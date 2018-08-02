@@ -3,7 +3,6 @@
 \docType{methods}
 \name{diffExp}
 \alias{diffExp}
-\alias{diffExp}
 \alias{diffExp,SingleCellExperiment-method}
 \alias{diffExp,seurat-method}
 \title{Differential Expression}
@@ -14,31 +13,35 @@ diffExp(object, ...)
   caller = c("edgeR", "DESeq2"), minCellsPerGene = 25L,
   minCountsPerCell = 5L)
 
-\S4method{diffExp}{seurat}(object, numerator, denominator, caller = c("edgeR",
-  "DESeq2"), minCellsPerGene = 25L, minCountsPerCell = 5L)
+\S4method{diffExp}{seurat}(object, numerator, denominator,
+  caller = c("edgeR", "DESeq2"), minCellsPerGene = 25L,
+  minCountsPerCell = 5L)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{numerator}{Group of cells to use in the numerator of the contrast
+\item{numerator}{\code{character}. Cells to use in the numerator of the contrast
 (e.g. treatment).}
 
-\item{denominator}{Group of cells to use in the denominator of the contrast
-(e.g. control).}
+\item{denominator}{\code{character}. Cells to use in the denominator of the
+contrast (e.g. control).}
 
-\item{caller}{Package to use for differential expression calling. Defaults to
-edgeR (faster for large datasets) but DESeq2 is also supported.}
+\item{caller}{\code{string}. Package to use for differential expression calling.
+Defaults to \code{"edgeR"} (faster for large datasets) but \code{"DESeq2"} is also
+supported.}
 
-\item{minCellsPerGene}{The minimum number of cells where a gene is expressed,
-to pass low expression filtering. Set to \code{0} to disable (not recommended).}
+\item{minCellsPerGene}{\code{scalar integer}. The minimum number of cells where a
+gene is expressed, to pass low expression filtering. Set to \code{0} to disable
+(\emph{not recommended}).}
 
-\item{minCountsPerCell}{Minimum number of counts per cell for a gene to pass
-low expression filtering. The number of cells is defined by
-\code{minCellsPerGene}. Set to \code{0} to disable (not recommended).}
+\item{minCountsPerCell}{\code{scalar integer}. Minimum number of counts per cell
+for a gene to pass low expression filtering. The number of cells is defined
+by \code{minCellsPerGene}. Set to \code{0} to disable (\emph{not recommended}).}
 }
 \value{
+Varies depending on the \code{caller} argument:
 \itemize{
 \item \code{caller = "edgeR"}: \code{DEGLRT}.
 \item \code{caller = "DESeq2"}: Unshrunken \code{DESeqResults}. Use \code{lfcShrink()} if
@@ -46,14 +49,20 @@ shrunken results are desired.
 }
 }
 \description{
-We now generally recommend the ZINB-WaVE method over zingeR, since it is
+We are currently recommending the ZINB-WaVE method over zingeR, since it is
 faster, and has been show to be more sensitive for most single-cell RNA-seq
 datasets.
 }
 \section{zinbwave}{
 
 We are currently using an epsilon setting of \code{1e12}, as recommended by the
-ZINB-WaVE integration paper.
+ZINB-WaVE integration paper. For more information on the zinbwave package,
+refer to these materials:
+\itemize{
+\item \href{https://doi.org/10.1186/s13059-018-1406-4}{zinbwave paper}.
+\item \href{https://bit.ly/2wtDdpS}{zinbwave vignette}.
+\item \href{https://github.com/mikelove/zinbwave-deseq2}{zinbwave-DESeq2 workflow}.
+}
 }
 
 \section{edgeR}{
@@ -72,10 +81,35 @@ DESeq2. By default, the average fitted values are used as a filter criterion.
 
 We're providing preliminary support for DESeq2 as the differential expression
 caller. It is currently considerably slower for large datasets than edgeR.
+
+We're trying to follow the conventions used in DESeq2 for contrasts, defining
+the name of the factor in the design formula, numerator, and denominator
+level for the fold change calculations. See \code{\link[DESeq2:results]{DESeq2::results()}} for more
+information.
+}
+
+\section{Seurat conventions}{
+
+Note that Seurat currently uses the convention \code{cells.1} for the numerator
+and \code{cells.2} for the denominator. See \code{\link[Seurat:DiffExpTest]{Seurat::DiffExpTest()}} for
+additional information.
 }
 
 \examples{
+# SingleCellExperiment ====
+object <- indrops_small
+numerator <- head(colnames(object), n = 100L)
+glimpse(numerator)
+denominator <- tail(colnames(object), n = 100L)
+glimpse(denominator)
+x <- diffExp(
+    object = object,
+    numerator = numerator,
+    denominator = denominator
+)
+
 # seurat ====
+# We recommend using SingleCellExperiment instead of seurat for DE
 # Expression in cluster 3 relative to cluster 2
 object <- seurat_small
 numerator <- Seurat::WhichCells(object, ident = 3L)
@@ -86,28 +120,11 @@ x <- diffExp(
     object = object,
     numerator = numerator,
     denominator = denominator,
-    minCellsPerGene = 5L,
-    minCountsPerCell = 5L
+    minCellsPerGene = 1L,
+    minCountsPerCell = 1L
 )
-}
-\seealso{
-Consult the following sources for more information:
-\itemize{
-\item \href{https://doi.org/10.1186/s13059-018-1406-4}{zinbwave paper}.
-\item \href{https://bit.ly/2wtDdpS}{zinbwave vignette}.
-\item \href{https://github.com/mikelove/zinbwave-deseq2}{zinbwave-DESeq2 workflow}.
-}
-
-\itemize{
-\item DESeq2: We're trying to follow the conventions used in DESeq2 for
-contrasts, defining the name of the factor in the design formula,
-numerator, and denominator level for the fold change calculations. See
-\code{\link[DESeq2:results]{DESeq2::results()}} for more information.
-\item Seurat: Note that Seurat currently uses the convention \code{cells.1} for the
-numerator and \code{cells.2} for the denominator. See \code{\link[Seurat:DiffExpTest]{Seurat::DiffExpTest()}}
-for additional information.
-}
 }
 \author{
 Michael Steinbaugh
 }
+\concept{Differential Expression Functions}

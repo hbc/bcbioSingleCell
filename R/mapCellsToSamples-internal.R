@@ -6,33 +6,33 @@
 #' @name mapCellsToSamples
 #' @family Data Functions
 #' @author Michael Steinbaugh
+#' @noRd
 #'
-#' @param cells Cell identifiers.
-#' @param samples Sample identifiers.
+#' @param cells `character`. Cell identifiers.
+#' @param samples `character`. Sample identifiers.
 #'
 #' @return Named `factor` containing cells as the names, and samples as the
 #'   factor levels.
-#' @export
 #'
 #' @examples
 #' # bcbioSingleCell ====
 #' object <- indrops_small
 #'
+#' # Cell IDs are the column names of object
 #' cells <- colnames(object)
-#' glimpse(cells)
+#' print(cells)
 #'
 #' # Use the sample ID for the mappings, which must be present in the cell ID
-#' sampleNames(object)
 #' samples <- names(sampleNames(object))
+#' # Alternate approach:
 #' # samples <- rownames(sampleData(object))
-#' samples
-#'
 #' # Sample ID must be the prefix of the cell IDs
-#' stopifnot(all(grepl(paste0("^", samples[[1]]), cells)))
+#' stopifnot(all(grepl(paste0("^", samples[[1L]]), cells)))
+#' print(samples)
 #'
-#' x <- mapCellsToSamples(cells = cells, samples = samples)
+#' x <- .mapCellsToSamples(cells = cells, samples = samples)
 #' glimpse(x)
-mapCellsToSamples <- function(cells, samples) {
+.mapCellsToSamples <- function(cells, samples) {
     assert_is_character(cells)
     assert_has_no_duplicates(cells)
     assert_is_any_of(samples, c("character", "factor"))
@@ -63,6 +63,7 @@ mapCellsToSamples <- function(cells, samples) {
         names(vec) <- match[["cellID"]]
         vec
     })
+
     cell2sample <- unlist(list)
     assert_are_identical(length(cells), length(cell2sample))
     as.factor(cell2sample)

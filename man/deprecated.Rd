@@ -8,6 +8,7 @@
 \alias{plotCumulativeUMIsPerCell}
 \alias{loadCellRanger}
 \alias{loadSingleCell}
+\alias{sanitizeMarkers}
 \title{Deprecated Functions}
 \usage{
 calculateMetrics(...)
@@ -21,6 +22,8 @@ plotCumulativeUMIsPerCell(...)
 loadCellRanger(...)
 
 loadSingleCell(...)
+
+sanitizeMarkers(...)
 }
 \arguments{
 \item{...}{Additional arguments.}

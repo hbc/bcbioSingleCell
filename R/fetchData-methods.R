@@ -1,11 +1,15 @@
 #' Fetch Data Functions
 #'
+#' @note Some of these functions require "`ident`" to be defined in [colData()].
+#'   For t-SNE, UMAP, and PCA, the reduced dimensions must be defined in the
+#'   [reducedDims()] slot.
+#'
 #' @name fetchData
 #' @family Data Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general
-#' @param minimal Return minimal data without metrics.
+#' @param minimal `boolean`. Return minimal data without metrics.
 #'
 #' @return
 #' - `fetchGeneData()`: `matrix`.
@@ -18,14 +22,11 @@
 #' # SingleCellExperiment ====
 #' object <- indrops_small
 #' genes <- head(rownames(object))
+#' glimpse(genes)
 #'
-#' # fetchGeneData
+#' # Genes
 #' x <- fetchGeneData(object, genes = genes)
 #' glimpse(x)
-#'
-#' # seurat ====
-#' object <- seurat_small
-#' genes <- head(rownames(object))
 #'
 #' # t-SNE
 #' x <- fetchTSNEData(object)
@@ -40,24 +41,24 @@
 #' glimpse(x)
 #'
 #' # t-SNE gene expression
-#' x <- fetchTSNEExpressionData(seurat_small, genes = genes)
+#' x <- fetchTSNEExpressionData(object, genes = genes)
 #' glimpse(x)
 #'
 #' # UMAP gene expession
-#' genes <- head(rownames(seurat_small))
-#' x <- fetchUMAPExpressionData(seurat_small, genes = genes)
+#' x <- fetchUMAPExpressionData(object, genes = genes)
 #' glimpse(x)
 NULL
 
 
 
 # Constructors =================================================================
-.reducedDims <- function(
+.reducedDimsData <- function(
     object,
     reduction = c("PCA", "TSNE", "UMAP"),
     minimal = FALSE
 ) {
     object <- as(object, "SingleCellExperiment")
+    .assertHasIdent(object)
     reduction <- match.arg(reduction)
     assert_is_a_bool(minimal)
 
@@ -75,9 +76,9 @@ NULL
     # Limit to the first two columns. PCA returns multiple columns.
     data <- as.data.frame(data)[, seq_len(2L)]
     dimCols <- colnames(data)
-    metrics <- metrics(object)
-    assert_are_identical(rownames(data), rownames(metrics))
-    cbind(metrics, data) %>%
+    colData <- as.data.frame(colData(object))
+    assert_are_identical(rownames(data), rownames(colData))
+    cbind(colData, data) %>%
         rownames_to_column() %>%
         # Group by ident here for center calculations
         group_by(!!sym("ident")) %>%
@@ -98,12 +99,29 @@ NULL
 setMethod(
     "fetchGeneData",
     signature("SingleCellExperiment"),
-    function(object, genes) {
+    function(
+        object,
+        genes,
+        gene2symbol = FALSE
+    ) {
+        assert_is_character(genes)
+        assert_has_no_duplicates(genes)
+        assert_is_a_bool(gene2symbol)
+
+        counts <- counts(object)
         assert_is_subset(genes, rownames(object))
-        counts(object) %>%
-            .[genes, , drop = FALSE] %>%
-            as.matrix() %>%
-            t()
+        counts <- counts[genes, , drop = FALSE]
+
+        # Convert gene IDs to gene names (symbols)
+        if (isTRUE(gene2symbol) && !isTRUE(.useGene2symbol(object))) {
+            g2s <- gene2symbol(object)
+            assertIsGene2symbol(g2s)
+            g2s <- g2s[genes, , drop = FALSE]
+            assert_are_identical(rownames(counts), g2s[["geneID"]])
+            rownames(counts) <- make.unique(g2s[["geneName"]])
+        }
+
+        t(as.matrix(counts))
     }
 )
 
@@ -125,7 +143,7 @@ setMethod(
     "fetchPCAData",
     signature("SingleCellExperiment"),
     function(object, minimal = FALSE) {
-        .reducedDims(
+        .reducedDimsData(
             object = object,
             reduction = "PCA",
             minimal = minimal
@@ -151,7 +169,7 @@ setMethod(
     "fetchTSNEData",
     signature("SingleCellExperiment"),
     function(object, minimal = FALSE) {
-        .reducedDims(
+        .reducedDimsData(
             object = object,
             reduction = "TSNE",
             minimal = minimal
@@ -179,7 +197,7 @@ setMethod(
     function(object, genes) {
         assert_is_subset(genes, rownames(object))
         tsne <- fetchTSNEData(object)
-        data <- fetchGeneData(object, genes = genes)
+        data <- fetchGeneData(object = object, genes = genes)
         mean <- rowMeans(data)
         median <- rowMedians(data)
         sum <- rowSums(data)
@@ -205,7 +223,7 @@ setMethod(
     "fetchUMAPData",
     signature("SingleCellExperiment"),
     function(object, minimal = FALSE) {
-        .reducedDims(
+        .reducedDimsData(
             object,
             reduction = "UMAP",
             minimal = minimal
@@ -233,7 +251,7 @@ setMethod(
     function(object, genes) {
         assert_is_subset(genes, rownames(object))
         umap <- fetchUMAPData(object)
-        data <- fetchGeneData(object, genes = genes)
+        data <- fetchGeneData(object = object, genes = genes)
         mean <- rowMeans(data)
         median <- rowMedians(data)
         sum <- rowSums(data)

@@ -38,13 +38,15 @@
 #'
 #' @inheritParams bcbioSingleCell
 #' @inheritParams general
-#' @param uploadDir Path to Cell Ranger output directory. This directory path
-#'   must contain `filtered_gene_bc_matrices*` as a child directory.
-#' @param filtered Use filtered (recommended) or raw counts. Note that raw
-#'   counts still contain only whitelisted cellular barcodes.
-#' @param format Output format, either MatrixMarket ("`mtx`") or HDF5
+#' @param uploadDir `string`. Path to Cell Ranger output directory. This
+#'   directory path must contain `filtered_gene_bc_matrices*` as a child
+#'   directory.
+#' @param filtered `boolean`. Use filtered (recommended) or raw counts. Note
+#'   that raw counts still contain only whitelisted cellular barcodes.
+#' @param format `string`. Output format, either MatrixMarket ("`mtx`") or HDF5
 #'   ("`hdf5`").
-#' @param refdataDir Directory path to Cell Ranger reference annotation data.
+#' @param refdataDir `string` or `NULL`. Directory path to Cell Ranger reference
+#'   annotation data.
 #'
 #' @return `SingleCellExperiment`.
 #' @export
@@ -235,19 +237,21 @@ readCellRanger <- function(
     } else {
         rowRanges <- emptyRanges(rownames(counts))
     }
-    rowData <- as.data.frame(rowRanges)
-    rownames(rowData) <- names(rowRanges)
 
     # Column data ==============================================================
     # Always prefilter, removing very low quality cells with no UMIs or genes
-    metrics <- metrics(counts, rowData = rowData, prefilter = TRUE)
+    metrics <- metrics(
+        object = counts,
+        rowRanges = rowRanges,
+        prefilter = TRUE
+    )
 
     # Subset the counts to match the prefiltered metrics
     counts <- counts[, rownames(metrics), drop = FALSE]
 
     colData <- as(metrics, "DataFrame")
     colData[["cellID"]] <- rownames(colData)
-    cell2sample <- mapCellsToSamples(
+    cell2sample <- .mapCellsToSamples(
         cells = rownames(colData),
         samples = rownames(sampleData)
     )

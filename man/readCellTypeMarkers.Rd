@@ -7,10 +7,10 @@
 readCellTypeMarkers(file, gene2symbol)
 }
 \arguments{
-\item{file}{Gene markers file (CSV or Excel).}
+\item{file}{\code{string}. Gene markers file path (CSV or Excel).}
 
-\item{gene2symbol}{\code{data.frame} containing gene-to-symbol mappings. Columns
-must contain \code{geneID} and \code{geneName}.}
+\item{gene2symbol}{\code{data.frame}. Gene-to-symbol mappings. Columns must
+contain \code{geneID} and \code{geneName}.}
 }
 \value{
 \code{grouped_df}, grouped by "\code{cellType}" column.
@@ -33,3 +33,4 @@ Other Read Functions: \code{\link{readCellRanger}}
 \author{
 Michael Steinbaugh
 }
+\concept{Read Functions}

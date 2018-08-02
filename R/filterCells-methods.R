@@ -12,15 +12,19 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param nCells Expected number of cells per sample.
-#' @param minUMIs Minimum number of UMI disambiguated counts per cell.
-#' @param maxUMIs Maximum number of UMI disambiguated counts per cell.
-#' @param minGenes Minimum number of genes detected.
-#' @param maxGenes Maximum number of genes detected.
-#' @param minNovelty Minimum novelty score (log10 genes per UMI).
-#' @param maxMitoRatio Maximum relative mitochondrial abundance (`0-1` scale).
-#' @param minCellsPerGene Include genes with non-zero expression in at least
-#'   this many cells.
+#' @param nCells `scalar integer`. Expected number of cells per sample.
+#' @param minUMIs `scalar integer`. Minimum number of UMI disambiguated counts
+#'   per cell.
+#' @param maxUMIs `scalar integer`. Maximum number of UMI disambiguated counts
+#'   per cell.
+#' @param minGenes `scalar integer`. Minimum number of genes detected.
+#' @param maxGenes `scalar integer`. Maximum number of genes detected.
+#' @param minNovelty `scalar integer` (`0`-`1`). Minimum novelty score (log10
+#'   genes per UMI).
+#' @param maxMitoRatio `scalar integer` (`0`-`1`). Maximum relative
+#'   mitochondrial abundance.
+#' @param minCellsPerGene `scalar integer`. Include genes with non-zero
+#'   expression in at least this many cells.
 #'
 #' @seealso [Seurat::CreateSeuratObject()].
 #'
@@ -32,7 +36,7 @@
 #' object <- cellranger_small
 #' show(object)
 #'
-#' x <- filterCells(object, minNovelty = 0L)
+#' x <- filterCells(object)
 #' show(x)
 #' metadata(x)$filterParams
 #'
@@ -49,6 +53,16 @@ NULL
 
 
 # Constructors =================================================================
+.isFiltered <- function(object) {
+    if (!is.null(metadata(object)[["filterParams"]])) {
+        TRUE
+    } else {
+        FALSE
+    }
+}
+
+
+
 .paddedCount <- function(x, width = 8L) {
     str_pad(x, width = width, pad = " ")
 }
@@ -70,9 +84,13 @@ setMethod(
         maxGenes = Inf,
         minNovelty = 0L,
         maxMitoRatio = 1L,
-        minCellsPerGene = 10L
+        minCellsPerGene = 1L,
+        zinbwave = FALSE
     ) {
         validObject(object)
+        assert_is_a_bool(zinbwave)
+
+        originalDim <- dim(object)
         sampleNames <- sampleNames(object)
         metrics <- metrics(object)
 
@@ -109,8 +127,9 @@ setMethod(
         assert_all_are_in_range(maxMitoRatio, lower = 0L, upper = 1L)
 
         # minCellsPerGene
+        # Don't allow genes with all zero counts, so require at least 1 here
         assert_is_numeric(minCellsPerGene)
-        assert_all_are_non_negative(minCellsPerGene)
+        assert_all_are_positive(minCellsPerGene)
 
         params <- list(
             nCells = nCells,
@@ -343,10 +362,6 @@ setMethod(
 
         # Expected nCells per sample (filtered by top nUMI) --------------------
         if (nCells < Inf) {
-            message(paste(
-                "Using a hard cell count limit of", nCells, "per sample,",
-                "after applying other filtering cutoffs"
-            ))
             metrics <- metrics %>%
                 rownames_to_column() %>%
                 group_by(!!sym("sampleID")) %>%
@@ -355,6 +370,7 @@ setMethod(
                 as.data.frame() %>%
                 column_to_rownames()
         }
+
         if (!nrow(metrics)) {
             stop("No cells passed `nCells` cutoff")
         }
@@ -366,6 +382,7 @@ setMethod(
 
         cells <- sort(rownames(metrics))
         assert_is_subset(cells, colnames(object))
+        object <- object[, cells]
 
         # Filter low quality genes =============================================
         summaryGenes <- character()
@@ -375,20 +392,23 @@ setMethod(
             sep = " | "
         )
         if (minCellsPerGene > 0L) {
-            counts <- assay(object)
-            numCells <- rowSums(counts > 0L)
-            genes <- names(numCells[which(numCells >= minCellsPerGene)])
+            nonzero <- counts(object) > 0L
+            keep <- rowSums(nonzero) >= minCellsPerGene
+            genes <- names(keep)[keep]
         } else {
-            genes <- sort(rownames(object))
+            genes <- rownames(object)
         }
         if (!length(genes)) {
             stop("No genes passed `minCellsPerGene` cutoff")
         }
         summaryGenes[["minCellsPerGene"]] <- paste(
             paste(.paddedCount(length(genes)), "genes"),
-            paste("minCellsPerGene", "<=", as.character(minCellsPerGene)),
+            paste("minCellsPerGene", ">=", as.character(minCellsPerGene)),
             sep = " | "
         )
+        genes <- sort(genes)
+        assert_is_subset(genes, rownames(object))
+        object <- object[genes, ]
 
         # Summary ==============================================================
         printParams <- c(
@@ -407,6 +427,7 @@ setMethod(
             bcbioBase::separatorBar,
             "Cells:",
             as.character(summaryCells),
+            printString(table(metrics[["sampleName"]])),
             bcbioBase::separatorBar,
             "Genes:",
             as.character(summaryGenes),
@@ -414,20 +435,23 @@ setMethod(
             "Summary:",
             paste(
                 "  -",
-                length(cells), "of", ncol(object), "cells passed filtering",
-                paste0("(", percent(length(cells) / ncol(object)), ")")
+                dim(object)[[2L]], "of", originalDim[[2L]],
+                "cells passed filtering",
+                paste0(
+                    "(", percent(dim(object)[[2L]] / originalDim[[2L]]), ")"
+                )
             ),
             paste(
                 "  -",
-                length(genes), "of", nrow(object), "genes passed filtering",
-                paste0("(", percent(length(genes) / nrow(object)), ")")
+                dim(object)[[1L]], "of", originalDim[[1L]],
+                "genes passed filtering",
+                paste0(
+                    "(", percent(dim(object)[[1L]] / originalDim[[1L]]), ")"
+                )
             )
         ), collapse = "\n"))
 
-        summary <- list(
-            cells = summaryCells,
-            genes = summaryGenes
-        )
+        summary <- list(cells = summaryCells, genes = summaryGenes)
 
         # Metadata =============================================================
         metadata(object)[["cellularBarcodes"]] <- NULL
@@ -436,6 +460,11 @@ setMethod(
         metadata(object)[["filterParams"]] <- params
         metadata(object)[["filterSummary"]] <- summary
 
-        object[genes, cells]
+        # zinbwave weights =====================================================
+        if (isTRUE(zinbwave)) {
+            object <- .slotZinbwaveIntoAssays(object)
+        }
+
+        object
     }
 )

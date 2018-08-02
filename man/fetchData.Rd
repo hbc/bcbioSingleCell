@@ -35,9 +35,10 @@ fetchUMAPData(object, ...)
 
 fetchUMAPExpressionData(object, ...)
 
-\S4method{fetchGeneData}{SingleCellExperiment}(object, genes)
+\S4method{fetchGeneData}{SingleCellExperiment}(object, genes,
+  gene2symbol = FALSE)
 
-\S4method{fetchGeneData}{seurat}(object, genes)
+\S4method{fetchGeneData}{seurat}(object, genes, gene2symbol = FALSE)
 
 \S4method{fetchPCAData}{SingleCellExperiment}(object, minimal = FALSE)
 
@@ -64,9 +65,13 @@ fetchUMAPExpressionData(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{genes}{Gene identifiers. Must match the rownames of the object.}
+\item{genes}{\code{character}. Gene identifiers. Must match the rownames of the
+object.}
 
-\item{minimal}{Return minimal data without metrics.}
+\item{gene2symbol}{\code{data.frame}. Gene-to-symbol mappings. Columns must
+contain \code{geneID} and \code{geneName}.}
+
+\item{minimal}{\code{boolean}. Return minimal data without metrics.}
 }
 \value{
 \itemize{
@@ -80,18 +85,20 @@ and \code{sum}).
 \description{
 Fetch Data Functions
 }
+\note{
+Some of these functions require "\code{ident}" to be defined in \code{\link[=colData]{colData()}}.
+For t-SNE, UMAP, and PCA, the reduced dimensions must be defined in the
+\code{\link[=reducedDims]{reducedDims()}} slot.
+}
 \examples{
 # SingleCellExperiment ====
 object <- indrops_small
 genes <- head(rownames(object))
+glimpse(genes)
 
-# fetchGeneData
+# Genes
 x <- fetchGeneData(object, genes = genes)
 glimpse(x)
-
-# seurat ====
-object <- seurat_small
-genes <- head(rownames(object))
 
 # t-SNE
 x <- fetchTSNEData(object)
@@ -106,18 +113,16 @@ x <- fetchUMAPData(object)
 glimpse(x)
 
 # t-SNE gene expression
-x <- fetchTSNEExpressionData(seurat_small, genes = genes)
+x <- fetchTSNEExpressionData(object, genes = genes)
 glimpse(x)
 
 # UMAP gene expession
-genes <- head(rownames(seurat_small))
-x <- fetchUMAPExpressionData(seurat_small, genes = genes)
+x <- fetchUMAPExpressionData(object, genes = genes)
 glimpse(x)
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{cell2sample}},
-  \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{sampleData}},
   \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
@@ -125,3 +130,4 @@ Other Data Functions: \code{\link{aggregateReplicates}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
+\concept{Data Functions}

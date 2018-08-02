@@ -7,6 +7,16 @@ barcodePattern <- ")_([ACGT_]{6,})(_[0-9]+)?$"
 
 requiredAssays <- "counts"
 
+metricsCols <- c(
+    "nCount",
+    "nUMI",
+    "nGene",
+    "nCoding",
+    "nMito",
+    "log10GenesPerUMI",
+    "mitoRatio"
+)
+
 # Empty sample metadata support (e.g. for splatter simulation SCE)
 unknownSampleData <- data.frame(
     sampleID = "unknown",
@@ -17,5 +27,5 @@ unknownSampleData <- data.frame(
 )
 
 # DR marker default color palettes
-darkMarkerColors <- scale_colour_viridis_c(option = "plasma")
-lightMarkerColors <- scale_colour_gradient(low = "gray90", high = "red")
+darkMarkerColors <- scale_color_viridis_c(option = "plasma")
+lightMarkerColors <- scale_color_gradient(low = "gray90", high = "red")

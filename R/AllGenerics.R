@@ -141,17 +141,6 @@ setGeneric(
 
 
 
-#' @rdname knownMarkersDetected
-#' @export
-setGeneric(
-    "knownMarkersDetected",
-    function(object, ...) {
-        standardGeneric("knownMarkersDetected")
-    }
-)
-
-
-
 #' @rdname metricsPerSample
 #' @export
 setGeneric(
@@ -383,17 +372,6 @@ setGeneric(
 
 
 
-#' @rdname sanitizeMarkers
-#' @export
-setGeneric(
-    "sanitizeMarkers",
-    function(object, ...) {
-        standardGeneric("sanitizeMarkers")
-    }
-)
-
-
-
 #' @rdname subsetPerSample
 #' @export
 setGeneric(
@@ -411,16 +389,5 @@ setGeneric(
     "topBarcodes",
     function(object, ...) {
         standardGeneric("topBarcodes")
-    }
-)
-
-
-
-#' @rdname topMarkers
-#' @export
-setGeneric(
-    "topMarkers",
-    function(object, ...) {
-        standardGeneric("topMarkers")
     }
 )

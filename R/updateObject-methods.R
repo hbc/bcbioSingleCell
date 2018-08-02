@@ -9,7 +9,7 @@
 #'
 #' @inherit BiocGenerics::updateObject
 #'
-#' @return `bcbioRNASeq`.
+#' @return Valid object.
 #'
 #' @examples
 #' # bcbioSingleCell ====

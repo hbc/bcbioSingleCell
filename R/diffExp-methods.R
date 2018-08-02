@@ -1,12 +1,17 @@
 #' Differential Expression
 #'
-#' We now generally recommend the ZINB-WaVE method over zingeR, since it is
+#' We are currently recommending the ZINB-WaVE method over zingeR, since it is
 #' faster, and has been show to be more sensitive for most single-cell RNA-seq
 #' datasets.
 #'
 #' @section zinbwave:
 #' We are currently using an epsilon setting of `1e12`, as recommended by the
-#' ZINB-WaVE integration paper.
+#' ZINB-WaVE integration paper. For more information on the zinbwave package,
+#' refer to these materials:
+#'
+#' - [zinbwave paper](https://doi.org/10.1186/s13059-018-1406-4).
+#' - [zinbwave vignette](https://bit.ly/2wtDdpS).
+#' - [zinbwave-DESeq2 workflow](https://github.com/mikelove/zinbwave-deseq2).
 #'
 #' @section edgeR:
 #' After estimation of the dispersions and posterior probabilities, the
@@ -22,44 +27,55 @@
 #' We're providing preliminary support for DESeq2 as the differential expression
 #' caller. It is currently considerably slower for large datasets than edgeR.
 #'
-#' @seealso Consult the following sources for more information:
-#' - [zinbwave paper](https://doi.org/10.1186/s13059-018-1406-4).
-#' - [zinbwave vignette](https://bit.ly/2wtDdpS).
-#' - [zinbwave-DESeq2 workflow](https://github.com/mikelove/zinbwave-deseq2).
+#' We're trying to follow the conventions used in DESeq2 for contrasts, defining
+#' the name of the factor in the design formula, numerator, and denominator
+#' level for the fold change calculations. See [DESeq2::results()] for more
+#' information.
+#'
+#' @section Seurat conventions:
+#' Note that Seurat currently uses the convention `cells.1` for the numerator
+#' and `cells.2` for the denominator. See [Seurat::DiffExpTest()] for
+#' additional information.
 #'
 #' @name diffExp
 #' @family Differential Expression Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param numerator Group of cells to use in the numerator of the contrast
+#' @param numerator `character`. Cells to use in the numerator of the contrast
 #'   (e.g. treatment).
-#' @param denominator Group of cells to use in the denominator of the contrast
-#'   (e.g. control).
-#' @param caller Package to use for differential expression calling. Defaults to
-#'   edgeR (faster for large datasets) but DESeq2 is also supported.
-#' @param minCellsPerGene The minimum number of cells where a gene is expressed,
-#' to pass low expression filtering. Set to `0` to disable (not recommended).
-#' @param minCountsPerCell Minimum number of counts per cell for a gene to pass
-#'   low expression filtering. The number of cells is defined by
-#'   `minCellsPerGene`. Set to `0` to disable (not recommended).
+#' @param denominator `character`. Cells to use in the denominator of the
+#'   contrast (e.g. control).
+#' @param caller `string`. Package to use for differential expression calling.
+#'   Defaults to `"edgeR"` (faster for large datasets) but `"DESeq2"` is also
+#'   supported.
+#' @param minCellsPerGene `scalar integer`. The minimum number of cells where a
+#'   gene is expressed, to pass low expression filtering. Set to `0` to disable
+#'   (*not recommended*).
+#' @param minCountsPerCell `scalar integer`. Minimum number of counts per cell
+#'   for a gene to pass low expression filtering. The number of cells is defined
+#'   by `minCellsPerGene`. Set to `0` to disable (*not recommended*).
 #'
-#' @seealso
-#' - DESeq2: We're trying to follow the conventions used in DESeq2 for
-#'   contrasts, defining the name of the factor in the design formula,
-#'   numerator, and denominator level for the fold change calculations. See
-#'   [DESeq2::results()] for more information.
-#' - Seurat: Note that Seurat currently uses the convention `cells.1` for the
-#'   numerator and `cells.2` for the denominator. See [Seurat::DiffExpTest()]
-#'   for additional information.
-#'
-#' @return
+#' @return Varies depending on the `caller` argument:
 #' - `caller = "edgeR"`: `DEGLRT`.
 #' - `caller = "DESeq2"`: Unshrunken `DESeqResults`. Use `lfcShrink()` if
 #'   shrunken results are desired.
 #'
 #' @examples
+#' # SingleCellExperiment ====
+#' object <- indrops_small
+#' numerator <- head(colnames(object), n = 100L)
+#' glimpse(numerator)
+#' denominator <- tail(colnames(object), n = 100L)
+#' glimpse(denominator)
+#' x <- diffExp(
+#'     object = object,
+#'     numerator = numerator,
+#'     denominator = denominator
+#' )
+#'
 #' # seurat ====
+#' # We recommend using SingleCellExperiment instead of seurat for DE
 #' # Expression in cluster 3 relative to cluster 2
 #' object <- seurat_small
 #' numerator <- Seurat::WhichCells(object, ident = 3L)
@@ -70,8 +86,8 @@
 #'     object = object,
 #'     numerator = numerator,
 #'     denominator = denominator,
-#'     minCellsPerGene = 5L,
-#'     minCountsPerCell = 5L
+#'     minCellsPerGene = 1L,
+#'     minCountsPerCell = 1L
 #' )
 NULL
 
@@ -81,24 +97,10 @@ NULL
 
 
 
-.zinbwave <- function(object) {
-    message("Running zinbwave")
+.assertHasDesignFormula <- function(object) {
     stopifnot(is(object, "SingleCellExperiment"))
-    object <- as(object, "SingleCellExperiment")
-    # zinbFit doesn't support `dgCMatrix``, so coerce counts to matrix
-    assays(object) <- list(counts = as.matrix(counts(object)))
-    print(system.time({
-        zinb <- zinbwave(
-            Y = object,
-            K = 0L,
-            BPPARAM = SerialParam(),
-            epsilon = 1e12
-        )
-    }))
-    stopifnot(is(zinb, "SingleCellExperiment"))
-    assert_is_factor(zinb[["group"]])
-    assert_is_matrix(metadata(zinb)[["design"]])
-    zinb
+    assert_is_factor(object[["group"]])
+    assert_is_matrix(metadata(object)[["design"]])
 }
 
 
@@ -113,12 +115,12 @@ NULL
 # DESeq2 supports `weights` in assays automatically.
 .zinbwave.DESeq2 <- function(object) {  # nolint
     stopifnot(packageVersion("DESeq2") >= 1.2)
-    stopifnot(is(object, "SingleCellExperiment"))
-    zinb <- .zinbwave(object)
+    stopifnot(.hasZinbwave(object))
+    .assertHasDesignFormula(object)
     # DESeq2 ===================================================================
-    message("Running DESeq2")
-    print(system.time({
-        dds <- DESeqDataSet(se = zinb, design = .designFormula)
+    message("Running DESeq2...")
+    message(printString(system.time({
+        dds <- DESeqDataSet(se = object, design = .designFormula)
         dds <- DESeq(
             object = dds,
             test = "LRT",
@@ -129,7 +131,7 @@ NULL
         )
         # We already performed low count filtering
         res <- results(dds, independentFiltering = FALSE)
-    }))
+    })))
     res
 }
 
@@ -137,18 +139,18 @@ NULL
 
 .zinbwave.edgeR <- function(object) {  # nolint
     stopifnot(packageVersion("edgeR") >= 3.22)
-    stopifnot(is(object, "SingleCellExperiment"))
-    zinb <- .zinbwave(object)
+    stopifnot(.hasZinbwave(object))
+    .assertHasDesignFormula(object)
     # edgeR ====================================================================
-    message("Running edgeR")
-    counts <- as.matrix(counts(zinb))
-    weights <- assay(zinb, "weights")
+    message("Running edgeR...")
+    counts <- as.matrix(counts(object))
+    weights <- assay(object, "weights")
     assert_is_matrix(weights)
     design <- metadata(object)[["design"]]
     assert_is_matrix(design)
     group <- object[["group"]]
     assert_is_factor(group)
-    print(system.time({
+    message(printString(system.time({
         dge <- DGEList(counts, group = group)
         dge <- calcNormFactors(dge)
         dge[["weights"]] <- weights
@@ -160,7 +162,7 @@ NULL
             coef = 2L,
             independentFiltering = FALSE
         )
-    }))
+    })))
     lrt
 }
 
@@ -185,11 +187,11 @@ setMethod(
         assert_is_character(denominator)
         assert_are_disjoint_sets(numerator, denominator)
         caller <- match.arg(caller)
-        assertIsAnImplicitInteger(minCountsPerCell)
-        assertIsAnImplicitInteger(minCellsPerGene)
-
         # Consider adding zingeR support back once it's on Bioconductor
         zeroWeights <- "zinbwave"
+        assertIsAnImplicitInteger(minCountsPerCell)
+        assertIsAnImplicitInteger(minCellsPerGene)
+        assert_all_are_positive(c(minCountsPerCell, minCellsPerGene))
 
         message(paste(
             "Performing differential expression with",
@@ -245,8 +247,15 @@ setMethod(
         design <- model.matrix(~group)
         metadata(object)[["design"]] <- design
 
-        fun <- get(paste("", zeroWeights, caller, sep = "."))
-        fun(object)
+        # Calculate the weights (e.g. `.zinbwave`)
+        weightsFunction <- get(paste("", zeroWeights, sep = "."))
+        object <- weightsFunction(object)
+
+        # Run differential expression (e.g. `.zinbwave.edgeR`)
+        callerFunction <- get(paste("", zeroWeights, caller, sep = "."))
+        object <- callerFunction(object)
+
+        object
     }
 )
 

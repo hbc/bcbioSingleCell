@@ -18,56 +18,59 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general
-#' @param markers `grouped_df` of marker genes.
+#' @param markers `grouped_df`. Marker genes data.
 #'   - [plotTopMarkers()]: must be grouped by "`cluster`".
 #'   - [plotKnownMarkersDetected()]: must be grouped by "`cellType`".
 #'
 #' @return Show graphical output. Invisibly return `ggplot` `list`.
 #'
 #' @examples
-#' object <- seurat_small
-#' title <- "mito genes"
-#' genes <- grep("^MT-", rownames(object), value = TRUE)
+#' # SingleCellExperiment ====
+#' object <- cellranger_small
+#'
+#' # MHC class II genes
+#' title <- "MHC class II"
+#' genes <- rownames(object)[which(grepl(
+#'     pattern = "^major histocompatibility complex, class II",
+#'     x = rowData(object)$description
+#' ))]
 #' print(genes)
 #'
 #' # t-SNE
+#' plotMarkerTSNE(object, genes)
 #' plotMarkerTSNE(
 #'     object = object,
 #'     genes = genes,
-#'     title = title
-#' )
-#'
-#' # Dark mode
-#' plotMarkerTSNE(
-#'     object = object,
-#'     genes = genes,
-#'     dark = TRUE,
-#'     title = title
-#' )
-#'
-#' # Number cloud
-#' plotMarkerTSNE(
-#'     object = object,
-#'     genes = genes,
+#'     expression = "sum",
 #'     pointsAsNumbers = TRUE,
+#'     dark = TRUE,
+#'     label = FALSE,
 #'     title = title
 #' )
 #'
 #' # UMAP
-#' plotMarkerUMAP(
+#' plotMarkerUMAP(object, genes)
+#' plotMarkerTSNE(
 #'     object = object,
 #'     genes = genes,
+#'     expression = "mean",
+#'     pointsAsNumbers = TRUE,
+#'     dark = TRUE,
+#'     label = FALSE,
 #'     title = title
 #' )
 #'
+#' # seurat ====
+#' object <- seurat_small
+#'
 #' # Top markers
 #' markers <- topMarkers(all_markers_small, n = 1)
-#' markers
+#' glimpse(markers)
 #' plotTopMarkers(object, markers = tail(markers, 1))
 #'
 #' # Known markers detected
 #' markers <- head(known_markers_small, n = 1)
-#' markers
+#' glimpse(markers)
 #' plotKnownMarkersDetected(object, markers = head(markers, 1))
 NULL
 
@@ -97,19 +100,20 @@ NULL
     genes,
     reduction = c("TSNE", "UMAP"),
     expression = c("mean", "median", "sum"),
-    color = NULL,
+    color = getOption("bcbio.discrete.color", NULL),
+    pointSize = getOption("bcbio.pointSize", 0.75),
+    pointAlpha = getOption("bcbio.pointAlpha", 0.8),
     pointsAsNumbers = FALSE,
-    pointSize = 0.75,
-    pointAlpha = 0.8,
-    label = TRUE,
-    labelSize = 6L,
-    dark = FALSE,
-    grid = FALSE,
-    legend = TRUE,
-    aspectRatio = 1L,
+    label = getOption("bcbio.label", TRUE),
+    labelSize = getOption("bcbio.labelSize", 6L),
+    dark = getOption("bcbio.dark", FALSE),
+    grid = getOption("bcbio.grid", FALSE),
+    legend = getOption("bcbio.legend", TRUE),
+    aspectRatio = getOption("bcbio.aspectRatio", 1L),
     title = TRUE
 ) {
     assert_is_character(genes)
+    assert_has_no_duplicates(genes)
     assert_is_subset(genes, rownames(object))
     reduction <- match.arg(reduction)
     expression <- match.arg(expression)
@@ -118,9 +122,9 @@ NULL
         color <- NULL
     }
     assertIsColorScaleContinuousOrNULL(color)
-    assert_is_a_bool(pointsAsNumbers)
     assert_is_a_number(pointSize)
     assert_is_a_number(pointAlpha)
+    assert_is_a_bool(pointsAsNumbers)
     assert_is_a_bool(label)
     assert_is_a_number(labelSize)
     assert_is_a_bool(dark)
@@ -138,7 +142,16 @@ NULL
         fun <- fetchUMAPExpressionData
         dimCols <- c("UMAP1", "UMAP2")
     }
-    data <- fun(object, genes = genes)
+    data <- fun(object = object, genes = genes)
+
+    if (!isTRUE(.useGene2symbol(object))) {
+        g2s <- gene2symbol(object)
+        if (length(g2s)) {
+            g2s <- g2s[genes, , drop = FALSE]
+            genes <- make.unique(g2s[["geneName"]])
+        }
+    }
+    genes <- sort(unique(genes))
 
     requiredCols <- c(
         "centerX",
@@ -186,7 +199,7 @@ NULL
         } else {
             guideTitle <- expression
         }
-        p <- p + guides(color = guide_colourbar(title = guideTitle))
+        p <- p + guides(color = guide_colorbar(title = guideTitle))
     } else {
         p <- p + guides(color = "none")
     }
@@ -268,16 +281,16 @@ setMethod(
         object,
         genes,
         expression = c("mean", "median", "sum"),
-        color = NULL,
+        color = getOption("bcbio.discrete.color", NULL),
+        pointSize = getOption("bcbio.pointSize", 0.75),
+        pointAlpha = getOption("bcbio.pointAlpha", 0.8),
         pointsAsNumbers = FALSE,
-        pointSize = 0.75,
-        pointAlpha = 0.8,
-        label = TRUE,
-        labelSize = 6L,
-        dark = FALSE,
-        grid = FALSE,
-        legend = TRUE,
-        aspectRatio = 1L,
+        label = getOption("bcbio.label", TRUE),
+        labelSize = getOption("bcbio.labelSize", 6L),
+        dark = getOption("bcbio.dark", FALSE),
+        grid = getOption("bcbio.grid", FALSE),
+        legend = getOption("bcbio.legend", TRUE),
+        aspectRatio = getOption("bcbio.aspectRatio", 1L),
         title = TRUE
     ) {
         .plotMarkerReduction(
@@ -286,9 +299,9 @@ setMethod(
             reduction = "TSNE",
             expression = expression,
             color = color,
-            pointsAsNumbers = pointsAsNumbers,
             pointSize = pointSize,
             pointAlpha = pointAlpha,
+            pointsAsNumbers = pointsAsNumbers,
             label = label,
             labelSize = labelSize,
             dark = dark,
@@ -321,16 +334,16 @@ setMethod(
         object,
         genes,
         expression = c("mean", "median", "sum"),
-        color = NULL,
+        color = getOption("bcbio.discrete.color", NULL),
+        pointSize = getOption("bcbio.pointSize", 0.75),
+        pointAlpha = getOption("bcbio.pointAlpha", 0.8),
         pointsAsNumbers = FALSE,
-        pointSize = 0.75,
-        pointAlpha = 0.8,
-        label = TRUE,
-        labelSize = 6L,
-        dark = FALSE,
-        grid = FALSE,
-        legend = TRUE,
-        aspectRatio = 1L,
+        label = getOption("bcbio.label", TRUE),
+        labelSize = getOption("bcbio.labelSize", 6L),
+        dark = getOption("bcbio.dark", FALSE),
+        grid = getOption("bcbio.grid", FALSE),
+        legend = getOption("bcbio.legend", TRUE),
+        aspectRatio = getOption("bcbio.aspectRatio", 1L),
         title = TRUE
     ) {
         .plotMarkerReduction(
@@ -339,9 +352,9 @@ setMethod(
             reduction = "UMAP",
             expression = expression,
             color = color,
-            pointsAsNumbers = pointsAsNumbers,
             pointSize = pointSize,
             pointAlpha = pointAlpha,
+            pointsAsNumbers = pointsAsNumbers,
             label = label,
             labelSize = labelSize,
             dark = dark,
@@ -456,6 +469,7 @@ setMethod(
 
         cellTypes <- markers %>%
             pull("cellType") %>%
+            as.character() %>%
             na.omit() %>%
             unique()
         assert_is_non_empty(cellTypes)
@@ -464,6 +478,7 @@ setMethod(
             genes <- markers %>%
                 filter(cellType == !!cellType) %>%
                 pull("geneName") %>%
+                as.character() %>%
                 na.omit() %>%
                 unique()
             assert_is_non_empty(genes)

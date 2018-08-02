@@ -8,30 +8,32 @@
 \title{Plot Gene}
 \usage{
 \S4method{plotGene}{SingleCellExperiment}(object, genes, geom = c("dot",
-  "violin"), legend = FALSE)
+  "violin"), legend = getOption("bcbio.legend", TRUE))
 
 \S4method{plotGene}{seurat}(object, genes, geom = c("dot", "violin"),
-  legend = FALSE)
+  legend = getOption("bcbio.legend", TRUE))
 }
 \arguments{
 \item{object}{Object.}
 
-\item{genes}{Gene identifiers. Must match the rownames of the object.}
+\item{genes}{\code{character}. Gene identifiers. Must match the rownames of the
+object.}
 
-\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} to pick the type. Currently
-supports "\code{dot}" and "\code{violin}".}
+\item{geom}{\code{string}. Plot type. Uses \code{\link[=match.arg]{match.arg()}} to pick the type.
+Currently supports "\code{dot}" and "\code{violin}".}
 
-\item{legend}{Include plot legend.}
+\item{legend}{\code{boolean}. Include plot legend.}
 }
 \value{
 \code{ggplot}.
 }
 \description{
-Plot Gene
+Visualize genes on a dot or violin plot.
 }
 \examples{
-object <- seurat_small
+object <- indrops_small
 genes <- head(rownames(object))
+glimpse(genes)
 
 # Dot
 plotGene(object, genes = genes, geom = "dot")
@@ -52,3 +54,4 @@ Other Gene Expression Functions: \code{\link{plotDot}},
 \author{
 Michael Steinbaugh
 }
+\concept{Gene Expression Functions}

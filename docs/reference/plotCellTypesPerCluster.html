@@ -65,7 +65,7 @@ many (max cutoff) marker genes will be skipped." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
       </span>
     </div>
 
@@ -116,6 +116,11 @@ many (<code>max</code> cutoff) marker genes will be skipped.</p>
 
     <pre class="usage"><span class='fu'>plotCellTypesPerCluster</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
+<span class='co'># S4 method for SingleCellExperiment</span>
+<span class='fu'>plotCellTypesPerCluster</span>(<span class='no'>object</span>,
+  <span class='no'>cellTypesPerCluster</span>, <span class='kw'>reduction</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"TSNE"</span>, <span class='st'>"UMAP"</span>), <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>,
+  <span class='no'>...</span>)
+
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>plotCellTypesPerCluster</span>(<span class='no'>object</span>, <span class='no'>cellTypesPerCluster</span>,
   <span class='kw'>reduction</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"TSNE"</span>, <span class='st'>"UMAP"</span>), <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='no'>...</span>)</pre>
@@ -133,17 +138,17 @@ many (<code>max</code> cutoff) marker genes will be skipped.</p>
     </tr>
     <tr>
       <th>cellTypesPerCluster</th>
-      <td><p>Cell types per cluster <code>grouped_df</code>. This must be
-the return from <code>cellTypesPerCluster()</code>.</p></td>
+      <td><p><code>grouped_df</code>. Cell types per cluster data. This
+must be the return from <code><a href='cellTypesPerCluster.html'>cellTypesPerCluster()</a></code>.</p></td>
     </tr>
     <tr>
       <th>reduction</th>
-      <td><p>Dimensional reduction method to apply. Defaults to t-SNE
-("<code>TSNE</code>") but UMAP is also supported ("<code>UMAP</code>").</p></td>
+      <td><p><code>string</code>. Dimensional reduction method to apply. Defaults to
+t-SNE ("<code>TSNE</code>") but UMAP is also supported ("<code>UMAP</code>").</p></td>
     </tr>
     <tr>
       <th>headerLevel</th>
-      <td><p>R Markdown header level.</p></td>
+      <td><p><code>scalar integer</code> (<code>1</code>-<code>7</code>). R Markdown header level.</p></td>
     </tr>
     </table>
     
@@ -153,36 +158,40 @@ the return from <code>cellTypesPerCluster()</code>.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
-  <code>knownMarkersDetected</code>,
+    <div class='dont-index'><p>Other Clustering Functions: <code><a href='cellTypesPerCluster.html'>cellTypesPerCluster</a></code>,
+  <code><a href='knownMarkersDetected.html'>knownMarkersDetected</a></code>,
   <code><a href='plotFeature.html'>plotFeatureTSNE</a></code>,
   <code><a href='plotMarker.html'>plotKnownMarkersDetected</a></code>,
-  <code>plotPCElbow</code>, <code><a href='plotDimensionalReduction.html'>plotTSNE</a></code>,
-  <code>sanitizeMarkers</code>, <code>topMarkers</code></p></div>
+  <code><a href='plotPCElbow.html'>plotPCElbow</a></code>, <code><a href='plotDimensionalReduction.html'>plotTSNE</a></code>,
+  <code><a href='sanitizeSeuratMarkers.html'>sanitizeSeuratMarkers</a></code>,
+  <code><a href='topMarkers.html'>topMarkers</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
-<span class='no'>per_cluster</span> <span class='kw'>&lt;-</span> <span class='fu'>cellTypesPerCluster</span>(<span class='no'>known_markers_small</span>)
-<span class='fu'>glimpse</span>(<span class='no'>per_cluster</span>)</div><div class='output co'>#&gt; Observations: 12
+    <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
+<span class='no'>per_cluster</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='cellTypesPerCluster.html'>cellTypesPerCluster</a></span>(<span class='no'>known_markers_small</span>)
+<span class='fu'>glimpse</span>(<span class='no'>per_cluster</span>)</div><div class='output co'>#&gt; Observations: 13
 #&gt; Variables: 5
-#&gt; $ cluster  &lt;fct&gt; 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 4, 5
-#&gt; $ cellType &lt;fct&gt; T Cell, Mesenchymal Stem Cell, Dendritic Cell, T Cell, B C...
-#&gt; $ n        &lt;int&gt; 2, 1, 5, 2, 1, 5, 2, 1, 2, 1, 4, 2
-#&gt; $ geneID   &lt;chr&gt; "ENSG00000167286, ENSG00000198851", "ENSG00000026508", "EN...
-#&gt; $ geneName &lt;chr&gt; "CD3D, CD3E", "CD44", "HLA-DRA, HLA-DRB1, HLA-DQB1, HLA-DQ...</div><div class='input'>
+#&gt; $ cluster  &lt;fct&gt; 0, 0, 0, 0, 1, 1, 1, 2, 3, 3, 4, 4, 4
+#&gt; $ cellType &lt;fct&gt; Dendritic Cell, T Cell, B Cell, Mesenchymal Stem Cell, Den...
+#&gt; $ n        &lt;int&gt; 3, 2, 1, 1, 5, 2, 1, 2, 4, 1, 5, 1, 1
+#&gt; $ geneID   &lt;chr&gt; "ENSG00000204257, ENSG00000196126, ENSG00000204287", "ENSG...
+#&gt; $ geneName &lt;chr&gt; "HLA-DMA, HLA-DRB1, HLA-DRA", "CD3D, CD3E", "IGHM", "CD44"...</div><div class='input'>
 <span class='co'># Let's plot the first row, as an example</span>
 <span class='fu'>plotCellTypesPerCluster</span>(
-    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>seurat_small</span>,
-    <span class='kw'>cellTypesPerCluster</span> <span class='kw'>=</span> <span class='fu'>head</span>(<span class='no'>per_cluster</span>, <span class='fl'>1</span>),
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>cellranger_small</span>,
+    <span class='kw'>cellTypesPerCluster</span> <span class='kw'>=</span> <span class='fu'>head</span>(<span class='no'>per_cluster</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
 )</div><div class='output co'>#&gt; 
 #&gt; 
 #&gt; ## Cluster 0 {.tabset}
 #&gt; 
 #&gt; 
 #&gt; 
+#&gt; ### Dendritic Cell
+#&gt; </div><div class='img'><img src='plotCellTypesPerCluster-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; 
 #&gt; ### T Cell
-#&gt; </div><div class='img'><img src='plotCellTypesPerCluster-1.png' alt='' width='700' height='433' /></div></pre>
+#&gt; </div><div class='img'><img src='plotCellTypesPerCluster-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

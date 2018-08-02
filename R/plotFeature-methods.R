@@ -5,7 +5,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param features Character vector of features (e.g. gene expression, PC
+#' @param features `character`. Features to plot (e.g. gene expression, PC
 #'   scores, number of genes detected).
 #'
 #' @seealso [Seurat::FeaturePlot()].
@@ -13,9 +13,9 @@
 #' @return `ggplot` or `list`.
 #'
 #' @examples
-#' # seurat ====
-#' object <- seurat_small
-#' features <- c("nUMI", "nGene", "PC1", "PC2")
+#' # SingleCellExperiment ====
+#' object <- indrops_small
+#' features <- c("nUMI", "nGene", "mitoRatio")
 #'
 #' # t-SNE
 #' plotFeatureTSNE(object, features)
@@ -31,19 +31,20 @@ NULL
     object,
     features,
     reduction = c("TSNE", "UMAP"),
-    color = NULL,
-    pointSize = getOption("pointSize", 0.75),
-    pointAlpha = getOption("pointAlpha", 0.75),
-    label = TRUE,
-    labelSize = getOption("labelSize", 6L),
-    dark = FALSE,
-    grid = FALSE,
-    legend = FALSE,
-    aspectRatio = 1L
+    color = getOption("bcbio.discrete.color", NULL),
+    pointSize = getOption("bcbio.pointSize", 0.75),
+    pointAlpha = getOption("bcbio.pointAlpha", 0.75),
+    label = getOption("bcbio.label", TRUE),
+    labelSize = getOption("bcbio.labelSize", 6L),
+    dark = getOption("bcbio.dark", FALSE),
+    grid = getOption("bcbio.grid", FALSE),
+    legend = getOption("bcbio.legend", FALSE),
+    aspectRatio = getOption("bcbio.aspectRatio", 1L)
 ) {
     assert_is_character(features)
     # Legacy support for `color = "auto"`
     if (identical(color, "auto")) {
+        warning("Use `NULL` instead of `\"auto\"` for `color`")
         color <- NULL
     }
     assertIsColorScaleContinuousOrNULL(color)
@@ -55,6 +56,7 @@ NULL
         fill <- "white"
     }
 
+    # Get reduced dimension coordinates (t-SNE and UMAP are supported)
     if (reduction == "TSNE") {
         fxn <- fetchTSNEData
         dimCols <- c("tSNE_1", "tSNE_2")
@@ -62,18 +64,21 @@ NULL
         fxn <- fetchUMAPData
         dimCols <- c("UMAP1", "UMAP2")
     }
-    reducedDims <- fxn(object)
+    data <- fxn(object)
 
-    featureData <- FetchData(object, vars.all = features)
-
-    # Columns from `FetchData` take priority, if there is overlap
-    if (length(intersect(colnames(reducedDims), colnames(featureData)))) {
-        reducedDims <- reducedDims %>%
-            .[, setdiff(colnames(.), colnames(featureData))]
+    # If the features are not defined, attempt to merge all reduced dims
+    # information before stopping
+    if (!all(features %in% colnames(data))) {
+        reducedDimsData <- do.call(
+            what = cbind,
+            args = reducedDims(object)
+        )
+        stopifnot(identical(rownames(data), rownames(reducedDimsData)))
+        data <- cbind(data, reducedDimsData) %>%
+            # Ensure columns are unique
+            .[, unique(colnames(.))]
     }
-    assert_are_identical(rownames(reducedDims), rownames(featureData))
-    assert_are_disjoint_sets(colnames(reducedDims), colnames(featureData))
-    data <- cbind(reducedDims, featureData)
+    assert_is_subset(features, colnames(data))
 
     plotlist <- lapply(features, function(feature) {
         p <- ggplot(
@@ -162,15 +167,15 @@ setMethod(
     function(
         object,
         features,
-        color = NULL,
-        pointSize = getOption("pointSize", 0.75),
-        pointAlpha = getOption("pointAlpha", 0.75),
-        label = TRUE,
-        labelSize = getOption("labelSize", 6L),
-        dark = FALSE,
-        grid = FALSE,
-        legend = FALSE,
-        aspectRatio = 1L
+        color = getOption("bcbio.discrete.color", NULL),
+        pointSize = getOption("bcbio.pointSize", 0.75),
+        pointAlpha = getOption("bcbio.pointAlpha", 0.75),
+        label = getOption("bcbio.label", TRUE),
+        labelSize = getOption("bcbio.labelSize", 6L),
+        dark = getOption("bcbio.dark", FALSE),
+        grid = getOption("bcbio.grid", FALSE),
+        legend = getOption("bcbio.legend", FALSE),
+        aspectRatio = getOption("bcbio.aspectRatio", 1L)
     ) {
         .plotFeatureReduction(
             object = object,
@@ -209,15 +214,15 @@ setMethod(
     function(
         object,
         features,
-        color = NULL,
-        pointSize = getOption("pointSize", 0.75),
-        pointAlpha = getOption("pointAlpha", 0.75),
-        label = TRUE,
-        labelSize = getOption("labelSize", 6L),
-        dark = FALSE,
-        grid = FALSE,
-        legend = FALSE,
-        aspectRatio = 1L
+        color = getOption("bcbio.discrete.color", NULL),
+        pointSize = getOption("bcbio.pointSize", 0.75),
+        pointAlpha = getOption("bcbio.pointAlpha", 0.75),
+        label = getOption("bcbio.label", TRUE),
+        labelSize = getOption("bcbio.labelSize", 6L),
+        dark = getOption("bcbio.dark", FALSE),
+        grid = getOption("bcbio.grid", FALSE),
+        legend = getOption("bcbio.legend", FALSE),
+        aspectRatio = getOption("bcbio.aspectRatio", 1L)
     ) {
         .plotFeatureReduction(
             object = object,

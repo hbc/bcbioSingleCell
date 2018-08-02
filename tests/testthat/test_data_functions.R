@@ -23,28 +23,28 @@ test_that("fetchPCAData", {
     x <- fetchPCAData(seurat_small)
     expect_is(x, "data.frame")
     expect_identical(
-        lapply(x, class),
+        lapply(x, class) %>%
+            .[sort(names(.))],
         list(
-            sampleID = "factor",
-            nGene = "integer",
-            nUMI = "integer",
-            nCoding = "integer",
-            nMito = "integer",
+            centerX = "numeric",
+            centerY = "numeric",
+            description = "factor",
+            ident = "factor",
+            index = "factor",
             log10GenesPerUMI = "numeric",
             mitoRatio = "numeric",
+            nCoding = "integer",
+            nGene = "integer",
+            nMito = "integer",
+            nUMI = "integer",
             orig.ident = "factor",
+            PC1 = "numeric",
+            PC2 = "numeric",
             res.0.4 = "character",
             res.0.8 = "character",
             res.1.2 = "character",
-            ident = "factor",
-            sampleName = "factor",
-            description = "factor",
-            index = "factor",
-            interestingGroups = "factor",
-            PC1 = "numeric",
-            PC2 = "numeric",
-            centerX = "numeric",
-            centerY = "numeric"
+            sampleID = "factor",
+            sampleName = "factor"
         )
     )
 })
@@ -56,28 +56,28 @@ test_that("fetchTSNEData", {
     x <- fetchTSNEData(seurat_small)
     expect_is(x, "data.frame")
     expect_identical(
-        lapply(x, class),
+        lapply(x, class) %>%
+            .[sort(names(.))],
         list(
-            sampleID = "factor",
-            nGene = "integer",
-            nUMI = "integer",
-            nCoding = "integer",
-            nMito = "integer",
+            centerX = "numeric",
+            centerY = "numeric",
+            description = "factor",
+            ident = "factor",
+            index = "factor",
             log10GenesPerUMI = "numeric",
             mitoRatio = "numeric",
+            nCoding = "integer",
+            nGene = "integer",
+            nMito = "integer",
+            nUMI = "integer",
             orig.ident = "factor",
             res.0.4 = "character",
             res.0.8 = "character",
             res.1.2 = "character",
-            ident = "factor",
+            sampleID = "factor",
             sampleName = "factor",
-            description = "factor",
-            index = "factor",
-            interestingGroups = "factor",
             tSNE_1 = "numeric",
-            tSNE_2 = "numeric",
-            centerX = "numeric",
-            centerY = "numeric"
+            tSNE_2 = "numeric"
         )
     )
 })
@@ -92,31 +92,31 @@ test_that("fetchTSNEExpressionData", {
     )
     expect_is(x, "data.frame")
     expect_identical(
-        lapply(x, class),
+        lapply(x, class) %>%
+            .[sort(names(.))],
         list(
-            sampleID = "factor",
-            nGene = "integer",
-            nUMI = "integer",
-            nCoding = "integer",
-            nMito = "integer",
+            centerX = "numeric",
+            centerY = "numeric",
+            description = "factor",
+            ident = "factor",
+            index = "factor",
             log10GenesPerUMI = "numeric",
+            mean = "numeric",
+            median = "numeric",
             mitoRatio = "numeric",
+            nCoding = "integer",
+            nGene = "integer",
+            nMito = "integer",
+            nUMI = "integer",
             orig.ident = "factor",
             res.0.4 = "character",
             res.0.8 = "character",
             res.1.2 = "character",
-            ident = "factor",
+            sampleID = "factor",
             sampleName = "factor",
-            description = "factor",
-            index = "factor",
-            interestingGroups = "factor",
+            sum = "numeric",
             tSNE_1 = "numeric",
-            tSNE_2 = "numeric",
-            centerX = "numeric",
-            centerY = "numeric",
-            mean = "numeric",
-            median = "numeric",
-            sum = "numeric"
+            tSNE_2 = "numeric"
         )
     )
 })

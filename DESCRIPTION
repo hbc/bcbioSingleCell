@@ -1,7 +1,7 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Toolkit for bcbio single-cell RNA-seq analysis.
-Version: 0.1.17
+Version: 0.1.18
 Authors@R: c(
     person(
         given = "Michael",
@@ -62,7 +62,7 @@ Imports:
     assertive.sets,
     assertive.strings,
     assertive.types,
-    basejump (>= 0.6.1),
+    basejump (>= 0.6.2),
     Biobase,
     BiocGenerics,
     BiocParallel,
@@ -85,6 +85,7 @@ Imports:
     purrr (>= 0.2.5),
     R.utils,
     readr (>= 1.1),
+    reticulate,
     rhdf5 (>= 2.2),
     rlang (>= 0.2),
     rmarkdown (>= 1.10),
@@ -106,6 +107,7 @@ Suggests:
     EnsDb.Hsapiens.v75,
     googlesheets,
     MAST,
+    roxygen2,
     splatter,
     testthat (>= 2.0)
 Remotes:
@@ -122,4 +124,4 @@ biocViews:
     Transcription,
     Visualization
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0

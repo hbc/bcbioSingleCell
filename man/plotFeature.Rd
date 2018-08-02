@@ -16,59 +16,77 @@ plotFeatureTSNE(object, ...)
 plotFeatureUMAP(object, ...)
 
 \S4method{plotFeatureTSNE}{SingleCellExperiment}(object, features,
-  color = NULL, pointSize = getOption("pointSize", 0.75),
-  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
-  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
-  legend = FALSE, aspectRatio = 1L)
+  color = getOption("bcbio.discrete.color", NULL),
+  pointSize = getOption("bcbio.pointSize", 0.75),
+  pointAlpha = getOption("bcbio.pointAlpha", 0.75),
+  label = getOption("bcbio.label", TRUE),
+  labelSize = getOption("bcbio.labelSize", 6L),
+  dark = getOption("bcbio.dark", FALSE), grid = getOption("bcbio.grid",
+  FALSE), legend = getOption("bcbio.legend", FALSE),
+  aspectRatio = getOption("bcbio.aspectRatio", 1L))
 
-\S4method{plotFeatureTSNE}{seurat}(object, features, color = NULL,
-  pointSize = getOption("pointSize", 0.75),
-  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
-  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
-  legend = FALSE, aspectRatio = 1L)
+\S4method{plotFeatureTSNE}{seurat}(object, features,
+  color = getOption("bcbio.discrete.color", NULL),
+  pointSize = getOption("bcbio.pointSize", 0.75),
+  pointAlpha = getOption("bcbio.pointAlpha", 0.75),
+  label = getOption("bcbio.label", TRUE),
+  labelSize = getOption("bcbio.labelSize", 6L),
+  dark = getOption("bcbio.dark", FALSE), grid = getOption("bcbio.grid",
+  FALSE), legend = getOption("bcbio.legend", FALSE),
+  aspectRatio = getOption("bcbio.aspectRatio", 1L))
 
 \S4method{plotFeatureUMAP}{SingleCellExperiment}(object, features,
-  color = NULL, pointSize = getOption("pointSize", 0.75),
-  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
-  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
-  legend = FALSE, aspectRatio = 1L)
+  color = getOption("bcbio.discrete.color", NULL),
+  pointSize = getOption("bcbio.pointSize", 0.75),
+  pointAlpha = getOption("bcbio.pointAlpha", 0.75),
+  label = getOption("bcbio.label", TRUE),
+  labelSize = getOption("bcbio.labelSize", 6L),
+  dark = getOption("bcbio.dark", FALSE), grid = getOption("bcbio.grid",
+  FALSE), legend = getOption("bcbio.legend", FALSE),
+  aspectRatio = getOption("bcbio.aspectRatio", 1L))
 
-\S4method{plotFeatureUMAP}{seurat}(object, features, color = NULL,
-  pointSize = getOption("pointSize", 0.75),
-  pointAlpha = getOption("pointAlpha", 0.75), label = TRUE,
-  labelSize = getOption("labelSize", 6L), dark = FALSE, grid = FALSE,
-  legend = FALSE, aspectRatio = 1L)
+\S4method{plotFeatureUMAP}{seurat}(object, features,
+  color = getOption("bcbio.discrete.color", NULL),
+  pointSize = getOption("bcbio.pointSize", 0.75),
+  pointAlpha = getOption("bcbio.pointAlpha", 0.75),
+  label = getOption("bcbio.label", TRUE),
+  labelSize = getOption("bcbio.labelSize", 6L),
+  dark = getOption("bcbio.dark", FALSE), grid = getOption("bcbio.grid",
+  FALSE), legend = getOption("bcbio.legend", FALSE),
+  aspectRatio = getOption("bcbio.aspectRatio", 1L))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{features}{Character vector of features (e.g. gene expression, PC
+\item{features}{\code{character}. Features to plot (e.g. gene expression, PC
 scores, number of genes detected).}
 
-\item{color}{Desired ggplot color scale. Must supply discrete values. When
-set to \code{NULL}, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 color
+scale. Must supply discrete values. When set to \code{NULL}, the default ggplot2
+color palette will be used. If manual color definitions are desired, we
+recommend using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.
+To set the discrete color palette globally, use
+\code{options(bcbio.discrete.color = scale_color_viridis_d())}.}
 
-\item{pointSize}{Cell point size.}
+\item{pointSize}{\code{scalar numeric}. Cell point size.}
 
-\item{pointAlpha}{Alpha transparency level. Useful when there many cells in
-the dataset, and some cells can be masked.}
+\item{pointAlpha}{\code{scalar numeric} (\code{0}-\code{1}). Alpha transparency level.
+Useful when there many cells in the dataset, and some cells can be masked.}
 
-\item{label}{Overlay a cluster identitiy label on the plot.}
+\item{label}{\code{boolean}. Overlay a cluster identitiy label on the plot.}
 
-\item{labelSize}{Size of the text label.}
+\item{labelSize}{\code{scalar integer}. Size of the text label.}
 
-\item{dark}{Plot against a dark background using
+\item{dark}{\code{boolean}. Plot against a dark background using
 \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
-\item{grid}{Show major grid lines but hide axis lines.}
+\item{grid}{\code{boolean}. Show major grid lines but hide axis lines.}
 
-\item{legend}{Include plot legend.}
+\item{legend}{\code{boolean}. Include plot legend.}
 
-\item{aspectRatio}{Aspect ratio.}
+\item{aspectRatio}{\code{scalar integer}. Aspect ratio.}
 }
 \value{
 \code{ggplot} or \code{list}.
@@ -77,9 +95,9 @@ the dataset, and some cells can be masked.}
 Plot Feature
 }
 \examples{
-# seurat ====
-object <- seurat_small
-features <- c("nUMI", "nGene", "PC1", "PC2")
+# SingleCellExperiment ====
+object <- indrops_small
+features <- c("nUMI", "nGene", "mitoRatio")
 
 # t-SNE
 plotFeatureTSNE(object, features)
@@ -95,8 +113,10 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotCellTypesPerCluster}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
-  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
+  \code{\link{sanitizeSeuratMarkers}},
+  \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh
 }
+\concept{Clustering Functions}

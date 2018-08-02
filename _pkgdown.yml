@@ -20,6 +20,7 @@ reference:
     contents:
     - bcbioSingleCell
     - coerce
+    - combine
     - extract
     - show
     - ends_with("Object")
@@ -32,34 +33,37 @@ reference:
     - cell2sample
     - starts_with("fetch")
     - starts_with("map")
-    - starts_with("select")
     - sampleData
+    - starts_with("select")
     - subsetPerSample
     - topBarcodes
     - matches("2")
   - title: Quality Control Functions
     contents:
-    - starts_with("metrics")
+    - starts_with("barcode")
     - filterCells
-    - plotQC
+    - starts_with("metrics")
+    - plotBarcodeRanks
     - plotCellCounts
-    - plotReadsPerCell
-    - plotUMIsPerCell
-    - plotGenesPerCell
-    - plotUMIsVsGenes
-    - plotNovelty
-    - matches("Mito")
-    - plotZerosVsDepth
-    - matches("Ranks")
-    - plotNovelty
     - plotFeature
+    - plotGenesPerCell
+    - starts_with("plotMito")
+    - plotNovelty
+    - plotQC
+    - plotReadsPerCell
+    - starts_with("plotUMI")
+    - plotZerosVsDepth
+    - plotNovelty
+
   - title: Clustering Functions
     contents:
-    - matches("Cluster")
-    - matches("Elbow")
-    - matches("PCA")
-    - matches("TSNE")
-    - matches("UMAP")
+    - cellCountsPerCluster
+    - cellTypesPerCluster
+    - starts_with("cluster")
+    - plotFeature
+    - plotMarker
+    - plotPCElbow
+    - plotTSNE
   - title: Gene Expression Functions
     contents:
     - plotGene
@@ -70,7 +74,7 @@ reference:
     contents:
     - diffExp
     - knownMarkersDetected
-    - sanitizeMarkers
+    - sanitizeSeuratMarkers
     - topMarkers
   - title: Plot Functions
     contents:

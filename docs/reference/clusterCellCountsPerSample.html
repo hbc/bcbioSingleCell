@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
       </span>
     </div>
 
@@ -137,17 +137,14 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
-<span class='fu'>clusterCellCountsPerSample</span>(<span class='no'>seurat_small</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 4
+    <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
+<span class='fu'>clusterCellCountsPerSample</span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; # A tibble: 3 x 4
 #&gt; # Groups:   sampleName [1]
 #&gt;   sampleName ident     n ratio
 #&gt;   &lt;fct&gt;      &lt;fct&gt; &lt;int&gt; &lt;dbl&gt;
-#&gt; 1 pbmc       0       133 0.266
-#&gt; 2 pbmc       1       126 0.252
-#&gt; 3 pbmc       2        92 0.184
-#&gt; 4 pbmc       3        81 0.162
-#&gt; 5 pbmc       4        45 0.09 
-#&gt; 6 pbmc       5        23 0.046</div></pre>
+#&gt; 1 rep_1      0       200 0.4  
+#&gt; 2 rep_1      1       171 0.342
+#&gt; 3 rep_1      2       129 0.258</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

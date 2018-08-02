@@ -6,30 +6,44 @@
 
 [R][] package for [bcbio][] single-cell RNA-seq analysis.
 
-
 ## Installation
 
-### [Bioconductor][] method
+This is an [R][] package.
+
+### [Bioconductor][]
+
+We recommend installing the package with [BiocManager][].
 
 ```r
-## try http:// if https:// URLs are not supported
-source("https://bioconductor.org/biocLite.R")
-biocLite("devtools")
-biocLite("remotes")
-biocLite("GenomeInfoDbData")
-biocLite(
-    "hbc/bcbioSingleCell",
+if (!require("BiocManager")) {
+    install.packages("BiocManager")
+}
+BiocManager::install(
+    pkgs = c(
+        "devtools",
+        "remotes",
+        "GenomeInfoDbData"
+    )
+)
+BiocManager::install(
+    pkgs = "hbc/bcbioSingleCell",
     dependencies = c("Depends", "Imports", "Suggests")
 )
 ```
 
+For [R][] < 3.5, [BiocManager][] is not supported. Use `BiocInstaller::biocLite()` instead of `BiocManager::install()`. This requires sourcing the legacy [Bioconductor][] `biocLite.R` script.
+
+```r
+# try http:// if https:// URLs are not supported
+source("https://bioconductor.org/biocLite.R")
+```
 
 ## Load [bcbio][] run
 
 ```r
 library(bcbioSingleCell)
 bcb <- bcbioSingleCell(
-    uploadDir = "bcbio_indrop/final",
+    uploadDir = "indrops/final",
     interestingGroups = c("genotype", "treatment"),
     sampleMetadataFile = "sample_metadata.csv",
     organism = "Homo sapiens",
@@ -40,18 +54,11 @@ flat <- flatFiles(bcb)
 saveData(bcb, flat, dir = "data")
 ```
 
-This will return a `bcbioSingleCell` object, which is an extension of the [Bioconductor][] [SingleCellExperiment][SCE] container class.
+This will return a `bcbioSingleCell` object, which is an extension of the [Bioconductor][] [SingleCellExperiment][SCE] container class. Consult the `bcbioSingleCell()` constructor function documentation for detailed information on the supported parameters:
 
-Parameters:
-
-- `uploadDir`: Path to the [bcbio][] final upload directory.
-- `interestingGroups`: Character vector of the column names of interest in the sample metadata, which is stored in the `sampleData()` accessor slot of the `bcbioSingleCell` object. These values should be formatted in camelCase, and can be reassigned in the object after creation (e.g. `interestingGroups(bcb) <- c("batch", "age")`). They are used for data visualization in the quality control utility functions.
-- `organism`: Organism name. Use the full latin name (e.g. "Homo sapiens"). If set `NULL`, no gene annotations will be downloaded and stashed into the `rowRanges` slot of the object.
-- `genomeBuild`: *Optional.* The Ensembl release version to use.
-- `gffFile`: *Optional.* If your transcriptome does not entirely match up to an Ensembl release, you can pass the GFF/GTF file of the transcriptome you used to load the annotations instead.
-
-Consult `help("bcbioSingleCell", "bcbioSingleCell")` for additional documentation.
-
+```r
+help(topic = "bcbioSingleCell", package = "bcbioSingleCell")
+```
 
 ## Sample metadata examples
 
@@ -84,11 +91,9 @@ This is our current method for handling [10X Genomics Cell Ranger][cellranger] o
 | sample3     | wildtype |
 | sample4     | knockout |
 
-### Forbidden metadata fields
-The following fields are forbidden as user-supplied metadata, as they are used
-internally:
+## Markers
 
-`nCells`
+Shared [cell-cycle markers][] and [cell-type markers][] are available on [Google Sheets][]. Contact [Michael Steinbaugh][] if you'd like to contribute to this list, and he'll enable write access.
 
 ## Troubleshooting
 
@@ -107,19 +112,22 @@ R_MAX_NUM_DLLS=150
 
 For more information on this issue, consult `help("dyn.load")` in the [R][] documentation. The number of loaded DLLs in an [R][] session can be obtained with `getLoadedDLLs()`.
 
-
 ## References
 
 The papers and software cited in our workflows are available as a [shared library](https://paperpile.com/shared/C8EMxl) on [Paperpile][].
 
-
 [bcbio]: https://bcbio-nextgen.readthedocs.io
 [bcl2fastq]: https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html
 [Bioconductor]: https://bioconductor.org
+[BiocManager]: https://cran.r-project.org/package=BiocManager
+[Cell-cycle markers]: https://docs.google.com/spreadsheets/d/1qA5ktYeimNGpZF1UPSQZATbpzEqgyxN6daoMOjv6YYw
+[Cell-type markers]: https://docs.google.com/spreadsheets/d/1vGNU2CCxpaoTCLvzOxK1hf5gjULrf2-CpgCp9bOfGJ0
 [CellRanger]: https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger
 [conda]: https://conda.io
 [devtools]: https://cran.r-project.org/package=devtools
+[Google Sheets]: https://www.google.com/sheets
 [inDrops]: https://github.com/indrops/indrops
+[Michael Steinbaugh]: https://mike.steinbaugh.com
 [Paperpile]: https://paperpile.com
 [R]: https://www.r-project.org
 [SCE]: https://doi.org/doi:10.18129/B9.bioc.SingleCellExperiment

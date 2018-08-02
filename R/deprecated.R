@@ -184,4 +184,14 @@ plotMarkers <- function(...) {
 
 
 
+# v0.1.8 =======================================================================
+#' @rdname deprecated
+#' @export
+sanitizeMarkers <- function(...) {
+    .Deprecated("sanitizeSeuratMarkers")
+    sanitizeSeuratMarkers(...)
+}
+
+
+
 # nocov end

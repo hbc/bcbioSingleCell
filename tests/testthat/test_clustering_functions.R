@@ -24,40 +24,47 @@ test_that("cellTypesPerCluster", {
 # knownMarkersDetected =========================================================
 test_that("knownMarkersDetected", {
     x <- knownMarkersDetected(
-        object = all_markers_small,
+        all = all_markers_small,
         known = cell_type_markers[["homoSapiens"]]
     )
     expect_is(x, "grouped_df")
     expect_identical(dplyr::group_vars(x), "cellType")
     expect_identical(
-        lapply(x, class),
+        lapply(x, class) %>%
+            .[sort(names(.))],
         list(
+            avgLogFC = "numeric",
+            broadClass = "factor",
             cellType = "factor",
             cluster = "factor",
+            description = "factor",
+            end = "integer",
+            geneBiotype = "factor",
             geneID = "character",
-            geneName = "character",
-            avgLogFC = "numeric",
+            geneName = "factor",
+            padj = "numeric",
             pct1 = "numeric",
             pct2 = "numeric",
-            rowname = "character",
             pvalue = "numeric",
-            padj = "numeric",
-            geneBiotype = "factor",
-            description = "character",
+            rowname = "character",
             seqCoordSystem = "factor",
-            broadClass = "factor"
+            seqnames = "factor",
+            start = "integer",
+            strand = "factor",
+            width = "integer"
         )
     )
 })
 
 
 
-# sanitizeMarkers ==============================================================
-test_that("sanitizeMarkers : seurat", {
+# sanitizeSeuratMarkers ========================================================
+test_that("sanitizeSeuratMarkers", {
+    # Early return on sanitized data
     expect_message(
-        sanitizeMarkers(
-            object = seurat_small,
-            markers = all_markers_small
+        sanitizeSeuratMarkers(
+            data = all_markers_small,
+            rowRanges = rowRanges(seurat_small)
         ),
         "Markers are already sanitized"
     )
@@ -66,7 +73,10 @@ test_that("sanitizeMarkers : seurat", {
     invisible(capture.output(
         all <- Seurat::FindAllMarkers(seurat_small)
     ))
-    x <- sanitizeMarkers(object = seurat_small, markers = all)
+    x <- sanitizeSeuratMarkers(
+        data = all,
+        rowRanges = rowRanges(seurat_small)
+    )
     expect_is(x, "grouped_df")
 
     # FindMarkers
@@ -77,9 +87,9 @@ test_that("sanitizeMarkers : seurat", {
             ident.2 = NULL
         )
     ))
-    x <- sanitizeMarkers(
-        object = seurat_small,
-        markers = ident3
+    x <- sanitizeSeuratMarkers(
+        data = ident3,
+        rowRanges = rowRanges(seurat_small)
     )
     expect_is(x, "data.frame")
     expect_true(tibble::has_rownames(x))
@@ -93,21 +103,27 @@ test_that("topMarkers : grouped_df", {
     expect_is(x, "grouped_df")
     expect_identical(dplyr::group_vars(x), "cluster")
     expect_identical(
-        lapply(x, class),
+        lapply(x, class) %>%
+            .[sort(names(.))],
         list(
-            cluster = "factor",
             avgLogFC = "numeric",
+            broadClass = "factor",
+            cluster = "factor",
+            description = "factor",
+            end = "integer",
+            geneBiotype = "factor",
+            geneID = "character",
+            geneName = "factor",
+            padj = "numeric",
             pct1 = "numeric",
             pct2 = "numeric",
-            rowname = "character",
             pvalue = "numeric",
-            padj = "numeric",
-            geneID = "character",
-            geneName = "character",
-            geneBiotype = "factor",
-            description = "character",
+            rowname = "character",
             seqCoordSystem = "factor",
-            broadClass = "factor"
+            seqnames = "factor",
+            start = "integer",
+            strand = "factor",
+            width = "integer"
         )
     )
 })

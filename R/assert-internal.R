@@ -1,3 +1,9 @@
+.assertHasIdent <- function(object) {
+    assert_is_subset("ident", colnames(colData(object)))
+}
+
+
+
 .isAggregate <- function(object, stop = FALSE) {
     logical <- "aggregate" %in% colnames(object)
     if (
@@ -11,18 +17,6 @@
 
 
 
-#' Check for Sanitized Markers Data
-#'
-#' @author Michael Steinbaugh
-#' @keywords internal
-#' @noRd
-#'
-#' @param object Input should be a sanitized markers `data.frame`, returned from
-#'   [sanitizeMarkers()].
-#' @param package Name of package used to generate the markers.
-#' @param stop Stop on failure, instead of returning `FALSE`.
-#'
-#' @return `TRUE` if sanitized, `FALSE` if not.
 .isSanitizedMarkers <- function(
     object,
     package = "Seurat"
@@ -32,8 +26,7 @@
     # General checks ===========================================================
     if (!is(object, "grouped_df")) {
         return(FALSE)
-    }
-    else if (
+    } else if (
         is.null(attr(object, "vars")) ||
         attr(object, "vars") != "cluster"
     ) {
@@ -50,7 +43,7 @@
         seuratBlacklist <- c(
             "avg_diff",   # Legacy, now "avg_logFC"
             "avg_logFC",  # Renamed in v2.1
-            "gene",       # Gene symbol, we'll rename to "geneName"
+            "gene",
             "p_val",      # We'll rename to pvalue, matching DESeq2
             "p_val_adj",  # New in v2.1, we'll rename to padj, matching DESeq2
             "pct.1",
@@ -62,4 +55,16 @@
             return(TRUE)
         }
     }
+}
+
+
+
+# Determine whether we should use stashed gene-to-symbol mappings
+.useGene2symbol <- function(object) {
+    geneName <- as.character(
+        suppressWarnings(
+            gene2symbol(object)[["geneName"]]
+        )
+    )
+    any(geneName %in% rownames(object))
 }

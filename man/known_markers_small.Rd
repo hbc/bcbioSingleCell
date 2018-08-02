@@ -4,7 +4,7 @@
 \name{known_markers_small}
 \alias{known_markers_small}
 \title{Known Markers Example}
-\format{An object of class \code{grouped_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 28 rows and 14 columns.}
+\format{An object of class \code{grouped_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 29 rows and 19 columns.}
 \usage{
 known_markers_small
 }
@@ -22,4 +22,5 @@ Other Minimal Example Data: \code{\link{all_markers_small}},
 \author{
 Michael Steinbaugh
 }
+\concept{Minimal Example Data}
 \keyword{datasets}

@@ -1,5 +1,8 @@
 #' Methods for Coercing an Object to a Class
 #'
+#' @note Use [convertGenesToSymbols()] to convert gene IDs to names (symbols).
+#'   This step is no longer automatic, as of v0.1.18.
+#'
 #' @name coerce
 #' @aliases as
 #' @family S4 Object
@@ -13,6 +16,17 @@
 #' - [methods::as()].
 #' - [methods::coerce()].
 NULL
+
+
+
+# Constructors =================================================================
+.as.SingleCellExperiment.seurat <- function(object) {  # nolint
+    validObject(object)
+    # Sanitize legacy seurat objects that contain Ensembl IDs in names
+    names(rownames(object@raw.data)) <- NULL
+    names(rownames(object@data)) <- NULL
+    as.SingleCellExperiment(object)
+}
 
 
 
@@ -35,18 +49,6 @@ setAs(
     from = "SingleCellExperiment",
     to = "seurat",
     function(from) {
-        # Require that technical replicates are aggregated
-        if ("aggregate" %in% colnames(sampleData(from))) {
-            message(paste(
-                "`aggregate` metadata column detected.",
-                "Use `aggregateReplicates()` to combine technical replicates.",
-                sep = "\n"
-            ))
-        }
-
-        # Convert gene identifiers to symbols
-        from <- convertGenesToSymbols(from)
-
         # Create the seurat object
         to <- CreateSeuratObject(
             raw.data = counts(from),
@@ -56,7 +58,7 @@ setAs(
             min.genes = 0L,
             # Default for UMI datasets
             is.expr = 0L,
-            meta.data = as.data.frame(metrics(from))
+            meta.data = as.data.frame(colData(from))
         )
 
         # Check that the dimensions match exactly
@@ -88,14 +90,14 @@ setAs(
 #' @examples
 #' # seurat to SingleCellExperiment ====
 #' x <- as(seurat_small, "SingleCellExperiment")
-#' class(x)
 #' print(x)
 setAs(
     from = "seurat",
     to = "SingleCellExperiment",
     function(from) {
         validObject(from)
-        to <- as.SingleCellExperiment(from)
+        to <- .as.SingleCellExperiment.seurat(from)
+        rowRanges(to) <- rowRanges(from)
         metadata(to) <- metadata(from)
         to
     }

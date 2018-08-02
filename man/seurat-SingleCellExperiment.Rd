@@ -7,42 +7,47 @@
 \alias{plotCellCounts,seurat-method}
 \alias{seurat-SingleCellExperiment}
 \alias{assay,seurat,ANY-method}
+\alias{assayNames,seurat-method}
+\alias{assays,seurat-method}
 \alias{colData,seurat-method}
+\alias{colData<-,seurat,DataFrame-method}
 \alias{colnames,seurat-method}
+\alias{convertGenesToSymbols,seurat-method}
 \alias{counts,seurat-method}
-\alias{metadata,seurat-method}
-\alias{metadata<-,seurat-method}
-\alias{rowData,seurat-method}
-\alias{rowRanges,seurat-method}
-\alias{rownames,seurat-method}
 \alias{gene2symbol,seurat-method}
 \alias{interestingGroups,seurat-method}
 \alias{interestingGroups<-,seurat,character-method}
+\alias{metadata,seurat-method}
+\alias{metadata<-,seurat-method}
+\alias{reducedDims,seurat-method}
+\alias{rowData,seurat-method}
+\alias{rownames,seurat-method}
+\alias{rowRanges,seurat-method}
 \alias{sampleNames,seurat-method}
 \title{Extend S4 Methods for \code{seurat} Class}
 \usage{
 \S4method{cell2sample}{seurat}(object)
 
-\S4method{plotCellCounts}{seurat}(object, interestingGroups, fill = NULL,
-  title = "cell counts")
+\S4method{plotCellCounts}{seurat}(object, interestingGroups,
+  fill = getOption("bcbio.discrete.fill", NULL), title = "cell counts")
 
-\S4method{assay}{seurat,ANY}(x)
+\S4method{assay}{seurat,ANY}(x, i, ...)
 
-\S4method{colData}{seurat}(x)
+\S4method{assayNames}{seurat}(x, ...)
+
+\S4method{assays}{seurat}(x, ..., withDimnames = TRUE)
+
+\S4method{colData}{seurat}(x, ...)
+
+\S4method{colData}{seurat,DataFrame}(x) <- value
 
 \S4method{colnames}{seurat}(x)
 
-\S4method{counts}{seurat}(object)
+\S4method{convertGenesToSymbols}{seurat}(object)
 
-\S4method{metadata}{seurat}(x)
+\S4method{colnames}{seurat}(x)
 
-\S4method{metadata}{seurat}(x) <- value
-
-\S4method{rowData}{seurat}(x)
-
-\S4method{rowRanges}{seurat}(x)
-
-\S4method{rownames}{seurat}(x)
+\S4method{counts}{seurat}(object, ...)
 
 \S4method{gene2symbol}{seurat}(object)
 
@@ -50,21 +55,39 @@
 
 \S4method{interestingGroups}{seurat,character}(object) <- value
 
+\S4method{metadata}{seurat}(x, ...)
+
+\S4method{metadata}{seurat}(x) <- value
+
+\S4method{reducedDims}{seurat}(x)
+
+\S4method{rowData}{seurat}(x, ...)
+
+\S4method{rownames}{seurat}(x)
+
+\S4method{rowRanges}{seurat}(x, ...)
+
 \S4method{sampleNames}{seurat}(object)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+\code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
-to \code{NULL}, the default ggplot2 color palette will be used. If manual color
-definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+\item{fill}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 fill scale.
+Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.
+To set the discrete fill palette globally, use
+\code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
 
-\item{title}{Plot title.}
+\item{title}{\code{string} or \code{NULL}. Plot title.}
 
 \item{x}{Primary object.}
+
+\item{...}{Additional arguments.}
 
 \item{value}{Object to assign.}
 

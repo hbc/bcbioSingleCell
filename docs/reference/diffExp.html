@@ -34,7 +34,7 @@
   
 <meta property="og:title" content="Differential Expression — diffExp" />
 
-<meta property="og:description" content="We now generally recommend the ZINB-WaVE method over zingeR, since it is
+<meta property="og:description" content="We are currently recommending the ZINB-WaVE method over zingeR, since it is
 faster, and has been show to be more sensitive for most single-cell RNA-seq
 datasets." />
 <meta name="twitter:card" content="summary" />
@@ -65,7 +65,7 @@ datasets." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@ datasets." />
 
     <div class="ref-description">
     
-    <p>We now generally recommend the ZINB-WaVE method over zingeR, since it is
+    <p>We are currently recommending the ZINB-WaVE method over zingeR, since it is
 faster, and has been show to be more sensitive for most single-cell RNA-seq
 datasets.</p>
     
@@ -122,8 +122,9 @@ datasets.</p>
   <span class='kw'>minCountsPerCell</span> <span class='kw'>=</span> <span class='fl'>5L</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>diffExp</span>(<span class='no'>object</span>, <span class='no'>numerator</span>, <span class='no'>denominator</span>, <span class='kw'>caller</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"edgeR"</span>,
-  <span class='st'>"DESeq2"</span>), <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>25L</span>, <span class='kw'>minCountsPerCell</span> <span class='kw'>=</span> <span class='fl'>5L</span>)</pre>
+<span class='fu'>diffExp</span>(<span class='no'>object</span>, <span class='no'>numerator</span>, <span class='no'>denominator</span>,
+  <span class='kw'>caller</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"edgeR"</span>, <span class='st'>"DESeq2"</span>), <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>25L</span>,
+  <span class='kw'>minCountsPerCell</span> <span class='kw'>=</span> <span class='fl'>5L</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,36 +139,37 @@ datasets.</p>
     </tr>
     <tr>
       <th>numerator</th>
-      <td><p>Group of cells to use in the numerator of the contrast
+      <td><p><code>character</code>. Cells to use in the numerator of the contrast
 (e.g. treatment).</p></td>
     </tr>
     <tr>
       <th>denominator</th>
-      <td><p>Group of cells to use in the denominator of the contrast
-(e.g. control).</p></td>
+      <td><p><code>character</code>. Cells to use in the denominator of the
+contrast (e.g. control).</p></td>
     </tr>
     <tr>
       <th>caller</th>
-      <td><p>Package to use for differential expression calling. Defaults to
-edgeR (faster for large datasets) but DESeq2 is also supported.</p></td>
+      <td><p><code>string</code>. Package to use for differential expression calling.
+Defaults to <code>"edgeR"</code> (faster for large datasets) but <code>"DESeq2"</code> is also
+supported.</p></td>
     </tr>
     <tr>
       <th>minCellsPerGene</th>
-      <td><p>The minimum number of cells where a gene is expressed,
-to pass low expression filtering. Set to <code>0</code> to disable (not recommended).</p></td>
+      <td><p><code>scalar integer</code>. The minimum number of cells where a
+gene is expressed, to pass low expression filtering. Set to <code>0</code> to disable
+(<em>not recommended</em>).</p></td>
     </tr>
     <tr>
       <th>minCountsPerCell</th>
-      <td><p>Minimum number of counts per cell for a gene to pass
-low expression filtering. The number of cells is defined by
-<code>minCellsPerGene</code>. Set to <code>0</code> to disable (not recommended).</p></td>
+      <td><p><code>scalar integer</code>. Minimum number of counts per cell
+for a gene to pass low expression filtering. The number of cells is defined
+by <code>minCellsPerGene</code>. Set to <code>0</code> to disable (<em>not recommended</em>).</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-<ul>
+    <p>Varies depending on the <code>caller</code> argument:</p><ul>
 <li><p><code>caller = "edgeR"</code>: <code>DEGLRT</code>.</p></li>
 <li><p><code>caller = "DESeq2"</code>: Unshrunken <code>DESeqResults</code>. Use <code>lfcShrink()</code> if
 shrunken results are desired.</p></li>
@@ -178,7 +180,12 @@ shrunken results are desired.</p></li>
 
     
     <p>We are currently using an epsilon setting of <code>1e12</code>, as recommended by the
-ZINB-WaVE integration paper.</p>
+ZINB-WaVE integration paper. For more information on the zinbwave package,
+refer to these materials:</p><ul>
+<li><p><a href='https://doi.org/10.1186/s13059-018-1406-4'>zinbwave paper</a>.</p></li>
+<li><p><a href='https://bit.ly/2wtDdpS'>zinbwave vignette</a>.</p></li>
+<li><p><a href='https://github.com/mikelove/zinbwave-deseq2'>zinbwave-DESeq2 workflow</a>.</p></li>
+</ul>
     
     <h2 class="hasAnchor" id="edger"><a class="anchor" href="#edger"></a>edgeR</h2>
 
@@ -197,41 +204,47 @@ DESeq2. By default, the average fitted values are used as a filter criterion.</p
     
     <p>We're providing preliminary support for DESeq2 as the differential expression
 caller. It is currently considerably slower for large datasets than edgeR.</p>
+<p>We're trying to follow the conventions used in DESeq2 for contrasts, defining
+the name of the factor in the design formula, numerator, and denominator
+level for the fold change calculations. See <code><a href='http://www.rdocumentation.org/packages/DESeq2/topics/results'>DESeq2::results()</a></code> for more
+information.</p>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="seurat-conventions"><a class="anchor" href="#seurat-conventions"></a>Seurat conventions</h2>
 
-    <div class='dont-index'><p>Consult the following sources for more information:</p><ul>
-<li><p><a href='https://doi.org/10.1186/s13059-018-1406-4'>zinbwave paper</a>.</p></li>
-<li><p><a href='https://bit.ly/2wtDdpS'>zinbwave vignette</a>.</p></li>
-<li><p><a href='https://github.com/mikelove/zinbwave-deseq2'>zinbwave-DESeq2 workflow</a>.</p></li>
-</ul></div>
-    <div class='dont-index'><ul>
-<li><p>DESeq2: We're trying to follow the conventions used in DESeq2 for
-contrasts, defining the name of the factor in the design formula,
-numerator, and denominator level for the fold change calculations. See
-<code><a href='http://www.rdocumentation.org/packages/DESeq2/topics/results'>DESeq2::results()</a></code> for more information.</p></li>
-<li><p>Seurat: Note that Seurat currently uses the convention <code>cells.1</code> for the
-numerator and <code>cells.2</code> for the denominator. See <code><a href='http://www.rdocumentation.org/packages/Seurat/topics/DiffExpTest'>Seurat::DiffExpTest()</a></code>
-for additional information.</p></li>
-</ul></div>
+    
+    <p>Note that Seurat currently uses the convention <code>cells.1</code> for the numerator
+and <code>cells.2</code> for the denominator. See <code><a href='http://www.rdocumentation.org/packages/Seurat/topics/DiffExpTest'>Seurat::DiffExpTest()</a></code> for
+additional information.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
+    <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
+<span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>indrops_small</span>
+<span class='no'>numerator</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>colnames</span>(<span class='no'>object</span>), <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100L</span>)
+<span class='fu'>glimpse</span>(<span class='no'>numerator</span>)</div><div class='output co'>#&gt;  chr [1:100] "multiplexed_AAAAAAAA_AAACACTA_ATCCCACG" ...</div><div class='input'><span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='fu'>tail</span>(<span class='fu'>colnames</span>(<span class='no'>object</span>), <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100L</span>)
+<span class='fu'>glimpse</span>(<span class='no'>denominator</span>)</div><div class='output co'>#&gt;  chr [1:100] "multiplexed_AAAAAAAA_TAAGGGCC_GGTCTGAC" ...</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
+    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
+    <span class='kw'>numerator</span> <span class='kw'>=</span> <span class='no'>numerator</span>,
+    <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>denominator</span>
+)</div><div class='output co'>#&gt; <span class='message'>Performing differential expression with zinbwave-edgeR</span></div><div class='output co'>#&gt; <span class='message'>Applying low gene count filter</span>
+#&gt; <span class='message'>Requiring at least 25 cells with counts of 5 or more per gene</span></div><div class='output co'>#&gt; <span class='message'>Using stashed zinbwave weights in assays</span></div><div class='output co'>#&gt; <span class='message'>Running edgeR...</span></div><div class='output co'>#&gt; <span class='message'>   user  system elapsed </span>
+#&gt; <span class='message'>  0.652   0.064   0.814 </span></div><div class='input'>
+<span class='co'># seurat ====</span>
+<span class='co'># We recommend using SingleCellExperiment instead of seurat for DE</span>
 <span class='co'># Expression in cluster 3 relative to cluster 2</span>
 <span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>seurat_small</span>
 <span class='no'>numerator</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/WhichCells'>WhichCells</a></span>(<span class='no'>object</span>, <span class='kw'>ident</span> <span class='kw'>=</span> <span class='fl'>3L</span>)
-<span class='fu'>glimpse</span>(<span class='no'>numerator</span>)</div><div class='output co'>#&gt;  chr [1:81] "pbmc_1_AAAGTAGAGTCAAGGC" "pbmc_1_ACAGCCGGTCTTGATG" ...</div><div class='input'><span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/WhichCells'>WhichCells</a></span>(<span class='no'>object</span>, <span class='kw'>ident</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
-<span class='fu'>glimpse</span>(<span class='no'>denominator</span>)</div><div class='output co'>#&gt;  chr [1:92] "pbmc_1_AAACCTGCAGGCGATA" "pbmc_1_AAACGGGAGCGGCTTC" ...</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
+<span class='fu'>glimpse</span>(<span class='no'>numerator</span>)</div><div class='output co'>#&gt;  chr [1:70] "pbmc_1_AAAGCAAAGTGTCCAT" "pbmc_1_AACACGTCACCTGGTG" ...</div><div class='input'><span class='no'>denominator</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>Seurat</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/Seurat/topics/WhichCells'>WhichCells</a></span>(<span class='no'>object</span>, <span class='kw'>ident</span> <span class='kw'>=</span> <span class='fl'>2L</span>)
+<span class='fu'>glimpse</span>(<span class='no'>denominator</span>)</div><div class='output co'>#&gt;  chr [1:80] "pbmc_1_AAAGTAGAGTCAAGGC" "pbmc_1_ACAGCCGGTCTTGATG" ...</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>diffExp</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
     <span class='kw'>numerator</span> <span class='kw'>=</span> <span class='no'>numerator</span>,
     <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>denominator</span>,
-    <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>5L</span>,
-    <span class='kw'>minCountsPerCell</span> <span class='kw'>=</span> <span class='fl'>5L</span>
+    <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
+    <span class='kw'>minCountsPerCell</span> <span class='kw'>=</span> <span class='fl'>1L</span>
 )</div><div class='output co'>#&gt; <span class='message'>Performing differential expression with zinbwave-edgeR</span></div><div class='output co'>#&gt; <span class='message'>Applying low gene count filter</span>
-#&gt; <span class='message'>Requiring at least 5 cells with counts of 5 or more per gene</span></div><div class='output co'>#&gt; <span class='message'>Running zinbwave</span></div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;  12.391   0.829  14.076 </div><div class='output co'>#&gt; <span class='message'>Running edgeR</span></div><div class='output co'>#&gt;    user  system elapsed 
-#&gt;   1.100   0.097   1.349 </div></pre>
+#&gt; <span class='message'>Requiring at least 1 cells with counts of 1 or more per gene</span></div><div class='output co'>#&gt; <span class='message'>Running zinbwave...</span></div><div class='output co'>#&gt; <span class='message'>   user  system elapsed </span>
+#&gt; <span class='message'> 13.870   0.748  14.978 </span></div><div class='output co'>#&gt; <span class='message'>Running edgeR...</span></div><div class='output co'>#&gt; <span class='message'>   user  system elapsed </span>
+#&gt; <span class='message'>  0.630   0.053   0.687 </span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -246,7 +259,7 @@ for additional information.</p></li>
 
       <li><a href="#deseq-">DESeq2</a></li>
 
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#seurat-conventions">Seurat conventions</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

@@ -23,8 +23,8 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # seurat ====
-#' object <- seurat_small
+#' # SingleCellExperiment ====
+#' object <- cellranger_small
 #'
 #' # t-SNE
 #' plotTSNE(object)
@@ -42,30 +42,34 @@ NULL
 
 # Constructors =================================================================
 .plotReducedDims <- function(
-    data,
+    object,
+    fun,  # e.g. fetchTSNEData
     axes,
     interestingGroups = "ident",
-    color = NULL,
+    color = getOption("bcbio.discrete.color", NULL),
+    pointSize = getOption("bcbio.pointSize", 0.75),
+    pointAlpha = getOption("bcbio.pointAlpha", 0.75),
     pointsAsNumbers = FALSE,
-    pointSize = getOption("pointSize", 0.75),
-    pointAlpha = getOption("pointAlpha", 0.75),
-    label = TRUE,
-    labelSize = getOption("labelSize", 6L),
-    dark = FALSE,
-    grid = FALSE,
-    legend = TRUE,
-    aspectRatio = 1L,
+    label = getOption("bcbio.label", TRUE),
+    labelSize = getOption("bcbio.labelSize", 6L),
+    dark = getOption("bcbio.dark", FALSE),
+    grid = getOption("bcbio.grid", FALSE),
+    legend = getOption("bcbio.legend", TRUE),
+    aspectRatio = getOption("bcbio.aspectRatio", 1L),
     title = NULL
 ) {
+    .assertHasIdent(object)
+    assert_is_function(fun)
+    data <- fun(object)
     assert_is_data.frame(data)
     assert_is_character(axes)
     assert_is_subset(axes, colnames(data))
     assert_is_a_string(interestingGroups)
     assert_is_subset(interestingGroups, colnames(data))
     assertIsColorScaleDiscreteOrNULL(color)
-    assert_is_a_bool(pointsAsNumbers)
     assert_is_a_number(pointSize)
     assert_is_a_number(pointAlpha)
+    assert_is_a_bool(pointsAsNumbers)
     assert_is_a_bool(label)
     assert_is_a_number(labelSize)
     assert_is_a_bool(dark)
@@ -163,26 +167,27 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        color = NULL,
+        color = getOption("bcbio.discrete.color", NULL),
+        pointSize = getOption("bcbio.pointSize", 0.75),
+        pointAlpha = getOption("bcbio.pointAlpha", 0.75),
         pointsAsNumbers = FALSE,
-        pointSize = getOption("pointSize", 0.75),
-        pointAlpha = getOption("pointAlpha", 0.75),
-        label = TRUE,
-        labelSize = getOption("labelSize", 6L),
-        dark = FALSE,
-        grid = FALSE,
-        legend = TRUE,
-        aspectRatio = 1L,
+        label = getOption("bcbio.label", TRUE),
+        labelSize = getOption("bcbio.labelSize", 6L),
+        dark = getOption("bcbio.dark", FALSE),
+        grid = getOption("bcbio.grid", FALSE),
+        legend = getOption("bcbio.legend", TRUE),
+        aspectRatio = getOption("bcbio.aspectRatio", 1L),
         title = NULL
     ) {
         .plotReducedDims(
-            data = fetchTSNEData(object),
+            object = object,
+            fun = fetchTSNEData,
             axes = c(x = "tSNE_1", y = "tSNE_2"),
             interestingGroups = interestingGroups,
             color = color,
-            pointsAsNumbers = pointsAsNumbers,
             pointSize = pointSize,
             pointAlpha = pointAlpha,
+            pointsAsNumbers = pointsAsNumbers,
             label = label,
             labelSize = labelSize,
             dark = dark,
@@ -214,26 +219,27 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        color = NULL,
+        color = getOption("bcbio.discrete.color", NULL),
+        pointSize = getOption("bcbio.pointSize", 0.75),
+        pointAlpha = getOption("bcbio.pointAlpha", 0.75),
         pointsAsNumbers = FALSE,
-        pointSize = getOption("pointSize", 0.75),
-        pointAlpha = getOption("pointAlpha", 0.75),
-        label = TRUE,
-        labelSize = getOption("labelSize", 6L),
-        dark = FALSE,
-        grid = FALSE,
-        legend = TRUE,
-        aspectRatio = 1L,
+        label = getOption("bcbio.label", TRUE),
+        labelSize = getOption("bcbio.labelSize", 6L),
+        dark = getOption("bcbio.dark", FALSE),
+        grid = getOption("bcbio.grid", FALSE),
+        legend = getOption("bcbio.legend", TRUE),
+        aspectRatio = getOption("bcbio.aspectRatio", 1L),
         title = NULL
     ) {
         .plotReducedDims(
-            data = fetchUMAPData(object),
+            object = object,
+            fun = fetchUMAPData,
             axes = c(x = "UMAP1", y = "UMAP2"),
             interestingGroups = interestingGroups,
             color = color,
-            pointsAsNumbers = pointsAsNumbers,
             pointSize = pointSize,
             pointAlpha = pointAlpha,
+            pointsAsNumbers = pointsAsNumbers,
             label = label,
             labelSize = labelSize,
             dark = dark,
@@ -265,26 +271,27 @@ setMethod(
     function(
         object,
         interestingGroups = "ident",
-        color = NULL,
+        color = getOption("bcbio.discrete.color", NULL),
+        pointSize = getOption("bcbio.pointSize", 0.75),
+        pointAlpha = getOption("bcbio.pointAlpha", 0.75),
         pointsAsNumbers = FALSE,
-        pointSize = getOption("pointSize", 0.75),
-        pointAlpha = getOption("pointAlpha", 0.75),
-        label = TRUE,
-        labelSize = getOption("labelSize", 6L),
-        dark = FALSE,
-        grid = FALSE,
-        legend = TRUE,
-        aspectRatio = 1L,
+        label = getOption("bcbio.label", TRUE),
+        labelSize = getOption("bcbio.labelSize", 6L),
+        dark = getOption("bcbio.dark", FALSE),
+        grid = getOption("bcbio.grid", FALSE),
+        legend = getOption("bcbio.legend", TRUE),
+        aspectRatio = getOption("bcbio.aspectRatio", 1L),
         title = NULL
     ) {
         .plotReducedDims(
-            data = fetchPCAData(object),
+            object = object,
+            fun = fetchPCAData,
             axes = c(x = "PC1", y = "PC2"),
             interestingGroups = interestingGroups,
             color = color,
-            pointsAsNumbers = pointsAsNumbers,
             pointSize = pointSize,
             pointAlpha = pointAlpha,
+            pointsAsNumbers = pointsAsNumbers,
             label = label,
             labelSize = labelSize,
             dark = dark,

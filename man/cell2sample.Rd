@@ -3,7 +3,6 @@
 \docType{methods}
 \name{cell2sample}
 \alias{cell2sample}
-\alias{cell2sample}
 \alias{cell2sample,SingleCellExperiment-method}
 \title{Cell to Sample Mappings}
 \usage{
@@ -31,7 +30,6 @@ table(x)
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{fetchGeneData}},
-  \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{sampleData}},
   \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
@@ -39,3 +37,4 @@ Other Data Functions: \code{\link{aggregateReplicates}},
 \author{
 Michael Steinbaugh
 }
+\concept{Data Functions}

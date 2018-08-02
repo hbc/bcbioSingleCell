@@ -3,7 +3,6 @@
 \docType{methods}
 \name{cellTypesPerCluster}
 \alias{cellTypesPerCluster}
-\alias{cellTypesPerCluster}
 \alias{cellTypesPerCluster,grouped_df-method}
 \title{Cell Types per Cluster}
 \usage{
@@ -16,9 +15,9 @@ cellTypesPerCluster(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{min}{Minimum number of marker genes per cluster.}
+\item{min}{\code{scalar integer}. Minimum number of marker genes per cluster.}
 
-\item{max}{Maximum number of marker genes per cluster.}
+\item{max}{\code{scalar integer}. Maximum number of marker genes per cluster.}
 }
 \value{
 \code{grouped_df} grouped by "\code{cluster}", containing the count (\code{n}) of
@@ -38,8 +37,10 @@ Other Clustering Functions: \code{\link{knownMarkersDetected}},
   \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
-  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
+  \code{\link{sanitizeSeuratMarkers}},
+  \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh
 }
+\concept{Clustering Functions}

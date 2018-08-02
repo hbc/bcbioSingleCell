@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
       </span>
     </div>
 
@@ -100,7 +100,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Top Markers</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/topMarkers-methods.R'><code>R/topMarkers-methods.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/topMarkers.R'><code>R/topMarkers.R</code></a></small>
     <div class="hidden name"><code>topMarkers.Rd</code></div>
     </div>
 
@@ -110,35 +110,29 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>topMarkers</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for grouped_df</span>
-<span class='fu'>topMarkers</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"positive"</span>,
-  <span class='st'>"negative"</span>, <span class='st'>"both"</span>), <span class='kw'>coding</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>topMarkers</span>(<span class='no'>data</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10L</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"positive"</span>, <span class='st'>"negative"</span>,
+  <span class='st'>"both"</span>), <span class='kw'>coding</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>Object.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments.</p></td>
+      <th>data</th>
+      <td><p><code>grouped_df</code>. <code><a href='http://www.rdocumentation.org/packages/Seurat/topics/FindAllMarkers'>Seurat::FindAllMarkers()</a></code> return, sanitized with
+our <code><a href='sanitizeSeuratMarkers.html'>sanitizeSeuratMarkers()</a></code> function.</p></td>
     </tr>
     <tr>
       <th>n</th>
-      <td><p>Number of genes per cluster.</p></td>
+      <td><p><code>scalar integer</code>. Number of genes per cluster.</p></td>
     </tr>
     <tr>
       <th>direction</th>
-      <td><p>Whether to include "<code>positive</code>", "<code>negative</code>", or "<code>both</code>"
-directions of association per cluster.</p></td>
+      <td><p><code>string</code>. Whether to include "<code>positive</code>", "<code>negative</code>", or
+"<code>both</code>" directions of association per cluster.</p></td>
     </tr>
     <tr>
       <th>coding</th>
-      <td><p>Only include protein coding genes.</p></td>
+      <td><p><code>boolean</code>. Include only protein coding genes.</p></td>
     </tr>
     </table>
     
@@ -152,36 +146,35 @@ directions of association per cluster.</p></td>
 <li><p><code><a href='http://dplyr.tidyverse.org/reference/slice.html'>dplyr::slice()</a></code>.</p></li>
 <li><p><code><a href='http://dplyr.tidyverse.org/reference/top_n.html'>dplyr::top_n()</a></code>.</p></li>
 </ul></div>
-    <div class='dont-index'><p>Other Clustering Functions: <code>cellTypesPerCluster</code>,
-  <code>knownMarkersDetected</code>,
-  <code>plotCellTypesPerCluster</code>,
+    <div class='dont-index'><p>Other Clustering Functions: <code><a href='cellTypesPerCluster.html'>cellTypesPerCluster</a></code>,
+  <code><a href='knownMarkersDetected.html'>knownMarkersDetected</a></code>,
+  <code><a href='plotCellTypesPerCluster.html'>plotCellTypesPerCluster</a></code>,
   <code><a href='plotFeature.html'>plotFeatureTSNE</a></code>,
   <code><a href='plotMarker.html'>plotKnownMarkersDetected</a></code>,
-  <code>plotPCElbow</code>, <code><a href='plotDimensionalReduction.html'>plotTSNE</a></code>,
-  <code>sanitizeMarkers</code></p></div>
+  <code><a href='plotPCElbow.html'>plotPCElbow</a></code>, <code><a href='plotDimensionalReduction.html'>plotTSNE</a></code>,
+  <code><a href='sanitizeSeuratMarkers.html'>sanitizeSeuratMarkers</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># grouped_df ====</span>
-<span class='co'># Currently only works on `Seurat::FindAllMarkers()` return sanitized with</span>
-<span class='co'># our `sanitizeMarkers()` function</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>topMarkers</span>(
-    <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>all_markers_small</span>,
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>all_markers_small</span>,
     <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2L</span>,
     <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"positive"</span>
 )
-<span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 13
+<span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; # A tibble: 6 x 18
 #&gt; # Groups:   cluster [3]
-#&gt;   cluster avgLogFC  pct1  pct2 rowname   pvalue     padj geneID geneName
-#&gt;   &lt;fct&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   
-#&gt; 1 0           2.33 0.917 0.215 S100A12 1.03e-63 5.14e-61 ENSG0… S100A12 
-#&gt; 2 0           2.87 1     0.823 S100A8  3.50e-62 1.75e-59 ENSG0… S100A8  
-#&gt; 3 1           1.96 0.952 0.353 TRAC    1.65e-56 8.23e-54 ENSG0… TRAC    
-#&gt; 4 1           1.58 0.937 0.313 CD3D    7.85e-54 3.93e-51 ENSG0… CD3D    
-#&gt; 5 2           1.72 1     0.691 HLA-DQ… 2.02e-47 1.01e-44 ENSG0… HLA-DQA1
-#&gt; 6 2           1.56 1     0.843 HLA-DP… 3.06e-47 1.53e-44 ENSG0… HLA-DPB1
-#&gt; # ... with 4 more variables: geneBiotype &lt;fct&gt;, description &lt;chr&gt;,
-#&gt; #   seqCoordSystem &lt;fct&gt;, broadClass &lt;fct&gt;</div></pre>
+#&gt;   cluster avgLogFC  pct1  pct2 rowname   pvalue     padj seqnames  start    end
+#&gt;   &lt;fct&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;     &lt;int&gt;  &lt;int&gt;
+#&gt; 1 0           1.98 0.921 0.137 VCAN    1.37e-74 6.85e-72 5        8.35e7 8.36e7
+#&gt; 2 0           3.05 1     0.807 S100A8  8.45e-72 4.22e-69 1        1.53e8 1.53e8
+#&gt; 3 1           1.97 0.952 0.356 TRAC    1.80e-56 8.98e-54 14       2.25e7 2.26e7
+#&gt; 4 1           1.59 0.944 0.314 CD3D    1.17e-54 5.85e-52 11       1.18e8 1.18e8
+#&gt; 5 2           1.66 1     0.729 LST1    2.74e-43 1.37e-40 6        3.16e7 3.16e7
+#&gt; 6 2           1.50 1     0.724 AIF1    2.84e-41 1.42e-38 6        3.16e7 3.16e7
+#&gt; # ... with 8 more variables: width &lt;int&gt;, strand &lt;fct&gt;, broadClass &lt;fct&gt;,
+#&gt; #   description &lt;fct&gt;, geneBiotype &lt;fct&gt;, geneID &lt;chr&gt;, geneName &lt;fct&gt;,
+#&gt; #   seqCoordSystem &lt;fct&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

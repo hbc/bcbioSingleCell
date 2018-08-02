@@ -14,9 +14,10 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # seurat ====
-#' object <- seurat_small
-#' genes <- head(rownames(object), 4L)
+#' # SingleCellExperiment ====
+#' object <- cellranger_small
+#' genes <- head(rownames(object), n = 4L)
+#' glimpse(genes)
 #' plotViolin(object, genes = genes)
 NULL
 
@@ -32,8 +33,8 @@ setMethod(
         object,
         genes,
         scale = c("count", "width", "area"),
-        fill = NULL,
-        legend = FALSE
+        fill = getOption("bcbio.discrete.fill", NULL),
+        legend = getOption("bcbio.legend", TRUE)
     ) {
         scale <- match.arg(scale)
         assert_is_any_of(fill, c("ScaleDiscrete", "character", "NULL"))
@@ -41,12 +42,29 @@ setMethod(
             assert_is_a_string(fill)
         }
 
-        ident <- slot(object, "ident")
-        data <- fetchGeneData(object, genes = genes) %>%
+        ident <- colData(object)[["ident"]]
+        assert_is_non_empty(ident)
+
+        data <- fetchGeneData(
+            object = object,
+            genes = genes,
+            gene2symbol = TRUE
+        ) %>%
             as.data.frame() %>%
             cbind(ident) %>%
             rownames_to_column("cell") %>%
-            as_tibble() %>%
+            as_tibble()
+
+        if (!isTRUE(.useGene2symbol(object))) {
+            g2s <- gene2symbol(object)
+            if (length(g2s)) {
+                g2s <- g2s[genes, , drop = FALSE]
+                genes <- make.unique(g2s[["geneName"]])
+                stopifnot(all(genes %in% colnames(data)))
+            }
+        }
+
+        data <- data %>%
             gather(
                 key = "gene",
                 value = "expression",

@@ -34,17 +34,18 @@
 #'   assertIsAnImplicitIntegerOrNULL assertIsANumberOrNULL
 #'   assertIsColorScaleContinuousOrNULL assertIsColorScaleDiscreteOrNULL
 #'   assertIsFillScaleDiscreteOrNULL assertIsGene2symbol assertIsTx2gene
-#'   assignAndSaveData camel convertGenesToSymbols convertUCSCBuildToEnsembl
-#'   detectOrganism emptyRanges hasRownames initializeDirectory
-#'   makeGRangesFromEnsembl makeGRangesFromGFF makeNames makeTx2geneFromGFF
-#'   markdownHeader markdownPlotlist printString readFileByExtension readYAML
-#'   sanitizeSampleData stripTranscriptVersions theme_midnight theme_paperwhite
-#'   tx2geneFromGFF uniteInterestingGroups
+#'   assignAndSaveData camel convertGenesToSymbols convertSymbolsToGenes
+#'   convertUCSCBuildToEnsembl detectOrganism emptyRanges gene2symbol
+#'   hasRownames initializeDirectory makeGRangesFromEnsembl makeGRangesFromGFF
+#'   makeNames makeTx2geneFromGFF markdownHeader markdownPlotlist printString
+#'   readFileByExtension readYAML sanitizeSampleData stripTranscriptVersions
+#'   theme_midnight theme_paperwhite tx2geneFromGFF uniteInterestingGroups
 #' @importFrom bcbioBase bcbio_geom_abline bcbio_geom_label
 #'   bcbio_geom_label_average bcbio_geom_label_repel flatFiles minimalSampleData
 #'   prepareSummarizedExperiment readDataVersions readLog readProgramVersions
 #'   readSampleData readTx2gene readYAMLSampleData sampleDirs
 #' @importFrom Biobase rowMedians sampleNames
+#' @importFrom BiocGenerics cbind counts counts<- do.call rbind
 #' @importFrom BiocParallel SerialParam
 #' @importFrom cowplot draw_plot ggdraw plot_grid
 #' @importFrom dplyr arrange bind_rows desc everything filter group_by
@@ -56,7 +57,7 @@
 #' @importFrom ggplot2 aes coord_flip element_blank element_line element_rect
 #'   element_text expand_limits facet_wrap geom_bar geom_boxplot geom_histogram
 #'   geom_hline geom_line geom_point geom_smooth geom_step geom_text geom_violin
-#'   geom_vline ggplot ggtitle guide_colourbar guide_legend guides labs qplot
+#'   geom_vline ggplot ggtitle guide_colorbar guide_legend guides labs qplot
 #'   scale_radius scale_x_continuous scale_y_continuous stat_ecdf theme xlab
 #'   xlim ylab
 #' @importFrom ggridges geom_density_ridges
@@ -72,12 +73,13 @@
 #' @importFrom pbapply pblapply
 #' @importFrom purrr map
 #' @importFrom readr read_lines read_tsv
+#' @importFrom reticulate py_module_available
 #' @importFrom rhdf5 h5dump h5read
 #' @importFrom rlang !! !!! sym syms UQ
 #' @importFrom S4Vectors DataFrame aggregate as.data.frame as.matrix
-#'   complete.cases mcols metadata metadata<- na.omit
+#'   complete.cases mcols mcols<- merge metadata metadata<- na.omit
 #' @importFrom scales percent pretty_breaks
-#' @importFrom Seurat as.SingleCellExperiment CreateSeuratObject FetchData
+#' @importFrom Seurat as.SingleCellExperiment CreateSeuratObject
 #' @importFrom SingleCellExperiment SingleCellExperiment isSpike isSpike<-
 #'   spikeNames
 #' @importFrom stats ecdf fitted median model.matrix predict relevel reorder
@@ -88,6 +90,6 @@
 #' @importFrom tibble as_tibble column_to_rownames has_rownames remove_rownames
 #'   rownames_to_column tibble
 #' @importFrom tidyr gather
-#' @importFrom utils globalVariables packageVersion
+#' @importFrom utils capture.output globalVariables packageVersion
 #' @importFrom zinbwave glmWeightedF zinbwave
 NULL

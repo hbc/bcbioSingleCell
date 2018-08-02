@@ -32,7 +32,6 @@ sampleNames(x)
 \seealso{
 Other Data Functions: \code{\link{cell2sample}},
   \code{\link{fetchGeneData}},
-  \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{sampleData}},
   \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
@@ -40,3 +39,4 @@ Other Data Functions: \code{\link{cell2sample}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
+\concept{Data Functions}

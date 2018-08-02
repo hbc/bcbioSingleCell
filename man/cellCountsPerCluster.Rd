@@ -3,14 +3,14 @@
 \docType{methods}
 \name{cellCountsPerCluster}
 \alias{cellCountsPerCluster}
-\alias{cellCountsPerCluster}
 \alias{cellCountsPerCluster,SingleCellExperiment-method}
 \alias{cellCountsPerCluster,seurat-method}
 \title{Cell Counts per Cluster}
 \usage{
 cellCountsPerCluster(object, ...)
 
-\S4method{cellCountsPerCluster}{SingleCellExperiment}(object, interestingGroups)
+\S4method{cellCountsPerCluster}{SingleCellExperiment}(object,
+  interestingGroups)
 
 \S4method{cellCountsPerCluster}{seurat}(object, interestingGroups)
 }
@@ -19,8 +19,9 @@ cellCountsPerCluster(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+\code{\link[=sampleData]{sampleData()}} colnames.}
 }
 \value{
 \code{tibble} grouped by "\code{ident}" column, arranged by abundance.
@@ -29,6 +30,6 @@ formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()
 Cell Counts per Cluster
 }
 \examples{
-# seurat ====
-cellCountsPerCluster(seurat_small)
+# SingleCellExperiment ====
+cellCountsPerCluster(indrops_small)
 }

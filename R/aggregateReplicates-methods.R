@@ -37,14 +37,24 @@ setMethod(
         if ("sampleNameAggregate" %in% colnames(sampleData)) {
             warning("Use `aggregate` instead of `sampleNameAggregate`")
             sampleData[["aggregate"]] <- sampleData[["sampleNameAggregate"]]
+            sampleData[["sampleNameAggregate"]] <- NULL
         }
         assert_is_subset("aggregate", colnames(sampleData))
+
+        # Consider adding an assert check here to check that interesting
+        # groups map to aggregate-level sample columns
+        interestingGroupsAggregate <- interestingGroups(object) %>%
+            as.character() %>%
+            setdiff("sampleName")
 
         # This step will replace the `sampleName` column with the `aggregate`
         # column metadata.
         remap <- sampleData %>%
             rownames_to_column("sampleID") %>%
-            select(!!!syms(c("sampleID", "aggregate"))) %>%
+            as_tibble() %>%
+            select(!!!syms(unique(c(
+                "sampleID", "aggregate", interestingGroupsAggregate
+            )))) %>%
             mutate(sampleIDAggregate = makeNames(
                 !!sym("aggregate"), unique = FALSE
             )) %>%
@@ -55,9 +65,16 @@ setMethod(
 
         # Update sampleData to use the aggregate groupings
         sampleData <- remap %>%
-            select(!!!syms(c("sampleIDAggregate", "sampleNameAggregate"))) %>%
+            select(!!!syms(unique(c(
+                "sampleIDAggregate",
+                "sampleNameAggregate",
+                interestingGroupsAggregate
+            )))) %>%
             rename(sampleName = !!sym("sampleNameAggregate")) %>%
-            column_to_rownames("sampleIDAggregate")
+            unique() %>%
+            as.data.frame() %>%
+            column_to_rownames("sampleIDAggregate") %>%
+            as("DataFrame")
 
         # Message the new sample IDs
         message(paste(
@@ -89,16 +106,16 @@ setMethod(
             stop("Aggregated counts sum isn't identical to original")
         }
 
-        # Row data =============================================================
-        rowData <- rowData(object)
-        rownames(rowData) <- rownames(object)
-
         # Column data ==========================================================
         # Always prefilter, removing cells with no UMIs or genes
-        metrics <- metrics(counts, rowData = rowData, prefilter = TRUE)
+        metrics <- metrics(
+            object = counts,
+            rowRanges = rowRanges(object),
+            prefilter = TRUE
+        )
 
         # Cell to sample mappings
-        cell2sample <- mapCellsToSamples(
+        cell2sample <- .mapCellsToSamples(
             cells = rownames(metrics),
             samples = rownames(sampleData)
         )
@@ -122,16 +139,12 @@ setMethod(
         cell2sample <- cell2sample[colnames(counts)]
 
         # Metadata =============================================================
-        metadata <- list()
-
-        # aggregateReplicates
-        metadata[["aggregateReplicates"]] <- groupings
-
-        # cell2sample
-        metadata[["cell2sample"]] <- cell2sample
-
-        # sampleData
-        metadata[["sampleData"]] <- sampleData
+        metadata <- list(
+            aggregateReplicates = groupings,
+            cell2sample = cell2sample,
+            interestingGroups = interestingGroups(object),
+            sampleData = sampleData
+        )
 
         # Return ===============================================================
         .new.SingleCellExperiment(

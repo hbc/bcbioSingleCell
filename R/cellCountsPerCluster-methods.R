@@ -7,8 +7,8 @@
 #' @return `tibble` grouped by "`ident`" column, arranged by abundance.
 #'
 #' @examples
-#' # seurat ====
-#' cellCountsPerCluster(seurat_small)
+#' # SingleCellExperiment ====
+#' cellCountsPerCluster(indrops_small)
 NULL
 
 
@@ -20,9 +20,12 @@ setMethod(
     "cellCountsPerCluster",
     signature("SingleCellExperiment"),
     function(object, interestingGroups) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
-        }
+        validObject(object)
+        .assertHasIdent(object)
+        interestingGroups <- .prepareInterestingGroups(
+            object = object,
+            interestingGroups = interestingGroups
+        )
         metrics <- metrics(object, interestingGroups = interestingGroups)
         cols <- unique(c("ident", interestingGroups))
         assert_is_subset(cols, colnames(metrics))

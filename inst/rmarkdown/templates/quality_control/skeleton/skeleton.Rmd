@@ -18,7 +18,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-06-28
+# Last modified 2018-07-30
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
@@ -35,16 +35,11 @@ bcb <- get(bcb_name, inherits = FALSE)
 stopifnot(is(bcb, "SingleCellExperiment"))
 invisible(validObject(bcb))
 bcb_original <- bcb
-
-# Temporarily set interesting groups to `sampleName`
-interesting_groups <- interestingGroups(bcb)
-interestingGroups(bcb) <- "sampleName"
+print(bcb)
 ```
 
 ```{r header, child="_header.Rmd"}
 ```
-
-
 
 ```{r sample_data}
 # getMethod("sampleData", "SingleCellExperiment")
@@ -58,30 +53,29 @@ sample_data
 
 [bcbio][] run data was imported from **`r metadata(bcb)$uploadDir`**.
 
-
-
 # Reads per cell {.tabset}
 
 These are counts of how many reads are assigned to a given cellular barcode. It is normal for single cell RNA-seq data to contain a large number of low complexity barcodes. The bcbio pipeline filters out most of these barcodes, and here we have applied a threshold cutoff of a minimum of `r metadata(bcb)$cellularBarcodeCutoff` reads per cell. The unfiltered read count distributions are shown here.
 
-
 ## Histogram
 
-For high quality data, the proportional histogram should contain a single large
-peak that represents reads from cells that were encapsulated. If we see a strong
-shoulder, or a bimodal distribution of the reads, that can indicate a couple
-problems. It might be that there is free floating RNA, which happens when cells
-are dying. It could also be that there are a set of cells that failed for some
-reason. Finally, it could also be that there are biologically different types of
-cells, and one type is much smaller than the other. If this is the case we would
-expect to see less reads because there is less RNA to be sequenced from the
-smaller cells.
+For high quality data, the proportional histogram should contain a single large peak that represents cells that were encapsulated. If we see a strong shoulder, or a bimodal distribution of the cells, that can indicate a couple problems. It might be that there is free floating RNA, which happens when cells are dying. It could also be that there are a set of cells that failed for some reason. Finally, it could also be that there are biologically different types of cells, and one type is much smaller than the other. If this is the case we would expect to see less RNA being sequenced from the smaller cells.
 
 ```{r plot_reads_per_cell_histogram}
 # getMethod("plotReadsPerCell", "bcbioSingleCell")
-plotReadsPerCell(bcb, geom = "histogram")
+plotReadsPerCell(
+    object = bcb,
+    geom = "histogram",
+    interestingGroups = "sampleName"
+)
+plotReadsPerCell(
+    object = bcb,
+    geom = "histogram",
+    interestingGroups = "sampleName"
+) +
+    facet_wrap(vars(sampleName)) +
+    theme(legend.position = "none")
 ```
-
 
 ## ECDF
 
@@ -89,10 +83,12 @@ An empirical distribution function (ECDF) plot will show the frequency distribut
 
 ```{r plot_reads_per_cell_ecdf}
 # getMethod("plotReadsPerCell", "bcbioSingleCell")
-plotReadsPerCell(bcb, geom = "ecdf")
+plotReadsPerCell(
+    object = bcb,
+    geom = "ecdf",
+    interestingGroups = "sampleName"
+)
 ```
-
-
 
 # UMI counts per cell {.tabset}
 
@@ -105,6 +101,7 @@ markdownHeader("Violin", level = 2)
 plotUMIsPerCell(
     object = bcb,
     geom = "violin",
+    interestingGroups = "sampleName",
     min = params$min_umis,
     max = params$max_umis
 )
@@ -113,6 +110,7 @@ markdownHeader("Ridgeline", level = 2)
 plotUMIsPerCell(
     bcb,
     geom = "ridgeline",
+    interestingGroups = "sampleName",
     min = params$min_umis,
     max = params$max_umis
 )
@@ -121,6 +119,7 @@ markdownHeader("Histogram", level = 2)
 plotUMIsPerCell(
     object = bcb,
     geom = "histogram",
+    interestingGroups = "sampleName",
     min = params$min_umis,
     max = params$max_umis
 )
@@ -129,12 +128,11 @@ markdownHeader("ECDF", level = 2)
 plotUMIsPerCell(
     object = bcb,
     geom = "ecdf",
+    interestingGroups = "sampleName",
     min = params$min_umis,
     max = params$max_umis
 )
 ```
-
-
 
 # Filter cells by UMI count
 
@@ -153,41 +151,14 @@ Let's take a look at the UMI per cell distributions after this filtering step. N
 
 ```{r plot_umis_per_cell_postfilter}
 # getMethod("plotUMIsPerCell", "SingleCellExperiment")
-
-markdownHeader("Violin", level = 2)
-plotUMIsPerCell(
-    object = bcb,
-    geom = "violin",
-    min = params$min_umis,
-    max = params$max_umis
-)
-
-markdownHeader("Ridgeline", level = 2)
-plotUMIsPerCell(
-    object = bcb,
-    geom = "ridgeline",
-    min = params$min_umis,
-    max = params$max_umis
-)
-
-markdownHeader("Histogram", level = 2)
 plotUMIsPerCell(
     object = bcb,
     geom = "histogram",
-    min = params$min_umis,
-    max = params$max_umis
-)
-
-markdownHeader("ECDF", level = 2)
-plotUMIsPerCell(
-    object = bcb,
-    geom = "ecdf",
+    interestingGroups = "sampleName",
     min = params$min_umis,
     max = params$max_umis
 )
 ```
-
-
 
 # Genes detected per cell {.tabset}
 
@@ -200,15 +171,16 @@ markdownHeader("Violin", level = 2)
 plotGenesPerCell(
     object = bcb,
     geom = "violin",
+    interestingGroups = "sampleName",
     min = min(params$min_genes),
     max = max(params$max_genes)
 )
-
 
 markdownHeader("Ridgeline", level = 2)
 plotGenesPerCell(
     object = bcb,
     geom = "ridgeline",
+    interestingGroups = "sampleName",
     min = min(params$min_genes),
     max = max(params$max_genes)
 )
@@ -217,6 +189,7 @@ markdownHeader("Histogram", level = 2)
 plotGenesPerCell(
     object = bcb,
     geom = "histogram",
+    interestingGroups = "sampleName",
     min = min(params$min_genes),
     max = max(params$max_genes)
 )
@@ -225,12 +198,11 @@ markdownHeader("ECDF", level = 2)
 plotGenesPerCell(
     object = bcb,
     geom = "ecdf",
+    interestingGroups = "sampleName",
     min = min(params$min_genes),
     max = max(params$max_genes)
 )
 ```
-
-
 
 # UMIs vs. genes detected
 
@@ -238,10 +210,11 @@ If we graph out the total number of UMI counts per cell vs. the genes detected p
 
 ```{r plot_umis_vs_genes}
 # getMethod("plotUMIsVsGenes", "SingleCellExperiment")
-plotUMIsVsGenes(bcb)
+plotUMIsVsGenes(
+    object = bcb,
+    interestingGroups = "sampleName"
+)
 ```
-
-
 
 # Novelty score {.tabset}
 
@@ -254,6 +227,7 @@ markdownHeader("Violin", level = 2)
 plotNovelty(
     object = bcb,
     geom = "violin",
+    interestingGroups = "sampleName",
     min = min(params$min_novelty)
 )
 
@@ -261,6 +235,7 @@ markdownHeader("Ridgeline", level = 2)
 plotNovelty(
     object = bcb,
     geom = "ridgeline",
+    interestingGroups = "sampleName",
     min = min(params$min_novelty)
 )
 
@@ -268,6 +243,7 @@ markdownHeader("Histogram", level = 2)
 plotNovelty(
     object = bcb,
     geom = "histogram",
+    interestingGroups = "sampleName",
     min = min(params$min_novelty)
 )
 
@@ -275,11 +251,10 @@ markdownHeader("ECDF", level = 2)
 plotNovelty(
     object = bcb,
     geom = "ecdf",
+    interestingGroups = "sampleName",
     min = min(params$min_novelty)
 )
 ```
-
-
 
 # Mitochondrial abundance {.tabset}
 
@@ -292,6 +267,7 @@ markdownHeader("Violin", level = 2)
 plotMitoRatio(
     object = bcb,
     geom = "violin",
+    interestingGroups = "sampleName",
     max = max(params$max_mito_ratio)
 )
 
@@ -299,6 +275,7 @@ markdownHeader("Ridgeline", level = 2)
 plotMitoRatio(
     object = bcb,
     geom = "ridgeline",
+    interestingGroups = "sampleName",
     max = max(params$max_mito_ratio)
 )
 
@@ -306,6 +283,7 @@ markdownHeader("Histogram", level = 2)
 plotMitoRatio(
     object = bcb,
     geom = "histogram",
+    interestingGroups = "sampleName",
     max = max(params$max_mito_ratio)
 )
 
@@ -313,11 +291,10 @@ markdownHeader("ECDF", level = 2)
 plotMitoRatio(
     object = bcb,
     geom = "ecdf",
+    interestingGroups = "sampleName",
     max = max(params$max_mito_ratio)
 )
 ```
-
-
 
 # Filter cells
 
@@ -336,33 +313,28 @@ bcb <- filterCells(
 )
 ```
 
-
-
 ```{r plot_filtered_qc, results="asis"}
 # getMethod("plotQC", "SingleCellExperiment")
 plotQC(
     object = bcb,
     geom = "violin",
+    interestingGroups = "sampleName",
     return = "markdown",
     headerLevel = 2
 )
 ```
-
-
 
 # Save filtered data
 
 ## S4 object
 
 ```{r save}
-interestingGroups(bcb) <- interesting_groups
 assignAndSaveData(
     name = paste(bcb_name, "filtered", sep = "_"),
     object = bcb,
     dir = params$data_dir
 )
 ```
-
 
 ## Counts matrix
 
@@ -385,7 +357,6 @@ R.utils::gzip(
 )
 ```
 
-
 ## Quality metrics
 
 ```{r metrics}
@@ -396,7 +367,6 @@ write.csv(
 )
 ```
 
-
 ## Gene annotations
 
 ```{r gene_annotations}
@@ -406,8 +376,6 @@ write.csv(
     file = file.path(params$results_dir, "gene_annotations.csv")
 )
 ```
-
-
 
 ```{r footer, child="_footer.Rmd"}
 ```

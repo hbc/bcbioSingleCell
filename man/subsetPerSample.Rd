@@ -3,28 +3,32 @@
 \docType{methods}
 \name{subsetPerSample}
 \alias{subsetPerSample}
-\alias{subsetPerSample}
 \alias{subsetPerSample,bcbioSingleCell-method}
 \title{Subset Per Sample}
 \usage{
 subsetPerSample(object, ...)
 
 \S4method{subsetPerSample}{bcbioSingleCell}(object, minCells = 200L,
-  assignAndSave = FALSE, envir = parent.frame(), dir = ".")
+  prefilter = TRUE, assignAndSave = FALSE, envir = parent.frame(),
+  dir = ".")
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{minCells}{Minimum number of cells required per sample.}
+\item{minCells}{\code{scalar integer}. Minimum number of cells required per
+sample.}
 
-\item{assignAndSave}{Assign and save the individual datasets.}
+\item{prefilter}{\code{boolean}. Apply prefiltering to remove zero count genes.}
 
-\item{envir}{Environment where to assign the subsets. Only applicable when
+\item{assignAndSave}{\code{boolean}. Assign and save the individual datasets.}
+
+\item{envir}{\code{environment}. Where to assign the subsets. Only applicable when
 \code{assignAndSave = TRUE}.}
 
-\item{dir}{Output directory. Only applicable when \code{assignAndSave = TRUE}.}
+\item{dir}{\code{string}. Output directory. Only applicable when
+\code{assignAndSave = TRUE}.}
 }
 \value{
 \itemize{
@@ -56,10 +60,10 @@ unlink("subsetPerSample", recursive = TRUE)
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{cell2sample}}, \code{\link{fetchGeneData}},
-  \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}}, \code{\link{sampleData}},
   \code{\link{selectSamples}}, \code{\link{topBarcodes}}
 }
 \author{
 Michael Steinbaugh
 }
+\concept{Data Functions}

@@ -4,79 +4,99 @@
 \alias{general}
 \title{General Arguments}
 \arguments{
-\item{aspectRatio}{Aspect ratio.}
+\item{aspectRatio}{\code{scalar integer}. Aspect ratio.}
 
-\item{color}{Desired ggplot color scale. Must supply discrete values. When
-set to \code{NULL}, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 color
+scale. Must supply discrete values. When set to \code{NULL}, the default ggplot2
+color palette will be used. If manual color definitions are desired, we
+recommend using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.
+To set the discrete color palette globally, use
+\code{options(bcbio.discrete.color = scale_color_viridis_d())}.}
 
-\item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
-to \code{NULL}, the default ggplot2 color palette will be used. If manual color
-definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+\item{fill}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 fill scale.
+Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.
+To set the discrete fill palette globally, use
+\code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
 
-\item{gene2symbol}{\code{data.frame} containing gene-to-symbol mappings. Columns
-must contain \code{geneID} and \code{geneName}.}
+\item{gene2symbol}{\code{data.frame}. Gene-to-symbol mappings. Columns must
+contain \code{geneID} and \code{geneName}.}
 
-\item{dark}{Plot against a dark background using
+\item{dark}{\code{boolean}. Plot against a dark background using
 \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
-\item{dir}{Output directory.}
+\item{dir}{\code{string}. Output directory path.}
 
-\item{expression}{Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and defaults to
-the first argument in the vector.}
+\item{expression}{\code{string}. Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and
+defaults to the first argument in the \code{character} vector.}
 
-\item{genes}{Gene identifiers. Must match the rownames of the object.}
+\item{gene2symbol}{\code{boolean}. Automatically interconvert gene identifiers
+and gene names in plots. Useful for marker plots.}
 
-\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} and defaults to the first argument
-in the vector.}
+\item{genes}{\code{character}. Gene identifiers. Must match the rownames of the
+object.}
 
-\item{grid}{Show major grid lines but hide axis lines.}
+\item{geom}{\code{string}. Plot type. Uses \code{\link[=match.arg]{match.arg()}} and defaults to the first
+argument in the \code{character} vector.}
 
-\item{headerLevel}{R Markdown header level.}
+\item{grid}{\code{boolean}. Show major grid lines but hide axis lines.}
 
-\item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+\item{headerLevel}{\code{scalar integer} (\code{1}-\code{7}). R Markdown header level.}
 
-\item{label}{Overlay a cluster identitiy label on the plot.}
+\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+\code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{labelSize}{Size of the text label.}
+\item{label}{\code{boolean}. Overlay a cluster identitiy label on the plot.}
 
-\item{legend}{Include plot legend.}
+\item{labelSize}{\code{scalar integer}. Size of the text label.}
 
-\item{min}{Recommended minimum value cutoff.}
+\item{legend}{\code{boolean}. Include plot legend.}
 
-\item{max}{Recommended maximum value cutoff.}
+\item{min}{\code{scalar numeric}. Recommended minimum value cutoff.}
+
+\item{max}{\code{scalar numeric}. Recommended maximum value cutoff.}
 
 \item{object}{Object.}
 
-\item{pipeline}{Pipeline used to generate the samples.}
+\item{prefilter}{\code{boolean}. Apply prefiltering to remove zero count genes.}
 
-\item{pointAlpha}{Alpha transparency level. Useful when there many cells in
-the dataset, and some cells can be masked.}
+\item{pipeline}{\code{string}. Pipeline used to generate the samples.}
 
-\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
+\item{pointAlpha}{\code{scalar numeric} (\code{0}-\code{1}). Alpha transparency level.
+Useful when there many cells in the dataset, and some cells can be masked.}
 
-\item{pointSize}{Cell point size.}
+\item{pointsAsNumbers}{\code{boolean}. Plot the points as numbers (\code{TRUE}) or
+dots (\code{FALSE}).}
 
-\item{reduction}{Dimensional reduction method to apply. Defaults to t-SNE
-("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
+\item{pointSize}{\code{scalar numeric}. Cell point size.}
 
-\item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
-to the first argument in the vector.}
+\item{reduction}{\code{string}. Dimensional reduction method to apply. Defaults to
+t-SNE ("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
 
-\item{title}{Plot title.}
+\item{return}{\code{string}. Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and
+defaults to the first argument in the \code{character} vector.}
 
-\item{trans}{Name of the axis scale transformation to apply. See
+\item{title}{\code{string} or \code{NULL}. Plot title.}
+
+\item{trans}{\code{string}. Name of the axis scale transformation to apply. See
 \code{help("scale_x_continuous", "ggplot2")} for more information.}
 
-\item{trendline}{Include trendline on plot.}
+\item{trendline}{\code{boolean}. Include trendline on plot.}
 
 \item{value}{Object to assign.}
 
 \item{x}{Primary object.}
 
 \item{y}{Secondary object.}
+
+\item{zinbwave}{\code{boolean}. Run \code{\link[zinbwave:zinbwave]{zinbwave::zinbwave()}} to automatically apply
+a ZINB regression model to calculate \code{normalizedValues} and \code{weights}
+matrices to by used for differential expression with DESeq2 or edgeR.
+Note that this calculation should only be performed on \strong{filtered data}.
+For large datasets this can take a long time and use a lot of memory, so
+this calculation is disabled by default.}
 
 \item{...}{Additional arguments.}
 }

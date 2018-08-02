@@ -26,14 +26,28 @@ setMethod(
     function(
         object,
         interestingGroups,
-        color = NULL,
+        color = getOption("bcbio.discrete.color", NULL),
         title = "zeros vs. depth"
     ) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
-        }
+        validObject(object)
+        interestingGroups <- .prepareInterestingGroups(
+            object = object,
+            interestingGroups = interestingGroups
+        )
         assertIsColorScaleDiscreteOrNULL(color)
         assertIsAStringOrNULL(title)
+
+        counts <- counts(object)
+        # Using a logical matrix is faster and more memory efficient
+        present <- counts %>%
+            # Ensure dgTMatrix gets coereced to dgCMatrix prior to logical
+            as("dgCMatrix") %>%
+            as("lgCMatrix")
+        data <- tibble(
+            sampleID = cell2sample(object),
+            dropout = (nrow(present) - colSums(present)) / nrow(present),
+            depth = colSums(counts)
+        )
 
         sampleData <- sampleData(
             object = object,
@@ -43,21 +57,12 @@ setMethod(
             sampleData <- unknownSampleData
         }
         sampleData <- as.data.frame(sampleData)
-        sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
+        sampleData[["sampleID"]] <- factor(
+            x = rownames(sampleData),
+            levels = levels(data[["sampleID"]])
+        )
 
-        counts <- counts(object)
-        # Using a logical matrix is faster and more memory efficient
-        present <- counts %>%
-            # Ensure dgTMatrix gets coereced properly (e.g. Seurat::pbmc_small)
-            as("dgCMatrix") %>%
-            as("lgCMatrix")
-
-        data <- tibble(
-            sampleID = cell2sample(object),
-            dropout = (nrow(present) - colSums(present)) / nrow(present),
-            depth = colSums(counts)
-        ) %>%
-            left_join(sampleData, by = "sampleID")
+        data <- left_join(data, sampleData, by = "sampleID")
 
         p <- ggplot(
             data = data,

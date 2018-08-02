@@ -7,8 +7,8 @@
 #' @return `tibble` grouped by "`sampleName" column, arranged by abundance.
 #'
 #' @examples
-#' # seurat ====
-#' clusterCellCountsPerSample(seurat_small)
+#' # SingleCellExperiment ====
+#' clusterCellCountsPerSample(indrops_small)
 NULL
 
 
@@ -20,6 +20,7 @@ setMethod(
     "clusterCellCountsPerSample",
     signature("SingleCellExperiment"),
     function(object) {
+        .assertHasIdent(object)
         metrics <- metrics(object)
         cols <- c("sampleName", "ident")
         assert_is_subset(cols, colnames(metrics))

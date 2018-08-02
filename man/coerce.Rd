@@ -12,6 +12,10 @@ Object of new class.
 \description{
 Methods for Coercing an Object to a Class
 }
+\note{
+Use \code{\link[=convertGenesToSymbols]{convertGenesToSymbols()}} to convert gene IDs to names (symbols).
+This step is no longer automatic, as of v0.1.18.
+}
 \section{\code{SingleCellExperiment} to \code{seurat}}{
 
 Interally \code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}} is called without applying any
@@ -33,7 +37,6 @@ class(x)
 print(x)
 # seurat to SingleCellExperiment ====
 x <- as(seurat_small, "SingleCellExperiment")
-class(x)
 print(x)
 }
 \seealso{
@@ -51,3 +54,4 @@ Other S4 Object: \code{\link{bcbioSingleCell}},
 \author{
 Michael Steinbaugh
 }
+\concept{S4 Object}

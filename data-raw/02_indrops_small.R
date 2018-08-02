@@ -1,12 +1,14 @@
-# indrops_small (harvard-indrop-v3)
-# 2018-07-12
+# inDrops example dataset (indrops_small)
+# Using harvard-indrop-v3 barcodes
+# 2018-08-01
 
-library(assertive)
 library(devtools)
 library(tidyverse)
+library(Seurat)
 library(Matrix)
 load_all()
 
+# Minimal example bcbio upload directory =======================================
 # Include the top 500 genes (rows) and cells (columns)
 upload_dir <- "inst/extdata/indrops"
 sample <- "multiplexed-AAAAAAAA"
@@ -31,9 +33,10 @@ barcodes_file <- file.path(
     sample,
     paste0(sample, "-barcodes.tsv")
 )
-assert_all_are_existing_files(
+
+stopifnot(all(file.exists(
     c(counts_file, rownames_file, colnames_file, barcodes_file)
-)
+)))
 
 # Prepare the sparse matrix
 counts <- readMM(counts_file)
@@ -45,12 +48,12 @@ rownames(counts) <- rownames
 colnames(counts) <- colnames
 
 # Subset the matrix to include only the top genes and cells
-top_genes <- rowSums(counts) %>%
+top_genes <- Matrix::rowSums(counts) %>%
     sort(decreasing = TRUE) %>%
     head(n = 500L)
 genes <- sort(names(top_genes))
 
-top_cells <- colSums(counts) %>%
+top_cells <- Matrix::colSums(counts) %>%
     sort(decreasing = TRUE) %>%
     head(n = 500L)
 cells <- sort(names(top_cells))
@@ -70,8 +73,8 @@ write_lines(rownames(counts), path = rownames_file)
 write_lines(colnames(counts), path = colnames_file)
 write_tsv(barcodes, path = barcodes_file, col_names = FALSE)
 
-# indrops_small ================================================================
-indrops_small <- bcbioSingleCell(
+# bcbioRNASeq object ===========================================================
+bcb <- bcbioSingleCell(
     uploadDir = upload_dir,
     sampleMetadataFile = file.path(upload_dir, "metadata.csv"),
     organism = "Homo sapiens",
@@ -79,16 +82,46 @@ indrops_small <- bcbioSingleCell(
 )
 
 # Apply example filtering without excluding any cells
-indrops_small <- filterCells(
-    object = indrops_small,
-    minUMIs = 0,
-    minGenes = 0,
-    minNovelty = 0,
-    maxMitoRatio = 1,
-    minCellsPerGene = 0
-)
+# Note that we're enabling zinbwave mode here to test the `diffExp()` handling
+bcb <- filterCells(bcb, zinbwave = TRUE)
 
 # Require 500 cells, 500 genes
-assert_are_identical(dim(indrops_small), c(500L, 500L))
+stopifnot(identical(dim(indrops_small), c(500L, 500L)))
 
+# seurat =======================================================================
+# Let's handoff to seurat to perform dimensionality reduction and clustering,
+# then slot the DR data in our bcbioRNASeq object
+seurat <- as(bcb, "seurat") %>%
+    NormalizeData() %>%
+    FindVariableGenes(do.plot = FALSE) %>%
+    ScaleData() %>%
+    RunPCA(do.print = FALSE) %>%
+    FindClusters(resolution = seq(from = 0.4, to = 1.2, by = 0.4)) %>%
+    RunTSNE() %>%
+    # Requires Python `umap-learn` package
+    RunUMAP() %>%
+    SetAllIdent(id = "res.0.4")
+
+# Coerce seurat to SingleCellExperiment, which contains `reducedDims` slot
+seurat_sce <- as(seurat, "SingleCellExperiment")
+stopifnot(identical(
+    assayNames(seurat_sce),
+    c("counts", "logcounts")
+))
+stopifnot(identical(
+    names(reducedDims(seurat_sce)),
+    c("PCA", "TSNE", "UMAP")
+))
+stopifnot(identical(dimnames(bcb), dimnames(seurat_sce)))
+
+
+
+# Save =========================================================================
+# Slot the Seurat calculated logcounts into assays
+assays(bcb)[["logcounts"]] <- assays(seurat_sce)[["logcounts"]]
+# Slot the colData from seurat, which contains "ident"
+colData(bcb) <- colData(seurat_sce)
+# Slot the reduced dimensions into our bcbioSingleCell object
+reducedDims(bcb) <- reducedDims(seurat_sce)
+indrops_small <- bcb
 use_data(indrops_small, compress = "xz", overwrite = TRUE)

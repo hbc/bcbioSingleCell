@@ -4,7 +4,6 @@
 \docType{methods}
 \name{clusterCellCountsPerSample}
 \alias{clusterCellCountsPerSample}
-\alias{clusterCellCountsPerSample}
 \alias{clusterCellCountsPerSample,SingleCellExperiment-method}
 \alias{clusterCellCountsPerSample,seurat-method}
 \title{Cluster Cell Counts per Sample}
@@ -27,6 +26,6 @@ clusterCellCountsPerSample(object, ...)
 Cluster Cell Counts per Sample
 }
 \examples{
-# seurat ====
-clusterCellCountsPerSample(seurat_small)
+# SingleCellExperiment ====
+clusterCellCountsPerSample(indrops_small)
 }

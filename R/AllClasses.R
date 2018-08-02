@@ -38,32 +38,36 @@ bcbioSingleCell <- setClass(
 #'
 #' @inheritParams bcbioBase::prepareSummarizedExperiment
 #' @inheritParams general
-#' @param uploadDir Path to final upload directory. This path is set when
-#'   running "`bcbio_nextgen -w template`".
-#' @param organism Organism name. Use the full latin name (e.g.
-#'   "Homo sapiens"), since this will be input downstream to
-#'   AnnotationHub and ensembldb, unless `gffFile` is set.
-#' @param sampleMetadataFile Sample barcode metadata file. Optional for runs
-#'   with demultiplixed index barcodes (e.g. SureCell), but otherwise required
-#'   for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
-#'   inDrop).
-#' @param ensemblRelease *Optional.* Ensembl release version. If `NULL`,
-#'   defaults to current release, and does not typically need to be
+#' @param uploadDir `string`. Path to final upload directory. This path is set
+#'   when running "`bcbio_nextgen -w template`".
+#' @param organism `string` or `NULL`. Organism name. Use the full Latin name
+#'   (e.g. "Homo sapiens"), since this will be input downstream to AnnotationHub
+#'   and ensembldb, unless `gffFile` is set. If left `NULL` (*not recommended*),
+#'   the function call will skip loading gene-level annotations into
+#'   [rowRanges()]. This can be useful for poorly annotation genomes or
+#'   experiments involving multiple genomes.
+#' @param sampleMetadataFile `string` or `NULL`. Sample barcode metadata file.
+#'   Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
+#'   be left `NULL`, but otherwise required for runs with multipliexed FASTQs
+#'   containing multiple index barcodes (e.g. inDrop).
+#' @param ensemblRelease `scalar integer` or `NULL`. Ensembl release version. If
+#'   `NULL`, defaults to current release, and does not typically need to be
 #'   user-defined. Passed to AnnotationHub for `EnsDb` annotation matching,
 #'   unless `gffFile` is set.
-#' @param genomeBuild *Optional.* Ensembl genome build name (e.g. "GRCh38").
-#'   This will be passed to AnnotationHub for `EnsDb` annotation matching,
-#'   unless `gffFile` is set.
-#' @param gffFile *Optional, not recommended.* By default, we recommend leaving
-#'   this `NULL` for genomes that are supported on Ensembl. In this case, the
-#'   row annotations ([rowRanges()]) will be obtained automatically from Ensembl
-#'   by passing the `organism`, `genomeBuild`, and `ensemblRelease` arguments to
-#'   AnnotationHub and ensembldb. For a genome that is not supported on Ensembl
-#'   and/or AnnotationHub, a GFF/GTF (General Feature Format) file is required.
-#'   Generally, we recommend using a GTF (GFFv2) file here over a GFF3 file if
-#'   possible, although all GFF formats are supported. The function will
-#'   internally generate a `TxDb` containing transcript-to-gene mappings and
-#'   construct a `GRanges` object containing the genomic ranges ([rowRanges()]).
+#' @param genomeBuild `string` or `NULL`. Ensembl genome build name (e.g.
+#'   "GRCh38"). This will be passed to AnnotationHub for `EnsDb` annotation
+#'   matching, unless `gffFile` is set.
+#' @param gffFile `string` or `NULL`. *Advanced use only; not recommended.* By
+#'   default, we recommend leaving this `NULL` for genomes that are supported on
+#'   Ensembl. In this case, the row annotations ([rowRanges()]) will be obtained
+#'   automatically from Ensembl by passing the `organism`, `genomeBuild`, and
+#'   `ensemblRelease` arguments to AnnotationHub and ensembldb. For a genome
+#'   that is not supported on Ensembl and/or AnnotationHub, a GFF/GTF (General
+#'   Feature Format) file is required. Generally, we recommend using a GTF
+#'   (GFFv2) file here over a GFF3 file if possible, although all GFF formats
+#'   are supported. The function will internally generate transcript-to-gene
+#'   mappings and construct a `GRanges` object containing the genomic ranges
+#'   ([rowRanges()]).
 #' @param ... Additional arguments, to be stashed in the [metadata()] slot.
 #'
 #' @return `bcbioSingleCell`.
@@ -118,7 +122,7 @@ bcbioSingleCell <- function(
     }
     # organism
     if (!"organism" %in% names(call)) {
-        warning("`organism` is now recommended, to acquire gene annotations")
+        message("`organism` is now recommended, to acquire gene annotations")
     }
     dots <- Filter(Negate(is.null), dots)
 
@@ -370,14 +374,12 @@ bcbioSingleCell <- function(
         rowRanges <- emptyRanges(rownames(counts))
     }
     assert_is_subset(rownames(counts), names(rowRanges))
-    rowData <- as.data.frame(rowRanges)
-    rownames(rowData) <- names(rowRanges)
 
     # Column data ==============================================================
     # Always prefilter, removing very low quality cells with no UMIs or genes
     metrics <- metrics(
         object = counts,
-        rowData = rowData,
+        rowRanges = rowRanges,
         prefilter = TRUE
     )
 
@@ -386,7 +388,7 @@ bcbioSingleCell <- function(
 
     colData <- as(metrics, "DataFrame")
     colData[["cellID"]] <- rownames(colData)
-    cell2sample <- mapCellsToSamples(
+    cell2sample <- .mapCellsToSamples(
         cells = rownames(colData),
         samples = rownames(sampleData)
     )
@@ -465,11 +467,46 @@ setValidity(
         stopifnot(!.hasSlot(object, "bcbio"))
 
         # Assays ===============================================================
-        assert_are_identical("counts", names(assays(object)))
+        assert_is_subset("counts", names(assays(object)))
 
         # Row data =============================================================
         assert_is_all_of(rowRanges(object), "GRanges")
         assert_is_all_of(rowData(object), "DataFrame")
+
+        # Column data ==========================================================
+        # Require that metrics columns are defined
+        assert_is_subset(metricsCols, colnames(colData(object)))
+
+        # Ensure that sample-level metadata is also defined at cell-level.
+        # We're doing this in long format in the colData slot.
+        assert_is_subset(
+            x = colnames(sampleData(object, interestingGroups = NULL)),
+            y = colnames(colData(object))
+        )
+
+        # Ensure that `interestingGroups` isn't slotted in colData
+        stopifnot(!"interestingGroups" %in% colnames(colData(object)))
+
+        # Don't allow the user to manually define `sampleID` column
+        stopifnot(!"sampleID" %in% colnames(sampleData(object)))
+
+        # Check that the levels set in `sampleData()` match `colData()`
+        sampleDataLevels <- lapply(
+            X = sampleData(object, interestingGroups = NULL),
+            FUN = function(x) {
+                if (is.factor(x)) {
+                    levels(x)
+                } else {
+                    NULL
+                }
+            }
+        )
+        sampleDataLevels <- Filter(Negate(is.null), sampleDataLevels)
+        colDataLevels <- lapply(
+            X = colData(object)[, names(sampleDataLevels)],
+            FUN = levels
+        )
+        assert_are_identical(sampleDataLevels, colDataLevels)
 
         # Metadata =============================================================
         metadata <- metadata(object)
@@ -486,6 +523,7 @@ setValidity(
         # bcbio-specific:
         # - bcbioCommandsLog: character
         # - bcbioLog: character
+        # - cellularBarcodes: list
         # - dataVersions: tbl_df
         # - gffFile: character
         # - programVersions: tbl_df
@@ -532,10 +570,10 @@ setValidity(
             USE.NAMES = TRUE
         ))
         if (!all(classChecks)) {
-            print(classChecks)
             stop(paste(
                 "Metadata class checks failed.",
                 bcbioBase::updateMessage,
+                printString(classChecks),
                 sep = "\n"
             ))
         }

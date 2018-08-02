@@ -3,17 +3,18 @@
 \docType{methods}
 \name{plotZerosVsDepth}
 \alias{plotZerosVsDepth}
-\alias{plotZerosVsDepth}
 \alias{plotZerosVsDepth,SingleCellExperiment-method}
 \alias{plotZerosVsDepth,seurat-method}
 \title{Plot Percentage of Zeros vs. Library Depth}
 \usage{
 plotZerosVsDepth(object, ...)
 
-\S4method{plotZerosVsDepth}{SingleCellExperiment}(object, interestingGroups,
-  color = NULL, title = "zeros vs. depth")
+\S4method{plotZerosVsDepth}{SingleCellExperiment}(object,
+  interestingGroups, color = getOption("bcbio.discrete.color", NULL),
+  title = "zeros vs. depth")
 
-\S4method{plotZerosVsDepth}{seurat}(object, interestingGroups, color = NULL,
+\S4method{plotZerosVsDepth}{seurat}(object, interestingGroups,
+  color = getOption("bcbio.discrete.color", NULL),
   title = "zeros vs. depth")
 }
 \arguments{
@@ -21,15 +22,18 @@ plotZerosVsDepth(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+\code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{color}{Desired ggplot color scale. Must supply discrete values. When
-set to \code{NULL}, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 color
+scale. Must supply discrete values. When set to \code{NULL}, the default ggplot2
+color palette will be used. If manual color definitions are desired, we
+recommend using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.
+To set the discrete color palette globally, use
+\code{options(bcbio.discrete.color = scale_color_viridis_d())}.}
 
-\item{title}{Plot title.}
+\item{title}{\code{string} or \code{NULL}. Plot title.}
 }
 \value{
 \code{ggplot}.
@@ -55,3 +59,4 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
 \author{
 Rory Kirchner, Michael Steinbaugh
 }
+\concept{Quality Control Functions}

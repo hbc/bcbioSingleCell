@@ -5,11 +5,13 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param minCells Minimum number of cells required per sample.
-#' @param assignAndSave Assign and save the individual datasets.
-#' @param envir Environment where to assign the subsets. Only applicable when
+#' @param minCells `scalar integer`. Minimum number of cells required per
+#'   sample.
+#' @param assignAndSave `boolean`. Assign and save the individual datasets.
+#' @param envir `environment`. Where to assign the subsets. Only applicable when
 #'   `assignAndSave = TRUE`.
-#' @param dir Output directory. Only applicable when `assignAndSave = TRUE`.
+#' @param dir `string`. Output directory. Only applicable when
+#'   `assignAndSave = TRUE`.
 #'
 #' @return
 #' - `assignAndSave = FALSE`: Per sample objects in a `list`.
@@ -45,12 +47,15 @@ setMethod(
     function(
         object,
         minCells = 200L,
+        prefilter = TRUE,
         assignAndSave = FALSE,
         envir = parent.frame(),
         dir = "."
     ) {
         assertIsAnImplicitInteger(minCells)
         assert_all_are_positive(minCells)
+        assert_is_a_bool(prefilter)
+        assert_is_a_bool(assignAndSave)
         assert_is_environment(envir)
         dir <- initializeDirectory(dir)
         samples <- levels(cell2sample(object))
@@ -59,7 +64,11 @@ setMethod(
         return <- lapply(
             X = samples,
             FUN = function(sampleID) {
-                subset <- selectSamples(object, sampleID = sampleID)
+                subset <- selectSamples(
+                    object,
+                    sampleID = sampleID,
+                    prefilter = prefilter
+                )
                 # Skip if subset doesn't have enough cells
                 if (ncol(subset) < minCells) {
                     warning(paste(sampleID, "didn't pass minimum cell cutoff"))

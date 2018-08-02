@@ -1,4 +1,4 @@
-# inDrop sample preparation
+# inDrops sample preparation
 
 ## FASTQ structure information
 
@@ -13,8 +13,7 @@
     - `_R4`: second half of the gel barcode, the UMI, and a fraction of the
              polyA tail
 
-This study used the [inDrop][] `v3` design.
-
+This study used the [inDrops][] `v3` design.
 
 ## FASTQ demultiplexing
 
@@ -28,7 +27,7 @@ This step generates files with the following suffixes:
 
 We ran this on [Orchestra][] with the following settings:
 
-```{bash bcl2fastq, echo=TRUE, eval=FALSE}
+```{bash, echo=TRUE, eval=FALSE}
 module load seq/bcl2fastq/2.17.1.14
 bcl2fastq --use-bases-mask y*,y*,y*,y* \
           --mask-short-adapter-reads 0 \

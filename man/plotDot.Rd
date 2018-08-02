@@ -7,36 +7,43 @@
 \alias{plotDot,seurat-method}
 \title{Plot Dot}
 \usage{
-\S4method{plotDot}{SingleCellExperiment}(object, genes, color = NULL,
-  colMin = -2.5, colMax = 2.5, dotMin = 0L, dotScale = 6L,
-  legend = TRUE)
+\S4method{plotDot}{SingleCellExperiment}(object, genes, colMin = -2.5,
+  colMax = 2.5, dotMin = 0L, dotScale = 6L,
+  color = getOption("bcbio.discrete.color", NULL),
+  legend = getOption("bcbio.legend", TRUE))
 
-\S4method{plotDot}{seurat}(object, genes, color = NULL, colMin = -2.5,
-  colMax = 2.5, dotMin = 0L, dotScale = 6L, legend = TRUE)
+\S4method{plotDot}{seurat}(object, genes, colMin = -2.5, colMax = 2.5,
+  dotMin = 0L, dotScale = 6L,
+  color = getOption("bcbio.discrete.color", NULL),
+  legend = getOption("bcbio.legend", TRUE))
 }
 \arguments{
 \item{object}{Object.}
 
-\item{genes}{Gene identifiers. Must match the rownames of the object.}
+\item{genes}{\code{character}. Gene identifiers. Must match the rownames of the
+object.}
 
-\item{color}{Desired ggplot color scale. Must supply discrete values. When
-set to \code{NULL}, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+\item{colMin}{\code{scalar numeric}. Minimum scaled average expression threshold.
+Everything smaller will be set to this.}
 
-\item{colMin}{Minimum scaled average expression threshold. Everything
-smaller will be set to this.}
+\item{colMax}{\code{scalar numeric}.Maximum scaled average expression threshold.
+Everything larger will be set to this.}
 
-\item{colMax}{Maximum scaled average expression threshold. Everything larger
-will be set to this.}
+\item{dotMin}{\code{scalar numeric}.The fraction of cells at which to draw the
+smallest dot. All cell groups with less than this expressing the given gene
+will have no dot drawn.}
 
-\item{dotMin}{The fraction of cells at which to draw the smallest dot. All
-cell groups with less than this expressing the given gene will have no dot
-drawn.}
+\item{dotScale}{\code{scalar numeric}.Scale the size of the points, similar to
+\code{cex}.}
 
-\item{dotScale}{Scale the size of the points, similar to \code{cex}.}
+\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 color
+scale. Must supply discrete values. When set to \code{NULL}, the default ggplot2
+color palette will be used. If manual color definitions are desired, we
+recommend using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.
+To set the discrete color palette globally, use
+\code{options(bcbio.discrete.color = scale_color_viridis_d())}.}
 
-\item{legend}{Include plot legend.}
+\item{legend}{\code{boolean}. Include plot legend.}
 }
 \value{
 \code{ggplot}.
@@ -46,8 +53,9 @@ Plot Dot
 }
 \examples{
 # seurat ====
-object <- seurat_small
+object <- indrops_small
 genes <- head(rownames(object))
+glimpse(genes)
 plotDot(object, genes = genes)
 }
 \seealso{
@@ -59,3 +67,4 @@ Other Gene Expression Functions: \code{\link{plotGene}},
 \author{
 Michael Steinbaugh
 }
+\concept{Gene Expression Functions}

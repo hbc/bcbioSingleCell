@@ -7,7 +7,7 @@
 \alias{sampleData,SingleCellExperiment-method}
 \alias{sampleData,seurat-method}
 \alias{sampleData<-,SingleCellExperiment,DataFrame-method}
-\alias{sampleData<-,SingleCellExperiment,DataFrame-method}
+\alias{sampleData<-,seurat,DataFrame-method}
 \title{Sample Data}
 \usage{
 \S4method{sampleData}{SingleCellExperiment}(object, interestingGroups)
@@ -16,13 +16,14 @@
 
 \S4method{sampleData}{SingleCellExperiment,DataFrame}(object) <- value
 
-\S4method{sampleData}{SingleCellExperiment,DataFrame}(object) <- value
+\S4method{sampleData}{seurat,DataFrame}(object) <- value
 }
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+\code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{value}{Object to assign.}
 }
@@ -39,15 +40,20 @@ the samples.
 # SingleCellExperiment ====
 x <- cellranger_small
 sampleData(x) \%>\% glimpse()
-
-# Assignment support
 sampleData(x)[["batch"]] <- 1L
 sampleData(x) \%>\% glimpse()
+"batch" \%in\% colnames(colData(x))
+
+# seurat ====
+x <- seurat_small
+sampleData(x) \%>\% glimpse()
+sampleData(x)[["batch"]] <- 1L
+sampleData(x) \%>\% glimpse()
+"batch" \%in\% colnames(colData(x))
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
   \code{\link{cell2sample}}, \code{\link{fetchGeneData}},
-  \code{\link{mapCellsToSamples}},
   \code{\link{metricsPerSample}},
   \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
@@ -55,3 +61,4 @@ Other Data Functions: \code{\link{aggregateReplicates}},
 \author{
 Michael Steinbaugh
 }
+\concept{Data Functions}

@@ -4,7 +4,7 @@
 \name{all_markers_small}
 \alias{all_markers_small}
 \title{Sanitized Markers Example}
-\format{An object of class \code{grouped_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 1215 rows and 13 columns.}
+\format{An object of class \code{grouped_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 952 rows and 18 columns.}
 \usage{
 all_markers_small
 }
@@ -23,4 +23,5 @@ Other Minimal Example Data: \code{\link{cellranger_small}},
 \author{
 Michael Steinbaugh
 }
+\concept{Minimal Example Data}
 \keyword{datasets}

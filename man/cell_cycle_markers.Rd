@@ -21,4 +21,5 @@ Other Marker Data: \code{\link{cell_type_markers}}
 \author{
 Michael Steinbaugh
 }
+\concept{Marker Data}
 \keyword{datasets}

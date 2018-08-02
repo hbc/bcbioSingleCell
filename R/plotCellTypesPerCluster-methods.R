@@ -9,21 +9,21 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param cellTypesPerCluster Cell types per cluster `grouped_df`. This must be
-#'   the return from [cellTypesPerCluster()].
+#' @param cellTypesPerCluster `grouped_df`. Cell types per cluster data. This
+#'   must be the return from [cellTypesPerCluster()].
 #' @param ... Passthrough arguments to [plotMarkerTSNE()] or [plotMarkerUMAP()].
 #'
 #' @return Show graphical output. Invisibly return `ggplot` `list`.
 #'
 #' @examples
-#' # seurat ====
+#' # SingleCellExperiment ====
 #' per_cluster <- cellTypesPerCluster(known_markers_small)
 #' glimpse(per_cluster)
 #'
 #' # Let's plot the first row, as an example
 #' plotCellTypesPerCluster(
-#'     object = seurat_small,
-#'     cellTypesPerCluster = head(per_cluster, 1),
+#'     object = cellranger_small,
+#'     cellTypesPerCluster = head(per_cluster, n = 2L)
 #' )
 NULL
 
@@ -34,7 +34,7 @@ NULL
 #' @export
 setMethod(
     "plotCellTypesPerCluster",
-    signature("seurat"),
+    signature("SingleCellExperiment"),
     function(
         object,
         cellTypesPerCluster,
@@ -52,6 +52,13 @@ setMethod(
         )
         reduction <- match.arg(reduction)
         assertIsAHeaderLevel(headerLevel)
+
+        # Determine whether we need to use `geneID` or `geneName`
+        if (isTRUE(.useGene2symbol(object))) {
+            idCol <- "geneName"
+        } else {
+            idCol <- "geneID"
+        }
 
         cellTypesPerCluster <- cellTypesPerCluster %>%
             ungroup() %>%
@@ -73,10 +80,11 @@ setMethod(
             assert_has_rows(subset)
             lapply(seq_len(nrow(subset)), function(x) {
                 cellType <- subset[x, , drop = FALSE]
-                genes <- pull(cellType, "geneName") %>%
+                genes <- pull(cellType, idCol) %>%
+                    as.character() %>%
                     strsplit(", ") %>%
                     .[[1L]]
-                title <- pull(cellType, "cellType")
+                title <- as.character(pull(cellType, "cellType"))
                 markdownHeader(
                     text = title,
                     level = headerLevel + 1L,
@@ -96,4 +104,14 @@ setMethod(
         })
         invisible(return)
     }
+)
+
+
+
+#' @rdname plotCellTypesPerCluster
+#' @export
+setMethod(
+    "plotCellTypesPerCluster",
+    signature("seurat"),
+    getMethod("plotCellTypesPerCluster", "SingleCellExperiment")
 )

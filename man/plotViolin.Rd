@@ -7,26 +7,33 @@
 \alias{plotViolin,seurat-method}
 \title{Plot Violin}
 \usage{
-\S4method{plotViolin}{SingleCellExperiment}(object, genes, scale = c("count",
-  "width", "area"), fill = NULL, legend = FALSE)
+\S4method{plotViolin}{SingleCellExperiment}(object, genes,
+  scale = c("count", "width", "area"),
+  fill = getOption("bcbio.discrete.fill", NULL),
+  legend = getOption("bcbio.legend", TRUE))
 
 \S4method{plotViolin}{seurat}(object, genes, scale = c("count", "width",
-  "area"), fill = NULL, legend = FALSE)
+  "area"), fill = getOption("bcbio.discrete.fill", NULL),
+  legend = getOption("bcbio.legend", TRUE))
 }
 \arguments{
 \item{object}{Object.}
 
-\item{genes}{Gene identifiers. Must match the rownames of the object.}
+\item{genes}{\code{character}. Gene identifiers. Must match the rownames of the
+object.}
 
 \item{scale}{if "area" (default), all violins have the same area (before trimming
 the tails). If "count", areas are scaled proportionally to the number of
 observations. If "width", all violins have the same maximum width.}
 
-\item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
-to \code{NULL}, the default ggplot2 color palette will be used. If manual color
-definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+\item{fill}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 fill scale.
+Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.
+To set the discrete fill palette globally, use
+\code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
 
-\item{legend}{Include plot legend.}
+\item{legend}{\code{boolean}. Include plot legend.}
 }
 \value{
 \code{ggplot}.
@@ -35,9 +42,10 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 Plot Violin
 }
 \examples{
-# seurat ====
-object <- seurat_small
-genes <- head(rownames(object), 4L)
+# SingleCellExperiment ====
+object <- cellranger_small
+genes <- head(rownames(object), n = 4L)
+glimpse(genes)
 plotViolin(object, genes = genes)
 }
 \seealso{
@@ -49,3 +57,4 @@ Other Gene Expression Functions: \code{\link{plotDot}},
 \author{
 Michael Steinbaugh
 }
+\concept{Gene Expression Functions}

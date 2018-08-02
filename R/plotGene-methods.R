@@ -1,5 +1,7 @@
 #' Plot Gene
 #'
+#' Visualize genes on a dot or violin plot.
+#'
 #' @name plotGene
 #' @family Gene Expression Functions
 #' @author Michael Steinbaugh
@@ -8,8 +10,8 @@
 #' @export
 #'
 #' @inheritParams general
-#' @param geom Plot type. Uses [match.arg()] to pick the type. Currently
-#'   supports "`dot`" and "`violin`".
+#' @param geom `string`. Plot type. Uses [match.arg()] to pick the type.
+#'   Currently supports "`dot`" and "`violin`".
 #'
 #' @seealso
 #' - [plotDot()], [Seurat::DotPlot()].
@@ -19,8 +21,9 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' object <- seurat_small
+#' object <- indrops_small
 #' genes <- head(rownames(object))
+#' glimpse(genes)
 #'
 #' # Dot
 #' plotGene(object, genes = genes, geom = "dot")
@@ -41,7 +44,7 @@ setMethod(
         object,
         genes,
         geom = c("dot", "violin"),
-        legend = FALSE
+        legend = getOption("bcbio.legend", TRUE)
     ) {
         geom <- match.arg(geom)
         if (geom == "dot") {

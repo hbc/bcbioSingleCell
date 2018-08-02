@@ -1,3 +1,56 @@
+# bcbioSingleCell 0.1.18 (2018-07-31)
+
+## Major changes
+
+- Now recommending [BiocManager][] instead of [BiocInstaller][] to install.
+- `filterCells()` now supports `zinbwave = TRUE` for automatic
+  zero-inflation weights calculation, using the [zinbwave][] package.
+- Now requiring in `bcbioSingleCell` object validity checks that all
+  `sampleData()` columns are defined in `colData()`, and that the factor levels
+  also match. If you run into an error because of this change, post an issue
+  on GitHub and we'll sort it out. The validity check method now also checks
+  to make sure that all `metricsCols` are defined in `colData()`.
+- `aggregateReplicates()` now keeps track of interesting groups metadata
+  better and returns a `SingleCellExperiment` containing this information.
+- `seurat` to `SingleCellExperiment` now keeps track of `rowRanges`, if they
+  have been stashed inside the `seurat` object.
+- Minimal `bcbioSingleCell` (`indrops_small`) and `SingleCellExperiment`
+  (`cellranger_small`) objects now contain dimensionality reduction information
+  calculated with [Seurat][]. See the scripts in `data-raw/` for how this was
+  performed.
+- `metrics()`: `SingleCellExperiment` method now just returns `colData()`
+  with `interestingGroups` column defined internally with
+  `uniteInterestingGroups()`. Previously we updated the `sampleData` to long
+  format here dynamically, but this is no longer needed now that `colData()`
+  always must contain sample data in long format.
+- `sampleData<-()` assignment method now dynamically updates the sample metadata
+  in `colData()` to match.
+- Simplified `SingleCellExperiment` method extension for `seurat` objects.
+- Added support for global ggplot2 discrete color palettes using
+  `bcbio.discrete.color` and `bcbio.discrete.fill` with `options()`.
+
+## Minor changes
+
+- Marker functions are no longer exported as generics, since they only
+  currently apply to [Seurat][] and may be deprecated in the future.
+- Improved documentation, specifying the accepted classes for each argument.
+  This matches the conventions now used in [bcbioBase][] and [bcbioRNASeq][].
+- Now using roxygen2 v6.1 for documentation.
+- `metrics()` `matrix` method now uses `rowRanges` instead of `rowData`.
+- `mapCellsToSamples()` is no longer exported and has been switched to an
+  internal function.
+- Improved `filterCells()` return to include the counts per sample, which
+  makes visual inspection and confirmation with `plotCellCounts()` easier.
+- Added assert checks to plotting functions to stop if
+  `interestingGroups = NULL`. Adding support for NULL handling may be a good
+  idea in a future release but isn't a priority at the moment.
+- Improved factor level handling in `plotCellCounts()` and `plotZerosVsDepth()`
+  to avoid warnings if `colData()` and `sampleData()` levels don't match
+  exactly. This can happen if the sample order is different in `sampleData()`
+  than in `colData()`.
+
+
+
 # bcbioSingleCell 0.1.17 (2018-07-21)
 
 ## Major changes

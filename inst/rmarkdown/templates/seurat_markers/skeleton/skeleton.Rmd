@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
   seurat_file: "data/YYYY-MM-DD/seurat.rda"
-  all_markers_file: NULL
+  all_markers_file: "data/YYYY-MM-DD/all_markers.rda"
   cell_type_markers_file: NULL
   organism: "Homo sapiens"
   dark: FALSE
@@ -14,7 +14,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-05-29
+# Last modified 2018-08-01
 
 # Highly recommended to run this template on an HPC cluster
 # stopifnot(detectHPC())
@@ -80,17 +80,11 @@ assignAndSaveData(
 ```{r header, child="_header.Rmd"}
 ```
 
-
-
 This workflow is adapted from the following sources:
 
 - Satija Lab: [Seurat v2 Guided Clustering Tutorial](http://satijalab.org/seurat/pbmc3k_tutorial.html)
 
-
-
 * * *
-
-
 
 # Differential expression
 
@@ -115,7 +109,7 @@ if (!exists("all_markers", inherits = FALSE)) {
 }
 
 # Sanitize the markers data.frame and include gene metadata
-all_markers <- sanitizeMarkers(seurat, markers = all_markers)
+all_markers <- sanitizeSeuratMarkers(seurat, markers = all_markers)
 assignAndSaveData(
     name = paste(seurat_name, "markers", "sanitized", sep = "_"),
     object = all_markers,
@@ -129,8 +123,6 @@ write_csv(
     )
 )
 ```
-
-
 
 # Top markers per cluster {.tabset}
 
@@ -147,8 +139,6 @@ plotTopMarkers(
     dark = params$dark
 )
 ```
-
-
 
 # Cluster heterogeneity
 
@@ -167,8 +157,6 @@ DoHeatmap(
     slim.col.label = TRUE
 )
 ```
-
-
 
 # Known cell type markers {.tabset}
 
@@ -194,8 +182,6 @@ plotKnownMarkersDetected(
 )
 ```
 
-
-
 # Cell types per cluster {.tabset}
 
 ```{r cell_types_per_cluster}
@@ -216,8 +202,6 @@ plotCellTypesPerCluster(
     dark = params$dark
 )
 ```
-
-
 
 ```{r footer, child="_footer.Rmd"}
 ```

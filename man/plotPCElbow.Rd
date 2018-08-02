@@ -3,30 +3,28 @@
 \docType{methods}
 \name{plotPCElbow}
 \alias{plotPCElbow}
-\alias{plotPCElbow}
 \alias{plotPCElbow,seurat-method}
 \title{Plot PC Elbow}
 \usage{
 plotPCElbow(object, ...)
 
 \S4method{plotPCElbow}{seurat}(object, minSD = 1L, minPct = 0.01,
-  maxCumPct = 0.9, trans = c("identity", "sqrt"), plot = TRUE)
+  maxCumPct = 0.9, trans = c("identity", "sqrt"))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{minSD}{Minimum standard deviation.}
+\item{minSD}{\code{scalar numeric}. Minimum standard deviation.}
 
-\item{minPct}{Minimum percent standard deviation.}
+\item{minPct}{\code{scalar numeric} (\code{0}-\code{1}). Minimum percent standard deviation.}
 
-\item{maxCumPct}{Maximum cumulative percent standard deviation.}
+\item{maxCumPct}{\code{scalar numeric} (\code{0}-\code{1}).Maximum cumulative percent
+standard deviation.}
 
-\item{trans}{Name of the axis scale transformation to apply. See
+\item{trans}{\code{string}. Name of the axis scale transformation to apply. See
 \code{help("scale_x_continuous", "ggplot2")} for more information.}
-
-\item{plot}{Include plot.}
 }
 \value{
 \itemize{
@@ -56,9 +54,11 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotCellTypesPerCluster}},
   \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
-  \code{\link{plotTSNE}}, \code{\link{sanitizeMarkers}},
+  \code{\link{plotTSNE}},
+  \code{\link{sanitizeSeuratMarkers}},
   \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh
 }
+\concept{Clustering Functions}

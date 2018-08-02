@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
       </span>
     </div>
 
@@ -128,11 +128,11 @@
     </tr>
     <tr>
       <th>min</th>
-      <td><p>Minimum number of marker genes per cluster.</p></td>
+      <td><p><code>scalar integer</code>. Minimum number of marker genes per cluster.</p></td>
     </tr>
     <tr>
       <th>max</th>
-      <td><p>Maximum number of marker genes per cluster.</p></td>
+      <td><p><code>scalar integer</code>. Maximum number of marker genes per cluster.</p></td>
     </tr>
     </table>
     
@@ -143,24 +143,25 @@ significant known makers per cell type.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Clustering Functions: <code>knownMarkersDetected</code>,
-  <code>plotCellTypesPerCluster</code>,
+    <div class='dont-index'><p>Other Clustering Functions: <code><a href='knownMarkersDetected.html'>knownMarkersDetected</a></code>,
+  <code><a href='plotCellTypesPerCluster.html'>plotCellTypesPerCluster</a></code>,
   <code><a href='plotFeature.html'>plotFeatureTSNE</a></code>,
   <code><a href='plotMarker.html'>plotKnownMarkersDetected</a></code>,
-  <code>plotPCElbow</code>, <code><a href='plotDimensionalReduction.html'>plotTSNE</a></code>,
-  <code>sanitizeMarkers</code>, <code>topMarkers</code></p></div>
+  <code><a href='plotPCElbow.html'>plotPCElbow</a></code>, <code><a href='plotDimensionalReduction.html'>plotTSNE</a></code>,
+  <code><a href='sanitizeSeuratMarkers.html'>sanitizeSeuratMarkers</a></code>,
+  <code><a href='topMarkers.html'>topMarkers</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># grouped_df ====</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>cellTypesPerCluster</span>(<span class='no'>known_markers_small</span>)
-<span class='fu'>glimpse</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 12
+<span class='fu'>glimpse</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 13
 #&gt; Variables: 5
-#&gt; $ cluster  &lt;fct&gt; 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 4, 5
-#&gt; $ cellType &lt;fct&gt; T Cell, Mesenchymal Stem Cell, Dendritic Cell, T Cell, B C...
-#&gt; $ n        &lt;int&gt; 2, 1, 5, 2, 1, 5, 2, 1, 2, 1, 4, 2
-#&gt; $ geneID   &lt;chr&gt; "ENSG00000167286, ENSG00000198851", "ENSG00000026508", "EN...
-#&gt; $ geneName &lt;chr&gt; "CD3D, CD3E", "CD44", "HLA-DRA, HLA-DRB1, HLA-DQB1, HLA-DQ...</div></pre>
+#&gt; $ cluster  &lt;fct&gt; 0, 0, 0, 0, 1, 1, 1, 2, 3, 3, 4, 4, 4
+#&gt; $ cellType &lt;fct&gt; Dendritic Cell, T Cell, B Cell, Mesenchymal Stem Cell, Den...
+#&gt; $ n        &lt;int&gt; 3, 2, 1, 1, 5, 2, 1, 2, 4, 1, 5, 1, 1
+#&gt; $ geneID   &lt;chr&gt; "ENSG00000204257, ENSG00000196126, ENSG00000204287", "ENSG...
+#&gt; $ geneName &lt;chr&gt; "HLA-DMA, HLA-DRB1, HLA-DRA", "CD3D, CD3E", "IGHM", "CD44"...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

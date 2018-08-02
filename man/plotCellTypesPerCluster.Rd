@@ -4,11 +4,15 @@
 \docType{methods}
 \name{plotCellTypesPerCluster}
 \alias{plotCellTypesPerCluster}
-\alias{plotCellTypesPerCluster}
+\alias{plotCellTypesPerCluster,SingleCellExperiment-method}
 \alias{plotCellTypesPerCluster,seurat-method}
 \title{Plot Cell Types per Cluster}
 \usage{
 plotCellTypesPerCluster(object, ...)
+
+\S4method{plotCellTypesPerCluster}{SingleCellExperiment}(object,
+  cellTypesPerCluster, reduction = c("TSNE", "UMAP"), headerLevel = 2L,
+  ...)
 
 \S4method{plotCellTypesPerCluster}{seurat}(object, cellTypesPerCluster,
   reduction = c("TSNE", "UMAP"), headerLevel = 2L, ...)
@@ -18,13 +22,13 @@ plotCellTypesPerCluster(object, ...)
 
 \item{...}{Passthrough arguments to \code{\link[=plotMarkerTSNE]{plotMarkerTSNE()}} or \code{\link[=plotMarkerUMAP]{plotMarkerUMAP()}}.}
 
-\item{cellTypesPerCluster}{Cell types per cluster \code{grouped_df}. This must be
-the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
+\item{cellTypesPerCluster}{\code{grouped_df}. Cell types per cluster data. This
+must be the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 
-\item{reduction}{Dimensional reduction method to apply. Defaults to t-SNE
-("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
+\item{reduction}{\code{string}. Dimensional reduction method to apply. Defaults to
+t-SNE ("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
 
-\item{headerLevel}{R Markdown header level.}
+\item{headerLevel}{\code{scalar integer} (\code{1}-\code{7}). R Markdown header level.}
 }
 \value{
 Show graphical output. Invisibly return \code{ggplot} \code{list}.
@@ -35,14 +39,14 @@ type (per unbiased cluster). Cell types with too few (\code{min} cutoff) or too
 many (\code{max} cutoff) marker genes will be skipped.
 }
 \examples{
-# seurat ====
+# SingleCellExperiment ====
 per_cluster <- cellTypesPerCluster(known_markers_small)
 glimpse(per_cluster)
 
 # Let's plot the first row, as an example
 plotCellTypesPerCluster(
-    object = seurat_small,
-    cellTypesPerCluster = head(per_cluster, 1),
+    object = cellranger_small,
+    cellTypesPerCluster = head(per_cluster, n = 2L)
 )
 }
 \seealso{
@@ -51,8 +55,10 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{plotFeatureTSNE}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
-  \code{\link{sanitizeMarkers}}, \code{\link{topMarkers}}
+  \code{\link{sanitizeSeuratMarkers}},
+  \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh
 }
+\concept{Clustering Functions}

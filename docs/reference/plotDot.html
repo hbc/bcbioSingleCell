@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
       </span>
     </div>
 
@@ -111,13 +111,16 @@
     </div>
 
     <pre class="usage"><span class='co'># S4 method for SingleCellExperiment</span>
-<span class='fu'>plotDot</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>colMin</span> <span class='kw'>=</span> -<span class='fl'>2.5</span>, <span class='kw'>colMax</span> <span class='kw'>=</span> <span class='fl'>2.5</span>, <span class='kw'>dotMin</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>dotScale</span> <span class='kw'>=</span> <span class='fl'>6L</span>,
-  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>plotDot</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>colMin</span> <span class='kw'>=</span> -<span class='fl'>2.5</span>,
+  <span class='kw'>colMax</span> <span class='kw'>=</span> <span class='fl'>2.5</span>, <span class='kw'>dotMin</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>dotScale</span> <span class='kw'>=</span> <span class='fl'>6L</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.color"</span>, <span class='kw'>NULL</span>),
+  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.legend"</span>, <span class='fl'>TRUE</span>))
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotDot</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>colMin</span> <span class='kw'>=</span> -<span class='fl'>2.5</span>,
-  <span class='kw'>colMax</span> <span class='kw'>=</span> <span class='fl'>2.5</span>, <span class='kw'>dotMin</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>dotScale</span> <span class='kw'>=</span> <span class='fl'>6L</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>plotDot</span>(<span class='no'>object</span>, <span class='no'>genes</span>, <span class='kw'>colMin</span> <span class='kw'>=</span> -<span class='fl'>2.5</span>, <span class='kw'>colMax</span> <span class='kw'>=</span> <span class='fl'>2.5</span>,
+  <span class='kw'>dotMin</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>dotScale</span> <span class='kw'>=</span> <span class='fl'>6L</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.color"</span>, <span class='kw'>NULL</span>),
+  <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.legend"</span>, <span class='fl'>TRUE</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -128,38 +131,42 @@
     </tr>
     <tr>
       <th>genes</th>
-      <td><p>Gene identifiers. Must match the rownames of the object.</p></td>
-    </tr>
-    <tr>
-      <th>color</th>
-      <td><p>Desired ggplot color scale. Must supply discrete values. When
-set to <code>NULL</code>, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-<code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p></td>
+      <td><p><code>character</code>. Gene identifiers. Must match the rownames of the
+object.</p></td>
     </tr>
     <tr>
       <th>colMin</th>
-      <td><p>Minimum scaled average expression threshold. Everything
-smaller will be set to this.</p></td>
+      <td><p><code>scalar numeric</code>. Minimum scaled average expression threshold.
+Everything smaller will be set to this.</p></td>
     </tr>
     <tr>
       <th>colMax</th>
-      <td><p>Maximum scaled average expression threshold. Everything larger
-will be set to this.</p></td>
+      <td><p><code>scalar numeric</code>.Maximum scaled average expression threshold.
+Everything larger will be set to this.</p></td>
     </tr>
     <tr>
       <th>dotMin</th>
-      <td><p>The fraction of cells at which to draw the smallest dot. All
-cell groups with less than this expressing the given gene will have no dot
-drawn.</p></td>
+      <td><p><code>scalar numeric</code>.The fraction of cells at which to draw the
+smallest dot. All cell groups with less than this expressing the given gene
+will have no dot drawn.</p></td>
     </tr>
     <tr>
       <th>dotScale</th>
-      <td><p>Scale the size of the points, similar to <code>cex</code>.</p></td>
+      <td><p><code>scalar numeric</code>.Scale the size of the points, similar to
+<code>cex</code>.</p></td>
+    </tr>
+    <tr>
+      <th>color</th>
+      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot2 color
+scale. Must supply discrete values. When set to <code>NULL</code>, the default ggplot2
+color palette will be used. If manual color definitions are desired, we
+recommend using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.
+To set the discrete color palette globally, use
+<code>options(bcbio.discrete.color = scale_color_viridis_d())</code>.</p></td>
     </tr>
     <tr>
       <th>legend</th>
-      <td><p>Include plot legend.</p></td>
+      <td><p><code>boolean</code>. Include plot legend.</p></td>
     </tr>
     </table>
     
@@ -176,9 +183,9 @@ drawn.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># seurat ====</span>
-<span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>seurat_small</span>
+<span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>indrops_small</span>
 <span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>rownames</span>(<span class='no'>object</span>))
-<span class='fu'>plotDot</span>(<span class='no'>object</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)</div><div class='img'><img src='plotDot-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>glimpse</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt;  chr [1:6] "ENSG00000000457" "ENSG00000002586" "ENSG00000004939" ...</div><div class='input'><span class='fu'>plotDot</span>(<span class='no'>object</span>, <span class='kw'>genes</span> <span class='kw'>=</span> <span class='no'>genes</span>)</div><div class='img'><img src='plotDot-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

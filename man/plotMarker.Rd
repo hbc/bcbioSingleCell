@@ -8,7 +8,6 @@
 \alias{plotMarkerUMAP}
 \alias{plotTopMarkers}
 \alias{plotMarker}
-\alias{plotMarker}
 \alias{plotMarkerTSNE,SingleCellExperiment-method}
 \alias{plotMarkerTSNE,seurat-method}
 \alias{plotMarkerUMAP,SingleCellExperiment-method}
@@ -28,28 +27,46 @@ plotMarkerUMAP(object, ...)
 plotTopMarkers(object, ...)
 
 \S4method{plotMarkerTSNE}{SingleCellExperiment}(object, genes,
-  expression = c("mean", "median", "sum"), color = NULL,
-  pointsAsNumbers = FALSE, pointSize = 0.75, pointAlpha = 0.8,
-  label = TRUE, labelSize = 6L, dark = FALSE, grid = FALSE,
-  legend = TRUE, aspectRatio = 1L, title = TRUE)
+  expression = c("mean", "median", "sum"),
+  color = getOption("bcbio.discrete.color", NULL),
+  pointSize = getOption("bcbio.pointSize", 0.75),
+  pointAlpha = getOption("bcbio.pointAlpha", 0.8),
+  pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
+  labelSize = getOption("bcbio.labelSize", 6L),
+  dark = getOption("bcbio.dark", FALSE), grid = getOption("bcbio.grid",
+  FALSE), legend = getOption("bcbio.legend", TRUE),
+  aspectRatio = getOption("bcbio.aspectRatio", 1L), title = TRUE)
 
 \S4method{plotMarkerTSNE}{seurat}(object, genes, expression = c("mean",
-  "median", "sum"), color = NULL, pointsAsNumbers = FALSE,
-  pointSize = 0.75, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  dark = FALSE, grid = FALSE, legend = TRUE, aspectRatio = 1L,
-  title = TRUE)
+  "median", "sum"), color = getOption("bcbio.discrete.color", NULL),
+  pointSize = getOption("bcbio.pointSize", 0.75),
+  pointAlpha = getOption("bcbio.pointAlpha", 0.8),
+  pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
+  labelSize = getOption("bcbio.labelSize", 6L),
+  dark = getOption("bcbio.dark", FALSE), grid = getOption("bcbio.grid",
+  FALSE), legend = getOption("bcbio.legend", TRUE),
+  aspectRatio = getOption("bcbio.aspectRatio", 1L), title = TRUE)
 
 \S4method{plotMarkerUMAP}{SingleCellExperiment}(object, genes,
-  expression = c("mean", "median", "sum"), color = NULL,
-  pointsAsNumbers = FALSE, pointSize = 0.75, pointAlpha = 0.8,
-  label = TRUE, labelSize = 6L, dark = FALSE, grid = FALSE,
-  legend = TRUE, aspectRatio = 1L, title = TRUE)
+  expression = c("mean", "median", "sum"),
+  color = getOption("bcbio.discrete.color", NULL),
+  pointSize = getOption("bcbio.pointSize", 0.75),
+  pointAlpha = getOption("bcbio.pointAlpha", 0.8),
+  pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
+  labelSize = getOption("bcbio.labelSize", 6L),
+  dark = getOption("bcbio.dark", FALSE), grid = getOption("bcbio.grid",
+  FALSE), legend = getOption("bcbio.legend", TRUE),
+  aspectRatio = getOption("bcbio.aspectRatio", 1L), title = TRUE)
 
 \S4method{plotMarkerUMAP}{seurat}(object, genes, expression = c("mean",
-  "median", "sum"), color = NULL, pointsAsNumbers = FALSE,
-  pointSize = 0.75, pointAlpha = 0.8, label = TRUE, labelSize = 6L,
-  dark = FALSE, grid = FALSE, legend = TRUE, aspectRatio = 1L,
-  title = TRUE)
+  "median", "sum"), color = getOption("bcbio.discrete.color", NULL),
+  pointSize = getOption("bcbio.pointSize", 0.75),
+  pointAlpha = getOption("bcbio.pointAlpha", 0.8),
+  pointsAsNumbers = FALSE, label = getOption("bcbio.label", TRUE),
+  labelSize = getOption("bcbio.labelSize", 6L),
+  dark = getOption("bcbio.dark", FALSE), grid = getOption("bcbio.grid",
+  FALSE), legend = getOption("bcbio.legend", TRUE),
+  aspectRatio = getOption("bcbio.aspectRatio", 1L), title = TRUE)
 
 \S4method{plotTopMarkers}{SingleCellExperiment}(object, markers,
   reduction = c("TSNE", "UMAP"), headerLevel = 2L, ...)
@@ -68,48 +85,52 @@ plotTopMarkers(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{genes}{Gene identifiers. Must match the rownames of the object.}
+\item{genes}{\code{character}. Gene identifiers. Must match the rownames of the
+object.}
 
-\item{expression}{Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and defaults to
-the first argument in the vector.}
+\item{expression}{\code{string}. Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and
+defaults to the first argument in the \code{character} vector.}
 
-\item{color}{Desired ggplot color scale. Must supply discrete values. When
-set to \code{NULL}, the default ggplot2 color palette will be used. If manual
-color definitions are desired, we recommend using
-\code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.}
+\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 color
+scale. Must supply discrete values. When set to \code{NULL}, the default ggplot2
+color palette will be used. If manual color definitions are desired, we
+recommend using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.
+To set the discrete color palette globally, use
+\code{options(bcbio.discrete.color = scale_color_viridis_d())}.}
 
-\item{pointsAsNumbers}{Plot the points as numbers (\code{TRUE}) or dots (\code{FALSE}).}
+\item{pointSize}{\code{scalar numeric}. Cell point size.}
 
-\item{pointSize}{Cell point size.}
+\item{pointAlpha}{\code{scalar numeric} (\code{0}-\code{1}). Alpha transparency level.
+Useful when there many cells in the dataset, and some cells can be masked.}
 
-\item{pointAlpha}{Alpha transparency level. Useful when there many cells in
-the dataset, and some cells can be masked.}
+\item{pointsAsNumbers}{\code{boolean}. Plot the points as numbers (\code{TRUE}) or
+dots (\code{FALSE}).}
 
-\item{label}{Overlay a cluster identitiy label on the plot.}
+\item{label}{\code{boolean}. Overlay a cluster identitiy label on the plot.}
 
-\item{labelSize}{Size of the text label.}
+\item{labelSize}{\code{scalar integer}. Size of the text label.}
 
-\item{dark}{Plot against a dark background using
+\item{dark}{\code{boolean}. Plot against a dark background using
 \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
-\item{grid}{Show major grid lines but hide axis lines.}
+\item{grid}{\code{boolean}. Show major grid lines but hide axis lines.}
 
-\item{legend}{Include plot legend.}
+\item{legend}{\code{boolean}. Include plot legend.}
 
-\item{aspectRatio}{Aspect ratio.}
+\item{aspectRatio}{\code{scalar integer}. Aspect ratio.}
 
-\item{title}{Plot title.}
+\item{title}{\code{string} or \code{NULL}. Plot title.}
 
-\item{markers}{\code{grouped_df} of marker genes.
+\item{markers}{\code{grouped_df}. Marker genes data.
 \itemize{
 \item \code{\link[=plotTopMarkers]{plotTopMarkers()}}: must be grouped by "\code{cluster}".
 \item \code{\link[=plotKnownMarkersDetected]{plotKnownMarkersDetected()}}: must be grouped by "\code{cellType}".
 }}
 
-\item{reduction}{Dimensional reduction method to apply. Defaults to t-SNE
-("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
+\item{reduction}{\code{string}. Dimensional reduction method to apply. Defaults to
+t-SNE ("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
 
-\item{headerLevel}{R Markdown header level.}
+\item{headerLevel}{\code{scalar integer} (\code{1}-\code{7}). R Markdown header level.}
 }
 \value{
 Show graphical output. Invisibly return \code{ggplot} \code{list}.
@@ -131,49 +152,52 @@ for the number of genes to plot here in a future update.
 }
 
 \examples{
-object <- seurat_small
-title <- "mito genes"
-genes <- grep("^MT-", rownames(object), value = TRUE)
+# SingleCellExperiment ====
+object <- cellranger_small
+
+# MHC class II genes
+title <- "MHC class II"
+genes <- rownames(object)[which(grepl(
+    pattern = "^major histocompatibility complex, class II",
+    x = rowData(object)$description
+))]
 print(genes)
 
 # t-SNE
+plotMarkerTSNE(object, genes)
 plotMarkerTSNE(
     object = object,
     genes = genes,
-    title = title
-)
-
-# Dark mode
-plotMarkerTSNE(
-    object = object,
-    genes = genes,
-    dark = TRUE,
-    title = title
-)
-
-# Number cloud
-plotMarkerTSNE(
-    object = object,
-    genes = genes,
+    expression = "sum",
     pointsAsNumbers = TRUE,
+    dark = TRUE,
+    label = FALSE,
     title = title
 )
 
 # UMAP
-plotMarkerUMAP(
+plotMarkerUMAP(object, genes)
+plotMarkerTSNE(
     object = object,
     genes = genes,
+    expression = "mean",
+    pointsAsNumbers = TRUE,
+    dark = TRUE,
+    label = FALSE,
     title = title
 )
 
+# seurat ====
+object <- seurat_small
+
 # Top markers
 markers <- topMarkers(all_markers_small, n = 1)
-markers
+glimpse(markers)
 plotTopMarkers(object, markers = tail(markers, 1))
 
 # Known markers detected
 markers <- head(known_markers_small, n = 1)
-markers
+glimpse(markers)
 plotKnownMarkersDetected(object, markers = head(markers, 1))
 }
 \seealso{
@@ -181,9 +205,11 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{knownMarkersDetected}},
   \code{\link{plotCellTypesPerCluster}},
   \code{\link{plotFeatureTSNE}}, \code{\link{plotPCElbow}},
-  \code{\link{plotTSNE}}, \code{\link{sanitizeMarkers}},
+  \code{\link{plotTSNE}},
+  \code{\link{sanitizeSeuratMarkers}},
   \code{\link{topMarkers}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
+\concept{Clustering Functions}

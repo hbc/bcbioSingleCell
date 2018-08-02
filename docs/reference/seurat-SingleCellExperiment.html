@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
       </span>
     </div>
 
@@ -111,38 +111,38 @@
     </div>
 
     <pre class="usage"><span class='co'># S4 method for seurat</span>
-<span class='fu'>cell2sample</span>(<span class='no'>object</span>)
+<span class='fu'><a href='cell2sample.html'>cell2sample</a></span>(<span class='no'>object</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>plotCellCounts</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"cell counts"</span>)
+<span class='fu'><a href='plotCellCounts.html'>plotCellCounts</a></span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.fill"</span>, <span class='kw'>NULL</span>), <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"cell counts"</span>)
 
 <span class='co'># S4 method for seurat,ANY</span>
-<span class='fu'>assay</span>(<span class='no'>x</span>)
+<span class='fu'>assay</span>(<span class='no'>x</span>, <span class='no'>i</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>colData</span>(<span class='no'>x</span>)
+<span class='fu'>assayNames</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>assays</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>withDimnames</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>colData</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for seurat,DataFrame</span>
+<span class='fu'>colData</span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>colnames</span>(<span class='no'>x</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>counts</span>(<span class='no'>object</span>)
+<span class='fu'>convertGenesToSymbols</span>(<span class='no'>object</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>metadata</span>(<span class='no'>x</span>)
+<span class='fu'>colnames</span>(<span class='no'>x</span>)
 
 <span class='co'># S4 method for seurat</span>
-<span class='fu'>metadata</span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
-
-<span class='co'># S4 method for seurat</span>
-<span class='fu'>rowData</span>(<span class='no'>x</span>)
-
-<span class='co'># S4 method for seurat</span>
-<span class='fu'>rowRanges</span>(<span class='no'>x</span>)
-
-<span class='co'># S4 method for seurat</span>
-<span class='fu'>rownames</span>(<span class='no'>x</span>)
+<span class='fu'>counts</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>gene2symbol</span>(<span class='no'>object</span>)
@@ -152,6 +152,24 @@
 
 <span class='co'># S4 method for seurat,character</span>
 <span class='fu'>interestingGroups</span>(<span class='no'>object</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>metadata</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>metadata</span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>reducedDims</span>(<span class='no'>x</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>rowData</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>rownames</span>(<span class='no'>x</span>)
+
+<span class='co'># S4 method for seurat</span>
+<span class='fu'>rowRanges</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for seurat</span>
 <span class='fu'>sampleNames</span>(<span class='no'>object</span>)</pre>
@@ -165,22 +183,30 @@
     </tr>
     <tr>
       <th>interestingGroups</th>
-      <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+<code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
     </tr>
     <tr>
       <th>fill</th>
-      <td><p>Desired ggplot fill scale. Must supply discrete values. When set
-to <code>NULL</code>, the default ggplot2 color palette will be used. If manual color
-definitions are desired, we recommend using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.</p></td>
+      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot2 fill scale.
+Must supply discrete values. When set to <code>NULL</code>, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.
+To set the discrete fill palette globally, use
+<code>options(bcbio.discrete.fill = scale_fill_viridis_d())</code>.</p></td>
     </tr>
     <tr>
       <th>title</th>
-      <td><p>Plot title.</p></td>
+      <td><p><code>string</code> or <code>NULL</code>. Plot title.</p></td>
     </tr>
     <tr>
       <th>x</th>
       <td><p>Primary object.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
       <th>value</th>

@@ -28,7 +28,7 @@ setMethod(
         geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
         interestingGroups,
         min = 0L,
-        fill = NULL,
+        fill = getOption("bcbio.discrete.fill", NULL),
         trans = "identity",
         title = "genes per UMI (novelty)"
     ) {
