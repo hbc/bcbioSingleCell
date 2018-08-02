@@ -50,8 +50,8 @@
 #' @param pointsAsNumbers `boolean`. Plot the points as numbers (`TRUE`) or
 #'   dots (`FALSE`).
 #' @param pointSize `scalar numeric`. Cell point size.
-#' @param reducedDimName `string`. Name of reduced dimension matrix slotted
-#'   in [reducedDims()]. Includes TNSE, UMAP, PCA, for example.
+#' @param reducedDim `string`. Name of reduced dimension matrix slotted in
+#'   [reducedDims()]. Includes TNSE, UMAP, PCA, for example.
 #' @param return `string`. Return type. Uses [base::match.arg()] internally and
 #'   defaults to the first argument in the `character` vector.
 #' @param title `string` or `NULL`. Plot title.
