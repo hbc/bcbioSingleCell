@@ -29,10 +29,11 @@ setMethod(
         color = getOption("bcbio.discrete.color", NULL),
         title = "zeros vs. depth"
     ) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
-        }
-        assert_is_character(interestingGroups)
+        validObject(object)
+        interestingGroups <- .prepareInterestingGroups(
+            object = object,
+            interestingGroups = interestingGroups
+        )
         assertIsColorScaleDiscreteOrNULL(color)
         assertIsAStringOrNULL(title)
 

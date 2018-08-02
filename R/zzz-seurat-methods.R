@@ -36,6 +36,19 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
+#' @importFrom SummarizedExperiment assayNames
+#' @export
+setMethod(
+    "assayNames",
+    signature("seurat"),
+    function(x, ...) {
+        assayNames(.as.SingleCellExperiment.seurat(x), ...)
+    }
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
 #' @importFrom SummarizedExperiment assays
 #' @export
 setMethod(
@@ -129,21 +142,7 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
-#' @importFrom BiocGenerics colnames
-#' @export
-setMethod(
-    "colnames",
-    signature("seurat"),
-    function(x) {
-        colnames(.as.SingleCellExperiment.seurat(x))
-    }
-)
-
-
-
-#' @rdname seurat-SingleCellExperiment
 #' @importFrom BiocGenerics counts
-#' @param normalized Normalized (`TRUE`) or raw (`FALSE`) counts.
 #' @export
 setMethod(
     "counts",
@@ -497,6 +496,19 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
+#' @importFrom BiocGenerics rownames
+#' @export
+setMethod(
+    "rownames",
+    signature("seurat"),
+    function(x) {
+        rownames(.as.SingleCellExperiment.seurat(x))
+    }
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
 #' @importFrom SummarizedExperiment rowRanges
 #' @export
 setMethod(
@@ -534,19 +546,6 @@ setMethod(
 
 
 
-#' @rdname seurat-SingleCellExperiment
-#' @importFrom BiocGenerics rownames
-#' @export
-setMethod(
-    "rownames",
-    signature("seurat"),
-    function(x) {
-        rownames(.as.SingleCellExperiment.seurat(x))
-    }
-)
-
-
-
 #' @rdname sampleData
 #' @export
 setMethod(
@@ -573,7 +572,6 @@ setMethod(
         )
     )
 )
-
 
 
 

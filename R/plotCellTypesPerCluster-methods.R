@@ -64,7 +64,7 @@ setMethod(
         assertIsAHeaderLevel(headerLevel)
 
         # Determine whether we need to use `geneID` or `geneName`
-        if (isTRUE(.useGeneName(object))) {
+        if (isTRUE(.useGene2symbol(object))) {
             idCol <- "geneName"
         } else {
             idCol <- "geneID"

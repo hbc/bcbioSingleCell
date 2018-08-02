@@ -27,27 +27,30 @@ setMethod(
         fill = getOption("bcbio.discrete.fill", NULL),
         title = "cell counts"
     ) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
-        }
-        assert_is_character(interestingGroups)
+        validObject(object)
+        interestingGroups <- .prepareInterestingGroups(
+            object = object,
+            interestingGroups = interestingGroups
+        )
         assertIsFillScaleDiscreteOrNULL(fill)
         assertIsAStringOrNULL(title)
 
         metrics <- metrics(object, interestingGroups = interestingGroups)
 
+        # TODO Check to see if we should make this an internal constructor
         sampleData <- sampleData(
             object = object,
             interestingGroups = interestingGroups
         )
         if (is.null(sampleData)) {
             sampleData <- unknownSampleData
+        } else {
+            sampleData[["sampleID"]] <- factor(
+                x = rownames(sampleData),
+                levels = levels(metrics[["sampleID"]])
+            )
         }
         sampleData <- as.data.frame(sampleData)
-        sampleData[["sampleID"]] <- factor(
-            x = rownames(sampleData),
-            levels = levels(metrics[["sampleID"]])
-        )
 
         # Remove user-defined `nCells` column, if present
         metrics[["nCells"]] <- NULL

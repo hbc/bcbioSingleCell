@@ -144,7 +144,7 @@ NULL
     }
     data <- fun(object = object, genes = genes)
 
-    if (!isTRUE(.useGeneName(object))) {
+    if (!isTRUE(.useGene2symbol(object))) {
         g2s <- gene2symbol(object)
         if (length(g2s)) {
             g2s <- g2s[genes, , drop = FALSE]

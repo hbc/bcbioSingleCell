@@ -70,7 +70,7 @@ setMethod(
         counts <- counts[genes, , drop = FALSE]
 
         # Convert gene IDs to gene names (symbols)
-        if (isTRUE(gene2symbol) && !isTRUE(.useGeneName(object))) {
+        if (isTRUE(gene2symbol) && !isTRUE(.useGene2symbol(object))) {
             g2s <- gene2symbol(object)
             assertIsGene2symbol(g2s)
             g2s <- g2s[genes, , drop = FALSE]

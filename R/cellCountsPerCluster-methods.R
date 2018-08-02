@@ -20,10 +20,12 @@ setMethod(
     "cellCountsPerCluster",
     signature("SingleCellExperiment"),
     function(object, interestingGroups) {
+        validObject(object)
         .assertHasIdent(object)
-        if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
-        }
+        interestingGroups <- .prepareInterestingGroups(
+            object = object,
+            interestingGroups = interestingGroups
+        )
         metrics <- metrics(object, interestingGroups = interestingGroups)
         cols <- unique(c("ident", interestingGroups))
         assert_is_subset(cols, colnames(metrics))

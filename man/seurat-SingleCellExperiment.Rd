@@ -5,6 +5,7 @@
 \alias{cell2sample,seurat-method}
 \alias{seurat-SingleCellExperiment}
 \alias{assay,seurat,ANY-method}
+\alias{assayNames,seurat-method}
 \alias{assays,seurat-method}
 \alias{colData,seurat-method}
 \alias{colData<-,seurat,DataFrame-method}
@@ -19,14 +20,16 @@
 \alias{plotCellCounts,seurat-method}
 \alias{reducedDims,seurat-method}
 \alias{rowData,seurat-method}
-\alias{rowRanges,seurat-method}
 \alias{rownames,seurat-method}
+\alias{rowRanges,seurat-method}
 \alias{sampleNames,seurat-method}
 \title{Extend S4 Methods for \code{seurat} Class}
 \usage{
 \S4method{cell2sample}{seurat}(object)
 
 \S4method{assay}{seurat,ANY}(x, i, ...)
+
+\S4method{assayNames}{seurat}(x, ...)
 
 \S4method{assays}{seurat}(x, ..., withDimnames = TRUE)
 
@@ -37,8 +40,6 @@
 \S4method{colnames}{seurat}(x)
 
 \S4method{convertGenesToSymbols}{seurat}(object)
-
-\S4method{colnames}{seurat}(x)
 
 \S4method{counts}{seurat}(object, ...)
 
@@ -59,9 +60,9 @@
 
 \S4method{rowData}{seurat}(x, ...)
 
-\S4method{rowRanges}{seurat}(x, ...)
-
 \S4method{rownames}{seurat}(x)
+
+\S4method{rowRanges}{seurat}(x, ...)
 
 \S4method{sampleNames}{seurat}(object)
 }
@@ -86,8 +87,6 @@ To set the discrete fill palette globally, use
 \code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
 
 \item{title}{\code{string} or \code{NULL}. Plot title.}
-
-\item{normalized}{Normalized (\code{TRUE}) or raw (\code{FALSE}) counts.}
 }
 \value{
 Match \code{SummarizedExperiment} method return.
