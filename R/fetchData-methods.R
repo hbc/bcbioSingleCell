@@ -9,7 +9,9 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general
-#' @param minimal `boolean`. Return minimal data without metrics.
+#' @param dimsUse `integer`. Vector of length 2 that denotes the columns from
+#'   the reduced dimension matrix to use for `centerX` and `centerY` column
+#'   calculations. Defaults the first and second dimensions.
 #'
 #' @return
 #' - `fetchGeneData()`: `matrix`.
@@ -51,48 +53,6 @@ NULL
 
 
 
-# Constructors =================================================================
-.reducedDimsData <- function(
-    object,
-    reduction = c("PCA", "TSNE", "UMAP"),
-    minimal = FALSE
-) {
-    object <- as(object, "SingleCellExperiment")
-    .assertHasIdent(object)
-    reduction <- match.arg(reduction)
-    assert_is_a_bool(minimal)
-
-    data <- slot(object, "reducedDims")[[reduction]]
-    if (!is.matrix(data)) {
-        stop(
-            paste(reduction, "dimensional reduction has not been calculated"),
-            call. = FALSE
-        )
-    }
-    if (isTRUE(minimal)) {
-        return(data)
-    }
-
-    # Limit to the first two columns. PCA returns multiple columns.
-    data <- as.data.frame(data)[, seq_len(2L)]
-    dimCols <- colnames(data)
-    colData <- as.data.frame(colData(object))
-    assert_are_identical(rownames(data), rownames(colData))
-    cbind(colData, data) %>%
-        rownames_to_column() %>%
-        # Group by ident here for center calculations
-        group_by(!!sym("ident")) %>%
-        mutate(
-            centerX = median(!!sym(dimCols[[1L]])),
-            centerY = median(!!sym(dimCols[[2L]]))
-        ) %>%
-        ungroup() %>%
-        as.data.frame() %>%
-        column_to_rownames()
-}
-
-
-
 # Methods ======================================================================
 #' @rdname fetchData
 #' @export
@@ -130,24 +90,43 @@ setMethod(
 #' @rdname fetchData
 #' @export
 setMethod(
-    "fetchGeneData",
-    signature("seurat"),
-    getMethod("fetchGeneData", "SingleCellExperiment")
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setMethod(
-    "fetchPCAData",
+    "fetchReducedDimData",
     signature("SingleCellExperiment"),
-    function(object, minimal = FALSE) {
-        .reducedDimsData(
-            object = object,
-            reduction = "PCA",
-            minimal = minimal
-        )
+    function(
+        object,
+        reducedDimName,
+        dimsUse = c(1L, 2L)
+    ) {
+        object <- as(object, "SingleCellExperiment")
+        .assertHasIdent(object)
+        assert_is_a_string(reducedDimName)
+        assertIsImplicitInteger(dimsUse)
+        assert_is_of_length(dimsUse, 2L)
+
+        data <- slot(object, "reducedDims")[[reducedDimName]]
+        if (!is.matrix(data)) {
+            stop(
+                paste(reducedDimName, "reduced dimension not calculated"),
+                call. = FALSE
+            )
+        }
+        data <- as.data.frame(data)
+
+        colData <- as.data.frame(colData(object))
+        assert_are_identical(rownames(data), rownames(colData))
+
+        dimCols <- colnames(data)[dimsUse]
+        cbind(colData, data) %>%
+            rownames_to_column() %>%
+            # Group by ident here for center calculations
+            group_by(!!sym("ident")) %>%
+            mutate(
+                centerX = median(!!sym(dimCols[[1L]])),
+                centerY = median(!!sym(dimCols[[2L]]))
+            ) %>%
+            ungroup() %>%
+            as.data.frame() %>%
+            column_to_rownames()
     }
 )
 
@@ -157,22 +136,12 @@ setMethod(
 #' @export
 setMethod(
     "fetchPCAData",
-    signature("seurat"),
-    getMethod("fetchPCAData", "SingleCellExperiment")
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setMethod(
-    "fetchTSNEData",
     signature("SingleCellExperiment"),
-    function(object, minimal = FALSE) {
-        .reducedDimsData(
+    function(object, ...) {
+        fetchReducedDimData(
             object = object,
-            reduction = "TSNE",
-            minimal = minimal
+            reducedDimName = "PCA",
+            ...
         )
     }
 )
@@ -183,8 +152,14 @@ setMethod(
 #' @export
 setMethod(
     "fetchTSNEData",
-    signature("seurat"),
-    getMethod("fetchTSNEData", "SingleCellExperiment")
+    signature("SingleCellExperiment"),
+    function(object, ...) {
+        fetchReducedDimData(
+            object = object,
+            reducedDimName = "TSNE",
+            ...
+        )
+    }
 )
 
 
@@ -196,11 +171,11 @@ setMethod(
     signature("SingleCellExperiment"),
     function(object, genes) {
         assert_is_subset(genes, rownames(object))
-        tsne <- fetchTSNEData(object)
         data <- fetchGeneData(object = object, genes = genes)
         mean <- rowMeans(data)
         median <- rowMedians(data)
         sum <- rowSums(data)
+        tsne <- fetchTSNEData(object)
         cbind(tsne, mean, median, sum)
     }
 )
@@ -210,35 +185,15 @@ setMethod(
 #' @rdname fetchData
 #' @export
 setMethod(
-    "fetchTSNEExpressionData",
-    signature("seurat"),
-    getMethod("fetchTSNEExpressionData", "SingleCellExperiment")
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setMethod(
     "fetchUMAPData",
     signature("SingleCellExperiment"),
-    function(object, minimal = FALSE) {
-        .reducedDimsData(
-            object,
-            reduction = "UMAP",
-            minimal = minimal
+    function(object, ...) {
+        fetchReducedDimData(
+            object = object,
+            reducedDimName = "UMAP",
+            ...
         )
     }
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setMethod(
-    "fetchUMAPData",
-    signature("seurat"),
-    getMethod("fetchUMAPData", "SingleCellExperiment")
 )
 
 
@@ -250,21 +205,11 @@ setMethod(
     signature("SingleCellExperiment"),
     function(object, genes) {
         assert_is_subset(genes, rownames(object))
-        umap <- fetchUMAPData(object)
         data <- fetchGeneData(object = object, genes = genes)
         mean <- rowMeans(data)
         median <- rowMedians(data)
         sum <- rowSums(data)
+        umap <- fetchUMAPData(object)
         cbind(umap, mean, median, sum)
     }
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setMethod(
-    "fetchUMAPExpressionData",
-    signature("seurat"),
-    getMethod("fetchUMAPExpressionData", "SingleCellExperiment")
 )
