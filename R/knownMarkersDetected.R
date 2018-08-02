@@ -55,12 +55,22 @@ knownMarkersDetected <- function(
     # Check for valid promiscuous cutoff
     assertIsAnImplicitInteger(promiscuousCutoff)
     assert_all_are_in_left_open_range(promiscuousCutoff, 1L)
+
+    # Sanitize factors to character
+    all <- all %>%
+        mutate_if(is.factor, as.character) %>%
+        # Ensure coercion of `AsIs` column
+        mutate(geneID = as.character(!!sym("geneID")))
+    known <- known %>%
+        select(!!!syms(c("cellType", "geneID"))) %>%
+        mutate_if(is.factor, as.character)
+
     # Group by cell type and arrange by P value
     markers <- all %>%
         ungroup() %>%
         # Apply alpha cutoff, before adding cell type annotations
         filter(!!sym("padj") < !!alpha) %>%
-        left_join(known[, c("cellType", "geneID")], by = "geneID") %>%
+        left_join(known, by = "geneID") %>%
         select(
             !!!syms(c("cellType", "cluster", "geneID", "geneName")),
             everything()
@@ -69,6 +79,7 @@ knownMarkersDetected <- function(
         filter(!is.na(!!sym("cellType"))) %>%
         group_by(!!sym("cellType")) %>%
         arrange(!!sym("padj"), .by_group = TRUE)
+
     if (isTRUE(filterPromiscuous)) {
         # Filter out promiscuous markers present in multiple clusters
         promiscuous <- markers %>%
@@ -84,5 +95,6 @@ knownMarkersDetected <- function(
             markers <- filter(markers, !!sym("geneID") %in% !!!promiscuous)
         }
     }
+
     markers
 }
