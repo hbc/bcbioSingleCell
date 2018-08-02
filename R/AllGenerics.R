@@ -89,6 +89,17 @@ setGeneric(
 #' @rdname fetchData
 #' @export
 setGeneric(
+    "fetchReducedDimData",
+    function(object, ...) {
+        standardGeneric("fetchReducedDimData")
+    }
+)
+
+
+
+#' @rdname fetchData
+#' @export
+setGeneric(
     "fetchTSNEData",
     function(object, ...) {
         standardGeneric("fetchTSNEData")
