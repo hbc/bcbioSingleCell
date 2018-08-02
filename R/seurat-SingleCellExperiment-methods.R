@@ -268,6 +268,19 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
+#' @importFrom BiocGenerics rownames
+#' @export
+setMethod(
+    "rownames",
+    signature("seurat"),
+    function(x) {
+        rownames(.as.SingleCellExperiment.seurat(x))
+    }
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
 #' @importFrom SummarizedExperiment rowRanges
 #' @export
 setMethod(
@@ -300,19 +313,6 @@ setMethod(
         }
 
         gr
-    }
-)
-
-
-
-#' @rdname seurat-SingleCellExperiment
-#' @importFrom BiocGenerics rownames
-#' @export
-setMethod(
-    "rownames",
-    signature("seurat"),
-    function(x) {
-        rownames(.as.SingleCellExperiment.seurat(x))
     }
 )
 

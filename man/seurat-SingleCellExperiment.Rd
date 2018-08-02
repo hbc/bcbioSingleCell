@@ -21,8 +21,8 @@
 \alias{metadata<-,seurat-method}
 \alias{reducedDims,seurat-method}
 \alias{rowData,seurat-method}
-\alias{rowRanges,seurat-method}
 \alias{rownames,seurat-method}
+\alias{rowRanges,seurat-method}
 \alias{sampleNames,seurat-method}
 \title{Extend S4 Methods for \code{seurat} Class}
 \usage{
@@ -63,9 +63,9 @@
 
 \S4method{rowData}{seurat}(x, ...)
 
-\S4method{rowRanges}{seurat}(x, ...)
-
 \S4method{rownames}{seurat}(x)
+
+\S4method{rowRanges}{seurat}(x, ...)
 
 \S4method{sampleNames}{seurat}(object)
 }
