@@ -386,17 +386,29 @@ setMethod(
     function(
         object,
         markers,
+        n = 10L,
+        direction = c("positive", "negative", "both"),
+        coding = FALSE,
         reduction = c("TSNE", "UMAP"),
         headerLevel = 2L,
         ...
     ) {
+        # Passthrough: n, direction, coding
         validObject(object)
         stopifnot(is(markers, "grouped_df"))
         stopifnot(.isSanitizedMarkers(markers))
+        markers <- topMarkers(
+            data = markers,
+            n = n,
+            direction = direction,
+            coding = coding
+        )
         reduction <- match.arg(reduction)
         assertIsAHeaderLevel(headerLevel)
 
+        assert_is_subset("cluster", colnames(markers))
         clusters <- levels(markers[["cluster"]])
+
         list <- pblapply(clusters, function(cluster) {
             genes <- markers %>%
                 filter(cluster == !!cluster) %>%
