@@ -199,6 +199,17 @@ setGeneric(
 #' @rdname plotFeature
 #' @export
 setGeneric(
+    "plotFeature",
+    function(object, ...) {
+        standardGeneric("plotFeature")
+    }
+)
+
+
+
+#' @rdname plotFeature
+#' @export
+setGeneric(
     "plotFeatureTSNE",
     function(object, ...) {
         standardGeneric("plotFeatureTSNE")
@@ -235,6 +246,17 @@ setGeneric(
     "plotKnownMarkersDetected",
     function(object, ...) {
         standardGeneric("plotKnownMarkersDetected")
+    }
+)
+
+
+
+#' @rdname plotMarker
+#' @export
+setGeneric(
+    "plotMarker",
+    function(object, ...) {
+        standardGeneric("plotMarker")
     }
 )
 

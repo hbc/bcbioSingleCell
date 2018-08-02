@@ -162,16 +162,7 @@ loadSingleCell <- function(...) {
 #' @rdname defunct
 #' @export
 plotFeatures <- function(...) {
-    .Defunct("plotFeatureTSNE")
-}
-
-
-
-#' @rdname plotMarker
-#' @usage NULL
-#' @export
-plotMarker <- function(...) {
-    .Defunct("plotMarkerTSNE")
+    .Defunct("plotFeature")
 }
 
 
@@ -179,7 +170,7 @@ plotMarker <- function(...) {
 #' @rdname defunct
 #' @export
 plotMarkers <- function(...) {
-    .Defunct("plotMarkerTSNE")
+    .Defunct("plotMarker")
 }
 
 
