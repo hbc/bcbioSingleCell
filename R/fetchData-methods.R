@@ -9,9 +9,6 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general
-#' @param dimsUse `integer`. Vector of length 2 that denotes the columns from
-#'   the reduced dimension matrix to use for `centerX` and `centerY` column
-#'   calculations. Defaults the first and second dimensions.
 #'
 #' @return
 #' - `fetchGeneData()`: `matrix`.
@@ -116,11 +113,15 @@ setMethod(
         assert_are_identical(rownames(data), rownames(colData))
 
         dimCols <- colnames(data)[dimsUse]
+        assert_is_character(dimCols)
+
         cbind(colData, data) %>%
             rownames_to_column() %>%
             # Group by ident here for center calculations
             group_by(!!sym("ident")) %>%
             mutate(
+                x = !!sym(dimCols[[1L]]),
+                y = !!sym(dimCols[[2L]]),
                 centerX = median(!!sym(dimCols[[1L]])),
                 centerY = median(!!sym(dimCols[[2L]]))
             ) %>%
