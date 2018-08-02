@@ -103,13 +103,3 @@ setMethod(
         p
     }
 )
-
-
-
-#' @rdname plotViolin
-#' @export
-setMethod(
-    "plotViolin",
-    signature("seurat"),
-    getMethod("plotViolin", "SingleCellExperiment")
-)

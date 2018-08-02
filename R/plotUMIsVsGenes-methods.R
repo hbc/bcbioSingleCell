@@ -42,13 +42,3 @@ setMethod(
         )
     }
 )
-
-
-
-#' @rdname plotUMIsVsGenes
-#' @export
-setMethod(
-    "plotUMIsVsGenes",
-    signature("seurat"),
-    getMethod("plotUMIsVsGenes", "SingleCellExperiment")
-)

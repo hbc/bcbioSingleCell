@@ -40,13 +40,3 @@ setMethod(
         .mapCellsToSamples(cells = cells, samples = samples)
     }
 )
-
-
-
-#' @rdname seurat-SingleCellExperiment
-#' @export
-setMethod(
-    "cell2sample",
-    signature("seurat"),
-    getMethod("cell2sample", "SingleCellExperiment")
-)

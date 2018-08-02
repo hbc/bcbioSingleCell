@@ -72,6 +72,16 @@ setMethod(
 
 
 #' @rdname seurat-SingleCellExperiment
+#' @export
+setMethod(
+    "cell2sample",
+    signature("seurat"),
+    getMethod("cell2sample", "SingleCellExperiment")
+)
+
+
+
+#' @rdname seurat-SingleCellExperiment
 #' @importFrom SummarizedExperiment colData
 #' @export
 setMethod(
@@ -455,6 +465,36 @@ setMethod(
     "plotUMAP",
     signature("seurat"),
     getMethod("plotUMAP", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotUMIsPerCell
+#' @export
+setMethod(
+    "plotUMIsPerCell",
+    signature("seurat"),
+    getMethod("plotUMIsPerCell", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotUMIsVsGenes
+#' @export
+setMethod(
+    "plotUMIsVsGenes",
+    signature("seurat"),
+    getMethod("plotUMIsVsGenes", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotViolin
+#' @export
+setMethod(
+    "plotViolin",
+    signature("seurat"),
+    getMethod("plotViolin", "SingleCellExperiment")
 )
 
 
