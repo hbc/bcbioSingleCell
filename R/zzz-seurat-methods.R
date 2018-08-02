@@ -217,6 +217,16 @@ setMethod(
 #' @rdname fetchData
 #' @export
 setMethod(
+    "fetchReducedDimData",
+    signature("seurat"),
+    getMethod("fetchReducedDimData", "SingleCellExperiment")
+)
+
+
+
+#' @rdname fetchData
+#' @export
+setMethod(
     "fetchTSNEData",
     signature("seurat"),
     getMethod("fetchTSNEData", "SingleCellExperiment")
@@ -399,6 +409,16 @@ setMethod(
 
 
 
+#' @rdname plotFeature
+#' @export
+setMethod(
+    "plotFeature",
+    signature("seurat"),
+    getMethod("plotFeature", "SingleCellExperiment")
+)
+
+
+
 #' @rdname plotGene
 #' @export
 setMethod(
@@ -425,6 +445,16 @@ setMethod(
     "plotKnownMarkersDetected",
     signature("seurat"),
     getMethod("plotKnownMarkersDetected", "SingleCellExperiment")
+)
+
+
+
+#' @rdname plotMarker
+#' @export
+setMethod(
+    "plotMarker",
+    signature("seurat"),
+    getMethod("plotMarker", "SingleCellExperiment")
 )
 
 
