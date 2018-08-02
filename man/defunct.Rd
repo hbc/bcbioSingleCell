@@ -2,40 +2,16 @@
 % Please edit documentation in R/deprecated.R
 \name{defunct}
 \alias{defunct}
-\alias{plotClusters}
-\alias{plotTSNEExpressionData}
 \alias{loadSingleCellRun}
 \alias{darkTheme}
 \alias{pcCutoff}
-\alias{quantileHeatmap}
-\alias{plotKnownMarkers}
-\alias{readMarkers}
-\alias{readMarkersFile}
-\alias{plotFeatures}
-\alias{plotMarkers}
 \title{Defunct Functions}
 \usage{
-plotClusters(...)
-
-plotTSNEExpressionData(...)
-
 loadSingleCellRun(...)
 
 darkTheme(...)
 
 pcCutoff(...)
-
-quantileHeatmap(...)
-
-plotKnownMarkers(...)
-
-readMarkers(...)
-
-readMarkersFile(...)
-
-plotFeatures(...)
-
-plotMarkers(...)
 }
 \arguments{
 \item{...}{Additional arguments.}

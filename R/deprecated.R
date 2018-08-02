@@ -26,23 +26,6 @@ NULL
 
 
 
-# v0.0.18 ======================================================================
-#' @rdname defunct
-#' @export
-plotClusters <- function(...) {
-    .Defunct("plotMarkers")
-}
-
-
-
-#' @rdname defunct
-#' @export
-plotTSNEExpressionData <- function(...) {
-    .Defunct("plotMarkerTSNE")
-}
-
-
-
 # v0.0.19 ======================================================================
 #' @rdname defunct
 #' @export
@@ -69,40 +52,6 @@ pcCutoff <- function(...) {
 
 
 
-#' @rdname defunct
-#' @export
-quantileHeatmap <- function(...) {
-    .Defunct("plotQuantileHeatmap")
-}
-
-
-
-# v0.0.25 ======================================================================
-#' @rdname defunct
-#' @export
-plotKnownMarkers <- function(...) {
-    .Defunct("plotKnownMarkersDetected")
-}
-
-
-
-#' @rdname defunct
-#' @export
-readMarkers <- function(...) {
-    .Defunct("readCellTypeMarkers")
-}
-
-
-
-# v0.0.26 ======================================================================
-#' @rdname defunct
-#' @export
-readMarkersFile <- function(...) {
-    .Defunct("readCellTypeMarkers")
-}
-
-
-
 # v0.1.0 =======================================================================
 #' @rdname deprecated
 #' @export
@@ -113,20 +62,11 @@ calculateMetrics <- function(...) {
 
 
 
-#' @rdname deprecated
-#' @export
-readCellTypeMarkersFile <- function(...) {
-    .Deprecated("readCellTypeMarkers")
-    readCellTypeMarkers(...)
-}
-
-
-
 # v0.1.1 =======================================================================
 #' @rdname deprecated
 #' @export
 inflectionPoint <- function(...) {
-    .Defunct("DropletUtils::barcodeRanks")
+    .Defunct("plotBarcodeRanks")
 }
 
 
@@ -154,151 +94,6 @@ loadCellRanger <- function(...) {
 loadSingleCell <- function(...) {
     .Deprecated("bcbioSingleCell")
     bcbioSingleCell(...)
-}
-
-
-
-# v0.1.11 ======================================================================
-#' @rdname defunct
-#' @export
-plotFeatures <- function(...) {
-    .Defunct("plotFeature")
-}
-
-
-
-#' @rdname defunct
-#' @export
-plotMarkers <- function(...) {
-    .Defunct("plotMarker")
-}
-
-
-
-# v0.1.8 =======================================================================
-#' @rdname deprecated
-#' @export
-sanitizeMarkers <- function(...) {
-    .Deprecated("sanitizeSeuratMarkers")
-    sanitizeSeuratMarkers(...)
-}
-
-
-
-# v0.3.0 =======================================================================
-#' @rdname deprecated
-#' @export
-fetchPCAData <- function(object, ...) {
-    .Deprecated("fetchReducedDimData")
-    fetchReducedDimData(
-        object = object,
-        reducedDim = "PCA",
-        ...
-    )
-}
-
-
-
-#' @rdname deprecated
-#' @export
-fetchTSNEData <- function(object, ...) {
-    .Deprecated("fetchReducedDimData")
-    fetchReducedDimData(
-        object = object,
-        reducedDim = "TSNE",
-        ...
-    )
-}
-
-
-
-#' @rdname deprecated
-#' @export
-fetchTSNEExpressionData <- function(object, ...) {
-    .Deprecated("fetchReducedDimExpressionData")
-    fetchReducedDimExpressionData(
-        object = object,
-        reducedDim = "TSNE",
-        ...
-    )
-}
-
-
-
-#' @rdname deprecated
-#' @export
-fetchUMAPData <- function(object, ...) {
-    .Deprecated("fetchReducedDimData")
-    fetchReducedDimData(
-        object = object,
-        reducedDim = "UMAP",
-        ...
-    )
-}
-
-
-
-#' @rdname deprecated
-#' @export
-fetchUMAPExpressionData <- function(object, ...) {
-    .Deprecated("fetchReducedDimExpressionData")
-    fetchReducedDimExpressionData(
-        object = object,
-        reducedDim = "UMAP",
-        ...
-    )
-}
-
-
-
-#' @rdname deprecated
-#' @export
-plotFeatureTSNE <- function(object, ...) {
-    .Deprecated("plotFeature")
-    plotFeature(
-        object = object,
-        reducedDim = "TSNE",
-        ...
-    )
-}
-
-
-
-#' @rdname deprecated
-#' @export
-plotFeatureUMAP <- function(object, ...) {
-    .Deprecated("plotFeature")
-    plotFeature(
-        object = object,
-        reducedDim = "UMAP",
-        ...
-    )
-}
-
-
-
-#' @rdname deprecated
-#' @export
-plotMarkerTSNE <- function(object, ...) {
-    .Deprecated("plotMarker")
-    plotMarker(
-        object = object,
-        reducedDim = "TSNE",
-        ...
-    )
-}
-
-
-
-#' @rdname deprecated
-#' @export
-plotMarkerUMAP <- function(object, ...) {
-    .Deprecated("plotMarker")
-    plotMarker(
-        object = object,
-        reducedDim = "UMAP",
-        ...
-    )
 }
 
 

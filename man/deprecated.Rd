@@ -3,26 +3,13 @@
 \name{deprecated}
 \alias{deprecated}
 \alias{calculateMetrics}
-\alias{readCellTypeMarkersFile}
 \alias{inflectionPoint}
 \alias{plotCumulativeUMIsPerCell}
 \alias{loadCellRanger}
 \alias{loadSingleCell}
-\alias{sanitizeMarkers}
-\alias{fetchPCAData}
-\alias{fetchTSNEData}
-\alias{fetchTSNEExpressionData}
-\alias{fetchUMAPData}
-\alias{fetchUMAPExpressionData}
-\alias{plotFeatureTSNE}
-\alias{plotFeatureUMAP}
-\alias{plotMarkerTSNE}
-\alias{plotMarkerUMAP}
 \title{Deprecated Functions}
 \usage{
 calculateMetrics(...)
-
-readCellTypeMarkersFile(...)
 
 inflectionPoint(...)
 
@@ -31,31 +18,9 @@ plotCumulativeUMIsPerCell(...)
 loadCellRanger(...)
 
 loadSingleCell(...)
-
-sanitizeMarkers(...)
-
-fetchPCAData(object, ...)
-
-fetchTSNEData(object, ...)
-
-fetchTSNEExpressionData(object, ...)
-
-fetchUMAPData(object, ...)
-
-fetchUMAPExpressionData(object, ...)
-
-plotFeatureTSNE(object, ...)
-
-plotFeatureUMAP(object, ...)
-
-plotMarkerTSNE(object, ...)
-
-plotMarkerUMAP(object, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}
-
-\item{object}{Object.}
 }
 \value{
 \code{\link[=.Deprecated]{.Deprecated()}}.
