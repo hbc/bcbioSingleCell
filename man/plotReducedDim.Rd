@@ -22,7 +22,7 @@ plotTSNE(object, ...)
 
 plotUMAP(object, ...)
 
-\S4method{plotReducedDim}{SingleCellExperiment}(object, reducedDimName,
+\S4method{plotReducedDim}{SingleCellExperiment}(object, reducedDim,
   dimsUse = c(1L, 2L), interestingGroups = "ident",
   color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
@@ -41,7 +41,7 @@ plotUMAP(object, ...)
 
 \S4method{plotPCA}{seurat}(object, ...)
 
-\S4method{plotReducedDim}{seurat}(object, reducedDimName, dimsUse = c(1L,
+\S4method{plotReducedDim}{seurat}(object, reducedDim, dimsUse = c(1L,
   2L), interestingGroups = "ident",
   color = getOption("bcbio.discrete.color", NULL),
   pointSize = getOption("bcbio.pointSize", 0.75),
@@ -61,8 +61,8 @@ plotUMAP(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{reducedDimName}{\code{string}. Name of reduced dimension matrix slotted
-in \code{\link[=reducedDims]{reducedDims()}}. Includes TNSE, UMAP, PCA, for example.}
+\item{reducedDim}{\code{string}. Name of reduced dimension matrix slotted in
+\code{\link[=reducedDims]{reducedDims()}}. Includes TNSE, UMAP, PCA, for example.}
 
 \item{dimsUse}{\code{integer}. Vector of length 2 that denotes the columns from
 the reduced dimension matrix to use for \code{centerX} and \code{centerY} column
@@ -141,7 +141,7 @@ plotPCA(object)
 Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{knownMarkersDetected}},
   \code{\link{plotCellTypesPerCluster}},
-  \code{\link{plotFeatureTSNE}},
+  \code{\link{plotFeature}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotPCElbow}},
   \code{\link{sanitizeSeuratMarkers}},

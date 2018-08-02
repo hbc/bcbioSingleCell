@@ -34,7 +34,7 @@ glimpse(x)
 \seealso{
 Other Clustering Functions: \code{\link{knownMarkersDetected}},
   \code{\link{plotCellTypesPerCluster}},
-  \code{\link{plotFeatureTSNE}},
+  \code{\link{plotFeature}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotPCElbow}}, \code{\link{plotReducedDim}},
   \code{\link{sanitizeSeuratMarkers}},

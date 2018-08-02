@@ -52,7 +52,7 @@ plotPCElbow(seurat_small)
 Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{knownMarkersDetected}},
   \code{\link{plotCellTypesPerCluster}},
-  \code{\link{plotFeatureTSNE}},
+  \code{\link{plotFeature}},
   \code{\link{plotKnownMarkersDetected}},
   \code{\link{plotReducedDim}},
   \code{\link{sanitizeSeuratMarkers}},

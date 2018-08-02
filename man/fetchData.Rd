@@ -43,8 +43,8 @@ fetchUMAPExpressionData(object, ...)
 \S4method{fetchGeneData}{SingleCellExperiment}(object, genes,
   gene2symbol = FALSE)
 
-\S4method{fetchReducedDimData}{SingleCellExperiment}(object,
-  reducedDimName, dimsUse = c(1L, 2L), interestingGroups)
+\S4method{fetchReducedDimData}{SingleCellExperiment}(object, reducedDim,
+  dimsUse = c(1L, 2L), interestingGroups)
 
 \S4method{fetchPCAData}{SingleCellExperiment}(object, ...)
 
@@ -79,8 +79,8 @@ object.}
 \item{gene2symbol}{\code{data.frame}. Gene-to-symbol mappings. Columns must
 contain \code{geneID} and \code{geneName}.}
 
-\item{reducedDimName}{\code{string}. Name of reduced dimension matrix slotted
-in \code{\link[=reducedDims]{reducedDims()}}. Includes TNSE, UMAP, PCA, for example.}
+\item{reducedDim}{\code{string}. Name of reduced dimension matrix slotted in
+\code{\link[=reducedDims]{reducedDims()}}. Includes TNSE, UMAP, PCA, for example.}
 
 \item{dimsUse}{\code{integer}. Vector of length 2 that denotes the columns from
 the reduced dimension matrix to use for \code{centerX} and \code{centerY} column

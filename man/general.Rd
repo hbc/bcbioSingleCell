@@ -76,8 +76,8 @@ dots (\code{FALSE}).}
 
 \item{pointSize}{\code{scalar numeric}. Cell point size.}
 
-\item{reducedDimName}{\code{string}. Name of reduced dimension matrix slotted
-in \code{\link[=reducedDims]{reducedDims()}}. Includes TNSE, UMAP, PCA, for example.}
+\item{reducedDim}{\code{string}. Name of reduced dimension matrix slotted in
+\code{\link[=reducedDims]{reducedDims()}}. Includes TNSE, UMAP, PCA, for example.}
 
 \item{return}{\code{string}. Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and
 defaults to the first argument in the \code{character} vector.}
