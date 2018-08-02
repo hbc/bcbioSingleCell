@@ -53,7 +53,8 @@ LazyData: TRUE
 Depends:
     R (>= 3.4),
     SingleCellExperiment,
-    bcbioBase (>= 0.3)
+    bcbioBase (>= 0.3),
+    pointillism (>= 0.1)
 Imports:
     assertive.base,
     assertive.files,
@@ -62,7 +63,7 @@ Imports:
     assertive.sets,
     assertive.strings,
     assertive.types,
-    basejump (>= 0.6.2),
+    basejump (>= 0.6.3),
     Biobase,
     BiocGenerics,
     BiocParallel,
@@ -103,16 +104,13 @@ Imports:
     zinbwave
 Suggests:
     BiocStyle,
-    DropletUtils,
     EnsDb.Hsapiens.v75,
-    googlesheets,
-    MAST,
     roxygen2,
-    splatter,
     testthat (>= 2.0)
 Remotes:
     hbc/bcbioBase,
-    steinbaugh/basejump
+    steinbaugh/basejump,
+    steinbaugh/pointillism
 biocViews:
     DataImport,
     DataRepresentation,
@@ -121,7 +119,6 @@ biocViews:
     ReportWriting,
     RNASeq,
     SingleCell,
-    Transcription,
-    Visualization
+    Transcription
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.0
