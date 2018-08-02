@@ -18,7 +18,6 @@
 #' - `assignAndSave = TRUE`: Subset file paths.
 #'
 #' @examples
-#' # bcbioSingleCell ====
 #' # List mode (default)
 #' list <- subsetPerSample(indrops_small, assignAndSave = FALSE)
 #' names(list)

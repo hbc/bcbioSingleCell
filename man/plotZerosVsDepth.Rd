@@ -37,8 +37,7 @@ To set the discrete color palette globally, use
 This function helps us visualize the dropout rate.
 }
 \examples{
-# SingleCellExperiment ====
-plotZerosVsDepth(cellranger_small)
+plotZerosVsDepth(indrops_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

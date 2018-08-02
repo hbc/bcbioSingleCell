@@ -9,8 +9,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' plotUMIsVsGenes(cellranger_small)
+#' plotUMIsVsGenes(indrops_small)
 NULL
 
 

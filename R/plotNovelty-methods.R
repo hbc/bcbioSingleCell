@@ -11,8 +11,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' plotNovelty(cellranger_small)
+#' plotNovelty(indrops_small)
 NULL
 
 

@@ -9,8 +9,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' plotCellCounts(cellranger_small)
+#' plotCellCounts(indrops_small)
 NULL
 
 

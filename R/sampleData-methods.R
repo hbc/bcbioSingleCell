@@ -17,8 +17,7 @@
 #' @return `DataFrame`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' x <- cellranger_small
+#' x <- indrops_small
 #' sampleData(x) %>% glimpse()
 #' sampleData(x)[["batch"]] <- 1L
 #' sampleData(x) %>% glimpse()

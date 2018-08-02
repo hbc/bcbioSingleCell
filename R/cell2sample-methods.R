@@ -10,8 +10,7 @@
 #'   barcode IDs as the names.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' x <- cell2sample(cellranger_small)
+#' x <- cell2sample(indrops_small)
 #' table(x)
 NULL
 

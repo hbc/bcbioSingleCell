@@ -9,8 +9,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' plotMitoRatio(cellranger_small)
+#' plotMitoRatio(indrops_small)
 NULL
 
 

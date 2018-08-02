@@ -49,8 +49,7 @@ To set the discrete fill palette globally, use
 Plot Genes per Cell
 }
 \examples{
-# SingleCellExperiment ====
-plotGenesPerCell(cellranger_small)
+plotGenesPerCell(indrops_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

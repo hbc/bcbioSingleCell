@@ -18,7 +18,6 @@
 Aggregate Replicates
 }
 \examples{
-# bcbioSingleCell ====
 object <- indrops_small
 sampleNames(object)
 

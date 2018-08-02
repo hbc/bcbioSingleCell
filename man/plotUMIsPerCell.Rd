@@ -61,12 +61,11 @@ To set the discrete fill palette globally, use
 Plot the universal molecular identifiers (UMIs) per cell.
 }
 \examples{
-# SingleCellExperiment ====
-plotUMIsPerCell(cellranger_small, geom = "violin")
-plotUMIsPerCell(cellranger_small, geom = "ridgeline")
-plotUMIsPerCell(cellranger_small, geom = "ecdf")
-plotUMIsPerCell(cellranger_small, geom = "histogram")
-plotUMIsPerCell(cellranger_small, geom = "boxplot")
+plotUMIsPerCell(indrops_small, geom = "violin")
+plotUMIsPerCell(indrops_small, geom = "ridgeline")
+plotUMIsPerCell(indrops_small, geom = "ecdf")
+plotUMIsPerCell(indrops_small, geom = "histogram")
+plotUMIsPerCell(indrops_small, geom = "boxplot")
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

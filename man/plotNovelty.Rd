@@ -46,8 +46,7 @@ To set the discrete fill palette globally, use
 "Novelty" refers to log10 genes detected per count.
 }
 \examples{
-# SingleCellExperiment ====
-plotNovelty(cellranger_small)
+plotNovelty(indrops_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

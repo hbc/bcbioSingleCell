@@ -36,8 +36,7 @@ To set the discrete fill palette globally, use
 Plot Cell Counts
 }
 \examples{
-# SingleCellExperiment ====
-plotCellCounts(cellranger_small)
+plotCellCounts(indrops_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

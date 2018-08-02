@@ -9,8 +9,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' plotMitoVsCoding(cellranger_small)
+#' plotMitoVsCoding(indrops_small)
 NULL
 
 

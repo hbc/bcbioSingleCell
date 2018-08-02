@@ -32,8 +32,7 @@
 #'   [metadata()] as `filterCells` and `filterParams`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' object <- cellranger_small
+#' object <- indrops_small
 #' show(object)
 #'
 #' x <- filterCells(object)
@@ -44,7 +43,7 @@
 #' sampleNames(object)
 #' x <- filterCells(
 #'     object = object,
-#'     minUMIs = c(pbmc = 100)
+#'     minUMIs = c(rep_1 = 100)
 #' )
 #' show(x)
 #' metadata(x)$filterParams

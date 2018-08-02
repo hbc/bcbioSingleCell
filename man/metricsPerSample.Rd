@@ -26,17 +26,16 @@ but "\code{mean}" and "\code{median}" are also supported.}
 Calculate summary statistics per sample.
 }
 \examples{
-# SingleCellExperiment ====
 # mean
-x <- metricsPerSample(cellranger_small, f = "mean")
+x <- metricsPerSample(indrops_small, f = "mean")
 head(x)
 
 # median
-x <- metricsPerSample(cellranger_small, f = "median")
+x <- metricsPerSample(indrops_small, f = "median")
 head(x)
 
 # sum
-x <- metricsPerSample(cellranger_small, f = "sum")
+x <- metricsPerSample(indrops_small, f = "sum")
 head(x)
 }
 \seealso{

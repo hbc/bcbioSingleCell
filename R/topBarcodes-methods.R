@@ -16,13 +16,12 @@
 #'   column in descending order. Cellular barcodes are in the `cellID` column.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' # list
-#' x <- topBarcodes(cellranger_small, return = "list")
+#' # Return list
+#' x <- topBarcodes(indrops_small, return = "list")
 #' lapply(x, class)
 #'
-#' # data.frame
-#' x <- topBarcodes(cellranger_small, return = "data.frame")
+#' # Return data.frame
+#' x <- topBarcodes(indrops_small, return = "data.frame")
 #' glimpse(x)
 NULL
 

@@ -9,8 +9,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' plotGenesPerCell(cellranger_small)
+#' plotGenesPerCell(indrops_small)
 NULL
 
 

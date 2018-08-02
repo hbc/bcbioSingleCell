@@ -22,9 +22,7 @@ plotBarcodeRanks(object, ...)
 Plot Barcode Ranks
 }
 \examples{
-# SingleCellExperiment ====
-object <- splatter::splatSimulate()
-plotBarcodeRanks(object)
+plotBarcodeRanks(indrops_small)
 }
 \seealso{
 \code{\link[DropletUtils:barcodeRanks]{DropletUtils::barcodeRanks()}}.

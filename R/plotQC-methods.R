@@ -18,11 +18,7 @@
 #'   - `markdown`: R Markdown report, with reports separated by headers.
 #'
 #' @examples
-#' # bcbioSingleCell ====
 #' plotQC(indrops_small)
-#'
-#' # SingleCellExperiment ====
-#' plotQC(cellranger_small)
 NULL
 
 

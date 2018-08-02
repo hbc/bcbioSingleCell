@@ -79,7 +79,6 @@ including cells not kept in the matrix will be dropped in favor of the
 \code{nCount} column of \code{colData()}.
 }
 \examples{
-# bcbioSingleCell ====
 cells <- head(colnames(indrops_small), 100L)
 head(cells)
 genes <- head(rownames(indrops_small), 100L)
@@ -101,8 +100,7 @@ indrops_small[genes, cells]
 }
 
 Other S4 Object: \code{\link{bcbioSingleCell}},
-  \code{\link{coerce}}, \code{\link{show}},
-  \code{\link{updateObject}}
+  \code{\link{show}}, \code{\link{updateObject}}
 }
 \author{
 Michael Steinbaugh

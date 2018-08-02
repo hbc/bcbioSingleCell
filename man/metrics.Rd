@@ -39,11 +39,11 @@ Sample Barcode Metrics
 }
 \examples{
 # SingleCellExperiment ====
-x <- metrics(cellranger_small)
+x <- metrics(indrops_small)
 glimpse(x)
 
 # matrix ====
-counts <- counts(cellranger_small)
+counts <- counts(indrops_small)
 class(counts)
 x <- metrics(counts)
 glimpse(x)

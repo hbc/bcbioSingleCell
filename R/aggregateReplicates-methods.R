@@ -11,7 +11,6 @@
 #' @return `SingleCellExperiment`.
 #'
 #' @examples
-#' # bcbioSingleCell ====
 #' object <- indrops_small
 #' sampleNames(object)
 #'

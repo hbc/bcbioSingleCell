@@ -43,8 +43,7 @@ To set the discrete color palette globally, use
 Plot Mitochondrial vs. Coding Counts
 }
 \examples{
-# SingleCellExperiment ====
-plotMitoVsCoding(cellranger_small)
+plotMitoVsCoding(indrops_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

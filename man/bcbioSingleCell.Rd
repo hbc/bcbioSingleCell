@@ -98,8 +98,7 @@ validObject(x)
 \item \code{.S4methods(class = "bcbioSingleCell")}.
 }
 
-Other S4 Object: \code{\link{coerce}},
-  \code{\link{extract}}, \code{\link{show}},
+Other S4 Object: \code{\link{extract}}, \code{\link{show}},
   \code{\link{updateObject}}
 }
 \author{

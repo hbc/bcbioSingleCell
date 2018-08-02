@@ -59,8 +59,7 @@ use the \code{\link[=sampleNames]{sampleNames()}} return values (i.e. the \code{
 \code{\link[=sampleData]{sampleData()}}).
 }
 \examples{
-# SingleCellExperiment ====
-object <- cellranger_small
+object <- indrops_small
 show(object)
 
 x <- filterCells(object)
@@ -71,7 +70,7 @@ metadata(x)$filterParams
 sampleNames(object)
 x <- filterCells(
     object = object,
-    minUMIs = c(pbmc = 100)
+    minUMIs = c(rep_1 = 100)
 )
 show(x)
 metadata(x)$filterParams

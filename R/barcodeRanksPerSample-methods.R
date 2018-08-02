@@ -12,8 +12,7 @@
 #' @seealso [DropletUtils::barcodeRanks()].
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' x <- barcodeRanksPerSample(cellranger_small)
+#' x <- barcodeRanksPerSample(indrops_small)
 #' names(x)
 NULL
 

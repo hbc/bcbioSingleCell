@@ -46,8 +46,7 @@ To set the discrete fill palette globally, use
 Plot Mitochondrial Transcript Abundance
 }
 \examples{
-# SingleCellExperiment ====
-plotMitoRatio(cellranger_small)
+plotMitoRatio(indrops_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

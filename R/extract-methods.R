@@ -20,7 +20,6 @@
 #' @return `bcbioSingleCell`.
 #'
 #' @examples
-#' # bcbioSingleCell ====
 #' cells <- head(colnames(indrops_small), 100L)
 #' head(cells)
 #' genes <- head(rownames(indrops_small), 100L)

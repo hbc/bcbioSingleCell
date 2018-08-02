@@ -11,8 +11,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' plotZerosVsDepth(cellranger_small)
+#' plotZerosVsDepth(indrops_small)
 NULL
 
 

@@ -42,8 +42,7 @@ To set the discrete color palette globally, use
 Plot UMI and Gene Correlation
 }
 \examples{
-# SingleCellExperiment ====
-plotUMIsVsGenes(cellranger_small)
+plotUMIsVsGenes(indrops_small)
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

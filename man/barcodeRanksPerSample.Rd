@@ -59,8 +59,7 @@ The lower bound is set to the point at which the first derivative is closest to 
 Note that only points with total counts above \code{lower} will be considered, regardless of how \code{fit.bounds} is defined.
 }
 \examples{
-# SingleCellExperiment ====
-x <- barcodeRanksPerSample(cellranger_small)
+x <- barcodeRanksPerSample(indrops_small)
 names(x)
 }
 \seealso{

@@ -40,11 +40,7 @@ Utility function that loops our standard quality control plots, for easy
 visualization.
 }
 \examples{
-# bcbioSingleCell ====
 plotQC(indrops_small)
-
-# SingleCellExperiment ====
-plotQC(cellranger_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

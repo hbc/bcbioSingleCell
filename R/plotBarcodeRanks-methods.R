@@ -11,9 +11,7 @@
 #' @return `ggplot` grid.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' object <- splatter::splatSimulate()
-#' plotBarcodeRanks(object)
+#' plotBarcodeRanks(indrops_small)
 NULL
 
 

@@ -15,7 +15,6 @@
 #'   factor levels.
 #'
 #' @examples
-#' # bcbioSingleCell ====
 #' object <- indrops_small
 #'
 #' # Cell IDs are the column names of object
