@@ -20,7 +20,7 @@ NULL
 
 
 # Constructors =================================================================
-.as.SingleCellExperiment.seurat <- function(object) {
+.as.SingleCellExperiment.seurat <- function(object) {  # nolint
     validObject(object)
     # Sanitize legacy seurat objects that contain Ensembl IDs in names
     names(rownames(object@raw.data)) <- NULL
