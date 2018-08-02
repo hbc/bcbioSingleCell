@@ -8,11 +8,3 @@
     }
     logical
 }
-
-
-
-# Check assays for zinbwave weights
-.hasZinbwave <- function(object) {
-    stopifnot(is(object, "SingleCellExperiment"))
-    all(c("normalizedValues", "weights") %in% assayNames(object))
-}
