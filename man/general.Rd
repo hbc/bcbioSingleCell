@@ -26,6 +26,10 @@ contain \code{geneID} and \code{geneName}.}
 \item{dark}{\code{boolean}. Plot against a dark background using
 \code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
 
+\item{dimsUse}{\code{integer}. Vector of length 2 that denotes the columns from
+the reduced dimension matrix to use for \code{centerX} and \code{centerY} column
+calculations. Defaults the first and second dimensions.}
+
 \item{dir}{\code{string}. Output directory path.}
 
 \item{expression}{\code{string}. Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and
@@ -72,8 +76,8 @@ dots (\code{FALSE}).}
 
 \item{pointSize}{\code{scalar numeric}. Cell point size.}
 
-\item{reduction}{\code{string}. Dimensional reduction method to apply. Defaults to
-t-SNE ("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
+\item{reducedDimName}{\code{string}. Name of reduced dimension matrix slotted
+in \code{\link[=reducedDims]{reducedDims()}}. Includes TNSE, UMAP, PCA, for example.}
 
 \item{return}{\code{string}. Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and
 defaults to the first argument in the \code{character} vector.}

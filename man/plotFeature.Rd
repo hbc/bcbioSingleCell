@@ -112,7 +112,7 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{knownMarkersDetected}},
   \code{\link{plotCellTypesPerCluster}},
   \code{\link{plotKnownMarkersDetected}},
-  \code{\link{plotPCElbow}}, \code{\link{plotTSNE}},
+  \code{\link{plotPCElbow}}, \code{\link{plotReducedDim}},
   \code{\link{sanitizeSeuratMarkers}},
   \code{\link{topMarkers}}
 }

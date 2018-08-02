@@ -33,7 +33,7 @@ objects. In this case, provide cellular barcode identifiers for columns
 and Ensembl gene identifiers for rows.
 }
 \examples{
-# bcbioSingleCell ====
+# SingleCellExperiment ====
 object <- indrops_small
 sample <- sampleNames(object) \%>\% head(1L)
 print(sample)

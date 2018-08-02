@@ -129,9 +129,6 @@ dots (\code{FALSE}).}
 \item \code{\link[=plotKnownMarkersDetected]{plotKnownMarkersDetected()}}: must be grouped by "\code{cellType}".
 }}
 
-\item{reduction}{\code{string}. Dimensional reduction method to apply. Defaults to
-t-SNE ("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
-
 \item{headerLevel}{\code{scalar integer} (\code{1}-\code{7}). R Markdown header level.}
 }
 \value{
@@ -207,7 +204,7 @@ Other Clustering Functions: \code{\link{cellTypesPerCluster}},
   \code{\link{knownMarkersDetected}},
   \code{\link{plotCellTypesPerCluster}},
   \code{\link{plotFeatureTSNE}}, \code{\link{plotPCElbow}},
-  \code{\link{plotTSNE}},
+  \code{\link{plotReducedDim}},
   \code{\link{sanitizeSeuratMarkers}},
   \code{\link{topMarkers}}
 }
