@@ -59,25 +59,23 @@ sanitizeSeuratMarkers <- function(data, rowRanges) {
         x = c("geneID", "geneName"),
         y = colnames(mcols(rowRanges))
     )
-    # We're using the rowRanges to map `geneName` back to `geneID`
-    assert_is_subset(
-        x = data[["gene"]],
-        y = mcols(rowRanges)[["geneName"]]
-    )
 
-    # Map the matrix rownames to `rownames` column in tibble
+    # Map the Seurat matrix rownames to `rownames` column in tibble
     if ("cluster" %in% colnames(data)) {
-        # `FindAllMarkers()` return
+        message("`Seurat::FindAllMarkers()` return detected")
         all <- TRUE
         assert_is_subset("gene", colnames(data))
         data <- remove_rownames(data)
         data[["rowname"]] <- data[["gene"]]
         data[["gene"]] <- NULL
     } else {
-        # `FindMarkers()` return
+        message("`Seurat::FindMarkers()` return detected")
         all <- FALSE
         data <- rownames_to_column(data)
     }
+
+    stopifnot(all(data$rowname %in% rownames(seurat)))
+    stopifnot(all(data$rowname %in% names(rowRanges)))
 
     # Now ready to coerce
     data <- data %>%
