@@ -290,7 +290,7 @@ plotMarkerTSNE <- function(object, ...) {
 
 
 
-#' @rdname plotMarker
+#' @rdname deprecated
 #' @export
 plotMarkerUMAP <- function(object, ...) {
     .Deprecated("plotMarker")

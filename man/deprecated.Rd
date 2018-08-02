@@ -17,6 +17,7 @@
 \alias{plotFeatureTSNE}
 \alias{plotFeatureUMAP}
 \alias{plotMarkerTSNE}
+\alias{plotMarkerUMAP}
 \title{Deprecated Functions}
 \usage{
 calculateMetrics(...)
@@ -48,6 +49,8 @@ plotFeatureTSNE(object, ...)
 plotFeatureUMAP(object, ...)
 
 plotMarkerTSNE(object, ...)
+
+plotMarkerUMAP(object, ...)
 }
 \arguments{
 \item{...}{Additional arguments.}

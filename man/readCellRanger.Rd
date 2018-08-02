@@ -98,9 +98,6 @@ x <- readCellRanger(
 )
 show(x)
 }
-\seealso{
-Other Read Functions: \code{\link{readCellTypeMarkers}}
-}
 \author{
 Michael Steinbaugh
 }
