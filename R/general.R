@@ -20,6 +20,9 @@
 #'   contain `geneID` and `geneName`.
 #' @param dark `boolean`. Plot against a dark background using
 #'   [basejump::theme_midnight()].
+#' @param dimsUse `integer`. Vector of length 2 that denotes the columns from
+#'   the reduced dimension matrix to use for `centerX` and `centerY` column
+#'   calculations. Defaults the first and second dimensions.
 #' @param dir `string`. Output directory path.
 #' @param expression `string`. Calculation to apply. Uses [match.arg()] and
 #'   defaults to the first argument in the `character` vector.
@@ -47,8 +50,8 @@
 #' @param pointsAsNumbers `boolean`. Plot the points as numbers (`TRUE`) or
 #'   dots (`FALSE`).
 #' @param pointSize `scalar numeric`. Cell point size.
-#' @param reduction `string`. Dimensional reduction method to apply. Defaults to
-#'   t-SNE ("`TSNE`") but UMAP is also supported ("`UMAP`").
+#' @param reducedDimName `string`. Name of reduced dimension matrix slotted
+#'   in [reducedDims()]. Includes TNSE, UMAP, PCA, for example.
 #' @param return `string`. Return type. Uses [base::match.arg()] internally and
 #'   defaults to the first argument in the `character` vector.
 #' @param title `string` or `NULL`. Plot title.
