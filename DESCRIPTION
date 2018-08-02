@@ -110,11 +110,9 @@ Remotes:
 biocViews:
     DataImport,
     DataRepresentation,
-    GeneExpression,
     QualityControl,
     ReportWriting,
     RNASeq,
-    SingleCell,
-    Transcription
+    SingleCell
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.0
