@@ -5,7 +5,7 @@
 \title{Known Markers Detected}
 \usage{
 knownMarkersDetected(all, known, alpha = 0.05,
-  filterPromiscuous = FALSE, promiscuousCutoff = 5L)
+  filterPromiscuous = FALSE, promiscuousCutoff = 5L, ...)
 }
 \arguments{
 \item{all}{\code{grouped_df}, grouped by \code{cluster}. All markers \code{data.frame},
@@ -26,6 +26,8 @@ are present in as many clusters as defined by \code{promiscuousCutoff}.}
 
 \item{promiscuousCutoff}{\code{scalar integer}. Minimum number of clusters
 required to consider a gene marker promiscuous.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \code{grouped_df}, grouped by "\code{cellType}" column.

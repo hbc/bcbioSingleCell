@@ -10,11 +10,10 @@
 \usage{
 plotCellTypesPerCluster(object, ...)
 
-\S4method{plotCellTypesPerCluster}{SingleCellExperiment}(object,
-  cellTypesPerCluster, reduction = c("TSNE", "UMAP"), headerLevel = 2L,
-  ...)
+\S4method{plotCellTypesPerCluster}{SingleCellExperiment}(object, markers,
+  reduction = c("TSNE", "UMAP"), headerLevel = 2L, ...)
 
-\S4method{plotCellTypesPerCluster}{seurat}(object, cellTypesPerCluster,
+\S4method{plotCellTypesPerCluster}{seurat}(object, markers,
   reduction = c("TSNE", "UMAP"), headerLevel = 2L, ...)
 }
 \arguments{
@@ -22,8 +21,8 @@ plotCellTypesPerCluster(object, ...)
 
 \item{...}{Passthrough arguments to \code{\link[=plotMarkerTSNE]{plotMarkerTSNE()}} or \code{\link[=plotMarkerUMAP]{plotMarkerUMAP()}}.}
 
-\item{cellTypesPerCluster}{\code{grouped_df}. Cell types per cluster data. This
-must be the return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
+\item{markers}{\code{grouped_df}. Cell types per cluster data. This must be the
+return from \code{\link[=cellTypesPerCluster]{cellTypesPerCluster()}}.}
 
 \item{reduction}{\code{string}. Dimensional reduction method to apply. Defaults to
 t-SNE ("\code{TSNE}") but UMAP is also supported ("\code{UMAP}").}
@@ -46,7 +45,7 @@ glimpse(per_cluster)
 # Let's plot the first row, as an example
 plotCellTypesPerCluster(
     object = cellranger_small,
-    cellTypesPerCluster = head(per_cluster, n = 2L)
+    markers = head(per_cluster, n = 2L)
 )
 }
 \seealso{

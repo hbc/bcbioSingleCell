@@ -68,11 +68,13 @@ plotTopMarkers(object, ...)
   FALSE), legend = getOption("bcbio.legend", TRUE),
   aspectRatio = getOption("bcbio.aspectRatio", 1L), title = TRUE)
 
-\S4method{plotTopMarkers}{SingleCellExperiment}(object, markers,
+\S4method{plotTopMarkers}{SingleCellExperiment}(object, markers, n = 10L,
+  direction = c("positive", "negative", "both"), coding = FALSE,
   reduction = c("TSNE", "UMAP"), headerLevel = 2L, ...)
 
-\S4method{plotTopMarkers}{seurat}(object, markers, reduction = c("TSNE",
-  "UMAP"), headerLevel = 2L, ...)
+\S4method{plotTopMarkers}{seurat}(object, markers, n = 10L,
+  direction = c("positive", "negative", "both"), coding = FALSE,
+  reduction = c("TSNE", "UMAP"), headerLevel = 2L, ...)
 
 \S4method{plotKnownMarkersDetected}{SingleCellExperiment}(object, markers,
   reduction = c("TSNE", "UMAP"), headerLevel = 2L, ...)
