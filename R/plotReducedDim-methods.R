@@ -92,9 +92,9 @@ setMethod(
         )
 
         # Get the x- and y-axis labels (e.g. tSNE_1, tSNE_2)
-        dimCols <- colnames(reducedDims(object)[[reducedDim]])[dimsUse]
-        assert_is_character(dimCols)
-        assert_is_subset(dimCols, colnames(data))
+        axes <- colnames(reducedDims(object)[[reducedDim]])[dimsUse]
+        assert_is_character(axes)
+        assert_is_subset(axes, colnames(data))
 
         if (isTRUE(dark)) {
             theme <- theme_midnight
@@ -111,8 +111,8 @@ setMethod(
             )
         ) +
             labs(
-                x = dimCols[[1L]],
-                y = dimCols[[2L]],
+                x = axes[[1L]],
+                y = axes[[2L]],
                 color = paste(interestingGroups, collapse = ":\n")
             ) +
             theme(

@@ -139,11 +139,14 @@ setMethod(
             assert_is_a_string(title)
         }
 
+        # FIXME Make this a general reduced dim function
+        stop("Make a general reduced function here")
+
         # Fetch reduced dimension data
         fun <- get(paste0("fetch", reducedDim, "ExpressionData"))
         assert_is_function(fun)
         data <- fun(object = object, genes = genes)
-        dimCols <- colnames(data)[seq_len(2L)]
+        axes <- colnames(data)[seq_len(2L)]
 
         if (!isTRUE(.useGene2symbol(object))) {
             g2s <- gene2symbol(object)
@@ -155,7 +158,7 @@ setMethod(
         genes <- sort(unique(genes))
 
         requiredCols <- c(
-            dimCols,
+            axes,
             "x",
             "y",
             "centerX",
@@ -195,8 +198,8 @@ setMethod(
         }
         p <- p +
             labs(
-                x = dimCols[[1L]],
-                y = dimCols[[2L]],
+                x = axes[[1L]],
+                y = axes[[2L]],
                 title = title,
                 subtitle = subtitle
             )
