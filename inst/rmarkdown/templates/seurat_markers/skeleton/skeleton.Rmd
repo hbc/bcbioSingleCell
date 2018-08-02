@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 params:
   seurat_file: "data/YYYY-MM-DD/seurat.rda"
-  all_markers_file: NULL
+  all_markers_file: "data/YYYY-MM-DD/seurat.rda"
   cell_type_markers_file: NULL
   organism: "Homo sapiens"
   dark: FALSE
@@ -14,7 +14,7 @@ params:
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-05-29
+# Last modified 2018-08-01
 
 # Highly recommended to run this template on an HPC cluster
 # stopifnot(detectHPC())
@@ -31,22 +31,18 @@ seurat <- get(seurat_name, inherits = FALSE)
 stopifnot(is(seurat, "seurat"))
 invisible(validObject(seurat))
 
-# Load presaved Seurat markers
-if (!is.null(params$all_markers_file)) {
-    # Load presaved `Seurat::FindAllMarkers()` return.
-    # Use the original, unsanitized data.frame.
-    all_markers_name <- load(params$all_markers_file)
-    all_markers <- get(all_markers_name, inherits = FALSE)
-}
+# Load Seurat markers data.frame.
+# Use `Seurat::FindAllMarkers()` return.
+all_markers_name <- load(params$all_markers_file)
+all_markers <- get(all_markers_name, inherits = FALSE)
 
 # Default to using our internal cell type markers, managed on Google Sheets.
 # File on issue on the bcbioSingleCell GitHub repo if this list needs to get
 # updated or the desired organism isn't yet supported.
 if (!is.null(params$cell_type_markers_file)) {
-    gene2symbol <- gene2symbol(seurat)
     cell_type_markers <- readCellTypeMarkers(
         file = params$cell_type_markers_file,
-        gene2symbol = gene2symbol
+        gene2symbol = gene2symbol(seurat)
     )
 } else {
     stopifnot(!is.null(params$organism))
@@ -94,22 +90,22 @@ The `min.pct` argument requires a gene to be detected at a minimum percentage in
 
 Seurat has multiple tests for differential expression which can be set with the `test.use` parameter. Currently it defaults to Wilcoxon rank sum test ("`wilcox`"), which tends to overreport significant markers. Instead we currently recommend using MAST (Finak et al, Genome Biology, 2015) or DESeq2 (Love et al, Genome Biology, 2014).
 
+It is recommended to run this calculation as a seprate R script outside of R Markdown, since it can take a long time for large datasets.
+
 ```{r find_all_markers, cache=FALSE, results="hide"}
-# MAST and DESeq2 are recommended over Wilcoxon rank sum test (default). This
-# step can a long time to run and shouldn't be cached. We recommend running this
-# step outside of R Markdown and then loading the presaved R data file instead.
-if (!exists("all_markers", inherits = FALSE)) {
-    all_markers <- FindAllMarkers(seurat)
-    # Save the original, unmodified data.frame as a backup
-    assignAndSaveData(
-        name = paste(seurat_name, "markers", "original", sep = "_"),
-        object = all_markers,
-        dir = params$data_dir
-    )
-}
+# Run the marker calculation externally in a separate script
+help("FindAllMarkers", "Seurat")
+
+# Note that this step requires a seurat object created with our `as()` method.
+# Otherwise change this code and use rowRanges from our bcbioSingleCell object.
+rowRanges <- rowRanges(seurat)
+stopifnot("geneName" %in% colnames(mcols(rowRanges)))
 
 # Sanitize the markers data.frame and include gene metadata
-all_markers <- sanitizeMarkers(seurat, markers = all_markers)
+all_markers <- sanitizeSeuratMarkers(
+    data = all_markers,
+    rowRanges = rowRanges
+)
 assignAndSaveData(
     name = paste(seurat_name, "markers", "sanitized", sep = "_"),
     object = all_markers,
@@ -127,14 +123,13 @@ write_csv(
 # Top markers per cluster {.tabset}
 
 ```{r top_markers}
-top_markers <- topMarkers(all_markers)
-top_markers
+topMarkers(all_markers)
 ```
 
 ```{r plot_top_markers, results="asis"}
 plotTopMarkers(
     object = seurat,
-    markers = top_markers,
+    markers = all_markers,
     headerLevel = 2,
     dark = params$dark
 )
@@ -162,15 +157,15 @@ DoHeatmap(
 
 ```{r known_markers_detected}
 known_markers_detected <- knownMarkersDetected(
-    object = all_markers,
+    all = all_markers,
     known = cell_type_markers
 )
-known_markers_detected
 assignAndSaveData(
     name = paste(seurat_name, "known_markers_detected", sep = "_"),
     object = known_markers_detected,
     dir = params$data_dir
 )
+known_markers_detected
 ```
 
 ```{r plot_known_markers_detected, results="asis"}
@@ -186,18 +181,18 @@ plotKnownMarkersDetected(
 
 ```{r cell_types_per_cluster}
 cell_types_per_cluster <- cellTypesPerCluster(known_markers_detected)
-cell_types_per_cluster
 assignAndSaveData(
     name = paste(seurat_name, "cell_types_per_cluster", sep = "_"),
     object = cell_types_per_cluster,
     dir = params$data_dir
 )
+cell_types_per_cluster
 ```
 
 ```{r plot_cell_types_per_cluster, results="asis"}
 plotCellTypesPerCluster(
     object = seurat,
-    cellTypesPerCluster = cell_types_per_cluster,
+    markers = cell_types_per_cluster,
     headerLevel = 2,
     dark = params$dark
 )
