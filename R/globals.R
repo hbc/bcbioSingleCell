@@ -7,8 +7,8 @@ barcodePattern <- ")_([ACGT_]{6,})(_[0-9]+)?$"
 
 requiredAssays <- "counts"
 
+# `nCount` column is bcbioSingleCell class specific
 metricsCols <- c(
-    "nCount",
     "nUMI",
     "nGene",
     "nCoding",
