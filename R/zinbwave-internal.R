@@ -10,7 +10,7 @@
 # @seealso [zinbwave::zinbwave()].
 .runZinbwave <- function(
     Y,  # nolint
-    BPPARAM = BiocParallel::SerialParam(),  # nolint
+    BPPARAM = SerialParam(),  # nolint
     epsilon = 1e12,
     ...
 ) {
