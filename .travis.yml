@@ -22,6 +22,14 @@ os:
 #   only:
 #   - master
 
+# External dependencies
+# dependency for gsl > copula > zinbwave
+addons:
+  apt:
+    update: true
+    packages:
+      - libgsl-dev
+
 env:
   global:
     - LINTR_COMMENT_BOT=true
@@ -35,7 +43,7 @@ env:
 warnings_are_errors: true
 
 # Temporarily enable to cache packages
-# script: true
+script: true
 
 r_packages:
   - covr
