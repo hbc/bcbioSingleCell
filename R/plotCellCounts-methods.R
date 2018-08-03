@@ -27,7 +27,7 @@ setMethod(
         title = "cell counts"
     ) {
         validObject(object)
-        interestingGroups <- .prepareInterestingGroups(
+        interestingGroups <- .returnInterestingGroups(
             object = object,
             interestingGroups = interestingGroups
         )

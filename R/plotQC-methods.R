@@ -40,7 +40,7 @@ NULL
 ) {
     assert_is_a_string(metricCol)
     geom <- match.arg(geom)
-    interestingGroups <- .prepareInterestingGroups(
+    interestingGroups <- .returnInterestingGroups(
         object = object,
         interestingGroups = interestingGroups
     )
@@ -202,7 +202,7 @@ NULL
     assert_is_a_string(yCol)
     assert_is_a_string(xTrans)
     assert_is_a_string(yTrans)
-    interestingGroups <- .prepareInterestingGroups(
+    interestingGroups <- .returnInterestingGroups(
         object = object,
         interestingGroups = interestingGroups
     )
@@ -277,7 +277,7 @@ setMethod(
         return = c("grid", "list", "markdown")
     ) {
         validObject(object)
-        interestingGroups <- .prepareInterestingGroups(
+        interestingGroups <- .returnInterestingGroups(
             object = object,
             interestingGroups = interestingGroups
         )

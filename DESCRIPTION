@@ -62,7 +62,7 @@ Imports:
     assertive.sets,
     assertive.strings,
     assertive.types,
-    basejump (>= 0.6.3),
+    basejump (>= 0.6.4),
     Biobase,
     BiocGenerics,
     BiocParallel,
@@ -99,7 +99,7 @@ Suggests:
     testthat (>= 2.0)
 Remotes:
     hbc/bcbioBase,
-    steinbaugh/basejump
+    steinbaugh/basejump@develop
 biocViews:
     DataImport,
     DataRepresentation,

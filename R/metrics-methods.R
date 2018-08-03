@@ -146,7 +146,7 @@ setMethod(
     signature("SingleCellExperiment"),
     function(object, interestingGroups) {
         validObject(object)
-        interestingGroups <- .prepareInterestingGroups(
+        interestingGroups <- .returnInterestingGroups(
             object = object,
             interestingGroups = interestingGroups
         )
