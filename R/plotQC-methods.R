@@ -282,6 +282,7 @@ setMethod(
             interestingGroups = interestingGroups
         )
         geom <- match.arg(geom)
+        assertIsAHeaderLevel(headerLevel)
         return <- match.arg(return)
 
         plotCellCounts <- plotCellCounts(object)
