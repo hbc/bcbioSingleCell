@@ -85,17 +85,8 @@ test_that("filterCells: zinbwave mode", {
 
 
 # metrics ======================================================================
-test_that("metrics : bcbioSingleCell", {
+test_that("metrics", {
     object <- indrops_small
-    x <- metrics(object)
-    expect_true(all(
-        colnames(colData(object)) %in% colnames(x)
-    ))
-    expect_true("interestingGroups" %in% colnames(x))
-})
-
-test_that("metrics : seurat", {
-    object <- seurat_small
     x <- metrics(object)
     expect_true(all(
         colnames(colData(object)) %in% colnames(x)

@@ -3,7 +3,7 @@ context("S4 Object : bcbioSingleCell")
 
 
 # bcbioSingleCell ==============================================================
-# Need to improve the internal minimal YAML to test .readYAMLSample here
+# Need to add YAML metadata to test without `sampleMetadataFile`
 test_that("bcbioSingleCell", {
     uploadDir <- system.file("extdata/indrops", package = "bcbioSingleCell")
     sampleMetadataFile <- file.path(uploadDir, "metadata.csv")
