@@ -27,7 +27,7 @@ setMethod(
         title = "cell counts"
     ) {
         validObject(object)
-        interestingGroups <- .returnInterestingGroups(
+        interestingGroups <- matchInterestingGroups(
             object = object,
             interestingGroups = interestingGroups
         )

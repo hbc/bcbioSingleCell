@@ -29,7 +29,7 @@ setMethod(
         title = "zeros vs. depth"
     ) {
         validObject(object)
-        interestingGroups <- .returnInterestingGroups(
+        interestingGroups <- matchInterestingGroups(
             object = object,
             interestingGroups = interestingGroups
         )

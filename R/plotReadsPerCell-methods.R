@@ -333,7 +333,7 @@ setMethod(
     ) {
         # Passthrough: color, fill
         validObject(object)
-        interestingGroups <- .returnInterestingGroups(
+        interestingGroups <- matchInterestingGroups(
             object = object,
             interestingGroups = interestingGroups
         )

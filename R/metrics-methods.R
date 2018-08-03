@@ -170,7 +170,7 @@ setMethod(
             return(object)
         }
 
-        interestingGroups <- .returnInterestingGroups(
+        interestingGroups <- matchInterestingGroups(
             object = object,
             interestingGroups = interestingGroups
         )
