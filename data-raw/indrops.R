@@ -1,12 +1,14 @@
 # inDrops example dataset (indrops_small)
 # Using harvard-indrop-v3 barcodes
-# 2018-08-02
+# 2018-08-03
 
 library(devtools)
 library(tidyverse)
 library(Seurat)
 library(Matrix)
 load_all()
+
+
 
 # Minimal example bcbio upload directory =======================================
 # Include the top 500 genes (rows) and cells (columns)
@@ -73,6 +75,8 @@ write_lines(rownames(counts), path = rownames_file)
 write_lines(colnames(counts), path = colnames_file)
 write_tsv(barcodes, path = barcodes_file, col_names = FALSE)
 
+
+
 # bcbioRNASeq object ===========================================================
 bcb <- bcbioSingleCell(
     uploadDir = upload_dir,
@@ -82,46 +86,12 @@ bcb <- bcbioSingleCell(
 )
 
 # Apply example filtering without excluding any cells
-# Note that we're enabling zinbwave mode here to test the `diffExp()` handling
-bcb <- filterCells(bcb, zinbwave = TRUE)
-
-# Require 500 cells, 500 genes
-stopifnot(identical(dim(indrops_small), c(500L, 500L)))
-
-# seurat =======================================================================
-# Let's handoff to seurat to perform dimensionality reduction and clustering,
-# then slot the DR data in our bcbioRNASeq object
-seurat <- as(bcb, "seurat") %>%
-    NormalizeData() %>%
-    FindVariableGenes(do.plot = FALSE) %>%
-    ScaleData() %>%
-    RunPCA(do.print = FALSE) %>%
-    FindClusters(resolution = seq(from = 0.4, to = 1.2, by = 0.4)) %>%
-    RunTSNE() %>%
-    # Requires Python `umap-learn` package
-    RunUMAP() %>%
-    SetAllIdent(id = "res.0.4")
-
-# Coerce seurat to SingleCellExperiment, which contains `reducedDims` slot
-seurat_sce <- as(seurat, "SingleCellExperiment")
-stopifnot(identical(
-    assayNames(seurat_sce),
-    c("counts", "logcounts")
-))
-stopifnot(identical(
-    names(reducedDims(seurat_sce)),
-    c("PCA", "TSNE", "UMAP")
-))
-stopifnot(identical(dimnames(bcb), dimnames(seurat_sce)))
+# Note that we're enabling zinbwave mode here to calculate weights
+bcb <- filterCells(bcb)
+stopifnot(identical(dim(bcb), c(500L, 500L)))
 
 
 
 # Save =========================================================================
-# Slot the Seurat calculated logcounts into assays
-assays(bcb)[["logcounts"]] <- assays(seurat_sce)[["logcounts"]]
-# Slot the colData from seurat, which contains "ident"
-colData(bcb) <- colData(seurat_sce)
-# Slot the reduced dimensions into our bcbioSingleCell object
-reducedDims(bcb) <- reducedDims(seurat_sce)
 indrops_small <- bcb
 use_data(indrops_small, compress = "xz", overwrite = TRUE)
