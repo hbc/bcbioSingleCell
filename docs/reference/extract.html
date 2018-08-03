@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
       </span>
     </div>
 
@@ -190,13 +190,11 @@ including cells not kept in the matrix will be dropped in favor of the
 <li><p><code><a href='selectSamples.html'>selectSamples()</a></code> for subsetting based on sample metadata.</p></li>
 </ul></div>
     <div class='dont-index'><p>Other S4 Object: <code><a href='bcbioSingleCell.html'>bcbioSingleCell</a></code>,
-  <code><a href='coerce.html'>coerce</a></code>, <code><a href='show.html'>show</a></code>,
-  <code><a href='updateObject.html'>updateObject</a></code></p></div>
+  <code><a href='show.html'>show</a></code>, <code><a href='updateObject.html'>updateObject</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>colnames</span>(<span class='no'>indrops_small</span>), <span class='fl'>100L</span>)
+    <pre class="examples"><div class='input'><span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>colnames</span>(<span class='no'>indrops_small</span>), <span class='fl'>100L</span>)
 <span class='fu'>head</span>(<span class='no'>cells</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA_AAACACTA_ATCCCACG"
 #&gt; [2] "multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA"
 #&gt; [3] "multiplexed_AAAAAAAA_AAACACTA_CTTCGATT"
@@ -206,10 +204,10 @@ including cells not kept in the matrix will be dropped in favor of the
 <span class='fu'>head</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000000457" "ENSG00000002586" "ENSG00000004939" "ENSG00000005022"
 #&gt; [5] "ENSG00000005100" "ENSG00000008988"</div><div class='input'>
 <span class='co'># Subset by cell identifiers</span>
-<span class='no'>indrops_small</span>[, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.1.18
+<span class='no'>indrops_small</span>[, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.2.0
 #&gt; class: SingleCellExperiment 
 #&gt; dim: 500 100 
-#&gt; metadata(35): version pipeline ... filterSummary subset
+#&gt; metadata(36): version pipeline ... subset originalVersion
 #&gt; assays(4): counts normalizedValues weights logcounts
 #&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
 #&gt;   ENSG00000283391
@@ -224,7 +222,7 @@ including cells not kept in the matrix will be dropped in favor of the
 #&gt; ================================================================================
 #&gt; Upload Dir: "/Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-08-01
+#&gt; R Load Date: 2018-08-02
 #&gt; Level: "genes"
 #&gt; Organism: "Homo sapiens"
 #&gt; Interesting Groups: "sampleName"
@@ -235,10 +233,10 @@ including cells not kept in the matrix will be dropped in favor of the
 #&gt; Filtered: TRUE
 #&gt; zinbwave: TRUE</div><div class='input'>
 <span class='co'># Subset by genes</span>
-<span class='no'>indrops_small</span>[<span class='no'>genes</span>, ]</div><div class='output co'>#&gt; bcbioSingleCell 0.1.18
+<span class='no'>indrops_small</span>[<span class='no'>genes</span>, ]</div><div class='output co'>#&gt; bcbioSingleCell 0.2.0
 #&gt; class: SingleCellExperiment 
 #&gt; dim: 100 500 
-#&gt; metadata(35): version pipeline ... filterSummary subset
+#&gt; metadata(36): version pipeline ... subset originalVersion
 #&gt; assays(4): counts normalizedValues weights logcounts
 #&gt; rownames(100): ENSG00000000457 ENSG00000002586 ... ENSG00000111716
 #&gt;   ENSG00000111775
@@ -253,7 +251,7 @@ including cells not kept in the matrix will be dropped in favor of the
 #&gt; ================================================================================
 #&gt; Upload Dir: "/Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-08-01
+#&gt; R Load Date: 2018-08-02
 #&gt; Level: "genes"
 #&gt; Organism: "Homo sapiens"
 #&gt; Interesting Groups: "sampleName"
@@ -264,10 +262,10 @@ including cells not kept in the matrix will be dropped in favor of the
 #&gt; Filtered: TRUE
 #&gt; zinbwave: TRUE</div><div class='input'>
 <span class='co'># Subset by both genes and cells</span>
-<span class='no'>indrops_small</span>[<span class='no'>genes</span>, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.1.18
+<span class='no'>indrops_small</span>[<span class='no'>genes</span>, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.2.0
 #&gt; class: SingleCellExperiment 
 #&gt; dim: 100 100 
-#&gt; metadata(35): version pipeline ... filterSummary subset
+#&gt; metadata(36): version pipeline ... subset originalVersion
 #&gt; assays(4): counts normalizedValues weights logcounts
 #&gt; rownames(100): ENSG00000000457 ENSG00000002586 ... ENSG00000111716
 #&gt;   ENSG00000111775
@@ -282,7 +280,7 @@ including cells not kept in the matrix will be dropped in favor of the
 #&gt; ================================================================================
 #&gt; Upload Dir: "/Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-08-01
+#&gt; R Load Date: 2018-08-02
 #&gt; Level: "genes"
 #&gt; Organism: "Homo sapiens"
 #&gt; Interesting Groups: "sampleName"

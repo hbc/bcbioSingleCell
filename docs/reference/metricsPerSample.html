@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
       </span>
     </div>
 
@@ -114,11 +114,7 @@
 
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>metricsPerSample</span>(<span class='no'>object</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>,
-  <span class='st'>"median"</span>, <span class='st'>"sum"</span>))
-
-<span class='co'># S4 method for seurat</span>
-<span class='fu'>metricsPerSample</span>(<span class='no'>object</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>, <span class='st'>"median"</span>,
-  <span class='st'>"sum"</span>))</pre>
+  <span class='st'>"median"</span>, <span class='st'>"sum"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,22 +141,21 @@ but "<code>mean</code>" and "<code>median</code>" are also supported.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
-  <code><a href='cell2sample.html'>cell2sample</a></code>, <code><a href='fetchData.html'>fetchGeneData</a></code>,
-  <code><a href='sampleData.html'>sampleData</a></code>, <code><a href='selectSamples.html'>selectSamples</a></code>,
+  <code><a href='cell2sample.html'>cell2sample</a></code>, <code><a href='sampleData.html'>sampleData</a></code>,
+  <code><a href='selectSamples.html'>selectSamples</a></code>,
   <code><a href='subsetPerSample.html'>subsetPerSample</a></code>, <code><a href='topBarcodes.html'>topBarcodes</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
-<span class='co'># mean</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metricsPerSample</span>(<span class='no'>cellranger_small</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating mean per sample</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;         nGene     nUMI nCoding   nMito log10GenesPerUMI  mitoRatio
-#&gt; pbmc 2275.424 9151.192  8396.6 301.658        0.8496251 0.03342856</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='co'># mean</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metricsPerSample</span>(<span class='no'>indrops_small</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating mean per sample</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;        nGene     nUMI   nCount  nCoding  nMito log10GenesPerUMI mitoRatio
+#&gt; rep_1 320.73 2203.768 42565.34 1640.836 374.53        0.7600619 0.1954493</div><div class='input'>
 <span class='co'># median</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metricsPerSample</span>(<span class='no'>cellranger_small</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"median"</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating median per sample</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;       nGene nUMI nCoding nMito log10GenesPerUMI mitoRatio
-#&gt; pbmc 2139.5 7947    7233   277        0.8496976 0.0310044</div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metricsPerSample</span>(<span class='no'>indrops_small</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"median"</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating median per sample</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;       nGene   nUMI  nCount nCoding nMito log10GenesPerUMI mitoRatio
+#&gt; rep_1   330 1790.5 36119.5  1263.5   256         0.763051 0.1154283</div><div class='input'>
 <span class='co'># sum</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metricsPerSample</span>(<span class='no'>cellranger_small</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"sum"</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating sum per sample</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;        nGene    nUMI nCoding  nMito
-#&gt; pbmc 1137712 4575596 4198300 150829</div></pre>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metricsPerSample</span>(<span class='no'>indrops_small</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"sum"</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating sum per sample</span></div><div class='input'><span class='fu'>head</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;        nGene    nUMI   nCount nCoding  nMito
+#&gt; rep_1 160365 1101884 21282671  820418 187265</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

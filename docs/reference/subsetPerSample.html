@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
       </span>
     </div>
 
@@ -165,14 +165,13 @@ sample.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
-  <code><a href='cell2sample.html'>cell2sample</a></code>, <code><a href='fetchData.html'>fetchGeneData</a></code>,
+  <code><a href='cell2sample.html'>cell2sample</a></code>,
   <code><a href='metricsPerSample.html'>metricsPerSample</a></code>, <code><a href='sampleData.html'>sampleData</a></code>,
   <code><a href='selectSamples.html'>selectSamples</a></code>, <code><a href='topBarcodes.html'>topBarcodes</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='co'># List mode (default)</span>
+    <pre class="examples"><div class='input'><span class='co'># List mode (default)</span>
 <span class='no'>list</span> <span class='kw'>&lt;-</span> <span class='fu'>subsetPerSample</span>(<span class='no'>indrops_small</span>, <span class='kw'>assignAndSave</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: rep_1</span></div><div class='output co'>#&gt; <span class='message'>500 cells matched</span></div><div class='output co'>#&gt; <span class='message'>Parameters:</span>
 #&gt; <span class='message'>  - &gt;= 0 UMIs per cell</span>
 #&gt; <span class='message'>  - &lt;= Inf UMIs per cell</span>

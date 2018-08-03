@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.18</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
       </span>
     </div>
 
@@ -145,6 +145,12 @@ contain <code>geneID</code> and <code>geneName</code>.</p></td>
       <th>dark</th>
       <td><p><code>boolean</code>. Plot against a dark background using
 <code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>dimsUse</th>
+      <td><p><code>integer</code>. Vector of length 2 that denotes the columns from
+the reduced dimension matrix to use for <code>centerX</code> and <code>centerY</code> column
+calculations. Defaults the first and second dimensions.</p></td>
     </tr>
     <tr>
       <th>dir</th>
@@ -231,9 +237,9 @@ dots (<code>FALSE</code>).</p></td>
       <td><p><code>scalar numeric</code>. Cell point size.</p></td>
     </tr>
     <tr>
-      <th>reduction</th>
-      <td><p><code>string</code>. Dimensional reduction method to apply. Defaults to
-t-SNE ("<code>TSNE</code>") but UMAP is also supported ("<code>UMAP</code>").</p></td>
+      <th>reducedDim</th>
+      <td><p><code>string</code>. Name of reduced dimension matrix slotted in
+<code>reducedDims()</code>. Includes TNSE, UMAP, PCA, for example.</p></td>
     </tr>
     <tr>
       <th>return</th>
