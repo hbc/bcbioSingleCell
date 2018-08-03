@@ -18,20 +18,20 @@
 #' @importFrom assertive.sets assert_are_disjoint_sets assert_are_set_equal
 #'   assert_is_subset
 #' @importFrom assertive.strings assert_any_are_matching_regex
-#' @importFrom assertive.types assert_is_a_bool assert_is_a_string
-#'   assert_is_all_of assert_is_an_integer assert_is_any_of assert_is_character
-#'   assert_is_data.frame assert_is_environment assert_is_factor
-#'   assert_is_function assert_is_integer assert_is_list assert_is_numeric
-#'   assert_is_tbl_df is_a_string
+#' @importFrom assertive.types assert_is_a_bool assert_is_a_number
+#'   assert_is_a_string assert_is_all_of assert_is_an_integer assert_is_any_of
+#'   assert_is_character assert_is_data.frame assert_is_environment
+#'   assert_is_factor assert_is_function assert_is_integer assert_is_list
+#'   assert_is_numeric assert_is_tbl_df is_a_string
 #' @importFrom basejump assertFormalInterestingGroups assertHasRownames
 #'   assertIsAHeaderLevel assertIsAStringOrNULL assertIsAnImplicitInteger
 #'   assertIsAnImplicitIntegerOrNULL assertIsColorScaleDiscreteOrNULL
 #'   assertIsFillScaleDiscreteOrNULL assignAndSaveData camel emptyRanges
-#'   gene2symbol hasRownames initializeDirectory makeGRangesFromEnsembl
-#'   makeGRangesFromGFF makeNames makeTx2geneFromGFF markdownHeader
-#'   markdownPlotlist printString readJSON readYAML sanitizeSampleData
-#'   stripTranscriptVersions theme_midnight theme_paperwhite tx2geneFromGFF
-#'   uniteInterestingGroups
+#'   gene2symbol hasRownames interestingGroups interestingGroups<-
+#'   initializeDirectory makeGRangesFromEnsembl makeGRangesFromGFF makeNames
+#'   makeTx2geneFromGFF markdownHeader markdownPlotlist printString readJSON
+#'   readYAML sanitizeSampleData stripTranscriptVersions theme_midnight
+#'   theme_paperwhite tx2geneFromGFF uniteInterestingGroups
 #' @importFrom bcbioBase bcbio_geom_abline bcbio_geom_label
 #'   bcbio_geom_label_average bcbio_geom_label_repel minimalSampleData
 #'   prepareSummarizedExperiment readDataVersions readLog readProgramVersions
@@ -66,7 +66,7 @@
 #' @importFrom stats ecdf
 #' @importFrom stringr str_extract str_match str_pad str_split
 #' @importFrom SummarizedExperiment assay assayNames assays assays<- colData
-#'   rowData rowRanges rowRanges<-
+#'   colData<- rowData rowRanges rowRanges<-
 #' @importFrom tibble as_tibble column_to_rownames
 #'   rownames_to_column tibble
 #' @importFrom utils capture.output globalVariables packageVersion
