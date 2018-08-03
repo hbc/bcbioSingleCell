@@ -36,7 +36,6 @@ setMethod(
 
         metrics <- metrics(object, interestingGroups = interestingGroups)
 
-        # TODO Check to see if we should make this an internal constructor
         sampleData <- sampleData(
             object = object,
             interestingGroups = interestingGroups
