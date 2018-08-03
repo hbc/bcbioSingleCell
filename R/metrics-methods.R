@@ -175,12 +175,14 @@ setMethod(
             interestingGroups = interestingGroups
         )
 
-        assert_is_subset(metricsCols, colnames(colData))
         data <- as.data.frame(colData)
+        assert_is_subset(metricsCols, colnames(data))
+
         if (!"sampleName" %in% colnames(data)) {
             data[["sampleID"]] <- factor("unknown")
             data[["sampleName"]] <- factor("unknown")
         }
+
         data <- uniteInterestingGroups(
             object = data,
             interestingGroups = interestingGroups
@@ -190,6 +192,6 @@ setMethod(
             y = colnames(data)
         )
 
-        as.data.frame(colData)
+        data
     }
 )
