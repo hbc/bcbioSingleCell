@@ -19,11 +19,10 @@ reference:
   - title: S4 Object
     contents:
     - bcbioSingleCell
-    - coerce
     - combine
     - extract
     - show
-    - ends_with("Object")
+    - updateObject
   - title: Read Functions
     contents:
     - starts_with("read")
@@ -31,7 +30,6 @@ reference:
     contents:
     - starts_with("aggregate")
     - cell2sample
-    - starts_with("fetch")
     - starts_with("map")
     - sampleData
     - starts_with("select")
@@ -45,7 +43,6 @@ reference:
     - starts_with("metrics")
     - plotBarcodeRanks
     - plotCellCounts
-    - plotFeature
     - plotGenesPerCell
     - starts_with("plotMito")
     - plotNovelty
@@ -53,39 +50,9 @@ reference:
     - plotReadsPerCell
     - starts_with("plotUMI")
     - plotZerosVsDepth
-    - plotNovelty
-
-  - title: Clustering Functions
-    contents:
-    - cellCountsPerCluster
-    - cellTypesPerCluster
-    - starts_with("cluster")
-    - plotFeature
-    - plotMarker
-    - plotPCElbow
-    - plotTSNE
-  - title: Gene Expression Functions
-    contents:
-    - plotGene
-    - plotDot
-    - plotMarker
-    - plotViolin
-  - title: Differential Expression Functions
-    contents:
-    - diffExp
-    - knownMarkersDetected
-    - sanitizeSeuratMarkers
-    - topMarkers
-  - title: Plot Functions
-    contents:
-    - starts_with("plot")
   - title: R Markdown Functions
     contents:
     - ends_with("Template")
-  - title: Internal Data
-    contents:
-    - cellCycleMarkers
-    - cellTypeMarkers
   - title: Example Data
     contents:
     - ends_with("_small")

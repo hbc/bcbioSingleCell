@@ -80,7 +80,7 @@ setMethod(
             ), call. = FALSE)
         }
 
-        # Following the Seurat `seurat@meta.data` conventions here
+        # Following the Seurat `seurat@meta.data` conventions
         data <- tibble(
             rowname = colnames(object),
             nUMI = colSums(object),

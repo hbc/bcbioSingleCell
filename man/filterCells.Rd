@@ -76,8 +76,6 @@ show(x)
 metadata(x)$filterParams
 }
 \seealso{
-\code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}}.
-
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
   \code{\link{metrics}}, \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},

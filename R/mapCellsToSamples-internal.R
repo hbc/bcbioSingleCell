@@ -38,7 +38,7 @@
     samples <- unique(as.character(samples))
 
     # Early return if `cells` don't have a separator and `samples` is a string.
-    # Shouldn't happen normally but is necessary for some Seurat datasets.
+    # Shouldn't happen normally but is necessary for some seurat objects.
     if (!any(grepl("[_-]", cells)) && is_a_string(samples)) {
         cell2sample <- factor(replicate(n = length(cells), expr = samples))
         names(cell2sample) <- cells

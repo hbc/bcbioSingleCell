@@ -26,8 +26,6 @@
 #' @param minCellsPerGene `scalar integer`. Include genes with non-zero
 #'   expression in at least this many cells.
 #'
-#' @seealso [Seurat::CreateSeuratObject()].
-#'
 #' @return `bcbioSingleCell`, with filtering information slotted into
 #'   [metadata()] as `filterCells` and `filterParams`.
 #'

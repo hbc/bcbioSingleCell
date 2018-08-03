@@ -122,7 +122,8 @@
   <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S4 method for SingleCellExperiment</span>
-<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>)</pre>
+<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
+  <span class='kw'>recalculate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -146,11 +147,18 @@
 interesting groups. Must be formatted in camel case and intersect with
 <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
     </tr>
+    <tr>
+      <th>recalculate</th>
+      <td><p><code>boolean</code>. Force recalculation, using primary <code>counts()</code>
+matrix.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>data.frame</code> with cellular barcodes as rows.</p>
+    <p><code>data.frame</code> with cellular barcodes as rows. If <code>recalculate = TRUE</code>,
+returns the original object class (e.g. <code>SingleCellExperiment</code>), with
+updated metrics in <code>colData()</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -169,11 +177,11 @@ interesting groups. Must be formatted in camel case and intersect with
     <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metrics</span>(<span class='no'>indrops_small</span>)
 <span class='fu'>glimpse</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 500
-#&gt; Variables: 21
-#&gt; $ nGene             &lt;int&gt; 289, 405, 423, 337, 350, 378, 442, 217, 332, 405,...
-#&gt; $ nUMI              &lt;int&gt; 1199, 2766, 4399, 1485, 1771, 2208, 4095, 1406, 1...
+#&gt; Variables: 16
 #&gt; $ nCount            &lt;int&gt; 25114, 55337, 71802, 34607, 34005, 44760, 76590, ...
 #&gt; $ sampleID          &lt;fct&gt; multiplexed_AAAAAAAA, multiplexed_AAAAAAAA, multi...
+#&gt; $ nUMI              &lt;int&gt; 1199, 2766, 4399, 1485, 1771, 2208, 4095, 1406, 1...
+#&gt; $ nGene             &lt;int&gt; 289, 405, 423, 337, 350, 378, 442, 217, 332, 405,...
 #&gt; $ nCoding           &lt;int&gt; 1105, 2385, 3864, 1296, 1574, 1599, 3630, 695, 11...
 #&gt; $ nMito             &lt;int&gt; 24, 241, 234, 103, 83, 452, 234, 556, 246, 225, 2...
 #&gt; $ log10GenesPerUMI  &lt;dbl&gt; 0.7992992, 0.7575732, 0.7208579, 0.7969256, 0.783...
@@ -185,11 +193,6 @@ interesting groups. Must be formatted in camel case and intersect with
 #&gt; $ sequence          &lt;fct&gt; TTTTTTTT, TTTTTTTT, TTTTTTTT, TTTTTTTT, TTTTTTTT,...
 #&gt; $ aggregate         &lt;fct&gt; sample, sample, sample, sample, sample, sample, s...
 #&gt; $ revcomp           &lt;fct&gt; AAAAAAAA, AAAAAAAA, AAAAAAAA, AAAAAAAA, AAAAAAAA,...
-#&gt; $ orig.ident        &lt;fct&gt; multiplexed, multiplexed, multiplexed, multiplexe...
-#&gt; $ res.0.4           &lt;chr&gt; "0", "2", "0", "0", "0", "1", "0", "0", "0", "2",...
-#&gt; $ res.0.8           &lt;chr&gt; "3", "2", "1", "1", "3", "0", "1", "1", "3", "2",...
-#&gt; $ res.1.2           &lt;chr&gt; "4", "0", "1", "1", "4", "2", "1", "1", "4", "0",...
-#&gt; $ ident             &lt;fct&gt; 0, 2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 1, 1, 1, 0, 1, 2...
 #&gt; $ interestingGroups &lt;fct&gt; rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, ...</div><div class='input'>
 <span class='co'># matrix ====</span>
 <span class='no'>counts</span> <span class='kw'>&lt;-</span> <span class='fu'>counts</span>(<span class='no'>indrops_small</span>)

@@ -113,9 +113,9 @@ counts from <code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.
     </div>
 
     <pre class="usage"><span class='fu'>readCellRanger</span>(<span class='no'>uploadDir</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mtx"</span>, <span class='st'>"hdf5"</span>), <span class='kw'>filtered</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>organism</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refdataDir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>transgeneNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>spikeNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>organism</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>refdataDir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>gffFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>transgeneNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>spikeNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,15 +153,29 @@ be left <code>NULL</code>, but otherwise required for runs with multipliexed FAS
 containing multiple index barcodes (e.g. inDrop).</p></td>
     </tr>
     <tr>
+      <th>interestingGroups</th>
+      <td><p><code>character</code> or <code>NULL</code>. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+<code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+    </tr>
+    <tr>
       <th>refdataDir</th>
       <td><p><code>string</code> or <code>NULL</code>. Directory path to Cell Ranger reference
 annotation data.</p></td>
     </tr>
     <tr>
-      <th>interestingGroups</th>
-      <td><p><code>character</code> or <code>NULL</code>. Character vector of
-interesting groups. Must be formatted in camel case and intersect with
-<code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+      <th>gffFile</th>
+      <td><p><code>string</code> or <code>NULL</code>. <em>Advanced use only; not recommended.</em> By
+default, we recommend leaving this <code>NULL</code> for genomes that are supported on
+Ensembl. In this case, the row annotations (<code>rowRanges()</code>) will be obtained
+automatically from Ensembl by passing the <code>organism</code>, <code>genomeBuild</code>, and
+<code>ensemblRelease</code> arguments to AnnotationHub and ensembldb. For a genome
+that is not supported on Ensembl and/or AnnotationHub, a GFF/GTF (General
+Feature Format) file is required. Generally, we recommend using a GTF
+(GFFv2) file here over a GFF3 file if possible, although all GFF formats
+are supported. The function will internally generate transcript-to-gene
+mappings and construct a <code>GRanges</code> object containing the genomic ranges
+(<code>rowRanges()</code>).</p></td>
     </tr>
     <tr>
       <th>transgeneNames</th>
