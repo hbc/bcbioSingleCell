@@ -214,24 +214,6 @@ flat &lt;-<span class="st"> </span><span class="kw">flatFiles</span>(bcb)
 </table>
 </div>
 </div>
-<div id="markers" class="section level2">
-<h2 class="hasAnchor">
-<a href="#markers" class="anchor"></a>Markers</h2>
-<p>Shared <a href="https://docs.google.com/spreadsheets/d/1qA5ktYeimNGpZF1UPSQZATbpzEqgyxN6daoMOjv6YYw">cell-cycle markers</a> and <a href="https://docs.google.com/spreadsheets/d/1vGNU2CCxpaoTCLvzOxK1hf5gjULrf2-CpgCp9bOfGJ0">cell-type markers</a> are available on <a href="https://www.google.com/sheets">Google Sheets</a>. Contact <a href="https://mike.steinbaugh.com">Michael Steinbaugh</a> if you’d like to contribute to this list, and he’ll enable write access.</p>
-</div>
-<div id="troubleshooting" class="section level2">
-<h2 class="hasAnchor">
-<a href="#troubleshooting" class="anchor"></a>Troubleshooting</h2>
-<div id="maximal-number-of-dlls-reached" class="section level3">
-<h3 class="hasAnchor">
-<a href="#maximal-number-of-dlls-reached" class="anchor"></a>Maximal number of DLLs reached</h3>
-<pre><code>Error: package or namespace load failed for 'bcbioSingleCell' in dyn.load(file, DLLpath = DLLpath, ...):
-  maximal number of DLLs reached...</code></pre>
-<p>Depending on your operating system, you may encounter this error about hitting the DLL limit in <a href="https://www.r-project.org">R</a>. This issue is becoming more common as RNA-seq analysis packages grow increasingly complex. Luckily, we can configure <a href="https://www.r-project.org">R</a> to increase the DLL limit. Append this line to your <code>~/.Renviron</code> file:</p>
-<pre><code>R_MAX_NUM_DLLS=150</code></pre>
-<p>For more information on this issue, consult <code>help("dyn.load")</code> in the <a href="https://www.r-project.org">R</a> documentation. The number of loaded DLLs in an <a href="https://www.r-project.org">R</a> session can be obtained with <code>getLoadedDLLs()</code>.</p>
-</div>
-</div>
 <div id="references" class="section level2">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>

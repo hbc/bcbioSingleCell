@@ -91,27 +91,6 @@ This is our current method for handling [10X Genomics Cell Ranger][cellranger] o
 | sample3     | wildtype |
 | sample4     | knockout |
 
-## Markers
-
-Shared [cell-cycle markers][] and [cell-type markers][] are available on [Google Sheets][]. Contact [Michael Steinbaugh][] if you'd like to contribute to this list, and he'll enable write access.
-
-## Troubleshooting
-
-### Maximal number of DLLs reached
-
-```
-Error: package or namespace load failed for 'bcbioSingleCell' in dyn.load(file, DLLpath = DLLpath, ...):
-  maximal number of DLLs reached...
-```
-
-Depending on your operating system, you may encounter this error about hitting the DLL limit in [R][]. This issue is becoming more common as RNA-seq analysis packages grow increasingly complex. Luckily, we can configure [R][] to increase the DLL limit. Append this line to your `~/.Renviron` file:
-
-```
-R_MAX_NUM_DLLS=150
-```
-
-For more information on this issue, consult `help("dyn.load")` in the [R][] documentation. The number of loaded DLLs in an [R][] session can be obtained with `getLoadedDLLs()`.
-
 ## References
 
 The papers and software cited in our workflows are available as a [shared library](https://paperpile.com/shared/C8EMxl) on [Paperpile][].
@@ -120,14 +99,10 @@ The papers and software cited in our workflows are available as a [shared librar
 [bcl2fastq]: https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html
 [Bioconductor]: https://bioconductor.org
 [BiocManager]: https://cran.r-project.org/package=BiocManager
-[Cell-cycle markers]: https://docs.google.com/spreadsheets/d/1qA5ktYeimNGpZF1UPSQZATbpzEqgyxN6daoMOjv6YYw
-[Cell-type markers]: https://docs.google.com/spreadsheets/d/1vGNU2CCxpaoTCLvzOxK1hf5gjULrf2-CpgCp9bOfGJ0
 [CellRanger]: https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger
 [conda]: https://conda.io
 [devtools]: https://cran.r-project.org/package=devtools
-[Google Sheets]: https://www.google.com/sheets
 [inDrops]: https://github.com/indrops/indrops
-[Michael Steinbaugh]: https://mike.steinbaugh.com
 [Paperpile]: https://paperpile.com
 [R]: https://www.r-project.org
 [SCE]: https://doi.org/doi:10.18129/B9.bioc.SingleCellExperiment
