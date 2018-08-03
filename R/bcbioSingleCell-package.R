@@ -32,6 +32,7 @@
 #'   makeTx2geneFromGFF markdownHeader markdownPlotlist printString readJSON
 #'   readYAML sanitizeSampleData stripTranscriptVersions theme_midnight
 #'   theme_paperwhite tx2geneFromGFF uniteInterestingGroups
+#'   .returnInterestingGroups
 #' @importFrom bcbioBase bcbio_geom_abline bcbio_geom_label
 #'   bcbio_geom_label_average bcbio_geom_label_repel minimalSampleData
 #'   prepareSummarizedExperiment readDataVersions readLog readProgramVersions
