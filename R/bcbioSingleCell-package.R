@@ -40,9 +40,9 @@
 #' @importFrom BiocGenerics cbind counts counts<- do.call rbind
 #' @importFrom BiocParallel SerialParam
 #' @importFrom cowplot plot_grid
-#' @importFrom dplyr arrange bind_rows desc filter group_by
-#'   left_join matches mutate mutate_all mutate_if n pull
-#'   rename select select_if slice summarize summarize_all ungroup
+#' @importFrom dplyr arrange bind_rows desc filter group_by left_join matches
+#'   mutate mutate_all mutate_if n pull rename select select_if slice summarize
+#'   summarize_all ungroup
 #' @importFrom ggplot2 aes facet_wrap geom_bar geom_boxplot geom_histogram
 #'   geom_hline geom_line geom_point geom_smooth geom_step geom_text geom_violin
 #'   geom_vline ggplot labs scale_x_continuous scale_y_continuous stat_ecdf
@@ -67,8 +67,7 @@
 #' @importFrom stringr str_extract str_match str_pad str_split
 #' @importFrom SummarizedExperiment assay assayNames assays assays<- colData
 #'   colData<- rowData rowRanges rowRanges<-
-#' @importFrom tibble as_tibble column_to_rownames
-#'   rownames_to_column tibble
+#' @importFrom tibble as_tibble column_to_rownames rownames_to_column tibble
 #' @importFrom utils capture.output globalVariables packageVersion
 #' @importFrom zinbwave glmWeightedF zinbwave
 NULL
