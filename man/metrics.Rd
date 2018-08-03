@@ -17,7 +17,8 @@
 \S4method{metrics}{dgTMatrix}(object, rowRanges = NULL,
   prefilter = FALSE)
 
-\S4method{metrics}{SingleCellExperiment}(object, interestingGroups)
+\S4method{metrics}{SingleCellExperiment}(object, interestingGroups,
+  recalculate = FALSE)
 }
 \arguments{
 \item{object}{Object.}
@@ -30,9 +31,14 @@
 \item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
 interesting groups. Must be formatted in camel case and intersect with
 \code{\link[=sampleData]{sampleData()}} colnames.}
+
+\item{recalculate}{\code{boolean}. Force recalculation, using primary \code{\link[=counts]{counts()}}
+matrix.}
 }
 \value{
-\code{data.frame} with cellular barcodes as rows.
+\code{data.frame} with cellular barcodes as rows. If \code{recalculate = TRUE},
+returns the original object class (e.g. \code{SingleCellExperiment}), with
+updated metrics in \code{\link[=colData]{colData()}}.
 }
 \description{
 Sample Barcode Metrics

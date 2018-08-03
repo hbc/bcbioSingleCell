@@ -11,8 +11,12 @@
 #' @param rowRanges `GRanges`. Data describing the rows of the object.
 #' @param prefilter `boolean`. Apply pre-filtering to the cellular barcodes
 #'   (*recommended*).
+#' @param recalculate `boolean`. Force recalculation, using primary [counts()]
+#'   matrix.
 #'
-#' @return `data.frame` with cellular barcodes as rows.
+#' @return `data.frame` with cellular barcodes as rows. If `recalculate = TRUE`,
+#'   returns the original object class (e.g. `SingleCellExperiment`), with
+#'   updated metrics in [colData()].
 #'
 #' @examples
 #' # SingleCellExperiment ====
@@ -144,14 +148,32 @@ setMethod(
 setMethod(
     "metrics",
     signature("SingleCellExperiment"),
-    function(object, interestingGroups) {
+    function(object, interestingGroups, recalculate = FALSE) {
         validObject(object)
+
+        colData <- colData(object)
+
+        # Recalculate metrics and return original object, if desired
+        if (isTRUE(recalculate)) {
+            # Bind metrics to colData
+            metrics <- metrics(counts(object))
+            colData <- colData[
+                ,
+                setdiff(colnames(colData), colnames(metrics)),
+                drop = FALSE
+                ]
+            colData <- cbind(metrics, colData)
+            colData(object) <- colData
+            return(object)
+        }
+
         interestingGroups <- .returnInterestingGroups(
             object = object,
             interestingGroups = interestingGroups
         )
 
-        data <- as.data.frame(colData(object))
+        assert_is_subset(metricsCols, colnames(colData))
+        data <- as.data.frame(colData)
         if (!"sampleName" %in% colnames(data)) {
             data[["sampleID"]] <- factor("unknown")
             data[["sampleName"]] <- factor("unknown")
@@ -165,6 +187,6 @@ setMethod(
             y = colnames(data)
         )
 
-        data
+        as.data.frame(colData)
     }
 )
