@@ -156,7 +156,10 @@ setMethod(
         # Recalculate metrics and return original object, if desired
         if (isTRUE(recalculate)) {
             # Bind metrics to colData
-            metrics <- metrics(counts(object))
+            metrics <- metrics(
+                object = counts(object),
+                rowRanges = rowRanges(object)
+            )
             colData <- colData[
                 ,
                 setdiff(colnames(colData), colnames(metrics)),
