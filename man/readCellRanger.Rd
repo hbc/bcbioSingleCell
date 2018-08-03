@@ -5,9 +5,9 @@
 \title{Read 10X Genomics Cell Ranger Data}
 \usage{
 readCellRanger(uploadDir, format = c("mtx", "hdf5"), filtered = TRUE,
-  organism = NULL, sampleMetadataFile = NULL, refdataDir = NULL,
-  interestingGroups = "sampleName", transgeneNames = NULL,
-  spikeNames = NULL, ...)
+  organism = NULL, sampleMetadataFile = NULL,
+  interestingGroups = "sampleName", refdataDir = NULL,
+  gffFile = NULL, transgeneNames = NULL, spikeNames = NULL, ...)
 }
 \arguments{
 \item{uploadDir}{\code{string}. Path to Cell Ranger output directory. This
@@ -32,12 +32,24 @@ Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
 be left \code{NULL}, but otherwise required for runs with multipliexed FASTQs
 containing multiple index barcodes (e.g. inDrop).}
 
-\item{refdataDir}{\code{string} or \code{NULL}. Directory path to Cell Ranger reference
-annotation data.}
-
 \item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
 interesting groups. Must be formatted in camel case and intersect with
 \code{\link[=sampleData]{sampleData()}} colnames.}
+
+\item{refdataDir}{\code{string} or \code{NULL}. Directory path to Cell Ranger reference
+annotation data.}
+
+\item{gffFile}{\code{string} or \code{NULL}. \emph{Advanced use only; not recommended.} By
+default, we recommend leaving this \code{NULL} for genomes that are supported on
+Ensembl. In this case, the row annotations (\code{\link[=rowRanges]{rowRanges()}}) will be obtained
+automatically from Ensembl by passing the \code{organism}, \code{genomeBuild}, and
+\code{ensemblRelease} arguments to AnnotationHub and ensembldb. For a genome
+that is not supported on Ensembl and/or AnnotationHub, a GFF/GTF (General
+Feature Format) file is required. Generally, we recommend using a GTF
+(GFFv2) file here over a GFF3 file if possible, although all GFF formats
+are supported. The function will internally generate transcript-to-gene
+mappings and construct a \code{GRanges} object containing the genomic ranges
+(\code{\link[=rowRanges]{rowRanges()}}).}
 
 \item{transgeneNames}{\code{character} or \code{NULL}. Vector indicating which
 \code{\link[=assay]{assay()}} rows denote transgenes (e.g. EGFP, TDTOMATO).}

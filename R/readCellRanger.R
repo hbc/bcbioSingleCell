@@ -64,8 +64,9 @@ readCellRanger <- function(
     filtered = TRUE,
     organism = NULL,
     sampleMetadataFile = NULL,
-    refdataDir = NULL,
     interestingGroups = "sampleName",
+    refdataDir = NULL,
+    gffFile = NULL,
     transgeneNames = NULL,
     spikeNames = NULL,
     ...
@@ -82,6 +83,7 @@ readCellRanger <- function(
         assert_all_are_dirs(refdataDir)
         refdataDir <- normalizePath(refdataDir, winslash = "/", mustWork = TRUE)
     }
+    assertIsAStringOrNULL(gffFile)
     assert_is_character(interestingGroups)
     assert_is_any_of(transgeneNames, c("character", "NULL"))
     assert_is_any_of(spikeNames, c("character", "NULL"))
@@ -212,6 +214,8 @@ readCellRanger <- function(
             str_split("\\.", simplify = TRUE) %>%
             .[1L, 3L] %>%
             as.integer()
+    } else if (is_a_string(gffFile)) {
+        rowRanges <- makeGRangesFromGFF(gffFile, format = "genes")
     } else if (is_a_string(organism)) {
         # CellRanger uses Ensembl refdata internally. Here we're fetching the
         # annotations with AnnotationHub rather than pulling from the GTF file
