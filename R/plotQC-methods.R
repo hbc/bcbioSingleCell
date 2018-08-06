@@ -7,7 +7,7 @@
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh
 #'
-#' @importFrom bcbioBase plotQC
+#' @importFrom basejump plotQC
 #' @export
 #'
 #' @inheritParams general
