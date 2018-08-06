@@ -45,9 +45,6 @@ unlink(c(
     "bibliography.bib"
 ))
 }
-\seealso{
-Other Prepare Functions: \code{\link{prepareSummarizedExperiment}}
-}
 \author{
 Michael Steinbaugh
 }

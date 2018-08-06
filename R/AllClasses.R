@@ -36,7 +36,7 @@ bcbioSingleCell <- setClass(
 #' @docType class
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @inheritParams bcbioBase::prepareSummarizedExperiment
+#' @inheritParams basejump::makeSummarizedExperiment
 #' @inheritParams general
 #' @param uploadDir `string`. Path to final upload directory. This path is set
 #'   when running "`bcbio_nextgen -w template`".
