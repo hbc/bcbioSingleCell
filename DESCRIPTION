@@ -53,7 +53,7 @@ LazyData: TRUE
 Depends:
     R (>= 3.4),
     SingleCellExperiment,
-    bcbioBase (>= 0.3)
+    bcbioBase (>= 0.4)
 Imports:
     assertive.base,
     assertive.files,
@@ -62,7 +62,7 @@ Imports:
     assertive.sets,
     assertive.strings,
     assertive.types,
-    basejump (>= 0.6.4),
+    basejump (>= 0.7),
     Biobase,
     BiocGenerics,
     BiocParallel,
@@ -98,8 +98,8 @@ Suggests:
     roxygen2,
     testthat (>= 2.0)
 Remotes:
-    hbc/bcbioBase,
-    steinbaugh/basejump
+    hbc/bcbioBase@develop,
+    steinbaugh/basejump@develop
 biocViews:
     DataImport,
     DataRepresentation,
