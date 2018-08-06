@@ -53,17 +53,16 @@ pcCutoff <- function(...) {
 
 
 # v0.1.0 =======================================================================
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 calculateMetrics <- function(...) {
-    .Deprecated("metrics")
-    metrics(...)
+    .Defunct("metrics")
 }
 
 
 
 # v0.1.1 =======================================================================
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 inflectionPoint <- function(...) {
     .Defunct("plotBarcodeRanks")
@@ -71,7 +70,7 @@ inflectionPoint <- function(...) {
 
 
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotCumulativeUMIsPerCell <- function(...) {
     .Defunct("plotUMIsPerCell")
@@ -99,236 +98,178 @@ loadSingleCell <- function(...) {
 
 
 # v0.2.0 =======================================================================
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 cellCountsPerCluster <- function(...) {
-    .Deprecated("pointillism::cellCountsPerCluster")
-    requireNamespace("pointillism")
-    pointillism::cellCountsPerCluster(...)
+    .Defunct("pointillism::cellCountsPerCluster")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 cellTypesPerCluster <- function(...) {
-    .Deprecated("pointillism::cellTypesPerCluster")
-    requireNamespace("pointillism")
-    pointillism::cellTypesPerCluster(...)
+    .Defunct("pointillism::cellTypesPerCluster")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 clusterCellCountsPerSample <- function(...) {
-    .Deprecated("pointillism::clusterCellCountsPerSample")
-    requireNamespace("pointillism")
-    pointillism::clusterCellCountsPerSample(...)
+    .Defunct("pointillism::clusterCellCountsPerSample")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 diffExp <- function(...) {
-    .Deprecated("pointillism::diffExp")
-    requireNamespace("pointillism")
-    pointillism::diffExp(...)
+    .Defunct("pointillism::diffExp")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 fetchGeneData <- function(...) {
-    .Deprecated("pointillism::fetchGeneData")
-    requireNamespace("pointillism")
-    pointillism::fetchGeneData(...)
+    .Defunct("pointillism::fetchGeneData")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 fetchPCAData <- function(...) {
-    .Deprecated("pointillism::fetchPCAData")
-    requireNamespace("pointillism")
-    pointillism::fetchPCAData(...)
+    .Defunct("pointillism::fetchReducedDimData")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 fetchTSNEData <- function(...) {
-    .Deprecated("pointillism::fetchTSNEData")
-    requireNamespace("pointillism")
-    pointillism::fetchTSNEData(...)
+    .Defunct("pointillism::fetchReducedDimData")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 fetchTSNEExpressionData <- function(...) {
-    .Deprecated("pointillism::fetchTSNEExpressionData")
-    requireNamespace("pointillism")
-    pointillism::fetchTSNEExpressionData(...)
+    .Defunct("pointillism::fetchReducedDimExpressionData")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 fetchUMAPData <- function(...) {
-    .Deprecated("pointillism::fetchUMAPData")
-    requireNamespace("pointillism")
-    pointillism::fetchUMAPData(...)
+    .Defunct("pointillism::fetchReducedDimData")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 fetchUMAPExpressionData <- function(...) {
-    .Deprecated("pointillism::fetchUMAPExpressionData")
-    requireNamespace("pointillism")
-    pointillism::fetchUMAPExpressionData(...)
+    .Defunct("pointillism::fetchReducedDimExpressionData")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 knownMarkersDetected <- function(...) {
-    .Deprecated("pointillism::knownMarkersDetected")
-    requireNamespace("pointillism")
-    pointillism::knownMarkersDetected(...)
+    .Defunct("pointillism::knownMarkersDetected")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotCellTypesPerCluster <- function(...) {
-    .Deprecated("pointillism::plotCellTypesPerCluster")
-    requireNamespace("pointillism")
-    pointillism::plotCellTypesPerCluster(...)
+    .Defunct("pointillism::plotCellTypesPerCluster")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotFeatureTSNE <- function(...) {
-    .Deprecated("pointillism::plotFeatureTSNE")
-    requireNamespace("pointillism")
-    pointillism::plotFeatureTSNE(...)
+    .Defunct("pointillism::plotFeature")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotFeatureUMAP <- function(...) {
-    .Deprecated("pointillism::plotFeatureUMAP")
-    requireNamespace("pointillism")
-    pointillism::plotFeatureUMAP(...)
+    .Defunct("pointillism::plotFeature")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotGene <- function(...) {
-    .Deprecated("pointillism::plotGene")
-    requireNamespace("pointillism")
-    pointillism::plotGene(...)
+    .Defunct("pointillism::plotGene")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotKnownMarkers <- function(...) {
-    .Deprecated("pointillism::plotKnownMarkers")
-    requireNamespace("pointillism")
-    pointillism::plotKnownMarkers(...)
+    .Defunct("pointillism::plotKnownMarkersDetected")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotKnownMarkersDetected <- function(...) {
-    .Deprecated("pointillism::plotKnownMarkersDetected")
-    requireNamespace("pointillism")
-    pointillism::plotKnownMarkersDetected(...)
+    .Defunct("pointillism::plotKnownMarkersDetected")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotMarker <- function(...) {
-    .Deprecated("pointillism::plotMarker")
-    requireNamespace("pointillism")
-    pointillism::plotMarker(...)
+    .Defunct("pointillism::plotMarker")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotMarkerTSNE <- function(...) {
-    .Deprecated("pointillism::plotMarkerTSNE")
-    requireNamespace("pointillism")
-    pointillism::plotMarkerTSNE(...)
+    .Defunct("pointillism::plotMarker")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotMarkerUMAP <- function(...) {
-    .Deprecated("pointillism::plotMarkerUMAP")
-    requireNamespace("pointillism")
-    pointillism::plotMarkerUMAP(...)
+    .Defunct("pointillism::plotMarker")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotMarkers <- function(...) {
-    .Deprecated("pointillism::plotMarkers")
-    requireNamespace("pointillism")
-    pointillism::plotMarkers(...)
+    .Defunct("pointillism::plotMarkers")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotPCElbow <- function(...) {
-    .Deprecated("pointillism::plotPCElbow")
-    requireNamespace("pointillism")
-    pointillism::plotPCElbow(...)
+    .Defunct("pointillism::plotPCElbow")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotTSNE <- function(...) {
-    .Deprecated("pointillism::plotTSNE")
-    requireNamespace("pointillism")
-    pointillism::plotTSNE(...)
+    .Defunct("pointillism::plotTSNE")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotTSNEExpressionData <- function(...) {
-    .Deprecated("pointillism::plotTSNEExpressionData")
-    requireNamespace("pointillism")
-    pointillism::plotTSNEExpressionData(...)
+    .Defunct("pointillism::plotMarker")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotTopMarkers <- function(...) {
-    .Deprecated("pointillism::plotTopMarkers")
-    requireNamespace("pointillism")
-    pointillism::plotTopMarkers(...)
+    .Defunct("pointillism::plotTopMarkers")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotUMAP <- function(...) {
-    .Deprecated("pointillism::plotUMAP")
-    requireNamespace("pointillism")
-    pointillism::plotUMAP(...)
+    .Defunct("pointillism::plotUMAP")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 readCellTypeMarkers <- function(...) {
-    .Deprecated("pointillism::readCellTypeMarkers")
-    requireNamespace("pointillism")
-    pointillism::readCellTypeMarkers(...)
+    .Defunct("pointillism::readCellTypeMarkers")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 sanitizeMarkers <- function(...) {
-    .Deprecated("pointillism::sanitizeSeuratMarkers")
-    requireNamespace("pointillism")
-    pointillism::sanitizeSeuratMarkers(...)
+    .Defunct("pointillism::sanitizeSeuratMarkers")
 }
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 topMarkers <- function(...) {
-    .Deprecated("pointillism::topMarkers")
-    requireNamespace("pointillism")
-    pointillism::topMarkers(...)
+    .Defunct("pointillism::topMarkers")
 }
 
 
