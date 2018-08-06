@@ -4,7 +4,7 @@
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @importFrom bcbioBase metrics
+#' @importFrom basejump metrics
 #' @export
 #'
 #' @inheritParams general
