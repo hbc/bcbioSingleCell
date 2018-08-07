@@ -61,12 +61,6 @@
 #' @param value Object to assign.
 #' @param x Primary object.
 #' @param y Secondary object.
-#' @param zinbwave `boolean`. Run [zinbwave::zinbwave()] to automatically apply
-#'   a ZINB regression model to calculate `normalizedValues` and `weights`
-#'   matrices to by used for differential expression with DESeq2 or edgeR.
-#'   Note that this calculation should only be performed on **filtered data**.
-#'   For large datasets this can take a long time and use a lot of memory, so
-#'   this calculation is disabled by default.
 #' @param ... Additional arguments.
 #'
 #' @return No value.

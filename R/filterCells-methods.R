@@ -25,6 +25,12 @@
 #'   mitochondrial abundance.
 #' @param minCellsPerGene `scalar integer`. Include genes with non-zero
 #'   expression in at least this many cells.
+#' @param zinbwave `boolean`. Run [zinbwave::zinbwave()] to automatically apply
+#'   a ZINB regression model to calculate `normalizedValues` and `weights`
+#'   matrices to by used for differential expression with DESeq2 or edgeR.
+#'   Note that this calculation should only be performed on **filtered data**.
+#'   For large datasets this can take a long time and use a lot of memory, so
+#'   this calculation is disabled by default.
 #'
 #' @return `bcbioSingleCell`, with filtering information slotted into
 #'   [metadata()] as `filterCells` and `filterParams`.

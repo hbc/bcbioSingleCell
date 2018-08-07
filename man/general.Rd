@@ -95,13 +95,6 @@ defaults to the first argument in the \code{character} vector.}
 
 \item{y}{Secondary object.}
 
-\item{zinbwave}{\code{boolean}. Run \code{\link[zinbwave:zinbwave]{zinbwave::zinbwave()}} to automatically apply
-a ZINB regression model to calculate \code{normalizedValues} and \code{weights}
-matrices to by used for differential expression with DESeq2 or edgeR.
-Note that this calculation should only be performed on \strong{filtered data}.
-For large datasets this can take a long time and use a lot of memory, so
-this calculation is disabled by default.}
-
 \item{...}{Additional arguments.}
 }
 \value{
