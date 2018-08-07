@@ -25,12 +25,6 @@ argument in the \code{character} vector.}
 interesting groups. Must be formatted in camel case and intersect with
 \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{label}{\code{boolean}. Overlay a cluster identitiy label on the plot.}
-
-\item{labelSize}{\code{scalar integer}. Size of the text label.}
-
-\item{legend}{\code{boolean}. Include plot legend.}
-
 \item{min}{\code{scalar numeric}. Recommended minimum value cutoff.}
 
 \item{max}{\code{scalar numeric}. Recommended maximum value cutoff.}
@@ -38,8 +32,6 @@ interesting groups. Must be formatted in camel case and intersect with
 \item{object}{Object.}
 
 \item{prefilter}{\code{boolean}. Apply prefiltering to remove zero count genes.}
-
-\item{pipeline}{\code{string}. Pipeline used to generate the samples.}
 
 \item{return}{\code{string}. Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and
 defaults to the first argument in the \code{character} vector.}

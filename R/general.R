@@ -20,14 +20,10 @@
 #' @param interestingGroups `character` or `NULL`. Character vector of
 #'   interesting groups. Must be formatted in camel case and intersect with
 #'   [sampleData()] colnames.
-#' @param label `boolean`. Overlay a cluster identitiy label on the plot.
-#' @param labelSize `scalar integer`. Size of the text label.
-#' @param legend `boolean`. Include plot legend.
 #' @param min `scalar numeric`. Recommended minimum value cutoff.
 #' @param max `scalar numeric`. Recommended maximum value cutoff.
 #' @param object Object.
 #' @param prefilter `boolean`. Apply prefiltering to remove zero count genes.
-#' @param pipeline `string`. Pipeline used to generate the samples.
 #' @param return `string`. Return type. Uses [base::match.arg()] internally and
 #'   defaults to the first argument in the `character` vector.
 #' @param title `string` or `NULL`. Plot title.
