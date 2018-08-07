@@ -115,10 +115,6 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>aspectRatio</th>
-      <td><p><code>scalar integer</code>. Aspect ratio.</p></td>
-    </tr>
-    <tr>
       <th>color</th>
       <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot2 color
 scale. Must supply discrete values. When set to <code>NULL</code>, the default ggplot2
@@ -137,70 +133,15 @@ To set the discrete fill palette globally, use
 <code>options(bcbio.discrete.fill = scale_fill_viridis_d())</code>.</p></td>
     </tr>
     <tr>
-      <th>gene2symbol</th>
-      <td><p><code>data.frame</code>. Gene-to-symbol mappings. Columns must
-contain <code>geneID</code> and <code>geneName</code>.</p></td>
-    </tr>
-    <tr>
-      <th>dark</th>
-      <td><p><code>boolean</code>. Plot against a dark background using
-<code><a href='http://www.rdocumentation.org/packages/basejump/topics/themes'>basejump::theme_midnight()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>dimsUse</th>
-      <td><p><code>integer</code>. Vector of length 2 that denotes the columns from
-the reduced dimension matrix to use for <code>centerX</code> and <code>centerY</code> column
-calculations. Defaults the first and second dimensions.</p></td>
-    </tr>
-    <tr>
-      <th>dir</th>
-      <td><p><code>string</code>. Output directory path.</p></td>
-    </tr>
-    <tr>
-      <th>expression</th>
-      <td><p><code>string</code>. Calculation to apply. Uses <code>match.arg()</code> and
-defaults to the first argument in the <code>character</code> vector.</p></td>
-    </tr>
-    <tr>
-      <th>gene2symbol</th>
-      <td><p><code>boolean</code>. Automatically interconvert gene identifiers
-and gene names in plots. Useful for marker plots.</p></td>
-    </tr>
-    <tr>
-      <th>genes</th>
-      <td><p><code>character</code>. Gene identifiers. Must match the rownames of the
-object.</p></td>
-    </tr>
-    <tr>
       <th>geom</th>
       <td><p><code>string</code>. Plot type. Uses <code>match.arg()</code> and defaults to the first
 argument in the <code>character</code> vector.</p></td>
-    </tr>
-    <tr>
-      <th>grid</th>
-      <td><p><code>boolean</code>. Show major grid lines but hide axis lines.</p></td>
-    </tr>
-    <tr>
-      <th>headerLevel</th>
-      <td><p><code>scalar integer</code> (<code>1</code>-<code>7</code>). R Markdown header level.</p></td>
     </tr>
     <tr>
       <th>interestingGroups</th>
       <td><p><code>character</code> or <code>NULL</code>. Character vector of
 interesting groups. Must be formatted in camel case and intersect with
 <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
-    </tr>
-    <tr>
-      <th>label</th>
-      <td><p><code>boolean</code>. Overlay a cluster identitiy label on the plot.</p></td>
-    </tr>
-    <tr>
-      <th>labelSize</th>
-      <td><p><code>scalar integer</code>. Size of the text label.</p></td>
-    </tr>
-    <tr>
-      <th>legend</th>
-      <td><p><code>boolean</code>. Include plot legend.</p></td>
     </tr>
     <tr>
       <th>min</th>
@@ -217,29 +158,6 @@ interesting groups. Must be formatted in camel case and intersect with
     <tr>
       <th>prefilter</th>
       <td><p><code>boolean</code>. Apply prefiltering to remove zero count genes.</p></td>
-    </tr>
-    <tr>
-      <th>pipeline</th>
-      <td><p><code>string</code>. Pipeline used to generate the samples.</p></td>
-    </tr>
-    <tr>
-      <th>pointAlpha</th>
-      <td><p><code>scalar numeric</code> (<code>0</code>-<code>1</code>). Alpha transparency level.
-Useful when there many cells in the dataset, and some cells can be masked.</p></td>
-    </tr>
-    <tr>
-      <th>pointsAsNumbers</th>
-      <td><p><code>boolean</code>. Plot the points as numbers (<code>TRUE</code>) or
-dots (<code>FALSE</code>).</p></td>
-    </tr>
-    <tr>
-      <th>pointSize</th>
-      <td><p><code>scalar numeric</code>. Cell point size.</p></td>
-    </tr>
-    <tr>
-      <th>reducedDim</th>
-      <td><p><code>string</code>. Name of reduced dimension matrix slotted in
-<code>reducedDims()</code>. Includes TNSE, UMAP, PCA, for example.</p></td>
     </tr>
     <tr>
       <th>return</th>
@@ -270,15 +188,6 @@ defaults to the first argument in the <code>character</code> vector.</p></td>
     <tr>
       <th>y</th>
       <td><p>Secondary object.</p></td>
-    </tr>
-    <tr>
-      <th>zinbwave</th>
-      <td><p><code>boolean</code>. Run <code><a href='http://www.rdocumentation.org/packages/zinbwave/topics/zinbwave'>zinbwave::zinbwave()</a></code> to automatically apply
-a ZINB regression model to calculate <code>normalizedValues</code> and <code>weights</code>
-matrices to by used for differential expression with DESeq2 or edgeR.
-Note that this calculation should only be performed on <strong>filtered data</strong>.
-For large datasets this can take a long time and use a lot of memory, so
-this calculation is disabled by default.</p></td>
     </tr>
     <tr>
       <th>...</th>
