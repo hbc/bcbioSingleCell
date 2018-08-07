@@ -11,6 +11,7 @@
 #' @export
 #'
 #' @inheritParams general
+#' @param headerLevel `scalar integer` (`1`-`7`). R Markdown header level.
 #'
 #' @return
 #'   - `grid`: [cowplot::plot_grid()] graphical output.

@@ -4,8 +4,6 @@
 \alias{general}
 \title{General Arguments}
 \arguments{
-\item{aspectRatio}{\code{scalar integer}. Aspect ratio.}
-
 \item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 color
 scale. Must supply discrete values. When set to \code{NULL}, the default ggplot2
 color palette will be used. If manual color definitions are desired, we
@@ -20,33 +18,8 @@ using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.
 To set the discrete fill palette globally, use
 \code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
 
-\item{gene2symbol}{\code{data.frame}. Gene-to-symbol mappings. Columns must
-contain \code{geneID} and \code{geneName}.}
-
-\item{dark}{\code{boolean}. Plot against a dark background using
-\code{\link[basejump:theme_midnight]{basejump::theme_midnight()}}.}
-
-\item{dimsUse}{\code{integer}. Vector of length 2 that denotes the columns from
-the reduced dimension matrix to use for \code{centerX} and \code{centerY} column
-calculations. Defaults the first and second dimensions.}
-
-\item{dir}{\code{string}. Output directory path.}
-
-\item{expression}{\code{string}. Calculation to apply. Uses \code{\link[=match.arg]{match.arg()}} and
-defaults to the first argument in the \code{character} vector.}
-
-\item{gene2symbol}{\code{boolean}. Automatically interconvert gene identifiers
-and gene names in plots. Useful for marker plots.}
-
-\item{genes}{\code{character}. Gene identifiers. Must match the rownames of the
-object.}
-
 \item{geom}{\code{string}. Plot type. Uses \code{\link[=match.arg]{match.arg()}} and defaults to the first
 argument in the \code{character} vector.}
-
-\item{grid}{\code{boolean}. Show major grid lines but hide axis lines.}
-
-\item{headerLevel}{\code{scalar integer} (\code{1}-\code{7}). R Markdown header level.}
 
 \item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
 interesting groups. Must be formatted in camel case and intersect with
@@ -67,17 +40,6 @@ interesting groups. Must be formatted in camel case and intersect with
 \item{prefilter}{\code{boolean}. Apply prefiltering to remove zero count genes.}
 
 \item{pipeline}{\code{string}. Pipeline used to generate the samples.}
-
-\item{pointAlpha}{\code{scalar numeric} (\code{0}-\code{1}). Alpha transparency level.
-Useful when there many cells in the dataset, and some cells can be masked.}
-
-\item{pointsAsNumbers}{\code{boolean}. Plot the points as numbers (\code{TRUE}) or
-dots (\code{FALSE}).}
-
-\item{pointSize}{\code{scalar numeric}. Cell point size.}
-
-\item{reducedDim}{\code{string}. Name of reduced dimension matrix slotted in
-\code{\link[=reducedDims]{reducedDims()}}. Includes TNSE, UMAP, PCA, for example.}
 
 \item{return}{\code{string}. Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and
 defaults to the first argument in the \code{character} vector.}
