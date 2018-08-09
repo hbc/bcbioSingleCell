@@ -12,12 +12,11 @@ params:
   resolution_calc: !r seq(from = 0.2, to = 1.2, by = 0.1)
   resolution_use: 0.6
   dark: FALSE
-  umap: FALSE
   data_dir: !r file.path("data", Sys.Date())
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-07-09
+# Last modified 2018-08-02
 
 # Highly recommended to run this template on an HPC cluster
 # stopifnot(detectHPC())
@@ -25,11 +24,16 @@ params:
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
 
+library(pointillism)
+library(Seurat)
+
 # Load SingleCellExperiment object
 bcb_name <- load(params$bcb_file)
 bcb <- get(bcb_name, inherits = FALSE)
 stopifnot(is(bcb, "SingleCellExperiment"))
 invisible(validObject(bcb))
+
+has_umap <- reticulate::py_module_available(module = "umap")
 
 # Vector to use for dimensional reduction plot looping
 dim_red_groups <- unique(c(
@@ -69,8 +73,6 @@ stopifnot(is.character(organism))
 ```{r header, child="_header.Rmd"}
 ```
 
-
-
 This workflow is adapted from the following sources:
 
 - Satija Lab: [Seurat v2 Guided Clustering Tutorial](http://satijalab.org/seurat/pbmc3k_tutorial.html)
@@ -84,11 +86,7 @@ To identify clusters, the following steps will be performed:
 4. Identification of the primary sources of heterogeneity using principal component (PC) analysis and heatmaps.
 5. Clustering cells based on significant PCs (metagenes).
 
-
-
 * * *
-
-
 
 # Initialize Seurat (`r bcb_name`)
 
@@ -99,6 +97,7 @@ First, let's create a `seurat` object using the raw counts from the cells that h
 # handles gene to symbol conversion and stashes metadata in the `@misc` slot.
 # getMethod("coerce", signature(from = "bcbioSingleCell", to = "seurat"))
 seurat <- as(bcb, "seurat") %>%
+    convertGenesToSymbols() %>%
     NormalizeData(
         normalization.method = "LogNormalize",
         scale.factor = 10000
@@ -111,8 +110,6 @@ seurat <- as(bcb, "seurat") %>%
     ScaleData(model.use = "linear")
 ```
 
-
-
 # Plot variable genes
 
 To better cluster our cells, we need to detect the genes that are most variable within our dataset. We can plot dispersion (a normalized measure of to cell-to-cell variation) as a function of average expression for each gene to identify a set of high-variance genes.
@@ -121,12 +118,9 @@ To better cluster our cells, we need to detect the genes that are most variable 
 VariableGenePlot(seurat)
 ```
 
-
-
 # Regress out unwanted sources of variation
 
 Your single-cell dataset likely contains "uninteresting" sources of variation. This can include technical noise, batch effects, and/or uncontrolled biological variation (e.g. cell cycle). Regressing these signals out of the analysis can improve downstream dimensionality reduction and clustering [@Buettner2015-ur]. To mitigate the effect of these signals, [Seurat][] constructs linear models to predict gene expression based on user-defined variables. The scaled z-scored residuals of these models are stored in the `seurat@scale.data` slot, and are used for dimensionality reduction and clustering.
-
 
 ## Cell-cycle scoring
 
@@ -180,7 +174,6 @@ RunPCA(
     )
 ```
 
-
 ## Apply regression variables
 
 Here we are regressing out variables of uninteresting variation, using the `vars.to.regress` argument in the `ScaleData()` function. When variables are defined in the `vars.to.regress` argument, [Seurat][] regresses them individually against each gene, then rescales and centers the resulting residuals.
@@ -209,8 +202,6 @@ RunPCA(
     )
 ```
 
-
-
 # Linear dimensionality reduction {.tabset}
 
 Next, we perform principal component analysis (PCA) on the scaled data with `RunPCA()`. By default, the genes in `seurat@var.genes` are used as input, but can be defined using the `pc.genes` argument. `ProjectPCA()` scores each gene in the dataset (including genes not included in the PCA) based on their correlation with the calculated components. Though we don't use this further here, it can be used to identify markers that are strongly correlated with cellular heterogeneity, but may not have passed through variable gene selection.  The results of the projected PCA can be explored by setting `use.full = TRUE` for `PrintPCA()`.
@@ -220,7 +211,6 @@ seurat <- seurat %>%
     RunPCA(do.print = FALSE) %>%
     ProjectPCA(do.print = FALSE)
 ```
-
 
 ## `PCHeatmap()`
 
@@ -246,7 +236,6 @@ invisible(mapply(
 ))
 ```
 
-
 ## `VizPCA()`
 
 ```{r viz_pca}
@@ -263,14 +252,11 @@ invisible(mapply(
 ))
 ```
 
-
 ## `PrintPCA()`
 
 ```{r print_pca}
 PrintPCA(seurat, pcs.print = 1:params$pc_compute)
 ```
-
-
 
 # Determine statistically significant principal components
 
@@ -299,8 +285,6 @@ if (!is.numeric(params$dims_use)) {
 
 We are using `r length(dims_use)` principal components for dimensionality reduction calculations.
 
-
-
 # Cluster the cells
 
 Seurat uses a graph-based clustering approach, inspired by SNN-Cliq [@Xu2015-je] and PhenoGraph [@Levine2015-hr]. This approach embeds cells in a graph structure, by default using a K-nearest neighbor (KNN) graph, with edges drawn between cells with similar gene expression patterns, and then attempt to partition this graph into highly interconnected ‘quasi-cliques’ or ‘communities’. As in PhenoGraph, [Seurat][] first constructs a KNN graph based on the euclidean distance in PCA space, and refines the edge weights between any two cells based on the shared overlap in their local neighborhoods (Jaccard distance). To cluster the cells, it then applies modularity optimization techniques [@Blondel2008-rf], to iteratively group cells together, with the goal of optimizing the standard modularity function.
@@ -324,8 +308,6 @@ A useful feature in [Seurat][] v2.0 is the ability to recall the parameters that
 ```{r print_find_clusters_params}
 PrintFindClustersParams(seurat)
 ```
-
-
 
 # Run non-linear dimensional reduction
 
@@ -368,7 +350,6 @@ invisible(lapply(
 ))
 ```
 
-
 ## UMAP {.tabset}
 
 [Uniform Manifold Approximation and Projection (UMAP)][UMAP] is a dimension reduction technique that can be used for visualisation similarly to t-SNE, but also for general non-linear dimension reduction. The algorithm is founded on three assumptions about the data:
@@ -383,11 +364,11 @@ invisible(lapply(
 conda install -c conda-forge umap-learn
 ```
 
-```{r run_umap, eval=params$umap}
+```{r run_umap, include=has_umap, eval=has_umap}
 seurat <- RunUMAP(seurat)
 ```
 
-```{r plot_umap, eval=params$umap, results="asis"}
+```{r plot_umap, include=has_umap, eval=has_umap, results="asis"}
 invisible(lapply(
     X = dim_red_groups,
     FUN = function(group) {
@@ -408,7 +389,6 @@ invisible(lapply(
     }
 ))
 ```
-
 
 ## PCA {.tabset}
 
@@ -436,8 +416,6 @@ invisible(lapply(
 ))
 ```
 
-
-
 # Pick resolution to use
 
 Pick the resolution to use, if multiple are stashed.
@@ -451,8 +429,6 @@ if (!is.null(params$resolution_use)) {
     )
 }
 ```
-
-
 
 # Cluster quality control
 
@@ -500,8 +476,6 @@ plotFeatureUMAP(
 )
 ```
 
-
-
 ```{r save}
 assignAndSaveData(
     name = params$seurat_name,
@@ -509,8 +483,6 @@ assignAndSaveData(
     dir = params$data_dir
 )
 ```
-
-
 
 ```{r footer, child="_footer.Rmd"}
 ```

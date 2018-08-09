@@ -2,40 +2,112 @@
 % Please edit documentation in R/deprecated.R
 \name{defunct}
 \alias{defunct}
-\alias{plotClusters}
-\alias{plotTSNEExpressionData}
 \alias{loadSingleCellRun}
 \alias{darkTheme}
 \alias{pcCutoff}
-\alias{quantileHeatmap}
+\alias{calculateMetrics}
+\alias{inflectionPoint}
+\alias{plotCumulativeUMIsPerCell}
+\alias{cellCountsPerCluster}
+\alias{cellTypesPerCluster}
+\alias{clusterCellCountsPerSample}
+\alias{diffExp}
+\alias{fetchGeneData}
+\alias{fetchPCAData}
+\alias{fetchTSNEData}
+\alias{fetchTSNEExpressionData}
+\alias{fetchUMAPData}
+\alias{fetchUMAPExpressionData}
+\alias{knownMarkersDetected}
+\alias{plotCellTypesPerCluster}
+\alias{plotFeatureTSNE}
+\alias{plotFeatureUMAP}
+\alias{plotGene}
 \alias{plotKnownMarkers}
-\alias{readMarkers}
-\alias{readMarkersFile}
-\alias{plotFeatures}
+\alias{plotKnownMarkersDetected}
+\alias{plotMarker}
+\alias{plotMarkerTSNE}
+\alias{plotMarkerUMAP}
 \alias{plotMarkers}
+\alias{plotPCElbow}
+\alias{plotTSNE}
+\alias{plotTSNEExpressionData}
+\alias{plotTopMarkers}
+\alias{plotUMAP}
+\alias{readCellTypeMarkers}
+\alias{sanitizeMarkers}
+\alias{topMarkers}
 \title{Defunct Functions}
 \usage{
-plotClusters(...)
-
-plotTSNEExpressionData(...)
-
 loadSingleCellRun(...)
 
 darkTheme(...)
 
 pcCutoff(...)
 
-quantileHeatmap(...)
+calculateMetrics(...)
+
+inflectionPoint(...)
+
+plotCumulativeUMIsPerCell(...)
+
+cellCountsPerCluster(...)
+
+cellTypesPerCluster(...)
+
+clusterCellCountsPerSample(...)
+
+diffExp(...)
+
+fetchGeneData(...)
+
+fetchPCAData(...)
+
+fetchTSNEData(...)
+
+fetchTSNEExpressionData(...)
+
+fetchUMAPData(...)
+
+fetchUMAPExpressionData(...)
+
+knownMarkersDetected(...)
+
+plotCellTypesPerCluster(...)
+
+plotFeatureTSNE(...)
+
+plotFeatureUMAP(...)
+
+plotGene(...)
 
 plotKnownMarkers(...)
 
-readMarkers(...)
+plotKnownMarkersDetected(...)
 
-readMarkersFile(...)
+plotMarker(...)
 
-plotFeatures(...)
+plotMarkerTSNE(...)
+
+plotMarkerUMAP(...)
 
 plotMarkers(...)
+
+plotPCElbow(...)
+
+plotTSNE(...)
+
+plotTSNEExpressionData(...)
+
+plotTopMarkers(...)
+
+plotUMAP(...)
+
+readCellTypeMarkers(...)
+
+sanitizeMarkers(...)
+
+topMarkers(...)
 }
 \arguments{
 \item{...}{Additional arguments.}

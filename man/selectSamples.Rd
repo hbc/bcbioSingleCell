@@ -6,13 +6,16 @@
 \alias{selectSamples,SingleCellExperiment-method}
 \title{Select Samples}
 \usage{
-\S4method{selectSamples}{SingleCellExperiment}(object, ...)
+\S4method{selectSamples}{SingleCellExperiment}(object, ...,
+  prefilter = TRUE)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Columns to use for grep pattern matching. Supply a named character
 vector containing the column name and the grep pattern.}
+
+\item{prefilter}{\code{boolean}. Apply prefiltering to remove zero count genes.}
 }
 \value{
 \code{bcbioSingleCell}.
@@ -30,7 +33,6 @@ objects. In this case, provide cellular barcode identifiers for columns
 and Ensembl gene identifiers for rows.
 }
 \examples{
-# bcbioSingleCell ====
 object <- indrops_small
 sample <- sampleNames(object) \%>\% head(1L)
 print(sample)
@@ -40,11 +42,11 @@ selectSamples(object, sampleName = sample)
 \code{\link[=sampleData]{sampleData()}}.
 
 Other Data Functions: \code{\link{aggregateReplicates}},
-  \code{\link{cell2sample}}, \code{\link{fetchGeneData}},
-  \code{\link{mapCellsToSamples}},
+  \code{\link{cell2sample}},
   \code{\link{metricsPerSample}}, \code{\link{sampleData}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{
 Michael Steinbaugh
 }
+\concept{Data Functions}

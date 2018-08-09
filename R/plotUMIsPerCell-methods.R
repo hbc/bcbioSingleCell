@@ -9,16 +9,15 @@
 #' @inherit plotGenesPerCell
 #'
 #' @inheritParams general
-#' @param point Label either the "`knee`" or "`inflection`" points per sample.
-#'   To disable, use "`none`". Requires `geom = "ecdf"`.
+#' @param point `string`. Label either the "`knee`" or "`inflection`" points per
+#'   sample. To disable, use "`none`". Requires `geom = "ecdf"`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' plotUMIsPerCell(cellranger_small, geom = "ecdf")
-#' plotUMIsPerCell(cellranger_small, geom = "histogram")
-#' plotUMIsPerCell(cellranger_small, geom = "ridgeline")
-#' plotUMIsPerCell(cellranger_small, geom = "violin")
-#' plotUMIsPerCell(cellranger_small, geom = "boxplot")
+#' plotUMIsPerCell(indrops_small, geom = "violin")
+#' plotUMIsPerCell(indrops_small, geom = "ridgeline")
+#' plotUMIsPerCell(indrops_small, geom = "ecdf")
+#' plotUMIsPerCell(indrops_small, geom = "histogram")
+#' plotUMIsPerCell(indrops_small, geom = "boxplot")
 NULL
 
 
@@ -37,8 +36,8 @@ setMethod(
         max = Inf,
         point = c("none", "inflection", "knee"),
         trans = "log10",
-        color = NULL,
-        fill = NULL,
+        color = getOption("bcbio.discrete.color", NULL),
+        fill = getOption("bcbio.discrete.fill", NULL),
         title = "UMIs per cell"
     ) {
         geom <- match.arg(geom)
@@ -137,14 +136,4 @@ setMethod(
 
         p
     }
-)
-
-
-
-#' @rdname plotUMIsPerCell
-#' @export
-setMethod(
-    "plotUMIsPerCell",
-    signature("seurat"),
-    getMethod("plotUMIsPerCell", "SingleCellExperiment")
 )

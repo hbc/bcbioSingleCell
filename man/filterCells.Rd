@@ -3,7 +3,6 @@
 \docType{methods}
 \name{filterCells}
 \alias{filterCells}
-\alias{filterCells}
 \alias{filterCells,SingleCellExperiment-method}
 \title{Filter Cells}
 \usage{
@@ -11,29 +10,41 @@ filterCells(object, ...)
 
 \S4method{filterCells}{SingleCellExperiment}(object, nCells = Inf,
   minUMIs = 0L, maxUMIs = Inf, minGenes = 0L, maxGenes = Inf,
-  minNovelty = 0L, maxMitoRatio = 1L, minCellsPerGene = 10L)
+  minNovelty = 0L, maxMitoRatio = 1L, minCellsPerGene = 1L,
+  zinbwave = FALSE)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{nCells}{Expected number of cells per sample.}
+\item{nCells}{\code{scalar integer}. Expected number of cells per sample.}
 
-\item{minUMIs}{Minimum number of UMI disambiguated counts per cell.}
+\item{minUMIs}{\code{scalar integer}. Minimum number of UMI disambiguated counts
+per cell.}
 
-\item{maxUMIs}{Maximum number of UMI disambiguated counts per cell.}
+\item{maxUMIs}{\code{scalar integer}. Maximum number of UMI disambiguated counts
+per cell.}
 
-\item{minGenes}{Minimum number of genes detected.}
+\item{minGenes}{\code{scalar integer}. Minimum number of genes detected.}
 
-\item{maxGenes}{Maximum number of genes detected.}
+\item{maxGenes}{\code{scalar integer}. Maximum number of genes detected.}
 
-\item{minNovelty}{Minimum novelty score (log10 genes per UMI).}
+\item{minNovelty}{\code{scalar integer} (\code{0}-\code{1}). Minimum novelty score (log10
+genes per UMI).}
 
-\item{maxMitoRatio}{Maximum relative mitochondrial abundance (\code{0-1} scale).}
+\item{maxMitoRatio}{\code{scalar integer} (\code{0}-\code{1}). Maximum relative
+mitochondrial abundance.}
 
-\item{minCellsPerGene}{Include genes with non-zero expression in at least
-this many cells.}
+\item{minCellsPerGene}{\code{scalar integer}. Include genes with non-zero
+expression in at least this many cells.}
+
+\item{zinbwave}{\code{boolean}. Run \code{\link[zinbwave:zinbwave]{zinbwave::zinbwave()}} to automatically apply
+a ZINB regression model to calculate \code{normalizedValues} and \code{weights}
+matrices to by used for differential expression with DESeq2 or edgeR.
+Note that this calculation should only be performed on \strong{filtered data}.
+For large datasets this can take a long time and use a lot of memory, so
+this calculation is disabled by default.}
 }
 \value{
 \code{bcbioSingleCell}, with filtering information slotted into
@@ -48,11 +59,10 @@ use the \code{\link[=sampleNames]{sampleNames()}} return values (i.e. the \code{
 \code{\link[=sampleData]{sampleData()}}).
 }
 \examples{
-# SingleCellExperiment ====
-object <- cellranger_small
+object <- indrops_small
 show(object)
 
-x <- filterCells(object, minNovelty = 0L)
+x <- filterCells(object)
 show(x)
 metadata(x)$filterParams
 
@@ -60,14 +70,12 @@ metadata(x)$filterParams
 sampleNames(object)
 x <- filterCells(
     object = object,
-    minUMIs = c(pbmc = 100)
+    minUMIs = c(rep_1 = 100)
 )
 show(x)
 metadata(x)$filterParams
 }
 \seealso{
-\code{\link[Seurat:CreateSeuratObject]{Seurat::CreateSeuratObject()}}.
-
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
   \code{\link{metrics}}, \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
@@ -81,3 +89,4 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
 \author{
 Michael Steinbaugh
 }
+\concept{Quality Control Functions}

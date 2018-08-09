@@ -102,8 +102,12 @@ setMethod(
         # Column data ==========================================================
         xColData <- colData(x)
         yColData <- colData(y)
-        assert_are_identical(colnames(xColData), colnames(yColData))
-        colData <- rbind(xColData, yColData)
+        assert_are_set_equal(colnames(xColData), colnames(yColData))
+        cols <- intersect(colnames(xColData), colnames(yColData))
+        colData <- rbind(
+            xColData[, cols, drop = FALSE],
+            yColData[, cols, drop = FALSE]
+        )
 
         # Sample data ==========================================================
         xSampleData <- metadata(x)[["sampleData"]]
@@ -112,7 +116,7 @@ setMethod(
         sampleData <- rbind(xSampleData, ySampleData)
 
         # cell2sample ==========================================================
-        cell2sample <- mapCellsToSamples(
+        cell2sample <- .mapCellsToSamples(
             cells = colnames(counts),
             samples = rownames(sampleData)
         )

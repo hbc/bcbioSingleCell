@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
       </span>
     </div>
 
@@ -77,6 +77,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -111,7 +114,8 @@
     </div>
 
     <pre class="usage"><span class='co'># S4 method for SingleCellExperiment</span>
-<span class='fu'>selectSamples</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>selectSamples</span>(<span class='no'>object</span>, <span class='no'>...</span>,
+  <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -124,6 +128,10 @@
       <th>...</th>
       <td><p>Columns to use for grep pattern matching. Supply a named character
 vector containing the column name and the grep pattern.</p></td>
+    </tr>
+    <tr>
+      <th>prefilter</th>
+      <td><p><code>boolean</code>. Apply prefiltering to remove zero count genes.</p></td>
     </tr>
     </table>
     
@@ -146,30 +154,72 @@ and Ensembl gene identifiers for rows.</p>
 
     <div class='dont-index'><p><code><a href='sampleData.html'>sampleData()</a></code>.</p>
 <p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
-  <code>cell2sample</code>, <code><a href='fetchData.html'>fetchGeneData</a></code>,
-  <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>,
-  <code>metricsPerSample</code>, <code><a href='sampleData.html'>sampleData</a></code>,
-  <code>subsetPerSample</code>, <code>topBarcodes</code></p></div>
+  <code><a href='cell2sample.html'>cell2sample</a></code>,
+  <code><a href='metricsPerSample.html'>metricsPerSample</a></code>, <code><a href='sampleData.html'>sampleData</a></code>,
+  <code><a href='subsetPerSample.html'>subsetPerSample</a></code>, <code><a href='topBarcodes.html'>topBarcodes</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># bcbioSingleCell ====</span>
-<span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>indrops_small</span>
+    <pre class="examples"><div class='input'><span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>indrops_small</span>
 <span class='no'>sample</span> <span class='kw'>&lt;-</span> <span class='fu'>sampleNames</span>(<span class='no'>object</span>) <span class='kw'>%&gt;%</span> <span class='fu'>head</span>(<span class='fl'>1L</span>)
 <span class='fu'>print</span>(<span class='no'>sample</span>)</div><div class='output co'>#&gt; multiplexed_AAAAAAAA 
-#&gt;              "rep_1" </div><div class='input'><span class='fu'>selectSamples</span>(<span class='no'>object</span>, <span class='kw'>sampleName</span> <span class='kw'>=</span> <span class='no'>sample</span>)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: rep_1</span></div><div class='output co'>#&gt; <span class='message'>500 cells matched</span></div><div class='output co'>#&gt; bcbioSingleCell 0.1.17
-#&gt; Samples: 1
-#&gt; Cells: 500
-#&gt; Genes: 500
-#&gt; Assays: counts
-#&gt; Organism: Homo sapiens
-#&gt; AnnotationHub: AH57757
-#&gt; Ensembl Release: 90
-#&gt; Genome Build: GRCh38
-#&gt; Filtered: TRUE
-#&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops
+#&gt;              "rep_1" </div><div class='input'><span class='fu'>selectSamples</span>(<span class='no'>object</span>, <span class='kw'>sampleName</span> <span class='kw'>=</span> <span class='no'>sample</span>)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) matched: rep_1</span></div><div class='output co'>#&gt; <span class='message'>500 cells matched</span></div><div class='output co'>#&gt; <span class='message'>Parameters:</span>
+#&gt; <span class='message'>  - &gt;= 0 UMIs per cell</span>
+#&gt; <span class='message'>  - &lt;= Inf UMIs per cell</span>
+#&gt; <span class='message'>  - &gt;= 0 genes per cell</span>
+#&gt; <span class='message'>  - &lt;= Inf genes per cell</span>
+#&gt; <span class='message'>  - &gt;= 0 novelty score</span>
+#&gt; <span class='message'>  - &lt;= 1 mitochondrial abundance</span>
+#&gt; <span class='message'>  - == Inf cells per sample</span>
+#&gt; <span class='message'>  - &gt;= 1 cells per gene</span>
+#&gt; <span class='message'>====================================================================================================</span>
+#&gt; <span class='message'>Cells:</span>
+#&gt; <span class='message'>     500 cells | prefilter</span>
+#&gt; <span class='message'>     500 cells | minUMIs &gt;= 0</span>
+#&gt; <span class='message'>     500 cells | maxUMIs &lt;= Inf</span>
+#&gt; <span class='message'>     500 cells | minGenes &gt;= 0</span>
+#&gt; <span class='message'>     500 cells | maxGenes &lt;= Inf</span>
+#&gt; <span class='message'>     500 cells | minNovelty &lt;= 0</span>
+#&gt; <span class='message'>     500 cells | maxMitoRatio &lt;= 1</span>
+#&gt; <span class='message'>     500 cells | nCells == Inf</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>rep_1 </span>
+#&gt; <span class='message'>  500 </span>
+#&gt; <span class='message'>====================================================================================================</span>
+#&gt; <span class='message'>Genes:</span>
+#&gt; <span class='message'>     500 genes | prefilter</span>
+#&gt; <span class='message'>     500 genes | minCellsPerGene &gt;= 1</span>
+#&gt; <span class='message'>====================================================================================================</span>
+#&gt; <span class='message'>Summary:</span>
+#&gt; <span class='message'>  - 500 of 500 cells passed filtering (100%)</span>
+#&gt; <span class='message'>  - 500 of 500 genes passed filtering (100%)</span></div><div class='output co'>#&gt; bcbioSingleCell 0.2.0
+#&gt; class: SingleCellExperiment 
+#&gt; dim: 500 500 
+#&gt; metadata(35): version pipeline ... filterSummary selectSamples
+#&gt; assays(1): counts
+#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
+#&gt;   ENSG00000283391
+#&gt; rowData names(7): broadClass description ... geneName seqCoordSystem
+#&gt; colnames(500): multiplexed_AAAAAAAA_AAACACTA_ATCCCACG
+#&gt;   multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA ...
+#&gt;   multiplexed_AAAAAAAA_TGTTATCA_ACGCAGAG
+#&gt;   multiplexed_AAAAAAAA_TGTTATCA_CAAGTCAT
+#&gt; colData names(15): nCount sampleID ... aggregate revcomp
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):
+#&gt; ====================================================================================================
+#&gt; Upload Dir: "/Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-07-20</div></pre>
+#&gt; R Load Date: 2018-08-03
+#&gt; Level: "genes"
+#&gt; Organism: "Homo sapiens"
+#&gt; Interesting Groups: "sampleName"
+#&gt; Metadata File: "inst/extdata/indrops/metadata.csv"
+#&gt; AnnotationHub: "AH57757"
+#&gt; Ensembl Release: "90"
+#&gt; Genome Build: "GRCh38"
+#&gt; Filtered: TRUE
+#&gt; zinbwave: FALSE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

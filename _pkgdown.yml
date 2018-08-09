@@ -19,10 +19,10 @@ reference:
   - title: S4 Object
     contents:
     - bcbioSingleCell
-    - coerce
+    - combine
     - extract
     - show
-    - ends_with("Object")
+    - updateObject
   - title: Read Functions
     contents:
     - starts_with("read")
@@ -30,58 +30,29 @@ reference:
     contents:
     - starts_with("aggregate")
     - cell2sample
-    - starts_with("fetch")
     - starts_with("map")
-    - starts_with("select")
     - sampleData
+    - starts_with("select")
     - subsetPerSample
     - topBarcodes
     - matches("2")
   - title: Quality Control Functions
     contents:
-    - starts_with("metrics")
+    - starts_with("barcode")
     - filterCells
-    - plotQC
+    - starts_with("metrics")
+    - plotBarcodeRanks
     - plotCellCounts
-    - plotReadsPerCell
-    - plotUMIsPerCell
     - plotGenesPerCell
-    - plotUMIsVsGenes
+    - starts_with("plotMito")
     - plotNovelty
-    - matches("Mito")
+    - plotQC
+    - plotReadsPerCell
+    - starts_with("plotUMI")
     - plotZerosVsDepth
-    - matches("Ranks")
-    - plotNovelty
-    - plotFeature
-  - title: Clustering Functions
-    contents:
-    - matches("Cluster")
-    - matches("Elbow")
-    - matches("PCA")
-    - matches("TSNE")
-    - matches("UMAP")
-  - title: Gene Expression Functions
-    contents:
-    - plotGene
-    - plotDot
-    - plotMarker
-    - plotViolin
-  - title: Differential Expression Functions
-    contents:
-    - diffExp
-    - knownMarkersDetected
-    - sanitizeMarkers
-    - topMarkers
-  - title: Plot Functions
-    contents:
-    - starts_with("plot")
   - title: R Markdown Functions
     contents:
     - ends_with("Template")
-  - title: Internal Data
-    contents:
-    - cellCycleMarkers
-    - cellTypeMarkers
   - title: Example Data
     contents:
     - ends_with("_small")

@@ -2,6 +2,10 @@
 #'
 #' Extract genes by row and cells by column from a `bcbioSingleCell` object.
 #'
+#' @note Unfiltered cellular barcode distributions for the entire dataset,
+#'   including cells not kept in the matrix will be dropped in favor of the
+#'   `nCount` column of `colData()`.
+#'
 #' @name extract
 #' @family S4 Object
 #' @author Michael Steinbaugh
@@ -16,7 +20,6 @@
 #' @return `bcbioSingleCell`.
 #'
 #' @examples
-#' # bcbioSingleCell ====
 #' cells <- head(colnames(indrops_small), 100L)
 #' head(cells)
 #' genes <- head(rownames(indrops_small), 100L)
@@ -81,6 +84,11 @@ setMethod(
 
         # Metadata =============================================================
         metadata <- metadata(sce)
+
+        # cellularBarcodes
+        # Drop the raw cellular barcode distributions for all cells
+        metadata[["cellularBarcodes"]] <- NULL
+
         metadata[["subset"]] <- TRUE
         # Update version, if necessary
         if (!identical(metadata[["version"]], packageVersion)) {
@@ -131,22 +139,6 @@ setMethod(
         if (!is.null(filterGenes)) {
             filterGenes <- intersect(filterGenes, genes)
             metadata[["filterGenes"]] <- filterGenes
-        }
-
-        # Unfiltered cellular barcodes
-        cb <- metadata[["cellularBarcodes"]]
-        # Bind barcodes into a single `data.frame`, which we can subset
-        if (!is.null(cb)) {
-            assert_is_list(cb)
-            df <- .bindCellularBarcodes(cb)[cells, , drop = FALSE]
-            cb <- lapply(seq_along(sampleIDs), function(a) {
-                df %>%
-                    ungroup() %>%
-                    .[.[["sampleID"]] == sampleIDs[[a]], , drop = FALSE] %>%
-                    mutate(sampleID = NULL)
-            })
-            names(cb) <- sampleIDs
-            metadata[["cellularBarcodes"]] <- cb
         }
 
         # Return ===============================================================

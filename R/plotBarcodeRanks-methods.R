@@ -11,9 +11,7 @@
 #' @return `ggplot` grid.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' object <- splatter::splatSimulate()
-#' plotBarcodeRanks(object)
+#' plotBarcodeRanks(indrops_small)
 NULL
 
 
@@ -118,14 +116,4 @@ setMethod(
 
         plot_grid(plotlist = plotlist)
     }
-)
-
-
-
-#' @rdname plotBarcodeRanks
-#' @export
-setMethod(
-    "plotBarcodeRanks",
-    signature("seurat"),
-    getMethod("plotBarcodeRanks", "SingleCellExperiment")
 )

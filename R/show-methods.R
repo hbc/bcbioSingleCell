@@ -7,7 +7,6 @@
 #' @inherit methods::show
 #'
 #' @examples
-#' # bcbioSingleCell ====
 #' show(indrops_small)
 NULL
 
@@ -22,57 +21,79 @@ setMethod(
     function(object) {
         validObject(object)
 
+        # Extend the SingleCellExperiment method
+        sce <- as(object, "SingleCellExperiment")
+
         return <- c(
             paste(class(object), metadata(object)[["version"]]),
-            paste("Samples:", nrow(sampleData(object))),
-            paste("Cells:", ncol(object)),
-            paste0(
-                sub(
-                    pattern = "^([a-z])",
-                    replacement = "\\U\\1",
-                    x = metadata(object)[["level"]],
-                    perl = TRUE
-                ),
-                ": ",
-                nrow(object)
+            capture.output(show(sce)),
+            bcbioBase::separatorBar,
+            paste(
+                "Upload Dir:",
+                deparse(metadata(object)[["uploadDir"]])
             ),
-            paste("Assays:", toString(names(assays(object)))),
-            paste("Organism:", metadata(object)[["organism"]])
+            paste(
+                "Upload Date:",
+                metadata(object)[["runDate"]]
+            ),
+            paste(
+                "R Load Date:",
+                metadata(object)[["date"]]
+            ),
+            paste(
+                "Level:",
+                deparse(metadata(object)[["level"]])
+            ),
+            paste(
+                "Organism:",
+                deparse(metadata(object)[["organism"]])
+            ),
+            paste(
+                "Interesting Groups:",
+                deparse(metadata(object)[["interestingGroups"]])
+            )
         )
 
-        # rowRanges
-        m <- metadata(object)[["rowRangesMetadata"]]
-        if (is.data.frame(m)) {
+        # sampleMetadataFile
+        sampleMetadataFile <- metadata(object)[["sampleMetadataFile"]]
+        if (length(sampleMetadataFile)) {
             return <- c(
                 return,
-                paste(
-                    "AnnotationHub:",
-                    m[m[["name"]] == "id", "value", drop = TRUE]
-                ),
-                paste(
-                    "Ensembl Release:",
-                    m[m[["name"]] == "ensembl_version", "value", drop = TRUE]
-                ),
-                paste(
-                    "Genome Build:",
-                    m[m[["name"]] == "genome_build", "value", drop = TRUE]
-                )
+                paste("Metadata File:", deparse(sampleMetadataFile))
             )
         }
 
-        # Report if counts are filtered
-        if (!is.null(metadata(object)[["filterParams"]])) {
-            filtered <- TRUE
-        } else {
-            filtered <- FALSE
+        # Gene annotations
+        m <- metadata(object)[["rowRangesMetadata"]]
+        if (is.data.frame(m) && length(m)) {
+            annotationHub <-
+                m[m[["name"]] == "id", "value", drop = TRUE]
+            ensemblRelease <-
+                m[m[["name"]] == "ensembl_version", "value", drop = TRUE]
+            genomeBuild <-
+                m[m[["name"]] == "genome_build", "value", drop = TRUE]
+            return <- c(
+                return,
+                paste("AnnotationHub:", deparse(annotationHub)),
+                paste("Ensembl Release:", deparse(ensemblRelease)),
+                paste("Genome Build:", deparse(genomeBuild))
+            )
         }
 
+        # GFF File
+        gffFile <- metadata(object)[["gffFile"]]
+        if (length(gffFile)) {
+            return <- c(
+                return,
+                paste("GFF File:", deparse(gffFile))
+            )
+        }
+
+        # Filtered counts, with optional zinbwave weights
         return <- c(
             return,
-            paste("Filtered:", filtered),
-            paste("Upload Dir:", metadata(object)[["uploadDir"]]),
-            paste("Upload Date:", metadata(object)[["runDate"]]),
-            paste("R Load Date:", metadata(object)[["date"]])
+            paste("Filtered:", .isFiltered(object)),
+            paste("zinbwave:", .hasZinbwave(object))
         )
 
         cat(return, sep = "\n")

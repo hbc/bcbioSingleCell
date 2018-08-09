@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
       </span>
     </div>
 
@@ -77,6 +77,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -111,19 +114,19 @@
     </div>
 
     <pre class="usage"><span class='co'># S4 method for matrix</span>
-<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>rowData</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>rowRanges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S4 method for dgCMatrix</span>
-<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>rowData</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>rowRanges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S4 method for dgTMatrix</span>
-<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>rowData</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>rowRanges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>prefilter</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S4 method for SingleCellExperiment</span>
-<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>)
-
-<span class='co'># S4 method for seurat</span>
-<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
+  <span class='kw'>recalculate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -133,68 +136,79 @@
       <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>rowData</th>
-      <td><p>Data describing the rows of the object.</p></td>
+      <th>rowRanges</th>
+      <td><p><code>GRanges</code>. Data describing the rows of the object.</p></td>
     </tr>
     <tr>
       <th>prefilter</th>
-      <td><p>Whether to apply pre-filtering to the cellular barcodes.</p></td>
+      <td><p><code>boolean</code>. Apply pre-filtering to the cellular barcodes
+(<em>recommended</em>).</p></td>
     </tr>
     <tr>
       <th>interestingGroups</th>
-      <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+<code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Additional arguments.</p></td>
+      <th>recalculate</th>
+      <td><p><code>boolean</code>. Force recalculation, using primary <code>counts()</code>
+matrix.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>data.frame</code> with cellular barcodes as rows.</p>
+    <p><code>data.frame</code> with cellular barcodes as rows. If <code>recalculate = TRUE</code>,
+returns the original object class (e.g. <code>SingleCellExperiment</code>), with
+updated metrics in <code>colData()</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Quality Control Functions: <code>barcodeRanksPerSample</code>,
-  <code>filterCells</code>, <code>plotCellCounts</code>,
-  <code>plotGenesPerCell</code>,
-  <code>plotMitoRatio</code>,
-  <code>plotMitoVsCoding</code>,
-  <code>plotNovelty</code>, <code><a href='plotQC.html'>plotQC</a></code>,
-  <code>plotReadsPerCell</code>,
-  <code>plotUMIsPerCell</code>,
-  <code>plotZerosVsDepth</code></p></div>
+    <div class='dont-index'><p>Other Quality Control Functions: <code><a href='barcodeRanksPerSample.html'>barcodeRanksPerSample</a></code>,
+  <code><a href='filterCells.html'>filterCells</a></code>, <code><a href='plotCellCounts.html'>plotCellCounts</a></code>,
+  <code><a href='plotGenesPerCell.html'>plotGenesPerCell</a></code>,
+  <code><a href='plotMitoRatio.html'>plotMitoRatio</a></code>,
+  <code><a href='plotMitoVsCoding.html'>plotMitoVsCoding</a></code>,
+  <code><a href='plotNovelty.html'>plotNovelty</a></code>, <code><a href='plotQC.html'>plotQC</a></code>,
+  <code><a href='plotReadsPerCell.html'>plotReadsPerCell</a></code>,
+  <code><a href='plotUMIsPerCell.html'>plotUMIsPerCell</a></code>,
+  <code><a href='plotZerosVsDepth.html'>plotZerosVsDepth</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metrics</span>(<span class='no'>cellranger_small</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metrics</span>(<span class='no'>indrops_small</span>)
 <span class='fu'>glimpse</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 500
-#&gt; Variables: 11
-#&gt; $ sampleID          &lt;fct&gt; pbmc_1, pbmc_1, pbmc_1, pbmc_1, pbmc_1, pbmc_1, p...
-#&gt; $ nUMI              &lt;int&gt; 12147, 8588, 7157, 10995, 7025, 11698, 7014, 1006...
-#&gt; $ nGene             &lt;int&gt; 2785, 2278, 1639, 2645, 2194, 2724, 1708, 2583, 1...
-#&gt; $ nCoding           &lt;int&gt; 11413, 7791, 6659, 10388, 6504, 10945, 6610, 9084...
-#&gt; $ nMito             &lt;int&gt; 394, 385, 173, 346, 199, 416, 148, 331, 440, 187,...
-#&gt; $ log10GenesPerUMI  &lt;dbl&gt; 0.8433961, 0.8534941, 0.8339308, 0.8468845, 0.868...
-#&gt; $ mitoRatio         &lt;dbl&gt; 0.03243599, 0.04483000, 0.02417214, 0.03146885, 0...
-#&gt; $ sampleName        &lt;fct&gt; pbmc, pbmc, pbmc, pbmc, pbmc, pbmc, pbmc, pbmc, p...
-#&gt; $ description       &lt;fct&gt; pbmc, pbmc, pbmc, pbmc, pbmc, pbmc, pbmc, pbmc, p...
+#&gt; Variables: 16
+#&gt; $ nCount            &lt;int&gt; 25114, 55337, 71802, 34607, 34005, 44760, 76590, ...
+#&gt; $ sampleID          &lt;fct&gt; multiplexed_AAAAAAAA, multiplexed_AAAAAAAA, multi...
+#&gt; $ nUMI              &lt;int&gt; 1199, 2766, 4399, 1485, 1771, 2208, 4095, 1406, 1...
+#&gt; $ nGene             &lt;int&gt; 289, 405, 423, 337, 350, 378, 442, 217, 332, 405,...
+#&gt; $ nCoding           &lt;int&gt; 1105, 2385, 3864, 1296, 1574, 1599, 3630, 695, 11...
+#&gt; $ nMito             &lt;int&gt; 24, 241, 234, 103, 83, 452, 234, 556, 246, 225, 2...
+#&gt; $ log10GenesPerUMI  &lt;dbl&gt; 0.7992992, 0.7575732, 0.7208579, 0.7969256, 0.783...
+#&gt; $ mitoRatio         &lt;dbl&gt; 0.02001668, 0.08712943, 0.05319391, 0.06936027, 0...
+#&gt; $ sampleName        &lt;fct&gt; rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, ...
+#&gt; $ fileName          &lt;fct&gt; multiplexed.fastq.gz, multiplexed.fastq.gz, multi...
+#&gt; $ description       &lt;fct&gt; multiplexed-AAAAAAAA, multiplexed-AAAAAAAA, multi...
 #&gt; $ index             &lt;fct&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1...
-#&gt; $ interestingGroups &lt;fct&gt; pbmc, pbmc, pbmc, pbmc, pbmc, pbmc, pbmc, pbmc, p...</div><div class='input'>
-<span class='co'># dgCMatrix ====</span>
-<span class='no'>counts</span> <span class='kw'>&lt;-</span> <span class='fu'>counts</span>(<span class='no'>cellranger_small</span>)
+#&gt; $ sequence          &lt;fct&gt; TTTTTTTT, TTTTTTTT, TTTTTTTT, TTTTTTTT, TTTTTTTT,...
+#&gt; $ aggregate         &lt;fct&gt; sample, sample, sample, sample, sample, sample, s...
+#&gt; $ revcomp           &lt;fct&gt; AAAAAAAA, AAAAAAAA, AAAAAAAA, AAAAAAAA, AAAAAAAA,...
+#&gt; $ interestingGroups &lt;fct&gt; rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, ...</div><div class='input'>
+<span class='co'># matrix ====</span>
+<span class='no'>counts</span> <span class='kw'>&lt;-</span> <span class='fu'>counts</span>(<span class='no'>indrops_small</span>)
 <span class='fu'>class</span>(<span class='no'>counts</span>)</div><div class='output co'>#&gt; [1] "dgCMatrix"
 #&gt; attr(,"package")
-#&gt; [1] "Matrix"</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metrics</span>(<span class='no'>counts</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='input'><span class='fu'>glimpse</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 500
+#&gt; [1] "Matrix"</div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metrics</span>(<span class='no'>counts</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Calculating metrics without gene annotations.</span>
+#&gt; <span class='warning'> `rowRanges` is required to determine: `nCoding`, `nMito`, `mitoRatio`.</span></div><div class='input'><span class='fu'>glimpse</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 500
 #&gt; Variables: 6
-#&gt; $ nUMI             &lt;int&gt; 8760, 6118, 5660, 7858, 4463, 8330, 5457, 7038, 46...
-#&gt; $ nGene            &lt;int&gt; 473, 456, 415, 462, 431, 459, 416, 458, 416, 444, ...
+#&gt; $ nUMI             &lt;int&gt; 1199, 2766, 4399, 1485, 1771, 2208, 4095, 1406, 15...
+#&gt; $ nGene            &lt;int&gt; 289, 405, 423, 337, 350, 378, 442, 217, 332, 405, ...
 #&gt; $ nCoding          &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
 #&gt; $ nMito            &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...
-#&gt; $ log10GenesPerUMI &lt;dbl&gt; 0.6784676, 0.7022020, 0.6976222, 0.6840638, 0.7218...
+#&gt; $ log10GenesPerUMI &lt;dbl&gt; 0.7992992, 0.7575732, 0.7208579, 0.7969256, 0.7832...
 #&gt; $ mitoRatio        &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

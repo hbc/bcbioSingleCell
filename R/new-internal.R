@@ -6,9 +6,9 @@
     transgeneNames = NULL,
     spikeNames = NULL
 ) {
-    # Prepare RangedSummarizedExperiment first.
+    # Make RangedSummarizedExperiment first.
     # Supports automatic resizing of rowRanges and helps slot FASTA spike-ins.
-    rse <- prepareSummarizedExperiment(
+    rse <- makeSummarizedExperiment(
         assays = assays,
         rowRanges = rowRanges,
         colData = colData,

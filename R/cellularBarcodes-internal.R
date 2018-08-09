@@ -4,7 +4,7 @@
 #' @keywords internal
 #' @noRd
 #'
-#' @param list List of cellular barcodes.
+#' @param list `list`. Cellular barcodes per sample.
 #'
 #' @return `data.frame`.
 .bindCellularBarcodes <- function(list) {

@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
       </span>
     </div>
 
@@ -77,6 +77,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -114,11 +117,7 @@
 
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1000L</span>,
-  <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"data.frame"</span>, <span class='st'>"list"</span>))
-
-<span class='co'># S4 method for seurat</span>
-<span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1000L</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"data.frame"</span>,
-  <span class='st'>"list"</span>))</pre>
+  <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"data.frame"</span>, <span class='st'>"list"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -133,12 +132,12 @@
     </tr>
     <tr>
       <th>n</th>
-      <td><p>Number of barcodes to return per sample.</p></td>
+      <td><p><code>scalar integer</code>. Number of barcodes to return per sample.</p></td>
     </tr>
     <tr>
       <th>return</th>
-      <td><p>Return type. Uses <code><a href='http://www.rdocumentation.org/packages/base/topics/match.arg'>base::match.arg()</a></code> internally and defaults
-to the first argument in the vector.</p></td>
+      <td><p><code>string</code>. Return type. Uses <code><a href='http://www.rdocumentation.org/packages/base/topics/match.arg'>base::match.arg()</a></code> internally and
+defaults to the first argument in the <code>character</code> vector.</p></td>
     </tr>
     </table>
     
@@ -156,28 +155,26 @@ column in descending order. Cellular barcodes are in the <code>cellID</code> col
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
-  <code>cell2sample</code>, <code><a href='fetchData.html'>fetchGeneData</a></code>,
-  <code><a href='mapCellsToSamples.html'>mapCellsToSamples</a></code>,
-  <code>metricsPerSample</code>, <code><a href='sampleData.html'>sampleData</a></code>,
+  <code><a href='cell2sample.html'>cell2sample</a></code>,
+  <code><a href='metricsPerSample.html'>metricsPerSample</a></code>, <code><a href='sampleData.html'>sampleData</a></code>,
   <code><a href='selectSamples.html'>selectSamples</a></code>,
-  <code>subsetPerSample</code></p></div>
+  <code><a href='subsetPerSample.html'>subsetPerSample</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
-<span class='co'># list</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>topBarcodes</span>(<span class='no'>cellranger_small</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"list"</span>)
-<span class='fu'>lapply</span>(<span class='no'>x</span>, <span class='no'>class</span>)</div><div class='output co'>#&gt; $pbmc_1
+    <pre class="examples"><div class='input'><span class='co'># Return list</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>topBarcodes</span>(<span class='no'>indrops_small</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"list"</span>)
+<span class='fu'>lapply</span>(<span class='no'>x</span>, <span class='no'>class</span>)</div><div class='output co'>#&gt; $multiplexed_AAAAAAAA
 #&gt; [1] "character"
 #&gt; </div><div class='input'>
-<span class='co'># data.frame</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>topBarcodes</span>(<span class='no'>cellranger_small</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"data.frame"</span>)
+<span class='co'># Return data.frame</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>topBarcodes</span>(<span class='no'>indrops_small</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"data.frame"</span>)
 <span class='fu'>glimpse</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 500
 #&gt; Variables: 4
-#&gt; $ sampleID   &lt;fct&gt; pbmc_1, pbmc_1, pbmc_1, pbmc_1, pbmc_1, pbmc_1, pbmc_1, ...
-#&gt; $ sampleName &lt;fct&gt; pbmc, pbmc, pbmc, pbmc, pbmc, pbmc, pbmc, pbmc, pbmc, pb...
-#&gt; $ nUMI       &lt;int&gt; 48443, 26128, 23059, 21195, 21125, 21026, 20176, 19996, ...
-#&gt; $ cellID     &lt;chr&gt; "pbmc_1_GGATTACCATAGGATA", "pbmc_1_CTCTGGTAGGAGTAGA", "p...</div></pre>
+#&gt; $ sampleID   &lt;fct&gt; multiplexed_AAAAAAAA, multiplexed_AAAAAAAA, multiplexed_...
+#&gt; $ sampleName &lt;fct&gt; rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, ...
+#&gt; $ nUMI       &lt;int&gt; 9323, 6978, 6933, 6467, 6387, 6137, 6102, 6008, 5982, 59...
+#&gt; $ cellID     &lt;chr&gt; "multiplexed_AAAAAAAA_CTAGCACG_AATCGGGT", "multiplexed_A...</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

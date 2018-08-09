@@ -7,22 +7,22 @@
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general
-#' @param f Mathematical function to apply. Defaults to "`sum`".
+#' @param f `string`. Mathematical function name to apply. Defaults to "`sum`"
+#'   but "`mean`" and "`median`" are also supported.
 #'
 #' @return `data.frame`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
 #' # mean
-#' x <- metricsPerSample(cellranger_small, f = "mean")
+#' x <- metricsPerSample(indrops_small, f = "mean")
 #' head(x)
 #'
 #' # median
-#' x <- metricsPerSample(cellranger_small, f = "median")
+#' x <- metricsPerSample(indrops_small, f = "median")
 #' head(x)
 #'
 #' # sum
-#' x <- metricsPerSample(cellranger_small, f = "sum")
+#' x <- metricsPerSample(indrops_small, f = "sum")
 #' head(x)
 NULL
 
@@ -61,14 +61,4 @@ setMethod(
             as.data.frame() %>%
             column_to_rownames()
     }
-)
-
-
-
-#' @rdname metricsPerSample
-#' @export
-setMethod(
-    "metricsPerSample",
-    signature("seurat"),
-    getMethod("metricsPerSample", "SingleCellExperiment")
 )

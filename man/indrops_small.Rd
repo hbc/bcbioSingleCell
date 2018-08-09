@@ -14,13 +14,8 @@ inDrops Example
 \examples{
 show(indrops_small)
 }
-\seealso{
-Other Minimal Example Data: \code{\link{all_markers_small}},
-  \code{\link{cellranger_small}},
-  \code{\link{known_markers_small}},
-  \code{\link{seurat_small}}
-}
 \author{
 Michael Steinbaugh
 }
+\concept{Minimal Example Data}
 \keyword{datasets}

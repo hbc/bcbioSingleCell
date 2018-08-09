@@ -9,8 +9,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' plotMitoRatio(cellranger_small)
+#' plotMitoRatio(indrops_small)
 NULL
 
 
@@ -26,7 +25,7 @@ setMethod(
         geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
         interestingGroups,
         max = 1L,
-        fill = NULL,
+        fill = getOption("bcbio.discrete.fill", NULL),
         trans = "sqrt",
         title = "mito ratio"
     ) {
@@ -44,14 +43,4 @@ setMethod(
             title = title
         )
     }
-)
-
-
-
-#' @rdname plotMitoRatio
-#' @export
-setMethod(
-    "plotMitoRatio",
-    signature("seurat"),
-    getMethod("plotMitoRatio", "SingleCellExperiment")
 )

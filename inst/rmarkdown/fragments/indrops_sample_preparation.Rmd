@@ -1,0 +1,35 @@
+# inDrops sample preparation
+
+## FASTQ structure information
+
+- `v1`: Original design
+    - `_R1`: metadata read
+    - `_R2`: biological read
+- `v2`: Inversion of `v1`
+- `v3`: Summer 2016 redesign, requiring manual demultiplexing
+    - `_R1`: biological read
+    - `_R2`: first half of the gel barcode
+    - `_R3`: library index
+    - `_R4`: second half of the gel barcode, the UMI, and a fraction of the
+             polyA tail
+
+This study used the [inDrops][] `v3` design.
+
+## FASTQ demultiplexing
+
+We demultiplexed the raw BCL run files into FASTQ format using [bcl2fastq][].
+This step generates files with the following suffixes:
+
+- `_R1`: 61 bp read 1, transcript
+- `_R2`: 8 bp index read 1 (i7), single cell barcode
+- `_R3`: 8 bp index read 2 (i5), library index
+- `_R4`: 14 bp read 2, barcode and unique molecular identifiers (UMIs)
+
+We ran this on [Orchestra][] with the following settings:
+
+```{bash, echo=TRUE, eval=FALSE}
+module load seq/bcl2fastq/2.17.1.14
+bcl2fastq --use-bases-mask y*,y*,y*,y* \
+          --mask-short-adapter-reads 0 \
+          --minimum-trimmed-read-length 0
+```

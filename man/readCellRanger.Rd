@@ -5,39 +5,57 @@
 \title{Read 10X Genomics Cell Ranger Data}
 \usage{
 readCellRanger(uploadDir, format = c("mtx", "hdf5"), filtered = TRUE,
-  organism = NULL, sampleMetadataFile = NULL, refdataDir = NULL,
-  interestingGroups = "sampleName", transgeneNames = NULL,
-  spikeNames = NULL, ...)
+  organism = NULL, sampleMetadataFile = NULL,
+  interestingGroups = "sampleName", refdataDir = NULL,
+  gffFile = NULL, transgeneNames = NULL, spikeNames = NULL, ...)
 }
 \arguments{
-\item{uploadDir}{Path to Cell Ranger output directory. This directory path
-must contain \code{filtered_gene_bc_matrices*} as a child directory.}
+\item{uploadDir}{\code{string}. Path to Cell Ranger output directory. This
+directory path must contain \code{filtered_gene_bc_matrices*} as a child
+directory.}
 
-\item{format}{Output format, either MatrixMarket ("\code{mtx}") or HDF5
+\item{format}{\code{string}. Output format, either MatrixMarket ("\code{mtx}") or HDF5
 ("\code{hdf5}").}
 
-\item{filtered}{Use filtered (recommended) or raw counts. Note that raw
-counts still contain only whitelisted cellular barcodes.}
+\item{filtered}{\code{boolean}. Use filtered (recommended) or raw counts. Note
+that raw counts still contain only whitelisted cellular barcodes.}
 
-\item{organism}{Organism name. Use the full latin name (e.g.
-"Homo sapiens"), since this will be input downstream to
-AnnotationHub and ensembldb, unless \code{gffFile} is set.}
+\item{organism}{\code{string} or \code{NULL}. Organism name. Use the full Latin name
+(e.g. "Homo sapiens"), since this will be input downstream to AnnotationHub
+and ensembldb, unless \code{gffFile} is set. If left \code{NULL} (\emph{not recommended}),
+the function call will skip loading gene-level annotations into
+\code{\link[=rowRanges]{rowRanges()}}. This can be useful for poorly annotation genomes or
+experiments involving multiple genomes.}
 
-\item{sampleMetadataFile}{Sample barcode metadata file. Optional for runs
-with demultiplixed index barcodes (e.g. SureCell), but otherwise required
-for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
-inDrop).}
+\item{sampleMetadataFile}{\code{string} or \code{NULL}. Sample barcode metadata file.
+Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
+be left \code{NULL}, but otherwise required for runs with multipliexed FASTQs
+containing multiple index barcodes (e.g. inDrop).}
 
-\item{refdataDir}{Directory path to Cell Ranger reference annotation data.}
+\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+\code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+\item{refdataDir}{\code{string} or \code{NULL}. Directory path to Cell Ranger reference
+annotation data.}
 
-\item{transgeneNames}{\code{character} vector indicating which \code{\link[=assay]{assay()}} rows
-denote transgenes (e.g. EGFP, TDTOMATO).}
+\item{gffFile}{\code{string} or \code{NULL}. \emph{Advanced use only; not recommended.} By
+default, we recommend leaving this \code{NULL} for genomes that are supported on
+Ensembl. In this case, the row annotations (\code{\link[=rowRanges]{rowRanges()}}) will be obtained
+automatically from Ensembl by passing the \code{organism}, \code{genomeBuild}, and
+\code{ensemblRelease} arguments to AnnotationHub and ensembldb. For a genome
+that is not supported on Ensembl and/or AnnotationHub, a GFF/GTF (General
+Feature Format) file is required. Generally, we recommend using a GTF
+(GFFv2) file here over a GFF3 file if possible, although all GFF formats
+are supported. The function will internally generate transcript-to-gene
+mappings and construct a \code{GRanges} object containing the genomic ranges
+(\code{\link[=rowRanges]{rowRanges()}}).}
 
-\item{spikeNames}{\code{character} vector indicating which \code{\link[=assay]{assay()}} rows denote
-spike-in sequences (e.g. ERCCs).}
+\item{transgeneNames}{\code{character} or \code{NULL}. Vector indicating which
+\code{\link[=assay]{assay()}} rows denote transgenes (e.g. EGFP, TDTOMATO).}
+
+\item{spikeNames}{\code{character} or \code{NULL}. Vector indicating which \code{\link[=assay]{assay()}}
+rows denote spike-in sequences (e.g. ERCCs).}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }
@@ -92,9 +110,7 @@ x <- readCellRanger(
 )
 show(x)
 }
-\seealso{
-Other Read Functions: \code{\link{readCellTypeMarkers}}
-}
 \author{
 Michael Steinbaugh
 }
+\concept{Read Functions}

@@ -3,19 +3,14 @@
 \docType{methods}
 \name{plotNovelty}
 \alias{plotNovelty}
-\alias{plotNovelty}
 \alias{plotNovelty,SingleCellExperiment-method}
-\alias{plotNovelty,seurat-method}
 \title{Plot Novelty Score}
 \usage{
 plotNovelty(object, ...)
 
 \S4method{plotNovelty}{SingleCellExperiment}(object, geom = c("violin",
-  "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups, min = 0L,
-  fill = NULL, trans = "identity", title = "genes per UMI (novelty)")
-
-\S4method{plotNovelty}{seurat}(object, geom = c("violin", "ridgeline", "ecdf",
-  "histogram", "boxplot"), interestingGroups, min = 0L, fill = NULL,
+  "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups,
+  min = 0L, fill = getOption("bcbio.discrete.fill", NULL),
   trans = "identity", title = "genes per UMI (novelty)")
 }
 \arguments{
@@ -23,22 +18,26 @@ plotNovelty(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{geom}{Plot type. Uses \code{\link[=match.arg]{match.arg()}} and defaults to the first argument
-in the vector.}
+\item{geom}{\code{string}. Plot type. Uses \code{\link[=match.arg]{match.arg()}} and defaults to the first
+argument in the \code{character} vector.}
 
-\item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+\code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{min}{Recommended minimum value cutoff.}
+\item{min}{\code{scalar numeric}. Recommended minimum value cutoff.}
 
-\item{fill}{Desired ggplot fill scale. Must supply discrete values. When set
-to \code{NULL}, the default ggplot2 color palette will be used. If manual color
-definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.}
+\item{fill}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 fill scale.
+Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.
+To set the discrete fill palette globally, use
+\code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
 
-\item{trans}{Name of the axis scale transformation to apply. See
+\item{trans}{\code{string}. Name of the axis scale transformation to apply. See
 \code{help("scale_x_continuous", "ggplot2")} for more information.}
 
-\item{title}{Plot title.}
+\item{title}{\code{string} or \code{NULL}. Plot title.}
 }
 \value{
 \code{ggplot}.
@@ -47,8 +46,7 @@ definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manua
 "Novelty" refers to log10 genes detected per count.
 }
 \examples{
-# SingleCellExperiment ====
-plotNovelty(cellranger_small)
+plotNovelty(indrops_small)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
@@ -64,3 +62,4 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
 \author{
 Michael Steinbaugh
 }
+\concept{Quality Control Functions}

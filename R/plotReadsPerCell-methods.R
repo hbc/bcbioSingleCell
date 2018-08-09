@@ -11,7 +11,6 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # bcbioSingleCell ====
 #' plotReadsPerCell(indrops_small, geom = "histogram")
 #' plotReadsPerCell(indrops_small, geom = "ecdf")
 NULL
@@ -22,7 +21,7 @@ NULL
 .plotReadsPerCellBoxplot <- function(
     data,
     min = 0L,
-    fill = NULL
+    fill = getOption("bcbio.discrete.fill", NULL)
 ) {
     assert_is_data.frame(data)
     assertIsFillScaleDiscreteOrNULL(fill)
@@ -70,7 +69,7 @@ NULL
 .plotReadsPerCellECDF <- function(
     data,
     min = 0L,
-    color = NULL
+    color = getOption("bcbio.discrete.color", NULL)
 ) {
     assert_is_data.frame(data)
     assertIsColorScaleDiscreteOrNULL(color)
@@ -116,7 +115,7 @@ NULL
 .plotReadsPerCellRidgeline <- function(
     data,
     min = 0L,
-    fill = NULL
+    fill = getOption("bcbio.discrete.fill", NULL)
 ) {
     assert_is_data.frame(data)
     assertIsFillScaleDiscreteOrNULL(fill)
@@ -169,7 +168,7 @@ NULL
 .plotReadsPerCellViolin <- function(
     data,
     min = 0L,
-    fill = NULL
+    fill = getOption("bcbio.discrete.fill", NULL)
 ) {
     assert_is_data.frame(data)
     assertIsFillScaleDiscreteOrNULL(fill)
@@ -272,7 +271,7 @@ NULL
 .plotReadsPerCellHistogram <- function(
     data,
     min = 0L,
-    color = NULL
+    color = getOption("bcbio.discrete.color", NULL)
 ) {
     assert_is_data.frame(data)
     assertIsColorScaleDiscreteOrNULL(color)
@@ -328,15 +327,16 @@ setMethod(
         object,
         interestingGroups,
         geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
-        color = NULL,
-        fill = NULL,
+        color = getOption("bcbio.discrete.color", NULL),
+        fill = getOption("bcbio.discrete.fill", NULL),
         title = "reads per cell"
     ) {
         # Passthrough: color, fill
         validObject(object)
-        if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
-        }
+        interestingGroups <- matchInterestingGroups(
+            object = object,
+            interestingGroups = interestingGroups
+        )
         geom <- match.arg(geom)
         assertIsAStringOrNULL(title)
 
@@ -354,8 +354,9 @@ setMethod(
         sampleData <- sampleData(
             object = object,
             interestingGroups = interestingGroups
-        ) %>%
-            as.data.frame()
+        )
+        assert_is_non_empty(sampleData)
+        sampleData <- as.data.frame(sampleData)
         sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
 
         # Obtain the read counts. Use the unfiltered reads stashed in the

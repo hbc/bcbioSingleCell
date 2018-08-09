@@ -7,44 +7,49 @@
 \alias{metrics,dgCMatrix-method}
 \alias{metrics,dgTMatrix-method}
 \alias{metrics,SingleCellExperiment-method}
-\alias{metrics,seurat-method}
 \title{Sample Barcode Metrics}
 \usage{
-\S4method{metrics}{matrix}(object, rowData = NULL, prefilter = FALSE)
+\S4method{metrics}{matrix}(object, rowRanges = NULL, prefilter = FALSE)
 
-\S4method{metrics}{dgCMatrix}(object, rowData = NULL, prefilter = FALSE)
+\S4method{metrics}{dgCMatrix}(object, rowRanges = NULL,
+  prefilter = FALSE)
 
-\S4method{metrics}{dgTMatrix}(object, rowData = NULL, prefilter = FALSE)
+\S4method{metrics}{dgTMatrix}(object, rowRanges = NULL,
+  prefilter = FALSE)
 
-\S4method{metrics}{SingleCellExperiment}(object, interestingGroups)
-
-\S4method{metrics}{seurat}(object, ...)
+\S4method{metrics}{SingleCellExperiment}(object, interestingGroups,
+  recalculate = FALSE)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{rowData}{Data describing the rows of the object.}
+\item{rowRanges}{\code{GRanges}. Data describing the rows of the object.}
 
-\item{prefilter}{Whether to apply pre-filtering to the cellular barcodes.}
+\item{prefilter}{\code{boolean}. Apply pre-filtering to the cellular barcodes
+(\emph{recommended}).}
 
-\item{interestingGroups}{Character vector of interesting groups. Must be
-formatted in camel case and intersect with \code{\link[=sampleData]{sampleData()}} colnames.}
+\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+\code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{...}{Additional arguments.}
+\item{recalculate}{\code{boolean}. Force recalculation, using primary \code{\link[=counts]{counts()}}
+matrix.}
 }
 \value{
-\code{data.frame} with cellular barcodes as rows.
+\code{data.frame} with cellular barcodes as rows. If \code{recalculate = TRUE},
+returns the original object class (e.g. \code{SingleCellExperiment}), with
+updated metrics in \code{\link[=colData]{colData()}}.
 }
 \description{
 Sample Barcode Metrics
 }
 \examples{
 # SingleCellExperiment ====
-x <- metrics(cellranger_small)
+x <- metrics(indrops_small)
 glimpse(x)
 
-# dgCMatrix ====
-counts <- counts(cellranger_small)
+# matrix ====
+counts <- counts(indrops_small)
 class(counts)
 x <- metrics(counts)
 glimpse(x)
@@ -63,3 +68,4 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
+\concept{Quality Control Functions}

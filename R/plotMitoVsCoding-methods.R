@@ -9,8 +9,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' plotMitoVsCoding(cellranger_small)
+#' plotMitoVsCoding(indrops_small)
 NULL
 
 
@@ -25,7 +24,7 @@ setMethod(
         object,
         interestingGroups,
         trendline = FALSE,
-        color = NULL,
+        color = getOption("bcbio.discrete.color", NULL),
         trans = "log2",
         title = "mito vs. coding"
     ) {
@@ -41,14 +40,4 @@ setMethod(
             title = title
         )
     }
-)
-
-
-
-#' @rdname plotMitoVsCoding
-#' @export
-setMethod(
-    "plotMitoVsCoding",
-    signature("seurat"),
-    getMethod("plotMitoVsCoding", "SingleCellExperiment")
 )

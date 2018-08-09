@@ -23,7 +23,6 @@
 #' @seealso [sampleData()].
 #'
 #' @examples
-#' # bcbioSingleCell ====
 #' object <- indrops_small
 #' sample <- sampleNames(object) %>% head(1L)
 #' print(sample)
@@ -38,8 +37,14 @@ NULL
 setMethod(
     "selectSamples",
     signature("SingleCellExperiment"),
-    function(object, ...) {
+    function(
+        object,
+        ...,
+        prefilter = TRUE
+    ) {
         validObject(object)
+        assert_is_a_bool(prefilter)
+
         metadata(object)[["selectSamples"]] <- TRUE
 
         # Here the `args` are captured as a named character vector. The
@@ -110,6 +115,13 @@ setMethod(
         message(paste(length(cells), "cells matched"))
 
         # Note that this step will drop the raw cellular barcodes list
-        object[, cells]
+        object <- object[, cells]
+
+        # Run low-stringency filtering to drop zero-count genes
+        if (isTRUE(prefilter)) {
+            object <- filterCells(object)
+        }
+
+        object
     }
 )

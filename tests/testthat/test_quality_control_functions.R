@@ -27,16 +27,7 @@ test_that("filterCells", {
 test_that("filterCells : Maximum parameters", {
     # This should return an object with the same dimensions
     invisible(capture.output(
-        x <- filterCells(
-            indrops_small,
-            minUMIs = 0L,
-            maxUMIs = Inf,
-            minGenes = 0L,
-            maxGenes = Inf,
-            maxMitoRatio = 1L,
-            minNovelty = 0L,
-            minCellsPerGene = 0L
-        )
+        x <- filterCells(indrops_small)
     ))
     expect_s4_class(x, "bcbioSingleCell")
     expect_identical(dim(x), dim(indrops_small))
@@ -78,60 +69,27 @@ test_that("filterCells : Per sample cutoffs", {
             maxGenes = c(rep_1 = Inf),
             minNovelty = c(rep_1 = 0L),
             maxMitoRatio = c(rep_1 = 0L),
-            minCellsPerGene = 10L
+            minCellsPerGene = 1L
         )
+    )
+})
+
+test_that("filterCells: zinbwave mode", {
+    x <- filterCells(indrops_small, zinbwave = TRUE)
+    expect_s4_class(x, "bcbioSingleCell")
+    expect_true(
+        all(c("counts", "normalizedValues", "weights") %in% assayNames(x))
     )
 })
 
 
 
 # metrics ======================================================================
-test_that("metrics : bcbioSingleCell", {
-    x <- metrics(indrops_small)
-    expect_identical(
-        lapply(x, class),
-        list(
-            sampleID = "factor",
-            nCount = "integer",
-            nUMI = "integer",
-            nGene = "integer",
-            nCoding = "integer",
-            nMito = "integer",
-            log10GenesPerUMI = "numeric",
-            mitoRatio = "numeric",
-            sampleName = "factor",
-            fileName = "factor",
-            description = "factor",
-            index = "factor",
-            sequence = "factor",
-            aggregate = "factor",
-            revcomp = "factor",
-            interestingGroups = "factor"
-        )
-    )
-})
-
-test_that("metrics : seurat", {
-    x <- metrics(seurat_small)
-    expect_identical(
-        lapply(x, class),
-        list(
-            sampleID = "factor",
-            nGene = "integer",
-            nUMI = "integer",
-            nCoding = "integer",
-            nMito = "integer",
-            log10GenesPerUMI = "numeric",
-            mitoRatio = "numeric",
-            orig.ident = "factor",
-            res.0.4 = "character",
-            res.0.8 = "character",
-            res.1.2 = "character",
-            ident = "factor",
-            sampleName = "factor",
-            description = "factor",
-            index = "factor",
-            interestingGroups = "factor"
-        )
-    )
+test_that("metrics", {
+    object <- indrops_small
+    x <- metrics(object)
+    expect_true(all(
+        colnames(colData(object)) %in% colnames(x)
+    ))
+    expect_true("interestingGroups" %in% colnames(x))
 })

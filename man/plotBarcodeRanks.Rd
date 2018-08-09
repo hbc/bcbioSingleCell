@@ -3,16 +3,12 @@
 \docType{methods}
 \name{plotBarcodeRanks}
 \alias{plotBarcodeRanks}
-\alias{plotBarcodeRanks}
 \alias{plotBarcodeRanks,SingleCellExperiment-method}
-\alias{plotBarcodeRanks,seurat-method}
 \title{Plot Barcode Ranks}
 \usage{
 plotBarcodeRanks(object, ...)
 
 \S4method{plotBarcodeRanks}{SingleCellExperiment}(object, ...)
-
-\S4method{plotBarcodeRanks}{seurat}(object, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -26,9 +22,7 @@ plotBarcodeRanks(object, ...)
 Plot Barcode Ranks
 }
 \examples{
-# SingleCellExperiment ====
-object <- splatter::splatSimulate()
-plotBarcodeRanks(object)
+plotBarcodeRanks(indrops_small)
 }
 \seealso{
 \code{\link[DropletUtils:barcodeRanks]{DropletUtils::barcodeRanks()}}.

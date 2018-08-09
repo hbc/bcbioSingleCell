@@ -11,8 +11,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' plotNovelty(cellranger_small)
+#' plotNovelty(indrops_small)
 NULL
 
 
@@ -28,7 +27,7 @@ setMethod(
         geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
         interestingGroups,
         min = 0L,
-        fill = NULL,
+        fill = getOption("bcbio.discrete.fill", NULL),
         trans = "identity",
         title = "genes per UMI (novelty)"
     ) {
@@ -47,14 +46,4 @@ setMethod(
             title = title
         )
     }
-)
-
-
-
-#' @rdname plotNovelty
-#' @export
-setMethod(
-    "plotNovelty",
-    signature("seurat"),
-    getMethod("plotNovelty", "SingleCellExperiment")
 )

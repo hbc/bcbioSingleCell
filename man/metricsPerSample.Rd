@@ -3,24 +3,21 @@
 \docType{methods}
 \name{metricsPerSample}
 \alias{metricsPerSample}
-\alias{metricsPerSample}
 \alias{metricsPerSample,SingleCellExperiment-method}
-\alias{metricsPerSample,seurat-method}
 \title{Metrics per Sample}
 \usage{
 metricsPerSample(object, ...)
 
 \S4method{metricsPerSample}{SingleCellExperiment}(object, f = c("mean",
   "median", "sum"))
-
-\S4method{metricsPerSample}{seurat}(object, f = c("mean", "median", "sum"))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{f}{Mathematical function to apply. Defaults to "\code{sum}".}
+\item{f}{\code{string}. Mathematical function name to apply. Defaults to "\code{sum}"
+but "\code{mean}" and "\code{median}" are also supported.}
 }
 \value{
 \code{data.frame}.
@@ -29,26 +26,25 @@ metricsPerSample(object, ...)
 Calculate summary statistics per sample.
 }
 \examples{
-# SingleCellExperiment ====
 # mean
-x <- metricsPerSample(cellranger_small, f = "mean")
+x <- metricsPerSample(indrops_small, f = "mean")
 head(x)
 
 # median
-x <- metricsPerSample(cellranger_small, f = "median")
+x <- metricsPerSample(indrops_small, f = "median")
 head(x)
 
 # sum
-x <- metricsPerSample(cellranger_small, f = "sum")
+x <- metricsPerSample(indrops_small, f = "sum")
 head(x)
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
-  \code{\link{cell2sample}}, \code{\link{fetchGeneData}},
-  \code{\link{mapCellsToSamples}},
-  \code{\link{sampleData}}, \code{\link{selectSamples}},
+  \code{\link{cell2sample}}, \code{\link{sampleData}},
+  \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
 }
 \author{
 Michael Steinbaugh
 }
+\concept{Data Functions}

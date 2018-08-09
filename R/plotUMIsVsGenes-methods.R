@@ -9,8 +9,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' plotUMIsVsGenes(cellranger_small)
+#' plotUMIsVsGenes(indrops_small)
 NULL
 
 
@@ -25,7 +24,7 @@ setMethod(
         object,
         interestingGroups,
         trendline = FALSE,
-        color = NULL,
+        color = getOption("bcbio.discrete.color", NULL),
         trans = "log2",
         title = "UMIs vs. genes"
     ) {
@@ -41,14 +40,4 @@ setMethod(
             title = title
         )
     }
-)
-
-
-
-#' @rdname plotUMIsVsGenes
-#' @export
-setMethod(
-    "plotUMIsVsGenes",
-    signature("seurat"),
-    getMethod("plotUMIsVsGenes", "SingleCellExperiment")
 )

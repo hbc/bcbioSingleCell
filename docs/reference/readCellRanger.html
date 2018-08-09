@@ -64,7 +64,7 @@ counts from barcodes.tsv, genes.tsv, and matrix.mtx files." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
       </span>
     </div>
 
@@ -78,6 +78,9 @@ counts from barcodes.tsv, genes.tsv, and matrix.mtx files." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -113,59 +116,79 @@ counts from <code>barcodes.tsv</code>, <code>genes.tsv</code>, and <code>matrix.
     </div>
 
     <pre class="usage"><span class='fu'>readCellRanger</span>(<span class='no'>uploadDir</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mtx"</span>, <span class='st'>"hdf5"</span>), <span class='kw'>filtered</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>organism</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refdataDir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>transgeneNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>spikeNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>organism</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>refdataDir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>gffFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>transgeneNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>spikeNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>uploadDir</th>
-      <td><p>Path to Cell Ranger output directory. This directory path
-must contain <code>filtered_gene_bc_matrices*</code> as a child directory.</p></td>
+      <td><p><code>string</code>. Path to Cell Ranger output directory. This
+directory path must contain <code>filtered_gene_bc_matrices*</code> as a child
+directory.</p></td>
     </tr>
     <tr>
       <th>format</th>
-      <td><p>Output format, either MatrixMarket ("<code>mtx</code>") or HDF5
+      <td><p><code>string</code>. Output format, either MatrixMarket ("<code>mtx</code>") or HDF5
 ("<code>hdf5</code>").</p></td>
     </tr>
     <tr>
       <th>filtered</th>
-      <td><p>Use filtered (recommended) or raw counts. Note that raw
-counts still contain only whitelisted cellular barcodes.</p></td>
+      <td><p><code>boolean</code>. Use filtered (recommended) or raw counts. Note
+that raw counts still contain only whitelisted cellular barcodes.</p></td>
     </tr>
     <tr>
       <th>organism</th>
-      <td><p>Organism name. Use the full latin name (e.g.
-"Homo sapiens"), since this will be input downstream to
-AnnotationHub and ensembldb, unless <code>gffFile</code> is set.</p></td>
+      <td><p><code>string</code> or <code>NULL</code>. Organism name. Use the full Latin name
+(e.g. "Homo sapiens"), since this will be input downstream to AnnotationHub
+and ensembldb, unless <code>gffFile</code> is set. If left <code>NULL</code> (<em>not recommended</em>),
+the function call will skip loading gene-level annotations into
+<code>rowRanges()</code>. This can be useful for poorly annotation genomes or
+experiments involving multiple genomes.</p></td>
     </tr>
     <tr>
       <th>sampleMetadataFile</th>
-      <td><p>Sample barcode metadata file. Optional for runs
-with demultiplixed index barcodes (e.g. SureCell), but otherwise required
-for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
-inDrop).</p></td>
-    </tr>
-    <tr>
-      <th>refdataDir</th>
-      <td><p>Directory path to Cell Ranger reference annotation data.</p></td>
+      <td><p><code>string</code> or <code>NULL</code>. Sample barcode metadata file.
+Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
+be left <code>NULL</code>, but otherwise required for runs with multipliexed FASTQs
+containing multiple index barcodes (e.g. inDrop).</p></td>
     </tr>
     <tr>
       <th>interestingGroups</th>
-      <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+<code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+    </tr>
+    <tr>
+      <th>refdataDir</th>
+      <td><p><code>string</code> or <code>NULL</code>. Directory path to Cell Ranger reference
+annotation data.</p></td>
+    </tr>
+    <tr>
+      <th>gffFile</th>
+      <td><p><code>string</code> or <code>NULL</code>. <em>Advanced use only; not recommended.</em> By
+default, we recommend leaving this <code>NULL</code> for genomes that are supported on
+Ensembl. In this case, the row annotations (<code>rowRanges()</code>) will be obtained
+automatically from Ensembl by passing the <code>organism</code>, <code>genomeBuild</code>, and
+<code>ensemblRelease</code> arguments to AnnotationHub and ensembldb. For a genome
+that is not supported on Ensembl and/or AnnotationHub, a GFF/GTF (General
+Feature Format) file is required. Generally, we recommend using a GTF
+(GFFv2) file here over a GFF3 file if possible, although all GFF formats
+are supported. The function will internally generate transcript-to-gene
+mappings and construct a <code>GRanges</code> object containing the genomic ranges
+(<code>rowRanges()</code>).</p></td>
     </tr>
     <tr>
       <th>transgeneNames</th>
-      <td><p><code>character</code> vector indicating which <code>assay()</code> rows
-denote transgenes (e.g. EGFP, TDTOMATO).</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Vector indicating which
+<code>assay()</code> rows denote transgenes (e.g. EGFP, TDTOMATO).</p></td>
     </tr>
     <tr>
       <th>spikeNames</th>
-      <td><p><code>character</code> vector indicating which <code>assay()</code> rows denote
-spike-in sequences (e.g. ERCCs).</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Vector indicating which <code>assay()</code>
+rows denote spike-in sequences (e.g. ERCCs).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -212,10 +235,6 @@ slotted in <code>rowRanges()</code>. Otherwise, the function will attempt to use
 most current annotations available from Ensembl, and some gene IDs may not
 match, due to deprecation in the current Ensembl release.</p>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other Read Functions: <code><a href='readCellTypeMarkers.html'>readCellTypeMarkers</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>uploadDir</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata/cellranger"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>)
@@ -252,8 +271,6 @@ match, due to deprecation in the current Ensembl release.</p>
       <li><a href="#sample-metadata">Sample metadata</a></li>
 
       <li><a href="#reference-data">Reference data</a></li>
-
-      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
       </span>
     </div>
 
@@ -77,6 +77,9 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -114,7 +117,7 @@
 
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotCellCounts</span>(<span class='no'>object</span>, <span class='no'>interestingGroups</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"cell counts"</span>)</pre>
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.fill"</span>, <span class='kw'>NULL</span>), <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"cell counts"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -129,18 +132,22 @@
     </tr>
     <tr>
       <th>interestingGroups</th>
-      <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+<code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
     </tr>
     <tr>
       <th>fill</th>
-      <td><p>Desired ggplot fill scale. Must supply discrete values. When set
-to <code>NULL</code>, the default ggplot2 color palette will be used. If manual color
-definitions are desired, we recommend using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.</p></td>
+      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code> or <code>NULL</code>. Desired ggplot2 fill scale.
+Must supply discrete values. When set to <code>NULL</code>, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using <code><a href='http://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.
+To set the discrete fill palette globally, use
+<code>options(bcbio.discrete.fill = scale_fill_viridis_d())</code>.</p></td>
     </tr>
     <tr>
       <th>title</th>
-      <td><p>Plot title.</p></td>
+      <td><p><code>string</code> or <code>NULL</code>. Plot title.</p></td>
     </tr>
     </table>
     
@@ -150,20 +157,19 @@ definitions are desired, we recommend using <code><a href='http://www.rdocumenta
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Quality Control Functions: <code>barcodeRanksPerSample</code>,
-  <code>filterCells</code>, <code><a href='metrics.html'>metrics</a></code>,
-  <code>plotGenesPerCell</code>,
-  <code>plotMitoRatio</code>,
-  <code>plotMitoVsCoding</code>,
-  <code>plotNovelty</code>, <code><a href='plotQC.html'>plotQC</a></code>,
-  <code>plotReadsPerCell</code>,
-  <code>plotUMIsPerCell</code>,
-  <code>plotZerosVsDepth</code></p></div>
+    <div class='dont-index'><p>Other Quality Control Functions: <code><a href='barcodeRanksPerSample.html'>barcodeRanksPerSample</a></code>,
+  <code><a href='filterCells.html'>filterCells</a></code>, <code><a href='metrics.html'>metrics</a></code>,
+  <code><a href='plotGenesPerCell.html'>plotGenesPerCell</a></code>,
+  <code><a href='plotMitoRatio.html'>plotMitoRatio</a></code>,
+  <code><a href='plotMitoVsCoding.html'>plotMitoVsCoding</a></code>,
+  <code><a href='plotNovelty.html'>plotNovelty</a></code>, <code><a href='plotQC.html'>plotQC</a></code>,
+  <code><a href='plotReadsPerCell.html'>plotReadsPerCell</a></code>,
+  <code><a href='plotUMIsPerCell.html'>plotUMIsPerCell</a></code>,
+  <code><a href='plotZerosVsDepth.html'>plotZerosVsDepth</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
-<span class='fu'>plotCellCounts</span>(<span class='no'>cellranger_small</span>)</div><div class='img'><img src='plotCellCounts-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>plotCellCounts</span>(<span class='no'>indrops_small</span>)</div><div class='img'><img src='plotCellCounts-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

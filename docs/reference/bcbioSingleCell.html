@@ -66,7 +66,7 @@ quality control metrics." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.17</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
       </span>
     </div>
 
@@ -80,6 +80,9 @@ quality control metrics." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -103,7 +106,7 @@ quality control metrics." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1><code>bcbioSingleCell</code> Object and Constructor</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllClasses.R'><code>R/AllClasses.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllClasses.R'><code>R/AllClasses.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/bcbioSingleCell-constructor.R'><code>R/bcbioSingleCell-constructor.R</code></a></small>
     <div class="hidden name"><code>bcbioSingleCell.Rd</code></div>
     </div>
 
@@ -126,62 +129,67 @@ quality control metrics.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>uploadDir</th>
-      <td><p>Path to final upload directory. This path is set when
-running "<code>bcbio_nextgen -w template</code>".</p></td>
+      <td><p><code>string</code>. Path to final upload directory. This path is set
+when running "<code>bcbio_nextgen -w template</code>".</p></td>
     </tr>
     <tr>
       <th>organism</th>
-      <td><p>Organism name. Use the full latin name (e.g.
-"Homo sapiens"), since this will be input downstream to
-AnnotationHub and ensembldb, unless <code>gffFile</code> is set.</p></td>
+      <td><p><code>string</code> or <code>NULL</code>. Organism name. Use the full Latin name
+(e.g. "Homo sapiens"), since this will be input downstream to AnnotationHub
+and ensembldb, unless <code>gffFile</code> is set. If left <code>NULL</code> (<em>not recommended</em>),
+the function call will skip loading gene-level annotations into
+<code>rowRanges()</code>. This can be useful for poorly annotation genomes or
+experiments involving multiple genomes.</p></td>
     </tr>
     <tr>
       <th>sampleMetadataFile</th>
-      <td><p>Sample barcode metadata file. Optional for runs
-with demultiplixed index barcodes (e.g. SureCell), but otherwise required
-for runs with multipliexed FASTQs containing multiple index barcodes (e.g.
-inDrop).</p></td>
+      <td><p><code>string</code> or <code>NULL</code>. Sample barcode metadata file.
+Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
+be left <code>NULL</code>, but otherwise required for runs with multipliexed FASTQs
+containing multiple index barcodes (e.g. inDrop).</p></td>
     </tr>
     <tr>
       <th>interestingGroups</th>
-      <td><p>Character vector of interesting groups. Must be
-formatted in camel case and intersect with <code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+<code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
     </tr>
     <tr>
       <th>ensemblRelease</th>
-      <td><p><em>Optional.</em> Ensembl release version. If <code>NULL</code>,
-defaults to current release, and does not typically need to be
+      <td><p><code>scalar integer</code> or <code>NULL</code>. Ensembl release version. If
+<code>NULL</code>, defaults to current release, and does not typically need to be
 user-defined. Passed to AnnotationHub for <code>EnsDb</code> annotation matching,
 unless <code>gffFile</code> is set.</p></td>
     </tr>
     <tr>
       <th>genomeBuild</th>
-      <td><p><em>Optional.</em> Ensembl genome build name (e.g. "GRCh38").
-This will be passed to AnnotationHub for <code>EnsDb</code> annotation matching,
-unless <code>gffFile</code> is set.</p></td>
+      <td><p><code>string</code> or <code>NULL</code>. Ensembl genome build name (e.g.
+"GRCh38"). This will be passed to AnnotationHub for <code>EnsDb</code> annotation
+matching, unless <code>gffFile</code> is set.</p></td>
     </tr>
     <tr>
       <th>transgeneNames</th>
-      <td><p><code>character</code> vector indicating which <code>assay()</code> rows
-denote transgenes (e.g. EGFP, TDTOMATO).</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Vector indicating which
+<code>assay()</code> rows denote transgenes (e.g. EGFP, TDTOMATO).</p></td>
     </tr>
     <tr>
       <th>spikeNames</th>
-      <td><p><code>character</code> vector indicating which <code>assay()</code> rows denote
-spike-in sequences (e.g. ERCCs).</p></td>
+      <td><p><code>character</code> or <code>NULL</code>. Vector indicating which <code>assay()</code>
+rows denote spike-in sequences (e.g. ERCCs).</p></td>
     </tr>
     <tr>
       <th>gffFile</th>
-      <td><p><em>Optional, not recommended.</em> By default, we recommend leaving
-this <code>NULL</code> for genomes that are supported on Ensembl. In this case, the
-row annotations (<code>rowRanges()</code>) will be obtained automatically from Ensembl
-by passing the <code>organism</code>, <code>genomeBuild</code>, and <code>ensemblRelease</code> arguments to
-AnnotationHub and ensembldb. For a genome that is not supported on Ensembl
-and/or AnnotationHub, a GFF/GTF (General Feature Format) file is required.
-Generally, we recommend using a GTF (GFFv2) file here over a GFF3 file if
-possible, although all GFF formats are supported. The function will
-internally generate a <code>TxDb</code> containing transcript-to-gene mappings and
-construct a <code>GRanges</code> object containing the genomic ranges (<code>rowRanges()</code>).</p></td>
+      <td><p><code>string</code> or <code>NULL</code>. <em>Advanced use only; not recommended.</em> By
+default, we recommend leaving this <code>NULL</code> for genomes that are supported on
+Ensembl. In this case, the row annotations (<code>rowRanges()</code>) will be obtained
+automatically from Ensembl by passing the <code>organism</code>, <code>genomeBuild</code>, and
+<code>ensemblRelease</code> arguments to AnnotationHub and ensembldb. For a genome
+that is not supported on Ensembl and/or AnnotationHub, a GFF/GTF (General
+Feature Format) file is required. Generally, we recommend using a GTF
+(GFFv2) file here over a GFF3 file if possible, although all GFF formats
+are supported. The function will internally generate transcript-to-gene
+mappings and construct a <code>GRanges</code> object containing the genomic ranges
+(<code>rowRanges()</code>).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -211,8 +219,7 @@ run directory as a remote connection over
 <li><p><code><a href='http://www.rdocumentation.org/packages/SingleCellExperiment/topics/SingleCellExperiment'>SingleCellExperiment::SingleCellExperiment()</a></code>.</p></li>
 <li><p><code>.S4methods(class = "bcbioSingleCell")</code>.</p></li>
 </ul></div>
-    <div class='dont-index'><p>Other S4 Object: <code><a href='coerce.html'>coerce</a></code>,
-  <code><a href='extract.html'>extract</a></code>, <code><a href='show.html'>show</a></code>,
+    <div class='dont-index'><p>Other S4 Object: <code><a href='extract.html'>extract</a></code>, <code><a href='show.html'>show</a></code>,
   <code><a href='updateObject.html'>updateObject</a></code></p></div>
     
 
@@ -228,19 +235,34 @@ run directory as a remote connection over
 #&gt; <span class='message'>organism: "Homo sapiens"</span>
 #&gt; <span class='message'>build: "GRCh38"</span>
 #&gt; <span class='message'>release: "87"</span>
-#&gt; <span class='message'>format: "genes"</span></div><div class='output co'>#&gt; <span class='message'>Standardizing the metadata columns</span></div><div class='output co'>#&gt; <span class='message'>Defining broad class using: geneName, geneBiotype, seqnames</span></div><div class='output co'>#&gt; <span class='message'>Sorting ranges by geneID</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>449 coding genes</span></div><div class='output co'>#&gt; <span class='message'>13 mitochondrial genes</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.1.17
-#&gt; Samples: 1
-#&gt; Cells: 500
-#&gt; Genes: 500
-#&gt; Assays: counts
-#&gt; Organism: Homo sapiens
-#&gt; AnnotationHub: AH53211
-#&gt; Ensembl Release: 87
-#&gt; Genome Build: GRCh38
-#&gt; Filtered: FALSE
-#&gt; Upload Dir: /Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops
+#&gt; <span class='message'>format: "genes"</span></div><div class='output co'>#&gt; <span class='message'>Standardizing the metadata columns</span></div><div class='output co'>#&gt; <span class='message'>Defining broad class using: geneName, geneBiotype, seqnames</span></div><div class='output co'>#&gt; <span class='message'>Sorting ranges by geneID</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>449 coding genes</span></div><div class='output co'>#&gt; <span class='message'>13 mitochondrial genes</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.2.0
+#&gt; class: SingleCellExperiment 
+#&gt; dim: 500 500 
+#&gt; metadata(31): version pipeline ... utilsSessionInfo devtoolsSessionInfo
+#&gt; assays(1): counts
+#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
+#&gt;   ENSG00000283391
+#&gt; rowData names(7): broadClass description ... geneName seqCoordSystem
+#&gt; colnames(500): multiplexed_AAAAAAAA_AAACACTA_ATCCCACG
+#&gt;   multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA ...
+#&gt;   multiplexed_AAAAAAAA_TGTTATCA_ACGCAGAG
+#&gt;   multiplexed_AAAAAAAA_TGTTATCA_CAAGTCAT
+#&gt; colData names(15): nCount sampleID ... aggregate revcomp
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):
+#&gt; ====================================================================================================
+#&gt; Upload Dir: "/Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-07-21</div><div class='input'><span class='fu'>validObject</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
+#&gt; R Load Date: 2018-08-09
+#&gt; Level: "genes"
+#&gt; Organism: "Homo sapiens"
+#&gt; Interesting Groups: "sampleName"
+#&gt; Metadata File: "/Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops/metadata.csv"
+#&gt; AnnotationHub: "AH53211"
+#&gt; Ensembl Release: "87"
+#&gt; Genome Build: "GRCh38"
+#&gt; Filtered: FALSE
+#&gt; zinbwave: FALSE</div><div class='input'><span class='fu'>validObject</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

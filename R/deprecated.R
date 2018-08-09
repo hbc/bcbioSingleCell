@@ -26,23 +26,6 @@ NULL
 
 
 
-# v0.0.18 ======================================================================
-#' @rdname defunct
-#' @export
-plotClusters <- function(...) {
-    .Defunct("plotMarkers")
-}
-
-
-
-#' @rdname defunct
-#' @export
-plotTSNEExpressionData <- function(...) {
-    .Defunct("plotMarkerTSNE")
-}
-
-
-
 # v0.0.19 ======================================================================
 #' @rdname defunct
 #' @export
@@ -69,69 +52,25 @@ pcCutoff <- function(...) {
 
 
 
-#' @rdname defunct
-#' @export
-quantileHeatmap <- function(...) {
-    .Defunct("plotQuantileHeatmap")
-}
-
-
-
-# v0.0.25 ======================================================================
-#' @rdname defunct
-#' @export
-plotKnownMarkers <- function(...) {
-    .Defunct("plotKnownMarkersDetected")
-}
-
-
-
-#' @rdname defunct
-#' @export
-readMarkers <- function(...) {
-    .Defunct("readCellTypeMarkers")
-}
-
-
-
-# v0.0.26 ======================================================================
-#' @rdname defunct
-#' @export
-readMarkersFile <- function(...) {
-    .Defunct("readCellTypeMarkers")
-}
-
-
-
 # v0.1.0 =======================================================================
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 calculateMetrics <- function(...) {
-    .Deprecated("metrics")
-    metrics(...)
-}
-
-
-
-#' @rdname deprecated
-#' @export
-readCellTypeMarkersFile <- function(...) {
-    .Deprecated("readCellTypeMarkers")
-    readCellTypeMarkers(...)
+    .Defunct("metrics")
 }
 
 
 
 # v0.1.1 =======================================================================
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 inflectionPoint <- function(...) {
-    .Defunct("DropletUtils::barcodeRanks")
+    .Defunct("plotBarcodeRanks")
 }
 
 
 
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 plotCumulativeUMIsPerCell <- function(...) {
     .Defunct("plotUMIsPerCell")
@@ -158,28 +97,179 @@ loadSingleCell <- function(...) {
 
 
 
-# v0.1.11 ======================================================================
+# v0.2.0 =======================================================================
 #' @rdname defunct
 #' @export
-plotFeatures <- function(...) {
-    .Defunct("plotFeatureTSNE")
+cellCountsPerCluster <- function(...) {
+    .Defunct("pointillism::cellCountsPerCluster")
 }
 
+#' @rdname defunct
+#' @export
+cellTypesPerCluster <- function(...) {
+    .Defunct("pointillism::cellTypesPerCluster")
+}
 
+#' @rdname defunct
+#' @export
+clusterCellCountsPerSample <- function(...) {
+    .Defunct("pointillism::clusterCellCountsPerSample")
+}
 
-#' @rdname plotMarker
-#' @usage NULL
+#' @rdname defunct
+#' @export
+diffExp <- function(...) {
+    .Defunct("pointillism::diffExp")
+}
+
+#' @rdname defunct
+#' @export
+fetchGeneData <- function(...) {
+    .Defunct("pointillism::fetchGeneData")
+}
+
+#' @rdname defunct
+#' @export
+fetchPCAData <- function(...) {
+    .Defunct("pointillism::fetchReducedDimData")
+}
+
+#' @rdname defunct
+#' @export
+fetchTSNEData <- function(...) {
+    .Defunct("pointillism::fetchReducedDimData")
+}
+
+#' @rdname defunct
+#' @export
+fetchTSNEExpressionData <- function(...) {
+    .Defunct("pointillism::fetchReducedDimExpressionData")
+}
+
+#' @rdname defunct
+#' @export
+fetchUMAPData <- function(...) {
+    .Defunct("pointillism::fetchReducedDimData")
+}
+
+#' @rdname defunct
+#' @export
+fetchUMAPExpressionData <- function(...) {
+    .Defunct("pointillism::fetchReducedDimExpressionData")
+}
+
+#' @rdname defunct
+#' @export
+knownMarkersDetected <- function(...) {
+    .Defunct("pointillism::knownMarkersDetected")
+}
+
+#' @rdname defunct
+#' @export
+plotCellTypesPerCluster <- function(...) {
+    .Defunct("pointillism::plotCellTypesPerCluster")
+}
+
+#' @rdname defunct
+#' @export
+plotFeatureTSNE <- function(...) {
+    .Defunct("pointillism::plotFeature")
+}
+
+#' @rdname defunct
+#' @export
+plotFeatureUMAP <- function(...) {
+    .Defunct("pointillism::plotFeature")
+}
+
+#' @rdname defunct
+#' @export
+plotGene <- function(...) {
+    .Defunct("pointillism::plotGene")
+}
+
+#' @rdname defunct
+#' @export
+plotKnownMarkers <- function(...) {
+    .Defunct("pointillism::plotKnownMarkersDetected")
+}
+
+#' @rdname defunct
+#' @export
+plotKnownMarkersDetected <- function(...) {
+    .Defunct("pointillism::plotKnownMarkersDetected")
+}
+
+#' @rdname defunct
 #' @export
 plotMarker <- function(...) {
-    .Defunct("plotMarkerTSNE")
+    .Defunct("pointillism::plotMarker")
 }
 
+#' @rdname defunct
+#' @export
+plotMarkerTSNE <- function(...) {
+    .Defunct("pointillism::plotMarker")
+}
 
+#' @rdname defunct
+#' @export
+plotMarkerUMAP <- function(...) {
+    .Defunct("pointillism::plotMarker")
+}
 
 #' @rdname defunct
 #' @export
 plotMarkers <- function(...) {
-    .Defunct("plotMarkerTSNE")
+    .Defunct("pointillism::plotMarkers")
+}
+
+#' @rdname defunct
+#' @export
+plotPCElbow <- function(...) {
+    .Defunct("pointillism::plotPCElbow")
+}
+
+#' @rdname defunct
+#' @export
+plotTSNE <- function(...) {
+    .Defunct("pointillism::plotTSNE")
+}
+
+#' @rdname defunct
+#' @export
+plotTSNEExpressionData <- function(...) {
+    .Defunct("pointillism::plotMarker")
+}
+
+#' @rdname defunct
+#' @export
+plotTopMarkers <- function(...) {
+    .Defunct("pointillism::plotTopMarkers")
+}
+
+#' @rdname defunct
+#' @export
+plotUMAP <- function(...) {
+    .Defunct("pointillism::plotUMAP")
+}
+
+#' @rdname defunct
+#' @export
+readCellTypeMarkers <- function(...) {
+    .Defunct("pointillism::readCellTypeMarkers")
+}
+
+#' @rdname defunct
+#' @export
+sanitizeMarkers <- function(...) {
+    .Defunct("pointillism::sanitizeSeuratMarkers")
+}
+
+#' @rdname defunct
+#' @export
+topMarkers <- function(...) {
+    .Defunct("pointillism::topMarkers")
 }
 
 

@@ -3,28 +3,23 @@
 \docType{methods}
 \name{topBarcodes}
 \alias{topBarcodes}
-\alias{topBarcodes}
 \alias{topBarcodes,SingleCellExperiment-method}
-\alias{topBarcodes,seurat-method}
 \title{Top Barcodes}
 \usage{
 topBarcodes(object, ...)
 
 \S4method{topBarcodes}{SingleCellExperiment}(object, n = 1000L,
   return = c("data.frame", "list"))
-
-\S4method{topBarcodes}{seurat}(object, n = 1000L, return = c("data.frame",
-  "list"))
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Additional arguments.}
 
-\item{n}{Number of barcodes to return per sample.}
+\item{n}{\code{scalar integer}. Number of barcodes to return per sample.}
 
-\item{return}{Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and defaults
-to the first argument in the vector.}
+\item{return}{\code{string}. Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and
+defaults to the first argument in the \code{character} vector.}
 }
 \value{
 \itemize{
@@ -38,19 +33,17 @@ column in descending order. Cellular barcodes are in the \code{cellID} column.
 Obtain the top cellular barcodes based on UMI counts.
 }
 \examples{
-# SingleCellExperiment ====
-# list
-x <- topBarcodes(cellranger_small, return = "list")
+# Return list
+x <- topBarcodes(indrops_small, return = "list")
 lapply(x, class)
 
-# data.frame
-x <- topBarcodes(cellranger_small, return = "data.frame")
+# Return data.frame
+x <- topBarcodes(indrops_small, return = "data.frame")
 glimpse(x)
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateReplicates}},
-  \code{\link{cell2sample}}, \code{\link{fetchGeneData}},
-  \code{\link{mapCellsToSamples}},
+  \code{\link{cell2sample}},
   \code{\link{metricsPerSample}}, \code{\link{sampleData}},
   \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}
@@ -58,3 +51,4 @@ Other Data Functions: \code{\link{aggregateReplicates}},
 \author{
 Michael Steinbaugh
 }
+\concept{Data Functions}

@@ -1,7 +1,5 @@
 * * *
 
-
-
 # R session information {.tabset}
 
 ```{r session_info}
@@ -20,8 +18,6 @@ markdownHeader("`utils::sessionInfo()`", level = 2)
 utils::sessionInfo()
 ```
 
-
-
 [bcbio]: https://bcbio-nextgen.readthedocs.io
 [bcbioSingleCell]: http://bioinformatics.sph.harvard.edu/bcbioSingleCell
 [bcl2fastq]: https://support.illumina.com/downloads/bcl2fastq-conversion-software-v217.html
@@ -30,7 +26,7 @@ utils::sessionInfo()
 [DESeq2]: https://doi.org/doi:10.18129/B9.bioc.DESeq2
 [edgeR]: https://doi.org/doi:10.18129/B9.bioc.edgeR
 [Ensembl]: http://useast.ensembl.org
-[inDrop]: http://1cell-bio.com
+[inDrops]: http://1cell-bio.com
 [Matrix]: https://cran.r-project.org/web/packages/Matrix/index.html
 [Orchestra]: https://wiki.med.harvard.edu/Orchestra
 [Python]: https://python.org

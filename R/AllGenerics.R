@@ -20,133 +20,12 @@ setGeneric(
 
 
 
-#' @rdname cellCountsPerCluster
-#' @export
-setGeneric(
-    "cellCountsPerCluster",
-    function(object, ...) {
-        standardGeneric("cellCountsPerCluster")
-    }
-)
-
-
-
-#' @rdname cellTypesPerCluster
-#' @export
-setGeneric(
-    "cellTypesPerCluster",
-    function(object, ...) {
-        standardGeneric("cellTypesPerCluster")
-    }
-)
-
-
-
-#' @rdname clusterCellCountsPerSample
-#' @export
-setGeneric(
-    "clusterCellCountsPerSample",
-    function(object, ...) {
-        standardGeneric("clusterCellCountsPerSample")
-    }
-)
-
-
-
-#' @rdname diffExp
-#' @export
-setGeneric(
-    "diffExp",
-    function(object, ...) {
-        standardGeneric("diffExp")
-    }
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setGeneric(
-    "fetchGeneData",
-    function(object, ...) {
-        standardGeneric("fetchGeneData")
-    }
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setGeneric(
-    "fetchPCAData",
-    function(object, ...) {
-        standardGeneric("fetchPCAData")
-    }
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setGeneric(
-    "fetchTSNEData",
-    function(object, ...) {
-        standardGeneric("fetchTSNEData")
-    }
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setGeneric(
-    "fetchTSNEExpressionData",
-    function(object, ...) {
-        standardGeneric("fetchTSNEExpressionData")
-    }
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setGeneric(
-    "fetchUMAPData",
-    function(object, ...) {
-        standardGeneric("fetchUMAPData")
-    }
-)
-
-
-
-#' @rdname fetchData
-#' @export
-setGeneric(
-    "fetchUMAPExpressionData",
-    function(object, ...) {
-        standardGeneric("fetchUMAPExpressionData")
-    }
-)
-
-
-
 #' @rdname filterCells
 #' @export
 setGeneric(
     "filterCells",
     function(object, ...) {
         standardGeneric("filterCells")
-    }
-)
-
-
-
-#' @rdname knownMarkersDetected
-#' @export
-setGeneric(
-    "knownMarkersDetected",
-    function(object, ...) {
-        standardGeneric("knownMarkersDetected")
     }
 )
 
@@ -185,78 +64,12 @@ setGeneric(
 
 
 
-#' @rdname plotCellTypesPerCluster
-#' @export
-setGeneric(
-    "plotCellTypesPerCluster",
-    function(object, ...) {
-        standardGeneric("plotCellTypesPerCluster")
-    }
-)
-
-
-
-#' @rdname plotFeature
-#' @export
-setGeneric(
-    "plotFeatureTSNE",
-    function(object, ...) {
-        standardGeneric("plotFeatureTSNE")
-    }
-)
-
-
-
-#' @rdname plotFeature
-#' @export
-setGeneric(
-    "plotFeatureUMAP",
-    function(object, ...) {
-        standardGeneric("plotFeatureUMAP")
-    }
-)
-
-
-
 #' @rdname plotGenesPerCell
 #' @export
 setGeneric(
     "plotGenesPerCell",
     function(object, ...) {
         standardGeneric("plotGenesPerCell")
-    }
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-setGeneric(
-    "plotKnownMarkersDetected",
-    function(object, ...) {
-        standardGeneric("plotKnownMarkersDetected")
-    }
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-setGeneric(
-    "plotMarkerTSNE",
-    function(object, ...) {
-        standardGeneric("plotMarkerTSNE")
-    }
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-setGeneric(
-    "plotMarkerUMAP",
-    function(object, ...) {
-        standardGeneric("plotMarkerUMAP")
     }
 )
 
@@ -295,56 +108,12 @@ setGeneric(
 
 
 
-#' @rdname plotPCElbow
-#' @export
-setGeneric(
-    "plotPCElbow",
-    function(object, ...) {
-        standardGeneric("plotPCElbow")
-    }
-)
-
-
-
 #' @rdname plotReadsPerCell
 #' @export
 setGeneric(
     "plotReadsPerCell",
     function(object, ...) {
         standardGeneric("plotReadsPerCell")
-    }
-)
-
-
-
-#' @rdname plotMarker
-#' @export
-setGeneric(
-    "plotTopMarkers",
-    function(object, ...) {
-        standardGeneric("plotTopMarkers")
-    }
-)
-
-
-
-#' @rdname plotDimensionalReduction
-#' @export
-setGeneric(
-    "plotTSNE",
-    function(object, ...) {
-        standardGeneric("plotTSNE")
-    }
-)
-
-
-
-#' @rdname plotDimensionalReduction
-#' @export
-setGeneric(
-    "plotUMAP",
-    function(object, ...) {
-        standardGeneric("plotUMAP")
     }
 )
 
@@ -383,17 +152,6 @@ setGeneric(
 
 
 
-#' @rdname sanitizeMarkers
-#' @export
-setGeneric(
-    "sanitizeMarkers",
-    function(object, ...) {
-        standardGeneric("sanitizeMarkers")
-    }
-)
-
-
-
 #' @rdname subsetPerSample
 #' @export
 setGeneric(
@@ -411,16 +169,5 @@ setGeneric(
     "topBarcodes",
     function(object, ...) {
         standardGeneric("topBarcodes")
-    }
-)
-
-
-
-#' @rdname topMarkers
-#' @export
-setGeneric(
-    "topMarkers",
-    function(object, ...) {
-        standardGeneric("topMarkers")
     }
 )

@@ -9,11 +9,11 @@
 #'
 #' @inherit BiocGenerics::updateObject
 #'
-#' @return `bcbioRNASeq`.
+#' @return Valid object.
 #'
 #' @examples
-#' # bcbioSingleCell ====
-#' updateObject(indrops_small)
+#' x <- updateObject(indrops_small)
+#' print(x)
 NULL
 
 

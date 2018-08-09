@@ -10,8 +10,7 @@
 #'   barcode IDs as the names.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' x <- cell2sample(cellranger_small)
+#' x <- cell2sample(indrops_small)
 #' table(x)
 NULL
 
@@ -37,16 +36,6 @@ setMethod(
         if (is.null(samples)) {
             samples <- "unknown"
         }
-        mapCellsToSamples(cells = cells, samples = samples)
+        .mapCellsToSamples(cells = cells, samples = samples)
     }
-)
-
-
-
-#' @rdname seurat-SingleCellExperiment
-#' @export
-setMethod(
-    "cell2sample",
-    signature("seurat"),
-    getMethod("cell2sample", "SingleCellExperiment")
 )

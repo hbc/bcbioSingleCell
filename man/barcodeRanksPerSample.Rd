@@ -4,16 +4,12 @@
 \docType{methods}
 \name{barcodeRanksPerSample}
 \alias{barcodeRanksPerSample}
-\alias{barcodeRanksPerSample}
 \alias{barcodeRanksPerSample,SingleCellExperiment-method}
-\alias{barcodeRanksPerSample,seurat-method}
 \title{Barcode Ranks per Sample}
 \usage{
 barcodeRanksPerSample(object, ...)
 
 \S4method{barcodeRanksPerSample}{SingleCellExperiment}(object, ...)
-
-\S4method{barcodeRanksPerSample}{seurat}(object, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -33,7 +29,7 @@ This is \code{NA} for points with \code{x} outside of \code{fit.bounds}.
 }
 }
 \description{
-Barcode Ranks per Sample
+Compute barcode rank statistics and identifry the knee and inflection points on the total count curve.
 }
 \details{
 Analyses of droplet-based scRNA-seq data often show a plot of the log-total count against the log-rank of each barcode, where the highest ranks have the largest totals.
@@ -63,8 +59,7 @@ The lower bound is set to the point at which the first derivative is closest to 
 Note that only points with total counts above \code{lower} will be considered, regardless of how \code{fit.bounds} is defined.
 }
 \examples{
-# SingleCellExperiment ====
-x <- barcodeRanksPerSample(cellranger_small)
+x <- barcodeRanksPerSample(indrops_small)
 names(x)
 }
 \seealso{
@@ -83,3 +78,4 @@ Other Quality Control Functions: \code{\link{filterCells}},
 \author{
 Michael Steinbaugh
 }
+\concept{Quality Control Functions}

@@ -18,10 +18,11 @@
   }
 }
 \value{
-\code{bcbioRNASeq}.
+Valid object.
 }
 \description{
-Update an Object to Its Current Class Definition
+\code{updateObject} is a generic function that returns an instance
+  of \code{object} updated to its current class definition.
 }
 \details{
 Updating objects is primarily useful when an object has been
@@ -80,14 +81,14 @@ Updating objects is primarily useful when an object has been
   \code{object} cannot be determined by accessing known slots.
 }
 \examples{
-# bcbioSingleCell ====
-updateObject(indrops_small)
+x <- updateObject(indrops_small)
+print(x)
 }
 \seealso{
 Other S4 Object: \code{\link{bcbioSingleCell}},
-  \code{\link{coerce}}, \code{\link{extract}},
-  \code{\link{show}}
+  \code{\link{extract}}, \code{\link{show}}
 }
 \author{
 Michael Steinbaugh
 }
+\concept{S4 Object}

@@ -9,8 +9,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' plotCellCounts(cellranger_small)
+#' plotCellCounts(indrops_small)
 NULL
 
 
@@ -24,12 +23,14 @@ setMethod(
     function(
         object,
         interestingGroups,
-        fill = NULL,
+        fill = getOption("bcbio.discrete.fill", NULL),
         title = "cell counts"
     ) {
-        if (missing(interestingGroups)) {
-            interestingGroups <- basejump::interestingGroups(object)
-        }
+        validObject(object)
+        interestingGroups <- matchInterestingGroups(
+            object = object,
+            interestingGroups = interestingGroups
+        )
         assertIsFillScaleDiscreteOrNULL(fill)
         assertIsAStringOrNULL(title)
 
@@ -41,9 +42,13 @@ setMethod(
         )
         if (is.null(sampleData)) {
             sampleData <- unknownSampleData
+        } else {
+            sampleData[["sampleID"]] <- factor(
+                x = rownames(sampleData),
+                levels = levels(metrics[["sampleID"]])
+            )
         }
         sampleData <- as.data.frame(sampleData)
-        sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
 
         # Remove user-defined `nCells` column, if present
         metrics[["nCells"]] <- NULL
@@ -98,14 +103,4 @@ setMethod(
 
         p
     }
-)
-
-
-
-#' @rdname seurat-SingleCellExperiment
-#' @export
-setMethod(
-    "plotCellCounts",
-    signature("seurat"),
-    getMethod("plotCellCounts", "SingleCellExperiment")
 )

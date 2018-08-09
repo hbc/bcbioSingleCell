@@ -38,13 +38,15 @@
 #'
 #' @inheritParams bcbioSingleCell
 #' @inheritParams general
-#' @param uploadDir Path to Cell Ranger output directory. This directory path
-#'   must contain `filtered_gene_bc_matrices*` as a child directory.
-#' @param filtered Use filtered (recommended) or raw counts. Note that raw
-#'   counts still contain only whitelisted cellular barcodes.
-#' @param format Output format, either MatrixMarket ("`mtx`") or HDF5
+#' @param uploadDir `string`. Path to Cell Ranger output directory. This
+#'   directory path must contain `filtered_gene_bc_matrices*` as a child
+#'   directory.
+#' @param filtered `boolean`. Use filtered (recommended) or raw counts. Note
+#'   that raw counts still contain only whitelisted cellular barcodes.
+#' @param format `string`. Output format, either MatrixMarket ("`mtx`") or HDF5
 #'   ("`hdf5`").
-#' @param refdataDir Directory path to Cell Ranger reference annotation data.
+#' @param refdataDir `string` or `NULL`. Directory path to Cell Ranger reference
+#'   annotation data.
 #'
 #' @return `SingleCellExperiment`.
 #' @export
@@ -62,8 +64,9 @@ readCellRanger <- function(
     filtered = TRUE,
     organism = NULL,
     sampleMetadataFile = NULL,
-    refdataDir = NULL,
     interestingGroups = "sampleName",
+    refdataDir = NULL,
+    gffFile = NULL,
     transgeneNames = NULL,
     spikeNames = NULL,
     ...
@@ -80,6 +83,7 @@ readCellRanger <- function(
         assert_all_are_dirs(refdataDir)
         refdataDir <- normalizePath(refdataDir, winslash = "/", mustWork = TRUE)
     }
+    assertIsAStringOrNULL(gffFile)
     assert_is_character(interestingGroups)
     assert_is_any_of(transgeneNames, c("character", "NULL"))
     assert_is_any_of(spikeNames, c("character", "NULL"))
@@ -196,7 +200,7 @@ readCellRanger <- function(
         # JSON data
         refJSONFile <- file.path(refdataDir, "reference.json")
         assert_all_are_existing_files(refJSONFile)
-        refJSON <- read_json(refJSONFile)
+        refJSON <- readJSON(refJSONFile)
         # Get the genome build from JSON metadata
         genomeBuild <- unlist(refJSON[["genomes"]])
         assert_is_a_string(genomeBuild)
@@ -210,6 +214,8 @@ readCellRanger <- function(
             str_split("\\.", simplify = TRUE) %>%
             .[1L, 3L] %>%
             as.integer()
+    } else if (is_a_string(gffFile)) {
+        rowRanges <- makeGRangesFromGFF(gffFile, format = "genes")
     } else if (is_a_string(organism)) {
         # CellRanger uses Ensembl refdata internally. Here we're fetching the
         # annotations with AnnotationHub rather than pulling from the GTF file
@@ -235,19 +241,21 @@ readCellRanger <- function(
     } else {
         rowRanges <- emptyRanges(rownames(counts))
     }
-    rowData <- as.data.frame(rowRanges)
-    rownames(rowData) <- names(rowRanges)
 
     # Column data ==============================================================
     # Always prefilter, removing very low quality cells with no UMIs or genes
-    metrics <- metrics(counts, rowData = rowData, prefilter = TRUE)
+    metrics <- metrics(
+        object = counts,
+        rowRanges = rowRanges,
+        prefilter = TRUE
+    )
 
     # Subset the counts to match the prefiltered metrics
     counts <- counts[, rownames(metrics), drop = FALSE]
 
     colData <- as(metrics, "DataFrame")
     colData[["cellID"]] <- rownames(colData)
-    cell2sample <- mapCellsToSamples(
+    cell2sample <- .mapCellsToSamples(
         cells = rownames(colData),
         samples = rownames(sampleData)
     )

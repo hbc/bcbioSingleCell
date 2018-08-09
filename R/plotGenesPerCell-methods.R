@@ -9,8 +9,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' # SingleCellExperiment ====
-#' plotGenesPerCell(cellranger_small)
+#' plotGenesPerCell(indrops_small)
 NULL
 
 
@@ -28,7 +27,7 @@ setMethod(
         min = 0L,
         max = Inf,
         trans = "log2",
-        fill = NULL,
+        fill = getOption("bcbio.discrete.fill", NULL),
         title = "genes per cell"
     ) {
         geom <- match.arg(geom)
@@ -44,14 +43,4 @@ setMethod(
             title = title
         )
     }
-)
-
-
-
-#' @rdname plotGenesPerCell
-#' @export
-setMethod(
-    "plotGenesPerCell",
-    signature("seurat"),
-    getMethod("plotGenesPerCell", "SingleCellExperiment")
 )
