@@ -361,7 +361,7 @@ bcbioSingleCell <- function(
 
     # Column data ==============================================================
     # Always prefilter, removing very low quality cells with no UMIs or genes
-    metrics <- metrics(
+    metrics <- .metrics(
         object = counts,
         rowRanges = rowRanges,
         prefilter = TRUE

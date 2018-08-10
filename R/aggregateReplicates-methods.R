@@ -107,7 +107,7 @@ setMethod(
 
         # Column data ==========================================================
         # Always prefilter, removing cells with no UMIs or genes
-        metrics <- metrics(
+        metrics <- .metrics(
             object = counts,
             rowRanges = rowRanges(object),
             prefilter = TRUE
