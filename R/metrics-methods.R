@@ -23,11 +23,9 @@
 #' x <- metrics(indrops_small)
 #' glimpse(x)
 #'
-#' # matrix ====
-#' counts <- counts(indrops_small)
-#' class(counts)
-#' x <- metrics(counts)
-#' glimpse(x)
+#' # Recalculate mode
+#' x <- metrics(indrops_small, recalculate = TRUE)
+#' print(x)
 NULL
 
 
