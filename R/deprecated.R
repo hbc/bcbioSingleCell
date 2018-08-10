@@ -125,37 +125,37 @@ diffExp <- function(...) {
 #' @rdname defunct
 #' @export
 fetchGeneData <- function(...) {
-    .Defunct("pointillism::fetchGeneData")
+    .Defunct()
 }
 
 #' @rdname defunct
 #' @export
 fetchPCAData <- function(...) {
-    .Defunct("pointillism::fetchReducedDimData")
+    .Defunct()
 }
 
 #' @rdname defunct
 #' @export
 fetchTSNEData <- function(...) {
-    .Defunct("pointillism::fetchReducedDimData")
+    .Defunct()
 }
 
 #' @rdname defunct
 #' @export
 fetchTSNEExpressionData <- function(...) {
-    .Defunct("pointillism::fetchReducedDimExpressionData")
+    .Defunct()
 }
 
 #' @rdname defunct
 #' @export
 fetchUMAPData <- function(...) {
-    .Defunct("pointillism::fetchReducedDimData")
+    .Defunct()
 }
 
 #' @rdname defunct
 #' @export
 fetchUMAPExpressionData <- function(...) {
-    .Defunct("pointillism::fetchReducedDimExpressionData")
+    .Defunct()
 }
 
 #' @rdname defunct
