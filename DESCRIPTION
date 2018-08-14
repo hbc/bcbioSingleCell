@@ -95,14 +95,11 @@ Suggests:
     BiocStyle,
     DropletUtils,
     EnsDb.Hsapiens.v75,
-    pointillism,
-    reticulate,
     roxygen2,
     testthat (>= 2.0)
 Remotes:
     hbc/bcbioBase,
-    steinbaugh/basejump,
-    steinbaugh/pointillism
+    steinbaugh/basejump
 biocViews:
     DataImport,
     DataRepresentation,
