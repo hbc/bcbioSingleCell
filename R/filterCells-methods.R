@@ -81,12 +81,6 @@ setMethod(
         maxMitoRatio = 1L,
         minCellsPerGene = 1L
     ) {
-        # Legacy params --------------------------------------------------------
-        call <- match.call()
-        if ("zinbwave" %in% names (call)) {
-            stop("zinbwave support was removed in v0.2.1")
-        }
-
         validObject(object)
 
         originalDim <- dim(object)
