@@ -70,5 +70,4 @@
 #'   colData<- rowData rowRanges rowRanges<-
 #' @importFrom tibble as_tibble column_to_rownames rownames_to_column tibble
 #' @importFrom utils capture.output globalVariables packageVersion
-#' @importFrom zinbwave glmWeightedF zinbwave
 NULL

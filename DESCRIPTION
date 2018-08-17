@@ -89,8 +89,7 @@ Imports:
     SummarizedExperiment,
     tibble (>= 1.4),
     tidyverse (>= 1.2),
-    utils,
-    zinbwave
+    utils
 Suggests:
     BiocStyle,
     DropletUtils,

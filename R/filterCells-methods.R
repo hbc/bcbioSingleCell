@@ -25,12 +25,6 @@
 #'   mitochondrial abundance.
 #' @param minCellsPerGene `scalar integer`. Include genes with non-zero
 #'   expression in at least this many cells.
-#' @param zinbwave `boolean`. Run [zinbwave::zinbwave()] to automatically apply
-#'   a ZINB regression model to calculate `normalizedValues` and `weights`
-#'   matrices to by used for differential expression with DESeq2 or edgeR.
-#'   Note that this calculation should only be performed on **filtered data**.
-#'   For large datasets this can take a long time and use a lot of memory, so
-#'   this calculation is disabled by default.
 #'
 #' @return `bcbioSingleCell`, with filtering information slotted into
 #'   [metadata()] as `filterCells` and `filterParams`.
@@ -87,17 +81,21 @@ setMethod(
         maxGenes = Inf,
         minNovelty = 0L,
         maxMitoRatio = 1L,
-        minCellsPerGene = 1L,
-        zinbwave = FALSE
+        minCellsPerGene = 1L
     ) {
+        # Legacy params --------------------------------------------------------
+        call <- match.call()
+        if ("zinbwave" %in% names (call)) {
+            stop("zinbwave support was removed in v0.2.1")
+        }
+
         validObject(object)
-        assert_is_a_bool(zinbwave)
 
         originalDim <- dim(object)
         sampleNames <- sampleNames(object)
         metrics <- metrics(object)
 
-        # Parameter integrity checks ===========================================
+        # Parameter integrity checks -------------------------------------------
         # Expected nCells per sample
         assert_is_a_number(nCells)
         assert_all_are_positive(nCells)
@@ -145,7 +143,7 @@ setMethod(
             minCellsPerGene = minCellsPerGene
         )
 
-        # Filter low quality cells =============================================
+        # Filter low quality cells ---------------------------------------------
         summaryCells <- character()
         summaryCells[["prefilter"]] <- paste(
             paste(.paddedCount(ncol(object)), "cells"),
@@ -153,7 +151,7 @@ setMethod(
             sep = " | "
         )
 
-        # minUMIs --------------------------------------------------------------
+        # minUMIs
         if (is_a_string(minUMIs)) {
             ranks <- barcodeRanksPerSample(object)
             minUMIs <- vapply(
@@ -198,7 +196,7 @@ setMethod(
             sep = " | "
         )
 
-        # maxUMIs --------------------------------------------------------------
+        # maxUMIs
         if (!is.null(names(maxUMIs))) {
             assert_are_set_equal(names(maxUMIs), sampleNames)
             message(paste(
@@ -231,7 +229,7 @@ setMethod(
             sep = " | "
         )
 
-        # minGenes -------------------------------------------------------------
+        # minGenes
         if (!is.null(names(minGenes))) {
             assert_are_set_equal(names(minGenes), sampleNames)
             message(paste(
@@ -264,7 +262,7 @@ setMethod(
             sep = " | "
         )
 
-        # maxGenes -------------------------------------------------------------
+        # maxGenes
         if (!is.null(names(maxGenes))) {
             assert_are_set_equal(names(maxGenes), sampleNames)
             message(paste(
@@ -297,7 +295,7 @@ setMethod(
             sep = " | "
         )
 
-        # minNovelty -----------------------------------------------------------
+        # minNovelty
         if (!is.null(names(minNovelty))) {
             assert_are_set_equal(names(minNovelty), sampleNames)
             message(paste(
@@ -330,7 +328,7 @@ setMethod(
             sep = " | "
         )
 
-        # maxMitoRatio ---------------------------------------------------------
+        # maxMitoRatio
         if (!is.null(names(maxMitoRatio))) {
             assert_are_set_equal(names(maxMitoRatio), sampleNames)
             message(paste(
@@ -363,7 +361,7 @@ setMethod(
             sep = " | "
         )
 
-        # Expected nCells per sample (filtered by top nUMI) --------------------
+        # Expected nCells per sample (filtered by top nUMI)
         if (nCells < Inf) {
             metrics <- metrics %>%
                 rownames_to_column() %>%
@@ -387,7 +385,7 @@ setMethod(
         assert_is_subset(cells, colnames(object))
         object <- object[, cells]
 
-        # Filter low quality genes =============================================
+        # Filter low quality genes ---------------------------------------------
         summaryGenes <- character()
         summaryGenes[["prefilter"]] <- paste(
             paste(.paddedCount(nrow(object)), "genes"),
@@ -413,7 +411,7 @@ setMethod(
         assert_is_subset(genes, rownames(object))
         object <- object[genes, ]
 
-        # Summary ==============================================================
+        # Summary --------------------------------------------------------------
         printParams <- c(
             paste(">=", min(minUMIs), "UMIs per cell"),
             paste("<=", max(maxUMIs), "UMIs per cell"),
@@ -456,17 +454,12 @@ setMethod(
 
         summary <- list(cells = summaryCells, genes = summaryGenes)
 
-        # Metadata =============================================================
+        # Metadata -------------------------------------------------------------
         metadata(object)[["cellularBarcodes"]] <- NULL
         metadata(object)[["filterCells"]] <- cells
         metadata(object)[["filterGenes"]] <- genes
         metadata(object)[["filterParams"]] <- params
         metadata(object)[["filterSummary"]] <- summary
-
-        # zinbwave weights =====================================================
-        if (isTRUE(zinbwave)) {
-            object <- .slotZinbwaveIntoAssays(object)
-        }
 
         object
     }

@@ -10,8 +10,7 @@ filterCells(object, ...)
 
 \S4method{filterCells}{SingleCellExperiment}(object, nCells = Inf,
   minUMIs = 0L, maxUMIs = Inf, minGenes = 0L, maxGenes = Inf,
-  minNovelty = 0L, maxMitoRatio = 1L, minCellsPerGene = 1L,
-  zinbwave = FALSE)
+  minNovelty = 0L, maxMitoRatio = 1L, minCellsPerGene = 1L)
 }
 \arguments{
 \item{object}{Object.}
@@ -38,13 +37,6 @@ mitochondrial abundance.}
 
 \item{minCellsPerGene}{\code{scalar integer}. Include genes with non-zero
 expression in at least this many cells.}
-
-\item{zinbwave}{\code{boolean}. Run \code{\link[zinbwave:zinbwave]{zinbwave::zinbwave()}} to automatically apply
-a ZINB regression model to calculate \code{normalizedValues} and \code{weights}
-matrices to by used for differential expression with DESeq2 or edgeR.
-Note that this calculation should only be performed on \strong{filtered data}.
-For large datasets this can take a long time and use a lot of memory, so
-this calculation is disabled by default.}
 }
 \value{
 \code{bcbioSingleCell}, with filtering information slotted into
