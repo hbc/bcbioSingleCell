@@ -16,7 +16,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname plotBarcodeRanks
 #' @export
 setMethod(

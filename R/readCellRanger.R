@@ -92,12 +92,12 @@ readCellRanger <- function(
     level <- "genes"
     umiType <- "chromium"
 
-    # Legacy arguments =========================================================
+    # Legacy arguments ---------------------------------------------------------
     # annotable
     stopifnot(!"annotable" %in% names(call))
     dots <- Filter(Negate(is.null), dots)
 
-    # Sample directories =======================================================
+    # Sample directories -------------------------------------------------------
     dirs <- list.dirs(uploadDir, recursive = FALSE)
     assert_is_non_empty(dirs)
     # Sample subdirectories must contain `outs/` directory
@@ -113,19 +113,19 @@ readCellRanger <- function(
     names(sampleDirs) <- makeNames(basename(sampleDirs), unique = TRUE)
     message(paste(length(sampleDirs), "sample(s) detected"))
 
-    # Sample metadata ==========================================================
+    # Sample metadata ----------------------------------------------------------
     if (is_a_string(sampleMetadataFile)) {
         sampleData <- readSampleData(sampleMetadataFile)
     } else {
         sampleData <- minimalSampleData(basename(sampleDirs))
     }
 
-    # Interesting groups =======================================================
+    # Interesting groups -------------------------------------------------------
     # Ensure internal formatting in camelCase
     interestingGroups <- camel(interestingGroups, strict = FALSE)
     assertFormalInterestingGroups(sampleData, interestingGroups)
 
-    # Subset sample directories by metadata ====================================
+    # Subset sample directories by metadata ------------------------------------
     if (nrow(sampleData) < length(sampleDirs)) {
         message("Loading a subset of samples, defined by the metadata file")
         allSamples <- FALSE
@@ -135,7 +135,7 @@ readCellRanger <- function(
         allSamples <- TRUE
     }
 
-    # Counts ===================================================================
+    # Counts -------------------------------------------------------------------
     # This step can be slow over sshfs, recommend running on an HPC
     message("Reading counts at gene level")
     counts <- .readCounts(
@@ -145,7 +145,7 @@ readCellRanger <- function(
         filtered = filtered
     )
 
-    # Multiplexed sample check =================================================
+    # Multiplexed sample check -------------------------------------------------
     # Check to see if multiplexed samples are present and require metadata
     multiplexedPattern <- "^(.+)_(\\d+)_([ACGT]+)$"
     if (any(grepl(multiplexedPattern, colnames(counts)))) {
@@ -187,7 +187,7 @@ readCellRanger <- function(
         }
     }
 
-    # Row data =================================================================
+    # Row data -----------------------------------------------------------------
     refJSON <- NULL
     genomeBuild <- NULL
     ensemblRelease <- NULL
@@ -242,7 +242,7 @@ readCellRanger <- function(
         rowRanges <- emptyRanges(rownames(counts))
     }
 
-    # Column data ==============================================================
+    # Column data --------------------------------------------------------------
     # Always prefilter, removing very low quality cells with no UMIs or genes
     metrics <- .metrics(
         object = counts,
@@ -271,7 +271,7 @@ readCellRanger <- function(
     colData[["cellID"]] <- NULL
     sampleData[["sampleID"]] <- NULL
 
-    # Metadata =================================================================
+    # Metadata -----------------------------------------------------------------
     metadata <- list(
         version = packageVersion,
         pipeline = pipeline,
@@ -299,7 +299,7 @@ readCellRanger <- function(
         metadata <- c(metadata, dots)
     }
 
-    # Return ===================================================================
+    # Return -------------------------------------------------------------------
     .new.SingleCellExperiment(
         assays = list(counts = counts),
         rowRanges = rowRanges,

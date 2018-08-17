@@ -34,7 +34,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname sampleData
 #' @export
 setMethod(

@@ -22,7 +22,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname plotUMIsPerCell
 #' @export
 setMethod(

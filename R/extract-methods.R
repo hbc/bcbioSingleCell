@@ -37,7 +37,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname extract
 #' @export
 setMethod(
@@ -72,7 +71,7 @@ setMethod(
         genes <- rownames(sce)
         cells <- colnames(sce)
 
-        # Column data ==========================================================
+        # Column data ----------------------------------------------------------
         # Ensure factors get releveled
         colData <- colData(sce) %>%
             as.data.frame() %>%
@@ -82,7 +81,7 @@ setMethod(
             column_to_rownames() %>%
             as("DataFrame")
 
-        # Metadata =============================================================
+        # Metadata -------------------------------------------------------------
         metadata <- metadata(sce)
 
         # cellularBarcodes
@@ -141,7 +140,7 @@ setMethod(
             metadata[["filterGenes"]] <- filterGenes
         }
 
-        # Return ===============================================================
+        # Return ---------------------------------------------------------------
         .new.bcbioSingleCell(
             assays = assays(sce),
             rowRanges <- rowRanges(sce),

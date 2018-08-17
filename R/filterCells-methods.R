@@ -49,7 +49,6 @@ NULL
 
 
 
-# Constructors =================================================================
 .isFiltered <- function(object) {
     if (!is.null(metadata(object)[["filterParams"]])) {
         TRUE
@@ -66,7 +65,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname filterCells
 #' @export
 setMethod(

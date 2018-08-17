@@ -4,14 +4,14 @@ setValidity(
         stopifnot(metadata(object)[["version"]] >= 0.1)
         stopifnot(!.hasSlot(object, "bcbio"))
 
-        # Assays ===============================================================
+        # Assays ---------------------------------------------------------------
         assert_is_subset("counts", names(assays(object)))
 
-        # Row data =============================================================
+        # Row data -------------------------------------------------------------
         assert_is_all_of(rowRanges(object), "GRanges")
         assert_is_all_of(rowData(object), "DataFrame")
 
-        # Column data ==========================================================
+        # Column data ----------------------------------------------------------
         # Require that metrics columns are defined
         assert_is_subset(metricsCols, colnames(colData(object)))
 
@@ -46,7 +46,7 @@ setValidity(
         )
         assert_are_identical(sampleDataLevels, colDataLevels)
 
-        # Metadata =============================================================
+        # Metadata -------------------------------------------------------------
         metadata <- metadata(object)
 
         # Optional metadata:

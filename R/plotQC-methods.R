@@ -25,7 +25,6 @@ NULL
 
 
 
-# Constructors =================================================================
 # Plot a single quality control metric
 .plotQCMetric <- function(
     object,
@@ -264,7 +263,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname plotQC
 #' @export
 setMethod(
