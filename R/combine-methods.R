@@ -61,7 +61,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname combine
 #' @export
 setMethod(
@@ -86,20 +85,20 @@ setMethod(
         # Require that there are no duplicate cells
         assert_are_disjoint_sets(colnames(x), colnames(y))
 
-        # Counts ===============================================================
+        # Counts ---------------------------------------------------------------
         xCounts <- counts(x)
         yCounts <- counts(y)
         assert_are_identical(class(xCounts), class(yCounts))
         counts <- cbind(xCounts, yCounts)
 
-        # Row data =============================================================
+        # Row data -------------------------------------------------------------
         # Require that the gene annotations are identical (strict)
         xRanges <- rowRanges(x)
         yRanges <- rowRanges(y)
         assert_are_identical(xRanges, yRanges)
         rowRanges <- xRanges
 
-        # Column data ==========================================================
+        # Column data ----------------------------------------------------------
         xColData <- colData(x)
         yColData <- colData(y)
         assert_are_set_equal(colnames(xColData), colnames(yColData))
@@ -109,19 +108,19 @@ setMethod(
             yColData[, cols, drop = FALSE]
         )
 
-        # Sample data ==========================================================
+        # Sample data ----------------------------------------------------------
         xSampleData <- metadata(x)[["sampleData"]]
         ySampleData <- metadata(y)[["sampleData"]]
         assert_are_identical(colnames(xSampleData), colnames(ySampleData))
         sampleData <- rbind(xSampleData, ySampleData)
 
-        # cell2sample ==========================================================
+        # cell2sample ----------------------------------------------------------
         cell2sample <- .mapCellsToSamples(
             cells = colnames(counts),
             samples = rownames(sampleData)
         )
 
-        # Metadata (minimal) ===================================================
+        # Metadata (minimal) ---------------------------------------------------
         m <- metadata(x)
         metadata <- list(
             interestingGroups = m[["interestingGroups"]],
@@ -134,7 +133,7 @@ setMethod(
             umiType = m[["umiType"]]
         )
 
-        # Return SingleCellExperiment ==========================================
+        # Return SingleCellExperiment ------------------------------------------
         .new.SingleCellExperiment(
             assays = list(counts = counts),
             rowRanges = rowRanges,

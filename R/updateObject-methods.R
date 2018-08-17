@@ -18,7 +18,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname updateObject
 #' @export
 setMethod(
@@ -38,7 +37,7 @@ setMethod(
         colData <- colData(sce)
         metadata <- metadata(sce)
 
-        # Assays ===============================================================
+        # Assays ---------------------------------------------------------------
         # Coerce ShallowSimpleListAssays to list
         assays <- lapply(seq_along(assays), function(a) {
             assay <- assays[[a]]
@@ -59,7 +58,7 @@ setMethod(
         assays <- assays[unique(c(requiredAssays, names(assays)))]
         assert_is_subset(requiredAssays, names(assays))
 
-        # Column data ==========================================================
+        # Column data ----------------------------------------------------------
         # Ensure that all `sampleData` columns are now slotted in `colData`
         sampleData <- metadata[["sampleData"]]
         stopifnot(!is.null(sampleData))
@@ -87,12 +86,12 @@ setMethod(
         colData[["cellID"]] <- NULL
         sampleData[["sampleID"]] <- NULL
 
-        # Metadata =============================================================
+        # Metadata -------------------------------------------------------------
         metadata[["sampleData"]] <- sampleData
         metadata[["previousVersion"]] <- metadata[["version"]]
         metadata[["version"]] <- packageVersion
 
-        # Return ===============================================================
+        # Return ---------------------------------------------------------------
         .new.bcbioSingleCell(
             assays = assays,
             rowRanges = rowRanges(sce),

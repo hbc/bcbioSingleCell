@@ -27,7 +27,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname topBarcodes
 #' @export
 setMethod(
