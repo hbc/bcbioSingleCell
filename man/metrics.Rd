@@ -33,7 +33,6 @@ updated metrics in \code{\link[=colData]{colData()}}.
 Sample Barcode Metrics
 }
 \examples{
-# SingleCellExperiment ====
 x <- metrics(indrops_small)
 glimpse(x)
 

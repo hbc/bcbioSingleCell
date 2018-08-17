@@ -19,7 +19,6 @@
 #'   updated metrics in [colData()].
 #'
 #' @examples
-#' # SingleCellExperiment ====
 #' x <- metrics(indrops_small)
 #' glimpse(x)
 #'
@@ -30,7 +29,6 @@ NULL
 
 
 
-# Constructors =================================================================
 .metrics <- function(
     object,
     rowRanges = NULL,

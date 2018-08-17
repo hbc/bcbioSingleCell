@@ -28,7 +28,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname metricsPerSample
 #' @export
 setMethod(
