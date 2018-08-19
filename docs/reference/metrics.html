@@ -135,15 +135,6 @@ interesting groups. Must be formatted in camel case and intersect with
       <td><p><code>boolean</code>. Force recalculation, using primary <code>counts()</code>
 matrix.</p></td>
     </tr>
-    <tr>
-      <th>rowRanges</th>
-      <td><p><code>GRanges</code>. Data describing the rows of the object.</p></td>
-    </tr>
-    <tr>
-      <th>prefilter</th>
-      <td><p><code>boolean</code>. Apply pre-filtering to the cellular barcodes
-(<em>recommended</em>).</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -166,8 +157,7 @@ updated metrics in <code>colData()</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># SingleCellExperiment ====</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metrics</span>(<span class='no'>indrops_small</span>)
+    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metrics</span>(<span class='no'>indrops_small</span>)
 <span class='fu'>glimpse</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 500
 #&gt; Variables: 16
 #&gt; $ nCount            &lt;int&gt; 25114, 55337, 71802, 34607, 34005, 44760, 76590, ...
@@ -202,7 +192,7 @@ updated metrics in <code>colData()</code>.</p>
 #&gt; colData names(15): nUMI nGene ... aggregate revcomp
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):
-#&gt; ====================================================================================================
+#&gt; ================================================================================
 #&gt; Upload Dir: "/Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
 #&gt; R Load Date: 2018-08-03
@@ -213,8 +203,7 @@ updated metrics in <code>colData()</code>.</p>
 #&gt; AnnotationHub: "AH57757"
 #&gt; Ensembl Release: "90"
 #&gt; Genome Build: "GRCh38"
-#&gt; Filtered: TRUE
-#&gt; zinbwave: FALSE</div></pre>
+#&gt; Filtered: TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
