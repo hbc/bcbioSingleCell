@@ -1,5 +1,5 @@
-# Cell Ranger Example Data Directory
-# 2018-08-02
+# Cell Ranger example data
+# 2018-08-19
 # 4k PBMCs from a Healthy Donor
 # https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k
 
@@ -9,18 +9,21 @@ library(Seurat)
 library(Matrix)
 load_all()
 
+
+
 # Complete dataset =============================================================
+upload_dir <- "data-raw/cellranger"
+dir.create(upload_dir, recursive = TRUE, showWarnings = FALSE)
+
+# Example dataset contains a single sample ("pbmc4k")
+outs_dir <- file.path(upload_dir, "pbmc", "outs")
+dir.create(outs_dir, recursive = TRUE, showWarnings = FALSE)
+
 # Directory structure:
 # - pbmc
 # - outs
 # - filtered_gene_bc_matrices
 # - GRCh38
-upload_dir <- "data-raw/cellranger"
-unlink(upload_dir, recursive = TRUE)
-dir.create(upload_dir, recursive = TRUE)
-# Example dataset contains a single sample ("pbmc4k")
-outs_dir <- file.path(upload_dir, "pbmc", "outs")
-dir.create(outs_dir, recursive = TRUE, showWarnings = FALSE)
 tar_file <- file.path(upload_dir, "pbmc.tar.gz")
 if (!file.exists(tar_file)) {
     download.file(
@@ -39,11 +42,28 @@ if (!file.exists(tar_file)) {
 untar(tarfile = tar_file, exdir = outs_dir)
 stopifnot(identical(dir(outs_dir), "filtered_gene_bc_matrices"))
 
-# Ensembl 92, expect 483 unannotated genes as warning
-# dim(sce)
-# [1] 33694  4340
-# Too large to save inside package
-sce <- readCellRanger(uploadDir = upload_dir, organism = "Homo sapiens")
+# Using Ensembl 84 GTF (GFFv2) annotations
+gff_file <- file.path(upload_dir, "genes.gtf")
+if (!file.exists(gff_file)) {
+    download.file(
+        url = paste(
+            "ftp://ftp.ensembl.org",
+            "pub",
+            "release-84",
+            "gtf",
+            "homo_sapiens",
+            "Homo_sapiens.GRCh38.84.gtf.gz",
+            sep = "/"
+        ),
+        destfile = gff_file
+    )
+}
+
+sce <- readCellRanger(
+    uploadDir = upload_dir,
+    organism = "Homo sapiens",
+    gffFile = gff_file
+)
 
 
 
@@ -67,20 +87,6 @@ output_dir <- file.path(
 )
 unlink("inst/extdata/cellranger", recursive = TRUE)
 dir.create(output_dir, recursive = TRUE)
-
-# Subset to only include the top 500 genes (rows) and cells (columns)
-counts <- counts(sce)
-
-# Subset the matrix to include only the top genes and cells
-top_genes <- Matrix::rowSums(counts) %>%
-    sort(decreasing = TRUE) %>%
-    head(n = 500L)
-genes <- sort(names(top_genes))
-
-top_cells <- Matrix::colSums(counts) %>%
-    sort(decreasing = TRUE) %>%
-    head(n = 500L)
-cells <- sort(names(top_cells))
 
 # Prepare the sparse matrix
 counts <- readMM(file.path(input_dir, "matrix.mtx"))
@@ -106,3 +112,22 @@ write_lines(
     x = barcodes,
     path = file.path(output_dir, "barcodes.tsv")
 )
+
+
+
+# cellranger_small =============================================================
+counts <- counts(sce)
+
+# Subset the matrix to include only the top genes and cells
+top_genes <- Matrix::rowSums(counts) %>%
+    sort(decreasing = TRUE) %>%
+    head(n = 500L)
+genes <- sort(names(top_genes))
+
+top_cells <- Matrix::colSums(counts) %>%
+    sort(decreasing = TRUE) %>%
+    head(n = 500L)
+cells <- sort(names(top_cells))
+
+cellranger_small <- sce[genes, cells]
+use_data(cellranger_small, compress = "xz", overwrite = TRUE)
