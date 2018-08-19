@@ -83,7 +83,7 @@ setMethod(
     ) {
         # Legacy params --------------------------------------------------------
         call <- match.call()
-        if ("zinbwave" %in% names (call)) {
+        if ("zinbwave" %in% names(call)) {
             stop("zinbwave support was removed in v0.2.1")
         }
 
