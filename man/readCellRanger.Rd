@@ -104,11 +104,8 @@ match, due to deprecation in the current Ensembl release.
 
 \examples{
 uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
-x <- readCellRanger(
-    uploadDir = uploadDir,
-    organism = "Homo sapiens"
-)
-show(x)
+x <- readCellRanger(uploadDir)
+print(x)
 }
 \author{
 Michael Steinbaugh
