@@ -18,11 +18,6 @@ interesting groups. Must be formatted in camel case and intersect with
 
 \item{recalculate}{\code{boolean}. Force recalculation, using primary \code{\link[=counts]{counts()}}
 matrix.}
-
-\item{rowRanges}{\code{GRanges}. Data describing the rows of the object.}
-
-\item{prefilter}{\code{boolean}. Apply pre-filtering to the cellular barcodes
-(\emph{recommended}).}
 }
 \value{
 \code{data.frame} with cellular barcodes as rows. If \code{recalculate = TRUE},
