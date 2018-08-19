@@ -14,7 +14,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname plotCellCounts
 #' @export
 setMethod(

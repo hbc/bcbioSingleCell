@@ -30,9 +30,9 @@
 #'   gene2symbol hasRownames interestingGroups interestingGroups<-
 #'   initializeDirectory makeGRangesFromEnsembl makeGRangesFromGFF makeNames
 #'   makeSummarizedExperiment makeTx2geneFromGFF matchInterestingGroups
-#'   markdownHeader markdownPlotlist printString readJSON readYAML
-#'   sanitizeSampleData stripTranscriptVersions theme_midnight theme_paperwhite
-#'   tx2geneFromGFF uniteInterestingGroups
+#'   markdownHeader markdownPlotlist prepareTemplate printString readJSON
+#'   readYAML sanitizeSampleData stripTranscriptVersions theme_midnight
+#'   theme_paperwhite tx2geneFromGFF uniteInterestingGroups
 #' @importFrom bcbioBase bcbio_geom_abline bcbio_geom_label
 #'   bcbio_geom_label_average bcbio_geom_label_repel minimalSampleData
 #'   readDataVersions readLog readProgramVersions readSampleData
@@ -70,5 +70,4 @@
 #'   colData<- rowData rowRanges rowRanges<-
 #' @importFrom tibble as_tibble column_to_rownames rownames_to_column tibble
 #' @importFrom utils capture.output globalVariables packageVersion
-#' @importFrom zinbwave glmWeightedF zinbwave
 NULL

@@ -37,7 +37,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname subsetPerSample
 #' @export
 setMethod(

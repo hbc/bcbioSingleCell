@@ -17,7 +17,6 @@ NULL
 
 
 
-# Constructors =================================================================
 .plotReadsPerCellBoxplot <- function(
     data,
     min = 0L,
@@ -317,7 +316,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname plotReadsPerCell
 #' @export
 setMethod(

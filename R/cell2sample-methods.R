@@ -16,7 +16,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname cell2sample
 #' @export
 setMethod(

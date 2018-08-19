@@ -74,22 +74,19 @@ test_that("filterCells : Per sample cutoffs", {
     )
 })
 
-test_that("filterCells: zinbwave mode", {
-    x <- filterCells(indrops_small, zinbwave = TRUE)
-    expect_s4_class(x, "bcbioSingleCell")
-    expect_true(
-        all(c("counts", "normalizedValues", "weights") %in% assayNames(x))
-    )
-})
-
 
 
 # metrics ======================================================================
 test_that("metrics", {
     object <- indrops_small
     x <- metrics(object)
+    expect_is(x, "data.frame")
     expect_true(all(
         colnames(colData(object)) %in% colnames(x)
     ))
     expect_true("interestingGroups" %in% colnames(x))
+
+    # Recalculate mode
+    x <- metrics(object, recalculate = TRUE)
+    expect_is(x, "bcbioSingleCell")
 })

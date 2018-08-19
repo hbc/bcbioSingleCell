@@ -64,7 +64,7 @@ counts from barcodes.tsv, genes.tsv, and matrix.mtx files." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
       </span>
     </div>
 
@@ -238,21 +238,13 @@ match, due to deprecation in the current Ensembl release.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>uploadDir</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata/cellranger"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>readCellRanger</span>(
-    <span class='kw'>uploadDir</span> <span class='kw'>=</span> <span class='no'>uploadDir</span>,
-    <span class='kw'>organism</span> <span class='kw'>=</span> <span class='st'>"Homo sapiens"</span>
-)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) detected</span></div><div class='output co'>#&gt; <span class='message'>Reading counts at gene level</span></div><div class='output co'>#&gt; <span class='message'>Reading counts in mtx format</span></div><div class='output co'>#&gt; <span class='message'>/Users/mike/GitHub/hbc/bcbioSingleCell/inst/extdata/cellranger/pbmc/outs/filtered_gene_bc_matrices</span></div><div class='output co'>#&gt; <span class='message'>Multiplexed (aggregated) samples detected</span></div><div class='output co'>#&gt; <span class='message'>Making GRanges from Ensembl with AnnotationHub 2.12.0 (2018-04-30)</span></div><div class='output co'>#&gt; <span class='message'>Ensembl 92 EnsDb for Homo Sapiens</span></div><div class='output co'>#&gt; <span class='message'>id: "AH60977"</span>
-#&gt; <span class='message'>organism: "Homo sapiens"</span>
-#&gt; <span class='message'>build: "GRCh38"</span>
-#&gt; <span class='message'>release: "92"</span>
-#&gt; <span class='message'>format: "genes"</span></div><div class='output co'>#&gt; <span class='message'>Standardizing the metadata columns</span></div><div class='output co'>#&gt; <span class='message'>Defining broad class using: geneName, geneBiotype, seqnames</span></div><div class='output co'>#&gt; <span class='message'>Sorting ranges by geneID</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>312 coding genes</span></div><div class='output co'>#&gt; <span class='message'>0 mitochondrial genes</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Unannotated rows detected (9):</span>
-#&gt; <span class='warning'>ENSG00000236743, ENSG00000278566, ENSG00000273547, ENSG00000279244, ENSG00000...</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>readCellRanger</span>(<span class='no'>uploadDir</span>)</div><div class='output co'>#&gt; <span class='message'>1 sample(s) detected</span></div><div class='output co'>#&gt; <span class='message'>Reading counts at gene level</span></div><div class='output co'>#&gt; <span class='message'>Reading counts in mtx format</span></div><div class='output co'>#&gt; <span class='message'>/Users/mike/GitHub/bcbioSingleCell/inst/extdata/cellranger/pbmc/outs/filtered_gene_bc_matrices</span></div><div class='output co'>#&gt; <span class='message'>Multiplexed (aggregated) samples detected</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; class: SingleCellExperiment 
 #&gt; dim: 500 500 
-#&gt; metadata(20): version pipeline ... utilsSessionInfo devtoolsSessionInfo
+#&gt; metadata(18): version pipeline ... utilsSessionInfo devtoolsSessionInfo
 #&gt; assays(1): counts
 #&gt; rownames(500): ENSG00000243485 ENSG00000237613 ... ENSG00000230703
 #&gt;   ENSG00000142677
-#&gt; rowData names(7): broadClass description ... geneName seqCoordSystem
+#&gt; rowData names(0):
 #&gt; colnames(500): pbmc_1_AAACCTGAGAAGGCCT pbmc_1_AAACCTGAGACAGACC ...
 #&gt;   pbmc_1_ACTTACTCACTGCCAG pbmc_1_ACTTACTCAGTACACT
 #&gt; colData names(10): sampleID nUMI ... description index

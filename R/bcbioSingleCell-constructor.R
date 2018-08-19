@@ -86,7 +86,7 @@ bcbioSingleCell <- function(
     dots <- list(...)
     pipeline <- "bcbio"
 
-    # Legacy arguments =========================================================
+    # Legacy arguments ---------------------------------------------------------
     call <- match.call(expand.dots = TRUE)
     # annotable
     if ("annotable" %in% names(call)) {
@@ -110,7 +110,7 @@ bcbioSingleCell <- function(
     }
     dots <- Filter(Negate(is.null), dots)
 
-    # Assert checks ============================================================
+    # Assert checks ------------------------------------------------------------
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
     assertIsAStringOrNULL(sampleMetadataFile)
@@ -125,7 +125,7 @@ bcbioSingleCell <- function(
         assert_all_are_existing_files(gffFile)
     }
 
-    # Directory paths ==========================================================
+    # Directory paths ----------------------------------------------------------
     uploadDir <- normalizePath(uploadDir, winslash = "/", mustWork = TRUE)
     projectDir <- dir(
         uploadDir,
@@ -141,7 +141,7 @@ bcbioSingleCell <- function(
     projectDir <- file.path(uploadDir, projectDir)
     sampleDirs <- sampleDirs(uploadDir)
 
-    # Sequencing lanes =========================================================
+    # Sequencing lanes ---------------------------------------------------------
     if (any(grepl(bcbioBase::lanePattern, sampleDirs))) {
         lanes <- str_match(names(sampleDirs), bcbioBase::lanePattern) %>%
             .[, 2L] %>%
@@ -154,11 +154,11 @@ bcbioSingleCell <- function(
         lanes <- 1L
     }
 
-    # Project summary YAML =====================================================
+    # Project summary YAML -----------------------------------------------------
     yamlFile <- file.path(projectDir, "project-summary.yaml")
     yaml <- readYAML(yamlFile)
 
-    # bcbio run information ====================================================
+    # bcbio run information ----------------------------------------------------
     dataVersions <- readDataVersions(
         file = file.path(projectDir, "data_versions.csv")
     )
@@ -179,7 +179,7 @@ bcbioSingleCell <- function(
     )
     assert_is_character(bcbioCommandsLog)
 
-    # Cellular barcode cutoff ==================================================
+    # Cellular barcode cutoff --------------------------------------------------
     cellularBarcodeCutoffPattern <- "--cb_cutoff (\\d+)"
     assert_any_are_matching_regex(
         x = bcbioCommandsLog,
@@ -201,7 +201,7 @@ bcbioSingleCell <- function(
         "reads per cellular barcode cutoff detected"
     ))
 
-    # Detect gene or transcript-level output ===================================
+    # Detect gene or transcript-level output -----------------------------------
     genemapPattern <- "--genemap (.+)-tx2gene.tsv"
     if (any(grepl(genemapPattern, bcbioCommandsLog))) {
         level <- "genes"
@@ -209,7 +209,7 @@ bcbioSingleCell <- function(
         level <- "transcripts"
     }
 
-    # Molecular barcode (UMI) type =============================================
+    # Molecular barcode (UMI) type ---------------------------------------------
     umiPattern <- "fastqtransform.*/(.*)\\.json"
     assert_any_are_matching_regex(bcbioCommandsLog, umiPattern)
     umiType <- str_match(bcbioCommandsLog, umiPattern) %>%
@@ -224,7 +224,7 @@ bcbioSingleCell <- function(
     assert_is_a_string(umiType)
     message(paste("UMI type:", umiType))
 
-    # Sample metadata ==========================================================
+    # Sample metadata ----------------------------------------------------------
     # External file required for inDrop
     if (grepl("indrop", umiType) && is.null(sampleMetadataFile)) {
         stop(paste(
@@ -259,12 +259,12 @@ bcbioSingleCell <- function(
     assert_is_subset(rownames(sampleData), names(sampleDirs))
     sampleData <- sanitizeSampleData(sampleData)
 
-    # Interesting groups =======================================================
+    # Interesting groups -------------------------------------------------------
     # Ensure internal formatting in camelCase
     interestingGroups <- camel(interestingGroups, strict = FALSE)
     assertFormalInterestingGroups(sampleData, interestingGroups)
 
-    # Subset sample directories by metadata ====================================
+    # Subset sample directories by metadata ------------------------------------
     # Check to see if a subset of samples is requested via the metadata file.
     # This matches by the reverse complement sequence of the index barcode.
     if (nrow(sampleData) < length(sampleDirs)) {
@@ -276,7 +276,7 @@ bcbioSingleCell <- function(
         allSamples <- TRUE
     }
 
-    # Assays ===================================================================
+    # Assays -------------------------------------------------------------------
     message(paste("Reading counts as", level))
     counts <- .readCounts(
         sampleDirs = sampleDirs,
@@ -284,7 +284,7 @@ bcbioSingleCell <- function(
         format = "mtx"
     )
 
-    # Require transcript to gene conversion (legacy) ===========================
+    # Require transcript to gene conversion (legacy) ---------------------------
     if (level == "transcripts") {
         message("Converting transcripts to genes")
 
@@ -327,11 +327,11 @@ bcbioSingleCell <- function(
         tx2gene <- NULL
     }
 
-    # Unfiltered cellular barcode distributions ================================
+    # Unfiltered cellular barcode distributions --------------------------------
     cbList <- .cellularBarcodesList(sampleDirs)
     cbData <- .bindCellularBarcodes(cbList)
 
-    # Row data =================================================================
+    # Row data -----------------------------------------------------------------
     rowRangesMetadata <- NULL
     if (is_a_string(gffFile)) {
         rowRanges <- makeGRangesFromGFF(gffFile, format = "genes")
@@ -359,9 +359,9 @@ bcbioSingleCell <- function(
     }
     assert_is_subset(rownames(counts), names(rowRanges))
 
-    # Column data ==============================================================
+    # Column data --------------------------------------------------------------
     # Always prefilter, removing very low quality cells with no UMIs or genes
-    metrics <- metrics(
+    metrics <- .metrics(
         object = counts,
         rowRanges = rowRanges,
         prefilter = TRUE
@@ -392,7 +392,7 @@ bcbioSingleCell <- function(
     nCount <- cbData[rownames(colData), "nCount", drop = FALSE]
     colData <- cbind(nCount, colData)
 
-    # Metadata =================================================================
+    # Metadata -----------------------------------------------------------------
     metadata <- list(
         version = packageVersion,
         pipeline = pipeline,
@@ -430,7 +430,7 @@ bcbioSingleCell <- function(
         metadata <- c(metadata, dots)
     }
 
-    # Return ===================================================================
+    # Return -------------------------------------------------------------------
     .new.bcbioSingleCell(
         assays = list(counts = counts),
         rowRanges = rowRanges,

@@ -14,7 +14,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname plotMitoVsCoding
 #' @export
 setMethod(

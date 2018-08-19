@@ -28,7 +28,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname metricsPerSample
 #' @export
 setMethod(
@@ -42,8 +41,8 @@ setMethod(
         message(paste("Calculating", f, "per sample"))
         fxn <- get(f)
         assert_is_function(fxn)
-        assert_is_subset("sampleName", colnames(metrics(object)))
         metrics <- metrics(object)
+        assert_is_subset("sampleName", colnames(metrics))
         if (f == "sum") {
             # Sum only the `n*` columns containing counts
             data <- select(metrics, matches("^n[A-Z]"))

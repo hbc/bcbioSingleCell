@@ -1,4 +1,0 @@
-name: Seurat Markers
-description: >
-  Template for gene marker visualization with the Seurat package.
-create_dir: false

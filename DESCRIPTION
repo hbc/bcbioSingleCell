@@ -1,7 +1,7 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Toolkit for bcbio single-cell RNA-seq analysis.
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(
     person(
         given = "Michael",
@@ -53,7 +53,7 @@ LazyData: TRUE
 Depends:
     R (>= 3.4),
     SingleCellExperiment,
-    bcbioBase (>= 0.4)
+    bcbioBase (>= 0.4.1)
 Imports:
     assertive.base,
     assertive.files,
@@ -62,7 +62,7 @@ Imports:
     assertive.sets,
     assertive.strings,
     assertive.types,
-    basejump (>= 0.7),
+    basejump (>= 0.7.1),
     Biobase,
     BiocGenerics,
     BiocParallel,
@@ -89,8 +89,7 @@ Imports:
     SummarizedExperiment,
     tibble (>= 1.4),
     tidyverse (>= 1.2),
-    utils,
-    zinbwave
+    utils
 Suggests:
     BiocStyle,
     DropletUtils,

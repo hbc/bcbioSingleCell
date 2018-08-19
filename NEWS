@@ -1,3 +1,18 @@
+## bcbioSingleCell 0.2.1 (2018-08-19)
+
+### Major changes
+
+- Moved clustering and marker templates to [pointillism][] package, since
+  all clustering code has been moved there. The quality control template using
+  the `filterCells()` function is still provided here.
+
+### Minor changes
+
+- `prepareSingleCellTemplate()`: Improved internal code to use updated
+  `prepareTemplate()`, which has been migrated to [basejump][] package.
+- Added back the `cellranger_small` example dataset.
+
+
 ## bcbioSingleCell 0.2.0 (2018-08-09)
 
 This is a significant maintenance release designed to simplify the package for

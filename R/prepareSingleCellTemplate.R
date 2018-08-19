@@ -4,9 +4,7 @@
 #' @family R Markdown Functions
 #' @author Michael Steinbaugh
 #'
-#' @importFrom bcbioBase prepareTemplate
-#'
-#' @inherit bcbioBase::prepareTemplate
+#' @inherit basejump::prepareTemplate
 #'
 #' @export
 #'
@@ -23,17 +21,13 @@
 #'     "bibliography.bib"
 #' ))
 prepareSingleCellTemplate <- function(overwrite = FALSE) {
+    package <- "bcbioSingleCell"
     prepareTemplate(
-        file = c(
-            "_footer.Rmd",
-            "_header.Rmd",
-            "_output.yaml",
-            "_setup.R",
-            "bibliography.bib"
-        ),
+        package = package,
         sourceDir = system.file(
             "rmarkdown/shared",
-            package = "bcbioSingleCell"
+            package = package,
+            mustWork = TRUE
         ),
         overwrite = overwrite
     )

@@ -24,7 +24,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname aggregateReplicates
 #' @export
 setMethod(
@@ -97,7 +96,7 @@ setMethod(
         ) %>%
             as.factor()
 
-        # Assays ===============================================================
+        # Assays ---------------------------------------------------------------
         message("Aggregating counts")
         counts <- aggregateReplicates(counts(object), groupings = groupings)
         # Check that the count number of counts matches
@@ -105,9 +104,9 @@ setMethod(
             stop("Aggregated counts sum isn't identical to original")
         }
 
-        # Column data ==========================================================
+        # Column data ----------------------------------------------------------
         # Always prefilter, removing cells with no UMIs or genes
-        metrics <- metrics(
+        metrics <- .metrics(
             object = counts,
             rowRanges = rowRanges(object),
             prefilter = TRUE
@@ -137,7 +136,7 @@ setMethod(
         counts <- counts[, rownames(colData), drop = FALSE]
         cell2sample <- cell2sample[colnames(counts)]
 
-        # Metadata =============================================================
+        # Metadata -------------------------------------------------------------
         metadata <- list(
             aggregateReplicates = groupings,
             cell2sample = cell2sample,
@@ -145,7 +144,7 @@ setMethod(
             sampleData = sampleData
         )
 
-        # Return ===============================================================
+        # Return ---------------------------------------------------------------
         .new.SingleCellExperiment(
             assays = list(counts = counts),
             rowRanges = rowRanges(object),

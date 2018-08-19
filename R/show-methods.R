@@ -12,7 +12,6 @@ NULL
 
 
 
-# Methods ======================================================================
 #' @rdname show
 #' @export
 setMethod(
@@ -89,11 +88,10 @@ setMethod(
             )
         }
 
-        # Filtered counts, with optional zinbwave weights
+        # Filtered counts logical
         return <- c(
             return,
-            paste("Filtered:", .isFiltered(object)),
-            paste("zinbwave:", .hasZinbwave(object))
+            paste("Filtered:", .isFiltered(object))
         )
 
         cat(return, sep = "\n")
