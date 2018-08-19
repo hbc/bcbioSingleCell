@@ -14,6 +14,9 @@ inDrops Example
 \examples{
 show(indrops_small)
 }
+\seealso{
+Other Minimal Example Data: \code{\link{cellranger_small}}
+}
 \author{
 Michael Steinbaugh
 }
