@@ -22,7 +22,6 @@
 \alias{plotCellTypesPerCluster}
 \alias{plotFeatureTSNE}
 \alias{plotFeatureUMAP}
-\alias{plotGene}
 \alias{plotKnownMarkers}
 \alias{plotKnownMarkersDetected}
 \alias{plotMarker}
@@ -78,8 +77,6 @@ plotCellTypesPerCluster(...)
 plotFeatureTSNE(...)
 
 plotFeatureUMAP(...)
-
-plotGene(...)
 
 plotKnownMarkers(...)
 

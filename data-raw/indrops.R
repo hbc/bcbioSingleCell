@@ -1,6 +1,6 @@
-# inDrops example dataset (indrops_small)
+# inDrops example data
 # Using harvard-indrop-v3 barcodes
-# 2018-08-03
+# 2018-08-19
 
 library(devtools)
 library(tidyverse)
@@ -84,14 +84,9 @@ bcb <- bcbioSingleCell(
     organism = "Homo sapiens",
     ensemblRelease = 90L
 )
-
 # Apply example filtering without excluding any cells
-# Note that we're enabling zinbwave mode here to calculate weights
 bcb <- filterCells(bcb)
 stopifnot(identical(dim(bcb), c(500L, 500L)))
 
-
-
-# Save =========================================================================
 indrops_small <- bcb
 use_data(indrops_small, compress = "xz", overwrite = TRUE)
