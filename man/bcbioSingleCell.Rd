@@ -89,7 +89,7 @@ x <- bcbioSingleCell(
     sampleMetadataFile = file.path(uploadDir, "metadata.csv"),
     ensemblRelease = 87L
 )
-print(x)
+show(x)
 validObject(x)
 }
 \seealso{
