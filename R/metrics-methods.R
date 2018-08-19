@@ -8,9 +8,6 @@
 #' @export
 #'
 #' @inheritParams general
-#' @param rowRanges `GRanges`. Data describing the rows of the object.
-#' @param prefilter `boolean`. Apply pre-filtering to the cellular barcodes
-#'   (*recommended*).
 #' @param recalculate `boolean`. Force recalculation, using primary [counts()]
 #'   matrix.
 #'
