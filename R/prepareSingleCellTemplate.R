@@ -21,8 +21,14 @@
 #'     "bibliography.bib"
 #' ))
 prepareSingleCellTemplate <- function(overwrite = FALSE) {
+    package <- "bcbioSingleCell"
     prepareTemplate(
-        package = "bcbioSingleCell",
+        package = package,
+        sourceDir = system.file(
+            "rmarkdown/shared",
+            package = package,
+            mustWork = TRUE
+        ),
         overwrite = overwrite
     )
 }
