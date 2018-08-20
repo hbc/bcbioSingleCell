@@ -340,7 +340,7 @@ bcbioSingleCell <- function(
         ah <- makeGRangesFromEnsembl(
             organism = organism,
             format = "genes",
-            genomeBuild = genomeBuild,
+            build = genomeBuild,
             release = ensemblRelease,
             metadata = TRUE
         )
