@@ -14,7 +14,6 @@
 #'     "<sampleName>",
 #'     "outs",
 #'     "filtered_gene_bc_matrices*",
-#'     "outs",
 #'     "<genomeBuild>",
 #'     "matrix.mtx"
 #' )
@@ -222,7 +221,7 @@ readCellRanger <- function(
         ah <- suppressWarnings(makeGRangesFromEnsembl(
             organism = organism,
             format = level,
-            genomeBuild = genomeBuild,
+            build = genomeBuild,
             metadata = TRUE
         ))
         assert_is_list(ah)

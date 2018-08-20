@@ -78,7 +78,6 @@ file.path(
     "<sampleName>",
     "outs",
     "filtered_gene_bc_matrices*",
-    "outs",
     "<genomeBuild>",
     "matrix.mtx"
 )
