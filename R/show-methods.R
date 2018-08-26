@@ -26,7 +26,7 @@ setMethod(
         return <- c(
             paste(class(object), metadata(object)[["version"]]),
             capture.output(show(sce)),
-            bcbioBase::separatorBar,
+            basejump::separatorBar,
             paste(
                 "Upload Dir:",
                 deparse(metadata(object)[["uploadDir"]])

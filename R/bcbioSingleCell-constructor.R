@@ -85,6 +85,8 @@ bcbioSingleCell <- function(
 ) {
     dots <- list(...)
     pipeline <- "bcbio"
+    projectDirPattern <- bcbioBase::projectDirPattern
+    lanePattern <- basejump::lanePattern
 
     # Legacy arguments ---------------------------------------------------------
     call <- match.call(expand.dots = TRUE)
@@ -129,21 +131,21 @@ bcbioSingleCell <- function(
     uploadDir <- normalizePath(uploadDir, winslash = "/", mustWork = TRUE)
     projectDir <- dir(
         uploadDir,
-        pattern = bcbioBase::projectDirPattern,
+        pattern = projectDirPattern,
         full.names = FALSE,
         recursive = FALSE
     )
     assert_is_a_string(projectDir)
     message(projectDir)
-    match <- str_match(projectDir, bcbioBase::projectDirPattern)
+    match <- str_match(projectDir, projectDirPattern)
     runDate <- as.Date(match[[2L]])
     template <- match[[3L]]
     projectDir <- file.path(uploadDir, projectDir)
     sampleDirs <- sampleDirs(uploadDir)
 
     # Sequencing lanes ---------------------------------------------------------
-    if (any(grepl(bcbioBase::lanePattern, sampleDirs))) {
-        lanes <- str_match(names(sampleDirs), bcbioBase::lanePattern) %>%
+    if (any(grepl(lanePattern, sampleDirs))) {
+        lanes <- str_match(names(sampleDirs), lanePattern) %>%
             .[, 2L] %>%
             unique() %>%
             length()

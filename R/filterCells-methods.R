@@ -417,14 +417,14 @@ setMethod(
         message(paste(c(
             "Parameters:",
             paste("  -", printParams),
-            bcbioBase::separatorBar,
+            basejump::separatorBar,
             "Cells:",
             as.character(summaryCells),
             printString(table(metrics[["sampleName"]])),
-            bcbioBase::separatorBar,
+            basejump::separatorBar,
             "Genes:",
             as.character(summaryGenes),
-            bcbioBase::separatorBar,
+            basejump::separatorBar,
             "Summary:",
             paste(
                 "  -",

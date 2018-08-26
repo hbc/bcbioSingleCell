@@ -70,6 +70,11 @@ setValidity(
         # - template: character
         # - yaml: list
 
+        # Legacy metadata:
+        # Switched to DataFrame in v0.1.17.
+        # Now using `colData()` directly in v0.2.2.
+        # sampleData = c("DataFrame", "data.frame")
+
         # Class checks
         requiredMetadata <- list(
             allSamples = "logical",
@@ -82,8 +87,6 @@ setValidity(
             level = "character",
             organism = "character",
             pipeline = "character",
-            # Switched to DataFrame in v0.1.17
-            sampleData = c("DataFrame", "data.frame"),
             sampleDirs = "character",
             sampleMetadataFile = "character",
             umiType = "character",
@@ -110,7 +113,7 @@ setValidity(
         if (!all(classChecks)) {
             stop(paste(
                 "Metadata class checks failed.",
-                bcbioBase::updateMessage,
+                basejump::updateMessage,
                 printString(classChecks),
                 sep = "\n"
             ))
