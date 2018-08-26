@@ -136,7 +136,10 @@ setMethod(
         colData(object) <- colData
 
         # Remove legacy `sampleData` in metadata, if defined.
-        metadata(object)[["sampleData"]] <- NULL
+        if (!is.null(metadata(object)[["sampleData"]])) {
+            message("Removing legacy `sampleData` in `metadata()` slot")
+            metadata(object)[["sampleData"]] <- NULL
+        }
 
         object
     }
