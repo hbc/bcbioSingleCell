@@ -73,9 +73,9 @@ setMethod(
     function(
         object,
         nCells = Inf,
-        minUMIs = 0L,
+        minUMIs = 1L,
         maxUMIs = Inf,
-        minGenes = 0L,
+        minGenes = 1L,
         maxGenes = Inf,
         minNovelty = 0L,
         maxMitoRatio = 1L,
@@ -97,6 +97,9 @@ setMethod(
         if (is.character(minUMIs)) {
             assert_is_a_string(minUMIs)
             assert_is_subset(minUMIs, c("inflection", "knee"))
+        } else {
+            assert_is_numeric(minUMIs)
+            assert_all_are_positive(minUMIs)
         }
 
         # maxUMIs
@@ -105,7 +108,7 @@ setMethod(
 
         # minGenes
         assert_is_numeric(minGenes)
-        assert_all_are_non_negative(minGenes)
+        assert_all_are_positive(minGenes)
 
         # maxGenes
         assert_is_numeric(maxGenes)
