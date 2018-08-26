@@ -27,7 +27,7 @@ metricsCols <- c(
 clusterCols <- c(
     "^ident$",
     "^origIdent$",
-    "res[.0-9]^",
+    "res[.0-9]+^",
     "^sScore$",
     "^g2mScore$",
     "^phase$"
