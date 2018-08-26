@@ -113,7 +113,7 @@ setValidity(
         if (!all(classChecks)) {
             stop(paste(
                 "Metadata class checks failed.",
-                basejump::updateMessage,
+                updateMessage,
                 printString(classChecks),
                 sep = "\n"
             ))

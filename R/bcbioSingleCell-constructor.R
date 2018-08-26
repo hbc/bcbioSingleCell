@@ -85,8 +85,6 @@ bcbioSingleCell <- function(
 ) {
     dots <- list(...)
     pipeline <- "bcbio"
-    projectDirPattern <- bcbioBase::projectDirPattern
-    lanePattern <- basejump::lanePattern
 
     # Legacy arguments ---------------------------------------------------------
     call <- match.call(expand.dots = TRUE)
