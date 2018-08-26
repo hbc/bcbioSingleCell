@@ -43,17 +43,55 @@ setMethod(
         object,
         interestingGroups
     ) {
-        data <- metadata(object)[["sampleData"]]
-        if (is.null(data)) {
-            return(NULL)
+        data <- colData(object)
+
+        # Require `sampleID` and `sampleName` columns.
+        # Note that `SummarizedExperiment` method differs but not requiring
+        # the `sampleID` column, which are the `colnames` of the object.
+        # `SingleCellExperiment` maps cells to `colnames` instead of samples.
+        if (!all(c("sampleID", "sampleName") %in% colnames(data))) {
+            stop(paste(
+                "`sampleData()` requires `sampleID` and `sampleName` columns",
+                "to be defined in `colData()`"
+            ), call. = FALSE)
         }
-        if (missing(interestingGroups)) {
-            interestingGroups <- bcbioBase::interestingGroups(object)
-        }
+
+        # Get the number of samples.
+        nSamples <- length(unique(data[["sampleID"]]))
+        assert_all_are_positive(nSamples)
+
+        # Select only columns that map to samples.
+        isSampleLevel <- vapply(
+            X = data,
+            FUN = function(x) {
+                uniques <- length(unique(x))
+                uniques <= nSamples
+            },
+            FUN.VALUE = logical(1L)
+        )
+        data <- data[, isSampleLevel, drop = FALSE]
+
+        # `metricsCols` are always blacklisted and will be removed.
+        data <- data[, setdiff(colnames(data), metricsCols), drop = FALSE]
+
+        # Collapse and set the rownames to `sampleID`.
+        rownames(data) <- NULL
+        data <- unique(data)
+        assert_has_no_duplicates(data[["sampleID"]])
+        rownames(data) <- data[["sampleID"]]
+        # Return sorted by `sampleID`.
+        data <- data[rownames(data), , drop = FALSE]
+
+        # Define interesting groups column.
+        interestingGroups <- matchInterestingGroups(
+            object = object,
+            interestingGroups = interestingGroups
+        )
         if (length(interestingGroups)) {
             data <- uniteInterestingGroups(data, interestingGroups)
         }
-        as(data, "DataFrame")
+
+        data
     }
 )
 
@@ -68,15 +106,15 @@ setMethod(
         value = "DataFrame"
     ),
     function(object, value) {
-        # Don't allow the user to manually set sampleID column
+        # Don't allow the user to manually set sampleID column.
         value[["sampleID"]] <- rownames(value)
 
-        # Ensure the interesting groups column is not stashed
+        # Ensure the interesting groups column is not stashed.
         value[["interestingGroups"]] <- NULL
 
-        # Ensure the cell-level column data is also updated
+        # Ensure the cell-level column data is also updated.
         colData <- colData(object)
-        # Require that sampleID column, defined by `cell2sample()`, is present
+        # Require that sampleID column, defined by `cell2sample()`, is present.
         assert_is_subset("sampleID", colnames(colData))
         colData <- colData[
             ,
@@ -93,13 +131,12 @@ setMethod(
         rownames(colData) <- colData[["cellID"]]
         colData[["cellID"]] <- NULL
 
-        # Re-slot the cell-level data
+        # Re-slot the cell-level data.
         colData <- colData[colnames(object), , drop = FALSE]
         colData(object) <- colData
 
-        # Re-slot the sample-level data
-        value[["sampleID"]] <- NULL
-        metadata(object)[["sampleData"]] <- value
+        # Remove legacy `sampleData` in metadata, if defined.
+        metadata(object)[["sampleData"]] <- NULL
 
         object
     }
