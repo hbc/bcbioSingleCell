@@ -28,7 +28,7 @@ NULL
 #' @export
 setMethod(
     "aggregateReplicates",
-    signature("bcbioSingleCell"),
+    signature("SingleCellExperiment"),
     function(object) {
         validObject(object)
         sampleData <- as.data.frame(sampleData(object))

@@ -3,10 +3,10 @@
 \docType{methods}
 \name{aggregateReplicates}
 \alias{aggregateReplicates}
-\alias{aggregateReplicates,bcbioSingleCell-method}
+\alias{aggregateReplicates,SingleCellExperiment-method}
 \title{Aggregate Replicates}
 \usage{
-\S4method{aggregateReplicates}{bcbioSingleCell}(object)
+\S4method{aggregateReplicates}{SingleCellExperiment}(object)
 }
 \arguments{
 \item{object}{Object.}
