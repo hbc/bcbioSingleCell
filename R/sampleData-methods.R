@@ -74,6 +74,16 @@ setMethod(
         # `metricsCols` are always blacklisted and will be removed.
         data <- data[, setdiff(colnames(data), metricsCols), drop = FALSE]
 
+        # `clusterCols` used to define cluster mappings are blacklist.
+        data <- data[
+            ,
+            !grepl(
+                pattern = paste(clusterCols, collapse = "|"),
+                x = camel(colnames(data))
+            ),
+            drop = FALSE
+        ]
+
         # Collapse and set the rownames to `sampleID`.
         rownames(data) <- NULL
         data <- unique(data)
