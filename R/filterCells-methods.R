@@ -420,14 +420,12 @@ setMethod(
         message(paste(c(
             "Parameters:",
             paste("  -", printParams),
-            separatorBar,
             "Cells:",
             as.character(summaryCells),
             printString(table(metrics[["sampleName"]])),
             separatorBar,
             "Genes:",
             as.character(summaryGenes),
-            separatorBar,
             "Summary:",
             paste(
                 "  -",
