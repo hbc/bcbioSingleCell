@@ -35,7 +35,7 @@
 #'   theme_paperwhite tx2geneFromGFF uniteInterestingGroups
 #' @importFrom bcbioBase bcbio_geom_abline bcbio_geom_label
 #'   bcbio_geom_label_average bcbio_geom_label_repel minimalSampleData
-#'   readDataVersions readLog readProgramVersions readSampleData
+#'   projectDir readDataVersions readLog readProgramVersions readSampleData
 #'   readYAMLSampleData sampleDirs
 #' @importFrom Biobase sampleNames
 #' @importFrom BiocGenerics cbind counts counts<- do.call rbind

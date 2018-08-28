@@ -127,19 +127,19 @@ bcbioSingleCell <- function(
 
     # Directory paths ----------------------------------------------------------
     uploadDir <- normalizePath(uploadDir, winslash = "/", mustWork = TRUE)
-    projectDir <- dir(
-        uploadDir,
-        pattern = projectDirPattern,
-        full.names = FALSE,
-        recursive = FALSE
+    projectDir <- projectDir(uploadDir)
+    sampleDirs <- sampleDirs(uploadDir)
+
+    # Run date and template name -----------------------------------------------
+    # Get run date and template name from project directory.
+    # This information will be stashed in `metadata()`.
+    match <- str_match(
+        string = basename(projectDir),
+        pattern = projectDirPattern
     )
-    assert_is_a_string(projectDir)
-    message(projectDir)
-    match <- str_match(projectDir, projectDirPattern)
     runDate <- as.Date(match[[2L]])
     template <- match[[3L]]
-    projectDir <- file.path(uploadDir, projectDir)
-    sampleDirs <- sampleDirs(uploadDir)
+    rm(match)
 
     # Sequencing lanes ---------------------------------------------------------
     if (any(grepl(lanePattern, sampleDirs))) {

@@ -2,7 +2,7 @@ Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Toolkit for bcbio single-cell RNA-seq analysis.
 Version: 0.2.2
-Date: 2018-08-26
+Date: 2018-08-28
 Authors@R: c(
     person(
         given = "Michael",
@@ -98,8 +98,8 @@ Suggests:
     roxygen2,
     testthat (>= 2.0)
 Remotes:
-    hbc/bcbioBase,
-    steinbaugh/basejump
+    hbc/bcbioBase@develop,
+    steinbaugh/basejump@develop
 biocViews:
     DataImport,
     DataRepresentation,
