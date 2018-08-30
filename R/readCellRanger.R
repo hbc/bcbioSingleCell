@@ -119,7 +119,7 @@ readCellRanger <- function(
     # Interesting groups -------------------------------------------------------
     # Ensure internal formatting in camelCase
     interestingGroups <- camel(interestingGroups, strict = FALSE)
-    assertFormalInterestingGroups(sampleData, interestingGroups)
+    assert_is_subset(interestingGroups, colnames(sampleData))
 
     # Subset sample directories by metadata ------------------------------------
     if (nrow(sampleData) < length(sampleDirs)) {

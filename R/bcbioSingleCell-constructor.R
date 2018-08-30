@@ -262,7 +262,7 @@ bcbioSingleCell <- function(
     # Interesting groups -------------------------------------------------------
     # Ensure internal formatting in camelCase
     interestingGroups <- camel(interestingGroups, strict = FALSE)
-    assertFormalInterestingGroups(sampleData, interestingGroups)
+    assert_is_subset(interestingGroups, colnames(sampleData))
 
     # Subset sample directories by metadata ------------------------------------
     # Check to see if a subset of samples is requested via the metadata file.
