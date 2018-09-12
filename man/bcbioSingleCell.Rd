@@ -4,7 +4,7 @@
 \name{bcbioSingleCell}
 \alias{bcbioSingleCell}
 \alias{bcbioSingleCell-class}
-\title{\code{bcbioSingleCell} Object and Constructor}
+\title{Read bcbio Single-Cell RNA-Seq Data}
 \usage{
 bcbioSingleCell(uploadDir, organism = NULL, sampleMetadataFile = NULL,
   interestingGroups = "sampleName", ensemblRelease = NULL,
@@ -64,10 +64,7 @@ mappings and construct a \code{GRanges} object containing the genomic ranges
 \code{bcbioSingleCell}.
 }
 \description{
-\code{bcbioSingleCell} is an S4 class that extends \code{SingleCellExperiment}, and is
-designed to store a bcbio single-cell RNA-seq analysis. This class contains
-read counts saved as a sparse matrix (\code{dgCMatrix}), sample metadata, and cell
-quality control metrics.
+Read bcbio Single-Cell RNA-Seq Data
 }
 \note{
 \code{bcbioSingleCell} extended \code{SummarizedExperiment} prior to v0.1.0,

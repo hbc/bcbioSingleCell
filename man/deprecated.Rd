@@ -4,11 +4,14 @@
 \alias{deprecated}
 \alias{loadCellRanger}
 \alias{loadSingleCell}
+\alias{readCellRanger}
 \title{Deprecated Functions}
 \usage{
 loadCellRanger(...)
 
 loadSingleCell(...)
+
+readCellRanger(...)
 }
 \arguments{
 \item{...}{Additional arguments.}

@@ -5,6 +5,8 @@
 \alias{bcbioSingleCell-class}
 \title{\code{bcbioSingleCell} Class}
 \description{
-Extends \code{SingleCellExperiment}, with additional validity checks on the
-\code{metadata()} slot.
+\code{bcbioSingleCell} is an S4 class that extends \code{SingleCellExperiment}, and is
+designed to store a bcbio single-cell RNA-seq analysis. This class contains
+read counts saved as a sparse matrix (\code{dgCMatrix}), sample metadata, and cell
+quality control metrics.
 }
