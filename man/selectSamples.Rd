@@ -12,16 +12,16 @@
 \arguments{
 \item{object}{Object.}
 
-\item{...}{Columns to use for grep pattern matching. Supply a named character
-vector containing the column name and the grep pattern.}
-
-\item{prefilter}{\code{boolean}. Apply prefiltering to remove zero count genes.}
+\item{...}{Selection arguments that map to the column names of
+\code{\link[=sampleData]{sampleData()}}. \code{character} vectors are supported. Avoid using \code{logical} or
+\code{numeric} indices (e.g. \code{\link[base:which]{base::which()}} calls) here, for improved code
+legibility and reproducibility.}
 }
 \value{
 \code{bcbioSingleCell}.
 }
 \description{
-Select Samples
+Sample selection utility function designed for interactive use.
 }
 \details{
 Internally, pattern matching against sample and file names is
@@ -41,7 +41,7 @@ selectSamples(object, sampleName = sample)
 \seealso{
 \code{\link[=sampleData]{sampleData()}}.
 
-Other Data Functions: \code{\link{aggregateReplicates}},
+Other Data Functions: \code{\link{aggregateCols}},
   \code{\link{cell2sample}},
   \code{\link{metricsPerSample}}, \code{\link{sampleData}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}
