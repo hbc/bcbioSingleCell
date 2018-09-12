@@ -335,6 +335,7 @@ setMethod(
             object = object,
             interestingGroups = interestingGroups
         )
+        interestingGroups(object) <- interestingGroups
         geom <- match.arg(geom)
         assertIsAStringOrNULL(title)
 
@@ -349,10 +350,7 @@ setMethod(
         assert_is_an_integer(min)
 
         # Obtain the sample metadata
-        sampleData <- sampleData(
-            object = object,
-            interestingGroups = interestingGroups
-        )
+        sampleData <- sampleData(object)
         assert_is_non_empty(sampleData)
         sampleData <- as.data.frame(sampleData)
         sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
@@ -393,10 +391,7 @@ setMethod(
                 min = min
             )
         } else if (geom == "histogram") {
-            sampleData <- sampleData(
-                object = object,
-                interestingGroups = interestingGroups
-            ) %>%
+            sampleData <- sampleData(object) %>%
                 as.data.frame()
             sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
             data <- .proportionalReadsPerCell(

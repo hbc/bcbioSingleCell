@@ -32,6 +32,7 @@ setMethod(
             object = object,
             interestingGroups = interestingGroups
         )
+        interestingGroups(object) <- interestingGroups
         assertIsColorScaleDiscreteOrNULL(color)
         assertIsAStringOrNULL(title)
 
@@ -47,10 +48,7 @@ setMethod(
             depth = colSums(counts)
         )
 
-        sampleData <- sampleData(
-            object = object,
-            interestingGroups = interestingGroups
-        )
+        sampleData <- sampleData(object)
         if (is.null(sampleData)) {
             sampleData <- unknownSampleData
         }

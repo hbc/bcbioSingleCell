@@ -45,6 +45,7 @@ NULL
         object = object,
         interestingGroups = interestingGroups
     )
+    interestingGroups(object) <- interestingGroups
     assert_all_are_non_negative(c(min, max))
     # Support for per sample filtering cutoffs
     min <- min(min)
@@ -56,7 +57,7 @@ NULL
     assertIsFillScaleDiscreteOrNULL(fill)
     assertIsAStringOrNULL(title)
 
-    data <- metrics(object, interestingGroups = interestingGroups)
+    data <- metrics(object)
     if (!metricCol %in% colnames(data)) {
         return(invisible())
     }
@@ -207,10 +208,11 @@ NULL
         object = object,
         interestingGroups = interestingGroups
     )
+    interestingGroups(object) <- interestingGroups
     assertIsColorScaleDiscreteOrNULL(color)
     assertIsAStringOrNULL(title)
 
-    data <- metrics(object, interestingGroups = interestingGroups)
+    data <- metrics(object)
     if (!all(c(xCol, yCol) %in% colnames(data))) {
         warning(paste(
             deparse(substitute(object)), "must contain",
@@ -281,6 +283,7 @@ setMethod(
             object = object,
             interestingGroups = interestingGroups
         )
+        interestingGroups(object) <- interestingGroups
         geom <- match.arg(geom)
         assertIsAHeaderLevel(headerLevel)
         return <- match.arg(return)

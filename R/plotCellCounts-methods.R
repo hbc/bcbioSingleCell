@@ -30,15 +30,13 @@ setMethod(
             object = object,
             interestingGroups = interestingGroups
         )
+        interestingGroups(object) <- interestingGroups
         assertIsFillScaleDiscreteOrNULL(fill)
         assertIsAStringOrNULL(title)
 
-        metrics <- metrics(object, interestingGroups = interestingGroups)
+        metrics <- metrics(object)
 
-        sampleData <- sampleData(
-            object = object,
-            interestingGroups = interestingGroups
-        )
+        sampleData <- sampleData(object)
         if (is.null(sampleData)) {
             sampleData <- unknownSampleData
         } else {

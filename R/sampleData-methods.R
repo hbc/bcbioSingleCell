@@ -94,6 +94,7 @@ setMethod(
             object = object,
             interestingGroups = interestingGroups
         )
+        interestingGroups(object) <- interestingGroups
         if (length(interestingGroups)) {
             data <- uniteInterestingGroups(data, interestingGroups)
         }

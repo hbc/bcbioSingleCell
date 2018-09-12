@@ -30,17 +30,19 @@ setMethod(
         title = "genes per cell"
     ) {
         geom <- match.arg(geom)
-        # FIXME Use do.call
-        .plotQCMetric(
-            object = object,
-            metricCol = "nGene",
-            geom = geom,
-            interestingGroups = interestingGroups,
-            min = min,
-            max = max,
-            trans = trans,
-            fill = fill,
-            title = title
+        do.call(
+            what = .plotQCMetric,
+            args = list(
+                object = object,
+                metricCol = "nGene",
+                geom = geom,
+                interestingGroups = interestingGroups,
+                min = min,
+                max = max,
+                trans = trans,
+                fill = fill,
+                title = title
+            )
         )
     }
 )
