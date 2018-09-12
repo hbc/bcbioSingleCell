@@ -1,9 +1,4 @@
-#' `bcbioSingleCell` Object and Constructor
-#'
-#' `bcbioSingleCell` is an S4 class that extends `SingleCellExperiment`, and is
-#' designed to store a bcbio single-cell RNA-seq analysis. This class contains
-#' read counts saved as a sparse matrix (`dgCMatrix`), sample metadata, and cell
-#' quality control metrics.
+#' Read bcbio Single-Cell RNA-Seq Data
 #'
 #' @section Remote Data:
 #'
