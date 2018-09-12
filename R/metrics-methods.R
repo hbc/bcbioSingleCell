@@ -115,7 +115,11 @@ NULL
 setMethod(
     "metrics",
     signature("SingleCellExperiment"),
-    function(object, interestingGroups, recalculate = FALSE) {
+    function(
+        object,
+        interestingGroups = NULL,
+        recalculate = FALSE
+    ) {
         validObject(object)
 
         colData <- colData(object)
