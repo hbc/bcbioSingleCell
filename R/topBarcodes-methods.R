@@ -10,19 +10,18 @@
 #' @param n `scalar integer`. Number of barcodes to return per sample.
 #'
 #' @return
-#' - "`list`": `list` containing top barcodes as a `character` vector, split by
-#'   `sampleID`.
-#' - "`data.frame`": `tibble` grouped by `sampleID` and arranged by `nUMI`
+#' - "`tibble`": `grouped_df`. Grouped by `sampleID` and arranged by `nUMI`
 #'   column in descending order. Cellular barcodes are in the `cellID` column.
+#' - "`list`": `list`. Top barcodes as `character`, split by `sampleID`.
 #'
 #' @examples
-#' # Return list
+#' # tibble
+#' x <- topBarcodes(indrops_small, return = "tibble")
+#' glimpse(x)
+#'
+#' # list
 #' x <- topBarcodes(indrops_small, return = "list")
 #' lapply(x, class)
-#'
-#' # Return data.frame
-#' x <- topBarcodes(indrops_small, return = "data.frame")
-#' glimpse(x)
 NULL
 
 
@@ -34,8 +33,8 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        n = 1000L,
-        return = c("data.frame", "list")
+        n = 100L,
+        return = c("tibble", "list")
     ) {
         validObject(object)
         assertIsAnImplicitInteger(n)
@@ -52,7 +51,7 @@ setMethod(
             arrange(desc(!!sym("nUMI")), .by_group = TRUE) %>%
             slice(seq_len(n))
 
-        if (return == "data.frame") {
+        if (return == "tibble") {
             data
         } else if (return == "list") {
             data %>%

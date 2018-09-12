@@ -8,8 +8,8 @@
 \usage{
 topBarcodes(object, ...)
 
-\S4method{topBarcodes}{SingleCellExperiment}(object, n = 1000L,
-  return = c("data.frame", "list"))
+\S4method{topBarcodes}{SingleCellExperiment}(object, n = 100L,
+  return = c("tibble", "list"))
 }
 \arguments{
 \item{object}{Object.}
@@ -23,23 +23,22 @@ defaults to the first argument in the \code{character} vector.}
 }
 \value{
 \itemize{
-\item "\code{list}": \code{list} containing top barcodes as a \code{character} vector, split by
-\code{sampleID}.
-\item "\code{data.frame}": \code{tibble} grouped by \code{sampleID} and arranged by \code{nUMI}
+\item "\code{tibble}": \code{grouped_df}. Grouped by \code{sampleID} and arranged by \code{nUMI}
 column in descending order. Cellular barcodes are in the \code{cellID} column.
+\item "\code{list}": \code{list}. Top barcodes as \code{character}, split by \code{sampleID}.
 }
 }
 \description{
 Obtain the top cellular barcodes based on UMI counts.
 }
 \examples{
-# Return list
+# tibble
+x <- topBarcodes(indrops_small, return = "tibble")
+glimpse(x)
+
+# list
 x <- topBarcodes(indrops_small, return = "list")
 lapply(x, class)
-
-# Return data.frame
-x <- topBarcodes(indrops_small, return = "data.frame")
-glimpse(x)
 }
 \seealso{
 Other Data Functions: \code{\link{aggregateCols}},
