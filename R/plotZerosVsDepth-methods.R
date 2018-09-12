@@ -23,7 +23,7 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        interestingGroups,
+        interestingGroups = NULL,
         color = getOption("bcbio.discrete.color", NULL),
         title = "zeros vs. depth"
     ) {

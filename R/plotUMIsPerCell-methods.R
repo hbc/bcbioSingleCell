@@ -30,7 +30,7 @@ setMethod(
     function(
         object,
         geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
-        interestingGroups,
+        interestingGroups = NULL,
         min = 0L,
         max = Inf,
         point = c("none", "inflection", "knee"),

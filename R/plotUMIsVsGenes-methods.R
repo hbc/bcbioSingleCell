@@ -21,12 +21,13 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        interestingGroups,
+        interestingGroups = NULL,
         trendline = FALSE,
         color = getOption("bcbio.discrete.color", NULL),
         trans = "log2",
         title = "UMIs vs. genes"
     ) {
+        # FIXME Use do.call
         .plotQCScatterplot(
             object = object,
             interestingGroups = interestingGroups,

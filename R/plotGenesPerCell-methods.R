@@ -22,7 +22,7 @@ setMethod(
     function(
         object,
         geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
-        interestingGroups,
+        interestingGroups = NULL,
         min = 0L,
         max = Inf,
         trans = "log2",
@@ -30,6 +30,7 @@ setMethod(
         title = "genes per cell"
     ) {
         geom <- match.arg(geom)
+        # FIXME Use do.call
         .plotQCMetric(
             object = object,
             metricCol = "nGene",

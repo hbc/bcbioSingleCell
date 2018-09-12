@@ -323,7 +323,7 @@ setMethod(
     signature("bcbioSingleCell"),
     function(
         object,
-        interestingGroups,
+        interestingGroups = NULL,
         geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
         color = getOption("bcbio.discrete.color", NULL),
         fill = getOption("bcbio.discrete.fill", NULL),

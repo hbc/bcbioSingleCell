@@ -21,7 +21,7 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        interestingGroups,
+        interestingGroups = NULL,
         fill = getOption("bcbio.discrete.fill", NULL),
         title = "cell counts"
     ) {

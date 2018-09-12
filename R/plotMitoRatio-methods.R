@@ -22,7 +22,7 @@ setMethod(
     function(
         object,
         geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
-        interestingGroups,
+        interestingGroups = NULL,
         max = 1L,
         fill = getOption("bcbio.discrete.fill", NULL),
         trans = "sqrt",
@@ -30,6 +30,7 @@ setMethod(
     ) {
         geom <- match.arg(geom)
         assert_all_are_in_left_open_range(max, lower = 0L, upper = 1L)
+        # FIXME Use do.call
         .plotQCMetric(
             object = object,
             metricCol = "mitoRatio",

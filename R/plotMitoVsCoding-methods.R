@@ -21,12 +21,13 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        interestingGroups,
+        interestingGroups = NULL,
         trendline = FALSE,
         color = getOption("bcbio.discrete.color", NULL),
         trans = "log2",
         title = "mito vs. coding"
     ) {
+        # FIXME Use do.call
         .plotQCScatterplot(
             object = object,
             interestingGroups = interestingGroups,

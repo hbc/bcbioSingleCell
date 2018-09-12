@@ -30,7 +30,7 @@ NULL
     object,
     metricCol,
     geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
-    interestingGroups,
+    interestingGroups = NULL,
     min = 0L,
     max = Inf,
     trans = "identity",
@@ -194,7 +194,7 @@ NULL
     yCol,
     xTrans = "identity",
     yTrans = "identity",
-    interestingGroups,
+    interestingGroups = NULL,
     trendline = FALSE,
     color = getOption("bcbio.discrete.color", NULL),
     title = NULL
@@ -270,7 +270,7 @@ setMethod(
     signature("SingleCellExperiment"),
     function(
         object,
-        interestingGroups,
+        interestingGroups = NULL,
         geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
         headerLevel = 2L,
         legend = getOption("bcbio.legend", FALSE),
