@@ -4,9 +4,12 @@
 \name{show}
 \alias{show}
 \alias{show,bcbioSingleCell-method}
+\alias{show,CellRanger-method}
 \title{Show an Object}
 \usage{
 \S4method{show}{bcbioSingleCell}(object)
+
+\S4method{show}{CellRanger}(object)
 }
 \arguments{
 \item{object}{Any R object}

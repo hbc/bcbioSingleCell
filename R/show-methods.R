@@ -15,9 +15,9 @@ NULL
 #' @rdname show
 #' @export
 setMethod(
-    "show",
-    signature("bcbioSingleCell"),
-    function(object) {
+    f = "show",
+    signature = signature("bcbioSingleCell"),
+    definition = function(object) {
         validObject(object)
 
         # Extend the SingleCellExperiment method
@@ -104,4 +104,17 @@ setMethod(
 
         cat(return, sep = "\n")
     }
+)
+
+
+
+#' @rdname show
+#' @export
+setMethod(
+    f = "show",
+    signature = signature("CellRanger"),
+    definition = getMethod(
+        f = "show",
+        signature = "bcbioSingleCell"
+    )
 )
