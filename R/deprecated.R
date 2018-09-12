@@ -272,4 +272,14 @@ topMarkers <- function(...) {
 
 
 
+# v0.2.2 =======================================================================
+#' @rdname deprecated
+#' @export
+readCellRanger <- function(...) {
+    .Deprecated("CellRanger")
+    CellRanger(...)
+}
+
+
+
 # nocov end
