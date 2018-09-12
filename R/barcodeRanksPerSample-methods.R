@@ -20,10 +20,6 @@ NULL
 
 
 .barcodeRanksPerSample <- function(object) {
-    # Match the call, which we need to pass to barcodeRanks below.
-    call <- matchCall()
-    fun <- sys.function(which = sys.parent())
-
     counts <- counts(object)
     cell2sample <- cell2sample(object)
     samples <- levels(cell2sample)
@@ -36,13 +32,13 @@ NULL
 
     # Calculate the ranks per sample.
     ranks <- lapply(countsPerSample, function(object) {
-        args <- setArgsToDoCall(
-            args = list(m = as.matrix(object)),
-            removeArgs = "object",
-            call = call,
-            fun = fun
+        do.call(
+            what = barcodeRanks,
+            args = matchArgsToDoCall(
+                args = list(m = as.matrix(object)),
+                removeArgs = "object"
+            )
         )
-        do.call(what = barcodeRanks, args = args)
     })
 
     names(ranks) <- samples

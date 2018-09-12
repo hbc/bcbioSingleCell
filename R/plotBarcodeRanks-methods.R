@@ -1,7 +1,3 @@
-# FIXME Use the formals for plotBarcodeRanks
-
-
-
 #' Plot Barcode Ranks
 #'
 #'
@@ -23,10 +19,7 @@ NULL
 .plotBarcodeRanks <- function(object) {
     ranksPerSample <- do.call(
         what = barcodeRanksPerSample,
-        args = setArgsToDoCall(
-            args = list(object = object),
-            call = matchCall()
-        )
+        args = matchArgsToDoCall(args = list(object = object))
     )
 
     sampleData <- sampleData(object)
