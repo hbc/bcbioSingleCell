@@ -96,7 +96,7 @@ setMethod(
                     paste("inflection", "=", ranks[["inflection"]])
                 )
                 p +
-                    bcbio_geom_label_repel(
+                    basejump_geom_label_repel(
                         data = labelData,
                         mapping = aes(
                             x = !!sym("rank"),

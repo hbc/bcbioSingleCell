@@ -26,17 +26,16 @@
 #' @importFrom basejump assertFormalInterestingGroups assertHasRownames
 #'   assertIsAHeaderLevel assertIsAStringOrNULL assertIsAnImplicitInteger
 #'   assertIsAnImplicitIntegerOrNULL assertIsColorScaleDiscreteOrNULL
-#'   assertIsFillScaleDiscreteOrNULL assignAndSaveData camel emptyRanges
-#'   gene2symbol hasRownames interestingGroups interestingGroups<-
-#'   initializeDirectory makeGRangesFromEnsembl makeGRangesFromGFF makeNames
-#'   makeSummarizedExperiment makeTx2geneFromGFF matchInterestingGroups
-#'   markdownHeader markdownPlotlist prepareTemplate printString readJSON
-#'   readYAML sanitizeSampleData stripTranscriptVersions theme_midnight
-#'   theme_paperwhite tx2geneFromGFF uniteInterestingGroups
-#' @importFrom bcbioBase bcbio_geom_abline bcbio_geom_label
-#'   bcbio_geom_label_average bcbio_geom_label_repel minimalSampleData
-#'   projectDir readDataVersions readLog readProgramVersions readSampleData
-#'   readYAMLSampleData sampleDirs
+#'   assertIsFillScaleDiscreteOrNULL assignAndSaveData basejump_geom_abline
+#'   basejump_geom_label basejump_geom_label_average basejump_geom_label_repel
+#'   camel emptyRanges gene2symbol hasRownames interestingGroups
+#'   interestingGroups<- initializeDirectory makeGRangesFromEnsembl
+#'   makeGRangesFromGFF makeNames makeSummarizedExperiment makeTx2geneFromGFF
+#'   matchInterestingGroups markdownHeader markdownPlotlist prepareTemplate
+#'   printString readJSON readYAML sanitizeSampleData stripTranscriptVersions
+#'   theme_midnight theme_paperwhite tx2geneFromGFF uniteInterestingGroups
+#' @importFrom bcbioBase minimalSampleData projectDir readDataVersions readLog
+#'   readProgramVersions readSampleData readYAMLSampleData sampleDirs
 #' @importFrom Biobase sampleNames
 #' @importFrom BiocGenerics cbind counts counts<- do.call rbind
 #' @importFrom BiocParallel SerialParam

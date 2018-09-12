@@ -35,7 +35,7 @@ NULL
     ) +
         geom_boxplot(color = "black", outlier.shape = NA) +
         scale_y_continuous(trans = "log10") +
-        bcbio_geom_label_average(data, col = "nCount", digits = 0L) +
+        basejump_geom_label_average(data, col = "nCount", digits = 0L) +
         labs(
             x = NULL,
             y = "reads per cell"
@@ -43,7 +43,7 @@ NULL
 
     # Cutoff line
     if (min > 0L) {
-        p <- p + bcbio_geom_abline(yintercept = min)
+        p <- p + basejump_geom_abline(yintercept = min)
     }
 
     # Color palette
@@ -89,7 +89,7 @@ NULL
 
     # Cutoff line
     if (min > 0L) {
-        p <- p + bcbio_geom_abline(xintercept = min)
+        p <- p + basejump_geom_abline(xintercept = min)
     }
 
     # Color palette
@@ -134,7 +134,7 @@ NULL
             scale = 10L
         ) +
         scale_x_continuous(trans = "log10") +
-        bcbio_geom_label_average(data, col = "nCount", digits = 0L) +
+        basejump_geom_label_average(data, col = "nCount", digits = 0L) +
         labs(
             x = "reads per cell",
             y = NULL
@@ -142,7 +142,7 @@ NULL
 
     # Cutoff line
     if (min > 0L) {
-        p <- p + bcbio_geom_abline(xintercept = min)
+        p <- p + basejump_geom_abline(xintercept = min)
     }
 
     # Color palette
@@ -185,7 +185,7 @@ NULL
             scale = "count"
         ) +
         scale_y_continuous(trans = "log10") +
-        bcbio_geom_label_average(data, col = "nCount", digits = 0L) +
+        basejump_geom_label_average(data, col = "nCount", digits = 0L) +
         labs(
             x = NULL,
             y = "reads per cell"
@@ -193,7 +193,7 @@ NULL
 
     # Cutoff line
     if (min > 0L) {
-        p <- p + bcbio_geom_abline(yintercept = min)
+        p <- p + basejump_geom_abline(yintercept = min)
     }
 
     # Color palette
@@ -294,7 +294,7 @@ NULL
 
     # Cutoff line
     if (min > 0L) {
-        p <- p + bcbio_geom_abline(xintercept = log10(min))
+        p <- p + basejump_geom_abline(xintercept = log10(min))
     }
 
     # Color palette

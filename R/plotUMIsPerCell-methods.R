@@ -119,7 +119,7 @@ setMethod(
                         size = 5L,
                         show.legend = FALSE
                     ) +
-                    bcbio_geom_label_repel(
+                    basejump_geom_label_repel(
                         data = pointData,
                         mapping = aes(
                             x = !!sym("x"),

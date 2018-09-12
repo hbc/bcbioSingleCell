@@ -123,23 +123,23 @@ NULL
     # Cutoff lines
     if (geom %in% c("boxplot", "violin")) {
         if (min > 0L) {
-            p <- p + bcbio_geom_abline(yintercept = min)
+            p <- p + basejump_geom_abline(yintercept = min)
         }
         if (
             (max < Inf && identical(ratio, FALSE)) ||
             (max < 1L && identical(ratio, TRUE))
         ) {
-            p <- p + bcbio_geom_abline(yintercept = max)
+            p <- p + basejump_geom_abline(yintercept = max)
         }
     } else {
         if (min > 0L) {
-            p <- p + bcbio_geom_abline(xintercept = min)
+            p <- p + basejump_geom_abline(xintercept = min)
         }
         if (
             (max < Inf && identical(ratio, FALSE)) ||
             (max < 1L && identical(ratio, TRUE))
         ) {
-            p <- p + bcbio_geom_abline(xintercept = max)
+            p <- p + basejump_geom_abline(xintercept = max)
         }
     }
 
@@ -170,7 +170,7 @@ NULL
             digits <- 0L
         }
         p <- p +
-            bcbio_geom_label_average(data, col = metricCol, digits = digits)
+            basejump_geom_label_average(data, col = metricCol, digits = digits)
     }
 
     # Facets
