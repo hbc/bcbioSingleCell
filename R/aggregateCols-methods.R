@@ -1,10 +1,15 @@
-#' Aggregate Replicates
+# FIXME Need to update this method.
+# FIXME rownames to column `sampleID`...
+
+
+
+#' Aggregate Columns
 #'
-#' @name aggregateReplicates
+#' @name aggregateCols
 #' @family Data Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @importFrom basejump aggregateReplicates
+#' @importFrom basejump aggregateCols
 #'
 #' @inheritParams general
 #'
@@ -14,28 +19,26 @@
 #' object <- indrops_small
 #' sampleNames(object)
 #'
-#' # Define groupings factor as`aggregate` column in `colData()`
+#' # Define groupings factor as`aggregate` column in `colData()`.
 #' glimpse(object$aggregate)
 #'
-#' x <- aggregateReplicates(object)
+#' x <- aggregateCols(object)
 #' show(x)
 #' sampleNames(x)
 NULL
 
 
 
-#' @rdname aggregateReplicates
+#' @rdname aggregateCols
 #' @export
 setMethod(
-    "aggregateReplicates",
+    "aggregateCols",
     signature("SingleCellExperiment"),
     function(object) {
         validObject(object)
         sampleData <- as.data.frame(sampleData(object))
         if ("sampleNameAggregate" %in% colnames(sampleData)) {
-            warning("Use `aggregate` instead of `sampleNameAggregate`")
-            sampleData[["aggregate"]] <- sampleData[["sampleNameAggregate"]]
-            sampleData[["sampleNameAggregate"]] <- NULL
+            stop("Use `aggregate` instead of `sampleNameAggregate`")
         }
         assert_is_subset("aggregate", colnames(sampleData))
 
@@ -98,7 +101,7 @@ setMethod(
 
         # Assays ---------------------------------------------------------------
         message("Aggregating counts")
-        counts <- aggregateReplicates(counts(object), groupings = groupings)
+        counts <- aggregateCols(counts(object), groupings = groupings)
         # Check that the count number of counts matches
         if (!identical(sum(assay(object)), sum(counts))) {
             stop("Aggregated counts sum isn't identical to original")
@@ -138,7 +141,7 @@ setMethod(
 
         # Metadata -------------------------------------------------------------
         metadata <- list(
-            aggregateReplicates = groupings,
+            aggregateCols = groupings,
             cell2sample = cell2sample,
             interestingGroups = interestingGroups(object),
             sampleData = sampleData
