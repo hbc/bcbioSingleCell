@@ -52,7 +52,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
 Depends:
-    R (>= 3.4),
+    R (>= 3.5),
     SingleCellExperiment,
     basejump (>= 0.99),
     bcbioBase (>= 0.99)
@@ -70,6 +70,7 @@ Imports:
     cowplot (>= 0.9),
     crayon,
     dplyr (>= 0.7),
+    DropletUtils,
     ggplot2 (>= 3.0),
     ggridges (>= 0.5),
     graphics,
@@ -94,7 +95,6 @@ Imports:
     utils
 Suggests:
     BiocStyle,
-    DropletUtils,
     EnsDb.Hsapiens.v75,
     roxygen2,
     testthat (>= 2.0)
