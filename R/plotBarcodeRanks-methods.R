@@ -1,3 +1,7 @@
+# FIXME Use the formals for plotBarcodeRanks
+
+
+
 #' Plot Barcode Ranks
 #'
 #' @name plotBarcodeRanks
@@ -19,9 +23,9 @@ NULL
 #' @rdname plotBarcodeRanks
 #' @export
 setMethod(
-    "plotBarcodeRanks",
-    signature("SingleCellExperiment"),
-    function(object, ...) {
+    f = "plotBarcodeRanks",
+    signature = signature("SingleCellExperiment"),
+    definition = function(object, ...) {
         ranksPerSample <- barcodeRanksPerSample(object, ...)
 
         sampleData <- sampleData(object)

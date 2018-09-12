@@ -9,12 +9,19 @@
 \usage{
 barcodeRanksPerSample(object, ...)
 
-\S4method{barcodeRanksPerSample}{SingleCellExperiment}(object, ...)
+\S4method{barcodeRanksPerSample}{SingleCellExperiment}(object,
+  lower = 100, fit.bounds = NULL, df = 20, ...)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{...}{Passthrough arguments to \code{\link[DropletUtils:barcodeRanks]{DropletUtils::barcodeRanks()}}.}
+
+\item{lower}{A numeric scalar specifying the lower bound on the total UMI count, at or below which all barcodes are assumed to correspond to empty droplets.}
+
+\item{fit.bounds}{A numeric vector of length 2, specifying the lower and upper bouunds on the total UMI count for spline fitting.}
+
+\item{df}{Further arguments to pass to \code{\link{smooth.spline}}.}
 }
 \value{
 A list with the following elements:
