@@ -8,7 +8,8 @@
 \alias{sampleData<-,SingleCellExperiment,DataFrame-method}
 \title{Sample Data}
 \usage{
-\S4method{sampleData}{SingleCellExperiment}(object, interestingGroups)
+\S4method{sampleData}{SingleCellExperiment}(object,
+  interestingGroups = NULL)
 
 \S4method{sampleData}{SingleCellExperiment,DataFrame}(object) <- value
 }
@@ -38,7 +39,7 @@ sampleData(x) \%>\% glimpse()
 "batch" \%in\% colnames(colData(x))
 }
 \seealso{
-Other Data Functions: \code{\link{aggregateReplicates}},
+Other Data Functions: \code{\link{aggregateCols}},
   \code{\link{cell2sample}},
   \code{\link{metricsPerSample}},
   \code{\link{selectSamples}},

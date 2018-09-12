@@ -9,7 +9,7 @@
 plotMitoVsCoding(object, ...)
 
 \S4method{plotMitoVsCoding}{SingleCellExperiment}(object,
-  interestingGroups, trendline = FALSE,
+  interestingGroups = NULL, trendline = FALSE,
   color = getOption("bcbio.discrete.color", NULL), trans = "log2",
   title = "mito vs. coding")
 }

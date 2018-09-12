@@ -39,7 +39,7 @@ x <- metricsPerSample(indrops_small, f = "sum")
 head(x)
 }
 \seealso{
-Other Data Functions: \code{\link{aggregateReplicates}},
+Other Data Functions: \code{\link{aggregateCols}},
   \code{\link{cell2sample}}, \code{\link{sampleData}},
   \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}

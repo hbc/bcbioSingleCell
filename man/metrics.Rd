@@ -6,8 +6,8 @@
 \alias{metrics,SingleCellExperiment-method}
 \title{Sample Barcode Metrics}
 \usage{
-\S4method{metrics}{SingleCellExperiment}(object, interestingGroups,
-  recalculate = FALSE)
+\S4method{metrics}{SingleCellExperiment}(object,
+  interestingGroups = NULL, recalculate = FALSE)
 }
 \arguments{
 \item{object}{Object.}

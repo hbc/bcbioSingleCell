@@ -8,8 +8,9 @@
 \usage{
 plotCellCounts(object, ...)
 
-\S4method{plotCellCounts}{SingleCellExperiment}(object, interestingGroups,
-  fill = getOption("bcbio.discrete.fill", NULL), title = "cell counts")
+\S4method{plotCellCounts}{SingleCellExperiment}(object,
+  interestingGroups = NULL, fill = getOption("bcbio.discrete.fill",
+  NULL), title = "cell counts")
 }
 \arguments{
 \item{object}{Object.}

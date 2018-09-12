@@ -27,7 +27,7 @@ x <- cell2sample(indrops_small)
 table(x)
 }
 \seealso{
-Other Data Functions: \code{\link{aggregateReplicates}},
+Other Data Functions: \code{\link{aggregateCols}},
   \code{\link{metricsPerSample}}, \code{\link{sampleData}},
   \code{\link{selectSamples}},
   \code{\link{subsetPerSample}}, \code{\link{topBarcodes}}

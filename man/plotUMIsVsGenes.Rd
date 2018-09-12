@@ -8,9 +8,10 @@
 \usage{
 plotUMIsVsGenes(object, ...)
 
-\S4method{plotUMIsVsGenes}{SingleCellExperiment}(object, interestingGroups,
-  trendline = FALSE, color = getOption("bcbio.discrete.color", NULL),
-  trans = "log2", title = "UMIs vs. genes")
+\S4method{plotUMIsVsGenes}{SingleCellExperiment}(object,
+  interestingGroups = NULL, trendline = FALSE,
+  color = getOption("bcbio.discrete.color", NULL), trans = "log2",
+  title = "UMIs vs. genes")
 }
 \arguments{
 \item{object}{Object.}

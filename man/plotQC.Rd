@@ -6,7 +6,7 @@
 \alias{plotQC,SingleCellExperiment-method}
 \title{Quality Control Plots}
 \usage{
-\S4method{plotQC}{SingleCellExperiment}(object, interestingGroups,
+\S4method{plotQC}{SingleCellExperiment}(object, interestingGroups = NULL,
   geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
   headerLevel = 2L, legend = getOption("bcbio.legend", FALSE),
   return = c("grid", "list", "markdown"))

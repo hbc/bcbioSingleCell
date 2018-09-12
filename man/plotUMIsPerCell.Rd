@@ -10,7 +10,7 @@ plotUMIsPerCell(object, ...)
 
 \S4method{plotUMIsPerCell}{SingleCellExperiment}(object,
   geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
-  interestingGroups, min = 0L, max = Inf, point = c("none",
+  interestingGroups = NULL, min = 0L, max = Inf, point = c("none",
   "inflection", "knee"), trans = "log10",
   color = getOption("bcbio.discrete.color", NULL),
   fill = getOption("bcbio.discrete.fill", NULL),

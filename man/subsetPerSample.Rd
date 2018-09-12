@@ -57,7 +57,7 @@ list.files("subsetPerSample")
 unlink("subsetPerSample", recursive = TRUE)
 }
 \seealso{
-Other Data Functions: \code{\link{aggregateReplicates}},
+Other Data Functions: \code{\link{aggregateCols}},
   \code{\link{cell2sample}},
   \code{\link{metricsPerSample}}, \code{\link{sampleData}},
   \code{\link{selectSamples}}, \code{\link{topBarcodes}}
