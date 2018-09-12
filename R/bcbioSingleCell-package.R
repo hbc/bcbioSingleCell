@@ -32,9 +32,9 @@
 #'   interestingGroups<- initializeDirectory makeGRangesFromEnsembl
 #'   makeGRangesFromGFF makeNames makeSummarizedExperiment makeTx2geneFromGFF
 #'   matchCall matchInterestingGroups markdownHeader markdownPlotlist
-#'   prepareTemplate printString readJSON readYAML sanitizeSampleData
-#'   setArgsToDoCall stripTranscriptVersions theme_midnight theme_paperwhite
-#'   tx2geneFromGFF uniteInterestingGroups
+#'   methodFormals prepareTemplate printString readJSON readYAML
+#'   sanitizeSampleData setArgsToDoCall stripTranscriptVersions theme_midnight
+#'   theme_paperwhite tx2geneFromGFF uniteInterestingGroups
 #' @importFrom bcbioBase minimalSampleData projectDir readDataVersions readLog
 #'   readProgramVersions readSampleData readYAMLSampleData sampleDirs
 #' @importFrom Biobase sampleNames

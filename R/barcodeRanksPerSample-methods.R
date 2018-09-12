@@ -3,11 +3,12 @@
 #' @name barcodeRanksPerSample
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh
+#' @export
 #'
 #' @inherit DropletUtils::barcodeRanks
 #'
 #' @inheritParams general
-#' @param ... Passthrough arguments to [DropletUtils::barcodeRanks()].
+#' @param ... Additional arguments.
 #'
 #' @seealso [DropletUtils::barcodeRanks()].
 #'
@@ -21,6 +22,7 @@ NULL
 .barcodeRanksPerSample <- function(object) {
     # Match the call, which we need to pass to barcodeRanks below.
     call <- matchCall()
+    fun <- sys.function(which = sys.parent())
 
     counts <- counts(object)
     cell2sample <- cell2sample(object)
@@ -37,7 +39,8 @@ NULL
         args <- setArgsToDoCall(
             args = list(m = as.matrix(object)),
             removeArgs = "object",
-            call = call
+            call = call,
+            fun = fun
         )
         do.call(what = barcodeRanks, args = args)
     })
@@ -49,7 +52,7 @@ NULL
 # Assign the formals.
 f1 <- formals(.barcodeRanksPerSample)
 f2 <- formals(barcodeRanks)
-f2 <- f2[setdiff(names(f2), c(names(f1), "m"))]
+f2 <- f2[setdiff(names(f2), c(names(f1), "m", "..."))]
 f <- c(f1, f2)
 formals(.barcodeRanksPerSample) <- f
 
