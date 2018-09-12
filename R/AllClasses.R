@@ -6,8 +6,10 @@ setOldClass(Classes = c("grouped_df", "tbl_df"))
 # bcbioSingleCell ==============================================================
 #' `bcbioSingleCell` Class
 #'
-#' Extends `SingleCellExperiment`, with additional validity checks on the
-#' `metadata()` slot.
+#' `bcbioSingleCell` is an S4 class that extends `SingleCellExperiment`, and is
+#' designed to store a bcbio single-cell RNA-seq analysis. This class contains
+#' read counts saved as a sparse matrix (`dgCMatrix`), sample metadata, and cell
+#' quality control metrics.
 #'
 #' @export
 setClass(
@@ -140,6 +142,27 @@ setValidity(
             y = c("genes", "transcripts")
         )
 
+        TRUE
+    }
+)
+
+
+
+# CellRanger ===================================================================
+#' `CellRanger` Class
+#'
+#' Extends `SingleCellExperiment`, with additional validity checks on the
+#' `metadata()` slot.
+#'
+#' @export
+setClass(
+    Class = "CellRanger",
+    contains = "SingleCellExperiment"
+)
+
+setValidity(
+    Class = "CellRanger",
+    method = function(object) {
         TRUE
     }
 )
