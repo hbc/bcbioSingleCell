@@ -32,7 +32,7 @@ setMethod(
         samples <- levels(cell2sample)
         perSampleCounts <- lapply(samples, function(sample) {
             cells <- names(cell2sample)[which(cell2sample == sample)]
-            counts[, cells]
+            counts[, cells, drop = FALSE]
         })
         ranks <- lapply(perSampleCounts, function(object) {
             DropletUtils::barcodeRanks(as.matrix(object), ...)
