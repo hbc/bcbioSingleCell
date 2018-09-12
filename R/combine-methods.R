@@ -1,3 +1,7 @@
+# FIXME Export this in basejump package for `SummarizedExperiment`.
+
+
+
 #' Combine Multiple `SingleCellExperiment ` Objects
 #'
 #' @note We're attempting to make this as strict as possible, requiring:
@@ -10,11 +14,13 @@
 #'
 #' @name combine
 #' @author Michael Steinbaugh
-#'
 #' @importFrom BiocGenerics combine
 #' @export
 #'
 #' @inheritParams BiocGenerics::combine
+#'
+#' @param metadata `character`. Metadata slot names that must be identical
+#'   between the datasets.
 #'
 #' @seealso `help("merge.Matrix", "Matrix.utils")`.
 #'
@@ -69,50 +75,86 @@ setMethod(
         x = "SingleCellExperiment",
         y = "SingleCellExperiment"
     ),
-    function(x, y, ...) {
-        # Coerce the objects to SingleCellExperiment
+    function(
+        x,
+        y,
+        metadata = c(
+            "version",
+            "pipeline",
+            "level",
+            "interestingGroups",
+            "organism",
+            "genomeBuild",
+            "ensemblRelease",
+            "rowRangesMetadata",
+            "umiType",
+            "gffFile",
+            "dataVersions",
+            "programVersions"
+        )
+    ) {
+        assert_is_character(metadata)
+
+        # Coerce the objects to SingleCellExperiment.
         x <- as(x, "SingleCellExperiment")
         y <- as(y, "SingleCellExperiment")
 
-        xGenome <- metadata(x)[c("organism", "genomeBuild")]
-        yGenome <- metadata(y)[c("organism", "genomeBuild")]
-        assert_are_identical(xGenome, yGenome)
-
         # Currently we're being strict and requiring that the rows (features)
-        # are identical, otherwise zero counts may be misleading
+        # are identical, otherwise zero counts may be misleading.
         assert_are_identical(rownames(x), rownames(y))
 
-        # Require that there are no duplicate cells
+        # Require that there are no duplicate cells.
         assert_are_disjoint_sets(colnames(x), colnames(y))
 
+        # Require that specific metadata is identical.
+        assert_are_identical(
+            x = metadata(x)[metadata],
+            y = metadata(y)[metadata]
+        )
+
         # Counts ---------------------------------------------------------------
-        xCounts <- counts(x)
-        yCounts <- counts(y)
-        assert_are_identical(class(xCounts), class(yCounts))
-        counts <- cbind(xCounts, yCounts)
+        # Check that count matrices are identical format, then combine.
+        assert_are_identical(
+            x = class(counts(x)),
+            y = class(counts(y))
+        )
+        counts <- cbind(counts(x), counts(y))
 
         # Row data -------------------------------------------------------------
-        # Require that the gene annotations are identical (strict)
-        xRanges <- rowRanges(x)
-        yRanges <- rowRanges(y)
-        assert_are_identical(xRanges, yRanges)
-        rowRanges <- xRanges
+        # Require that the gene annotations are identical.
+        assert_are_identical(
+            x = rowRanges(x),
+            y = rowRanges(y)
+        )
+        rowRanges <- rowRanges(x)
 
         # Column data ----------------------------------------------------------
-        xColData <- colData(x)
-        yColData <- colData(y)
-        assert_are_set_equal(colnames(xColData), colnames(yColData))
-        cols <- intersect(colnames(xColData), colnames(yColData))
+        assert_are_set_equal(
+            x = colnames(colData(x)),
+            y = colnames(colData(y))
+        )
+        cols <- intersect(
+            x = colnames(colData(x)),
+            y = colnames(colData(y))
+        )
         colData <- rbind(
-            xColData[, cols, drop = FALSE],
-            yColData[, cols, drop = FALSE]
+            colData(x)[, cols, drop = FALSE],
+            colData(y)[, cols, drop = FALSE]
         )
 
         # Sample data ----------------------------------------------------------
-        xSampleData <- metadata(x)[["sampleData"]]
-        ySampleData <- metadata(y)[["sampleData"]]
-        assert_are_identical(colnames(xSampleData), colnames(ySampleData))
-        sampleData <- rbind(xSampleData, ySampleData)
+        assert_are_set_equal(
+            x = colnames(sampleData(x)),
+            y = colnames(sampleData(y))
+        )
+        cols <- intersect(
+            x = colnames(sampleData(x)),
+            y = colnames(sampleData(y))
+        )
+        sampleData <- rbind(
+            sampleData(x)[, cols, drop = FALSE],
+            sampleData(y)[, cols, drop = FALSE]
+        )
 
         # cell2sample ----------------------------------------------------------
         cell2sample <- .mapCellsToSamples(
@@ -120,18 +162,9 @@ setMethod(
             samples = rownames(sampleData)
         )
 
-        # Metadata (minimal) ---------------------------------------------------
-        m <- metadata(x)
-        metadata <- list(
-            interestingGroups = m[["interestingGroups"]],
-            organism = m[["organism"]],
-            genomeBuild = m[["genomeBuild"]],
-            ensemblRelease = m[["ensemblRelease"]],
-            rowRangesMetadata = m[["rowRangesMetadata"]],
-            sampleData = sampleData,
-            cell2sample = cell2sample,
-            umiType = m[["umiType"]]
-        )
+        # Metadata -------------------------------------------------------------
+        metadata <- metadata(x)[metadata]
+        metadata[["cell2sample"]] <- cell2sample
 
         # Return SingleCellExperiment ------------------------------------------
         .new.SingleCellExperiment(

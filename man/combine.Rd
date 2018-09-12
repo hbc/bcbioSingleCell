@@ -6,14 +6,18 @@
 \alias{combine,SingleCellExperiment,SingleCellExperiment-method}
 \title{Combine Multiple \code{SingleCellExperiment} Objects}
 \usage{
-\S4method{combine}{SingleCellExperiment,SingleCellExperiment}(x, y, ...)
+\S4method{combine}{SingleCellExperiment,SingleCellExperiment}(x, y,
+  metadata = c("version", "pipeline", "level", "interestingGroups",
+  "organism", "genomeBuild", "ensemblRelease", "rowRangesMetadata",
+  "umiType", "gffFile", "dataVersions", "programVersions"))
 }
 \arguments{
 \item{x}{One of the values.}
 
 \item{y}{A second value.}
 
-\item{...}{Any other objects of the same class as \code{x} and \code{y}.}
+\item{metadata}{\code{character}. Metadata slot names that must be identical
+between the datasets.}
 }
 \value{
 \code{SingleCellExperiment}.
