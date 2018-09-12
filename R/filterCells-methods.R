@@ -378,7 +378,7 @@ setMethod(
 
         cells <- sort(rownames(metrics))
         assert_is_subset(cells, colnames(object))
-        object <- object[, cells]
+        object <- object[, cells, drop = FALSE]
 
         # Filter low quality genes ---------------------------------------------
         summaryGenes <- character()
@@ -404,10 +404,10 @@ setMethod(
         )
         genes <- sort(genes)
         assert_is_subset(genes, rownames(object))
-        object <- object[genes, ]
+        object <- object[genes, , drop = FALSE]
 
         # Summary --------------------------------------------------------------
-        printParams <- c(
+        summaryParams <- paste("  -", c(
             paste(">=", min(minUMIs), "UMIs per cell"),
             paste("<=", max(maxUMIs), "UMIs per cell"),
             paste(">=", min(minGenes), "genes per cell"),
@@ -416,36 +416,34 @@ setMethod(
             paste("<=", max(maxMitoRatio), "mitochondrial abundance"),
             paste("==", nCells, "cells per sample"),
             paste(">=", min(minCellsPerGene), "cells per gene")
-        )
-        message(paste(c(
-            "Parameters:",
-            paste("  -", printParams),
-            "Cells:",
-            as.character(summaryCells),
-            printString(table(metrics[["sampleName"]])),
+        ))
+        summary <- c(
+            bold("Parameters:"),
+            summaryParams,
             separatorBar,
-            "Genes:",
-            as.character(summaryGenes),
-            "Summary:",
+            bold("Cells:"),
+            as.character(summaryCells),
             paste(
-                "  -",
-                dim(object)[[2L]], "of", originalDim[[2L]],
+                .paddedCount(dim(object)[[2L]]), "of", originalDim[[2L]],
                 "cells passed filtering",
                 paste0(
                     "(", percent(dim(object)[[2L]] / originalDim[[2L]]), ")"
                 )
             ),
+            # Number of cells per sample.
+            printString(table(metrics[["sampleName"]])),
+            separatorBar,
+            bold("Genes:"),
+            as.character(summaryGenes),
             paste(
-                "  -",
-                dim(object)[[1L]], "of", originalDim[[1L]],
+                .paddedCount(dim(object)[[1L]]), "of", originalDim[[1L]],
                 "genes passed filtering",
                 paste0(
                     "(", percent(dim(object)[[1L]] / originalDim[[1L]]), ")"
                 )
             )
-        ), collapse = "\n"))
-
-        summary <- list(cells = summaryCells, genes = summaryGenes)
+        )
+        message(paste(summary, collapse = "\n"))
 
         # Metadata -------------------------------------------------------------
         metadata(object)[["cellularBarcodes"]] <- NULL
