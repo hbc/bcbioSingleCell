@@ -10,12 +10,12 @@
 barcodeRanksPerSample(object, ...)
 
 \S4method{barcodeRanksPerSample}{SingleCellExperiment}(object,
-  lower = 100, fit.bounds = NULL, df = 20, ...)
+  lower = 100, fit.bounds = NULL, df = 20)
 }
 \arguments{
 \item{object}{Object.}
 
-\item{...}{Passthrough arguments to \code{\link[DropletUtils:barcodeRanks]{DropletUtils::barcodeRanks()}}.}
+\item{...}{Additional arguments.}
 
 \item{lower}{A numeric scalar specifying the lower bound on the total UMI count, at or below which all barcodes are assumed to correspond to empty droplets.}
 
@@ -73,7 +73,8 @@ names(x)
 \code{\link[DropletUtils:barcodeRanks]{DropletUtils::barcodeRanks()}}.
 
 Other Quality Control Functions: \code{\link{filterCells}},
-  \code{\link{metrics}}, \code{\link{plotCellCounts}},
+  \code{\link{metrics}}, \code{\link{plotBarcodeRanks}},
+  \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},

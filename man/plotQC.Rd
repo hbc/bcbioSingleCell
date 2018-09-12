@@ -45,6 +45,7 @@ plotQC(indrops_small)
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
   \code{\link{filterCells}}, \code{\link{metrics}},
+  \code{\link{plotBarcodeRanks}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},

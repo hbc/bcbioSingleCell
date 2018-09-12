@@ -37,7 +37,9 @@ print(x)
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
-  \code{\link{filterCells}}, \code{\link{plotCellCounts}},
+  \code{\link{filterCells}},
+  \code{\link{plotBarcodeRanks}},
+  \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
