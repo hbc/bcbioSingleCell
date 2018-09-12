@@ -1,12 +1,14 @@
+# FIXME Resave example without `sampleData` slotted in metadata.
+
+
+
 # inDrops example data
 # Using harvard-indrop-v3 barcodes
-# 2018-08-19
+# 2018-09-12
 
-library(devtools)
 library(tidyverse)
 library(Seurat)
 library(Matrix)
-load_all()
 
 
 
@@ -89,4 +91,4 @@ bcb <- filterCells(bcb)
 stopifnot(identical(dim(bcb), c(500L, 500L)))
 
 indrops_small <- bcb
-use_data(indrops_small, compress = "xz", overwrite = TRUE)
+devtools::use_data(indrops_small, compress = "xz", overwrite = TRUE)
