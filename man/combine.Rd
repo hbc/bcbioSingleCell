@@ -4,7 +4,7 @@
 \name{combine}
 \alias{combine}
 \alias{combine,SingleCellExperiment,SingleCellExperiment-method}
-\title{Combine Multiple \code{SingleCellExperiment} Objects}
+\title{Combine Multiple Objects}
 \usage{
 \S4method{combine}{SingleCellExperiment,SingleCellExperiment}(x, y,
   metadata = c("version", "pipeline", "level", "interestingGroups",
@@ -23,42 +23,32 @@ between the datasets.}
 \code{SingleCellExperiment}.
 }
 \description{
-Combine Multiple \code{SingleCellExperiment} Objects
-}
-\note{
-We're attempting to make this as strict as possible, requiring:
-\itemize{
-\item Rows (genes) across objects must be identical.
-\item Organism and genome build must be identical.
-\item rowRanges metadata must be identical.
-\item colData (cellular barcode metrics) must contain the same columns.
-\item sampleData must contain the same columns.
-}
+Combine Multiple Objects
 }
 \examples{
 # For this simple working example, let's duplicate our minimal dataset,
-# modify the cell barcodes, and combine
+# modify the cell barcodes, and combine.
 
 x <- indrops_small
 validObject(x)
 sampleData(x)
 sampleNames(x)
 
-# Here we're faking a distinct replicate, just as an example
+# Here we're faking a distinct replicate, just as an example.
 y <- indrops_small
-# Modify the cellular barcodes prefix
+# Modify the cellular barcodes prefix.
 colnames(y) <- gsub(
     pattern = "^multiplexed_AAAAAAAA",
     replacement = "multiplexed_CCCCCCCC",
     x = colnames(y)
 )
-# Modify the column data
+# Modify the column data.
 colData(y)[["description"]] <- factor("multiplexed-CCCCCCCC")
 colData(y)[["sampleID"]] <- factor("multiplexed_CCCCCCCC")
 colData(y)[["sampleName"]] <- factor("rep_2")
 colData(y)[["sequence"]] <- factor("GGGGGGGG")
 colData(y)[["revcomp"]] <- factor("CCCCCCCC")
-# Modify the sample data
+# Modify the sample data.
 sampleData(y)[["sampleName"]] <- factor("rep_2")
 sampleData(y)[["description"]] <- factor("multiplexed-CCCCCCCC")
 sampleData(y)[["sequence"]] <- factor("GGGGGGGG")
@@ -68,13 +58,16 @@ validObject(y)
 sampleData(y)
 sampleNames(y)
 
-# Combine two SingleCellExperiment objects
+# Combine two SingleCellExperiment objects.
 c <- combine(x, y)
 print(c)
 sampleNames(c)
 }
 \seealso{
-\code{help("merge.Matrix", "Matrix.utils")}.
+\itemize{
+\item \code{\link[BiocGenerics:combine]{BiocGenerics::combine()}}.
+\item \code{help("merge.Matrix", "Matrix.utils")}.
+}
 }
 \author{
 Michael Steinbaugh
