@@ -1,21 +1,17 @@
 # Cell Ranger example data
-# 2018-08-19
+# 2018-09-12
 # 4k PBMCs from a Healthy Donor
 # https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k
 
-library(devtools)
 library(tidyverse)
 library(Seurat)
 library(Matrix)
-load_all()
-
-
 
 # Complete dataset =============================================================
 upload_dir <- "data-raw/cellranger"
 dir.create(upload_dir, recursive = TRUE, showWarnings = FALSE)
 
-# Example dataset contains a single sample ("pbmc4k")
+# Example dataset contains a single sample ("pbmc4k").
 outs_dir <- file.path(upload_dir, "pbmc", "outs")
 dir.create(outs_dir, recursive = TRUE, showWarnings = FALSE)
 
@@ -42,7 +38,7 @@ if (!file.exists(tar_file)) {
 untar(tarfile = tar_file, exdir = outs_dir)
 stopifnot(identical(dir(outs_dir), "filtered_gene_bc_matrices"))
 
-# Using Ensembl 84 GTF (GFFv2) annotations
+# Using Ensembl 84 GTF annotations.
 gff_file <- file.path(upload_dir, "genes.gtf")
 if (!file.exists(gff_file)) {
     download.file(
@@ -59,13 +55,11 @@ if (!file.exists(gff_file)) {
     )
 }
 
-sce <- readCellRanger(
+sce <- CellRanger(
     uploadDir = upload_dir,
     organism = "Homo sapiens",
     gffFile = gff_file
 )
-
-
 
 # Minimal example cellranger directory =========================================
 input_dir <- file.path(
@@ -88,7 +82,7 @@ output_dir <- file.path(
 unlink("inst/extdata/cellranger", recursive = TRUE)
 dir.create(output_dir, recursive = TRUE)
 
-# Prepare the sparse matrix
+# Prepare the sparse matrix.
 counts <- readMM(file.path(input_dir, "matrix.mtx"))
 counts <- counts[1:500, 1:500]
 writeMM(counts, file = file.path(output_dir, "matrix.mtx"))
@@ -113,12 +107,10 @@ write_lines(
     path = file.path(output_dir, "barcodes.tsv")
 )
 
-
-
 # cellranger_small =============================================================
 counts <- counts(sce)
 
-# Subset the matrix to include only the top genes and cells
+# Subset the matrix to include only the top genes and cells.
 top_genes <- Matrix::rowSums(counts) %>%
     sort(decreasing = TRUE) %>%
     head(n = 500L)
@@ -130,4 +122,4 @@ top_cells <- Matrix::colSums(counts) %>%
 cells <- sort(names(top_cells))
 
 cellranger_small <- sce[genes, cells]
-use_data(cellranger_small, compress = "xz", overwrite = TRUE)
+devtools::use_data(cellranger_small, compress = "xz", overwrite = TRUE)
