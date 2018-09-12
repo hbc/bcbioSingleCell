@@ -68,6 +68,7 @@ Imports:
     BiocGenerics,
     BiocParallel,
     cowplot (>= 0.9),
+    crayon,
     dplyr (>= 0.7),
     ggplot2 (>= 3.0),
     ggridges (>= 0.5),

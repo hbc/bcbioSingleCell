@@ -41,6 +41,7 @@
 #' @importFrom BiocGenerics cbind counts counts<- do.call rbind
 #' @importFrom BiocParallel SerialParam
 #' @importFrom cowplot plot_grid
+#' @importFrom crayon bold
 #' @importFrom dplyr arrange bind_rows desc filter group_by left_join matches
 #'   mutate mutate_all mutate_if n pull rename select select_if slice summarize
 #'   summarize_all ungroup
