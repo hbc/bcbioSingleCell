@@ -36,84 +36,83 @@ setMethod(
     signature("SingleCellExperiment"),
     function(object) {
         validObject(object)
-        sampleData <- as.data.frame(sampleData(object))
-        if ("sampleNameAggregate" %in% colnames(sampleData)) {
+
+        # FIXME Move this sampleData code to SE method?
+
+        # FIXME Move this to SE method.
+        # Aggregate the sample data.
+        colData <- colData(object)
+        if ("sampleNameAggregate" %in% colnames(colData)) {
             stop("Use `aggregate` instead of `sampleNameAggregate`")
         }
-        assert_is_subset("aggregate", colnames(sampleData))
+        assert_is_subset("aggregate", colnames(colData))
+
+        # FIXME Require valid names in aggregate column?
+        # Consider reworking `assertAllAreValidNames()`.
+        assert_all_are_true(validNames(
+            colData(object)[["aggregate"]]
+        ))
 
         # Consider adding an assert check here to check that interesting
-        # groups map to aggregate-level sample columns
-        interestingGroupsAggregate <- interestingGroups(object) %>%
-            as.character() %>%
-            setdiff("sampleName")
+        # groups map to aggregate-level sample columns.
+        interestingGroupsAggregate <- setdiff(
+            x = interestingGroups(object),
+            y = "sampleName"
+        )
 
+        # Collapse the sample data ---------------------------------------------
         # This step will replace the `sampleName` column with the `aggregate`
         # column metadata.
-        remap <- sampleData %>%
-            rownames_to_column("sampleID") %>%
-            as_tibble() %>%
+        # FIXME Improve the tibble/dplyr code here.
+        sampleData <- sampleData(object) %>%
+            as("tbl_df") %>%
             select(!!!syms(unique(c(
-                "sampleID", "aggregate", interestingGroupsAggregate
-            )))) %>%
-            mutate(sampleIDAggregate = makeNames(
-                !!sym("aggregate"), unique = FALSE
-            )) %>%
-            rename(sampleNameAggregate = !!sym("aggregate")) %>%
-            arrange(!!!syms(c("sampleID", "sampleIDAggregate"))) %>%
-            mutate_all(as.factor) %>%
-            mutate_all(droplevels)
-
-        # Update sampleData to use the aggregate groupings
-        sampleData <- remap %>%
-            select(!!!syms(unique(c(
-                "sampleIDAggregate",
-                "sampleNameAggregate",
+                "aggregate",
                 interestingGroupsAggregate
             )))) %>%
-            rename(sampleName = !!sym("sampleNameAggregate")) %>%
-            unique() %>%
-            as.data.frame() %>%
-            column_to_rownames("sampleIDAggregate") %>%
+            # FIXME Can take this out if we require aggregate to be valid.
+            mutate(rowname = makeNames(
+                # Use `unique = TRUE` here instead?
+                !!sym("aggregate"), unique = FALSE
+            )) %>%
+            rename(sampleName = !!sym("aggregate")) %>%
+            arrange(!!!syms(c("rowname", "sampleName"))) %>%
+            mutate_all(as.factor) %>%
+            mutate_all(droplevels) %>%
             as("DataFrame")
 
         # Message the new sample IDs
         message(paste(
             "New sample names:",
-            toString(unique(remap[["sampleNameAggregate"]]))
+            toString(levels(sampleData[["sampleName"]]))
         ))
 
+        # Remap cellular barcodes ----------------------------------------------
         message("Remapping cellular barcodes to aggregate sample IDs")
         cell2sample <- cell2sample(object)
-        remap <- tibble(
-            cellID = names(cell2sample),
-            sampleID = cell2sample
-        ) %>%
-            left_join(remap, by = "sampleID")
-
+        map <- tibble(
+            cell = names(cell2sample),
+            sample = cell2sample,
+            aggregate = colData(object)[["aggregate"]]
+        )
         groupings <- mapply(
             FUN = gsub,
-            x = remap[["cellID"]],
-            pattern = paste0("^", remap[["sampleID"]]),
-            replacement = remap[["sampleIDAggregate"]]
+            x = map[["cell"]],
+            pattern = paste0("^", map[["sample"]]),
+            replacement = map[["aggregate"]],
+            SIMPLIFY = TRUE,
+            USE.NAMES = TRUE
         ) %>%
             as.factor()
+        # Reslot the `aggregate` column using these groupings.
+        assert_are_identical(names(groupings), colnames(object))
+        colData(object)[["aggregate"]] <- groupings
 
-        # Assays ---------------------------------------------------------------
-        message("Aggregating counts")
-        counts <- aggregateCols(counts(object), groupings = groupings)
-        # Check that the count number of counts matches
-        if (!identical(sum(assay(object)), sum(counts))) {
-            stop("Aggregated counts sum isn't identical to original")
-        }
+        # Coerce to RangedSummarizedExperiment and aggregate.
+        agg <- aggregateCols(as(object, "RangedSummarizedExperiment"))
 
         # Column data ----------------------------------------------------------
-        # Always prefilter, removing cells with no UMIs or genes
-        metrics <- .metrics(
-            object = counts,
-            rowRanges = rowRanges(object),
-            prefilter = TRUE
-        )
+        # FIXME Rework this?
 
         # Cell to sample mappings
         cell2sample <- .mapCellsToSamples(
