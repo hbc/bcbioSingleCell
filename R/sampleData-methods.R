@@ -39,10 +39,7 @@ NULL
 setMethod(
     "sampleData",
     signature("SingleCellExperiment"),
-    function(
-        object,
-        interestingGroups
-    ) {
+    function(object, interestingGroups = NULL) {
         data <- colData(object)
 
         # Require `sampleID` and `sampleName` columns.
