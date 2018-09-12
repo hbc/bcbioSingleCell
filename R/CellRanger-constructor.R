@@ -1,3 +1,7 @@
+# FIXME Can we parse the CellRanger `runDate` from the YAML?
+
+
+
 #' Read 10X Genomics Cell Ranger Single-Cell RNA-Seq Data
 #'
 #' Read [10x Genomics Cell Ranger](https://www.10xgenomics.com/software/)
