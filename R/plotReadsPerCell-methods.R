@@ -379,41 +379,59 @@ setMethod(
             group_by(!!sym("sampleID"))
 
         if (geom == "boxplot") {
-            p <- .plotReadsPerCellBoxplot(
-                data = data,
-                fill = fill,
-                min = min
+            p <- do.call(
+                what = .plotReadsPerCellBoxplot,
+                args = list(
+                    data = data,
+                    fill = fill,
+                    min = min
+                )
             )
         } else if (geom == "ecdf") {
-            p <- .plotReadsPerCellECDF(
-                data = data,
-                color = color,
-                min = min
+            p <- do.call(
+                what = .plotReadsPerCellECDF,
+                args = list(
+                    data = data,
+                    color = color,
+                    min = min
+                )
             )
         } else if (geom == "histogram") {
             sampleData <- sampleData(object) %>%
                 as.data.frame()
             sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
-            data <- .proportionalReadsPerCell(
-                data = data,
-                sampleData = sampleData
+            data <- do.call(
+                what = .proportionalReadsPerCell,
+                args = list(
+                    data = data,
+                    sampleData = sampleData
+                )
             )
-            p <- .plotReadsPerCellHistogram(
-                data = data,
-                color = color,
-                min = min
+            p <- do.call(
+                what = .plotReadsPerCellHistogram,
+                args = list(
+                    data = data,
+                    color = color,
+                    min = min
+                )
             )
         } else if (geom == "ridgeline") {
-            p <- .plotReadsPerCellRidgeline(
-                data = data,
-                fill = fill,
-                min = min
+            p <- do.call(
+                what = .plotReadsPerCellRidgeline,
+                args = list(
+                    data = data,
+                    fill = fill,
+                    min = min
+                )
             )
         } else if (geom == "violin") {
-            p <- .plotReadsPerCellViolin(
-                data = data,
-                fill = fill,
-                min = min
+            p <- do.call(
+                what = .plotReadsPerCellViolin,
+                args = list(
+                    data = data,
+                    fill = fill,
+                    min = min
+                )
             )
         }
 

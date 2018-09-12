@@ -27,17 +27,19 @@ setMethod(
         trans = "log2",
         title = "UMIs vs. genes"
     ) {
-        # FIXME Use do.call
-        .plotQCScatterplot(
-            object = object,
-            interestingGroups = interestingGroups,
-            trendline = trendline,
-            xCol = "nUMI",
-            yCol = "nGene",
-            color = color,
-            xTrans = trans,
-            yTrans = trans,
-            title = title
+        do.call(
+            what = .plotQCScatterplot,
+            args = list(
+                object = object,
+                interestingGroups = interestingGroups,
+                trendline = trendline,
+                xCol = "nUMI",
+                yCol = "nGene",
+                color = color,
+                xTrans = trans,
+                yTrans = trans,
+                title = title
+            )
         )
     }
 )

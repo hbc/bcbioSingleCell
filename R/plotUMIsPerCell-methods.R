@@ -48,16 +48,19 @@ setMethod(
             interestingGroups <- "sampleName"
         }
 
-        p <- .plotQCMetric(
-            object = object,
-            metricCol = "nUMI",
-            geom = geom,
-            interestingGroups = interestingGroups,
-            min = min,
-            max = max,
-            trans = trans,
-            color = color,
-            fill = fill
+        p <- do.call(
+            what = .plotQCMetric,
+            args = list(
+                object = object,
+                metricCol = "nUMI",
+                geom = geom,
+                interestingGroups = interestingGroups,
+                min = min,
+                max = max,
+                trans = trans,
+                color = color,
+                fill = fill
+            )
         )
 
         # Calculate barcode ranks and label inflection or knee points

@@ -32,18 +32,20 @@ setMethod(
     ) {
         assert_all_are_in_right_open_range(min, lower = 0L, upper = 1L)
         geom <- match.arg(geom)
-        # FIXME Use do.call
-        .plotQCMetric(
-            object = object,
-            metricCol = "log10GenesPerUMI",
-            geom = geom,
-            interestingGroups = interestingGroups,
-            min = min,
-            max = 1L,
-            trans = trans,
-            ratio = TRUE,
-            fill = fill,
-            title = title
+        do.call(
+            what = .plotQCMetric,
+            args = list(
+                object = object,
+                metricCol = "log10GenesPerUMI",
+                geom = geom,
+                interestingGroups = interestingGroups,
+                min = min,
+                max = 1L,
+                trans = trans,
+                ratio = TRUE,
+                fill = fill,
+                title = title
+            )
         )
     }
 )

@@ -30,17 +30,19 @@ setMethod(
     ) {
         geom <- match.arg(geom)
         assert_all_are_in_left_open_range(max, lower = 0L, upper = 1L)
-        # FIXME Use do.call
-        .plotQCMetric(
-            object = object,
-            metricCol = "mitoRatio",
-            geom = geom,
-            interestingGroups = interestingGroups,
-            max = max,
-            trans = trans,
-            ratio = TRUE,
-            fill = fill,
-            title = title
+        do.call(
+            what = .plotQCMetric,
+            args = list(
+                object = object,
+                metricCol = "mitoRatio",
+                geom = geom,
+                interestingGroups = interestingGroups,
+                max = max,
+                trans = trans,
+                ratio = TRUE,
+                fill = fill,
+                title = title
+            )
         )
     }
 )
