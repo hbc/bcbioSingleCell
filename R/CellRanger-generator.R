@@ -56,7 +56,7 @@
 #'
 #' @examples
 #' uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
-#' x <- readCellRanger(uploadDir)
+#' x <- CellRanger(uploadDir)
 #' show(x)
 CellRanger <- function(
     uploadDir,

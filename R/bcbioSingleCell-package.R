@@ -35,8 +35,9 @@
 #'   makeGRangesFromGFF makeNames makeSummarizedExperiment makeTx2geneFromGFF
 #'   matchArgsToDoCall matchInterestingGroups markdownHeader markdownPlotlist
 #'   methodFormals prepareTemplate printString readJSON readYAML
-#'   sanitizeSampleData separator stripTranscriptVersions theme_midnight
-#'   theme_paperwhite tx2geneFromGFF uniteInterestingGroups zerosVsDepth
+#'   sanitizeSampleData separator standardizeCall stripTranscriptVersions
+#'   theme_midnight theme_paperwhite tx2geneFromGFF uniteInterestingGroups
+#'   zerosVsDepth
 #' @importFrom bcbioBase minimalSampleData projectDir readDataVersions readLog
 #'   readProgramVersions readSampleData readYAMLSampleData sampleDirs
 #' @importFrom Biobase sampleNames
