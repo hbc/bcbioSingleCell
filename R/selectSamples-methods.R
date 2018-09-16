@@ -11,9 +11,12 @@
 #' @family Data Functions
 #' @author Michael Steinbaugh
 #' @importFrom basejump selectSamples
+#' @inherit basejump::selectSamples
 #' @export
 #'
-#' @inherit basejump::selectSamples
+#' @param prefilter `boolean`. Apply `filterCells()` with default minimal
+#'  cutoffs to the sample subset. This is recommended to automatically remove
+#'  genes with all zero counts.
 #'
 #' @return `bcbioSingleCell`.
 #'

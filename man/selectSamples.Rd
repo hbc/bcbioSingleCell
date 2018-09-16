@@ -16,6 +16,10 @@
 \code{\link[=sampleData]{sampleData()}}. \code{character} vectors are supported. Avoid using \code{logical} or
 \code{numeric} indices (e.g. \code{\link[base:which]{base::which()}} calls) here, for improved code
 legibility and reproducibility.}
+
+\item{prefilter}{\code{boolean}. Apply \code{filterCells()} with default minimal
+cutoffs to the sample subset. This is recommended to automatically remove
+genes with all zero counts.}
 }
 \value{
 \code{bcbioSingleCell}.
