@@ -9,11 +9,9 @@
 #' @note `bcbioSingleCell` extended `SummarizedExperiment` prior to v0.1.0,
 #'   where we migrated to `SingleCellExperiment`.
 #'
-#' @rdname bcbioSingleCell
-#' @aliases bcbioSingleCell-class
 #' @family S4 Object
-#' @docType class
 #' @author Michael Steinbaugh, Rory Kirchner
+#' @export
 #'
 #' @inheritParams basejump::makeSummarizedExperiment
 #' @inheritParams general
@@ -50,7 +48,6 @@
 #' @param ... Additional arguments, to be stashed in the [metadata()] slot.
 #'
 #' @return `bcbioSingleCell`.
-#' @export
 #'
 #' @seealso
 #' - [SingleCellExperiment::SingleCellExperiment()].
