@@ -385,6 +385,7 @@ setMethod(
 
         # Now coerce back to DataFrame from tibble.
         colData <- as(colData, "DataFrame")
+        assertHasRownames(colData)
         cells <- sort(rownames(colData))
         assert_is_subset(cells, colnames(object))
         object <- object[, cells, drop = FALSE]
