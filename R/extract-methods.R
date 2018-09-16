@@ -74,11 +74,9 @@ setMethod(
         # Column data ----------------------------------------------------------
         # Ensure factors get releveled
         colData <- colData(sce) %>%
-            as.data.frame() %>%
-            rownames_to_column() %>%
+            as("tbl_df") %>%
             mutate_if(is.character, as.factor) %>%
             mutate_if(is.factor, droplevels) %>%
-            column_to_rownames() %>%
             as("DataFrame")
 
         # Metadata -------------------------------------------------------------
@@ -101,21 +99,6 @@ setMethod(
         # `cell2sample`, so this must come first
         cell2sample <- droplevels(cell2sample[cells])
         metadata[["cell2sample"]] <- cell2sample
-
-        # sampleData
-        sampleData <- metadata[["sampleData"]]
-        assert_is_non_empty(sampleData)
-        sampleData <- sampleData %>%
-            as.data.frame() %>%
-            .[levels(cell2sample), , drop = FALSE] %>%
-            rownames_to_column() %>%
-            mutate_all(as.factor) %>%
-            mutate_all(droplevels) %>%
-            column_to_rownames()
-        metadata[["sampleData"]] <- sampleData
-
-        # sampleIDs
-        sampleIDs <- as.character(sampleData[["sampleID"]])
 
         # aggregateReplicates
         aggregateReplicates <- metadata[["aggregateReplicates"]]
