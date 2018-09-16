@@ -329,12 +329,12 @@ bcbioSingleCell <- function(
     # Row data -----------------------------------------------------------------
     rowRangesMetadata <- NULL
     if (is_a_string(gffFile)) {
-        rowRanges <- makeGRangesFromGFF(gffFile, format = "genes")
+        rowRanges <- makeGRangesFromGFF(gffFile, level = "genes")
     } else if (is_a_string(organism)) {
         # ah: AnnotationHub
         ah <- makeGRangesFromEnsembl(
             organism = organism,
-            format = "genes",
+            level = "genes",
             build = genomeBuild,
             release = ensemblRelease,
             metadata = TRUE

@@ -215,7 +215,7 @@ CellRanger <- function(
             .[1L, 3L] %>%
             as.integer()
     } else if (is_a_string(gffFile)) {
-        rowRanges <- makeGRangesFromGFF(gffFile, format = "genes")
+        rowRanges <- makeGRangesFromGFF(gffFile, level = "genes")
     } else if (is_a_string(organism)) {
         # CellRanger uses Ensembl refdata internally. Here we're fetching the
         # annotations with AnnotationHub rather than pulling from the GTF file
@@ -224,7 +224,7 @@ CellRanger <- function(
         # version.
         ah <- suppressWarnings(makeGRangesFromEnsembl(
             organism = organism,
-            format = level,
+            level = level,
             build = genomeBuild,
             metadata = TRUE
         ))
