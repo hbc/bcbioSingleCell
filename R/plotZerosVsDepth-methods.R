@@ -93,6 +93,7 @@ setMethod(
         if (is.null(sampleData)) {
             sampleData <- unknownSampleData
         }
+        sampleData[["sampleID"]] <- rownames(sampleData)
         data <- merge(
             x = data,
             y = sampleData,
