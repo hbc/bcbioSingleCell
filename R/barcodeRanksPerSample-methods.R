@@ -19,7 +19,10 @@ NULL
 
 
 
-.barcodeRanksPerSample <- function(object) {
+.barcodeRanksPerSample.SCE <- function(object) {
+    definition <- sys.function(sys.parent(n = 1L))
+    call <- standardizeCall()
+
     counts <- counts(object)
     cell2sample <- cell2sample(object)
     samples <- levels(cell2sample)
@@ -31,26 +34,31 @@ NULL
     })
 
     # Calculate the ranks per sample.
-    ranks <- lapply(countsPerSample, function(object) {
-        do.call(
-            what = barcodeRanks,
-            args = matchArgsToDoCall(
-                args = list(m = as.matrix(object)),
-                removeFormals = "object"
+    ranks <- lapply(
+        X = countsPerSample,
+        FUN = function(counts, definition, call) {
+            do.call(
+                what = barcodeRanks,
+                args = matchArgsToDoCall(
+                    args = list(m = as.matrix(counts)),
+                    removeFormals = "object",
+                    definition = definition,
+                    call = call
+                )
             )
-        )
-    })
+        },
+        definition = definition,
+        call = call
+    )
 
     names(ranks) <- samples
     ranks
 }
-
-# Assign the formals.
-f1 <- formals(.barcodeRanksPerSample)
+f1 <- formals(.barcodeRanksPerSample.SCE)
 f2 <- formals(barcodeRanks)
 f2 <- f2[setdiff(names(f2), c(names(f1), "m", "..."))]
 f <- c(f1, f2)
-formals(.barcodeRanksPerSample) <- f
+formals(.barcodeRanksPerSample.SCE) <- f
 
 
 
@@ -59,5 +67,5 @@ formals(.barcodeRanksPerSample) <- f
 setMethod(
     f = "barcodeRanksPerSample",
     signature = signature("SingleCellExperiment"),
-    definition = .barcodeRanksPerSample
+    definition = .barcodeRanksPerSample.SCE
 )
