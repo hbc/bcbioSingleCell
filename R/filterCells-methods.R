@@ -85,10 +85,11 @@ setMethod(
 
         originalDim <- dim(object)
         sampleNames <- sampleNames(object)
-        metrics <- metrics(object)
+        # Coercing to tibble here for dplyr operations.
+        colData <- as(object = colData(object), Class = "tbl_df")
 
         # Parameter integrity checks -------------------------------------------
-        # Expected nCells per sample
+        # Expected nCells per sample.
         assert_is_a_number(nCells)
         assert_all_are_positive(nCells)
 
@@ -124,7 +125,7 @@ setMethod(
         assert_all_are_in_left_open_range(maxMitoRatio, lower = 0L, upper = 1L)
 
         # minCellsPerGene
-        # Don't allow genes with all zero counts, so require at least 1 here
+        # Don't allow genes with all zero counts, so require at least 1 here.
         assert_is_numeric(minCellsPerGene)
         assert_all_are_positive(minCellsPerGene)
 
@@ -171,23 +172,24 @@ setMethod(
                 sample = names(minUMIs),
                 cutoff = minUMIs,
                 FUN = function(sample, cutoff) {
-                    metrics %>%
-                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
-                        .[.[["nUMI"]] >= cutoff, , drop = FALSE]
+                    filter(
+                        colData,
+                        !!sym("sampleName") == !!sample,
+                        !!sym("nUMI") >= !!cutoff
+                    )
                 },
                 SIMPLIFY = FALSE,
                 USE.NAMES = FALSE
             )
-            metrics <- do.call(rbind, list)
+            colData <- bind_rows(list)
         } else {
-            metrics <- metrics %>%
-                .[.[["nUMI"]] >= minUMIs, , drop = FALSE]
+            colData <- filter(colData, !!sym("nUMI") >= !!minUMIs)
         }
-        if (!nrow(metrics)) {
+        if (!nrow(colData)) {
             stop("No cells passed `minUMIs` cutoff")
         }
         summaryCells[["minUMIs"]] <- paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
+            paste(.paddedCount(nrow(colData)), "cells"),
             paste("minUMIs", ">=", min(minUMIs)),
             sep = " | "
         )
@@ -204,23 +206,24 @@ setMethod(
                 sample = names(maxUMIs),
                 cutoff = maxUMIs,
                 FUN = function(sample, cutoff) {
-                    metrics %>%
-                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
-                        .[.[["nUMI"]] <= cutoff, , drop = FALSE]
+                    filter(
+                        colData,
+                        !!sym("sampleName") == !!sample,
+                        !!sym("nUMI") <= !!cutoff
+                    )
                 },
                 SIMPLIFY = FALSE,
                 USE.NAMES = FALSE
             )
-            metrics <- do.call(rbind, list)
+            colData <- bind_rows(list)
         } else {
-            metrics <- metrics %>%
-                .[.[["nUMI"]] <= maxUMIs, , drop = FALSE]
+            colData <- filter(colData, !!sym("nUMI") <= !!maxUMIs)
         }
-        if (!nrow(metrics)) {
+        if (!nrow(colData)) {
             stop("No cells passed `maxUMIs` cutoff")
         }
         summaryCells[["maxUMIs"]] <- paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
+            paste(.paddedCount(nrow(colData)), "cells"),
             paste("maxUMIs", "<=", max(maxUMIs)),
             sep = " | "
         )
@@ -237,23 +240,24 @@ setMethod(
                 sample = names(minGenes),
                 cutoff = minGenes,
                 FUN = function(sample, cutoff) {
-                    metrics %>%
-                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
-                        .[.[["nGene"]] >= cutoff, , drop = FALSE]
+                    filter(
+                        colData,
+                        !!sym("sampleName") == !!sample,
+                        !!sym("nGene") >= !!cutoff
+                    )
                 },
                 SIMPLIFY = FALSE,
                 USE.NAMES = FALSE
             )
-            metrics <- do.call(rbind, list)
+            colData <- bind_rows(list)
         } else {
-            metrics <- metrics %>%
-                .[.[["nGene"]] >= minGenes, , drop = FALSE]
+            colData <- filter(colData, !!sym("nGene") >= !!minGenes)
         }
-        if (!nrow(metrics)) {
+        if (!nrow(colData)) {
             stop("No cells passed `minGenes` cutoff")
         }
         summaryCells[["minGenes"]] <- paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
+            paste(.paddedCount(nrow(colData)), "cells"),
             paste("minGenes", ">=", min(minGenes)),
             sep = " | "
         )
@@ -270,23 +274,24 @@ setMethod(
                 sample = names(maxGenes),
                 cutoff = maxGenes,
                 FUN = function(sample, cutoff) {
-                    metrics %>%
-                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
-                        .[.[["nGene"]] <= cutoff, , drop = FALSE]
+                    filter(
+                        colData,
+                        !!sym("sampleName") == !!sample,
+                        !!sym("nGene") <= !!cutoff
+                    )
                 },
                 SIMPLIFY = FALSE,
                 USE.NAMES = FALSE
             )
-            metrics <- do.call(rbind, list)
+            colData <- bind_rows(list)
         } else {
-            metrics <- metrics %>%
-                .[.[["nGene"]] <= maxGenes, , drop = FALSE]
+            colData <- filter(colData, !!sym("nGene") <= !!maxGenes)
         }
-        if (!nrow(metrics)) {
+        if (!nrow(colData)) {
             stop("No cells passed `maxGenes` cutoff")
         }
         summaryCells[["maxGenes"]] <- paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
+            paste(.paddedCount(nrow(colData)), "cells"),
             paste("maxGenes", "<=", max(maxGenes)),
             sep = " | "
         )
@@ -303,23 +308,26 @@ setMethod(
                 sample = names(minNovelty),
                 cutoff = minNovelty,
                 FUN = function(sample, cutoff) {
-                    metrics %>%
-                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
-                        .[.[["log10GenesPerUMI"]] >= cutoff, , drop = FALSE]
+                    filter(
+                        colData,
+                        !!sym("sampleName") == !!sample,
+                        !!sym("log10GenesPerUMI") >= !!cutoff)
                 },
                 SIMPLIFY = FALSE,
                 USE.NAMES = FALSE
             )
-            metrics <- do.call(rbind, list)
+            colData <- bind_rows(list)
         } else {
-            metrics <- metrics %>%
-                .[.[["log10GenesPerUMI"]] >= minNovelty, , drop = FALSE]
+            colData <- filter(
+                colData,
+                !!sym("log10GenesPerUMI") >= !!minNovelty
+            )
         }
-        if (!nrow(metrics)) {
+        if (!nrow(colData)) {
             stop("No cells passed `minNovelty` cutoff")
         }
         summaryCells[["minNovelty"]] <- paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
+            paste(.paddedCount(nrow(colData)), "cells"),
             paste("minNovelty", "<=", min(minNovelty)),
             sep = " | "
         )
@@ -336,48 +344,48 @@ setMethod(
                 sample = names(maxMitoRatio),
                 cutoff = maxMitoRatio,
                 FUN = function(sample, cutoff) {
-                    metrics %>%
-                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
-                        .[.[["mitoRatio"]] <= cutoff, , drop = FALSE]
+                    filter(
+                        colData,
+                        !!sym("sampleName") == !!sample,
+                        !!sym("mitoRatio") <= !!cutoff
+                    )
                 },
                 SIMPLIFY = FALSE,
                 USE.NAMES = FALSE
             )
-            metrics <- do.call(rbind, list)
+            colData <- bind_rows(list)
         } else {
-            metrics <- metrics %>%
-                .[.[["mitoRatio"]] <= maxMitoRatio, , drop = FALSE]
+            colData <- filter(colData, !!sym("mitoRatio") <= !!maxMitoRatio)
         }
-        if (!nrow(metrics)) {
+        if (!nrow(colData)) {
             stop("No cells passed `maxMitoRatio` cutoff")
         }
         summaryCells[["maxMitoRatio"]] <- paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
+            paste(.paddedCount(nrow(colData)), "cells"),
             paste("maxMitoRatio", "<=", max(maxMitoRatio)),
             sep = " | "
         )
 
         # Expected nCells per sample (filtered by top nUMI)
         if (nCells < Inf) {
-            metrics <- metrics %>%
-                rownames_to_column() %>%
+            colData <- colData %>%
                 group_by(!!sym("sampleID")) %>%
                 arrange(desc(!!sym("nUMI")), .by_group = TRUE) %>%
-                slice(seq_len(nCells)) %>%
-                as.data.frame() %>%
-                column_to_rownames()
+                slice(seq_len(nCells))
         }
 
-        if (!nrow(metrics)) {
+        if (!nrow(colData)) {
             stop("No cells passed `nCells` cutoff")
         }
         summaryCells[["nCells"]] <- paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
+            paste(.paddedCount(nrow(colData)), "cells"),
             paste("nCells", "==", nCells),
             sep = " | "
         )
 
-        cells <- sort(rownames(metrics))
+        # Now coerce back to DataFrame from tibble.
+        colData <- as(colData, "DataFrame")
+        cells <- sort(rownames(colData))
         assert_is_subset(cells, colnames(object))
         object <- object[, cells, drop = FALSE]
 
@@ -432,7 +440,7 @@ setMethod(
                 )
             ),
             # Number of cells per sample.
-            printString(table(metrics[["sampleName"]])),
+            printString(table(colData[["sampleName"]])),
             separatorBar,
             bold("Genes:"),
             as.character(summaryGenes),
