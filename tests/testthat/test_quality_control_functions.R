@@ -25,7 +25,7 @@ test_that("filterCells", {
 })
 
 test_that("filterCells : Maximum parameters", {
-    # This should return an object with the same dimensions
+    # This should return an object with the same dimensions.
     invisible(capture.output(
         x <- filterCells(indrops_small)
     ))
@@ -49,26 +49,26 @@ test_that("filterCells : Per sample cutoffs", {
         c(multiplexed_AAAAAAAA = "rep_1")
     )
     invisible(capture.output(
-        x <- filterCells(
+        object <- filterCells(
             object = indrops_small,
-            minUMIs = c(rep_1 = 0L),
+            minUMIs = c(rep_1 = 1L),
             maxUMIs = c(rep_1 = Inf),
-            minGenes = c(rep_1 = 0L),
+            minGenes = c(rep_1 = 1L),
             maxGenes = c(rep_1 = Inf),
-            maxMitoRatio = c(rep_1 = 0L),
+            maxMitoRatio = c(rep_1 = 1L),
             minNovelty = c(rep_1 = 0L)
         )
     ))
     expect_identical(
-        metadata(x)[["filterParams"]],
-        list(
+        object = metadata(object)[["filterParams"]],
+        expected = list(
             nCells = Inf,
-            minUMIs = c(rep_1 = 0L),
+            minUMIs = c(rep_1 = 1L),
             maxUMIs = c(rep_1 = Inf),
-            minGenes = c(rep_1 = 0L),
+            minGenes = c(rep_1 = 1L),
             maxGenes = c(rep_1 = Inf),
             minNovelty = c(rep_1 = 0L),
-            maxMitoRatio = c(rep_1 = 0L),
+            maxMitoRatio = c(rep_1 = 1L),
             minCellsPerGene = 1L
         )
     )

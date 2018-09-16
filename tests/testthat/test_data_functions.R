@@ -19,12 +19,9 @@ test_that("aggregateCols", {
 
 
 # gene2symbol ==================================================================
-colnames <- c("geneID", "geneName")
-
 test_that("gene2symbol : bcbioSingleCell", {
     x <- gene2symbol(indrops_small)
-    expect_is(x, "data.frame")
-    expect_identical(colnames(x), colnames)
+    expect_is(x, "gene2symbol")
 })
 
 
@@ -32,8 +29,8 @@ test_that("gene2symbol : bcbioSingleCell", {
 # interestingGroups ============================================================
 test_that("interestingGroups", {
     expect_identical(
-        interestingGroups(indrops_small),
-        "sampleName"
+        object = interestingGroups(indrops_small),
+        expected = "sampleName"
     )
 })
 
@@ -42,28 +39,28 @@ test_that("interestingGroups<-", {
         interestingGroups(indrops_small) <- "sampleName"
     )
     expect_error(
-        interestingGroups(indrops_small) <- "XXX",
-        "The interesting groups \"XXX\" are not defined"
+        interestingGroups(indrops_small) <- "XXX"
     )
 })
 
 
 
 # sampleData ===================================================================
-all <- list(
-    sampleName  = "factor",
-    fileName  = "factor",
-    description  = "factor",
-    index = "factor",
-    sequence = "factor",
-    aggregate = "factor",
-    revcomp = "factor",
-    interestingGroups = "factor"
-)
-
 test_that("sampleData", {
-    x <- sampleData(indrops_small)
-    expect_identical(lapply(x, class), all)
+    object <- sampleData(indrops_small)
+    expect_identical(
+        object = lapply(object, class),
+        expected = list(
+            sampleName  = "factor",
+            fileName  = "factor",
+            description  = "factor",
+            index = "factor",
+            sequence = "factor",
+            aggregate = "factor",
+            revcomp = "factor",
+            interestingGroups = "factor"
+        )
+    )
 })
 
 
@@ -115,8 +112,8 @@ test_that("subsetPerSample", {
 
 # topBarcodes ==================================================================
 test_that("topBarcodes", {
-    # data.frame
-    x <- topBarcodes(indrops_small, return = "data.frame")
+    # tibble
+    x <- topBarcodes(indrops_small, return = "tibble")
     expect_identical(dplyr::group_vars(x), "sampleID")
     expect_identical(
         lapply(x, class),

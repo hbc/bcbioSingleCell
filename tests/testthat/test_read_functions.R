@@ -4,29 +4,29 @@ context("Read Functions")
 
 # readCellRanger ===============================================================
 test_that("readCellRanger", {
-    x <- suppressWarnings(readCellRanger(
+    object <- suppressWarnings(readCellRanger(
         uploadDir = system.file(
             "extdata/cellranger",
             package = "bcbioSingleCell"
         ),
         organism = "Homo sapiens"
     ))
-    expect_is(x, "SingleCellExperiment")
-    expect_identical(dim(x), c(500L, 500L))
+    expect_is(object, "SingleCellExperiment")
+    expect_identical(dim(object), c(500L, 500L))
     expect_identical(
-        sampleNames(x),
+        sampleNames(object),
         c(pbmc_1 = "pbmc")
     )
     expect_identical(
-        colnames(x)[[1L]],
-        "pbmc_1_AAACCTGAGAAGGCCT"
+        object = head(colnames(object), n = 1L),
+        expected = "pbmc_1_AAACCTGAGAAGGCCT"
     )
     expect_identical(
-        rownames(x)[[1L]],
-        "ENSG00000243485"
+        object = head(rownames(object), n = 1L),
+        expected = "ENSG00000004487"
     )
     expect_identical(
-        lapply(metadata(x), class),
+        lapply(metadata(object), class),
         list(
             version = c("package_version", "numeric_version"),
             pipeline = "character",
