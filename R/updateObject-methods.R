@@ -59,35 +59,36 @@ setMethod(
         assert_is_subset(requiredAssays, names(assays))
 
         # Column data ----------------------------------------------------------
-        # Ensure that all `sampleData` columns are now slotted in `colData`
+        # Require that all `sampleData` columns are now slotted in `colData`.
         sampleData <- metadata[["sampleData"]]
-        stopifnot(!is.null(sampleData))
-        # Starting using `DataFrame` in place of `data.frame` in v0.1.7
-        sampleData <- as(sampleData, "DataFrame")
-        colData <- colData[
-            ,
-            setdiff(colnames(colData), colnames(sampleData)),
-            drop = FALSE
-        ]
-        cell2sample <- cell2sample(sce)
-        assert_is_factor(cell2sample)
-        colData[["cellID"]] <- rownames(colData)
-        colData[["sampleID"]] <- cell2sample
-        sampleData[["sampleID"]] <- rownames(sampleData)
-        colData <- merge(
-            x = colData,
-            y = sampleData,
-            by = "sampleID",
-            all.x = TRUE
-        )
-        rownames(colData) <- colData[["cellID"]]
-        # Ensure rows are reordered to match the original object
-        colData <- colData[colnames(sce), ]
-        colData[["cellID"]] <- NULL
-        sampleData[["sampleID"]] <- NULL
+        if (!is.null(sampleData)) {
+            message("Moving `sampleData()` columns to `colData()`")
+            # Starting using `DataFrame` in place of `data.frame` in v0.1.7.
+            sampleData <- as(sampleData, "DataFrame")
+            colData <- colData[
+                ,
+                setdiff(colnames(colData), colnames(sampleData)),
+                drop = FALSE
+                ]
+            cell2sample <- cell2sample(sce)
+            assert_is_factor(cell2sample)
+            colData[["rowname"]] <- rownames(colData)
+            colData[["sampleID"]] <- cell2sample
+            sampleData[["sampleID"]] <- rownames(sampleData)
+            colData <- merge(
+                x = colData,
+                y = sampleData,
+                by = "sampleID",
+                all.x = TRUE
+            )
+            rownames(colData) <- colData[["rowname"]]
+            colData[["rowname"]] <- NULL
+            # Ensure rows are ordered to match the object.
+            colData <- colData[colnames(sce), , drop = FALSE]
+        }
 
         # Metadata -------------------------------------------------------------
-        metadata[["sampleData"]] <- sampleData
+        metadata[["sampleData"]] <- NULL
         metadata[["previousVersion"]] <- metadata[["version"]]
         metadata[["version"]] <- packageVersion
 
