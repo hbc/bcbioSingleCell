@@ -120,7 +120,8 @@ setMethod(
 
         # maxMitoRatio
         assert_is_numeric(maxMitoRatio)
-        assert_all_are_in_range(maxMitoRatio, lower = 0L, upper = 1L)
+        # Don't allow the user to set at 0.
+        assert_all_are_in_left_open_range(maxMitoRatio, lower = 0L, upper = 1L)
 
         # minCellsPerGene
         # Don't allow genes with all zero counts, so require at least 1 here
@@ -337,7 +338,7 @@ setMethod(
                 FUN = function(sample, cutoff) {
                     metrics %>%
                         .[.[["sampleName"]] == sample, , drop = FALSE] %>%
-                        .[.[["mitoRatio"]] >= cutoff, , drop = FALSE]
+                        .[.[["mitoRatio"]] <= cutoff, , drop = FALSE]
                 },
                 SIMPLIFY = FALSE,
                 USE.NAMES = FALSE
