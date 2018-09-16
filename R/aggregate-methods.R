@@ -1,10 +1,3 @@
-
-
-# FIXME Need to update this method.
-# FIXME rownames to column `sampleID`...
-
-
-
 #' Aggregate Columns or Rows
 #'
 #' @name aggregateCols
@@ -97,9 +90,3 @@ setMethod(
         sce
     }
 )
-
-
-
-# aggregateRows ================================================================
-# TODO Add `aggregateRows` support that returns SCE instead of SE.
-#
