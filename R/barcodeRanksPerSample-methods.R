@@ -36,7 +36,7 @@ NULL
             what = barcodeRanks,
             args = matchArgsToDoCall(
                 args = list(m = as.matrix(object)),
-                removeArgs = "object"
+                removeFormals = "object"
             )
         )
     })
