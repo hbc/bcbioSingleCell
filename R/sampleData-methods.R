@@ -86,6 +86,7 @@ setMethod(
         data <- unique(data)
         assert_has_no_duplicates(data[["sampleID"]])
         rownames(data) <- data[["sampleID"]]
+        data[["sampleID"]] <- NULL
         # Return sorted by `sampleID`.
         data <- data[rownames(data), , drop = FALSE]
 
