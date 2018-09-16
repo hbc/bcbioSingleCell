@@ -141,17 +141,6 @@ setGeneric(
 
 
 
-#' @rdname plotZerosVsDepth
-#' @export
-setGeneric(
-    "plotZerosVsDepth",
-    function(object, ...) {
-        standardGeneric("plotZerosVsDepth")
-    }
-)
-
-
-
 #' @rdname subsetPerSample
 #' @export
 setGeneric(

@@ -33,8 +33,8 @@
 #'   makeGRangesFromGFF makeNames makeSummarizedExperiment makeTx2geneFromGFF
 #'   matchArgsToDoCall matchInterestingGroups markdownHeader markdownPlotlist
 #'   methodFormals prepareTemplate printString readJSON readYAML
-#'   sanitizeSampleData stripTranscriptVersions theme_midnight theme_paperwhite
-#'   tx2geneFromGFF uniteInterestingGroups
+#'   sanitizeSampleData separator stripTranscriptVersions theme_midnight
+#'   theme_paperwhite tx2geneFromGFF uniteInterestingGroups zerosVsDepth
 #' @importFrom bcbioBase minimalSampleData projectDir readDataVersions readLog
 #'   readProgramVersions readSampleData readYAMLSampleData sampleDirs
 #' @importFrom Biobase sampleNames
@@ -46,10 +46,10 @@
 #'   mutate mutate_all mutate_if n pull rename select select_if slice summarize
 #'   summarize_all ungroup
 #' @importFrom DropletUtils barcodeRanks
-#' @importFrom ggplot2 aes facet_wrap geom_bar geom_boxplot geom_histogram
-#'   geom_hline geom_line geom_point geom_smooth geom_step geom_text geom_violin
-#'   geom_vline ggplot labs scale_x_continuous scale_y_continuous stat_ecdf
-#'   theme
+#' @importFrom ggplot2 aes expand_limits facet_wrap geom_bar geom_boxplot
+#'   geom_histogram geom_hline geom_line geom_point geom_smooth geom_step
+#'   geom_text geom_violin geom_vline ggplot labs scale_x_continuous
+#'   scale_y_continuous stat_ecdf theme
 #' @importFrom ggridges geom_density_ridges
 #' @importFrom graphics hist
 #' @importFrom magrittr %>% set_colnames
