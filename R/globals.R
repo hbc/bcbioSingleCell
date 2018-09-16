@@ -4,7 +4,7 @@ packageVersion <- packageVersion("bcbioSingleCell")
 
 lanePattern <- basejump::lanePattern
 projectDirPattern <- bcbioBase::projectDirPattern
-separatorBar <- basejump::separatorBar
+separatorBar <- basejump::separator()
 updateMessage <- basejump::updateMessage
 
 requiredAssays <- "counts"
