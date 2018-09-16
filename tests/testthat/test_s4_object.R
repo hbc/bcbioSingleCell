@@ -1,4 +1,4 @@
-context("S4 Object : bcbioSingleCell")
+context("S4 Objects")
 
 
 
@@ -23,4 +23,31 @@ test_that("bcbioSingleCell", {
         organism = NULL
     )
     expect_s4_class(x, "bcbioSingleCell")
+})
+
+
+
+# CellRanger ===================================================================
+test_that("CellRanger", {
+    object <- suppressWarnings(CellRanger(
+        uploadDir = system.file(
+            "extdata/cellranger",
+            package = "bcbioSingleCell"
+        ),
+        organism = "Homo sapiens"
+    ))
+    expect_is(object, "CellRanger")
+    expect_identical(dim(object), c(500L, 500L))
+    expect_identical(
+        sampleNames(object),
+        c(pbmc_1 = "pbmc")
+    )
+    expect_identical(
+        object = head(colnames(object), n = 1L),
+        expected = "pbmc_1_AAACCTGAGAAGGCCT"
+    )
+    expect_identical(
+        object = head(rownames(object), n = 1L),
+        expected = "ENSG00000004487"
+    )
 })
