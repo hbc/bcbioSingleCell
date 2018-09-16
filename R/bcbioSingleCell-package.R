@@ -8,6 +8,8 @@
 #'
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
 #'
+#' @importMethodsFrom basejump coerce
+#'
 #' @importFrom assertive.base assert_are_identical
 #' @importFrom assertive.files assert_all_are_dirs assert_all_are_existing_files
 #' @importFrom assertive.numbers assert_all_are_in_left_open_range
