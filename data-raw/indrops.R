@@ -1,6 +1,6 @@
 # inDrops example data
 # Using harvard-indrop-v3 barcodes
-# 2018-09-12
+# 2018-09-16
 
 library(tidyverse)
 library(Seurat)
