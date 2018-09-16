@@ -400,7 +400,6 @@ bcbioSingleCell <- function(
         genomeBuild = as.character(genomeBuild),
         ensemblRelease = as.integer(ensemblRelease),
         rowRangesMetadata = rowRangesMetadata,
-        sampleData = as(sampleData, "DataFrame"),
         cell2sample = as.factor(cell2sample),
         umiType = umiType,
         allSamples = allSamples,

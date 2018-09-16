@@ -279,7 +279,6 @@ CellRanger <- function(
         uploadDir = uploadDir,
         sampleDirs = sampleDirs,
         sampleMetadataFile = as.character(sampleMetadataFile),
-        sampleData = sampleData,
         interestingGroups = interestingGroups,
         cell2sample = as.factor(cell2sample),
         organism = organism,
