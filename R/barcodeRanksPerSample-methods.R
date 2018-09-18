@@ -20,8 +20,7 @@ NULL
 
 
 .barcodeRanksPerSample.SCE <- function(object) {
-    definition <- sys.function(sys.parent(n = 1L))
-    call <- standardizeCall()
+    which <- sys.parent()
 
     counts <- counts(object)
     cell2sample <- cell2sample(object)
@@ -36,19 +35,17 @@ NULL
     # Calculate the ranks per sample.
     ranks <- lapply(
         X = countsPerSample,
-        FUN = function(counts, definition, call) {
+        FUN = function(counts) {
             do.call(
                 what = barcodeRanks,
                 args = matchArgsToDoCall(
                     args = list(m = as.matrix(counts)),
                     removeFormals = "object",
-                    definition = definition,
-                    call = call
+                    which = which,
+                    verbose = TRUE
                 )
             )
-        },
-        definition = definition,
-        call = call
+        }
     )
 
     names(ranks) <- samples
