@@ -18,11 +18,11 @@
 #' - `assignAndSave = TRUE`: Subset file paths.
 #'
 #' @examples
-#' # List mode (default)
+#' # List mode (default).
 #' list <- subsetPerSample(indrops_small, assignAndSave = FALSE)
 #' names(list)
 #'
-#' # Assign and save mode (useful for large datasets)
+#' # Assign and save mode (useful for large datasets).
 #' subsetPerSample(
 #'     object = indrops_small,
 #'     assignAndSave = TRUE,
@@ -31,17 +31,13 @@
 #' )
 #' list.files("subsetPerSample")
 #'
-#' # Clean up
+#' # Clean up.
 #' unlink("subsetPerSample", recursive = TRUE)
 NULL
 
 
 
-#' @rdname subsetPerSample
-#' @export
-setMethod(
-    "subsetPerSample",
-    signature("bcbioSingleCell"),
+.subsetPerSample.bcbioSingleCell <-  # nolint
     function(
         object,
         minCells = 200L,
@@ -58,7 +54,7 @@ setMethod(
         dir <- initializeDirectory(dir)
         samples <- levels(cell2sample(object))
 
-        # Return objects or file paths
+        # Return objects or file paths.
         return <- lapply(
             X = samples,
             FUN = function(sampleID) {
@@ -67,7 +63,7 @@ setMethod(
                     sampleID = sampleID,
                     prefilter = prefilter
                 )
-                # Skip if subset doesn't have enough cells
+                # Skip if subset doesn't have enough cells.
                 if (ncol(subset) < minCells) {
                     warning(paste(sampleID, "didn't pass minimum cell cutoff"))
                     return(NULL)
@@ -87,15 +83,24 @@ setMethod(
         return <- Filter(Negate(is.null), return)
 
         if (isTRUE(assignAndSave)) {
-            # File paths
+            # File paths.
             names <- names(return)
             return <- unlist(return)
             return <- normalizePath(return, winslash = "/", mustWork = TRUE)
             names(return) <- names
             invisible(return)
         } else {
-            # Individual objects
+            # Individual objects.
             return
         }
     }
+
+
+
+#' @rdname subsetPerSample
+#' @export
+setMethod(
+    f = "subsetPerSample",
+    signature = signature("bcbioSingleCell"),
+    definition = .subsetPerSample.bcbioSingleCell
 )

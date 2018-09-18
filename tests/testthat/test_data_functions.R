@@ -91,6 +91,9 @@ test_that("subsetPerSample", {
     x <- subsetPerSample(indrops_small, assignAndSave = FALSE)
     expect_is(x, "list")
     expect_identical(names(x), "multiplexed_AAAAAAAA")
+
+    # Assign and save.
+    unlink("subsetPerSample", recursive = TRUE)
     subsetPerSample(
         object = indrops_small,
         assignAndSave = TRUE,
