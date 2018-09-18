@@ -41,8 +41,7 @@ NULL
                 args = matchArgsToDoCall(
                     args = list(m = as.matrix(counts)),
                     removeFormals = "object",
-                    which = which,
-                    verbose = TRUE
+                    which = which
                 )
             )
         }
