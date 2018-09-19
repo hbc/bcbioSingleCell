@@ -3,8 +3,9 @@
 #' @name show
 #' @family S4 Object
 #' @author Michael Steinbuagh
-#'
+#' @importFrom methods show
 #' @inherit methods::show
+#' @export
 #'
 #' @examples
 #' show(indrops_small)
@@ -12,6 +13,7 @@ NULL
 
 
 
+# Using the same internal method for bcbioSingleCell and CellRanger.
 .show <- function(object) {
     validObject(object)
 

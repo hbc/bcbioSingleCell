@@ -40,11 +40,11 @@ sample.}
 Subset Per Sample
 }
 \examples{
-# List mode (default)
+# List mode (default).
 list <- subsetPerSample(indrops_small, assignAndSave = FALSE)
 names(list)
 
-# Assign and save mode (useful for large datasets)
+# Assign and save mode (useful for large datasets).
 subsetPerSample(
     object = indrops_small,
     assignAndSave = TRUE,
@@ -53,7 +53,7 @@ subsetPerSample(
 )
 list.files("subsetPerSample")
 
-# Clean up
+# Clean up.
 unlink("subsetPerSample", recursive = TRUE)
 }
 \seealso{

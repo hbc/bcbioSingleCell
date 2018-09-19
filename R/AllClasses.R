@@ -1,3 +1,7 @@
+# FIXME Update and relax the check on `sessionInfo`.
+
+
+
 # tibble
 setOldClass(Classes = c("grouped_df", "tbl_df"))
 
@@ -97,7 +101,6 @@ setValidity(
             allSamples = "logical",
             cell2sample = "factor",
             date = "Date",
-            devtoolsSessionInfo = "session_info",
             ensemblRelease = "integer",
             genomeBuild = "character",
             interestingGroups = "character",
@@ -106,9 +109,9 @@ setValidity(
             pipeline = "character",
             sampleDirs = "character",
             sampleMetadataFile = "character",
+            sessionInfo = "session_info",
             umiType = "character",
             uploadDir = "character",
-            utilsSessionInfo = "sessionInfo",
             version = "package_version",
             wd = "character"
         )
@@ -160,6 +163,7 @@ setClass(
     contains = "SingleCellExperiment"
 )
 
+# FIXME Need to add validity checks for CellRanger
 setValidity(
     Class = "CellRanger",
     method = function(object) {
