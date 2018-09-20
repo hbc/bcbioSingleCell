@@ -7,7 +7,7 @@
 #'   `nCount` column of `colData()`.
 #'
 #' @name extract
-#' @family S4 Object
+#' @family S4 Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams base::`[`

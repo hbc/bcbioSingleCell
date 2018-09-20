@@ -8,3 +8,10 @@
 Extends \code{SingleCellExperiment}, with additional validity checks on the
 \code{metadata()} slot.
 }
+\seealso{
+Other S4 Classes: \code{\link{bcbioSingleCell-class}}
+}
+\author{
+Michael Steinbaugh
+}
+\concept{S4 Classes}

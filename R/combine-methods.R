@@ -1,6 +1,7 @@
 #' Combine Multiple Objects
 #'
 #' @name combine
+#' @family S4 Functions
 #' @author Michael Steinbaugh
 #' @importFrom BiocGenerics combine
 #' @importMethodsFrom basejump combine

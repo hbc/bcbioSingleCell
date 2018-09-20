@@ -68,7 +68,11 @@ sampleNames(c)
 \item \code{\link[BiocGenerics:combine]{BiocGenerics::combine()}}.
 \item \code{help("merge.Matrix", "Matrix.utils")}.
 }
+
+Other S4 Functions: \code{\link{extract}},
+  \code{\link{show}}, \code{\link{updateObject}}
 }
 \author{
 Michael Steinbaugh
 }
+\concept{S4 Functions}

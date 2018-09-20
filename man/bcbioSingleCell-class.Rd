@@ -10,3 +10,10 @@ designed to store a bcbio single-cell RNA-seq analysis. This class contains
 read counts saved as a sparse matrix (\code{dgCMatrix}), sample metadata, and cell
 quality control metrics.
 }
+\seealso{
+Other S4 Classes: \code{\link{CellRanger-class}}
+}
+\author{
+Michael Steinbaugh
+}
+\concept{S4 Classes}

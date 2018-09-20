@@ -1,7 +1,7 @@
 #' Update an Object to Its Current Class Definition
 #'
 #' @name updateObject
-#' @family S4 Object
+#' @family S4 Functions
 #' @author Michael Steinbaugh
 #'
 #' @importFrom BiocGenerics updateObject

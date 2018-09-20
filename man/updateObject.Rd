@@ -85,10 +85,10 @@ x <- updateObject(indrops_small)
 print(x)
 }
 \seealso{
-Other S4 Object: \code{\link{bcbioSingleCell}},
+Other S4 Functions: \code{\link{combine}},
   \code{\link{extract}}, \code{\link{show}}
 }
 \author{
 Michael Steinbaugh
 }
-\concept{S4 Object}
+\concept{S4 Functions}

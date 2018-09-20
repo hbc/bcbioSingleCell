@@ -43,10 +43,10 @@ the discussion in \code{\link{setIs}} for the general concept.
 show(indrops_small)
 }
 \seealso{
-Other S4 Object: \code{\link{bcbioSingleCell}},
+Other S4 Functions: \code{\link{combine}},
   \code{\link{extract}}, \code{\link{updateObject}}
 }
 \author{
 Michael Steinbuagh
 }
-\concept{S4 Object}
+\concept{S4 Functions}
