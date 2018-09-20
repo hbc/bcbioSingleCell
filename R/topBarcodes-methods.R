@@ -26,11 +26,7 @@ NULL
 
 
 
-#' @rdname topBarcodes
-#' @export
-setMethod(
-    "topBarcodes",
-    signature("SingleCellExperiment"),
+.topBarcodes.SCE <-  # nolint
     function(
         object,
         n = 100L,
@@ -59,4 +55,13 @@ setMethod(
                 map("cellID")
         }
     }
+
+
+
+#' @rdname topBarcodes
+#' @export
+setMethod(
+    f = "topBarcodes",
+    signature = signature("SingleCellExperiment"),
+    definition = .topBarcodes.SCE
 )

@@ -31,11 +31,7 @@ NULL
 
 
 
-#' @rdname selectSamples
-#' @export
-setMethod(
-    "selectSamples",
-    signature("SingleCellExperiment"),
+.selectSamples.SCE <-  # nolint
     function(
         object,
         ...,
@@ -123,4 +119,13 @@ setMethod(
 
         object
     }
+
+
+
+#' @rdname selectSamples
+#' @export
+setMethod(
+    f = "selectSamples",
+    signature = signature("SingleCellExperiment"),
+    definition = .selectSamples.SCE
 )

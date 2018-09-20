@@ -1,3 +1,7 @@
+# FIXME Add SE method to basejump.
+
+
+
 #' Plot Percentage of Zeros vs. Library Depth
 #'
 #' This function helps us visualize the dropout rate.
@@ -18,11 +22,35 @@ NULL
 
 
 
-#' @rdname plotZerosVsDepth
-#' @export
-setMethod(
-    "plotZerosVsDepth",
-    signature("SingleCellExperiment"),
+.zerosVsDepth.SCE <-  # nolint
+    function(object) {
+        data <- zerosVsDepth(counts(object))
+        # Stash the rownames.
+        data[["rowname"]] <- rownames(data)
+        # Add sample ID column.
+        data[["sampleID"]] <- cell2sample(object)
+        # Join the sample data.
+        sampleData <- sampleData(object)
+        if (is.null(sampleData)) {
+            sampleData <- unknownSampleData
+        }
+        sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
+        data <- merge(
+            x = data,
+            y = sampleData,
+            by = "sampleID",
+            all.x = TRUE
+        )
+        rownames(data) <- data[["rowname"]]
+        data[["rowname"]] <- NULL
+        # Ensure we're returning in the correct order.
+        data <- data[colnames(object), , drop = FALSE]
+        data
+    }
+
+
+
+.plotZerosVsDepth.SCE <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -73,6 +101,15 @@ setMethod(
 
         p
     }
+
+
+
+#' @rdname plotZerosVsDepth
+#' @export
+setMethod(
+    f = "plotZerosVsDepth",
+    signature = signature("SingleCellExperiment"),
+    definition = .plotZerosVsDepth.SCE
 )
 
 
@@ -80,30 +117,7 @@ setMethod(
 #' @rdname plotZerosVsDepth
 #' @export
 setMethod(
-    "zerosVsDepth",
-    signature("SingleCellExperiment"),
-    function(object) {
-        data <- zerosVsDepth(counts(object))
-        # Stash the rownames.
-        data[["rowname"]] <- rownames(data)
-        # Add sample ID column.
-        data[["sampleID"]] <- cell2sample(object)
-        # Join the sample data.
-        sampleData <- sampleData(object)
-        if (is.null(sampleData)) {
-            sampleData <- unknownSampleData
-        }
-        sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
-        data <- merge(
-            x = data,
-            y = sampleData,
-            by = "sampleID",
-            all.x = TRUE
-        )
-        rownames(data) <- data[["rowname"]]
-        data[["rowname"]] <- NULL
-        # Ensure we're returning in the correct order.
-        data <- data[colnames(object), , drop = FALSE]
-        data
-    }
+    f = "zerosVsDepth",
+    signature = signature("SingleCellExperiment"),
+    definition = .zerosVsDepth.SCE
 )

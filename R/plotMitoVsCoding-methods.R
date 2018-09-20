@@ -14,11 +14,7 @@ NULL
 
 
 
-#' @rdname plotMitoVsCoding
-#' @export
-setMethod(
-    "plotMitoVsCoding",
-    signature("SingleCellExperiment"),
+.plotMitoVsCoding.SCE <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -42,4 +38,13 @@ setMethod(
             )
         )
     }
+
+
+
+#' @rdname plotMitoVsCoding
+#' @export
+setMethod(
+    f = "plotMitoVsCoding",
+    signature = signature("SingleCellExperiment"),
+    definition = .plotMitoVsCoding.SCE
 )

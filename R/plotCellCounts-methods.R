@@ -14,11 +14,7 @@ NULL
 
 
 
-#' @rdname plotCellCounts
-#' @export
-setMethod(
-    "plotCellCounts",
-    signature("SingleCellExperiment"),
+.plotCellCounts.SCE <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -100,4 +96,13 @@ setMethod(
 
         p
     }
+
+
+
+#' @rdname plotCellCounts
+#' @export
+setMethod(
+    f = "plotCellCounts",
+    signature = signature("SingleCellExperiment"),
+    definition = .plotCellCounts.SCE
 )

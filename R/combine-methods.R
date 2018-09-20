@@ -59,12 +59,12 @@ NULL
 #' @rdname combine
 #' @export
 setMethod(
-    "combine",
-    signature(
+    f = "combine",
+    signature = signature(
         x = "SingleCellExperiment",
         y = "SingleCellExperiment"
     ),
-    function(
+    definition = function(
         x,
         y,
         metadata = c(
@@ -75,7 +75,6 @@ setMethod(
             "organism",
             "genomeBuild",
             "ensemblRelease",
-            "rowRangesMetadata",
             "umiType",
             "gffFile",
             "dataVersions",

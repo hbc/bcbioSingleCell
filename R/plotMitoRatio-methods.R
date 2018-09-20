@@ -14,11 +14,7 @@ NULL
 
 
 
-#' @rdname plotMitoRatio
-#' @export
-setMethod(
-    "plotMitoRatio",
-    signature("SingleCellExperiment"),
+.plotMitoRatio.SCE <-  # nolint
     function(
         object,
         geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
@@ -45,4 +41,13 @@ setMethod(
             )
         )
     }
+
+
+
+#' @rdname plotMitoRatio
+#' @export
+setMethod(
+    f = "plotMitoRatio",
+    signature = signature("SingleCellExperiment"),
+    definition = .plotMitoRatio.SCE
 )

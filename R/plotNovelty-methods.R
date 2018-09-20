@@ -16,11 +16,7 @@ NULL
 
 
 
-#' @rdname plotNovelty
-#' @export
-setMethod(
-    "plotNovelty",
-    signature("SingleCellExperiment"),
+.plotNovelty.SCE <-  # nolint
     function(
         object,
         geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
@@ -48,4 +44,13 @@ setMethod(
             )
         )
     }
+
+
+
+#' @rdname plotNovelty
+#' @export
+setMethod(
+    f = "plotNovelty",
+    signature = signature("SingleCellExperiment"),
+    definition = .plotNovelty.SCE
 )

@@ -14,11 +14,7 @@ NULL
 
 
 
-#' @rdname plotGenesPerCell
-#' @export
-setMethod(
-    "plotGenesPerCell",
-    signature("SingleCellExperiment"),
+.plotGenesPerCell.SCE <-  # nolint
     function(
         object,
         geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
@@ -45,4 +41,13 @@ setMethod(
             )
         )
     }
+
+
+
+#' @rdname plotGenesPerCell
+#' @export
+setMethod(
+    f = "plotGenesPerCell",
+    signature = signature("SingleCellExperiment"),
+    definition = .plotGenesPerCell.SCE
 )

@@ -22,11 +22,7 @@ NULL
 
 
 
-#' @rdname plotUMIsPerCell
-#' @export
-setMethod(
-    "plotUMIsPerCell",
-    signature("SingleCellExperiment"),
+.plotUMIsPerCell.SCE <-  # nolint
     function(
         object,
         geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
@@ -138,4 +134,13 @@ setMethod(
 
         p
     }
+
+
+
+#' @rdname plotUMIsPerCell
+#' @export
+setMethod(
+    f = "plotUMIsPerCell",
+    signature = signature("SingleCellExperiment"),
+    definition = .plotUMIsPerCell.SCE
 )

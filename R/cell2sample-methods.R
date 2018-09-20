@@ -16,11 +16,7 @@ NULL
 
 
 
-#' @rdname cell2sample
-#' @export
-setMethod(
-    "cell2sample",
-    signature("SingleCellExperiment"),
+.cell2sample.SCE <-  # nolint
     function(object) {
         validObject(object)
         stash <- metadata(object)[["cell2sample"]]
@@ -37,4 +33,13 @@ setMethod(
         }
         .mapCellsToSamples(cells = cells, samples = samples)
     }
+
+
+
+#' @rdname cell2sample
+#' @export
+setMethod(
+    f = "cell2sample",
+    signature = signature("SingleCellExperiment"),
+    definition = .cell2sample.SCE
 )

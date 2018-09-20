@@ -316,11 +316,7 @@ NULL
 
 
 
-#' @rdname plotReadsPerCell
-#' @export
-setMethod(
-    "plotReadsPerCell",
-    signature("bcbioSingleCell"),
+.plotReadsPerCell.SCE <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -446,4 +442,13 @@ setMethod(
 
         p
     }
+
+
+
+#' @rdname plotReadsPerCell
+#' @export
+setMethod(
+    f = "plotReadsPerCell",
+    signature = signature("bcbioSingleCell"),
+    definition = .plotReadsPerCell.SCE
 )

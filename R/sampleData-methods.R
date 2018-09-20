@@ -1,3 +1,7 @@
+# FIXME Update how we're handling interestingGroups to match SE method.
+
+
+
 #' Sample Data
 #'
 #' Metadata in columns describing the samples, which are defined in the
@@ -34,11 +38,7 @@ NULL
 
 
 
-#' @rdname sampleData
-#' @export
-setMethod(
-    "sampleData",
-    signature("SingleCellExperiment"),
+.sampleData.SCE <-  # nolint
     function(object, interestingGroups = NULL) {
         data <- colData(object)
 
@@ -79,7 +79,7 @@ setMethod(
                 x = camel(colnames(data))
             ),
             drop = FALSE
-        ]
+            ]
 
         # Collapse and set the rownames to `sampleID`.
         rownames(data) <- NULL
@@ -102,18 +102,10 @@ setMethod(
 
         data
     }
-)
 
 
 
-#' @rdname sampleData
-#' @export
-setMethod(
-    "sampleData<-",
-    signature(
-        object = "SingleCellExperiment",
-        value = "DataFrame"
-    ),
+`.sampleData<-.SCE` <-  # nolint
     function(object, value) {
         # Don't allow the user to manually set sampleID column.
         value[["sampleID"]] <- rownames(value)
@@ -129,7 +121,7 @@ setMethod(
             ,
             c("sampleID", setdiff(colnames(colData), colnames(value))),
             drop = FALSE
-        ]
+            ]
         colData[["cellID"]] <- rownames(colData)
         colData <- merge(
             x = colData,
@@ -152,4 +144,26 @@ setMethod(
 
         object
     }
+
+
+
+#' @rdname sampleData
+#' @export
+setMethod(
+    f = "sampleData",
+    signature = signature("SingleCellExperiment"),
+    definition = .sampleData.SCE
+)
+
+
+
+#' @rdname sampleData
+#' @export
+setMethod(
+    "sampleData<-",
+    signature(
+        object = "SingleCellExperiment",
+        value = "DataFrame"
+    ),
+    definition = `.sampleData<-.SCE`
 )

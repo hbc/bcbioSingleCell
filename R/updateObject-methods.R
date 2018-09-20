@@ -1,3 +1,7 @@
+# FIXME Update handling of `sessionInfo`
+
+
+
 #' Update an Object to Its Current Class Definition
 #'
 #' @name updateObject
@@ -18,11 +22,7 @@ NULL
 
 
 
-#' @rdname updateObject
-#' @export
-setMethod(
-    "updateObject",
-    signature("bcbioSingleCell"),
+.updateObject.bcbioSingleCell <-  # nolint
     function(object) {
         version <- slot(object, "metadata")[["version"]]
         assert_is_all_of(version, c("package_version", "numeric_version"))
@@ -100,4 +100,13 @@ setMethod(
             metadata = metadata
         )
     }
+
+
+
+#' @rdname updateObject
+#' @export
+setMethod(
+    f = "updateObject",
+    signature = signature("bcbioSingleCell"),
+    definition = .updateObject.bcbioSingleCell
 )

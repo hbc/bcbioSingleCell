@@ -265,11 +265,7 @@ NULL
 
 
 
-#' @rdname plotQC
-#' @export
-setMethod(
-    "plotQC",
-    signature("SingleCellExperiment"),
+.plotQC.SCE <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -348,4 +344,13 @@ setMethod(
             )
         }
     }
+
+
+
+#' @rdname plotQC
+#' @export
+setMethod(
+    f = "plotQC",
+    signature = signature("SingleCellExperiment"),
+    definition = .plotQC.SCE
 )

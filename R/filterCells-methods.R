@@ -65,11 +65,7 @@ NULL
 
 
 
-#' @rdname filterCells
-#' @export
-setMethod(
-    "filterCells",
-    signature("SingleCellExperiment"),
+.filterCells.SCE <-  # nolint
     function(
         object,
         nCells = Inf,
@@ -464,4 +460,13 @@ setMethod(
 
         object
     }
+
+
+
+#' @rdname filterCells
+#' @export
+setMethod(
+    f = "filterCells",
+    signature = signature("SingleCellExperiment"),
+    definition = .filterCells.SCE
 )

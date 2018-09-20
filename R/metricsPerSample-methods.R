@@ -28,11 +28,7 @@ NULL
 
 
 
-#' @rdname metricsPerSample
-#' @export
-setMethod(
-    "metricsPerSample",
-    signature("SingleCellExperiment"),
+.metricsPerSample.SCE <-  # nolint
     function(
         object,
         f = c("mean", "median", "sum")
@@ -60,4 +56,13 @@ setMethod(
             as.data.frame() %>%
             column_to_rownames()
     }
+
+
+
+#' @rdname metricsPerSample
+#' @export
+setMethod(
+    f = "metricsPerSample",
+    signature = signature("SingleCellExperiment"),
+    definition = .metricsPerSample.SCE
 )

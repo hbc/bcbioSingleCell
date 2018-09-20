@@ -14,11 +14,7 @@ NULL
 
 
 
-#' @rdname plotUMIsVsGenes
-#' @export
-setMethod(
-    "plotUMIsVsGenes",
-    signature("SingleCellExperiment"),
+.plotUMIsVsGenes.SCE <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -42,4 +38,13 @@ setMethod(
             )
         )
     }
+
+
+
+#' @rdname plotUMIsVsGenes
+#' @export
+setMethod(
+    f = "plotUMIsVsGenes",
+    signature = signature("SingleCellExperiment"),
+    definition = .plotUMIsVsGenes.SCE
 )
