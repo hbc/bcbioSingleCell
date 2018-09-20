@@ -2,9 +2,34 @@
 % Please edit documentation in R/bcbioSingleCell-package.R
 \docType{package}
 \name{bcbioSingleCell-package}
-\alias{bcbioSingleCell-package}
 \title{bcbioSingleCell}
 \description{
 Import and analyze \href{http://bcbio-nextgen.readthedocs.io}{bcbio} single-cell
 RNA-seq data.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{http://bioinformatics.sph.harvard.edu/bcbioSingleCell}
+  \item \url{https://github.com/hbc/bcbioSingleCell}
+  \item Report bugs at \url{https://github.com/hbc/bcbioSingleCell/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Michael Steinbaugh \email{mike@steinbaugh.com} (0000-0002-2403-2221)
+
+Authors:
+\itemize{
+  \item Rory Kirchner \email{roryk@alum.mit.edu} (0000-0003-4814-5885)
+  \item Mary Piper \email{mary.piper@gmail.com} (0000-0003-2699-3840)
+  \item Victor Barrera \email{barrera.vic@gmail.com} (0000-0003-0590-4634)
+  \item Shannan Ho Sui \email{shosui@hsph.harvard.edu} (0000-0002-6191-4709)
+}
+
+Other contributors:
+\itemize{
+  \item Harvard Chan Bioinformatics Core \email{bioinformatics@hsph.harvard.edu} [copyright holder, funder]
+}
+
 }

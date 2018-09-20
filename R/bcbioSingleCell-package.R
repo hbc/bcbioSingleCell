@@ -3,13 +3,10 @@
 #' Import and analyze [bcbio](http://bcbio-nextgen.readthedocs.io) single-cell
 #' RNA-seq data.
 #'
-#' @name bcbioSingleCell-package
-#' @docType package
+#' @aliases NULL
 #'
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
-#'
 #' @importMethodsFrom basejump coerce
-#'
 #' @importFrom assertive.base assert_are_identical
 #' @importFrom assertive.files assert_all_are_dirs assert_all_are_existing_files
 #' @importFrom assertive.numbers assert_all_are_in_left_open_range
@@ -75,4 +72,4 @@
 #'   colData<- rowData rowRanges rowRanges<-
 #' @importFrom tibble as_tibble column_to_rownames rownames_to_column tibble
 #' @importFrom utils capture.output globalVariables packageVersion
-NULL
+"_PACKAGE"
