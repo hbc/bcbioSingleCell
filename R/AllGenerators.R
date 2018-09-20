@@ -62,8 +62,7 @@
 #'     sampleMetadataFile = file.path(uploadDir, "metadata.csv"),
 #'     ensemblRelease = 87L
 #' )
-#' show(x)
-#' validObject(x)
+#' print(x)
 bcbioSingleCell <- function(
     uploadDir,
     organism = NULL,
@@ -350,7 +349,7 @@ bcbioSingleCell <- function(
 
     # Column data --------------------------------------------------------------
     # Always prefilter, removing very low quality cells with no UMIs or genes
-    metrics <- .metrics(
+    metrics <- .calculateMetrics(
         object = counts,
         rowRanges = rowRanges,
         prefilter = TRUE
@@ -488,7 +487,7 @@ bcbioSingleCell <- function(
 #' @examples
 #' uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
 #' x <- CellRanger(uploadDir)
-#' show(x)
+#' print(x)
 CellRanger <- function(
     uploadDir,
     format = c("mtx", "hdf5"),
@@ -673,7 +672,7 @@ CellRanger <- function(
 
     # Column data --------------------------------------------------------------
     # Always prefilter, removing very low quality cells with no UMIs or genes
-    metrics <- .metrics(
+    metrics <- .calculateMetrics(
         object = counts,
         rowRanges = rowRanges,
         prefilter = TRUE

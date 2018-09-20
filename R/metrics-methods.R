@@ -26,7 +26,7 @@ NULL
 
 
 
-.metrics <- function(
+.calculateMetrics <- function(
     object,
     rowRanges = NULL,
     prefilter = FALSE
@@ -110,11 +110,7 @@ NULL
 
 
 
-#' @rdname metrics
-#' @export
-setMethod(
-    "metrics",
-    signature("SingleCellExperiment"),
+.metrics.SCE <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -124,10 +120,10 @@ setMethod(
 
         colData <- colData(object)
 
-        # Calculate metrics, if necessary
+        # Calculate metrics, if necessary.
         if (isTRUE(recalculate)) {
-            # Bind metrics to colData
-            metrics <- .metrics(
+            # Bind metrics to colData.
+            metrics <- .calculateMetrics(
                 object = counts(object),
                 rowRanges = rowRanges(object)
             )
@@ -168,4 +164,13 @@ setMethod(
 
         data
     }
+
+
+
+#' @rdname metrics
+#' @export
+setMethod(
+    f = "metrics",
+    signature = signature("SingleCellExperiment"),
+    definition = .metrics.SCE
 )
