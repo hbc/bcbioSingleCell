@@ -1,5 +1,8 @@
-# bcbioSingleCell ==============================================================
 # FIXME Update and relax the check on `sessionInfo`.
+
+
+
+# bcbioSingleCell ==============================================================
 setValidity(
     Class = "bcbioSingleCell",
     method = function(object) {
