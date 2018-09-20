@@ -24,12 +24,7 @@ NULL
 
 
 
-# aggregateCols ================================================================
-#' @rdname aggregateCols
-#' @export
-setMethod(
-    "aggregateCols",
-    signature("SingleCellExperiment"),
+.aggregateCols.SCE <-  # nolint
     function(object) {
         validObject(object)
 
@@ -89,4 +84,13 @@ setMethod(
 
         sce
     }
+
+
+
+#' @rdname aggregateCols
+#' @export
+setMethod(
+    f = "aggregateCols",
+    signature = signature("SingleCellExperiment"),
+    definition = .aggregateCols.SCE
 )
