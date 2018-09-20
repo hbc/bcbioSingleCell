@@ -84,8 +84,7 @@ x <- bcbioSingleCell(
     sampleMetadataFile = file.path(uploadDir, "metadata.csv"),
     ensemblRelease = 87L
 )
-show(x)
-validObject(x)
+print(x)
 }
 \seealso{
 \itemize{

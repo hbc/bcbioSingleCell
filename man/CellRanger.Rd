@@ -104,7 +104,7 @@ match, due to deprecation in the current Ensembl release.
 \examples{
 uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
 x <- CellRanger(uploadDir)
-show(x)
+print(x)
 }
 \seealso{
 Other S4 Generators: \code{\link{bcbioSingleCell}}

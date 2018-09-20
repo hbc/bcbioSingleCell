@@ -8,8 +8,8 @@
 \usage{
 \S4method{combine}{SingleCellExperiment,SingleCellExperiment}(x, y,
   metadata = c("version", "pipeline", "level", "interestingGroups",
-  "organism", "genomeBuild", "ensemblRelease", "rowRangesMetadata",
-  "umiType", "gffFile", "dataVersions", "programVersions"))
+  "organism", "genomeBuild", "ensemblRelease", "umiType", "gffFile",
+  "dataVersions", "programVersions"))
 }
 \arguments{
 \item{x}{One of the values.}
