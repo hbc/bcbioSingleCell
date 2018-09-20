@@ -9,6 +9,8 @@
 #' @family S4 Classes
 #' @author Michael Steinbaugh
 #' @export
+#'
+#' @seealso [bcbioSingleCell()].
 setClass(
     Class = "bcbioSingleCell",
     contains = "SingleCellExperiment"
@@ -25,6 +27,8 @@ setClass(
 #' @family S4 Classes
 #' @author Michael Steinbaugh
 #' @export
+#'
+#' @seealso [CellRanger()].
 setClass(
     Class = "CellRanger",
     contains = "SingleCellExperiment"

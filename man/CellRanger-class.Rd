@@ -9,6 +9,8 @@ Extends \code{SingleCellExperiment}, with additional validity checks on the
 \code{metadata()} slot.
 }
 \seealso{
+\code{\link[=CellRanger]{CellRanger()}}.
+
 Other S4 Classes: \code{\link{bcbioSingleCell-class}}
 }
 \author{

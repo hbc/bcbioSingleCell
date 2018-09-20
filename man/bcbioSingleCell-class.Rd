@@ -11,6 +11,8 @@ read counts saved as a sparse matrix (\code{dgCMatrix}), sample metadata, and ce
 quality control metrics.
 }
 \seealso{
+\code{\link[=bcbioSingleCell]{bcbioSingleCell()}}.
+
 Other S4 Classes: \code{\link{CellRanger-class}}
 }
 \author{
