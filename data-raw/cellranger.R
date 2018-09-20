@@ -1,5 +1,5 @@
 # Cell Ranger example data
-# 2018-09-16
+# 2018-09-19
 # 4k PBMCs from a Healthy Donor
 # https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k
 
@@ -8,12 +8,9 @@ library(Seurat)
 library(Matrix)
 
 # Complete dataset =============================================================
-upload_dir <- "data-raw/cellranger"
-dir.create(upload_dir, recursive = TRUE, showWarnings = FALSE)
-
+upload_dir <- initializeDirectory("data-raw/cellranger")
 # Example dataset contains a single sample ("pbmc4k").
-outs_dir <- file.path(upload_dir, "pbmc", "outs")
-dir.create(outs_dir, recursive = TRUE, showWarnings = FALSE)
+outs_dir <- initializeDirectory(file.path(upload_dir, "pbmc", "outs"))
 
 # Directory structure:
 # - pbmc
