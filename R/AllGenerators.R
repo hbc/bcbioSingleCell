@@ -325,31 +325,27 @@ bcbioSingleCell <- function(
     cbData <- .bindCellularBarcodes(cbList)
 
     # Row data -----------------------------------------------------------------
-    rowRangesMetadata <- NULL
     if (is_a_string(gffFile)) {
         rowRanges <- makeGRangesFromGFF(gffFile, level = "genes")
     } else if (is_a_string(organism)) {
-        # ah: AnnotationHub
-        ah <- makeGRangesFromEnsembl(
+        # Using AnnotationHub/ensembldb to obtain the annotations.
+        message("Using `makeGRangesFromEnsembl()` for annotations")
+        rowRanges <- makeGRangesFromEnsembl(
             organism = organism,
-            level = "genes",
+            level = level,
             build = genomeBuild,
-            release = ensemblRelease,
-            metadata = TRUE
+            release = ensemblRelease
         )
-        assert_is_list(ah)
-        assert_are_identical(names(ah), c("data", "metadata"))
-        rowRanges <- ah[["data"]]
-        assert_is_all_of(rowRanges, "GRanges")
-        rowRangesMetadata <- ah[["metadata"]]
-        assert_is_data.frame(rowRangesMetadata)
-        genomeBuild <- rowRangesMetadata %>%
-            filter(!!sym("name") == "genome_build") %>%
-            pull("value")
-        assert_is_a_string(genomeBuild)
+        if (is.null(genomeBuild)) {
+            genomeBuild <- metadata(rowRanges)[["build"]]
+        }
+        if (is.null(ensemblRelease)) {
+            ensemblRelease <- metadata(rowRanges)[["release"]]
+        }
     } else {
         rowRanges <- emptyRanges(rownames(counts))
     }
+    assert_is_all_of(rowRanges, "GRanges")
     assert_is_subset(rownames(counts), names(rowRanges))
 
     # Column data --------------------------------------------------------------
@@ -397,7 +393,6 @@ bcbioSingleCell <- function(
         organism = as.character(organism),
         genomeBuild = as.character(genomeBuild),
         ensemblRelease = as.integer(ensemblRelease),
-        rowRangesMetadata = rowRangesMetadata,
         cell2sample = as.factor(cell2sample),
         umiType = umiType,
         allSamples = allSamples,
@@ -627,7 +622,6 @@ CellRanger <- function(
     refJSON <- NULL
     genomeBuild <- NULL
     ensemblRelease <- NULL
-    rowRangesMetadata <- NULL
 
     # Prepare gene annotations as GRanges
     if (is_a_string(refdataDir)) {
@@ -658,25 +652,24 @@ CellRanger <- function(
         # in the refdata directory. It will also drop genes that are now dead in
         # the current Ensembl release. Don't warn about old Ensembl release
         # version.
-        ah <- suppressWarnings(makeGRangesFromEnsembl(
+        # Using AnnotationHub/ensembldb to obtain the annotations.
+        message("Using `makeGRangesFromEnsembl()` for annotations")
+        rowRanges <- makeGRangesFromEnsembl(
             organism = organism,
             level = level,
             build = genomeBuild,
-            metadata = TRUE
-        ))
-        assert_is_list(ah)
-        assert_are_identical(names(ah), c("data", "metadata"))
-        rowRanges <- ah[["data"]]
-        assert_is_all_of(rowRanges, "GRanges")
-        rowRangesMetadata <- ah[["metadata"]]
-        assert_is_data.frame(rowRangesMetadata)
-        genomeBuild <- rowRangesMetadata %>%
-            filter(!!sym("name") == "genome_build") %>%
-            pull("value")
-        assert_is_a_string(genomeBuild)
+            release = ensemblRelease
+        )
+        if (is.null(genomeBuild)) {
+            genomeBuild <- metadata(rowRanges)[["build"]]
+        }
+        if (is.null(ensemblRelease)) {
+            ensemblRelease <- metadata(rowRanges)[["release"]]
+        }
     } else {
         rowRanges <- emptyRanges(rownames(counts))
     }
+    assert_is_all_of(rowRanges, "GRanges")
 
     # Column data --------------------------------------------------------------
     # Always prefilter, removing very low quality cells with no UMIs or genes
@@ -720,7 +713,6 @@ CellRanger <- function(
         organism = organism,
         genomeBuild = as.character(genomeBuild),
         ensemblRelease = as.integer(ensemblRelease),
-        rowRangesMetadata = rowRangesMetadata,
         umiType = umiType,
         allSamples = allSamples,
         # cellranger pipeline-specific -----------------------------------------
