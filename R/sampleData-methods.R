@@ -39,7 +39,7 @@ NULL
 
 
 .sampleData.SCE <-  # nolint
-    function(object, interestingGroups = NULL) {
+    function(object) {
         data <- colData(object)
 
         # Require `sampleID` and `sampleName` columns.
@@ -90,14 +90,11 @@ NULL
         # Return sorted by `sampleID`.
         data <- data[rownames(data), , drop = FALSE]
 
-        # Define interesting groups column.
-        interestingGroups <- matchInterestingGroups(
-            object = object,
-            interestingGroups = interestingGroups
-        )
-        interestingGroups(object) <- interestingGroups
-        if (length(interestingGroups)) {
-            data <- uniteInterestingGroups(data, interestingGroups)
+        if (!"interestingGroups" %in% colnames(data)) {
+            interestingGroups <- interestingGroups(object)
+            if (length(interestingGroups) > 0L) {
+                data <- uniteInterestingGroups(data, interestingGroups)
+            }
         }
 
         data
