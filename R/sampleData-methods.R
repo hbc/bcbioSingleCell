@@ -109,6 +109,10 @@ NULL
 
         # Ensure the interesting groups column is not stashed.
         value[["interestingGroups"]] <- NULL
+        interestingGroups <- interestingGroups(object)
+        if (length(interestingGroups) > 0L) {
+            value <- uniteInterestingGroups(value, interestingGroups)
+        }
 
         # Ensure the cell-level column data is also updated.
         colData <- colData(object)
@@ -157,8 +161,8 @@ setMethod(
 #' @rdname sampleData
 #' @export
 setMethod(
-    "sampleData<-",
-    signature(
+    f = "sampleData<-",
+    signature = signature(
         object = "SingleCellExperiment",
         value = "DataFrame"
     ),
