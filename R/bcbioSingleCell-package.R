@@ -23,18 +23,18 @@
 #'   assert_is_factor assert_is_function assert_is_integer assert_is_list
 #'   assert_is_numeric assert_is_tbl_df is_a_string
 #' @importFrom basejump assertFormalInterestingGroups assertHasRownames
-#'   assertIsAHeaderLevel assertIsAStringOrNULL assertIsAnImplicitInteger
+#'   assertIsAStringOrNULL assertIsAnImplicitInteger
 #'   assertIsAnImplicitIntegerOrNULL assertIsColorScaleDiscreteOrNULL
-#'   assertIsFillScaleDiscreteOrNULL assignAndSaveData basejump_geom_abline
-#'   basejump_geom_label basejump_geom_label_average basejump_geom_label_repel
-#'   camel emptyRanges gene2symbol hasRownames interestingGroups
-#'   interestingGroups<- initializeDirectory makeGRangesFromEnsembl
-#'   makeGRangesFromGFF makeNames makeSummarizedExperiment makeTx2geneFromGFF
-#'   matchArgsToDoCall matchInterestingGroups markdownHeader markdownPlotlist
-#'   methodFormals prepareTemplate printString readJSON readYAML
-#'   sanitizeSampleData separator standardizeCall stripTranscriptVersions
-#'   theme_midnight theme_paperwhite tx2geneFromGFF uniteInterestingGroups
-#'   zerosVsDepth
+#'   assertIsFillScaleDiscreteOrNULL assertIsHeaderLevel assignAndSaveData
+#'   basejump_geom_abline basejump_geom_label basejump_geom_label_average
+#'   basejump_geom_label_repel camel emptyRanges gene2symbol hasRownames
+#'   interestingGroups interestingGroups<- initializeDirectory
+#'   makeGRangesFromEnsembl makeGRangesFromGFF makeNames
+#'   makeSummarizedExperiment makeTx2geneFromGFF matchArgsToDoCall
+#'   matchInterestingGroups markdownHeader markdownPlotlist methodFormals
+#'   prepareTemplate printString readJSON readYAML sanitizeSampleData separator
+#'   standardizeCall stripTranscriptVersions theme_midnight theme_paperwhite
+#'   tx2geneFromGFF uniteInterestingGroups zerosVsDepth
 #' @importFrom bcbioBase minimalSampleData projectDir readDataVersions readLog
 #'   readProgramVersions readSampleData readYAMLSampleData sampleDirs
 #' @importFrom Biobase sampleNames

@@ -281,7 +281,7 @@ NULL
         )
         interestingGroups(object) <- interestingGroups
         geom <- match.arg(geom)
-        assertIsAHeaderLevel(headerLevel)
+        assertIsHeaderLevel(headerLevel)
         return <- match.arg(return)
 
         plotCellCounts <- plotCellCounts(object)
