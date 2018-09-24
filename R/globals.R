@@ -22,17 +22,7 @@ metricsCols <- c(
     "mitoRatio"
 )
 
-# We're grep matching against these camel case variants here to automatically
-# sanitize `colData()` into sample-level `sampleData()`.
-clusterCols <- c(
-    "^ident$",
-    "^origIdent$",
-    "^res[.0-9]+$",
-    "^sScore$",
-    "^g2mScore$",
-    "^phase$"
-)
-
+# FIXME Can we take this out?
 # Empty sample metadata support (e.g. for splatter simulation SCE).
 unknownSampleData <- data.frame(
     sampleID = "unknown",
