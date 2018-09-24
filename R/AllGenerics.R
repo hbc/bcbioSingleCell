@@ -9,34 +9,12 @@ setGeneric(
 
 
 
-#' @rdname cell2sample
-#' @export
-setGeneric(
-    "cell2sample",
-    function(object, ...) {
-        standardGeneric("cell2sample")
-    }
-)
-
-
-
 #' @rdname filterCells
 #' @export
 setGeneric(
     "filterCells",
     function(object, ...) {
         standardGeneric("filterCells")
-    }
-)
-
-
-
-#' @rdname metricsPerSample
-#' @export
-setGeneric(
-    "metricsPerSample",
-    function(object, ...) {
-        standardGeneric("metricsPerSample")
     }
 )
 
@@ -136,17 +114,6 @@ setGeneric(
     "plotUMIsVsGenes",
     function(object, ...) {
         standardGeneric("plotUMIsVsGenes")
-    }
-)
-
-
-
-#' @rdname subsetPerSample
-#' @export
-setGeneric(
-    "subsetPerSample",
-    function(object, ...) {
-        standardGeneric("subsetPerSample")
     }
 )
 
