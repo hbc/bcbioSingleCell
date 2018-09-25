@@ -54,7 +54,7 @@ plotReadsPerCell(indrops_small, geom = "ecdf")
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
-  \code{\link{filterCells}}, \code{\link{metrics}},
+  \code{\link{filterCells}},
   \code{\link{plotBarcodeRanks}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},

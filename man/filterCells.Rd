@@ -69,7 +69,7 @@ metadata(x)$filterParams
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
-  \code{\link{metrics}}, \code{\link{plotBarcodeRanks}},
+  \code{\link{plotBarcodeRanks}},
   \code{\link{plotCellCounts}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}},

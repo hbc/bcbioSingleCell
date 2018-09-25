@@ -40,13 +40,6 @@ glimpse(x)
 x <- topBarcodes(indrops_small, return = "list")
 lapply(x, class)
 }
-\seealso{
-Other Data Functions: \code{\link{aggregateCols}},
-  \code{\link{cell2sample}},
-  \code{\link{metricsPerSample}}, \code{\link{sampleData}},
-  \code{\link{selectSamples}},
-  \code{\link{subsetPerSample}}
-}
 \author{
 Michael Steinbaugh
 }

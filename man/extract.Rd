@@ -99,8 +99,8 @@ indrops_small[genes, cells]
 \item \code{selectSamples()} for subsetting based on sample metadata.
 }
 
-Other S4 Functions: \code{\link{combine}},
-  \code{\link{show}}, \code{\link{updateObject}}
+Other S4 Functions: \code{\link{show}},
+  \code{\link{updateObject}}
 }
 \author{
 Michael Steinbaugh

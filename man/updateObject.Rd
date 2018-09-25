@@ -85,8 +85,8 @@ x <- updateObject(indrops_small)
 print(x)
 }
 \seealso{
-Other S4 Functions: \code{\link{combine}},
-  \code{\link{extract}}, \code{\link{show}}
+Other S4 Functions: \code{\link{extract}},
+  \code{\link{show}}
 }
 \author{
 Michael Steinbaugh
