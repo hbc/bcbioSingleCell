@@ -102,7 +102,7 @@ bcbioSingleCell <- function(
     if (!"organism" %in% names(call)) {
         message("`organism` is now recommended, to acquire gene annotations")
     }
-    dots <- Filter(Negate(is.null), dots)
+    rm(dots, call)
 
     # Assert checks ------------------------------------------------------------
     assert_is_a_string(uploadDir)
@@ -178,7 +178,6 @@ bcbioSingleCell <- function(
     umiType <- getUMITypeFromCommands(commandsLog)
 
     # Sample metadata ----------------------------------------------------------
-    # TODO Improve this step for other multiplexed barcode types.
     # External file required for multiplexed data.
     if (
         grepl("indrop", umiType) &&
