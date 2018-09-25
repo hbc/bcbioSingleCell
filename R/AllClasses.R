@@ -19,6 +19,7 @@ setClass(
 
 
 # FIXME Update and relax the check on `sessionInfo`.
+# See bcbioRNASeq approach for example.
 setValidity(
     Class = "bcbioSingleCell",
     method = function(object) {
@@ -97,7 +98,6 @@ setValidity(
         # Class checks
         requiredMetadata <- list(
             allSamples = "logical",
-            cell2sample = "factor",
             date = "Date",
             ensemblRelease = "integer",
             genomeBuild = "character",
