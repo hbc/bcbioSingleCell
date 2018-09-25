@@ -30,11 +30,12 @@
 #'   basejump_geom_label_repel camel emptyRanges gene2symbol hasRownames
 #'   interestingGroups interestingGroups<- initializeDirectory
 #'   makeGRangesFromEnsembl makeGRangesFromGFF makeNames
-#'   makeSummarizedExperiment makeTx2geneFromGFF matchArgsToDoCall
-#'   matchInterestingGroups markdownHeader markdownPlotlist methodFormals
-#'   prepareTemplate printString readJSON readYAML sanitizeSampleData separator
-#'   standardizeCall stripTranscriptVersions theme_midnight theme_paperwhite
-#'   tx2geneFromGFF uniteInterestingGroups zerosVsDepth
+#'   makeSingleCellExperiment makeTx2geneFromGFF mapCellsToSamples
+#'   matchArgsToDoCall matchInterestingGroups markdownHeader markdownPlotlist
+#'   methodFormals prepareTemplate printString readJSON readYAML
+#'   sanitizeSampleData separator standardizeCall stripTranscriptVersions
+#'   theme_midnight theme_paperwhite tx2geneFromGFF uniteInterestingGroups
+#'   zerosVsDepth
 #' @importFrom bcbioBase minimalSampleData projectDir readDataVersions readLog
 #'   readProgramVersions readSampleData readYAMLSampleData sampleDirs
 #' @importFrom Biobase sampleNames
