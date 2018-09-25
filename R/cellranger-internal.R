@@ -1,10 +1,15 @@
-#' Get the MEX sparse matrix or HDF5 files inside the upload directory.
+# Get the MEX sparse matrix or HDF5 files inside the upload directory.
 .sampleFiles.cellranger <-  # nolint
     function(
         uploadDir,
         format = c("mtx", "hdf5"),
         filtered = TRUE
     ) {
+        assert_is_a_string(uploadDir)
+        assert_all_are_dirs(uploadDir)
+        format <- match.arg(format)
+        assert_is_a_bool(filtered)
+
         # Look for simple upload structure.
         if ("matrix.mtx" %in% list.files(uploadDir)) {
             message("Simple mode enabled")
