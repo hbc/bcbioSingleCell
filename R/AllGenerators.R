@@ -1,3 +1,8 @@
+# FIXME Allow loading of bcbio data without sampleMetadataFile.
+# FIXME Need to update bcbioBase to allow this.
+
+
+
 # bcbioSingleCell ==============================================================
 #' Read bcbio Single-Cell RNA-Seq Data
 #'
@@ -18,16 +23,16 @@
 #' @inheritParams general
 #' @param uploadDir `string`. Path to final upload directory. This path is set
 #'   when running "`bcbio_nextgen -w template`".
+#' @param sampleMetadataFile `string` or `NULL`. Sample barcode metadata file.
+#'   Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
+#'   be left `NULL`, but otherwise suggested for runs with multipliexed FASTQs
+#'   containing multiple index barcodes (e.g. inDrops).
 #' @param organism `string` or `NULL`. Organism name. Use the full Latin name
 #'   (e.g. "Homo sapiens"), since this will be input downstream to AnnotationHub
 #'   and ensembldb, unless `gffFile` is set. If left `NULL` (*not recommended*),
 #'   the function call will skip loading gene-level annotations into
 #'   [rowRanges()]. This can be useful for poorly annotation genomes or
 #'   experiments involving multiple genomes.
-#' @param sampleMetadataFile `string` or `NULL`. Sample barcode metadata file.
-#'   Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
-#'   be left `NULL`, but otherwise required for runs with multipliexed FASTQs
-#'   containing multiple index barcodes (e.g. inDrop).
 #' @param ensemblRelease `scalar integer` or `NULL`. Ensembl release version. If
 #'   `NULL`, defaults to current release, and does not typically need to be
 #'   user-defined. Passed to AnnotationHub for `EnsDb` annotation matching,
@@ -75,11 +80,9 @@ bcbioSingleCell <- function(
     gffFile = NULL,
     ...
 ) {
-    dots <- list(...)
-    pipeline <- "bcbio"
-
     # Legacy arguments ---------------------------------------------------------
-    call <- match.call(expand.dots = TRUE)
+    dots <- list(...)
+    call <- match.call()
     # annotable
     if ("annotable" %in% names(call)) {
         stop("Use `gffFile` instead of `annotable`")
@@ -148,7 +151,7 @@ bcbioSingleCell <- function(
 
     # Project summary YAML -----------------------------------------------------
     yamlFile <- file.path(projectDir, "project-summary.yaml")
-    yaml <- readYAML(yamlFile)
+    yaml <- import(yamlFile)
 
     # bcbio run information ----------------------------------------------------
     dataVersions <- readDataVersions(
@@ -161,66 +164,29 @@ bcbioSingleCell <- function(
     )
     assert_is_tbl_df(programVersions)
 
-    bcbioLog <- readLog(
+    log <- readLog(
         file = file.path(projectDir, "bcbio-nextgen.log")
     )
-    assert_is_character(bcbioLog)
+    assert_is_character(log)
 
-    bcbioCommandsLog <- readLog(
+    commandsLog <- readLog(
         file = file.path(projectDir, "bcbio-nextgen-commands.log")
     )
-    assert_is_character(bcbioCommandsLog)
+    assert_is_character(commandsLog)
 
-    # Cellular barcode cutoff --------------------------------------------------
-    cellularBarcodeCutoffPattern <- "--cb_cutoff (\\d+)"
-    assert_any_are_matching_regex(
-        x = bcbioCommandsLog,
-        pattern = cellularBarcodeCutoffPattern
-    )
-    match <- str_match(
-        string = bcbioCommandsLog,
-        pattern = cellularBarcodeCutoffPattern
-    )
-    cellularBarcodeCutoff <- match %>%
-        .[, 2L] %>%
-        na.omit() %>%
-        unique() %>%
-        as.integer()
-    assert_is_an_integer(cellularBarcodeCutoff)
-
-    message(paste(
-        cellularBarcodeCutoff,
-        "reads per cellular barcode cutoff detected"
-    ))
-
-    # Detect gene or transcript-level output -----------------------------------
-    genemapPattern <- "--genemap (.+)-tx2gene.tsv"
-    if (any(grepl(genemapPattern, bcbioCommandsLog))) {
-        level <- "genes"
-    } else {
-        level <- "transcripts"
-    }
-
-    # Molecular barcode (UMI) type ---------------------------------------------
-    umiPattern <- "fastqtransform.*/(.*)\\.json"
-    assert_any_are_matching_regex(bcbioCommandsLog, umiPattern)
-    umiType <- str_match(bcbioCommandsLog, umiPattern) %>%
-        .[, 2L] %>%
-        na.omit() %>%
-        unique() %>%
-        gsub(
-            pattern = "-transform",
-            replacement = "",
-            x = .
-        )
-    assert_is_a_string(umiType)
-    message(paste("UMI type:", umiType))
+    cutoff <- getBarcodeCutoffFromCommands(commandsLog)
+    level <- getLevelFromCommands(commandsLog)
+    umiType <- getUMITypeFromCommands(commandsLog)
 
     # Sample metadata ----------------------------------------------------------
-    # External file required for inDrop
-    if (grepl("indrop", umiType) && is.null(sampleMetadataFile)) {
+    # TODO Improve this step for other multiplexed barcode types.
+    # External file required for multiplexed data.
+    if (
+        grepl("indrop", umiType) &&
+        is.null(sampleMetadataFile)
+    ) {
         stop(paste(
-            "inDrop samples require `sampleMetadataFile`",
+            "inDrops data requires `sampleMetadataFile`,",
             "containing the index barcode sequences"
         ))
     }
@@ -231,7 +197,7 @@ bcbioSingleCell <- function(
         sampleData <- readYAMLSampleData(yamlFile)
     }
 
-    # Check for incorrect reverse complement input
+    # Check for incorrect reverse complement input.
     if ("sequence" %in% colnames(sampleData)) {
         sampleDirSequence <- str_extract(names(sampleDirs), "[ACGT]+$")
         if (identical(
@@ -268,64 +234,16 @@ bcbioSingleCell <- function(
         allSamples <- TRUE
     }
 
-    # Assays -------------------------------------------------------------------
-    message(paste("Reading counts as", level))
-    counts <- .readCounts(
-        sampleDirs = sampleDirs,
-        pipeline = pipeline,
-        format = "mtx"
-    )
-
-    # Require transcript to gene conversion (legacy) ---------------------------
-    if (level == "transcripts") {
-        message("Converting transcripts to genes")
-
-        # GFF file is required
-        if (!is_a_string(gffFile)) {
-            stop("GFF is required to convert transcripts to genes")
-        }
-
-        # Note that this data.frame won't contain transcript versions
-        tx2gene <- makeTx2geneFromGFF(gffFile)
-
-        # Add spike-ins to tx2gene, if necessary
-        if (is.character(isSpike)) {
-            assert_are_disjoint_sets(rownames(tx2gene), isSpike)
-            spike <- data.frame(
-                transcriptID = isSpike,
-                geneID = isSpike,
-                row.names = isSpike,
-                stringsAsFactors = FALSE
-            )
-            tx2gene <- rbind(spike, tx2gene)
-        }
-
-        # Ensure Ensembl transcript versions are removed
-        counts <- stripTranscriptVersions(counts)
-
-        # Resize the tx2gene to match the matrix rownames
-        assert_is_subset(rownames(counts), rownames(tx2gene))
-        tx2gene <- tx2gene[rownames(counts), , drop = FALSE]
-
-        # Now we're ready to assign `geneID` and aggregate
-        rownames(counts) <- tx2gene[["geneID"]]
-        counts <- aggregate.Matrix(
-            x = counts,
-            groupings = rownames(counts),
-            fun = "sum"
-        )
-        level <- "genes"
-    } else {
-        tx2gene <- NULL
-    }
-
     # Unfiltered cellular barcode distributions --------------------------------
-    cbList <- .cellularBarcodesList(sampleDirs)
-    cbData <- .bindCellularBarcodes(cbList)
+    cbList <- .import.bcbio.barcodes(sampleDirs)
+
+    # Assays -------------------------------------------------------------------
+    # Note that we're now allowing transcript-level counts (as of v0.99).
+    counts <- .import.bcbio(sampleDirs)
 
     # Row data -----------------------------------------------------------------
     if (is_a_string(gffFile)) {
-        rowRanges <- makeGRangesFromGFF(gffFile, level = "genes")
+        rowRanges <- makeGRangesFromGFF(gffFile, level = level)
     } else if (is_a_string(organism)) {
         # Using AnnotationHub/ensembldb to obtain the annotations.
         message("Using `makeGRangesFromEnsembl()` for annotations")
@@ -348,42 +266,40 @@ bcbioSingleCell <- function(
     assert_is_subset(rownames(counts), names(rowRanges))
 
     # Column data --------------------------------------------------------------
-    # Always prefilter, removing very low quality cells with no UMIs or genes
-    metrics <- .calculateMetrics(
+    # Always prefilter, removing very low quality cells with no UMIs or genes.
+    colData <- .calculateMetrics(
         object = counts,
         rowRanges = rowRanges,
         prefilter = TRUE
     )
+    assert_are_identical(colnames(counts), rownames(colData))
+    # Subset the counts to match the prefiltered metrics.
+    counts <- counts[, rownames(colData), drop = FALSE]
 
-    # Subset the counts to match the prefiltered metrics
-    counts <- counts[, rownames(metrics), drop = FALSE]
+    # Bind the `nCount` column into the colData. These are the number of counts
+    # bcbio uses for initial filtering (minimum_barcode_depth in YAML).
+    cbData <- .bindCellularBarcodes(cbList)
+    assert_is_all_of(cbData, "DataFrame")
+    assert_is_subset(rownames(colData), rownames(cbData))
+    assert_is_subset("n", colnames(cbData))
+    colData[["nCount"]] <- cbData[rownames(colData), "n", drop = TRUE]
 
-    colData <- as(metrics, "DataFrame")
-    colData[["cellID"]] <- rownames(colData)
-    cell2sample <- mapCellsToSamples(
+    # Join sampleData into cell-level colData.
+    colData[["sampleID"]] <- mapCellsToSamples(
         cells = rownames(colData),
         samples = rownames(sampleData)
     )
-    colData[["sampleID"]] <- cell2sample
-    sampleData[["sampleID"]] <- rownames(sampleData)
-    colData <- merge(
+    sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
+    colData <- left_join(
         x = colData,
         y = sampleData,
-        by = "sampleID",
-        all.x = TRUE
+        by = "sampleID"
     )
-    rownames(colData) <- colData[["cellID"]]
-    colData[["cellID"]] <- NULL
-    sampleData[["sampleID"]] <- NULL
-
-    # Bind the `nCount` column into the colData
-    nCount <- cbData[rownames(colData), "nCount", drop = FALSE]
-    colData <- cbind(nCount, colData)
 
     # Metadata -----------------------------------------------------------------
     metadata <- list(
         version = packageVersion,
-        pipeline = pipeline,
+        pipeline = "bcbio",
         level = level,
         uploadDir = uploadDir,
         sampleDirs = sampleDirs,
@@ -392,10 +308,9 @@ bcbioSingleCell <- function(
         organism = as.character(organism),
         genomeBuild = as.character(genomeBuild),
         ensemblRelease = as.integer(ensemblRelease),
-        cell2sample = as.factor(cell2sample),
         umiType = umiType,
         allSamples = allSamples,
-        # bcbio pipeline-specific ----------------------------------------------
+        # bcbio-specific -------------------------------------------------------
         projectDir = projectDir,
         template = template,
         runDate = runDate,
@@ -404,17 +319,12 @@ bcbioSingleCell <- function(
         tx2gene = tx2gene,
         dataVersions = dataVersions,
         programVersions = programVersions,
-        bcbioLog = bcbioLog,
-        bcbioCommandsLog = bcbioCommandsLog,
+        bcbioLog = log,
+        bcbioCommandsLog = commandsLog,
         cellularBarcodes = cbList,
-        cellularBarcodeCutoff = cellularBarcodeCutoff,
+        cellularBarcodeCutoff = cutoff,
         call = match.call()
     )
-    # Add user-defined custom metadata, if specified
-    if (length(dots)) {
-        assert_are_disjoint_sets(names(metadata), names(dots))
-        metadata <- c(metadata, dots)
-    }
 
     # Return -------------------------------------------------------------------
     .new.bcbioSingleCell(
@@ -431,6 +341,8 @@ bcbioSingleCell <- function(
 
 # CellRanger ===================================================================
 # FIXME Can we parse the CellRanger `runDate` from the YAML?
+# FIXME Work on not requiring `sampleMetadataFile` here.
+# FIXME Allow this function to work if the user points at dir containing matrix.mtx.
 
 #' Read 10X Genomics Cell Ranger Single-Cell RNA-Seq Data
 #'
@@ -498,8 +410,7 @@ CellRanger <- function(
     refdataDir = NULL,
     gffFile = NULL,
     transgeneNames = NULL,
-    spikeNames = NULL,
-    ...
+    spikeNames = NULL
 ) {
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
@@ -517,15 +428,19 @@ CellRanger <- function(
     assert_is_character(interestingGroups)
     assert_is_any_of(transgeneNames, c("character", "NULL"))
     assert_is_any_of(spikeNames, c("character", "NULL"))
-    dots <- list(...)
     pipeline <- "cellranger"
     level <- "genes"
     umiType <- "chromium"
 
-    # Legacy arguments ---------------------------------------------------------
-    # annotable
-    stopifnot(!"annotable" %in% names(call))
-    dots <- Filter(Negate(is.null), dots)
+    # Check for simple mode ----------------------------------------------------
+    if ("matrix.mtx" %in% list.files(uploadDir)) {
+        message(paste(
+            "Simple mode enabled.",
+            "Loading data from matrix.mtx."
+        ))
+        # FIXME Go back and rethink how to do this.
+        stop("This isn't added yet...")
+    }
 
     # Sample directories -------------------------------------------------------
     dirs <- list.dirs(uploadDir, recursive = FALSE)
@@ -541,9 +456,14 @@ CellRanger <- function(
     sampleDirs <- dirs[hasOuts]
     assert_is_non_empty(sampleDirs)
     names(sampleDirs) <- makeNames(basename(sampleDirs), unique = TRUE)
-    message(paste(length(sampleDirs), "sample(s) detected"))
+
+    message(paste(
+        length(sampleDirs), "sample(s) detected:",
+        toString(names(sampleDirs))
+    ))
 
     # Sample metadata ----------------------------------------------------------
+    # FIXME This approach won't work for aggr data...
     if (is_a_string(sampleMetadataFile)) {
         sampleData <- readSampleData(sampleMetadataFile)
     } else {
@@ -566,9 +486,11 @@ CellRanger <- function(
     }
 
     # Counts -------------------------------------------------------------------
+    # FIXME Rethink this approach with simple mode (see above).
+    # FIXME Improve message about aggr data.
     # This step can be slow over sshfs, recommend running on an HPC
     message("Reading counts at gene level")
-    counts <- .readCounts(
+    counts <- .importCounts(
         sampleDirs = sampleDirs,
         pipeline = pipeline,
         format = format,
@@ -622,14 +544,14 @@ CellRanger <- function(
     genomeBuild <- NULL
     ensemblRelease <- NULL
 
-    # Prepare gene annotations as GRanges
+    # Prepare gene annotations as GRanges.
     if (is_a_string(refdataDir)) {
         message("Using 10X Genomics reference data for gene annotations")
         message(paste("refdataDir:", refdataDir))
         # JSON data
         refJSONFile <- file.path(refdataDir, "reference.json")
         assert_all_are_existing_files(refJSONFile)
-        refJSON <- readJSON(refJSONFile)
+        refJSON <- import(refJSONFile)
         # Get the genome build from JSON metadata
         genomeBuild <- unlist(refJSON[["genomes"]])
         assert_is_a_string(genomeBuild)
@@ -651,7 +573,6 @@ CellRanger <- function(
         # in the refdata directory. It will also drop genes that are now dead in
         # the current Ensembl release. Don't warn about old Ensembl release
         # version.
-        # Using AnnotationHub/ensembldb to obtain the annotations.
         message("Using `makeGRangesFromEnsembl()` for annotations")
         rowRanges <- makeGRangesFromEnsembl(
             organism = organism,
@@ -671,14 +592,14 @@ CellRanger <- function(
     assert_is_all_of(rowRanges, "GRanges")
 
     # Column data --------------------------------------------------------------
-    # Always prefilter, removing very low quality cells with no UMIs or genes
+    # Always prefilter, removing very low quality cells with no UMIs or genes.
     metrics <- .calculateMetrics(
         object = counts,
         rowRanges = rowRanges,
         prefilter = TRUE
     )
 
-    # Subset the counts to match the prefiltered metrics
+    # Subset the counts to match the prefiltered metrics.
     counts <- counts[, rownames(metrics), drop = FALSE]
 
     colData <- as(metrics, "DataFrame")
@@ -714,12 +635,12 @@ CellRanger <- function(
         ensemblRelease = as.integer(ensemblRelease),
         umiType = umiType,
         allSamples = allSamples,
-        # cellranger pipeline-specific -----------------------------------------
+        # cellranger-specific --------------------------------------------------
         refdataDir = refdataDir,
         refJSON = refJSON,
         call = match.call()
     )
-    # Add user-defined custom metadata, if specified
+    # Add user-defined custom metadata, if specified.
     if (length(dots)) {
         assert_are_disjoint_sets(names(metadata), names(dots))
         metadata <- c(metadata, dots)
