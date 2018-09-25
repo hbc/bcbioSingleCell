@@ -1,4 +1,5 @@
 # TODO Work on enabling loading without `sampleMetadataFile` ever required.
+# FIXME Consider taking a per sample file approach consistently, like CellRanger.
 
 
 
@@ -338,9 +339,10 @@ bcbioSingleCell <- function(
 
 
 # CellRanger ===================================================================
-# FIXME Can we parse the CellRanger `runDate` from the YAML?
+# FIXME Can we parse the CellRanger `runDate` from the refData YAML?
 # FIXME Work on not requiring `sampleMetadataFile` here.
 # FIXME Allow this function to work if the user points at dir containing matrix.mtx.
+# FIXME Add documentation about simple mode.
 
 #' Read 10X Genomics Cell Ranger Single-Cell RNA-Seq Data
 #'
@@ -426,46 +428,20 @@ CellRanger <- function(
     assert_is_character(interestingGroups)
     assert_is_any_of(transgeneNames, c("character", "NULL"))
     assert_is_any_of(spikeNames, c("character", "NULL"))
+
     pipeline <- "cellranger"
     level <- "genes"
     umiType <- "chromium"
 
-    # Check for simple mode ----------------------------------------------------
-    if ("matrix.mtx" %in% list.files(uploadDir)) {
-        message(paste(
-            "Simple mode enabled.",
-            "Loading data from matrix.mtx."
-        ))
-        # FIXME Go back and rethink how to do this.
-        stop("This isn't added yet...")
-    }
-
-    # Sample directories -------------------------------------------------------
-    dirs <- list.dirs(uploadDir, recursive = FALSE)
-    assert_is_non_empty(dirs)
-    # Sample subdirectories must contain `outs/` directory
-    hasOuts <- vapply(
-        X = dirs,
-        FUN = function(dir) {
-            dir.exists(file.path(dir, "outs"))
-        },
-        FUN.VALUE = logical(1L)
-    )
-    sampleDirs <- dirs[hasOuts]
-    assert_is_non_empty(sampleDirs)
-    names(sampleDirs) <- makeNames(basename(sampleDirs), unique = TRUE)
-
-    message(paste(
-        length(sampleDirs), "sample(s) detected:",
-        toString(names(sampleDirs))
-    ))
+    # Sample files -------------------------------------------------------------
+    sampleFiles <- .sampleFiles.cellranger(uploadDir)
 
     # Sample metadata ----------------------------------------------------------
     # FIXME This approach won't work for aggr data...
     if (is_a_string(sampleMetadataFile)) {
         sampleData <- readSampleData(sampleMetadataFile)
     } else {
-        sampleData <- minimalSampleData(basename(sampleDirs))
+        sampleData <- minimalSampleData(names(sampleFiles))
     }
 
     # Interesting groups -------------------------------------------------------
@@ -474,33 +450,25 @@ CellRanger <- function(
     assert_is_subset(interestingGroups, colnames(sampleData))
 
     # Subset sample directories by metadata ------------------------------------
-    if (nrow(sampleData) < length(sampleDirs)) {
+    if (nrow(sampleData) < length(sampleFiles)) {
         message("Loading a subset of samples, defined by the metadata file")
         allSamples <- FALSE
-        sampleDirs <- sampleDirs[rownames(sampleData)]
-        message(paste(length(sampleDirs), "samples matched by metadata"))
+        sampleFiles <- sampleFiles[rownames(sampleData)]
+        message(paste(length(sampleFiles), "samples matched by metadata"))
     } else {
         allSamples <- TRUE
     }
 
     # Counts -------------------------------------------------------------------
-    # FIXME Rethink this approach with simple mode (see above).
-    # FIXME Improve message about aggr data.
-    # This step can be slow over sshfs, recommend running on an HPC
-    message("Reading counts at gene level")
-    counts <- .importCounts(
-        sampleDirs = sampleDirs,
-        pipeline = pipeline,
-        format = format,
-        filtered = filtered
-    )
+    counts <- .import.cellranger(sampleFiles)
 
     # Multiplexed sample check -------------------------------------------------
-    # Check to see if multiplexed samples are present and require metadata
+    # FIXME Break this out into a function.
+    # Check to see if multiplexed samples are present and require metadata.
     multiplexedPattern <- "^(.+)_(\\d+)_([ACGT]+)$"
     if (any(grepl(multiplexedPattern, colnames(counts)))) {
         message("Multiplexed (aggregated) samples detected")
-        # Prepare data.frame of barcode mappings
+        # Prepare data.frame of barcode mappings.
         # Example:
         # cellID: cellranger_AAACCTGGTTTACTCT_1
         # description: cellranger
@@ -528,7 +496,7 @@ CellRanger <- function(
             rownames(sampleData) <- paste0(rownames(sampleData), "_1")
         }
 
-        # Require user defined metadata
+        # Require user-defined metadata.
         if (!"index" %in% colnames(sampleData)) {
             stop(paste(
                 "`index` column must be defined using",
