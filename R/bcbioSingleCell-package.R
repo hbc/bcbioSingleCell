@@ -27,8 +27,8 @@
 #'   assertIsAnImplicitIntegerOrNULL assertIsColorScaleDiscreteOrNULL
 #'   assertIsFillScaleDiscreteOrNULL assertIsHeaderLevel assignAndSaveData
 #'   basejump_geom_abline basejump_geom_label basejump_geom_label_average
-#'   basejump_geom_label_repel camel emptyRanges gene2symbol hasRownames
-#'   interestingGroups interestingGroups<- initializeDirectory
+#'   basejump_geom_label_repel camel cell2sample emptyRanges gene2symbol
+#'   hasRownames interestingGroups interestingGroups<- initializeDirectory
 #'   makeGRangesFromEnsembl makeGRangesFromGFF makeNames
 #'   makeSingleCellExperiment makeTx2geneFromGFF mapCellsToSamples
 #'   matchArgsToDoCall matchInterestingGroups markdownHeader markdownPlotlist
