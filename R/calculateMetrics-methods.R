@@ -1,13 +1,11 @@
-# FIXME Rework how to use this in our initial data loading steps.
-
-
-
 .calculateMetrics <- function(
     object,
     rowRanges = NULL,
     prefilter = FALSE
 ) {
+    assert_is_any_of(object, c("matrix", "sparseMatrix"))
     assert_has_rows(object)
+    assert_is_any_of(rowRanges, c("GRanges", "NULL"))
     assert_is_a_bool(prefilter)
 
     message("Calculating cellular barcode metrics")
@@ -15,13 +13,18 @@
 
     codingGenes <- character()
     mitoGenes <- character()
+    biotypeWarning <- function() {
+        warning(paste(
+            "Calculating metrics without biotype information.\n",
+            "`rowRanges` is required to determine:",
+            "`nCoding`, `nMito`, `mitoRatio`."
+        ), call. = FALSE)
+    }
 
-    if (length(rowRanges)) {
+    if (length(rowRanges) > 0L) {
         assert_is_all_of(rowRanges, "GRanges")
-        rowData <- as.data.frame(rowRanges)
-        assertHasRownames(rowData)
-        rowData <- rowData[rownames(object), , drop = FALSE]
-        rowData <- as_tibble(rowData, rownames = "rowname")
+        assert_are_identical(rownames(object), names(rowRanges))
+        rowData <- as(rowRanges, "tbl_df")
         if ("broadClass" %in% colnames(rowData)) {
             # Drop rows with NA broad class
             rowData <- filter(rowData, !is.na(!!sym("broadClass")))
@@ -35,16 +38,14 @@
                 filter(!!sym("broadClass") == "mito") %>%
                 pull("rowname")
             message(paste(length(mitoGenes), "mitochondrial genes"))
+        } else {
+            biotypeWarning()
         }
     } else {
-        warning(paste(
-            "Calculating metrics without gene annotations.\n",
-            "`rowRanges` is required to determine:",
-            "`nCoding`, `nMito`, `mitoRatio`."
-        ), call. = FALSE)
+        biotypeWarning()
     }
 
-    # Following the Seurat `seurat@meta.data` conventions
+    # Following the Seurat `seurat@meta.data` naming conventions.
     data <- tibble(
         rowname = colnames(object),
         nUMI = colSums(object),
@@ -73,13 +74,12 @@
         ))
     }
 
-    # Return
+    # Return as DataFrame, containing cell IDs in the rownames.
     data %>%
-        # Enforce count columns as integers (e.g. `nUMI`)
+        # Enforce count columns as integers (e.g. `nUMI`).
         mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer) %>%
-        # Coerce character vectors to factors, and drop levels
+        # Coerce character vectors to factors, and drop levels.
         mutate_if(is.character, as.factor) %>%
         mutate_if(is.factor, droplevels) %>%
-        as.data.frame() %>%
-        column_to_rownames()
+        as("DataFrame")
 }
