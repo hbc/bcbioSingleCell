@@ -1,5 +1,4 @@
-# FIXME Allow loading of bcbio data without sampleMetadataFile.
-# FIXME Need to update bcbioBase to allow this.
+# TODO Work on enabling loading without `sampleMetadataFile` ever required.
 
 
 
