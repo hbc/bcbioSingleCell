@@ -3,16 +3,26 @@
     function(sampleDirs) {
         assert_all_are_dirs(sampleDirs)
         assert_has_names(sampleDirs)
+
         message("Importing counts...")
 
-        # FIXME
-        stop("BIND THE SAMPLE IDs AFTER")
-
-        list <- lapply(
-            X = sampleDirs,
-            FUN = function(dir) {
-                .import.bcbio.mtx(dir)
-            }
+        list <- mapply(
+            sampleID = names(sampleDirs),
+            dir = sampleDirs,
+            FUN = function(sampleID, dir) {
+                counts <- .import.bcbio.mtx(dir)
+                # FIXME Export `makeDimnames()` that simplifes this step?
+                rownames(counts) <-
+                    makeNames(rownames(counts), unique = TRUE)
+                colnames(counts) <-
+                    makeNames(
+                        paste(sampleID, colnames(counts), sep = "_"),
+                        unique = TRUE
+                    )
+                counts
+            },
+            SIMPLIFY = FALSE,
+            USE.NAMES = TRUE
         )
 
         # Remove any empty items in list, which can result from low quality
@@ -114,6 +124,8 @@
         assert_all_are_existing_files(sampleFiles)
         assert_has_names(sampleFiles)
 
+        message("Importing counts...")
+
         if (all(grepl("\\.mtx$", sampleFiles))) {
             fun <- .import.cellranger.mtx
         } else if (all(grepl("\\.h5$", sampleFiles))) {
@@ -125,6 +137,7 @@
             file = sampleFiles,
             FUN = function(sampleID, file) {
                 counts <- fun(file)
+                # FIXME Export `makeDimnames()` that simplifes this step?
                 rownames(counts) <-
                     makeNames(rownames(counts), unique = TRUE)
                 colnames(counts) <-
