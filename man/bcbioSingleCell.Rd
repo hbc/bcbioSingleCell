@@ -22,8 +22,8 @@ experiments involving multiple genomes.}
 
 \item{sampleMetadataFile}{\code{string} or \code{NULL}. Sample barcode metadata file.
 Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
-be left \code{NULL}, but otherwise required for runs with multipliexed FASTQs
-containing multiple index barcodes (e.g. inDrop).}
+be left \code{NULL}, but otherwise suggested for runs with multipliexed FASTQs
+containing multiple index barcodes (e.g. inDrops).}
 
 \item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
 interesting groups. Must be formatted in camel case and intersect with
