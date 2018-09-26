@@ -11,14 +11,9 @@
             dir = sampleDirs,
             FUN = function(sampleID, dir) {
                 counts <- .import.bcbio.mtx(dir)
-                # FIXME Export `makeDimnames()` that simplifes this step?
-                rownames(counts) <-
-                    makeNames(rownames(counts), unique = TRUE)
-                colnames(counts) <-
-                    makeNames(
-                        paste(sampleID, colnames(counts), sep = "_"),
-                        unique = TRUE
-                    )
+                # Always prefix cell barcodes with sample identifier.
+                colnames(counts) <- paste(sampleID, colnames(counts), sep = "_")
+                counts <- makeDimnames(counts)
                 counts
             },
             SIMPLIFY = FALSE,
@@ -137,14 +132,9 @@
             file = sampleFiles,
             FUN = function(sampleID, file) {
                 counts <- fun(file)
-                # FIXME Export `makeDimnames()` that simplifes this step?
-                rownames(counts) <-
-                    makeNames(rownames(counts), unique = TRUE)
-                colnames(counts) <-
-                    makeNames(
-                        paste(sampleID, colnames(counts), sep = "_"),
-                        unique = TRUE
-                    )
+                # Always prefix cell barcodes with sample identifier.
+                colnames(counts) <- paste(sampleID, colnames(counts), sep = "_")
+                counts <- makeDimnames(counts)
                 counts
             },
             SIMPLIFY = FALSE,
