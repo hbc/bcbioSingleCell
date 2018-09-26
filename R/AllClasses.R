@@ -61,7 +61,7 @@ setValidity(
         )
         sampleDataLevels <- Filter(Negate(is.null), sampleDataLevels)
         colDataLevels <- lapply(
-            X = colData[, names(sampleDataLevels)],
+            X = colData[, names(sampleDataLevels), drop = FALSE],
             FUN = levels
         )
         assert_are_identical(sampleDataLevels, colDataLevels)

@@ -61,6 +61,7 @@
 #'
 #' @examples
 #' uploadDir <- system.file("extdata/indrops", package = "bcbioSingleCell")
+#'
 #' x <- bcbioSingleCell(uploadDir)
 #' print(x)
 #'
@@ -151,49 +152,43 @@ bcbioSingleCell <- function(
     yaml <- import(yamlFile)
 
     # bcbio run information ----------------------------------------------------
-    dataVersions <- readDataVersions(
-        file = file.path(projectDir, "data_versions.csv")
-    )
+    dataVersions <-
+        readDataVersions(file.path(projectDir, "data_versions.csv"))
+    programVersions <-
+        readProgramVersions(file.path(projectDir, "programs.txt"))
+    log <-
+        readLog(file.path(projectDir, "bcbio-nextgen.log"))
+    commandsLog <-
+        readLog(file.path(projectDir, "bcbio-nextgen-commands.log"))
+
     assert_is_tbl_df(dataVersions)
-
-    programVersions <- readProgramVersions(
-        file = file.path(projectDir, "programs.txt")
-    )
     assert_is_tbl_df(programVersions)
-
-    log <- readLog(
-        file = file.path(projectDir, "bcbio-nextgen.log")
-    )
     assert_is_character(log)
-
-    commandsLog <- readLog(
-        file = file.path(projectDir, "bcbio-nextgen-commands.log")
-    )
     assert_is_character(commandsLog)
 
     cutoff <- getBarcodeCutoffFromCommandsLog(commandsLog)
     level <- getLevelFromCommandsLog(commandsLog)
     umiType <- getUMITypeFromCommandsLog(commandsLog)
 
-    # Sample metadata ----------------------------------------------------------
-    # External file required for multiplexed data.
-    if (
-        grepl("indrop", umiType) &&
-        is.null(sampleMetadataFile)
-    ) {
-        stop(paste(
-            "inDrops data requires `sampleMetadataFile`,",
-            "containing the index barcode sequences"
-        ))
-    }
+    # Grep string for multiplexed data.
+    multiplexed <- any(vapply(
+        X = c("dropseq", "indrop"),
+        FUN = function(pattern) {
+            grepl(pattern = pattern, x = umiType)
+        },
+        FUN.VALUE = logical(1L)
+    ))
 
-    # FIXME...this doesn't work.
+    # Sample metadata ----------------------------------------------------------
     if (is_a_string(sampleMetadataFile)) {
         sampleData <- readSampleData(sampleMetadataFile)
+    } else if (isTRUE(multiplexed)) {
+        # Multiplexed samples without user-defined metadata.
+        message("`sampleMetadataFile` is recommended for multiplexed samples.")
+        sampleData <- minimalSampleData(basename(sampleDirs))
     } else {
         sampleData <- readYAMLSampleData(yamlFile)
     }
-    stop("RETHINK THIS")
 
     # Check for incorrect reverse complement input.
     if ("sequence" %in% colnames(sampleData)) {
@@ -213,6 +208,7 @@ bcbioSingleCell <- function(
     }
 
     assert_is_subset(rownames(sampleData), names(sampleDirs))
+    # FIXME Can we skip this sanitize step?
     sampleData <- sanitizeSampleData(sampleData)
 
     # Interesting groups -------------------------------------------------------

@@ -78,6 +78,7 @@ run directory as a remote connection over
 
 \examples{
 uploadDir <- system.file("extdata/indrops", package = "bcbioSingleCell")
+
 x <- bcbioSingleCell(uploadDir)
 print(x)
 
