@@ -259,7 +259,9 @@ bcbioSingleCell <- function(
     }
 
     assert_is_subset(rownames(sampleData), names(sampleDirs))
-    sampleData <- sanitizeSampleData(sampleData)
+
+    # FIXME Take out the index code?
+    # sampleData <- sanitizeSampleData(sampleData)
 
     # Always prefilter, removing very low quality cells with no UMIs or genes.
     colData <- .calculateMetrics(
@@ -519,9 +521,10 @@ CellRanger <- function(
         sampleData <- minimalSampleData(samples)
     }
 
-    sampleData <- sanitizeSampleData(sampleData)
-
     # FIXME Add a message to the user about which samples here?
+
+    # FIXME Don't attempt to split index?
+    # sampleData <- sanitizeSampleData(sampleData)
 
     # Always prefilter, removing very low quality cells with no UMIs or genes.
     colData <- .calculateMetrics(
@@ -560,7 +563,6 @@ CellRanger <- function(
         sampleDirs = sampleDirs,
         sampleMetadataFile = as.character(sampleMetadataFile),
         interestingGroups = interestingGroups,
-        cell2sample = as.factor(cell2sample),
         organism = organism,
         genomeBuild = as.character(genomeBuild),
         ensemblRelease = as.integer(ensemblRelease),
