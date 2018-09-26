@@ -70,22 +70,22 @@
 #' print(x)
 bcbioSingleCell <- function(
     uploadDir,
-    organism = NULL,
     sampleMetadataFile = NULL,
-    interestingGroups = "sampleName",
+    organism = NULL,
     ensemblRelease = NULL,
     genomeBuild = NULL,
+    gffFile = NULL,
     transgeneNames = NULL,
     spikeNames = NULL,
-    gffFile = NULL,
+    interestingGroups = "sampleName",
     ...
 ) {
     # Legacy arguments ---------------------------------------------------------
     dots <- list(...)
     call <- match.call()
-    # annotable
-    if ("annotable" %in% names(call)) {
-        stop("Use `gffFile` instead of `annotable`")
+    # organism
+    if (!"organism" %in% names(call)) {
+        message("`organism` is recommended, to acquire gene annotations")
     }
     # ensemblVersion
     if ("ensemblVersion" %in% names(call)) {
@@ -99,9 +99,9 @@ bcbioSingleCell <- function(
         gffFile <- call[["gtfFile"]]
         dots[["gtfFile"]] <- NULL
     }
-    # organism
-    if (!"organism" %in% names(call)) {
-        message("`organism` is now recommended, to acquire gene annotations")
+    # annotable
+    if ("annotable" %in% names(call)) {
+        stop("Use `gffFile` instead of `annotable`")
     }
     rm(dots, call)
 
@@ -109,16 +109,16 @@ bcbioSingleCell <- function(
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
     assertIsAStringOrNULL(sampleMetadataFile)
-    assert_is_character(interestingGroups)
     assertIsAStringOrNULL(organism)
     assertIsAnImplicitIntegerOrNULL(ensemblRelease)
     assertIsAStringOrNULL(genomeBuild)
-    assert_is_any_of(transgeneNames, c("character", "NULL"))
-    assert_is_any_of(spikeNames, c("character", "NULL"))
     assertIsAStringOrNULL(gffFile)
     if (is_a_string(gffFile)) {
         assert_all_are_existing_files(gffFile)
     }
+    assert_is_any_of(transgeneNames, c("character", "NULL"))
+    assert_is_any_of(spikeNames, c("character", "NULL"))
+    assert_is_character(interestingGroups)
 
     # Directory paths ----------------------------------------------------------
     uploadDir <- normalizePath(uploadDir, winslash = "/", mustWork = TRUE)
@@ -404,30 +404,30 @@ CellRanger <- function(
     uploadDir,
     format = c("mtx", "hdf5"),
     filtered = TRUE,
-    organism = NULL,
     sampleMetadataFile = NULL,
-    interestingGroups = "sampleName",
+    organism = NULL,
     refdataDir = NULL,
     gffFile = NULL,
     transgeneNames = NULL,
-    spikeNames = NULL
+    spikeNames = NULL,
+    interestingGroups = "sampleName"
 ) {
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
     uploadDir <- normalizePath(uploadDir, winslash = "/", mustWork = TRUE)
     format <- match.arg(format)
     assert_is_a_bool(filtered)
-    assertIsAStringOrNULL(organism)
     assertIsAStringOrNULL(sampleMetadataFile)
+    assertIsAStringOrNULL(organism)
     assertIsAStringOrNULL(refdataDir)
     if (is_a_string(refdataDir)) {
         assert_all_are_dirs(refdataDir)
         refdataDir <- normalizePath(refdataDir, winslash = "/", mustWork = TRUE)
     }
     assertIsAStringOrNULL(gffFile)
-    assert_is_character(interestingGroups)
     assert_is_any_of(transgeneNames, c("character", "NULL"))
     assert_is_any_of(spikeNames, c("character", "NULL"))
+    assert_is_character(interestingGroups)
 
     pipeline <- "cellranger"
     level <- "genes"
