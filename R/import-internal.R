@@ -1,3 +1,7 @@
+# FIXME Strip any "-"/"_" in barcodes to make grep matching easier?
+
+
+
 # bcbio ========================================================================
 .import.bcbio <-  # nolint
     function(sampleDirs) {
