@@ -66,10 +66,5 @@
         assert_all_are_existing_files(files)
         names(files) <- makeNames(basename(dirs))
 
-        message(paste(
-            length(dirs), "sample(s) detected:",
-            toString(names(files))
-        ))
-
         files
     }

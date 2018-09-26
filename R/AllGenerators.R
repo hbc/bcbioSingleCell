@@ -166,6 +166,8 @@ bcbioSingleCell <- function(
     assert_is_character(log)
     assert_is_character(commandsLog)
 
+    allSamples <- TRUE
+    sampleData <- NULL
     cutoff <- getBarcodeCutoffFromCommandsLog(commandsLog)
     level <- getLevelFromCommandsLog(commandsLog)
     umiType <- getUMITypeFromCommandsLog(commandsLog)
@@ -179,53 +181,34 @@ bcbioSingleCell <- function(
         FUN.VALUE = logical(1L)
     ))
 
-    # Sample metadata ----------------------------------------------------------
+    # User-defined sample metadata ---------------------------------------------
     if (is_a_string(sampleMetadataFile)) {
         sampleData <- readSampleData(sampleMetadataFile)
-    } else if (isTRUE(multiplexed)) {
-        # Multiplexed samples without user-defined metadata.
-        message("`sampleMetadataFile` is recommended for multiplexed samples.")
-        sampleData <- minimalSampleData(basename(sampleDirs))
-    } else {
-        sampleData <- readYAMLSampleData(yamlFile)
-    }
 
-    # Check for incorrect reverse complement input.
-    if ("sequence" %in% colnames(sampleData)) {
-        sampleDirSequence <- str_extract(names(sampleDirs), "[ACGT]+$")
-        if (identical(
-            sort(sampleDirSequence),
-            sort(as.character(sampleData[["sequence"]]))
-        )) {
-            stop(paste(
-                "It appears that the reverse complement sequence of the",
-                "i5 index barcodes were input into the sample metadata",
-                "`sequence` column. bcbio outputs the revcomp into the",
-                "sample directories, but the forward sequence should be",
-                "used in the R package."
-            ))
+        # Allow sample selection by with this file.
+        if (nrow(sampleData) < length(sampleDirs)) {
+            message("Loading a subset of samples, defined by the metadata file")
+            allSamples <- FALSE
+            sampleDirs <- sampleDirs[rownames(sampleData)]
+            message(paste(length(sampleDirs), "samples matched by metadata"))
         }
-    }
 
-    assert_is_subset(rownames(sampleData), names(sampleDirs))
-    # FIXME Can we skip this sanitize step?
-    sampleData <- sanitizeSampleData(sampleData)
-
-    # Interesting groups -------------------------------------------------------
-    # Ensure internal formatting in camelCase
-    interestingGroups <- camel(interestingGroups)
-    assert_is_subset(interestingGroups, colnames(sampleData))
-
-    # Subset sample directories by metadata ------------------------------------
-    # Check to see if a subset of samples is requested via the metadata file.
-    # This matches by the reverse complement sequence of the index barcode.
-    if (nrow(sampleData) < length(sampleDirs)) {
-        message("Loading a subset of samples, defined by the metadata file")
-        allSamples <- FALSE
-        sampleDirs <- sampleDirs[rownames(sampleData)]
-        message(paste(length(sampleDirs), "samples matched by metadata"))
-    } else {
-        allSamples <- TRUE
+        # Error on incorrect reverse complement input.
+        if ("sequence" %in% colnames(sampleData)) {
+            sampleDirSequence <- str_extract(names(sampleDirs), "[ACGT]+$")
+            if (identical(
+                sort(sampleDirSequence),
+                sort(as.character(sampleData[["sequence"]]))
+            )) {
+                stop(paste(
+                    "It appears that the reverse complement sequence of the",
+                    "i5 index barcodes were input into the sample metadata",
+                    "`sequence` column. bcbio outputs the revcomp into the",
+                    "sample directories, but the forward sequence should be",
+                    "used in the R package."
+                ))
+            }
+        }
     }
 
     # Unfiltered cellular barcode distributions --------------------------------
@@ -261,14 +244,32 @@ bcbioSingleCell <- function(
     assert_is_subset(rownames(counts), names(rowRanges))
 
     # Column data --------------------------------------------------------------
+    # Automatic sample metadata.
+    if (is.null(sampleData)) {
+        if (isTRUE(multiplexed)) {
+            # Multiplexed samples without user-defined metadata.
+            message(paste0(
+                "`sampleMetadataFile` is recommended for",
+                "multiplexed samples (e.g. ", umiType, ")."
+            ))
+            sampleData <- minimalSampleData(basename(sampleDirs))
+        } else {
+            sampleData <- readYAMLSampleData(yamlFile)
+        }
+    }
+
+    assert_is_subset(rownames(sampleData), names(sampleDirs))
+    sampleData <- sanitizeSampleData(sampleData)
+
     # Always prefilter, removing very low quality cells with no UMIs or genes.
     colData <- .calculateMetrics(
         object = counts,
         rowRanges = rowRanges,
         prefilter = TRUE
     )
-    assert_are_identical(colnames(counts), rownames(colData))
+
     # Subset the counts to match the prefiltered metrics.
+    assert_is_subset(rownames(colData), colnames(counts))
     counts <- counts[, rownames(colData), drop = FALSE]
 
     # Bind the `nCount` column into the colData. These are the number of counts
@@ -290,6 +291,11 @@ bcbioSingleCell <- function(
         y = sampleData,
         by = "sampleID"
     )
+
+    # Interesting groups -------------------------------------------------------
+    # Ensure internal formatting in camelCase
+    interestingGroups <- camel(interestingGroups)
+    assert_is_subset(interestingGroups, colnames(sampleData))
 
     # Metadata -----------------------------------------------------------------
     metadata <- list(
@@ -433,73 +439,22 @@ CellRanger <- function(
     sampleFiles <- .sampleFiles.cellranger(uploadDir)
 
     # Sample metadata ----------------------------------------------------------
-    # FIXME This approach won't work for aggr data...
+    allSamples <- TRUE
+    sampleData <- NULL
+
     if (is_a_string(sampleMetadataFile)) {
         sampleData <- readSampleData(sampleMetadataFile)
-    } else {
-        sampleData <- minimalSampleData(names(sampleFiles))
-    }
-
-    # Interesting groups -------------------------------------------------------
-    # Ensure internal formatting in camelCase
-    interestingGroups <- camel(interestingGroups)
-    assert_is_subset(interestingGroups, colnames(sampleData))
-
-    # Subset sample directories by metadata ------------------------------------
-    if (nrow(sampleData) < length(sampleFiles)) {
-        message("Loading a subset of samples, defined by the metadata file")
-        allSamples <- FALSE
-        sampleFiles <- sampleFiles[rownames(sampleData)]
-        message(paste(length(sampleFiles), "samples matched by metadata"))
-    } else {
-        allSamples <- TRUE
+        # Allow sample selection by with this file.
+        if (nrow(sampleData) < length(sampleFiles)) {
+            message("Loading a subset of samples, defined by the metadata file")
+            allSamples <- FALSE
+            sampleFiles <- sampleFiles[rownames(sampleData)]
+            message(paste(length(sampleFiles), "samples matched by metadata"))
+        }
     }
 
     # Counts -------------------------------------------------------------------
     counts <- .import.cellranger(sampleFiles)
-
-    # Multiplexed sample check -------------------------------------------------
-    # FIXME Break this out into a function.
-    # Check to see if multiplexed samples are present and require metadata.
-    multiplexedPattern <- "^(.+)_(\\d+)_([ACGT]+)$"
-    if (any(grepl(multiplexedPattern, colnames(counts)))) {
-        message("Multiplexed (aggregated) samples detected")
-        # Prepare data.frame of barcode mappings.
-        # Example:
-        # cellID: cellranger_AAACCTGGTTTACTCT_1
-        # description: cellranger
-        # barcode: AAACCTGGTTTACTCT
-        # index: 1
-        cellMap <- str_match(
-            string = colnames(counts),
-            pattern = "^(.+)_(\\d+)_([ACGT]+)$"
-        ) %>%
-            as.data.frame() %>%
-            set_colnames(c(
-                "cellID",
-                "description",
-                "index",
-                "barcode"
-            )) %>%
-            mutate_all(as.factor)
-
-        # Check for single sample and fix sampleData automatically if necessary
-        if (
-            identical(levels(cellMap[["index"]]), "1") &&
-            !"index" %in% colnames(sampleData)
-        ) {
-            sampleData[["index"]] <- factor("1")
-            rownames(sampleData) <- paste0(rownames(sampleData), "_1")
-        }
-
-        # Require user-defined metadata.
-        if (!"index" %in% colnames(sampleData)) {
-            stop(paste(
-                "`index` column must be defined using",
-                "`sampleMetadataFile` for multiplexed samples"
-            ))
-        }
-    }
 
     # Row data -----------------------------------------------------------------
     refJSON <- NULL
@@ -538,9 +493,7 @@ CellRanger <- function(
         message("Using `makeGRangesFromEnsembl()` for annotations")
         rowRanges <- makeGRangesFromEnsembl(
             organism = organism,
-            level = level,
-            build = genomeBuild,
-            release = ensemblRelease
+            level = level
         )
         if (is.null(genomeBuild)) {
             genomeBuild <- metadata(rowRanges)[["build"]]
@@ -555,33 +508,46 @@ CellRanger <- function(
     assert_is_all_of(rowRanges, "GRanges")
 
     # Column data --------------------------------------------------------------
+    # Automatic sample metadata.
+    if (is.null(sampleData)) {
+        # Get cell to sample mappings.
+        match <- str_match(
+            string = colnames(counts),
+            pattern = "^(.+)_[ACGT]{16}$"
+        )
+        samples <- unique(match[["sampleID"]])
+        sampleData <- minimalSampleData(samples)
+    }
+
+    sampleData <- sanitizeSampleData(sampleData)
+
     # Always prefilter, removing very low quality cells with no UMIs or genes.
-    metrics <- .calculateMetrics(
+    colData <- .calculateMetrics(
         object = counts,
         rowRanges = rowRanges,
         prefilter = TRUE
     )
 
     # Subset the counts to match the prefiltered metrics.
-    counts <- counts[, rownames(metrics), drop = FALSE]
+    assert_is_subset(rownames(colData), colnames(counts))
+    counts <- counts[, rownames(colData), drop = FALSE]
 
-    colData <- as(metrics, "DataFrame")
-    colData[["cellID"]] <- rownames(colData)
-    cell2sample <- mapCellsToSamples(
+    # Join sampleData into cell-level colData.
+    colData[["sampleID"]] <- mapCellsToSamples(
         cells = rownames(colData),
         samples = rownames(sampleData)
     )
-    colData[["sampleID"]] <- cell2sample
-    sampleData[["sampleID"]] <- rownames(sampleData)
-    colData <- merge(
+    sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
+    colData <- left_join(
         x = colData,
         y = sampleData,
-        by = "sampleID",
-        all.x = TRUE
+        by = "sampleID"
     )
-    rownames(colData) <- colData[["cellID"]]
-    colData[["cellID"]] <- NULL
-    sampleData[["sampleID"]] <- NULL
+
+    # Interesting groups -------------------------------------------------------
+    # Ensure internal formatting in camelCase
+    interestingGroups <- camel(interestingGroups)
+    assert_is_subset(interestingGroups, colnames(sampleData))
 
     # Metadata -----------------------------------------------------------------
     metadata <- list(
