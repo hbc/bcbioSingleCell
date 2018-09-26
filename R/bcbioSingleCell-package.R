@@ -36,8 +36,8 @@
 #'   sanitizeSampleData separator standardizeCall stripTranscriptVersions
 #'   theme_midnight theme_paperwhite tx2geneFromGFF uniteInterestingGroups
 #'   zerosVsDepth
-#' @importFrom bcbioBase getBarcodeCutoffFromCommands getLevelFromCommands
-#'   getUMITypeFromCommands projectDir readDataVersions readLog
+#' @importFrom bcbioBase getBarcodeCutoffFromCommandsLog getLevelFromCommandsLog
+#'   getUMITypeFromCommandsLog projectDir readDataVersions readLog
 #'   readProgramVersions readSampleData readYAMLSampleData sampleDirs
 #' @importFrom Biobase sampleNames
 #' @importFrom BiocGenerics cbind counts counts<- do.call rbind

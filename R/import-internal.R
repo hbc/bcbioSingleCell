@@ -210,7 +210,7 @@
         # `barcodes.tsv` is not tab delimited.
         # Move the multiplexed sample index number to the beginning for logical
         # sorting and consistency with bcbio approach.
-        colnames <- read_lines(colFile) %>%
+        colnames <- read_lines(barcodesFile) %>%
             sub("^([ACGT]+)-(.+)$", "\\2-\\1", .)
 
         counts <- readMM(file)

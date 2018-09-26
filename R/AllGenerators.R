@@ -1,4 +1,4 @@
-# TODO Work on enabling loading without `sampleMetadataFile` ever required.
+# FIXME Enable loading without `sampleMetadataFile` ever being required.
 # FIXME Consider taking a per sample file approach consistently, like CellRanger.
 
 
@@ -61,11 +61,12 @@
 #'
 #' @examples
 #' uploadDir <- system.file("extdata/indrops", package = "bcbioSingleCell")
+#' x <- bcbioSingleCell(uploadDir)
+#' print(x)
+#'
 #' x <- bcbioSingleCell(
 #'     uploadDir = uploadDir,
-#'     sampleMetadataFile = file.path(uploadDir, "metadata.csv"),
-#'     organism = "Homo sapiens",
-#'     ensemblRelease = 90L
+#'     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 #' )
 #' print(x)
 bcbioSingleCell <- function(
@@ -83,10 +84,6 @@ bcbioSingleCell <- function(
     # Legacy arguments ---------------------------------------------------------
     dots <- list(...)
     call <- match.call()
-    # organism
-    if (!"organism" %in% names(call)) {
-        message("`organism` is recommended, to acquire gene annotations")
-    }
     # ensemblVersion
     if ("ensemblVersion" %in% names(call)) {
         warning("Use `ensemblRelease` instead of `ensemblVersion`")
@@ -174,9 +171,9 @@ bcbioSingleCell <- function(
     )
     assert_is_character(commandsLog)
 
-    cutoff <- getBarcodeCutoffFromCommands(commandsLog)
-    level <- getLevelFromCommands(commandsLog)
-    umiType <- getUMITypeFromCommands(commandsLog)
+    cutoff <- getBarcodeCutoffFromCommandsLog(commandsLog)
+    level <- getLevelFromCommandsLog(commandsLog)
+    umiType <- getUMITypeFromCommandsLog(commandsLog)
 
     # Sample metadata ----------------------------------------------------------
     # External file required for multiplexed data.
@@ -190,11 +187,13 @@ bcbioSingleCell <- function(
         ))
     }
 
+    # FIXME...this doesn't work.
     if (is_a_string(sampleMetadataFile)) {
         sampleData <- readSampleData(sampleMetadataFile)
     } else {
         sampleData <- readYAMLSampleData(yamlFile)
     }
+    stop("RETHINK THIS")
 
     # Check for incorrect reverse complement input.
     if ("sequence" %in% colnames(sampleData)) {
@@ -259,6 +258,7 @@ bcbioSingleCell <- function(
             ensemblRelease <- metadata(rowRanges)[["release"]]
         }
     } else {
+        message("Unknown organism. Skipping gene annotations.")
         rowRanges <- emptyRanges(rownames(counts))
     }
     assert_is_all_of(rowRanges, "GRanges")
@@ -553,6 +553,7 @@ CellRanger <- function(
             ensemblRelease <- metadata(rowRanges)[["release"]]
         }
     } else {
+        message("Unknown organism. Skipping gene annotations.")
         rowRanges <- emptyRanges(rownames(counts))
     }
     assert_is_all_of(rowRanges, "GRanges")

@@ -14,11 +14,14 @@
     codingGenes <- character()
     mitoGenes <- character()
     biotypeWarning <- function() {
-        warning(paste(
-            "Calculating metrics without biotype information.\n",
-            "`rowRanges` is required to determine:",
-            "`nCoding`, `nMito`, `mitoRatio`."
-        ), call. = FALSE)
+        message(paste(
+            "Calculating metrics without biotype information.",
+            "`rowRanges` is required to calculate:",
+            "  - nCoding",
+            "  - nMito",
+            "  - mitoRatio",
+            sep = "\n"
+        ))
     }
 
     if (length(rowRanges) > 0L) {
