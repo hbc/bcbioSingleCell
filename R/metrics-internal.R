@@ -17,9 +17,7 @@
         message(paste(
             "Calculating metrics without biotype information.",
             "`rowRanges` is required to calculate:",
-            "  - nCoding",
-            "  - nMito",
-            "  - mitoRatio",
+            "  nCoding, nMito, mitoRatio",
             sep = "\n"
         ))
     }
