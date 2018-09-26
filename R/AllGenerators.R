@@ -515,11 +515,13 @@ CellRanger <- function(
             string = colnames(counts),
             pattern = "^(.+)_[ACGT]{16}$"
         )
-        samples <- unique(match[["sampleID"]])
+        samples <- unique(match[, 2L, drop = TRUE])
         sampleData <- minimalSampleData(samples)
     }
 
     sampleData <- sanitizeSampleData(sampleData)
+
+    # FIXME Add a message to the user about which samples here?
 
     # Always prefilter, removing very low quality cells with no UMIs or genes.
     colData <- .calculateMetrics(
