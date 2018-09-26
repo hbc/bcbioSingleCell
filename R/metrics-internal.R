@@ -23,7 +23,9 @@
 
     if (length(rowRanges) > 0L) {
         assert_is_all_of(rowRanges, "GRanges")
-        assert_are_identical(rownames(object), names(rowRanges))
+        assert_is_subset(rownames(object), names(rowRanges))
+        # Subset ranges to match matrix.
+        rowRanges <- rowRanges[rownames(object)]
         rowData <- as(rowRanges, "tbl_df")
         if ("broadClass" %in% colnames(rowData)) {
             # Drop rows with NA broad class

@@ -80,9 +80,9 @@ run directory as a remote connection over
 uploadDir <- system.file("extdata/indrops", package = "bcbioSingleCell")
 x <- bcbioSingleCell(
     uploadDir = uploadDir,
-    organism = "Homo sapiens",
     sampleMetadataFile = file.path(uploadDir, "metadata.csv"),
-    ensemblRelease = 87L
+    organism = "Homo sapiens",
+    ensemblRelease = 90L
 )
 print(x)
 }
