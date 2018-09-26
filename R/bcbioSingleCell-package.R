@@ -28,15 +28,16 @@
 #'   assertIsFillScaleDiscreteOrNULL assertIsHeaderLevel assignAndSaveData
 #'   basejump_geom_abline basejump_geom_label basejump_geom_label_average
 #'   basejump_geom_label_repel camel cell2sample emptyRanges gene2symbol
-#'   hasRownames interestingGroups interestingGroups<- initializeDirectory
-#'   makeGRangesFromEnsembl makeGRangesFromGFF makeNames
-#'   makeSingleCellExperiment makeTx2geneFromGFF mapCellsToSamples
+#'   hasRownames import interestingGroups interestingGroups<-
+#'   initializeDirectory makeDimnames makeGRangesFromEnsembl makeGRangesFromGFF
+#'   makeNames makeSingleCellExperiment makeTx2geneFromGFF mapCellsToSamples
 #'   matchArgsToDoCall matchInterestingGroups markdownHeader markdownPlotlist
-#'   methodFormals prepareTemplate printString readJSON readYAML
+#'   methodFormals minimalSampleData prepareTemplate printString
 #'   sanitizeSampleData separator standardizeCall stripTranscriptVersions
 #'   theme_midnight theme_paperwhite tx2geneFromGFF uniteInterestingGroups
 #'   zerosVsDepth
-#' @importFrom bcbioBase minimalSampleData projectDir readDataVersions readLog
+#' @importFrom bcbioBase getBarcodeCutoffFromCommandsLog getLevelFromCommandsLog
+#'   getUMITypeFromCommandsLog projectDir readDataVersions readLog
 #'   readProgramVersions readSampleData readYAMLSampleData sampleDirs
 #' @importFrom Biobase sampleNames
 #' @importFrom BiocGenerics cbind counts counts<- do.call rbind

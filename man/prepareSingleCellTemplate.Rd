@@ -40,10 +40,10 @@ unlink(c(
 ))
 }
 \seealso{
-Other R Markdown Functions: \code{\link{kables}},
-  \code{\link{markdownHeader}}, \code{\link{markdownLink}},
-  \code{\link{markdownList}},
-  \code{\link{markdownPlotlist}}
+Other R Markdown Functions: \code{\link{markdownHeader}},
+  \code{\link{markdownLink}}, \code{\link{markdownList}},
+  \code{\link{markdownPlotlist}},
+  \code{\link{markdownTables}}
 }
 \author{
 Michael Steinbaugh

@@ -4,14 +4,19 @@
 \alias{bcbioSingleCell}
 \title{Read bcbio Single-Cell RNA-Seq Data}
 \usage{
-bcbioSingleCell(uploadDir, organism = NULL, sampleMetadataFile = NULL,
-  interestingGroups = "sampleName", ensemblRelease = NULL,
-  genomeBuild = NULL, transgeneNames = NULL, spikeNames = NULL,
-  gffFile = NULL, ...)
+bcbioSingleCell(uploadDir, sampleMetadataFile = NULL, organism = NULL,
+  ensemblRelease = NULL, genomeBuild = NULL, gffFile = NULL,
+  transgeneNames = NULL, spikeNames = NULL,
+  interestingGroups = "sampleName", ...)
 }
 \arguments{
 \item{uploadDir}{\code{string}. Path to final upload directory. This path is set
 when running "\code{bcbio_nextgen -w template}".}
+
+\item{sampleMetadataFile}{\code{string} or \code{NULL}. Sample barcode metadata file.
+Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
+be left \code{NULL}, but otherwise suggested for runs with multipliexed FASTQs
+containing multiple index barcodes (e.g. inDrops).}
 
 \item{organism}{\code{string} or \code{NULL}. Organism name. Use the full Latin name
 (e.g. "Homo sapiens"), since this will be input downstream to AnnotationHub
@@ -19,15 +24,6 @@ and ensembldb, unless \code{gffFile} is set. If left \code{NULL} (\emph{not reco
 the function call will skip loading gene-level annotations into
 \code{\link[=rowRanges]{rowRanges()}}. This can be useful for poorly annotation genomes or
 experiments involving multiple genomes.}
-
-\item{sampleMetadataFile}{\code{string} or \code{NULL}. Sample barcode metadata file.
-Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
-be left \code{NULL}, but otherwise required for runs with multipliexed FASTQs
-containing multiple index barcodes (e.g. inDrop).}
-
-\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
-interesting groups. Must be formatted in camel case and intersect with
-\code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{ensemblRelease}{\code{scalar integer} or \code{NULL}. Ensembl release version. If
 \code{NULL}, defaults to current release, and does not typically need to be
@@ -37,12 +33,6 @@ unless \code{gffFile} is set.}
 \item{genomeBuild}{\code{string} or \code{NULL}. Ensembl genome build name (e.g.
 "GRCh38"). This will be passed to AnnotationHub for \code{EnsDb} annotation
 matching, unless \code{gffFile} is set.}
-
-\item{transgeneNames}{\code{character} or \code{NULL}. Vector indicating which
-\code{\link[=assay]{assay()}} rows denote transgenes (e.g. EGFP, TDTOMATO).}
-
-\item{spikeNames}{\code{character} or \code{NULL}. Vector indicating which \code{\link[=assay]{assay()}}
-rows denote spike-in sequences (e.g. ERCCs).}
 
 \item{gffFile}{\code{string} or \code{NULL}. \emph{Advanced use only; not recommended.} By
 default, we recommend leaving this \code{NULL} for genomes that are supported on
@@ -55,6 +45,16 @@ Feature Format) file is required. Generally, we recommend using a GTF
 are supported. The function will internally generate transcript-to-gene
 mappings and construct a \code{GRanges} object containing the genomic ranges
 (\code{\link[=rowRanges]{rowRanges()}}).}
+
+\item{transgeneNames}{\code{character} or \code{NULL}. Vector indicating which
+\code{\link[=assay]{assay()}} rows denote transgenes (e.g. EGFP, TDTOMATO).}
+
+\item{spikeNames}{\code{character} or \code{NULL}. Vector indicating which \code{\link[=assay]{assay()}}
+rows denote spike-in sequences (e.g. ERCCs).}
+
+\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+\code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
 }
@@ -78,11 +78,12 @@ run directory as a remote connection over
 
 \examples{
 uploadDir <- system.file("extdata/indrops", package = "bcbioSingleCell")
+x <- bcbioSingleCell(uploadDir)
+print(x)
+
 x <- bcbioSingleCell(
     uploadDir = uploadDir,
-    organism = "Homo sapiens",
-    sampleMetadataFile = file.path(uploadDir, "metadata.csv"),
-    ensemblRelease = 87L
+    sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 )
 print(x)
 }

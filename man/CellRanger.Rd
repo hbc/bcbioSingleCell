@@ -5,9 +5,9 @@
 \title{Read 10X Genomics Cell Ranger Single-Cell RNA-Seq Data}
 \usage{
 CellRanger(uploadDir, format = c("mtx", "hdf5"), filtered = TRUE,
-  organism = NULL, sampleMetadataFile = NULL,
-  interestingGroups = "sampleName", refdataDir = NULL,
-  gffFile = NULL, transgeneNames = NULL, spikeNames = NULL, ...)
+  sampleMetadataFile = NULL, organism = NULL, refdataDir = NULL,
+  gffFile = NULL, transgeneNames = NULL, spikeNames = NULL,
+  interestingGroups = "sampleName")
 }
 \arguments{
 \item{uploadDir}{\code{string}. Path to Cell Ranger output directory. This
@@ -20,21 +20,17 @@ directory.}
 \item{filtered}{\code{boolean}. Use filtered (recommended) or raw counts. Note
 that raw counts still contain only whitelisted cellular barcodes.}
 
+\item{sampleMetadataFile}{\code{string} or \code{NULL}. Sample barcode metadata file.
+Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
+be left \code{NULL}, but otherwise suggested for runs with multipliexed FASTQs
+containing multiple index barcodes (e.g. inDrops).}
+
 \item{organism}{\code{string} or \code{NULL}. Organism name. Use the full Latin name
 (e.g. "Homo sapiens"), since this will be input downstream to AnnotationHub
 and ensembldb, unless \code{gffFile} is set. If left \code{NULL} (\emph{not recommended}),
 the function call will skip loading gene-level annotations into
 \code{\link[=rowRanges]{rowRanges()}}. This can be useful for poorly annotation genomes or
 experiments involving multiple genomes.}
-
-\item{sampleMetadataFile}{\code{string} or \code{NULL}. Sample barcode metadata file.
-Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
-be left \code{NULL}, but otherwise required for runs with multipliexed FASTQs
-containing multiple index barcodes (e.g. inDrop).}
-
-\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
-interesting groups. Must be formatted in camel case and intersect with
-\code{\link[=sampleData]{sampleData()}} colnames.}
 
 \item{refdataDir}{\code{string} or \code{NULL}. Directory path to Cell Ranger reference
 annotation data.}
@@ -57,7 +53,9 @@ mappings and construct a \code{GRanges} object containing the genomic ranges
 \item{spikeNames}{\code{character} or \code{NULL}. Vector indicating which \code{\link[=assay]{assay()}}
 rows denote spike-in sequences (e.g. ERCCs).}
 
-\item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
+\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+\code{\link[=sampleData]{sampleData()}} colnames.}
 }
 \value{
 \code{CellRanger}.
