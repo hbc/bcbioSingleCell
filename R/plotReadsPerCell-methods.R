@@ -1,3 +1,7 @@
+# FIXME Need to add legacy support for cellular barcodes list saved as tibble.
+
+
+
 #' Plot Read Counts per Cell
 #'
 #' Plot the distribution of read counts for all unfiltered cellular barcodes.
@@ -316,7 +320,7 @@ NULL
 
 
 
-.plotReadsPerCell.SCE <-  # nolint
+.plotReadsPerCell.bcbioSingleCell <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -346,33 +350,21 @@ NULL
         assert_is_an_integer(min)
 
         # Obtain the sample metadata
-        sampleData <- sampleData(object)
-        assert_is_non_empty(sampleData)
-        sampleData <- as.data.frame(sampleData)
-        sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
+        sampleData <- as_tibble(sampleData(object), rownames = "sampleID")
 
+        # FIXME Need to improve this code.
         # Obtain the read counts. Use the unfiltered reads stashed in the
-        # metadata if available, otherwise use the metrics return.
-        cbList <- metadata(object)[["cellularBarcodes"]]
-        if (length(cbList)) {
-            data <- .bindCellularBarcodes(cbList)
-        } else {
-            data <- metrics(object)
-        }
+        # metadata if available, otherwise use the `nCount` column in colData.
+        # cbList <- metadata(object)[["cellularBarcodes"]]
+        # if (is.list(cbList)) {
+        #     nCount <- .nCount(cbList)
+        #     stop("Need to rework this per sample")
+        # } else {
+        #     data <- metrics(object)
+        # }
 
-        # Early return NULL if `nCount` isn't present
-        if (!"nCount" %in% colnames(data)) {
-            warning("object does not contain nCount column in `colData()`.")
-            return(invisible())
-        }
-
-        data <- left_join(
-            x = data[, c("sampleID", "nCount")],
-            y = sampleData,
-            by = "sampleID"
-        ) %>%
-            as_tibble() %>%
-            group_by(!!sym("sampleID"))
+        data <- metrics(object)
+        assert_is_integer(data[["nCount"]])
 
         if (geom == "boxplot") {
             p <- do.call(
@@ -450,5 +442,5 @@ NULL
 setMethod(
     f = "plotReadsPerCell",
     signature = signature("bcbioSingleCell"),
-    definition = .plotReadsPerCell.SCE
+    definition = .plotReadsPerCell.bcbioSingleCell
 )
