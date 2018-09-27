@@ -554,11 +554,6 @@ CellRanger <- function(
         refJSON = refJSON,
         call = match.call()
     )
-    # Add user-defined custom metadata, if specified.
-    if (length(dots)) {
-        assert_are_disjoint_sets(names(metadata), names(dots))
-        metadata <- c(metadata, dots)
-    }
 
     # Return -------------------------------------------------------------------
     sce <- .new.SingleCellExperiment(
