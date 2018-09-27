@@ -64,15 +64,11 @@ interesting groups. Must be formatted in camel case and intersect with
 \description{
 Read bcbio Single-Cell RNA-Seq Data
 }
-\note{
-\code{bcbioSingleCell} extended \code{SummarizedExperiment} prior to v0.1.0,
-where we migrated to \code{SingleCellExperiment}.
-}
 \section{Remote Data}{
 
 
-When working in RStudio, we recommend connecting to the bcbio-nextgen
-run directory as a remote connection over
+When working in RStudio, we recommend connecting to the bcbio-nextgen run
+directory as a remote connection over
 \href{https://github.com/osxfuse/osxfuse/wiki/SSHFS}{sshfs}.
 }
 
