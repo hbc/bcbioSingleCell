@@ -25,13 +25,13 @@
 #' genes <- head(rownames(indrops_small), 100L)
 #' head(genes)
 #'
-#' # Subset by cell identifiers
+#' # Subset by cell identifiers.
 #' indrops_small[, cells]
 #'
-#' # Subset by genes
+#' # Subset by genes.
 #' indrops_small[genes, ]
 #'
-#' # Subset by both genes and cells
+#' # Subset by both genes and cells.
 #' indrops_small[genes, cells]
 NULL
 
@@ -82,9 +82,10 @@ setMethod(
         # Metadata -------------------------------------------------------------
         metadata <- metadata(sce)
 
-        # cellularBarcodes
-        # Drop the raw cellular barcode distributions for all cells
+        # Drop the raw cellular barcode distributions for all cells.
         metadata[["cellularBarcodes"]] <- NULL
+        # Drop this legacy slot, if defined.
+        metadata[["cell2sample"]] <- NULL
 
         metadata[["subset"]] <- TRUE
         # Update version, if necessary
@@ -92,13 +93,6 @@ setMethod(
             metadata[["originalVersion"]] <- metadata[["version"]]
             metadata[["version"]] <- packageVersion
         }
-
-        # cell2sample
-        cell2sample <- metadata[["cell2sample"]]
-        # Note that we're subsetting `sampleData` by the factor levels in
-        # `cell2sample`, so this must come first
-        cell2sample <- droplevels(cell2sample[cells])
-        metadata[["cell2sample"]] <- cell2sample
 
         # aggregateReplicates
         aggregateReplicates <- metadata[["aggregateReplicates"]]
