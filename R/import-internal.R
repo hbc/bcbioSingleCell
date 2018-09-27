@@ -143,9 +143,29 @@
             file = sampleFiles,
             FUN = function(sampleID, file) {
                 counts <- fun(file)
+
+                # Sanitize the cellular barcodes, if necessary.
+                colnames <- colnames(counts)
+
+                # Strip index when all barcodes end with "-1".
+                if (all(grepl("-1$", colnames))) {
+                    colnames <- sub("-1", "", colnames)
+                }
+
+                # Now move the multiplexed index name/number to the beginning,
+                # for more logical sorting and consistency with bcbio approach.
+                colnames <- sub(
+                    pattern = "^([ACGT]+)-(.+)$",
+                    replacement = "\\2-\\1",
+                    x = colnames
+                )
+
                 # Prefix cell barcodes with sample identifier when we're loading
                 # counts from multiple samples.
-                if (length(sampleFiles) > 1L) {
+                if (
+                    length(sampleFiles) > 1L ||
+                    grepl("^([[:digit:]]+)-([ACGT]+)$", colnames(counts))
+                ) {
                     colnames(counts) <-
                         paste(sampleID, colnames(counts), sep = "_")
                 }
@@ -189,9 +209,6 @@
         rownames <- h5[["genes"]]
         colnames <- h5[["barcodes"]]
 
-        # Move the multiplexed sample index number to the beginning.
-        colnames <- sub("^([ACGT]+)-(\\d+)$", "\\2-\\1", colnames)
-
         assert_are_identical(length(rownames), nrow(counts))
         assert_are_identical(length(colnames), ncol(counts))
 
@@ -224,10 +241,7 @@
             pull("geneID")
 
         # `barcodes.tsv` is not tab delimited.
-        # Move the multiplexed sample index number to the beginning for logical
-        # sorting and consistency with bcbio approach.
-        colnames <- read_lines(barcodesFile) %>%
-            sub("^([ACGT]+)-(.+)$", "\\2-\\1", .)
+        colnames <- read_lines(barcodesFile)
 
         counts <- readMM(file)
 
