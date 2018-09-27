@@ -1,4 +1,3 @@
-# FIXME Enable loading without `sampleMetadataFile` ever being required.
 # FIXME Consider taking a per sample file approach consistently, like CellRanger.
 
 
@@ -8,12 +7,9 @@
 #'
 #' @section Remote Data:
 #'
-#' When working in RStudio, we recommend connecting to the bcbio-nextgen
-#'   run directory as a remote connection over
-#'   [sshfs](https://github.com/osxfuse/osxfuse/wiki/SSHFS).
-#'
-#' @note `bcbioSingleCell` extended `SummarizedExperiment` prior to v0.1.0,
-#'   where we migrated to `SingleCellExperiment`.
+#' When working in RStudio, we recommend connecting to the bcbio-nextgen run
+#' directory as a remote connection over
+#' [sshfs](https://github.com/osxfuse/osxfuse/wiki/SSHFS).
 #'
 #' @family S4 Generators
 #' @author Michael Steinbaugh, Rory Kirchner
@@ -82,6 +78,9 @@ bcbioSingleCell <- function(
     interestingGroups = "sampleName",
     ...
 ) {
+    allSamples <- TRUE
+    sampleData <- NULL
+
     # Legacy arguments ---------------------------------------------------------
     dots <- list(...)
     call <- match.call()
@@ -135,17 +134,7 @@ bcbioSingleCell <- function(
     rm(match)
 
     # Sequencing lanes ---------------------------------------------------------
-    if (any(grepl(lanePattern, sampleDirs))) {
-        lanes <- str_match(names(sampleDirs), lanePattern) %>%
-            .[, 2L] %>%
-            unique() %>%
-            length()
-        message(paste(
-            lanes, "sequencing lane detected", "(technical replicates)"
-        ))
-    } else {
-        lanes <- 1L
-    }
+    lanes <- detectLanes(sampleDirs)
 
     # Project summary YAML -----------------------------------------------------
     yamlFile <- file.path(projectDir, "project-summary.yaml")
@@ -166,13 +155,11 @@ bcbioSingleCell <- function(
     assert_is_character(log)
     assert_is_character(commandsLog)
 
-    allSamples <- TRUE
-    sampleData <- NULL
     cutoff <- getBarcodeCutoffFromCommandsLog(commandsLog)
     level <- getLevelFromCommandsLog(commandsLog)
     umiType <- getUMITypeFromCommandsLog(commandsLog)
 
-    # Grep string for multiplexed data.
+    # Check to see if we're dealing with a multiplexed platform.
     multiplexed <- any(vapply(
         X = c("dropseq", "indrop"),
         FUN = function(pattern) {
@@ -249,7 +236,7 @@ bcbioSingleCell <- function(
         if (isTRUE(multiplexed)) {
             # Multiplexed samples without user-defined metadata.
             message(paste0(
-                "`sampleMetadataFile` is recommended for",
+                "`sampleMetadataFile` is recommended for ",
                 "multiplexed samples (e.g. ", umiType, ")."
             ))
             sampleData <- minimalSampleData(basename(sampleDirs))
@@ -257,11 +244,7 @@ bcbioSingleCell <- function(
             sampleData <- readYAMLSampleData(yamlFile)
         }
     }
-
     assert_is_subset(rownames(sampleData), names(sampleDirs))
-
-    # FIXME Take out the index code?
-    # sampleData <- sanitizeSampleData(sampleData)
 
     # Always prefilter, removing very low quality cells with no UMIs or genes.
     colData <- .calculateMetrics(
@@ -276,17 +259,19 @@ bcbioSingleCell <- function(
 
     # Bind the `nCount` column into the colData. These are the number of counts
     # bcbio uses for initial filtering (minimum_barcode_depth in YAML).
-    cbData <- .bindCellularBarcodes(cbList)
-    assert_is_all_of(cbData, "DataFrame")
-    assert_is_subset(rownames(colData), rownames(cbData))
-    assert_is_subset("n", colnames(cbData))
-    colData[["nCount"]] <- cbData[rownames(colData), "n", drop = TRUE]
+    nCount <- .nCount(cbList)
+    assert_is_subset(rownames(colData), names(nCount))
+    colData[["nCount"]] <- nCount[rownames(colData)]
 
-    # Join sampleData into cell-level colData.
-    colData[["sampleID"]] <- mapCellsToSamples(
-        cells = rownames(colData),
-        samples = rownames(sampleData)
-    )
+    # Join `sampleData` into cell-level `colData`.
+    if (has_length(nrow(sampleData), n = 1L)) {
+        colData[["sampleID"]] <- as.factor(rownames(sampleData))
+    } else {
+        colData[["sampleID"]] <- mapCellsToSamples(
+            cells = rownames(colData),
+            samples = rownames(sampleData)
+        )
+    }
     sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
     colData <- left_join(
         x = colData,
