@@ -1,10 +1,13 @@
 # inDrops example data
 # Using harvard-indrop-v3 barcodes
-# 2018-09-19
+# 2018-09-27
 
 library(tidyverse)
 library(Seurat)
 library(Matrix)
+
+# Restrict to 1 MB per file.
+limit <- structure(1e6, class = "object_size")
 
 # Minimal example bcbio upload directory =======================================
 # Include the top 500 genes (rows) and cells (columns).
@@ -72,15 +75,28 @@ write_lines(colnames(counts), path = colnames_file)
 write_tsv(barcodes, path = barcodes_file, col_names = FALSE)
 
 # bcbioSingleCell object =======================================================
-bcb <- bcbioSingleCell(
+sce <- bcbioSingleCell(
     uploadDir = upload_dir,
     sampleMetadataFile = file.path(upload_dir, "metadata.csv"),
     organism = "Homo sapiens",
     ensemblRelease = 90L
 )
-# Apply example filtering without excluding any cells.
-bcb <- filterCells(bcb)
-stopifnot(identical(dim(bcb), c(500L, 500L)))
 
-indrops_small <- bcb
+# Include only minimal metadata columns in rowRanges.
+mcols(rowRanges(sce)) <- mcols(rowRanges(sce)) %>%
+    as("tbl_df") %>%
+    select(rowname, broadClass, geneBiotype, geneID, geneName) %>%
+    mutate_if(is.factor, droplevels) %>%
+    as("DataFrame")
+
+# Report the size of each slot in bytes.
+vapply(
+    X = coerceS4ToList(sce),
+    FUN = object.size,
+    FUN.VALUE = numeric(1L)
+)
+stopifnot(object.size(sce) < limit)
+stopifnot(validObject(sce))
+
+indrops_small <- sce
 devtools::use_data(indrops_small, compress = "xz", overwrite = TRUE)
