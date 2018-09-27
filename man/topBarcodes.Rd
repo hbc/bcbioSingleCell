@@ -32,12 +32,14 @@ column in descending order. Cellular barcodes are in the \code{cellID} column.
 Obtain the top cellular barcodes based on UMI counts.
 }
 \examples{
+object <- indrops_small
+
 # tibble
-x <- topBarcodes(indrops_small, return = "tibble")
+x <- topBarcodes(object), return = "tibble")
 glimpse(x)
 
 # list
-x <- topBarcodes(indrops_small, return = "list")
+x <- topBarcodes(object, return = "list")
 lapply(x, class)
 }
 \author{

@@ -15,12 +15,14 @@
 #' - "`list`": `list`. Top barcodes as `character`, split by `sampleID`.
 #'
 #' @examples
+#' object <- indrops_small
+#'
 #' # tibble
-#' x <- topBarcodes(indrops_small, return = "tibble")
+#' x <- topBarcodes(object), return = "tibble")
 #' glimpse(x)
 #'
 #' # list
-#' x <- topBarcodes(indrops_small, return = "list")
+#' x <- topBarcodes(object, return = "list")
 #' lapply(x, class)
 NULL
 
@@ -37,12 +39,10 @@ NULL
         return <- match.arg(return)
 
         metrics <- metrics(object)
-        cols <- c("sampleID", "sampleName", "nUMI")
+        cols <- c("cellID", "sampleID", "sampleName", "nUMI")
         assert_is_subset(cols, colnames(metrics))
         data <- metrics %>%
-            as.data.frame() %>%
-            rownames_to_column("cellID") %>%
-            select(!!!syms(c(cols, "cellID"))) %>%
+            select(!!!syms(cols)) %>%
             group_by(!!sym("sampleID")) %>%
             arrange(desc(!!sym("nUMI")), .by_group = TRUE) %>%
             slice(seq_len(n))
