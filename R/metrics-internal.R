@@ -13,12 +13,12 @@
 
     codingGenes <- character()
     mitoGenes <- character()
-    biotypeWarning <- function() {
-        message(paste(
-            "Calculating metrics without biotype information.",
-            "`rowRanges` is required to calculate:",
-            "  nCoding, nMito, mitoRatio",
-            sep = "\n"
+
+    missingBiotype <- function() {
+        message(paste0(
+            "Calculating metrics without biotype information.\n",
+            "`rowRanges` is required to calculate: ",
+            "nCoding, nMito, mitoRatio"
         ))
     }
 
@@ -42,10 +42,10 @@
                 pull("rowname")
             message(paste(length(mitoGenes), "mitochondrial genes"))
         } else {
-            biotypeWarning()
+            missingBiotype()
         }
     } else {
-        biotypeWarning()
+        missingBiotype()
     }
 
     # Following the Seurat `seurat@meta.data` naming conventions.
