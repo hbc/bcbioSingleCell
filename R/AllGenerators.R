@@ -1,7 +1,3 @@
-# FIXME Consider taking a per sample file approach consistently, like CellRanger.
-
-
-
 # bcbioSingleCell ==============================================================
 #' Read bcbio Single-Cell RNA-Seq Data
 #'
@@ -86,19 +82,19 @@ bcbioSingleCell <- function(
     call <- match.call()
     # ensemblVersion
     if ("ensemblVersion" %in% names(call)) {
-        warning("Use `ensemblRelease` instead of `ensemblVersion`")
+        warning("Use `ensemblRelease` instead of `ensemblVersion`.")
         ensemblRelease <- call[["ensemblVersion"]]
         dots[["ensemblVersion"]] <- NULL
     }
     # gtfFile
     if ("gtfFile" %in% names(call)) {
-        warning("Use `gffFile` instead of `gtfFile`")
+        warning("Use `gffFile` instead of `gtfFile`.")
         gffFile <- call[["gtfFile"]]
         dots[["gtfFile"]] <- NULL
     }
     # annotable
     if ("annotable" %in% names(call)) {
-        stop("Use `gffFile` instead of `annotable`")
+        stop("Use `gffFile` instead of `annotable`.")
     }
     rm(dots, call)
 
@@ -121,17 +117,6 @@ bcbioSingleCell <- function(
     uploadDir <- normalizePath(uploadDir, winslash = "/", mustWork = TRUE)
     projectDir <- projectDir(uploadDir)
     sampleDirs <- sampleDirs(uploadDir)
-
-    # Run date and template name -----------------------------------------------
-    # Get run date and template name from project directory.
-    # This information will be stashed in `metadata()`.
-    match <- str_match(
-        string = basename(projectDir),
-        pattern = projectDirPattern
-    )
-    runDate <- as.Date(match[[2L]])
-    template <- match[[3L]]
-    rm(match)
 
     # Sequencing lanes ---------------------------------------------------------
     lanes <- detectLanes(sampleDirs)
@@ -170,14 +155,14 @@ bcbioSingleCell <- function(
 
     # User-defined sample metadata ---------------------------------------------
     if (is_a_string(sampleMetadataFile)) {
-        sampleData <- readSampleData(sampleMetadataFile)
+        sampleData <- readSampleData(sampleMetadataFile, lanes = lanes)
 
         # Allow sample selection by with this file.
         if (nrow(sampleData) < length(sampleDirs)) {
-            message("Loading a subset of samples, defined by the metadata file")
+            message("Loading a subset of samples, defined by the metadata.")
             allSamples <- FALSE
             sampleDirs <- sampleDirs[rownames(sampleData)]
-            message(paste(length(sampleDirs), "samples matched by metadata"))
+            message(paste(length(sampleDirs), "samples matched by metadata."))
         }
 
         # Error on incorrect reverse complement input.
@@ -210,7 +195,7 @@ bcbioSingleCell <- function(
         rowRanges <- makeGRangesFromGFF(gffFile, level = level)
     } else if (is_a_string(organism)) {
         # Using AnnotationHub/ensembldb to obtain the annotations.
-        message("Using `makeGRangesFromEnsembl()` for annotations")
+        message("Using `makeGRangesFromEnsembl()` for annotations.")
         rowRanges <- makeGRangesFromEnsembl(
             organism = organism,
             level = level,
@@ -224,7 +209,7 @@ bcbioSingleCell <- function(
             ensemblRelease <- metadata(rowRanges)[["release"]]
         }
     } else {
-        message("Unknown organism. Skipping gene annotations.")
+        message("Unknown organism. Skipping annotations.")
         rowRanges <- emptyRanges(rownames(counts))
     }
     assert_is_all_of(rowRanges, "GRanges")
@@ -279,12 +264,21 @@ bcbioSingleCell <- function(
         by = "sampleID"
     )
 
-    # Interesting groups -------------------------------------------------------
-    # Ensure internal formatting in camelCase
+    # Metadata -----------------------------------------------------------------
+    # TODO Make this a function in bcbioBase.
+    # Run date and template name.
+    match <- str_match(
+        string = basename(projectDir),
+        pattern = projectDirPattern
+    )
+    runDate <- as.Date(match[[2L]])
+    template <- match[[3L]]
+    rm(match)
+
+    # Interesting groups.
     interestingGroups <- camel(interestingGroups)
     assert_is_subset(interestingGroups, colnames(sampleData))
 
-    # Metadata -----------------------------------------------------------------
     metadata <- list(
         version = packageVersion,
         pipeline = "bcbio",
@@ -298,6 +292,7 @@ bcbioSingleCell <- function(
         ensemblRelease = as.integer(ensemblRelease),
         umiType = umiType,
         allSamples = allSamples,
+        lanes = lanes,
         # bcbio-specific -------------------------------------------------------
         projectDir = projectDir,
         template = template,
@@ -433,10 +428,10 @@ CellRanger <- function(
         sampleData <- readSampleData(sampleMetadataFile)
         # Allow sample selection by with this file.
         if (nrow(sampleData) < length(sampleFiles)) {
-            message("Loading a subset of samples, defined by the metadata file")
+            message("Loading a subset of samples, defined by the metadata.")
             allSamples <- FALSE
             sampleFiles <- sampleFiles[rownames(sampleData)]
-            message(paste(length(sampleFiles), "samples matched by metadata"))
+            message(paste(length(sampleFiles), "samples matched by metadata."))
         }
     }
 
@@ -450,7 +445,7 @@ CellRanger <- function(
 
     # Prepare gene annotations as GRanges.
     if (is_a_string(refdataDir)) {
-        message("Using 10X Genomics reference data for gene annotations")
+        message("Using 10X Genomics reference data for annotations.")
         message(paste("refdataDir:", refdataDir))
         # JSON data
         refJSONFile <- file.path(refdataDir, "reference.json")
@@ -477,7 +472,7 @@ CellRanger <- function(
         # in the refdata directory. It will also drop genes that are now dead in
         # the current Ensembl release. Don't warn about old Ensembl release
         # version.
-        message("Using `makeGRangesFromEnsembl()` for annotations")
+        message("Using `makeGRangesFromEnsembl()` for annotations.")
         rowRanges <- makeGRangesFromEnsembl(
             organism = organism,
             level = level
@@ -489,7 +484,7 @@ CellRanger <- function(
             ensemblRelease <- metadata(rowRanges)[["release"]]
         }
     } else {
-        message("Unknown organism. Skipping gene annotations.")
+        message("Unknown organism. Skipping annotations.")
         rowRanges <- emptyRanges(rownames(counts))
     }
     assert_is_all_of(rowRanges, "GRanges")
@@ -534,12 +529,11 @@ CellRanger <- function(
         by = "sampleID"
     )
 
-    # Interesting groups -------------------------------------------------------
-    # Ensure internal formatting in camelCase
+    # Metadata -----------------------------------------------------------------
+    # Interesting groups.
     interestingGroups <- camel(interestingGroups)
     assert_is_subset(interestingGroups, colnames(sampleData))
 
-    # Metadata -----------------------------------------------------------------
     metadata <- list(
         version = packageVersion,
         pipeline = pipeline,
@@ -553,6 +547,7 @@ CellRanger <- function(
         ensemblRelease = as.integer(ensemblRelease),
         umiType = umiType,
         allSamples = allSamples,
+        lanes = lanes,
         # cellranger-specific --------------------------------------------------
         refdataDir = refdataDir,
         refJSON = refJSON,
