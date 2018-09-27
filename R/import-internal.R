@@ -117,7 +117,7 @@
         rownames(counts) <- rownames
         colnames(counts) <- colnames
 
-        message(paste0("Imported ", basename(dir)))
+        message(paste0("Imported ", basename(dir), "."))
 
         counts
     }
