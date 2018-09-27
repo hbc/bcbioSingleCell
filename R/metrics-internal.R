@@ -8,8 +8,8 @@
     assert_is_any_of(rowRanges, c("GRanges", "NULL"))
     assert_is_a_bool(prefilter)
 
-    message("Calculating cellular barcode metrics")
-    message(paste(ncol(object), "cells detected"))
+    message("Calculating cellular barcode metrics...")
+    message(paste(ncol(object), "cells detected."))
 
     codingGenes <- character()
     mitoGenes <- character()
@@ -35,12 +35,12 @@
             codingGenes <- rowData %>%
                 filter(!!sym("broadClass") == "coding") %>%
                 pull("rowname")
-            message(paste(length(codingGenes), "coding genes"))
+            message(paste(length(codingGenes), "coding genes."))
             # Mitochondrial genes
             mitoGenes <- rowData %>%
                 filter(!!sym("broadClass") == "mito") %>%
                 pull("rowname")
-            message(paste(length(mitoGenes), "mitochondrial genes"))
+            message(paste(length(mitoGenes), "mitochondrial genes."))
         } else {
             missingBiotype()
         }

@@ -217,7 +217,7 @@ NULL
         warning(paste(
             deparse(substitute(object)), "must contain",
             toString(c(xCol, yCol)),
-            "columns in `metrics()`"
+            "columns in `colData()`."
         ))
         return(invisible())
     }

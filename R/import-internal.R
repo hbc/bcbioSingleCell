@@ -104,7 +104,7 @@
         colnames <- read_lines(colnamesFile)
 
         if (!length(rownames) > 0L || !length(colnames) > 0L) {
-            message(paste("Skipped", basename(dir)))
+            message(paste0("Skipped", basename(dir), "."))
             return(NULL)
         }
 

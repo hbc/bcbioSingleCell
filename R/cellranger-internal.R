@@ -12,7 +12,7 @@
 
         # Look for simple upload structure.
         if ("matrix.mtx" %in% list.files(uploadDir)) {
-            message("Simple mode enabled")
+            message("Simple mode enabled.")
             file <- file.path(uploadDir, "matrix.mtx")
             names(file) <- basename(uploadDir)
             return(file)

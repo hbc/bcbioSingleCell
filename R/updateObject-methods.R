@@ -26,7 +26,9 @@ NULL
     function(object) {
         version <- slot(object, "metadata")[["version"]]
         assert_is_all_of(version, c("package_version", "numeric_version"))
-        message(paste("Upgrading from", version, "to", packageVersion))
+        message(paste0(
+            "Upgrading from ", version, " to ", packageVersion, "..."
+        ))
 
         # Coerce to SingleCellExperiment
         sce <- as(object, "SingleCellExperiment")
@@ -48,7 +50,7 @@ NULL
 
         # raw counts
         if ("raw" %in% names(assays)) {
-            message("Renaming `raw` assay to `counts`")
+            message("Renaming primary assay to `counts`.")
             assays[["counts"]] <- assays[["raw"]]
             assays[["raw"]] <- NULL
         }
@@ -62,7 +64,7 @@ NULL
         # Require that all `sampleData` columns are now slotted in `colData`.
         sampleData <- metadata[["sampleData"]]
         if (!is.null(sampleData)) {
-            message("Moving `sampleData()` columns to `colData()`")
+            message("Moving `sampleData()` columns to `colData()`.")
             # Starting using `DataFrame` in place of `data.frame` in v0.1.7.
             sampleData <- as(sampleData, "DataFrame")
             colData <- colData[
