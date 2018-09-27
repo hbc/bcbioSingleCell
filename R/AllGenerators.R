@@ -420,6 +420,9 @@ CellRanger <- function(
     # Sample files -------------------------------------------------------------
     sampleFiles <- .sampleFiles.cellranger(uploadDir)
 
+    # Sequencing lanes ---------------------------------------------------------
+    lanes <- detectLanes(sampleFiles)
+
     # Sample metadata ----------------------------------------------------------
     allSamples <- TRUE
     sampleData <- NULL
