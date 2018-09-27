@@ -1,7 +1,3 @@
-# FIXME Strip any "-"/"_" in barcodes to make grep matching easier?
-
-
-
 # bcbio ========================================================================
 .import.bcbio <-  # nolint
     function(sampleDirs) {
@@ -15,8 +11,13 @@
             dir = sampleDirs,
             FUN = function(sampleID, dir) {
                 counts <- .import.bcbio.mtx(dir)
-                # Always prefix cell barcodes with sample identifier.
-                colnames(counts) <- paste(sampleID, colnames(counts), sep = "_")
+                # Prefix cell barcodes with sample identifier when we're loading
+                # counts from multiple samples.
+                if (length(sampleDirs) > 1L) {
+                    colnames(counts) <-
+                        paste(sampleID, colnames(counts), sep = "_")
+                }
+                # Ensure names are valid.
                 counts <- makeDimnames(counts)
                 counts
             },
@@ -27,6 +28,12 @@
         # Remove any empty items in list, which can result from low quality
         # samples with empty matrices in bcbio pipeline.
         list <- Filter(Negate(is.null), list)
+        if (!has_length(list)) {
+            stop(paste(
+                "bcbio didn't return any cells.",
+                "Check your `minimum_barcode_depth` setting."
+            ))
+        }
 
         # Bind the matrices.
         do.call(cbind, list)
@@ -42,27 +49,27 @@
 #'
 #' @param sampleDirs Sample directories.
 #'
-#' @return `list`.
+#' @return `list`. List of integer vectors per sample containing the
+#'   pre-filtered cellular barcode counts (`nCount`).
 .import.bcbio.barcodes <-  # nolint
     function(sampleDirs) {
+        message("Importing unfiltered cellular barcode distributions...")
         files <- file.path(
             normalizePath(sampleDirs, winslash = "/", mustWork = TRUE),
             paste(basename(sampleDirs), "barcodes.tsv", sep = "-")
         )
         assert_all_are_existing_files(files)
         names(files) <- names(sampleDirs)
-        message("Importing unfiltered cellular barcode distributions...")
         list <- lapply(files, function(file) {
-            read_tsv(
+            data <- read_tsv(
                 file = file,
                 col_names = c("barcode", "n"),
                 col_types = "ci"
-            ) %>%
-                as_tibble() %>%
-                mutate(
-                    !!sym("barcode") :=
-                        makeNames(!!sym("barcode"), unique = TRUE)
-                )
+            )
+            x <- data[["n"]]
+            names(x) <- makeNames(data[["barcode"]])
+            assert_is_integer(x)
+            x
         })
         names(list) <- names(sampleDirs)
         list
@@ -136,8 +143,13 @@
             file = sampleFiles,
             FUN = function(sampleID, file) {
                 counts <- fun(file)
-                # Always prefix cell barcodes with sample identifier.
-                colnames(counts) <- paste(sampleID, colnames(counts), sep = "_")
+                # Prefix cell barcodes with sample identifier when we're loading
+                # counts from multiple samples.
+                if (length(sampleFiles) > 1L) {
+                    colnames(counts) <-
+                        paste(sampleID, colnames(counts), sep = "_")
+                }
+                # Ensure names are valid.
                 counts <- makeDimnames(counts)
                 counts
             },
