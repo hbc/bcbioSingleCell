@@ -1,11 +1,14 @@
 # Cell Ranger example data
-# 2018-09-19
+# 2018-09-27
 # 4k PBMCs from a Healthy Donor
 # https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k
 
 library(tidyverse)
 library(Seurat)
 library(Matrix)
+
+# Restrict to 1 MB per file.
+limit <- structure(1e6, class = "object_size")
 
 # Complete dataset =============================================================
 upload_dir <- initializeDirectory("data-raw/cellranger")
@@ -36,8 +39,8 @@ untar(tarfile = tar_file, exdir = outs_dir)
 stopifnot(identical(dir(outs_dir), "filtered_gene_bc_matrices"))
 
 # Using Ensembl 84 GTF annotations.
-gff_file <- file.path(upload_dir, "genes.gtf")
-if (!file.exists(gff_file)) {
+gtf_file <- file.path(upload_dir, "genes.gtf")
+if (!file.exists(gtf_file)) {
     download.file(
         url = paste(
             "ftp://ftp.ensembl.org",
@@ -48,15 +51,18 @@ if (!file.exists(gff_file)) {
             "Homo_sapiens.GRCh38.84.gtf.gz",
             sep = "/"
         ),
-        destfile = gff_file
+        destfile = gtf_file
     )
 }
 
 sce <- CellRanger(
     uploadDir = upload_dir,
     organism = "Homo sapiens",
-    gffFile = gff_file
+    gffFile = gtf_file
 )
+
+pbmc <- sce
+saveData(pbmc, dir = "~")
 
 # Minimal example cellranger directory =========================================
 input_dir <- file.path(
@@ -118,5 +124,24 @@ top_cells <- Matrix::colSums(counts) %>%
     head(n = 500L)
 cells <- sort(names(top_cells))
 
-cellranger_small <- sce[genes, cells]
+# Subset the original pbmc dataset to contain only top genes and cells.
+sce <- sce[genes, cells]
+
+# Include only minimal metadata columns in rowRanges.
+mcols(rowRanges(sce)) <- mcols(rowRanges(sce)) %>%
+    as("tbl_df") %>%
+    select(rowname, broadClass, geneBiotype, geneID, geneName) %>%
+    mutate_if(is.factor, droplevels) %>%
+    as("DataFrame")
+
+# Report the size of each slot in bytes.
+vapply(
+    X = coerceS4ToList(sce),
+    FUN = object.size,
+    FUN.VALUE = numeric(1L)
+)
+stopifnot(object.size(sce) < limit)
+stopifnot(validObject(sce))
+
+cellranger_small <- sce
 devtools::use_data(cellranger_small, compress = "xz", overwrite = TRUE)
