@@ -144,20 +144,17 @@
             FUN = function(sampleID, file) {
                 counts <- fun(file)
 
-                # Sanitize the cellular barcodes, if necessary.
-                colnames <- colnames(counts)
-
                 # Strip index when all barcodes end with "-1".
-                if (all(grepl("-1$", colnames))) {
-                    colnames <- sub("-1", "", colnames)
+                if (all(grepl("-1$", colnames(counts)))) {
+                    colnames(counts) <- sub("-1", "", colnames(counts))
                 }
 
                 # Now move the multiplexed index name/number to the beginning,
                 # for more logical sorting and consistency with bcbio approach.
-                colnames <- sub(
+                colnames(counts) <- sub(
                     pattern = "^([ACGT]+)-(.+)$",
                     replacement = "\\2-\\1",
-                    x = colnames
+                    x = colnames(counts)
                 )
 
                 # Prefix cell barcodes with sample identifier when we're loading
