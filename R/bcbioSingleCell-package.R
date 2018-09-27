@@ -27,8 +27,8 @@
 #'   assertIsAnImplicitIntegerOrNULL assertIsColorScaleDiscreteOrNULL
 #'   assertIsFillScaleDiscreteOrNULL assertIsHeaderLevel assignAndSaveData
 #'   basejump_geom_abline basejump_geom_label basejump_geom_label_average
-#'   basejump_geom_label_repel camel cell2sample emptyRanges gene2symbol
-#'   hasRownames import interestingGroups interestingGroups<-
+#'   basejump_geom_label_repel camel cell2sample detectLanes emptyRanges
+#'   gene2symbol hasRownames import interestingGroups interestingGroups<-
 #'   initializeDirectory makeDimnames makeGRangesFromEnsembl makeGRangesFromGFF
 #'   makeNames makeSingleCellExperiment makeTx2geneFromGFF mapCellsToSamples
 #'   matchArgsToDoCall matchInterestingGroups markdownHeader markdownPlotlist
@@ -62,7 +62,7 @@
 #' @importFrom purrr map
 #' @importFrom readr read_lines read_tsv
 #' @importFrom rhdf5 h5dump h5read
-#' @importFrom rlang !! !!! sym syms UQ
+#' @importFrom rlang !! !!! has_length sym syms UQ
 #' @importFrom S4Vectors DataFrame aggregate as.data.frame as.matrix
 #'   complete.cases mcols mcols<- merge metadata metadata<- na.omit
 #' @importFrom scales percent pretty_breaks
