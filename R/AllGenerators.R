@@ -495,19 +495,19 @@ CellRanger <- function(
     # Column data --------------------------------------------------------------
     # Automatic sample metadata.
     if (is.null(sampleData)) {
-        # Get cell to sample mappings.
-        match <- str_match(
-            string = colnames(counts),
-            pattern = "^(.+)_[ACGT]{16}$"
-        )
-        samples <- unique(match[, 2L, drop = TRUE])
+        # Define the grep pattern to use for sample ID extraction.
+        pattern <- "^(.+)_[ACGT]+$"
+        if (all(grepl(pattern, colnames(counts)))) {
+            match <- str_match(
+                string = colnames(counts),
+                pattern = pattern
+            )
+            samples <- unique(match[, 2L, drop = TRUE])
+        } else if (has_length(sampleFiles, n = 1L)) {
+            samples <- names(sampleFiles)
+        }
         sampleData <- minimalSampleData(samples)
     }
-
-    # FIXME Add a message to the user about which samples here?
-
-    # FIXME Don't attempt to split index?
-    # sampleData <- sanitizeSampleData(sampleData)
 
     # Always prefilter, removing very low quality cells with no UMIs or genes.
     colData <- .calculateMetrics(
@@ -520,17 +520,15 @@ CellRanger <- function(
     assert_is_subset(rownames(colData), colnames(counts))
     counts <- counts[, rownames(colData), drop = FALSE]
 
-    # Join sampleData into cell-level colData.
-    colData[["sampleID"]] <- mapCellsToSamples(
-        cells = rownames(colData),
-        samples = rownames(sampleData)
-    )
-    sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
-    colData <- left_join(
-        x = colData,
-        y = sampleData,
-        by = "sampleID"
-    )
+    # Join `sampleData` into cell-level `colData`.
+    if (has_length(nrow(sampleData), n = 1L)) {
+        colData[["sampleID"]] <- as.factor(rownames(sampleData))
+    } else {
+        colData[["sampleID"]] <- mapCellsToSamples(
+            cells = rownames(colData),
+            samples = rownames(sampleData)
+        )
+    }
 
     # Metadata -----------------------------------------------------------------
     # Interesting groups.
