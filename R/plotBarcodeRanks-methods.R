@@ -35,12 +35,11 @@ NULL
         sampleName = sampleNames,
         ranks = ranksPerSample,
         FUN = function(sampleName, ranks) {
-            data <- cbind(
+            data <- tibble(
                 rank = ranks[["rank"]],
                 total = ranks[["total"]],  # nUMI
                 fitted = ranks[["fitted"]]
-            ) %>%
-                as("tbl_df")
+            )
 
             p <- ggplot(data = data) +
                 geom_point(
