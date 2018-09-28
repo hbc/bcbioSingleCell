@@ -1,32 +1,63 @@
+# FIXME Add a way to force recalculation.
+# Previously we added `metrics(recalculate = TRUE)` but a different approach
+# is needed.
+
+
+
 .calculateMetrics <- function(
-    object,
+    counts,
     rowRanges = NULL,
     prefilter = FALSE
 ) {
-    assert_is_any_of(object, c("matrix", "sparseMatrix"))
-    assert_has_rows(object)
+    assert_is_any_of(counts, c("matrix", "sparseMatrix"))
+    assert_has_rows(counts)
     assert_is_any_of(rowRanges, c("GRanges", "NULL"))
     assert_is_a_bool(prefilter)
 
     message("Calculating cellular barcode metrics...")
-    message(paste(ncol(object), "cells detected."))
+    message(paste(ncol(counts), "cells detected."))
 
     codingGenes <- character()
     mitoGenes <- character()
 
+    rowRangesMessage <- paste(
+        "`rowRanges` is required to calculate:",
+        "nCoding, nMito, mitoRatio"
+    )
     missingBiotype <- function() {
-        message(paste0(
-            "Calculating metrics without biotype information.\n",
-            "`rowRanges` is required to calculate: ",
-            "nCoding, nMito, mitoRatio"
+        message(paste(
+            "Calculating metrics without biotype information.",
+            rowRangesMessage,
+            sep = "\n"
         ))
     }
 
+    # Calculate nCoding and nMito, which requires annotations.
     if (length(rowRanges) > 0L) {
         assert_is_all_of(rowRanges, "GRanges")
-        assert_is_subset(rownames(object), names(rowRanges))
+
+        setdiff <- setdiff(rownames(counts), names(rowRanges))
+        if (has_length(setdiff)) {
+            warning(paste(
+                "Genes missing in rowRanges.",
+                rowRangesMessage,
+                printString(setdiff),
+                sep = "\n"
+            ))
+            # Slot the rowRanges with empty ranges for these genes.
+            # The same approach is used in `makeSummarizedExperiment()`.
+            rowRanges <- suppressWarnings(c(
+                rowRanges,
+                emptyRanges(
+                    names = setdiff,
+                    mcolsNames = colnames(mcols(rowRanges))
+                )
+            ))
+        }
+
         # Subset ranges to match matrix.
-        rowRanges <- rowRanges[rownames(object)]
+        assert_is_subset(rownames(counts), names(rowRanges))
+        rowRanges <- rowRanges[rownames(counts)]
         rowData <- as(rowRanges, "tbl_df")
         if ("broadClass" %in% colnames(rowData)) {
             # Drop rows with NA broad class
@@ -50,11 +81,11 @@
 
     # Following the Seurat `seurat@meta.data` naming conventions.
     data <- tibble(
-        rowname = colnames(object),
-        nUMI = colSums(object),
-        nGene = colSums(object > 0L),
-        nCoding = colSums(object[codingGenes, , drop = FALSE]),
-        nMito = colSums(object[mitoGenes, , drop = FALSE])
+        rowname = colnames(counts),
+        nUMI = colSums(counts),
+        nGene = colSums(counts > 0L),
+        nCoding = colSums(counts[codingGenes, , drop = FALSE]),
+        nMito = colSums(counts[mitoGenes, , drop = FALSE])
     ) %>%
         mutate(
             log10GenesPerUMI = log10(!!sym("nGene")) / log10(!!sym("nUMI")),
@@ -71,9 +102,9 @@
             filter(!!sym("nUMI") > 0L) %>%
             filter(!!sym("nGene") > 0L)
         message(paste(
-            nrow(data), "/", ncol(object),
+            nrow(data), "/", ncol(counts),
             "cellular barcodes passed pre-filtering",
-            paste0("(", percent(nrow(data) / ncol(object)), ")")
+            paste0("(", percent(nrow(data) / ncol(counts)), ")")
         ))
     }
 
