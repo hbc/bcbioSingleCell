@@ -328,6 +328,7 @@ NULL
 
         # Return.
         if (return == "list") {
+            names(plotlist) <- camel(names(plotlist))
             plotlist
         } else if (return == "grid") {
             plot_grid(plotlist = plotlist)
