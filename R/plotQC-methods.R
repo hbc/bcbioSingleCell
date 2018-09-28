@@ -25,7 +25,7 @@ NULL
 
 
 
-# Plot a single quality control metric
+# Plot a single quality control metric.
 .plotQCMetric <- function(
     object,
     metricCol,
@@ -47,7 +47,7 @@ NULL
     )
     interestingGroups(object) <- interestingGroups
     assert_all_are_non_negative(c(min, max))
-    # Support for per sample filtering cutoffs
+    # Support for per sample filtering cutoffs.
     min <- min(min)
     max <- max(max)
     if (isTRUE(ratio)) {
@@ -71,7 +71,7 @@ NULL
         mapping[["x"]] <- as.symbol("sampleName")
         mapping[["y"]] <- as.symbol(metricCol)
     } else if (geom == "ridgeline") {
-        # ridgeline flips the axes
+        # Ridgeline flips the axes.
         mapping[["x"]] <- as.symbol(metricCol)
         mapping[["y"]] <- as.symbol("sampleName")
     } else if (geom %in% c("ecdf", "histogram")) {
@@ -121,7 +121,7 @@ NULL
             labs(x = NULL)
     }
 
-    # Cutoff lines
+    # Cutoff lines.
     if (geom %in% c("boxplot", "violin")) {
         if (min > 0L) {
             p <- p + basejump_geom_abline(yintercept = min)
@@ -144,7 +144,7 @@ NULL
         }
     }
 
-    # Label interesting groups
+    # Label interesting groups.
     p <- p +
         labs(
             title = title,
@@ -152,7 +152,7 @@ NULL
             fill = paste(interestingGroups, collapse = ":\n")
         )
 
-    # Color palette
+    # Color palette.
     if (geom == "ecdf") {
         if (is(color, "ScaleDiscrete")) {
             p <- p + color
@@ -163,7 +163,7 @@ NULL
         }
     }
 
-    # Median labels
+    # Median labels.
     if (!geom %in% c("ecdf", "histogram")) {
         if (metricCol %in% c("log10GenesPerUMI", "mitoRatio")) {
             digits <- 2L
@@ -174,7 +174,7 @@ NULL
             basejump_geom_label_average(data, col = metricCol, digits = digits)
     }
 
-    # Facets
+    # Facets.
     facets <- NULL
     if (.isAggregate(data)) {
         facets <- "aggregate"
@@ -188,7 +188,7 @@ NULL
 
 
 
-# Compare two quality control metrics
+# Compare two quality control metrics.
 .plotQCScatterplot <- function(
     object,
     xCol,
@@ -240,18 +240,18 @@ NULL
         p <- p + geom_smooth(method = "glm", se = FALSE, size = 1L)
     }
 
-    # Label interesting groups
+    # Label interesting groups.
     p <- p + labs(
         title = title,
         color = paste(interestingGroups, collapse = ":\n")
     )
 
-    # Color palette
+    # Color palette.
     if (is(color, "ScaleDiscrete")) {
         p <- p + color
     }
 
-    # Facets
+    # Facets.
     facets <- NULL
     if (.isAggregate(data)) {
         facets <- c(facets, "aggregate")
@@ -294,11 +294,11 @@ NULL
         plotZerosVsDepth <- plotZerosVsDepth(object)
 
         if (is(object, "bcbioSingleCell")) {
-            # Don't show cell counts for unfiltered bcbio datasets
+            # Don't show cell counts for unfiltered bcbio datasets.
             if (!length(metadata(object)[["filterCells"]])) {
                 plotCellCounts <- NULL
             }
-            # Raw read counts are only stashed in bcbioSingleCell objects
+            # Raw read counts are only stashed in bcbioSingleCell objects.
             plotReadsPerCell <- plotReadsPerCell(object, geom = geom)
         }
 
@@ -318,7 +318,7 @@ NULL
         # cellular barcode counts.
         plotlist <- Filter(Negate(is.null), plotlist)
 
-        # Hide the legends, if desired
+        # Hide the legends, if desired.
         if (identical(legend, FALSE)) {
             .hideLegend <- function(gg) {
                 gg + theme(legend.position = "none")
@@ -326,14 +326,14 @@ NULL
             plotlist <- lapply(plotlist, .hideLegend)
         }
 
-        # Grid return mode
+        # Return.
         if (return == "list") {
             plotlist
         } else if (return == "grid") {
             plot_grid(plotlist = plotlist)
         } else if (return == "markdown") {
             markdownHeader(
-                text = "Filtered quality control metrics",
+                text = "Quality control metrics",
                 level = headerLevel,
                 tabset = TRUE,
                 asis = TRUE
