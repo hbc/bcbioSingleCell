@@ -85,6 +85,7 @@ setMethod(
         # Metadata -------------------------------------------------------------
         metadata <- metadata(sce)
         metadata <- .updateMetadata(metadata)
+        metadata[["subset"]] <- TRUE
 
         # Drop unfiltered cellular barcode list.
         metadata[["cellularBarcodes"]] <- NULL
@@ -102,8 +103,6 @@ setMethod(
             filterGenes <- intersect(filterGenes, genes)
             metadata[["filterGenes"]] <- filterGenes
         }
-
-        metadata[["extract"]] <- TRUE
 
         # Return ---------------------------------------------------------------
         .new.bcbioSingleCell(

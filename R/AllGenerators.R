@@ -237,7 +237,7 @@ bcbioSingleCell <- function(
 
     # Always prefilter, removing very low quality cells with no UMIs or genes.
     colData <- .calculateMetrics(
-        object = counts,
+        counts = counts,
         rowRanges = rowRanges,
         prefilter = TRUE
     )
@@ -514,7 +514,7 @@ CellRanger <- function(
 
     # Always prefilter, removing very low quality cells with no UMIs or genes.
     colData <- .calculateMetrics(
-        object = counts,
+        counts = counts,
         rowRanges = rowRanges,
         prefilter = TRUE
     )
