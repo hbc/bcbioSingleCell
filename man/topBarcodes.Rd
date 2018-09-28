@@ -35,7 +35,7 @@ Obtain the top cellular barcodes based on UMI counts.
 object <- indrops_small
 
 # tibble
-x <- topBarcodes(object), return = "tibble")
+x <- topBarcodes(object, return = "tibble")
 glimpse(x)
 
 # list
