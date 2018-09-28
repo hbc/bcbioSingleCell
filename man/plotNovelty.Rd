@@ -11,7 +11,7 @@ plotNovelty(object, ...)
 \S4method{plotNovelty}{SingleCellExperiment}(object, geom = c("violin",
   "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups = NULL,
   min = 0L, fill = getOption("bcbio.discrete.fill", NULL),
-  trans = "identity", title = "genes per UMI (novelty)")
+  trans = "identity", title = "novelty : genes per UMI")
 }
 \arguments{
 \item{object}{Object.}

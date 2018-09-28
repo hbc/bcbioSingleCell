@@ -24,7 +24,7 @@ NULL
         min = 0L,
         fill = getOption("bcbio.discrete.fill", NULL),
         trans = "identity",
-        title = "genes per UMI (novelty)"
+        title = "novelty : genes per UMI"
     ) {
         assert_all_are_in_right_open_range(min, lower = 0L, upper = 1L)
         geom <- match.arg(geom)
