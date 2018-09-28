@@ -1,3 +1,7 @@
+# FIXME Either make `sampleName` required or strip it from minimal examples.
+
+
+
 # bcbioSingleCell ==============================================================
 #' Read bcbio Single-Cell RNA-Seq Data
 #'
@@ -324,7 +328,6 @@ bcbioSingleCell <- function(
 
 # CellRanger ===================================================================
 # FIXME Can we parse the CellRanger `runDate` from the refData YAML?
-# FIXME Work on not requiring `sampleMetadataFile` here.
 # FIXME Allow this function to work if the user points at dir containing matrix.mtx.
 # FIXME Add documentation about simple mode.
 
@@ -450,14 +453,14 @@ CellRanger <- function(
     if (is_a_string(refdataDir)) {
         message("Using 10X Genomics reference data for annotations.")
         message(paste("refdataDir:", refdataDir))
-        # JSON data
+        # JSON data.
         refJSONFile <- file.path(refdataDir, "reference.json")
         assert_all_are_existing_files(refJSONFile)
         refJSON <- import(refJSONFile)
-        # Get the genome build from JSON metadata
+        # Get the genome build from JSON metadata.
         genomeBuild <- unlist(refJSON[["genomes"]])
         assert_is_a_string(genomeBuild)
-        # Convert the GTF file to GRanges
+        # Convert the GTF file to GRanges.
         gffFile <- file.path(refdataDir, "genes", "genes.gtf")
         assert_is_a_string(gffFile)
         rowRanges <- makeGRangesFromGFF(gffFile)
