@@ -16,26 +16,19 @@ reference:
   - title: Package Information
     contents:
     - bcbioSingleCell-package
-  - title: S4 Object
+  - title: S4 Classes
+    contents:
+    - ends_with("-class")
+  - title: S4 Generators
     contents:
     - bcbioSingleCell
+    - CellRanger
+  - title: S4 Functions
+    contents:
     - combine
     - extract
     - show
     - updateObject
-  - title: Read Functions
-    contents:
-    - starts_with("read")
-  - title: Data Functions
-    contents:
-    - starts_with("aggregate")
-    - cell2sample
-    - starts_with("map")
-    - sampleData
-    - starts_with("select")
-    - subsetPerSample
-    - topBarcodes
-    - matches("2")
   - title: Quality Control Functions
     contents:
     - starts_with("barcode")
