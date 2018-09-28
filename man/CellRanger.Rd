@@ -5,8 +5,9 @@
 \title{Read 10X Genomics Cell Ranger Single-Cell RNA-Seq Data}
 \usage{
 CellRanger(uploadDir, format = c("mtx", "hdf5"), filtered = TRUE,
-  sampleMetadataFile = NULL, organism = NULL, refdataDir = NULL,
-  gffFile = NULL, transgeneNames = NULL, spikeNames = NULL,
+  sampleMetadataFile = NULL, organism = NULL, ensemblRelease = NULL,
+  genomeBuild = NULL, refdataDir = NULL, gffFile = NULL,
+  transgeneNames = NULL, spikeNames = NULL,
   interestingGroups = "sampleName")
 }
 \arguments{
@@ -31,6 +32,15 @@ and ensembldb, unless \code{gffFile} is set. If left \code{NULL} (\emph{not reco
 the function call will skip loading gene-level annotations into
 \code{\link[=rowRanges]{rowRanges()}}. This can be useful for poorly annotation genomes or
 experiments involving multiple genomes.}
+
+\item{ensemblRelease}{\code{scalar integer} or \code{NULL}. Ensembl release version. If
+\code{NULL}, defaults to current release, and does not typically need to be
+user-defined. Passed to AnnotationHub for \code{EnsDb} annotation matching,
+unless \code{gffFile} is set.}
+
+\item{genomeBuild}{\code{string} or \code{NULL}. Ensembl genome build name (e.g.
+"GRCh38"). This will be passed to AnnotationHub for \code{EnsDb} annotation
+matching, unless \code{gffFile} is set.}
 
 \item{refdataDir}{\code{string} or \code{NULL}. Directory path to Cell Ranger reference
 annotation data.}
