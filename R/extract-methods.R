@@ -59,20 +59,23 @@ setMethod(
             j <- 1L:ncol(x)
         }
 
-        # Regenerate and subset SummarizedExperiment
-        sce <- as(x, "SingleCellExperiment")
-        sce <- sce[i, j, drop = drop]
-
-        # Early return if dimensions are unmodified
-        if (identical(dim(sce), dim(x))) {
+        if (identical(
+            x = c(length(i), length(j)),
+            y = dim(x)
+        )) {
+            message("Returning object unmodified.")
             return(x)
         }
+
+        # Subset using SCE method.
+        sce <- as(x, "SingleCellExperiment")
+        sce <- sce[i, j, drop = drop]
 
         genes <- rownames(sce)
         cells <- colnames(sce)
 
         # Column data ----------------------------------------------------------
-        # Ensure factors get releveled
+        # Ensure factors get releveled.
         colData <- colData(sce) %>%
             as("tbl_df") %>%
             mutate_if(is.character, as.factor) %>%
@@ -81,27 +84,10 @@ setMethod(
 
         # Metadata -------------------------------------------------------------
         metadata <- metadata(sce)
+        metadata <- .updateMetadata(metadata)
 
-        # Drop the raw cellular barcode distributions for all cells.
+        # Drop unfiltered cellular barcode list.
         metadata[["cellularBarcodes"]] <- NULL
-        # Drop this legacy slot, if defined.
-        metadata[["cell2sample"]] <- NULL
-
-        metadata[["subset"]] <- TRUE
-        # Update version, if necessary
-        if (!identical(metadata[["version"]], packageVersion)) {
-            metadata[["originalVersion"]] <- metadata[["version"]]
-            metadata[["version"]] <- packageVersion
-        }
-
-        # aggregateReplicates
-        aggregateReplicates <- metadata[["aggregateReplicates"]]
-        if (!is.null(aggregateReplicates)) {
-            intersect <- intersect(cells, aggregateReplicates)
-            aggregateReplicates <- aggregateReplicates %>%
-                .[. %in% intersect]
-            metadata[["aggregateReplicates"]] <- aggregateReplicates
-        }
 
         # filterCells
         filterCells <- metadata[["filterCells"]]
@@ -116,6 +102,8 @@ setMethod(
             filterGenes <- intersect(filterGenes, genes)
             metadata[["filterGenes"]] <- filterGenes
         }
+
+        metadata[["extract"]] <- TRUE
 
         # Return ---------------------------------------------------------------
         .new.bcbioSingleCell(

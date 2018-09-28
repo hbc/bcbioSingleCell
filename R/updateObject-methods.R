@@ -90,9 +90,7 @@ NULL
         }
 
         # Metadata -------------------------------------------------------------
-        metadata[["sampleData"]] <- NULL
-        metadata[["previousVersion"]] <- metadata[["version"]]
-        metadata[["version"]] <- packageVersion
+        metadata <- .updateMetadata(metadata)
 
         # Return ---------------------------------------------------------------
         .new.bcbioSingleCell(
@@ -102,6 +100,28 @@ NULL
             metadata = metadata
         )
     }
+
+
+
+.updateMetadata <- function(metadata) {
+    # Drop legacy slots.
+    keep <- setdiff(
+        x = names(metadata),
+        y = c(
+            "cell2sample",
+            "sampleData"
+        )
+    )
+    metadata <- metadata[keep]
+
+    # Update the version, if necessary.
+    if (!identical(metadata[["version"]], packageVersion)) {
+        metadata[["originalVersion"]] <- metadata[["version"]]
+        metadata[["version"]] <- packageVersion
+    }
+
+    metadata
+}
 
 
 
