@@ -3,24 +3,25 @@ context("S4 Objects")
 
 
 # bcbioSingleCell ==============================================================
-# Need to add YAML metadata to test without `sampleMetadataFile`
 test_that("bcbioSingleCell", {
     uploadDir <- system.file("extdata/indrops", package = "bcbioSingleCell")
-    sampleMetadataFile <- file.path(uploadDir, "metadata.csv")
 
-    # Organism
+    # Minimal mode, with no metadata or annotations.
+    # This is fast but doesn't slot a lot of useful info.
+    x <- bcbioSingleCell(uploadDir = uploadDir)
+    expect_s4_class(x, "bcbioSingleCell")
+
+    # User-defined metadata.
     x <- bcbioSingleCell(
         uploadDir = uploadDir,
-        sampleMetadataFile = sampleMetadataFile,
-        organism = "Homo sapiens"
+        sampleMetadataFile <- file.path(uploadDir, "metadata.csv")
     )
     expect_s4_class(x, "bcbioSingleCell")
 
-    # NULL organism
+    # Automatic organism annotations from AnnotationHub.
     x <- bcbioSingleCell(
         uploadDir = uploadDir,
-        sampleMetadataFile = sampleMetadataFile,
-        organism = NULL
+        organism = "Homo sapiens"
     )
     expect_s4_class(x, "bcbioSingleCell")
 })
@@ -29,25 +30,28 @@ test_that("bcbioSingleCell", {
 
 # CellRanger ===================================================================
 test_that("CellRanger", {
-    object <- suppressWarnings(CellRanger(
-        uploadDir = system.file(
-            "extdata/cellranger",
-            package = "bcbioSingleCell"
+    uploadDir = system.file("extdata/cellranger", package = "bcbioSingleCell")
+
+    # Minimal mode, with no metadata or annotations.
+    # This is fast but doesn't slot a lot of useful info.
+    x <- CellRanger(uploadDir = uploadDir)
+    expect_s4_class(x, "CellRanger")
+
+    # Automatic organism annotations from AnnotationHub.
+    x <- CellRanger(
+        uploadDir = uploadDir,
+        organism = "Homo sapiens",
+        ensemblRelease = 87L
+    )
+    expect_s4_class(x, "CellRanger")
+
+    # Minimal example contains some genes that are dead on current Ensembl.
+    expect_warning(
+        object = CellRanger(
+            uploadDir = uploadDir,
+            organism = "Homo sapiens",
+            ensemblRelease = 92L
         ),
-        organism = "Homo sapiens"
-    ))
-    expect_is(object, "CellRanger")
-    expect_identical(dim(object), c(500L, 500L))
-    expect_identical(
-        sampleNames(object),
-        c(pbmc_1 = "pbmc")
-    )
-    expect_identical(
-        object = head(colnames(object), n = 1L),
-        expected = "pbmc_1_AAACCTGAGAAGGCCT"
-    )
-    expect_identical(
-        object = head(rownames(object), n = 1L),
-        expected = "ENSG00000004487"
+        regexp = "Genes missing in rowRanges."
     )
 })

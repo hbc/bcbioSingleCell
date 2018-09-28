@@ -393,6 +393,8 @@ CellRanger <- function(
     filtered = TRUE,
     sampleMetadataFile = NULL,
     organism = NULL,
+    ensemblRelease = NULL,
+    genomeBuild = NULL,
     refdataDir = NULL,
     gffFile = NULL,
     transgeneNames = NULL,
@@ -406,6 +408,8 @@ CellRanger <- function(
     assert_is_a_bool(filtered)
     assertIsAStringOrNULL(sampleMetadataFile)
     assertIsAStringOrNULL(organism)
+    assertIsAnImplicitIntegerOrNULL(ensemblRelease)
+    assertIsAStringOrNULL(genomeBuild)
     assertIsAStringOrNULL(refdataDir)
     if (is_a_string(refdataDir)) {
         assert_all_are_dirs(refdataDir)
@@ -446,8 +450,6 @@ CellRanger <- function(
 
     # Row data -----------------------------------------------------------------
     refJSON <- NULL
-    genomeBuild <- NULL
-    ensemblRelease <- NULL
 
     # Prepare gene annotations as GRanges.
     if (is_a_string(refdataDir)) {
@@ -481,7 +483,9 @@ CellRanger <- function(
         message("Using `makeGRangesFromEnsembl()` for annotations.")
         rowRanges <- makeGRangesFromEnsembl(
             organism = organism,
-            level = level
+            level = level,
+            build = genomeBuild,
+            release = ensemblRelease
         )
         if (is.null(genomeBuild)) {
             genomeBuild <- metadata(rowRanges)[["build"]]
