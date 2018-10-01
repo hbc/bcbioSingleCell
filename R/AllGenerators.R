@@ -236,8 +236,8 @@ bcbioSingleCell <- function(
     assert_is_subset(rownames(sampleData), names(sampleDirs))
 
     # Always prefilter, removing very low quality cells with no UMIs or genes.
-    colData <- .calculateMetrics(
-        counts = counts,
+    colData <- metrics(
+        object = counts,
         rowRanges = rowRanges,
         prefilter = TRUE
     )
@@ -527,8 +527,8 @@ CellRanger <- function(
     }
 
     # Always prefilter, removing very low quality cells with no UMIs or genes.
-    colData <- .calculateMetrics(
-        counts = counts,
+    colData <- metrics(
+        object = counts,
         rowRanges = rowRanges,
         prefilter = TRUE
     )

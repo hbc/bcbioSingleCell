@@ -1,21 +1,30 @@
-# FIXME Add a way to force recalculation.
-# Previously we added `metrics(recalculate = TRUE)` but a different approach
-# is needed.
+#' Metrics
+#'
+#' @name metrics
+#' @author Michael Steinbaugh, Rory Kirchner
+#' @importFrom basejump metrics
+#' @inherit basejump::metrics
+#' @export
+#'
+#' @examples
+#' x <- metrics(indrops_small, recalculate = TRUE)
+#' print(x)
+NULL
 
 
 
-.calculateMetrics <- function(
-    counts,
+.metrics.matrix <- function(
+    object,
     rowRanges = NULL,
     prefilter = FALSE
 ) {
-    assert_is_any_of(counts, c("matrix", "sparseMatrix"))
-    assert_has_rows(counts)
+    assert_is_any_of(object, c("matrix", "sparseMatrix"))
+    assert_has_rows(object)
     assert_is_any_of(rowRanges, c("GRanges", "NULL"))
     assert_is_a_bool(prefilter)
 
     message("Calculating cellular barcode metrics...")
-    message(paste(ncol(counts), "cells detected."))
+    message(paste(ncol(object), "cells detected."))
 
     codingGenes <- character()
     mitoGenes <- character()
@@ -36,7 +45,7 @@
     if (length(rowRanges) > 0L) {
         assert_is_all_of(rowRanges, "GRanges")
 
-        setdiff <- setdiff(rownames(counts), names(rowRanges))
+        setdiff <- setdiff(rownames(object), names(rowRanges))
         if (has_length(setdiff)) {
             warning(paste(
                 "Genes missing in rowRanges.",
@@ -56,8 +65,8 @@
         }
 
         # Subset ranges to match matrix.
-        assert_is_subset(rownames(counts), names(rowRanges))
-        rowRanges <- rowRanges[rownames(counts)]
+        assert_is_subset(rownames(object), names(rowRanges))
+        rowRanges <- rowRanges[rownames(object)]
         rowData <- as(rowRanges, "tbl_df")
         if ("broadClass" %in% colnames(rowData)) {
             # Drop rows with NA broad class
@@ -81,11 +90,11 @@
 
     # Following the Seurat `seurat@meta.data` naming conventions.
     data <- tibble(
-        rowname = colnames(counts),
-        nUMI = colSums(counts),
-        nGene = colSums(counts > 0L),
-        nCoding = colSums(counts[codingGenes, , drop = FALSE]),
-        nMito = colSums(counts[mitoGenes, , drop = FALSE])
+        rowname = colnames(object),
+        nUMI = colSums(object),
+        nGene = colSums(object > 0L),
+        nCoding = colSums(object[codingGenes, , drop = FALSE]),
+        nMito = colSums(object[mitoGenes, , drop = FALSE])
     ) %>%
         mutate(
             log10GenesPerUMI = log10(!!sym("nGene")) / log10(!!sym("nUMI")),
@@ -102,9 +111,9 @@
             filter(!!sym("nUMI") > 0L) %>%
             filter(!!sym("nGene") > 0L)
         message(paste(
-            nrow(data), "/", ncol(counts),
+            nrow(data), "/", ncol(object),
             "cellular barcodes passed pre-filtering",
-            paste0("(", percent(nrow(data) / ncol(counts)), ")")
+            paste0("(", percent(nrow(data) / ncol(object)), ")")
         ))
     }
 
@@ -117,3 +126,63 @@
         mutate_if(is.factor, droplevels) %>%
         as("DataFrame")
 }
+
+
+
+.metrics.SCE <-  # nolint
+    function(object, recalculate = FALSE) {
+        validObject(object)
+        if (isTRUE(recalculate)) {
+            colData <- colData(object)
+            metrics <- metrics(
+                object = counts(object),
+                rowRanges = rowRanges(object)
+            )
+            colData <- colData[
+                ,
+                setdiff(colnames(colData), colnames(metrics)),
+                drop = FALSE
+                ]
+            colData <- cbind(metrics, colData)
+            colData(object) <- colData
+            object
+        } else {
+            metrics(as(object, "SingleCellExperiment"))
+        }
+    }
+
+
+
+setMethod(
+    f = "metrics",
+    signature = signature("matrix"),
+    definition = .metrics.matrix
+)
+
+
+
+setMethod(
+    f = "metrics",
+    signature = signature("sparseMatrix"),
+    definition = .metrics.matrix
+)
+
+
+
+#' @rdname metrics
+#' @export
+setMethod(
+    f = "metrics",
+    signature = signature("bcbioSingleCell"),
+    definition = .metrics.SCE
+)
+
+
+
+#' @rdname metrics
+#' @export
+setMethod(
+    f = "metrics",
+    signature = signature("CellRanger"),
+    definition = .metrics.SCE
+)
