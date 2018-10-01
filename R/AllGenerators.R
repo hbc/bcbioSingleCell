@@ -1,4 +1,5 @@
 # FIXME Either make `sampleName` required or strip it from minimal examples.
+# TODO Check to see if we can import tx2gene.csv
 
 
 
@@ -303,7 +304,6 @@ bcbioSingleCell <- function(
         runDate = runDate,
         yaml = yaml,
         gffFile = as.character(gffFile),
-        tx2gene = tx2gene,
         dataVersions = dataVersions,
         programVersions = programVersions,
         bcbioLog = log,
