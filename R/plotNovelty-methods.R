@@ -22,7 +22,7 @@ NULL
         geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
         interestingGroups = NULL,
         min = 0L,
-        fill = getOption("bcbio.discrete.fill", NULL),
+        fill = getOption("basejump.discrete.fill", NULL),
         trans = "identity",
         title = "novelty : genes per UMI"
     ) {

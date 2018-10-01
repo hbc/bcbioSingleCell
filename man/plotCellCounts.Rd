@@ -9,7 +9,7 @@
 plotCellCounts(object, ...)
 
 \S4method{plotCellCounts}{SingleCellExperiment}(object,
-  interestingGroups = NULL, fill = getOption("bcbio.discrete.fill",
+  interestingGroups = NULL, fill = getOption("basejump.discrete.fill",
   NULL), title = "cell counts")
 }
 \arguments{

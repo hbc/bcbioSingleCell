@@ -18,7 +18,7 @@ NULL
     function(
         object,
         interestingGroups = NULL,
-        fill = getOption("bcbio.discrete.fill", NULL),
+        fill = getOption("basejump.discrete.fill", NULL),
         title = "cell counts"
     ) {
         validObject(object)

@@ -24,7 +24,7 @@ NULL
 .plotReadsPerCellBoxplot <- function(
     data,
     min = 0L,
-    fill = getOption("bcbio.discrete.fill", NULL)
+    fill = getOption("basejump.discrete.fill", NULL)
 ) {
     assert_is_data.frame(data)
     assertIsFillScaleDiscreteOrNULL(fill)
@@ -72,7 +72,7 @@ NULL
 .plotReadsPerCellECDF <- function(
     data,
     min = 0L,
-    color = getOption("bcbio.discrete.color", NULL)
+    color = getOption("basejump.discrete.color", NULL)
 ) {
     assert_is_data.frame(data)
     assertIsColorScaleDiscreteOrNULL(color)
@@ -118,7 +118,7 @@ NULL
 .plotReadsPerCellRidgeline <- function(
     data,
     min = 0L,
-    fill = getOption("bcbio.discrete.fill", NULL)
+    fill = getOption("basejump.discrete.fill", NULL)
 ) {
     assert_is_data.frame(data)
     assertIsFillScaleDiscreteOrNULL(fill)
@@ -171,7 +171,7 @@ NULL
 .plotReadsPerCellViolin <- function(
     data,
     min = 0L,
-    fill = getOption("bcbio.discrete.fill", NULL)
+    fill = getOption("basejump.discrete.fill", NULL)
 ) {
     assert_is_data.frame(data)
     assertIsFillScaleDiscreteOrNULL(fill)
@@ -274,7 +274,7 @@ NULL
 .plotReadsPerCellHistogram <- function(
     data,
     min = 0L,
-    color = getOption("bcbio.discrete.color", NULL)
+    color = getOption("basejump.discrete.color", NULL)
 ) {
     assert_is_data.frame(data)
     assertIsColorScaleDiscreteOrNULL(color)
@@ -325,8 +325,8 @@ NULL
         object,
         interestingGroups = NULL,
         geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
-        color = getOption("bcbio.discrete.color", NULL),
-        fill = getOption("bcbio.discrete.fill", NULL),
+        color = getOption("basejump.discrete.color", NULL),
+        fill = getOption("basejump.discrete.fill", NULL),
         title = "reads per cell"
     ) {
         # Passthrough: color, fill
