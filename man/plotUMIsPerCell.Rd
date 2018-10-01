@@ -76,8 +76,7 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotReadsPerCell}},
-  \code{\link{plotZerosVsDepth}}
+  \code{\link{plotReadsPerCell}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

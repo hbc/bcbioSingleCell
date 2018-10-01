@@ -52,8 +52,7 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}},
   \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}},
-  \code{\link{plotZerosVsDepth}}
+  \code{\link{plotUMIsPerCell}}
 }
 \author{
 Michael Steinbaugh

@@ -35,7 +35,6 @@
 #'   methodFormals minimalSampleData prepareTemplate printString
 #'   sanitizeSampleData separator standardizeCall stripTranscriptVersions
 #'   theme_midnight theme_paperwhite tx2geneFromGFF uniteInterestingGroups
-#'   zerosVsDepth
 #' @importFrom bcbioBase getBarcodeCutoffFromCommandsLog getLevelFromCommandsLog
 #'   getUMITypeFromCommandsLog projectDir readDataVersions readLog
 #'   readProgramVersions readSampleData readYAMLSampleData sampleDirs
