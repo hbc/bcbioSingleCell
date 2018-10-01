@@ -13,6 +13,9 @@
 }
 \arguments{
 \item{object}{Object.}
+
+\item{recalculate}{\code{boolean}. Force recalculation, using primary \code{\link[=counts]{counts()}}
+matrix.}
 }
 \value{
 \code{grouped_df}. Grouped by \code{sampleID} column.

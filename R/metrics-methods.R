@@ -6,6 +6,10 @@
 #' @inherit basejump::metrics
 #' @export
 #'
+#' @inheritParams general
+#' @param recalculate `boolean`. Force recalculation, using primary [counts()]
+#'   matrix.
+#'
 #' @examples
 #' x <- metrics(indrops_small, recalculate = TRUE)
 #' print(x)
@@ -150,22 +154,6 @@ NULL
             metrics(as(object, "SingleCellExperiment"))
         }
     }
-
-
-
-setMethod(
-    f = "metrics",
-    signature = signature("matrix"),
-    definition = .metrics.matrix
-)
-
-
-
-setMethod(
-    f = "metrics",
-    signature = signature("sparseMatrix"),
-    definition = .metrics.matrix
-)
 
 
 
