@@ -1,4 +1,5 @@
 # FIXME Either make `sampleName` required or strip it from minimal examples.
+# TODO Check to see if we can import tx2gene.csv
 
 
 
@@ -236,8 +237,8 @@ bcbioSingleCell <- function(
     assert_is_subset(rownames(sampleData), names(sampleDirs))
 
     # Always prefilter, removing very low quality cells with no UMIs or genes.
-    colData <- .calculateMetrics(
-        counts = counts,
+    colData <- .metrics.matrix(
+        object = counts,
         rowRanges = rowRanges,
         prefilter = TRUE
     )
@@ -303,7 +304,6 @@ bcbioSingleCell <- function(
         runDate = runDate,
         yaml = yaml,
         gffFile = as.character(gffFile),
-        tx2gene = tx2gene,
         dataVersions = dataVersions,
         programVersions = programVersions,
         bcbioLog = log,
@@ -323,6 +323,16 @@ bcbioSingleCell <- function(
         spikeNames = spikeNames
     )
 }
+
+
+
+.new.bcbioSingleCell <-  # nolint
+    function(...) {
+        new(
+            Class = "bcbioSingleCell",
+            makeSingleCellExperiment(...)
+        )
+    }
 
 
 
@@ -517,8 +527,8 @@ CellRanger <- function(
     }
 
     # Always prefilter, removing very low quality cells with no UMIs or genes.
-    colData <- .calculateMetrics(
-        counts = counts,
+    colData <- .metrics.matrix(
+        object = counts,
         rowRanges = rowRanges,
         prefilter = TRUE
     )
@@ -563,7 +573,7 @@ CellRanger <- function(
     )
 
     # Return -------------------------------------------------------------------
-    sce <- .new.SingleCellExperiment(
+    .new.CellRanger(
         assays = list(counts = counts),
         rowRanges = rowRanges,
         colData = colData,
@@ -571,5 +581,14 @@ CellRanger <- function(
         transgeneNames = transgeneNames,
         spikeNames = spikeNames
     )
-    new("CellRanger", sce)
 }
+
+
+
+.new.CellRanger <-  # nolint
+    function(...) {
+        new(
+            Class = "CellRanger",
+            makeSingleCellExperiment(...)
+        )
+    }

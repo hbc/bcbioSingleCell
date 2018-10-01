@@ -10,7 +10,7 @@ plotNovelty(object, ...)
 
 \S4method{plotNovelty}{SingleCellExperiment}(object, geom = c("violin",
   "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups = NULL,
-  min = 0L, fill = getOption("bcbio.discrete.fill", NULL),
+  min = 0L, fill = getOption("basejump.discrete.fill", NULL),
   trans = "identity", title = "novelty : genes per UMI")
 }
 \arguments{
@@ -57,8 +57,7 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}}, \code{\link{plotQC}},
   \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}},
-  \code{\link{plotZerosVsDepth}}
+  \code{\link{plotUMIsPerCell}}
 }
 \author{
 Michael Steinbaugh

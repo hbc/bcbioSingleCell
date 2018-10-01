@@ -116,14 +116,3 @@ setGeneric(
         standardGeneric("plotUMIsVsGenes")
     }
 )
-
-
-
-#' @rdname topBarcodes
-#' @export
-setGeneric(
-    "topBarcodes",
-    function(object, ...) {
-        standardGeneric("topBarcodes")
-    }
-)

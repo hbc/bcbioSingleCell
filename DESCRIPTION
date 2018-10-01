@@ -96,6 +96,7 @@ Imports:
 Suggests:
     BiocStyle,
     EnsDb.Hsapiens.v75,
+    patrick,
     roxygen2,
     testthat (>= 2.0)
 Remotes:

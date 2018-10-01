@@ -10,8 +10,8 @@ plotReadsPerCell(object, ...)
 
 \S4method{plotReadsPerCell}{bcbioSingleCell}(object,
   interestingGroups = NULL, geom = c("histogram", "ecdf", "violin",
-  "ridgeline", "boxplot"), color = getOption("bcbio.discrete.color",
-  NULL), fill = getOption("bcbio.discrete.fill", NULL),
+  "ridgeline", "boxplot"), color = getOption("basejump.discrete.color",
+  NULL), fill = getOption("basejump.discrete.fill", NULL),
   title = "reads per cell")
 }
 \arguments{
@@ -61,8 +61,7 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotUMIsPerCell}},
-  \code{\link{plotZerosVsDepth}}
+  \code{\link{plotUMIsPerCell}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

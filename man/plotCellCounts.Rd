@@ -9,7 +9,7 @@
 plotCellCounts(object, ...)
 
 \S4method{plotCellCounts}{SingleCellExperiment}(object,
-  interestingGroups = NULL, fill = getOption("bcbio.discrete.fill",
+  interestingGroups = NULL, fill = getOption("basejump.discrete.fill",
   NULL), title = "cell counts")
 }
 \arguments{
@@ -48,8 +48,7 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}}, \code{\link{plotQC}},
   \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}},
-  \code{\link{plotZerosVsDepth}}
+  \code{\link{plotUMIsPerCell}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

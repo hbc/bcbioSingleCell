@@ -11,7 +11,7 @@ plotGenesPerCell(object, ...)
 \S4method{plotGenesPerCell}{SingleCellExperiment}(object,
   geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
   interestingGroups = NULL, min = 0L, max = Inf, trans = "log2",
-  fill = getOption("bcbio.discrete.fill", NULL),
+  fill = getOption("basejump.discrete.fill", NULL),
   title = "genes per cell")
 }
 \arguments{
@@ -60,8 +60,7 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}}, \code{\link{plotQC}},
   \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}},
-  \code{\link{plotZerosVsDepth}}
+  \code{\link{plotUMIsPerCell}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

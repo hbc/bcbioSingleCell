@@ -20,7 +20,7 @@ NULL
         geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
         interestingGroups = NULL,
         max = 1L,
-        fill = getOption("bcbio.discrete.fill", NULL),
+        fill = getOption("basejump.discrete.fill", NULL),
         trans = "sqrt",
         title = "mito ratio"
     ) {

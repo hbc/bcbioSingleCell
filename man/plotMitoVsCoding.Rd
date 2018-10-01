@@ -10,7 +10,7 @@ plotMitoVsCoding(object, ...)
 
 \S4method{plotMitoVsCoding}{SingleCellExperiment}(object,
   interestingGroups = NULL, trendline = FALSE,
-  color = getOption("bcbio.discrete.color", NULL), trans = "log2",
+  color = getOption("basejump.discrete.color", NULL), trans = "log2",
   title = "mito vs. coding")
 }
 \arguments{
@@ -53,8 +53,7 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
   \code{\link{plotGenesPerCell}},
   \code{\link{plotMitoRatio}}, \code{\link{plotNovelty}},
   \code{\link{plotQC}}, \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}},
-  \code{\link{plotZerosVsDepth}}
+  \code{\link{plotUMIsPerCell}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

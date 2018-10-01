@@ -1,5 +1,5 @@
 # Cell Ranger example data
-# 2018-09-27
+# 2018-09-30
 # 4k PBMCs from a Healthy Donor
 # https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k
 
@@ -64,64 +64,18 @@ sce <- CellRanger(
 pbmc <- sce
 saveData(pbmc, dir = "~")
 
-# Minimal example cellranger directory =========================================
-input_dir <- file.path(
-    upload_dir,
-    "pbmc",
-    "outs",
-    "filtered_gene_bc_matrices",
-    "GRCh38"
-)
-stopifnot(dir.exists(input_dir))
-output_dir <- file.path(
-    "inst",
-    "extdata",
-    "cellranger",
-    "pbmc",
-    "outs",
-    "filtered_gene_bc_matrices",
-    "GRCh38"
-)
-unlink("inst/extdata/cellranger", recursive = TRUE)
-dir.create(output_dir, recursive = TRUE)
-
-# Prepare the sparse matrix.
-counts <- readMM(file.path(input_dir, "matrix.mtx"))
-counts <- counts[1:500, 1:500]
-writeMM(counts, file = file.path(output_dir, "matrix.mtx"))
-
-genes <- read_tsv(
-    file = file.path(input_dir, "genes.tsv"),
-    col_names = c("geneID", "geneName"),
-    n_max = 500
-)
-write_tsv(
-    x = genes,
-    path = file.path(output_dir, "genes.tsv"),
-    col_names = FALSE
-)
-
-barcodes <- read_lines(
-    file = file.path(input_dir, "barcodes.tsv"),
-    n_max = 500
-)
-write_lines(
-    x = barcodes,
-    path = file.path(output_dir, "barcodes.tsv")
-)
-
 # cellranger_small =============================================================
 counts <- counts(sce)
 
 # Subset the matrix to include only the top genes and cells.
 top_genes <- Matrix::rowSums(counts) %>%
     sort(decreasing = TRUE) %>%
-    head(n = 500L)
+    head(n = 200L)
 genes <- sort(names(top_genes))
 
 top_cells <- Matrix::colSums(counts) %>%
     sort(decreasing = TRUE) %>%
-    head(n = 500L)
+    head(n = 2000L)
 cells <- sort(names(top_cells))
 
 # Subset the original pbmc dataset to contain only top genes and cells.
@@ -145,3 +99,51 @@ stopifnot(validObject(sce))
 
 cellranger_small <- sce
 devtools::use_data(cellranger_small, compress = "xz", overwrite = TRUE)
+
+
+
+# Minimal example cellranger directory =========================================
+input_dir <- file.path(
+    upload_dir,
+    "pbmc",
+    "outs",
+    "filtered_gene_bc_matrices",
+    "GRCh38"
+)
+stopifnot(dir.exists(input_dir))
+output_dir <- file.path(
+    "inst",
+    "extdata",
+    "cellranger",
+    "pbmc",
+    "outs",
+    "filtered_gene_bc_matrices",
+    "GRCh38"
+)
+unlink("inst/extdata/cellranger", recursive = TRUE)
+dir.create(output_dir, recursive = TRUE)
+
+# Prepare the sparse matrix.
+counts <- readMM(file.path(input_dir, "matrix.mtx"))
+counts <- counts[seq_len(100), seq_len(100)]
+writeMM(counts, file = file.path(output_dir, "matrix.mtx"))
+
+genes <- read_tsv(
+    file = file.path(input_dir, "genes.tsv"),
+    col_names = c("geneID", "geneName"),
+    n_max = 100
+)
+write_tsv(
+    x = genes,
+    path = file.path(output_dir, "genes.tsv"),
+    col_names = FALSE
+)
+
+barcodes <- read_lines(
+    file = file.path(input_dir, "barcodes.tsv"),
+    n_max = 100
+)
+write_lines(
+    x = barcodes,
+    path = file.path(output_dir, "barcodes.tsv")
+)

@@ -32,10 +32,10 @@
 #'   initializeDirectory makeDimnames makeGRangesFromEnsembl makeGRangesFromGFF
 #'   makeNames makeSingleCellExperiment makeTx2geneFromGFF mapCellsToSamples
 #'   matchArgsToDoCall matchInterestingGroups markdownHeader markdownPlotlist
-#'   methodFormals minimalSampleData prepareTemplate printString
-#'   sanitizeSampleData separator standardizeCall stripTranscriptVersions
-#'   theme_midnight theme_paperwhite tx2geneFromGFF uniteInterestingGroups
-#'   zerosVsDepth
+#'   methodFormals metrics minimalSampleData plotZerosVsDepth prepareTemplate
+#'   printString sanitizeSampleData separator standardizeCall
+#'   stripTranscriptVersions theme_midnight theme_paperwhite tx2geneFromGFF
+#'   uniteInterestingGroups
 #' @importFrom bcbioBase getBarcodeCutoffFromCommandsLog getLevelFromCommandsLog
 #'   getUMITypeFromCommandsLog projectDir readDataVersions readLog
 #'   readProgramVersions readSampleData readYAMLSampleData sampleDirs

@@ -12,8 +12,8 @@ plotUMIsPerCell(object, ...)
   geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
   interestingGroups = NULL, min = 0L, max = Inf, point = c("none",
   "inflection", "knee"), trans = "log10",
-  color = getOption("bcbio.discrete.color", NULL),
-  fill = getOption("bcbio.discrete.fill", NULL),
+  color = getOption("basejump.discrete.color", NULL),
+  fill = getOption("basejump.discrete.fill", NULL),
   title = "UMIs per cell")
 }
 \arguments{
@@ -76,8 +76,7 @@ Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
   \code{\link{plotMitoRatio}},
   \code{\link{plotMitoVsCoding}},
   \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotReadsPerCell}},
-  \code{\link{plotZerosVsDepth}}
+  \code{\link{plotReadsPerCell}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

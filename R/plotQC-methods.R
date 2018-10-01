@@ -35,8 +35,8 @@ NULL
     max = Inf,
     trans = "identity",
     ratio = FALSE,
-    color = getOption("bcbio.discrete.color", NULL),
-    fill = getOption("bcbio.discrete.fill", NULL),
+    color = getOption("basejump.discrete.color", NULL),
+    fill = getOption("basejump.discrete.fill", NULL),
     title = NULL
 ) {
     assert_is_a_string(metricCol)
@@ -197,7 +197,7 @@ NULL
     yTrans = "identity",
     interestingGroups = NULL,
     trendline = FALSE,
-    color = getOption("bcbio.discrete.color", NULL),
+    color = getOption("basejump.discrete.color", NULL),
     title = NULL
 ) {
     assert_is_a_string(xCol)
@@ -271,7 +271,7 @@ NULL
         interestingGroups = NULL,
         geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
         headerLevel = 2L,
-        legend = getOption("bcbio.legend", FALSE),
+        legend = getOption("basejump.legend", FALSE),
         return = c("grid", "list", "markdown")
     ) {
         validObject(object)
