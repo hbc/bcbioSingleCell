@@ -17,7 +17,7 @@
 #' - `help("[", "base")`.
 #' - `selectSamples()` for subsetting based on sample metadata.
 #'
-#' @return `bcbioSingleCell`.
+#' @return Modified object.
 #'
 #' @examples
 #' cells <- head(colnames(indrops_small), 100L)
@@ -37,16 +37,7 @@ NULL
 
 
 
-#' @rdname extract
-#' @export
-setMethod(
-    "[",
-    signature(
-        x = "bcbioSingleCell",
-        i = "ANY",
-        j = "ANY",
-        drop = "ANY"
-    ),
+.extract.SCE <-  # nolint
     function(x, i, j, ..., drop = FALSE) {
         validObject(x)
 
@@ -105,12 +96,44 @@ setMethod(
         }
 
         # Return ---------------------------------------------------------------
-        .new.bcbioSingleCell(
-            assays = assays(sce),
-            rowRanges <- rowRanges(sce),
-            colData <- colData,
-            metadata = metadata,
-            spikeNames = rownames(sce)[isSpike(sce)]
+        new(
+            Class = class(x)[[1L]],
+            makeSingleCellExperiment(
+                assays = assays(sce),
+                rowRanges <- rowRanges(sce),
+                colData <- colData,
+                metadata = metadata,
+                spikeNames = rownames(sce)[isSpike(sce)]
+            )
         )
     }
+
+
+
+#' @rdname extract
+#' @export
+setMethod(
+    "[",
+    signature(
+        x = "bcbioSingleCell",
+        i = "ANY",
+        j = "ANY",
+        drop = "ANY"
+    ),
+    definition = .extract.SCE
+)
+
+
+
+#' @rdname extract
+#' @export
+setMethod(
+    "[",
+    signature(
+        x = "CellRanger",
+        i = "ANY",
+        j = "ANY",
+        drop = "ANY"
+    ),
+    definition = .extract.SCE
 )
