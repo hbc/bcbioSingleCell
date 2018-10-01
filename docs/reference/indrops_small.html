@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
       </span>
     </div>
 
@@ -119,41 +119,45 @@
 
     <p>An object of class <code>bcbioSingleCell</code> with 500 rows and 500 columns.</p>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Minimal Example Data: <code><a href='cellranger_small.html'>cellranger_small</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.2.1
-#&gt; class: SingleCellExperiment 
-#&gt; dim: 500 500 
-#&gt; metadata(34): version pipeline ... filterParams filterSummary
-#&gt; assays(1): counts
-#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
-#&gt;   ENSG00000283391
-#&gt; rowData names(7): broadClass description ... geneName seqCoordSystem
-#&gt; colnames(500): multiplexed_AAAAAAAA_AAACACTA_ATCCCACG
-#&gt;   multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA ...
-#&gt;   multiplexed_AAAAAAAA_TGTTATCA_ACGCAGAG
-#&gt;   multiplexed_AAAAAAAA_TGTTATCA_CAAGTCAT
-#&gt; colData names(15): nCount sampleID ... aggregate revcomp
-#&gt; reducedDimNames(0):
-#&gt; spikeNames(0):
-#&gt; ================================================================================
-#&gt; Upload Dir: "/Users/mike/GitHub/bcbioSingleCell/inst/extdata/indrops"
+    <pre class="examples"><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
+#&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
+#&gt; citation("bcbioSingleCell")
+#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; Upload Dir: "/home/bioinfo/git/bcbioSingleCell-private/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-08-19
+#&gt; R Load Date: 2018-09-27
 #&gt; Level: "genes"
 #&gt; Organism: "Homo sapiens"
 #&gt; Interesting Groups: "sampleName"
 #&gt; Metadata File: "inst/extdata/indrops/metadata.csv"
-#&gt; AnnotationHub: "AH57757"
-#&gt; Ensembl Release: "90"
-#&gt; Genome Build: "GRCh38"
-#&gt; Filtered: TRUE</div></pre>
+#&gt; Filtered: FALSE
+#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; class: SingleCellExperiment 
+#&gt; dim: 500 500 
+#&gt; metadata(29): version pipeline ... wd sessionInfo
+#&gt; assays(1): counts
+#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
+#&gt;   ENSG00000283391
+#&gt; rowData names(4): broadClass geneBiotype geneID geneName
+#&gt; colnames(500): AAACACTA_ATCCCACG AAACACTA_CTTAGGTA ...
+#&gt;   TGTTATCA_ACGCAGAG TGTTATCA_CAAGTCAT
+#&gt; colData names(15): nUMI nGene ... aggregate revcomp
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
       <li><a href="#format">Format</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

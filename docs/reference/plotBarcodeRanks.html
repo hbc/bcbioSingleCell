@@ -34,7 +34,7 @@
   
 <meta property="og:title" content="Plot Barcode Ranks — plotBarcodeRanks" />
 
-<meta property="og:description" content="Plot Barcode Ranks" />
+<meta property="og:description" content="Compute barcode rank statistics and identifry the knee and inflection points on the total count curve." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
       </span>
     </div>
 
@@ -109,14 +109,15 @@
 
     <div class="ref-description">
     
-    <p>Plot Barcode Ranks</p>
+    <p>Compute barcode rank statistics and identifry the knee and inflection points on the total count curve.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>plotBarcodeRanks</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for SingleCellExperiment</span>
-<span class='fu'>plotBarcodeRanks</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>plotBarcodeRanks</span>(<span class='no'>object</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>fit.bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>df</span> <span class='kw'>=</span> <span class='fl'>20</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -127,7 +128,19 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Passthrough arguments to <code><a href='http://www.rdocumentation.org/packages/DropletUtils/topics/barcodeRanks'>DropletUtils::barcodeRanks()</a></code>.</p></td>
+      <td><p>Additional arguments.</p></td>
+    </tr>
+    <tr>
+      <th>lower</th>
+      <td><p>A numeric scalar specifying the lower bound on the total UMI count, at or below which all barcodes are assumed to correspond to empty droplets.</p></td>
+    </tr>
+    <tr>
+      <th>fit.bounds</th>
+      <td><p>A numeric vector of length 2, specifying the lower and upper bouunds on the total UMI count for spline fitting.</p></td>
+    </tr>
+    <tr>
+      <th>df</th>
+      <td><p>Further arguments to pass to <code>smooth.spline</code>.</p></td>
     </tr>
     </table>
     
@@ -135,13 +148,45 @@
 
     <p><code>ggplot</code> grid.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Analyses of droplet-based scRNA-seq data often show a plot of the log-total count against the log-rank of each barcode, where the highest ranks have the largest totals.
+This is equivalent to a transposed empirical cumulative density plot with log-transformed axes, which focuses on the barcodes with the largest counts.
+The <code>barcodeRanks</code> function will compute these ranks for all barcodes.
+Barcodes with the same total count receive the same average rank to avoid problems with discrete runs of the same total.</p>
+<p>The function will also identify a number of interesting points on the curve for downstream use, namely the inflection and knee points.
+Both of these points correspond to a sharp transition between two components of the total count distribution, 
+presumably reflecting the difference between empty droplets with little RNA and cell-containing droplets with much more RNA.</p><ul>
+<li><p>The inflection point is computed as the point on the rank/total curve where the first derivative is minimized.
+The derivative is computed directly from all points on the curve with total counts greater than <code>lower</code>.
+This avoids issues with erratic behaviour of the curve at lower totals.</p></li>
+<li><p>The knee point is defined as the point on the curve where the signed curvature is minimized.
+This requires calculation of the second derivative, which is much more sensitive to noise in the curve.
+To overcome this, a smooth spline is fitted to the log-total counts against the log-rank using the <code>smooth.spline</code> function.
+Derivatives are then calculated from the fitted spline using <code>predict</code>.</p></li>
+</ul><p>We supply a default setting of <code>df</code> to avoid overfitting the spline, which results in unstability in the higher derivatives (and thus the curvature).
+This and other arguments to <code>smooth.spline</code> can be tuned if the estimated knee point is not at an appropriate location.
+We also restrict the fit to lie within the bounds defined by <code>fit.bounds</code> to focus on the region containing the knee point.
+This allows us to obtain an accurate fit with low <code>df</code>, rather than attempting to model the entire curve.</p>
+<p>If <code>fit.bounds</code> is not specified, the upper bound is automatically set to the inflection point, which should lie after the knee point.
+The lower bound is set to the point at which the first derivative is closest to zero, i.e., the &#8220;plateau&#8221; region before the knee point.
+Note that only points with total counts above <code>lower</code> will be considered, regardless of how <code>fit.bounds</code> is defined.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/DropletUtils/topics/barcodeRanks'>DropletUtils::barcodeRanks()</a></code>.</p></div>
+    <div class='dont-index'><p>Other Quality Control Functions: <code><a href='barcodeRanksPerSample.html'>barcodeRanksPerSample</a></code>,
+  <code><a href='filterCells.html'>filterCells</a></code>, <code><a href='plotCellCounts.html'>plotCellCounts</a></code>,
+  <code><a href='plotGenesPerCell.html'>plotGenesPerCell</a></code>,
+  <code><a href='plotMitoRatio.html'>plotMitoRatio</a></code>,
+  <code><a href='plotMitoVsCoding.html'>plotMitoVsCoding</a></code>,
+  <code><a href='plotNovelty.html'>plotNovelty</a></code>, <code><a href='plotQC.html'>plotQC</a></code>,
+  <code><a href='plotReadsPerCell.html'>plotReadsPerCell</a></code>,
+  <code><a href='plotUMIsPerCell.html'>plotUMIsPerCell</a></code>,
+  <code><a href='plotZerosVsDepth.html'>plotZerosVsDepth</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>plotBarcodeRanks</span>(<span class='no'>indrops_small</span>)</div><div class='img'><img src='plotBarcodeRanks-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>plotBarcodeRanks</span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; <span class='error'>Error in grobs[[i]]: subscript out of bounds</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -149,6 +194,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

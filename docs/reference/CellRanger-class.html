@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cell to Sample Mappings — cell2sample • bcbioSingleCell</title>
+<title><code>CellRanger</code> Class — CellRanger-class • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -32,9 +32,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Cell to Sample Mappings — cell2sample" />
+<meta property="og:title" content="<code>CellRanger</code> Class — CellRanger-class" />
 
-<meta property="og:description" content="Cell to Sample Mappings" />
+<meta property="og:description" content="Extends SingleCellExperiment, with additional validity checks on the
+metadata() slot." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
       </span>
     </div>
 
@@ -102,65 +103,32 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Cell to Sample Mappings</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/cell2sample-methods.R'><code>R/cell2sample-methods.R</code></a></small>
-    <div class="hidden name"><code>cell2sample.Rd</code></div>
+    <h1><code>CellRanger</code> Class</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllClasses.R'><code>R/AllClasses.R</code></a></small>
+    <div class="hidden name"><code>CellRanger-class.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Cell to Sample Mappings</p>
+    <p>Extends <code>SingleCellExperiment</code>, with additional validity checks on the
+<code>metadata()</code> slot.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>cell2sample</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for SingleCellExperiment</span>
-<span class='fu'>cell2sample</span>(<span class='no'>object</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>object</th>
-      <td><p>Object.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>Named <code>factor</code> containing sample IDs as the levels and cellular
-barcode IDs as the names.</p>
-    
+        
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
-  <code><a href='metricsPerSample.html'>metricsPerSample</a></code>, <code><a href='sampleData.html'>sampleData</a></code>,
-  <code><a href='selectSamples.html'>selectSamples</a></code>,
-  <code><a href='subsetPerSample.html'>subsetPerSample</a></code>, <code><a href='topBarcodes.html'>topBarcodes</a></code></p></div>
+    <div class='dont-index'><p><code><a href='CellRanger.html'>CellRanger()</a></code>.</p>
+<p>Other S4 Classes: <code><a href='bcbioSingleCell-class.html'>bcbioSingleCell-class</a></code></p></div>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>cell2sample</span>(<span class='no'>indrops_small</span>)
-<span class='fu'>table</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; x
-#&gt; multiplexed_AAAAAAAA 
-#&gt;                  500 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
     <h2>Author</h2>
     

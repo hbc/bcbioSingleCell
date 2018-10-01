@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Contributing to bcbioSingleCell • bcbioSingleCell</title>
+<title>Contributing to development • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -32,7 +32,7 @@
 
   <link href="extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Contributing to bcbioSingleCell" />
+<meta property="og:title" content="Contributing to development" />
 
 
 
@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
       </span>
     </div>
 
@@ -99,38 +99,19 @@
 <div class="row">
   <div class="contents col-md-9">
     <div class="page-header">
-      <h1>Contributing to bcbioSingleCell</h1>
+      <h1>Contributing to development</h1>
     </div>
 
-<div id="contributing-to-bcbiosinglecell" class="section level1">
+<div id="contributing-to-development" class="section level1">
 
-<ul>
-<li>For all changes, fork or create a new branch, then issue a pull request that will be reviewed.</li>
-<li>Do not commit changes directly to <code>master</code> branch.</li>
-<li>Support is only provided for the current release version.</li>
-</ul>
-<div id="package-style-syntax" class="section level2">
+<p>Please follow all <a href="https://steinbaugh.com/basejump/CONTRIBUTING.html">recommended guidelines</a> defined in the <a href="https://steinbaugh.com/basejump">basejump</a> package.</p>
+<div id="administrator-guidelines" class="section level2">
 <h2 class="hasAnchor">
-<a href="#package-style-syntax" class="anchor"></a>Package style syntax</h2>
-<p>Attempt to follow these style guides, by priority: (1) <a href="https://www.bioconductor.org/developers/how-to/coding-style/">Bioconductor coding style</a>; (2) <a href="http://style.tidyverse.org">tidyverse style guide</a>; (3) <a href="https://google.github.io/styleguide/Rguide.xml">Google R style guide</a>.</p>
+<a href="#administrator-guidelines" class="anchor"></a>Administrator guidelines</h2>
 <ul>
-<li>Object and function parameter arguments should be formated in lowerCamelCase.</li>
-<li>Use spaces instead of tabs. Indent with 4 spaces.</li>
-<li>Use <code>&lt;-</code> and not <code>=</code> for assignment.</li>
-<li>Explicitly define <code>if</code>/<code>then</code> statements using opening and closing brackets (<code>{</code>, <code>}</code>).</li>
-<li>
-<code>else</code> declarations should be on the same line as the closing bracket.</li>
-<li>Use spaces around assignment operators (<code>&lt;-</code>), brackets (<code>{</code>), and comma delimiters (e.g. <code>c("foo", "bar")</code> not <code>c("foo","bar")</code>.</li>
+<li>Do not commit changes directly to master branch.</li>
+<li>Please avoid creating unnecessary new branches. Use a fork instead.</li>
 </ul>
-</div>
-<div id="required-checks" class="section level2">
-<h2 class="hasAnchor">
-<a href="#required-checks" class="anchor"></a>Required checks</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lintr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/lintr/topics/lint_package">lint_package</a></span>()
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/document">document</a></span>()
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/check">check</a></span>()
-BiocCheck<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/BiocCheck/topics/BiocCheck">BiocCheck</a></span>(<span class="kw">getwd</span>())
-pkgdown<span class="op">::</span><span class="kw"><a href="http://pkgdown.r-lib.org/reference/build_site.html">build_site</a></span>()</code></pre></div>
 </div>
 </div>
 

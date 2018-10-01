@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title><code>bcbioSingleCell</code> Object and Constructor — bcbioSingleCell • bcbioSingleCell</title>
+<title>Read bcbio Single-Cell RNA-Seq Data — bcbioSingleCell • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -32,12 +32,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="<code>bcbioSingleCell</code> Object and Constructor — bcbioSingleCell" />
+<meta property="og:title" content="Read bcbio Single-Cell RNA-Seq Data — bcbioSingleCell" />
 
-<meta property="og:description" content="bcbioSingleCell is an S4 class that extends SingleCellExperiment, and is
-designed to store a bcbio single-cell RNA-seq analysis. This class contains
-read counts saved as a sparse matrix (dgCMatrix), sample metadata, and cell
-quality control metrics." />
+<meta property="og:description" content="Read bcbio Single-Cell RNA-Seq Data" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -66,7 +63,7 @@ quality control metrics." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
       </span>
     </div>
 
@@ -105,24 +102,21 @@ quality control metrics." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1><code>bcbioSingleCell</code> Object and Constructor</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllClasses.R'><code>R/AllClasses.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/bcbioSingleCell-constructor.R'><code>R/bcbioSingleCell-constructor.R</code></a></small>
+    <h1>Read bcbio Single-Cell RNA-Seq Data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerators.R'><code>R/AllGenerators.R</code></a></small>
     <div class="hidden name"><code>bcbioSingleCell.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>bcbioSingleCell</code> is an S4 class that extends <code>SingleCellExperiment</code>, and is
-designed to store a bcbio single-cell RNA-seq analysis. This class contains
-read counts saved as a sparse matrix (<code>dgCMatrix</code>), sample metadata, and cell
-quality control metrics.</p>
+    <p>Read bcbio Single-Cell RNA-Seq Data</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>bcbioSingleCell</span>(<span class='no'>uploadDir</span>, <span class='kw'>organism</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='kw'>ensemblRelease</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>genomeBuild</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>transgeneNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>spikeNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>gffFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>bcbioSingleCell</span>(<span class='no'>uploadDir</span>, <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>organism</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ensemblRelease</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>genomeBuild</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gffFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>transgeneNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>spikeNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -133,6 +127,13 @@ quality control metrics.</p>
 when running "<code>bcbio_nextgen -w template</code>".</p></td>
     </tr>
     <tr>
+      <th>sampleMetadataFile</th>
+      <td><p><code>string</code> or <code>NULL</code>. Sample barcode metadata file.
+Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
+be left <code>NULL</code>, but otherwise suggested for runs with multipliexed FASTQs
+containing multiple index barcodes (e.g. inDrops).</p></td>
+    </tr>
+    <tr>
       <th>organism</th>
       <td><p><code>string</code> or <code>NULL</code>. Organism name. Use the full Latin name
 (e.g. "Homo sapiens"), since this will be input downstream to AnnotationHub
@@ -140,19 +141,6 @@ and ensembldb, unless <code>gffFile</code> is set. If left <code>NULL</code> (<e
 the function call will skip loading gene-level annotations into
 <code>rowRanges()</code>. This can be useful for poorly annotation genomes or
 experiments involving multiple genomes.</p></td>
-    </tr>
-    <tr>
-      <th>sampleMetadataFile</th>
-      <td><p><code>string</code> or <code>NULL</code>. Sample barcode metadata file.
-Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
-be left <code>NULL</code>, but otherwise required for runs with multipliexed FASTQs
-containing multiple index barcodes (e.g. inDrop).</p></td>
-    </tr>
-    <tr>
-      <th>interestingGroups</th>
-      <td><p><code>character</code> or <code>NULL</code>. Character vector of
-interesting groups. Must be formatted in camel case and intersect with
-<code><a href='sampleData.html'>sampleData()</a></code> colnames.</p></td>
     </tr>
     <tr>
       <th>ensemblRelease</th>
@@ -166,16 +154,6 @@ unless <code>gffFile</code> is set.</p></td>
       <td><p><code>string</code> or <code>NULL</code>. Ensembl genome build name (e.g.
 "GRCh38"). This will be passed to AnnotationHub for <code>EnsDb</code> annotation
 matching, unless <code>gffFile</code> is set.</p></td>
-    </tr>
-    <tr>
-      <th>transgeneNames</th>
-      <td><p><code>character</code> or <code>NULL</code>. Vector indicating which
-<code>assay()</code> rows denote transgenes (e.g. EGFP, TDTOMATO).</p></td>
-    </tr>
-    <tr>
-      <th>spikeNames</th>
-      <td><p><code>character</code> or <code>NULL</code>. Vector indicating which <code>assay()</code>
-rows denote spike-in sequences (e.g. ERCCs).</p></td>
     </tr>
     <tr>
       <th>gffFile</th>
@@ -192,6 +170,22 @@ mappings and construct a <code>GRanges</code> object containing the genomic rang
 (<code>rowRanges()</code>).</p></td>
     </tr>
     <tr>
+      <th>transgeneNames</th>
+      <td><p><code>character</code> or <code>NULL</code>. Vector indicating which
+<code>assay()</code> rows denote transgenes (e.g. EGFP, TDTOMATO).</p></td>
+    </tr>
+    <tr>
+      <th>spikeNames</th>
+      <td><p><code>character</code> or <code>NULL</code>. Vector indicating which <code>assay()</code>
+rows denote spike-in sequences (e.g. ERCCs).</p></td>
+    </tr>
+    <tr>
+      <th>interestingGroups</th>
+      <td><p><code>character</code> or <code>NULL</code>. Character vector of
+interesting groups. Must be formatted in camel case and intersect with
+<code>sampleData()</code> colnames.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Additional arguments, to be stashed in the <code>metadata()</code> slot.</p></td>
     </tr>
@@ -201,16 +195,11 @@ mappings and construct a <code>GRanges</code> object containing the genomic rang
 
     <p><code>bcbioSingleCell</code>.</p>
     
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p><code>bcbioSingleCell</code> extended <code>SummarizedExperiment</code> prior to v0.1.0,
-where we migrated to <code>SingleCellExperiment</code>.</p>
-    
     <h2 class="hasAnchor" id="remote-data"><a class="anchor" href="#remote-data"></a>Remote Data</h2>
 
     
-    <p>When working in RStudio, we recommend connecting to the bcbio-nextgen
-run directory as a remote connection over
+    <p>When working in RStudio, we recommend connecting to the bcbio-nextgen run
+directory as a remote connection over
 <a href='https://github.com/osxfuse/osxfuse/wiki/SSHFS'>sshfs</a>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -219,49 +208,68 @@ run directory as a remote connection over
 <li><p><code><a href='http://www.rdocumentation.org/packages/SingleCellExperiment/topics/SingleCellExperiment'>SingleCellExperiment::SingleCellExperiment()</a></code>.</p></li>
 <li><p><code>.S4methods(class = "bcbioSingleCell")</code>.</p></li>
 </ul></div>
-    <div class='dont-index'><p>Other S4 Object: <code><a href='extract.html'>extract</a></code>, <code><a href='show.html'>show</a></code>,
-  <code><a href='updateObject.html'>updateObject</a></code></p></div>
+    <div class='dont-index'><p>Other S4 Generators: <code><a href='CellRanger.html'>CellRanger</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>uploadDir</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata/indrops"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>bcbioSingleCell</span>(
-    <span class='kw'>uploadDir</span> <span class='kw'>=</span> <span class='no'>uploadDir</span>,
-    <span class='kw'>organism</span> <span class='kw'>=</span> <span class='st'>"Homo sapiens"</span>,
-    <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='no'>uploadDir</span>, <span class='st'>"metadata.csv"</span>),
-    <span class='kw'>ensemblRelease</span> <span class='kw'>=</span> <span class='fl'>87L</span>
-)</div><div class='output co'>#&gt; <span class='message'>2018-01-01_bcbio</span></div><div class='output co'>#&gt; <span class='message'>1 samples detected:</span>
-#&gt; <span class='message'>multiplexed_AAAAAAAA</span></div><div class='output co'>#&gt; <span class='message'>Reading project-summary.yaml</span></div><div class='output co'>#&gt; <span class='message'>Data versions are missing</span></div><div class='output co'>#&gt; <span class='message'>1000 reads per cellular barcode cutoff detected</span></div><div class='output co'>#&gt; <span class='message'>UMI type: surecell</span></div><div class='output co'>#&gt; <span class='message'>Reading metadata.csv</span></div><div class='output co'>#&gt; <span class='message'>Multiplexed samples detected</span></div><div class='output co'>#&gt; <span class='message'>Reading counts as genes</span></div><div class='output co'>#&gt; <span class='message'>Reading counts in mtx format</span></div><div class='output co'>#&gt; <span class='message'>Reading cellular barcode distributions</span></div><div class='output co'>#&gt; <span class='message'>Making GRanges from Ensembl with AnnotationHub 2.12.0 (2018-04-30)</span></div><div class='output co'>#&gt; <span class='message'>Ensembl 87 EnsDb for Homo Sapiens</span></div><div class='output co'>#&gt; <span class='message'>id: "AH53211"</span>
-#&gt; <span class='message'>organism: "Homo sapiens"</span>
-#&gt; <span class='message'>build: "GRCh38"</span>
-#&gt; <span class='message'>release: "87"</span>
-#&gt; <span class='message'>format: "genes"</span></div><div class='output co'>#&gt; <span class='message'>Standardizing the metadata columns</span></div><div class='output co'>#&gt; <span class='message'>Defining broad class using: geneName, geneBiotype, seqnames</span></div><div class='output co'>#&gt; <span class='message'>Sorting ranges by geneID</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected</span></div><div class='output co'>#&gt; <span class='message'>449 coding genes</span></div><div class='output co'>#&gt; <span class='message'>13 mitochondrial genes</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.2.1
+
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>bcbioSingleCell</span>(<span class='no'>uploadDir</span>)</div><div class='output co'>#&gt; <span class='message'>Dated project directory: 2018-01-01_bcbio</span></div><div class='output co'>#&gt; <span class='message'>1 sample(s) detected:</span>
+#&gt; <span class='message'>multiplexed_AAAAAAAA</span></div><div class='output co'>#&gt; <span class='message'>Reading project-summary.yaml...</span></div><div class='output co'>#&gt; <span class='message'>Data versions are missing.</span></div><div class='output co'>#&gt; <span class='message'>1000 reads per cellular barcode cutoff detected.</span></div><div class='output co'>#&gt; <span class='message'>Counts will imported as genes.</span></div><div class='output co'>#&gt; <span class='message'>UMI type: harvard-indrop-v3</span></div><div class='output co'>#&gt; <span class='message'>Importing unfiltered cellular barcode distributions...</span></div><div class='output co'>#&gt; <span class='message'>Importing counts...</span></div><div class='output co'>#&gt; <span class='message'>Imported multiplexed-AAAAAAAA.</span></div><div class='output co'>#&gt; <span class='message'>Unknown organism. Skipping annotations.</span></div><div class='output co'>#&gt; <span class='message'>`sampleMetadataFile` is recommended for multiplexed samples (e.g. harvard-indrop-v3).</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics...</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected.</span></div><div class='output co'>#&gt; <span class='message'>Calculating metrics without biotype information.</span>
+#&gt; <span class='message'>`rowRanges` is required to calculate: nCoding, nMito, mitoRatio</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
+#&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
+#&gt; citation("bcbioSingleCell")
+#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; Upload Dir: "/home/bioinfo/git/bcbioSingleCell-private/inst/extdata/indrops"
+#&gt; Upload Date: 2018-01-01
+#&gt; R Load Date: 2018-09-28
+#&gt; Level: "genes"
+#&gt; Organism: character(0)
+#&gt; Interesting Groups: "sampleName"
+#&gt; Filtered: FALSE
+#&gt; ────────────────────────────────────────────────────────────────────────
 #&gt; class: SingleCellExperiment 
 #&gt; dim: 500 500 
-#&gt; metadata(31): version pipeline ... utilsSessionInfo devtoolsSessionInfo
+#&gt; metadata(29): version pipeline ... wd sessionInfo
 #&gt; assays(1): counts
 #&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
 #&gt;   ENSG00000283391
-#&gt; rowData names(7): broadClass description ... geneName seqCoordSystem
-#&gt; colnames(500): multiplexed_AAAAAAAA_AAACACTA_ATCCCACG
-#&gt;   multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA ...
-#&gt;   multiplexed_AAAAAAAA_TGTTATCA_ACGCAGAG
-#&gt;   multiplexed_AAAAAAAA_TGTTATCA_CAAGTCAT
-#&gt; colData names(15): nCount sampleID ... aggregate revcomp
+#&gt; rowData names(0):
+#&gt; colnames(500): AAACACTA_ATCCCACG AAACACTA_CTTAGGTA ...
+#&gt;   TGTTATCA_ACGCAGAG TGTTATCA_CAAGTCAT
+#&gt; colData names(9): nUMI nGene ... sampleID sampleName
 #&gt; reducedDimNames(0):
-#&gt; spikeNames(0):
-#&gt; ================================================================================
-#&gt; Upload Dir: "/Users/mike/GitHub/bcbioSingleCell/inst/extdata/indrops"
+#&gt; spikeNames(0):</div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>bcbioSingleCell</span>(
+    <span class='kw'>uploadDir</span> <span class='kw'>=</span> <span class='no'>uploadDir</span>,
+    <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='no'>uploadDir</span>, <span class='st'>"metadata.csv"</span>)
+)</div><div class='output co'>#&gt; <span class='message'>Dated project directory: 2018-01-01_bcbio</span></div><div class='output co'>#&gt; <span class='message'>1 sample(s) detected:</span>
+#&gt; <span class='message'>multiplexed_AAAAAAAA</span></div><div class='output co'>#&gt; <span class='message'>Reading project-summary.yaml...</span></div><div class='output co'>#&gt; <span class='message'>Data versions are missing.</span></div><div class='output co'>#&gt; <span class='message'>1000 reads per cellular barcode cutoff detected.</span></div><div class='output co'>#&gt; <span class='message'>Counts will imported as genes.</span></div><div class='output co'>#&gt; <span class='message'>UMI type: harvard-indrop-v3</span></div><div class='output co'>#&gt; <span class='message'>Reading metadata.csv...</span></div><div class='output co'>#&gt; <span class='message'>Multiplexed samples detected.</span></div><div class='output co'>#&gt; <span class='message'>Importing unfiltered cellular barcode distributions...</span></div><div class='output co'>#&gt; <span class='message'>Importing counts...</span></div><div class='output co'>#&gt; <span class='message'>Imported multiplexed-AAAAAAAA.</span></div><div class='output co'>#&gt; <span class='message'>Unknown organism. Skipping annotations.</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics...</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected.</span></div><div class='output co'>#&gt; <span class='message'>Calculating metrics without biotype information.</span>
+#&gt; <span class='message'>`rowRanges` is required to calculate: nCoding, nMito, mitoRatio</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
+#&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
+#&gt; citation("bcbioSingleCell")
+#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; Upload Dir: "/home/bioinfo/git/bcbioSingleCell-private/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-08-19
+#&gt; R Load Date: 2018-09-28
 #&gt; Level: "genes"
-#&gt; Organism: "Homo sapiens"
+#&gt; Organism: character(0)
 #&gt; Interesting Groups: "sampleName"
-#&gt; Metadata File: "/Users/mike/GitHub/bcbioSingleCell/inst/extdata/indrops/metadata.csv"
-#&gt; AnnotationHub: "AH53211"
-#&gt; Ensembl Release: "87"
-#&gt; Genome Build: "GRCh38"
-#&gt; Filtered: FALSE</div><div class='input'><span class='fu'>validObject</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
+#&gt; Metadata File: "/home/bioinfo/git/bcbioSingleCell-private/inst/extdata/indrops/metadata.csv"
+#&gt; Filtered: FALSE
+#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; class: SingleCellExperiment 
+#&gt; dim: 500 500 
+#&gt; metadata(29): version pipeline ... wd sessionInfo
+#&gt; assays(1): counts
+#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
+#&gt;   ENSG00000283391
+#&gt; rowData names(0):
+#&gt; colnames(500): AAACACTA_ATCCCACG AAACACTA_CTTAGGTA ...
+#&gt;   TGTTATCA_ACGCAGAG TGTTATCA_CAAGTCAT
+#&gt; colData names(15): nUMI nGene ... aggregate revcomp
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -269,8 +277,6 @@ run directory as a remote connection over
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#note">Note</a></li>
 
       <li><a href="#remote-data">Remote Data</a></li>
 

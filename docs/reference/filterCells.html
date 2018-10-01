@@ -68,7 +68,7 @@ sampleData())." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
       </span>
     </div>
 
@@ -119,7 +119,7 @@ cellular barcodes. By default we recommend applying the same filtering cutoff
 to all samples. The filtering parameters now support per-sample cutoffs,
 defined using a named <code>numeric</code> vector. When matching per sample, be sure to
 use the <code>sampleNames()</code> return values (i.e. the <code>sampleName</code> column in
-<code><a href='sampleData.html'>sampleData()</a></code>).</p>
+<code>sampleData()</code>).</p>
     
     </div>
 
@@ -127,7 +127,7 @@ use the <code>sampleNames()</code> return values (i.e. the <code>sampleName</cod
 
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>filterCells</span>(<span class='no'>object</span>, <span class='kw'>nCells</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
-  <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>maxUMIs</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
+  <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>maxUMIs</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>minGenes</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>maxGenes</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
   <span class='kw'>minNovelty</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>maxMitoRatio</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>minCellsPerGene</span> <span class='kw'>=</span> <span class='fl'>1L</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -188,7 +188,8 @@ expression in at least this many cells.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Quality Control Functions: <code><a href='barcodeRanksPerSample.html'>barcodeRanksPerSample</a></code>,
-  <code><a href='metrics.html'>metrics</a></code>, <code><a href='plotCellCounts.html'>plotCellCounts</a></code>,
+  <code><a href='plotBarcodeRanks.html'>plotBarcodeRanks</a></code>,
+  <code><a href='plotCellCounts.html'>plotCellCounts</a></code>,
   <code><a href='plotGenesPerCell.html'>plotGenesPerCell</a></code>,
   <code><a href='plotMitoRatio.html'>plotMitoRatio</a></code>,
   <code><a href='plotMitoVsCoding.html'>plotMitoVsCoding</a></code>,
@@ -200,99 +201,92 @@ expression in at least this many cells.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>indrops_small</span>
-<span class='fu'><a href='show.html'>show</a></span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.2.1
-#&gt; class: SingleCellExperiment 
-#&gt; dim: 500 500 
-#&gt; metadata(34): version pipeline ... filterParams filterSummary
-#&gt; assays(1): counts
-#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
-#&gt;   ENSG00000283391
-#&gt; rowData names(7): broadClass description ... geneName seqCoordSystem
-#&gt; colnames(500): multiplexed_AAAAAAAA_AAACACTA_ATCCCACG
-#&gt;   multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA ...
-#&gt;   multiplexed_AAAAAAAA_TGTTATCA_ACGCAGAG
-#&gt;   multiplexed_AAAAAAAA_TGTTATCA_CAAGTCAT
-#&gt; colData names(15): nCount sampleID ... aggregate revcomp
-#&gt; reducedDimNames(0):
-#&gt; spikeNames(0):
-#&gt; ================================================================================
-#&gt; Upload Dir: "/Users/mike/GitHub/bcbioSingleCell/inst/extdata/indrops"
+<span class='fu'><a href='show.html'>show</a></span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
+#&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
+#&gt; citation("bcbioSingleCell")
+#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; Upload Dir: "/home/bioinfo/git/bcbioSingleCell-private/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-08-19
+#&gt; R Load Date: 2018-09-27
 #&gt; Level: "genes"
 #&gt; Organism: "Homo sapiens"
 #&gt; Interesting Groups: "sampleName"
 #&gt; Metadata File: "inst/extdata/indrops/metadata.csv"
-#&gt; AnnotationHub: "AH57757"
-#&gt; Ensembl Release: "90"
-#&gt; Genome Build: "GRCh38"
-#&gt; Filtered: TRUE</div><div class='input'>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; <span class='message'>Parameters:</span>
-#&gt; <span class='message'>  - &gt;= 0 UMIs per cell</span>
+#&gt; Filtered: FALSE
+#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; class: SingleCellExperiment 
+#&gt; dim: 500 500 
+#&gt; metadata(29): version pipeline ... wd sessionInfo
+#&gt; assays(1): counts
+#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
+#&gt;   ENSG00000283391
+#&gt; rowData names(4): broadClass geneBiotype geneID geneName
+#&gt; colnames(500): AAACACTA_ATCCCACG AAACACTA_CTTAGGTA ...
+#&gt;   TGTTATCA_ACGCAGAG TGTTATCA_CAAGTCAT
+#&gt; colData names(15): nUMI nGene ... aggregate revcomp
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):</div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; <span class='message'>Returning object unmodified.</span></div><div class='output co'>#&gt; <span class='message'>Returning object unmodified.</span></div><div class='output co'>#&gt; <span class='message'>Parameters:</span>
+#&gt; <span class='message'>  - &gt;= 1 UMIs per cell</span>
 #&gt; <span class='message'>  - &lt;= Inf UMIs per cell</span>
-#&gt; <span class='message'>  - &gt;= 0 genes per cell</span>
+#&gt; <span class='message'>  - &gt;= 1 genes per cell</span>
 #&gt; <span class='message'>  - &lt;= Inf genes per cell</span>
 #&gt; <span class='message'>  - &gt;= 0 novelty score</span>
 #&gt; <span class='message'>  - &lt;= 1 mitochondrial abundance</span>
 #&gt; <span class='message'>  - == Inf cells per sample</span>
 #&gt; <span class='message'>  - &gt;= 1 cells per gene</span>
-#&gt; <span class='message'>================================================================================</span>
+#&gt; <span class='message'>────────────────────────────────────────────────────────────────────────</span>
 #&gt; <span class='message'>Cells:</span>
 #&gt; <span class='message'>     500 cells | prefilter</span>
-#&gt; <span class='message'>     500 cells | minUMIs &gt;= 0</span>
+#&gt; <span class='message'>     500 cells | minUMIs &gt;= 1</span>
 #&gt; <span class='message'>     500 cells | maxUMIs &lt;= Inf</span>
-#&gt; <span class='message'>     500 cells | minGenes &gt;= 0</span>
+#&gt; <span class='message'>     500 cells | minGenes &gt;= 1</span>
 #&gt; <span class='message'>     500 cells | maxGenes &lt;= Inf</span>
 #&gt; <span class='message'>     500 cells | minNovelty &lt;= 0</span>
 #&gt; <span class='message'>     500 cells | maxMitoRatio &lt;= 1</span>
 #&gt; <span class='message'>     500 cells | nCells == Inf</span>
-#&gt; <span class='message'></span>
+#&gt; <span class='message'>     500 of 500 cells passed filtering (100%)</span>
 #&gt; <span class='message'>rep_1 </span>
 #&gt; <span class='message'>  500 </span>
-#&gt; <span class='message'>================================================================================</span>
+#&gt; <span class='message'>────────────────────────────────────────────────────────────────────────</span>
 #&gt; <span class='message'>Genes:</span>
 #&gt; <span class='message'>     500 genes | prefilter</span>
 #&gt; <span class='message'>     500 genes | minCellsPerGene &gt;= 1</span>
-#&gt; <span class='message'>================================================================================</span>
-#&gt; <span class='message'>Summary:</span>
-#&gt; <span class='message'>  - 500 of 500 cells passed filtering (100%)</span>
-#&gt; <span class='message'>  - 500 of 500 genes passed filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.2.1
-#&gt; class: SingleCellExperiment 
-#&gt; dim: 500 500 
-#&gt; metadata(34): version pipeline ... filterParams filterSummary
-#&gt; assays(1): counts
-#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
-#&gt;   ENSG00000283391
-#&gt; rowData names(7): broadClass description ... geneName seqCoordSystem
-#&gt; colnames(500): multiplexed_AAAAAAAA_AAACACTA_ATCCCACG
-#&gt;   multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA ...
-#&gt;   multiplexed_AAAAAAAA_TGTTATCA_ACGCAGAG
-#&gt;   multiplexed_AAAAAAAA_TGTTATCA_CAAGTCAT
-#&gt; colData names(15): nCount sampleID ... aggregate revcomp
-#&gt; reducedDimNames(0):
-#&gt; spikeNames(0):
-#&gt; ================================================================================
-#&gt; Upload Dir: "/Users/mike/GitHub/bcbioSingleCell/inst/extdata/indrops"
+#&gt; <span class='message'>     500 of 500 genes passed filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
+#&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
+#&gt; citation("bcbioSingleCell")
+#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; Upload Dir: "/home/bioinfo/git/bcbioSingleCell-private/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-08-19
+#&gt; R Load Date: 2018-09-27
 #&gt; Level: "genes"
 #&gt; Organism: "Homo sapiens"
 #&gt; Interesting Groups: "sampleName"
 #&gt; Metadata File: "inst/extdata/indrops/metadata.csv"
-#&gt; AnnotationHub: "AH57757"
-#&gt; Ensembl Release: "90"
-#&gt; Genome Build: "GRCh38"
-#&gt; Filtered: TRUE</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $nCells
+#&gt; Filtered: TRUE
+#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; class: SingleCellExperiment 
+#&gt; dim: 500 500 
+#&gt; metadata(32): version pipeline ... filterParams filterSummary
+#&gt; assays(1): counts
+#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
+#&gt;   ENSG00000283391
+#&gt; rowData names(4): broadClass geneBiotype geneID geneName
+#&gt; colnames(500): AAACACTA_ATCCCACG AAACACTA_CTTAGGTA ...
+#&gt;   TGTTATCA_ACGCAGAG TGTTATCA_CAAGTCAT
+#&gt; colData names(15): nUMI nGene ... aggregate revcomp
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $nCells
 #&gt; [1] Inf
 #&gt; 
 #&gt; $minUMIs
-#&gt; [1] 0
+#&gt; [1] 1
 #&gt; 
 #&gt; $maxUMIs
 #&gt; [1] Inf
 #&gt; 
 #&gt; $minGenes
-#&gt; [1] 0
+#&gt; [1] 1
 #&gt; 
 #&gt; $maxGenes
 #&gt; [1] Inf
@@ -307,68 +301,311 @@ expression in at least this many cells.</p></td>
 #&gt; [1] 1
 #&gt; </div><div class='input'>
 <span class='co'># Per sample cutoffs</span>
-<span class='fu'>sampleNames</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; multiplexed_AAAAAAAA 
-#&gt;              "rep_1" </div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(
+<span class='fu'>sampleNames</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; AAACACTA_ATCCCACG AAACACTA_CTTAGGTA AAACACTA_CTTCGATT AAACCGCC_GAGTTTCG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AAACCGCC_TAGCCTCG AAACGATC_TTTACCCT AAACTACA_CCACATTA AAAGAGGC_ACCTTGCC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AAAGTCAT_TTGAGGGT AAATTCCG_TTTATCAC AACAGAAC_TTTACCCT AACGATTT_ATTCAGTA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AACGATTT_TCCAGGGA AACGCCAA_TAAGACGG AACGGTAG_CACGGACT AACGTTAC_ACCCACGA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AACGTTAC_GCAGTCGA AACGTTAC_TCGGTTTA AACTGCCT_GAGAGTAT AACTGCCT_GCAAGGAC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AACTGCCT_GGGTGTAT AACTGCCT_TTAGGACC AAGAAGGT_ATTCAGTA AAGAAGGT_TCTGTGGT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AAGAGTAT_CCCTAACC AAGCCTTC_TAAATAGG AAGCCTTC_TCACGTTT AAGCTCCT_AGACACCA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AAGGATGA_CTAGTAAC AAGGGACC_CAGGTGTC AAGTCCAA_AACCTGAC AAGTCGGG_ACGCTCAG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AAGTCGGG_GGAAACAG AAGTGAGA_GAGGCTGA AATAAGGA_AACCTGAC AATAAGGA_CCACATTA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AATATGAC_GTAATCCC AATCGAAG_CCCAAGCA AATCGTTC_CCCTAACC AATGTATG_ATACTCTT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AATGTATG_CACAAGGC ACAAGTAG_GACAACTT ACAAGTAG_TAACCCGT ACAAGTAG_TCTGTGGT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; ACAGATAA_TGGTTTCT ACCAACCC_CACAACAG ACCAACCC_CCATTACT ACCAAGGG_GCACCTCT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; ACCACAGA_ATACCCAG ACCACAGA_CGATTGAT ACCAGTTT_GCGCATTC ACCCATGC_TGCCATCG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; ACCCGATT_GGGAACGA ACCCTCAA_CTGCGTTG ACCTGAAG_CCTACTAG ACCTGAAG_GAGCGGTA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; ACCTTCCC_ATACTCTT ACGGGTTA_CATCTCCC ACGTAAAC_AGAACGGG ACTAATTG_CTTTAATC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; ACTAATTG_TGACCAGT ACTACCCG_CGTACCTA ACTAGAGC_TCGACACC ACTGGTCA_AGTTTAGA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; ACTGGTCA_TGATAACA AGAAACCA_ATACTCTT AGAAACCA_GTGTCGGA AGAAGCTT_CGGAATTT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AGAAGCTT_GATGTGAG AGAGAGAC_ATTGGGCC AGAGAGAC_GTATGAGT AGCACGTA_TTCGCTGG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AGCATGCC_GGGAAATC AGCCATCT_GTGTCGGA AGCCATCT_TTTAACAG AGCGTGGT_CTTCGATT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AGCTCCAC_CCTGACAC AGCTCCAC_GTCCATGT AGCTTCGA_AGATGGCT AGGCAATA_CTATAGAG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AGGCAATA_GCAAAGCC AGGCGTTT_AGCACCAC AGGGACTG_CTAGACCC AGGGACTG_TCCGTCCA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AGGGTAAA_GGGAAGGT AGGGTAAA_TGGCCTGT AGGTAAGC_TCATGAGG AGGTAAGC_TCCCAATC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AGGTATAT_CTTACGGG AGGTATAT_TACTTGTG AGGTTCCC_GCCTCTTT AGGTTCCC_GTGTCGGA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AGTAATGG_ATACCCAG AGTAATGG_TGTGCTCA AGTAGTTA_AGAACGGG AGTCACAA_AACAATCC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; AGTCCGTG_TATTGCCT AGTGCTTC_GGAATAGA AGTTGAAC_CTTCGCAC ATAACAGG_GGATAAAG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; ATAACAGG_TAACCATC ATACACCC_GCATGGGT ATAGATGT_ATCCGCTA ATAGATGT_CTGTCTGG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; ATATGCAA_GGCCCTTA ATATGCAA_GGCGGTTT ATCAATCG_ATTCGACG ATCAATCG_GTTGTCAT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; ATCCCACC_CCCATAGC ATCCTAGT_TCGAAGCT ATCGCGCT_ACAGCGGA ATCGCGCT_AGAGGTGG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; ATCGCGCT_CACAGTTT ATCGCGCT_TCCCAATC ATCTTGGC_TCCTTATT ATGACAAC_AAAGTCGG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; ATGACTTG_TGCAAGGG ATGCGGAG_AACCCTTG ATGCGGAG_GATTTACC ATGGTCTG_TTTACCCT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; ATGTGCCG_CCGCAACT ATGTGCCG_GGTCACAG ATTACCTT_CGTAGAAG ATTACCTT_TTGCATAT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; ATTCTGAG_GAGCGGTA ATTCTGAG_TAACCCGT ATTGAAGT_ACGTATAC ATTGGCCC_AACAATCC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; ATTTGTTG_CTTTAATC CAAACATT_CTCAGAAT CAAACATT_GGGAGGTA CAACGCAG_CTCGCGTA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CAACGCAG_TGATGCCC CAAGGAAT_TTATAGCC CAAGGGTT_ACCCACGA CAAGGGTT_CAGACCAT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CAAGGTAC_CAGTTTGC CAATTCTC_ACGCCATT CAATTCTC_GTTCTGTT CAATTCTC_TGATAACA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CACAACCT_GGAGAAGC CACTAACC_AGTGAAAG CAGATGGG_TGTCTTTC CAGGTTGC_ATATACCT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CAGTTTAA_TAGTGGAC CATGCTGC_TTTATCAC CCACGTTG_TGGAGGAG CCATATGA_TGGCTACC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CCATGCAT_CAGTTTGC CCATGCAT_GCGCATTC CCATGCAT_TTCCGCTC CCCGTTCT_AAAGCCTA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CCCTCTTG_CTTACGGG CCCTGTTT_TGGTATGA CCCTTGCA_AGCAGAAC CCGACTTT_GGCCTAAG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CCGAGATC_ATGGGCAC CCGAGATC_GGAAACAG CCGATACG_CAAGAGGG CCGATACG_CTCGATGC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CCGGAAAT_AACCTGAC CCGGAAAT_ATCAGCGC CCGGAAAT_GTTGTCAT CCGGAAAT_TACCGGCA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CCGGAAAT_TCGACGGT CCGTAGCT_ACGCCATT CCGTAGCT_CGTATTTC CCGTAGCT_TTATCTGT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CCGTCTTA_GTTGTCAT CCTACGCT_ACTCACCG CCTACGCT_AGCAGAAC CCTACGCT_CCTCGTCT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CCTACGCT_TTCCGCTC CCTATTTA_ACGCAGAG CCTATTTA_GCAGTCGA CCTATTTA_GCGTTGCT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CCTATTTA_GGGAAATC CCTATTTA_TGCAAGGG CCTCATGA_CTTCGCAC CGACATTT_CGTGGATA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CGAGGCTA_CACAAGGC CGATGGCA_TCCCGTAG CGGACTAA_GTCCGTAC CGGCTGTA_GCCGGATT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CGTCGAAT_CGGACAAC CGTCGAAT_GAGTTTCG CGTGTACA_CCGTGTTT CGTGTACA_CGTACCTA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CGTGTACA_GCAACCTG CGTGTGTT_AGACACCA CGTGTGTT_AGGAAGAC CGTGTGTT_CTCTTGAC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CGTTGCCT_CGTGGATA CGTTGCCT_CTTCTTCG CGTTTCGT_GACAGATA CGTTTCGT_GAGAGTAT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CTAACGCC_TAGCCTCG CTAGCACG_AATCGGGT CTAGCACG_GGCCCTTA CTAGCACG_TCTGTGGT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CTAGCACG_TTGGCGTT CTAGTAGG_TTGAGGGT CTAGTAGG_TTTGTGTC CTCAAACA_GTGGATGG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CTCACATC_ACCCACGA CTCACATC_CCTCGTCT CTCCCAAA_ATGGGCAC CTCCTCCA_CGGGTAGT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CTCCTCCA_CGTATTTC CTCCTCCA_CTTCGCAC CTCCTCCA_TGTACACG CTCTATAG_CTTCGCAC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CTCTATAG_GCAAAGCC CTCTATAG_TGACGGAC CTGAAGGG_CCTACTAG CTGAAGGG_CGGCACAT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CTGAGCGT_CGACGTCA CTGAGCGT_GGTCCCTT CTGGAACA_TGGTTTCT CTGTCGCA_AGTGATGC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CTGTCGCA_CCTATTCA CTGTCGCA_TGATAACA CTGTCGCA_TTTAACAG CTGTTAAA_AATGAATG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CTGTTAAA_GACAGATA CTTAGGCC_AGAAGTCC CTTAGGCC_CCTATTCA CTTAGTGT_GAGAGTAT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CTTAGTGT_GTCGTCGT CTTAGTGT_TCCAGGGA CTTAGTGT_TTTAACAG CTTCTACG_CTTCTTCG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CTTCTACG_GCAGGGTA CTTTATCC_AGGATTCA CTTTATCC_CGAACGTA CTTTATCC_CTACCGTT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; CTTTATCC_TCGGTTTA CTTTCACT_TGTAAAGG CTTTGGAC_AAACTGGT GAAAGACA_TTCCGCTC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GAAATACG_AGCTATGA GAAATACG_CAGTCCCT GAATCCCA_TCCCAATC GAATGCGC_TGCGACAG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GACACAAA_ACGCCATT GACACAAA_GCAGGGTA GACACCTG_CTCAGAAT GACTAGCG_GAAGTGCC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GAGAAACC_ACAGCGGA GAGAAACC_GCAAGGAC GAGAAACC_TTGATTCT GAGCGGAA_GTAACGTT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GAGGGTCA_ACGAAACG GAGGGTCA_GCAGTCGA GAGTGTAC_ACGCAGAG GATACGCA_GATCGTTT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GATGCAGA_AACCTGAC GATGCAGA_CAGATTAC GATTAAAG_ACTAGCCA GATTAAAG_GTTACGAT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GATTACTT_ATGAAGCA GATTACTT_CTAGATTG GATTACTT_GAGAATTG GATTACTT_GATTGCGA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GATTACTT_TTGGACTT GATTACTT_TTTACCCT GATTGGGA_AACACACG GATTGGGA_AATGTTTG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GATTGGGA_AGTGATGC GATTTCCC_ATGTTGGC GATTTCCC_TGGAGGAG GCAAACTG_CTTCAGGT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GCAAACTG_GGGAACCT GCAAACTG_TTTACCCT GCACTCAG_AAGTAATC GCACTCAG_CCCATAGC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GCACTCAG_CGTACCTA GCATCGAG_CATCTCCC GCATCGAG_GCTTACCT GCCAAAGC_GCCTCTTT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GCCAACAT_CGTGGATA GCCAACAT_GATCGTTT GCCAACAT_TGAAATGA GCCTGGTA_CGCTCTCA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GCCTGGTA_CTATAGAG GCCTGGTA_GGCTACTA GCCTTGTG_AGAACGGG GCCTTGTG_AGCGCGAT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GCGCTGAT_CTCGATGC GCGCTGAT_GACAAAGG GCGCTGAT_GTCAATAC GCGTGCAA_CGCTCTCA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GCGTGCAA_TCTGTGGT GCGTGCAA_TTGTTTAC GCTAAGTT_ATTCCTTG GCTAAGTT_GCGCATTC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GCTAAGTT_TCTCAACC GCTCGTAG_ACCTTGCC GGAACGAA_CGTAGAAG GGAACGAA_CTAGTAAC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GGAACGAA_TCCGTCCA GGAACGAA_TTGCACGC GGACTTCT_CCCGACTT GGAGTAAG_CTTCTGGA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GGATTGTT_CAGTTTGC GGATTGTT_GCGTTGCT GGCACTTC_GAATTCGT GGCCCAAT_GTTTGTTT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GGCGACAA_AAGTAATC GGCGACAA_CGTCAGCA GGCGACAA_GACAGATA GGCGACAA_TTCCGAGT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GGCGACAA_TTGATTCT GGCTTTGC_AACCCTTG GGCTTTGC_AGCGAAGT GGCTTTGC_TGGAGGAG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GGCTTTGC_TTAGGACC GGGATTAC_AAATGTCG GGGATTAC_ATTCGACG GGGCATCA_GCTTACCT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GGGTCATT_TACGTGCT GGGTCTAG_AGCGAAGT GGGTCTAG_CTTCTGGA GGTAAATC_AAACAGGG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GGTAGCCA_CTGTCTGG GGTAGCCA_TAACTACT GGTAGCCA_TTTGTGTC GGTCCTAA_AGCAGAAC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GGTCCTAA_GACGATGG GGTCCTAA_GGTTTCTC GGTCCTAA_TGGCCTGT GGTCTTTC_AGCGCGAT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GGTGTCGA_ATATGCAT GGTGTCGA_CCTATTCA GGTGTCGA_CTGTTCTT GGTTAGGG_AAACTCGA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GGTTAGGG_AAATCAGA GGTTAGGG_TTCGCTGG GGTTGAGA_AAACCTCC GGTTGAGA_AGTGATGC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GGTTGAGA_CTGTCTGG GGTTGAGA_GAGAGTAT GTAAACAA_TACAGCCG GTAAGCCG_AAAGCCTA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GTAAGCCG_AATGACCC GTAAGCCG_CGATTGAT GTAAGCCG_GGCGTTAG GTAATCTG_CGCTAATA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GTACGCTT_CCCAAGCA GTACGCTT_GATTTACC GTACGCTT_GCTTTGGC GTACGGAC_ATGACCGA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GTACGGAC_CAACAAAT GTACGGAC_CGCTAGTC GTACGGAC_TACCGGCA GTATACGT_CGCTCTCA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GTATTGAC_AACACACG GTCAGACC_TAGCCTCG GTCAGACC_TTGGATCG GTCAGGTT_GGATAAAG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GTCCACTA_CGCTCTCA GTCCACTA_CTTCTGGA GTCCACTA_GACAAAGG GTCCGTCA_AGCACCAC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GTCCGTCA_ATACTCTT GTCCGTCA_CGTGGATA GTCCGTCA_GGGCCAAT GTCCTTGC_TAACCATC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GTCCTTGC_TACCAGGC GTCTAATC_CCATTACT GTCTAATC_GATGTGAG GTCTAATC_GATTAGAC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GTCTAATC_GGCCCTTA GTGAACTC_CAAGAGGG GTGAACTC_GCCGGATT GTGAACTC_GTCAAAGA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GTGAACTC_TCGACGGT GTGAGGCA_ACCCACGA GTGAGGCA_CAGTTTGC GTGATAAA_ATCAGCGC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GTGATAAA_CCCAAGCA GTGATAAA_CGCTCTCA GTGATAAA_CGTGCTAG GTGCCCAT_GCTCTAGT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GTGCCCAT_GTGTCGGA GTGCGAAG_TGGCCTGT GTGGTGCT_AAGTAATC GTGGTGCT_GGAGAAGC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GTGTCACC_TGTGGCTA GTGTCAGG_TCCAGGGA GTTACTAG_AGAAGTTA GTTACTAG_CCCTTGGT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GTTACTAG_TGACCCTC GTTCTGCT_CGAACGTA GTTCTGCT_TGGCTACC GTTGTCCG_ATGGGCAC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; GTTGTCCG_CGATTGAT TAAACCGA_GATCGTTT TAAGGGCC_ACCACGCT TAAGGGCC_GGTCACAG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TAAGGGCC_GGTCTGAC TAATCCAT_ATATGCAT TAATCCAT_CGGAATTT TAATGTGG_GGGAACGA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TAATGTGG_GTGTAACC TACCCTGC_AATCGGGT TACCCTGC_CTAGACCC TACCCTGC_GAAAGACC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TACCGCTC_CCCATAGC TACCGCTC_CTGAGTGC TACCGCTC_CTTCGCAC TACCGCTC_TCCCAATC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TACCTAAG_AAATCAGA TACCTAAG_AGGATTCA TACCTAAG_CTGGTGCA TACCTAAG_TGACGGAC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TACCTAAG_TGGCTACC TACCTCCC_AACCTGAC TACCTCCC_TGGGATTC TACGCGAG_ACGCCATT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TACGCGAG_CCTATTCA TACGCGAG_TGTAGTTT TACGTTCG_TGCCTCAC TACGTTCG_TTGATCTA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TAGATCAA_CGCTCTCA TAGATCAA_CTTCAGGT TAGATCAA_GAAAGACC TAGCCACA_GCAGTCGA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TAGGCTTT_CGGACAAC TAGGCTTT_CTTCAGGT TAGGCTTT_TACCGGCA TAGGTACG_ATGAAGCA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TAGGTACG_TGAAATGA TAGTAGCC_TAGTGTTT TATTAGCG_ACTCACCG TATTAGCG_CCCTAACC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TATTAGCG_GACAACTT TATTAGCG_GGTTAGTG TATTAGCG_TGTGCTCA TCAGCCTC_TGCAAGGG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TCATACCA_ACACTAAG TCATAGCT_ACAGCGGA TCATTTCA_GGCCCTTA TCATTTCA_TTGGCGTT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TCCAGAAG_GATGTATT TCCGACAC_GGGAGGTA TCCGCTGT_GTTACCGC TCGACTGC_AAACAGGG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TCGACTGC_ACTAGGAT TCGAGTTT_CCGCAACT TCGCAATC_AGTGATGC TCGCAATC_CATCTCCC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TCGCAATC_CGAACGTA TCGCAATC_GTACACTC TCGGTCAT_AGCACCAC TCGGTCAT_GACAGATA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TCGTTCCC_GTGTAACC TCGTTCCC_TGAGGTCT TCTAAACT_CTCTTGAC TCTAAACT_TCGGTTTA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TCTATTCC_AGACACCA TCTGATTT_AGGAGCTT TCTGATTT_CCTGACAC TCTGATTT_GGGCCAAT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TCTGATTT_TGTAGTTT TCTTTGAC_AAACAGGG TCTTTGAC_AGTGATGC TCTTTGAC_CGCTCTCA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TCTTTGAC_CTACGAGC TCTTTGAC_GGCTACTA TGAATAGG_AGAGACTA TGAATAGG_TTATCTGT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TGACGTCG_ACCTTCTT TGACGTCG_GATCTCGG TGAGAGCG_CCTATTCA TGAGAGCG_GAAGTGCC 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TGAGCACA_TGCTATTT TGCACCAG_AGTTTAGA TGCACCAG_CCTCGTCT TGCACCAG_GCAGTCGA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TGCCGGTA_GTTAACCA TGCCGGTA_GTTTGTTT TGCCGGTA_TGGTTTCT TGCGACTA_CCCTTGGT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TGCGACTA_CCGTGTTT TGCGACTA_TGTGCTCA TGCGACTA_TTCACATA TGCTGACG_CGTCAGCA 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TGCTTCAT_GCAGGGTA TGCTTGGG_CAACAAAT TGGACGGA_TTGTTTAC TGGCTAGT_AATGAATG 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TGGGAATT_ATATAGGA TGGGAATT_GGTCCCTT TGGGAATT_TTTAACAG TGGTGTCT_AAACTGGT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" 
+#&gt; TGGTGTCT_ATTCGACG TGGTTAAC_TGTACACG TGTTATCA_ACGCAGAG TGTTATCA_CAAGTCAT 
+#&gt;           "rep_1"           "rep_1"           "rep_1"           "rep_1" </div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
     <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='kw'>rep_1</span> <span class='kw'>=</span> <span class='fl'>100</span>)
 )</div><div class='output co'>#&gt; <span class='message'>minUMIs: per sample mode</span>
 #&gt; <span class='message'>rep_1 </span>
-#&gt; <span class='message'>  100 </span></div><div class='output co'>#&gt; <span class='message'>Parameters:</span>
+#&gt; <span class='message'>  100 </span></div><div class='output co'>#&gt; <span class='message'>Returning object unmodified.</span></div><div class='output co'>#&gt; <span class='message'>Returning object unmodified.</span></div><div class='output co'>#&gt; <span class='message'>Parameters:</span>
 #&gt; <span class='message'>  - &gt;= 100 UMIs per cell</span>
 #&gt; <span class='message'>  - &lt;= Inf UMIs per cell</span>
-#&gt; <span class='message'>  - &gt;= 0 genes per cell</span>
+#&gt; <span class='message'>  - &gt;= 1 genes per cell</span>
 #&gt; <span class='message'>  - &lt;= Inf genes per cell</span>
 #&gt; <span class='message'>  - &gt;= 0 novelty score</span>
 #&gt; <span class='message'>  - &lt;= 1 mitochondrial abundance</span>
 #&gt; <span class='message'>  - == Inf cells per sample</span>
 #&gt; <span class='message'>  - &gt;= 1 cells per gene</span>
-#&gt; <span class='message'>================================================================================</span>
+#&gt; <span class='message'>────────────────────────────────────────────────────────────────────────</span>
 #&gt; <span class='message'>Cells:</span>
 #&gt; <span class='message'>     500 cells | prefilter</span>
 #&gt; <span class='message'>     500 cells | minUMIs &gt;= 100</span>
 #&gt; <span class='message'>     500 cells | maxUMIs &lt;= Inf</span>
-#&gt; <span class='message'>     500 cells | minGenes &gt;= 0</span>
+#&gt; <span class='message'>     500 cells | minGenes &gt;= 1</span>
 #&gt; <span class='message'>     500 cells | maxGenes &lt;= Inf</span>
 #&gt; <span class='message'>     500 cells | minNovelty &lt;= 0</span>
 #&gt; <span class='message'>     500 cells | maxMitoRatio &lt;= 1</span>
 #&gt; <span class='message'>     500 cells | nCells == Inf</span>
-#&gt; <span class='message'></span>
+#&gt; <span class='message'>     500 of 500 cells passed filtering (100%)</span>
 #&gt; <span class='message'>rep_1 </span>
 #&gt; <span class='message'>  500 </span>
-#&gt; <span class='message'>================================================================================</span>
+#&gt; <span class='message'>────────────────────────────────────────────────────────────────────────</span>
 #&gt; <span class='message'>Genes:</span>
 #&gt; <span class='message'>     500 genes | prefilter</span>
 #&gt; <span class='message'>     500 genes | minCellsPerGene &gt;= 1</span>
-#&gt; <span class='message'>================================================================================</span>
-#&gt; <span class='message'>Summary:</span>
-#&gt; <span class='message'>  - 500 of 500 cells passed filtering (100%)</span>
-#&gt; <span class='message'>  - 500 of 500 genes passed filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.2.1
-#&gt; class: SingleCellExperiment 
-#&gt; dim: 500 500 
-#&gt; metadata(34): version pipeline ... filterParams filterSummary
-#&gt; assays(1): counts
-#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
-#&gt;   ENSG00000283391
-#&gt; rowData names(7): broadClass description ... geneName seqCoordSystem
-#&gt; colnames(500): multiplexed_AAAAAAAA_AAACACTA_ATCCCACG
-#&gt;   multiplexed_AAAAAAAA_AAACACTA_CTTAGGTA ...
-#&gt;   multiplexed_AAAAAAAA_TGTTATCA_ACGCAGAG
-#&gt;   multiplexed_AAAAAAAA_TGTTATCA_CAAGTCAT
-#&gt; colData names(15): nCount sampleID ... aggregate revcomp
-#&gt; reducedDimNames(0):
-#&gt; spikeNames(0):
-#&gt; ================================================================================
-#&gt; Upload Dir: "/Users/mike/GitHub/bcbioSingleCell/inst/extdata/indrops"
+#&gt; <span class='message'>     500 of 500 genes passed filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
+#&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
+#&gt; citation("bcbioSingleCell")
+#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; Upload Dir: "/home/bioinfo/git/bcbioSingleCell-private/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-08-19
+#&gt; R Load Date: 2018-09-27
 #&gt; Level: "genes"
 #&gt; Organism: "Homo sapiens"
 #&gt; Interesting Groups: "sampleName"
 #&gt; Metadata File: "inst/extdata/indrops/metadata.csv"
-#&gt; AnnotationHub: "AH57757"
-#&gt; Ensembl Release: "90"
-#&gt; Genome Build: "GRCh38"
-#&gt; Filtered: TRUE</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $nCells
+#&gt; Filtered: TRUE
+#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; class: SingleCellExperiment 
+#&gt; dim: 500 500 
+#&gt; metadata(32): version pipeline ... filterParams filterSummary
+#&gt; assays(1): counts
+#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
+#&gt;   ENSG00000283391
+#&gt; rowData names(4): broadClass geneBiotype geneID geneName
+#&gt; colnames(500): AAACACTA_ATCCCACG AAACACTA_CTTAGGTA ...
+#&gt;   TGTTATCA_ACGCAGAG TGTTATCA_CAAGTCAT
+#&gt; colData names(15): nUMI nGene ... aggregate revcomp
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $nCells
 #&gt; [1] Inf
 #&gt; 
 #&gt; $minUMIs
@@ -379,7 +616,7 @@ expression in at least this many cells.</p></td>
 #&gt; [1] Inf
 #&gt; 
 #&gt; $minGenes
-#&gt; [1] 0
+#&gt; [1] 1
 #&gt; 
 #&gt; $maxGenes
 #&gt; [1] Inf

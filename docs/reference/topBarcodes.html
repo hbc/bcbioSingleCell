@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
       </span>
     </div>
 
@@ -116,8 +116,8 @@
     <pre class="usage"><span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for SingleCellExperiment</span>
-<span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1000L</span>,
-  <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"data.frame"</span>, <span class='st'>"list"</span>))</pre>
+<span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100L</span>,
+  <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"tibble"</span>, <span class='st'>"list"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,36 +145,20 @@ defaults to the first argument in the <code>character</code> vector.</p></td>
 
     
 <ul>
-<li><p>"<code>list</code>": <code>list</code> containing top barcodes as a <code>character</code> vector, split by
-<code>sampleID</code>.</p></li>
-<li><p>"<code>data.frame</code>": <code>tibble</code> grouped by <code>sampleID</code> and arranged by <code>nUMI</code>
+<li><p>"<code>tibble</code>": <code>grouped_df</code>. Grouped by <code>sampleID</code> and arranged by <code>nUMI</code>
 column in descending order. Cellular barcodes are in the <code>cellID</code> column.</p></li>
+<li><p>"<code>list</code>": <code>list</code>. Top barcodes as <code>character</code>, split by <code>sampleID</code>.</p></li>
 </ul>
 
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>Other Data Functions: <code><a href='aggregateReplicates.html'>aggregateReplicates</a></code>,
-  <code><a href='cell2sample.html'>cell2sample</a></code>,
-  <code><a href='metricsPerSample.html'>metricsPerSample</a></code>, <code><a href='sampleData.html'>sampleData</a></code>,
-  <code><a href='selectSamples.html'>selectSamples</a></code>,
-  <code><a href='subsetPerSample.html'>subsetPerSample</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Return list</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>topBarcodes</span>(<span class='no'>indrops_small</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"list"</span>)
-<span class='fu'>lapply</span>(<span class='no'>x</span>, <span class='no'>class</span>)</div><div class='output co'>#&gt; $multiplexed_AAAAAAAA
-#&gt; [1] "character"
-#&gt; </div><div class='input'>
-<span class='co'># Return data.frame</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>topBarcodes</span>(<span class='no'>indrops_small</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"data.frame"</span>)
-<span class='fu'>glimpse</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; Observations: 500
-#&gt; Variables: 4
-#&gt; $ sampleID   &lt;fct&gt; multiplexed_AAAAAAAA, multiplexed_AAAAAAAA, multiplexed_...
-#&gt; $ sampleName &lt;fct&gt; rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, rep_1, ...
-#&gt; $ nUMI       &lt;int&gt; 9323, 6978, 6933, 6467, 6387, 6137, 6102, 6008, 5982, 59...
-#&gt; $ cellID     &lt;chr&gt; "multiplexed_AAAAAAAA_CTAGCACG_AATCGGGT", "multiplexed_A...</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>indrops_small</span>
+
+<span class='co'># tibble</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"tibble"</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Column `sampleID` already exists</span></div><div class='input'><span class='fu'>glimpse</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='error'>Error in glimpse(x): object 'x' not found</span></div><div class='input'>
+<span class='co'># list</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>topBarcodes</span>(<span class='no'>object</span>, <span class='kw'>return</span> <span class='kw'>=</span> <span class='st'>"list"</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Column `sampleID` already exists</span></div><div class='input'><span class='fu'>lapply</span>(<span class='no'>x</span>, <span class='no'>class</span>)</div><div class='output co'>#&gt; <span class='error'>Error in lapply(x, class): object 'x' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -182,8 +166,6 @@ column in descending order. Cellular barcodes are in the <code>cellID</code> col
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

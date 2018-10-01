@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
       </span>
     </div>
 
@@ -124,7 +124,7 @@ flat &lt;-<span class="st"> </span><span class="kw">flatFiles</span>(bcb)
 <h3 class="hasAnchor">
 <a href="#fastq-files-with-samples-multiplexed-by-index-barcode" class="anchor"></a>FASTQ files with samples multiplexed by index barcode</h3>
 <p>This is our current recommended method for analyzing an <a href="https://github.com/indrops/indrops">inDrops</a> dataset. The sample index barcodes are multiplexed per FASTQ set. For Illumina sequencing data, the raw binary base call (BCL) data must be converted into FASTQs (split into <code>R1</code>-<code>R4</code> files) using <a href="https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html">bcl2fastq</a>.</p>
-<p>The <a href="https://github.com/indrops/indrops">inDrops</a> library version is automatically detected by <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a>, but ensure that the sample index sequences provided match the library version when attempting to create a <code>bcbioSingleCell</code> object. A current list of <a href="https://github.com/seqcloud/seqcloud/blob/master/workflows/bcbio/scrnaseq/harvard_indrop_v3/index_barcodes.csv">inDrops v3 index barcodes</a> is available from <a href="http://seq.cloud">seqcloud</a>.</p>
+<p>The <a href="https://github.com/indrops/indrops">inDrops</a> library version is automatically detected by <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a>, but ensure that the sample index sequences provided match the library version when attempting to create a <code>bcbioSingleCell</code> object. A current list of <a href="https://github.com/steinbaugh/koopa/blob/master/workflows/indrops/harvard_v3_sample_barcodes.csv">inDrops v3 index barcodes</a> is available in the <a href="https://github.com/steinbaugh/koopa">koopa</a> shell bootloader.</p>
 <p>Consult the <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> documentation for more information on how to configure an <a href="https://github.com/indrops/indrops">inDrops</a> run prior to loading into <a href="https://www.r-project.org">R</a> with the <code><a href="reference/bcbioSingleCell.html">bcbioSingleCell()</a></code> function.</p>
 <table class="table">
 <thead><tr class="header">
@@ -133,64 +133,81 @@ flat &lt;-<span class="st"> </span><span class="kw">flatFiles</span>(bcb)
 <th>sequence</th>
 <th>sampleName</th>
 <th>aggregate</th>
+<th>genotype</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td>indrops1</td>
-<td>17</td>
-<td>GGAGGTAA</td>
+<td>1</td>
+<td>CTCTCTAT</td>
+<td>sample1_1</td>
 <td>sample1</td>
-<td>indrops</td>
+<td>wildtype</td>
 </tr>
 <tr class="even">
 <td>indrops1</td>
-<td>18</td>
-<td>CATAACTG</td>
+<td>2</td>
+<td>TATCCTCT</td>
+<td>sample2_1</td>
 <td>sample2</td>
-<td>indrops</td>
+<td>knockout</td>
 </tr>
 <tr class="odd">
-<td>indrops2</td>
-<td>12</td>
-<td>GCGTAAGA</td>
+<td>indrops1</td>
+<td>3</td>
+<td>GTAAGGAG</td>
+<td>sample3_1</td>
 <td>sample3</td>
-<td>indrops</td>
+<td>wildtype</td>
 </tr>
 <tr class="even">
-<td>indrops2</td>
-<td>13</td>
-<td>CTATTAAG</td>
+<td>indrops1</td>
+<td>4</td>
+<td>ACTGCATA</td>
+<td>sample4_1</td>
 <td>sample4</td>
-<td>indrops</td>
+<td>knockout</td>
 </tr>
 <tr class="odd">
 <td>indrops2</td>
-<td>14</td>
-<td>AAGGCTAT</td>
-<td>sample5</td>
-<td>indrops</td>
+<td>1</td>
+<td>CTCTCTAT</td>
+<td>sample1_2</td>
+<td>sample1</td>
+<td>wildtype</td>
 </tr>
 <tr class="even">
 <td>indrops2</td>
-<td>15</td>
-<td>GAGCCTTA</td>
-<td>sample6</td>
-<td>indrops</td>
+<td>2</td>
+<td>TATCCTCT</td>
+<td>sample1_2</td>
+<td>sample2</td>
+<td>knockout</td>
 </tr>
 <tr class="odd">
 <td>indrops2</td>
-<td>16</td>
-<td>TTATGCGA</td>
-<td>sample7</td>
-<td>indrops</td>
+<td>3</td>
+<td>GTAAGGAG</td>
+<td>sample1_2</td>
+<td>sample3</td>
+<td>wildtype</td>
+</tr>
+<tr class="even">
+<td>indrops2</td>
+<td>4</td>
+<td>ACTGCATA</td>
+<td>sample1_2</td>
+<td>sample4</td>
+<td>knockout</td>
 </tr>
 </tbody>
 </table>
+<p>Note that bcbio currently outputs the reverse complement index sequence in the sample directory names (e.g. <code>sample-ATAGAGAG</code>). Define the forward index barcode in the <code>sequence</code> column here, not the reverse complement. The reverse complement will be calculated automatically and added as the <code>revcomp</code> column in the sample metadata.</p>
 </div>
 <div id="fastq-files-demultiplexed-per-sample" class="section level3">
 <h3 class="hasAnchor">
 <a href="#fastq-files-demultiplexed-per-sample" class="anchor"></a>FASTQ files demultiplexed per sample</h3>
-<p>This is our current method for handling <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">10X Genomics Cell Ranger</a> output (using <code><a href="reference/readCellRanger.html">readCellRanger()</a></code>) and <a href="https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html">Illumina SureCell</a> sample data.</p>
+<p>This is our current method for handling <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">10X Genomics Cell Ranger</a> output (using <code><a href="reference/deprecated.html">readCellRanger()</a></code>) and <a href="https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html">Illumina SureCell</a> sample data.</p>
 <table class="table">
 <thead><tr class="header">
 <th>description</th>

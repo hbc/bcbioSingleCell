@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
       </span>
     </div>
 
@@ -116,7 +116,8 @@
     <pre class="usage"><span class='fu'>barcodeRanksPerSample</span>(<span class='no'>object</span>, <span class='no'>...</span>)
 
 <span class='co'># S4 method for SingleCellExperiment</span>
-<span class='fu'>barcodeRanksPerSample</span>(<span class='no'>object</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>barcodeRanksPerSample</span>(<span class='no'>object</span>,
+  <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>fit.bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>df</span> <span class='kw'>=</span> <span class='fl'>20</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -127,7 +128,19 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Passthrough arguments to <code><a href='http://www.rdocumentation.org/packages/DropletUtils/topics/barcodeRanks'>DropletUtils::barcodeRanks()</a></code>.</p></td>
+      <td><p>Additional arguments.</p></td>
+    </tr>
+    <tr>
+      <th>lower</th>
+      <td><p>A numeric scalar specifying the lower bound on the total UMI count, at or below which all barcodes are assumed to correspond to empty droplets.</p></td>
+    </tr>
+    <tr>
+      <th>fit.bounds</th>
+      <td><p>A numeric vector of length 2, specifying the lower and upper bouunds on the total UMI count for spline fitting.</p></td>
+    </tr>
+    <tr>
+      <th>df</th>
+      <td><p>Further arguments to pass to <code>smooth.spline</code>.</p></td>
     </tr>
     </table>
     
@@ -171,7 +184,8 @@ Note that only points with total counts above <code>lower</code> will be conside
 
     <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/DropletUtils/topics/barcodeRanks'>DropletUtils::barcodeRanks()</a></code>.</p>
 <p>Other Quality Control Functions: <code><a href='filterCells.html'>filterCells</a></code>,
-  <code><a href='metrics.html'>metrics</a></code>, <code><a href='plotCellCounts.html'>plotCellCounts</a></code>,
+  <code><a href='plotBarcodeRanks.html'>plotBarcodeRanks</a></code>,
+  <code><a href='plotCellCounts.html'>plotCellCounts</a></code>,
   <code><a href='plotGenesPerCell.html'>plotGenesPerCell</a></code>,
   <code><a href='plotMitoRatio.html'>plotMitoRatio</a></code>,
   <code><a href='plotMitoVsCoding.html'>plotMitoVsCoding</a></code>,
@@ -182,7 +196,8 @@ Note that only points with total counts above <code>lower</code> will be conside
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>barcodeRanksPerSample</span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: DropletUtils</span></div><div class='input'><span class='fu'>names</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA"</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>barcodeRanksPerSample</span>(<span class='no'>indrops_small</span>)
+<span class='fu'>names</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
