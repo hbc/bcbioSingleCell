@@ -326,6 +326,16 @@ bcbioSingleCell <- function(
 
 
 
+.new.bcbioSingleCell <-  # nolint
+    function(...) {
+        new(
+            Class = "bcbioSingleCell",
+            makeSingleCellExperiment(...)
+        )
+    }
+
+
+
 # CellRanger ===================================================================
 # FIXME Can we parse the CellRanger `runDate` from the refData YAML?
 # FIXME Allow this function to work if the user points at dir containing matrix.mtx.
@@ -563,7 +573,7 @@ CellRanger <- function(
     )
 
     # Return -------------------------------------------------------------------
-    sce <- .new.SingleCellExperiment(
+    .new.CellRanger(
         assays = list(counts = counts),
         rowRanges = rowRanges,
         colData = colData,
@@ -571,5 +581,14 @@ CellRanger <- function(
         transgeneNames = transgeneNames,
         spikeNames = spikeNames
     )
-    new("CellRanger", sce)
 }
+
+
+
+.new.CellRanger <-  # nolint
+    function(...) {
+        new(
+            Class = "CellRanger",
+            makeSingleCellExperiment(...)
+        )
+    }
