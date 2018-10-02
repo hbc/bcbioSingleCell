@@ -138,7 +138,7 @@ NULL
         validObject(object)
         if (isTRUE(recalculate)) {
             colData <- colData(object)
-            metrics <- metrics(
+            metrics <- .metrics.matrix(
                 object = counts(object),
                 rowRanges = rowRanges(object)
             )
