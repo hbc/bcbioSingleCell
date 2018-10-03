@@ -37,8 +37,9 @@ x <- metrics(indrops_small, recalculate = TRUE)
 print(x)
 }
 \seealso{
-Other Data Functions: \code{\link{aggregateCols}},
-  \code{\link{cell2sample}}, \code{\link{counts}},
+Other Data Functions: \code{\link{aggregateCellsToSamples}},
+  \code{\link{aggregateCols}}, \code{\link{cell2sample}},
+  \code{\link{counts}},
   \code{\link{makeSingleCellExperiment}},
   \code{\link{makeSummarizedExperiment}},
   \code{\link{mapCellsToSamples}},
