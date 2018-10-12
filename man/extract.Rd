@@ -70,16 +70,16 @@
     \code{\link{drop}} for further details.
   }
 }
-\value{
-Modified object.
-}
 \description{
-Extract genes by row and cells by column from a \code{bcbioSingleCell} object.
+Operators acting on vectors, matrices, arrays and lists to extract or
+  replace parts.
 }
-\note{
-Unfiltered cellular barcode distributions for the entire dataset,
-including cells not kept in the matrix will be dropped in favor of the
-\code{nCount} column of \code{colData()}.
+\details{
+Extract genes by row and cells by column from a \code{bcbioSingleCell} object.
+
+Unfiltered cellular barcode distributions for the entire dataset, including
+cells not kept in the matrix will be dropped in favor of the \code{nCount} column
+of \code{colData()}.
 }
 \examples{
 cells <- head(colnames(indrops_small), 100L)
@@ -96,16 +96,17 @@ indrops_small[genes, ]
 ## Subset by both genes and cells.
 indrops_small[genes, cells]
 }
+\references{
+Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth & Brooks/Cole.
+}
 \seealso{
 \itemize{
-\item \code{help("[", "base")}.
+\item \code{help(topic = "Extract", package = "base")}.
 \item \code{selectSamples()} for subsetting based on sample metadata.
 }
-
-Other S4 Functions: \code{\link{show}},
-  \code{\link{updateObject}}
 }
 \author{
 Michael Steinbaugh
 }
-\concept{S4 Functions}

@@ -1,23 +1,19 @@
-#' Extract or Replace Parts of an Object
-#'
-#' Extract genes by row and cells by column from a `bcbioSingleCell` object.
-#'
-#' @note Unfiltered cellular barcode distributions for the entire dataset,
-#'   including cells not kept in the matrix will be dropped in favor of the
-#'   `nCount` column of `colData()`.
-#'
 #' @name extract
-#' @family S4 Functions
+#' @inherit base::Extract title description params return references
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams base::`[`
+#' @details
+#' Extract genes by row and cells by column from a `bcbioSingleCell` object.
+#'
+#' Unfiltered cellular barcode distributions for the entire dataset, including
+#' cells not kept in the matrix will be dropped in favor of the `nCount` column
+#' of `colData()`.
+#'
 #' @inheritParams general
 #'
 #' @seealso
-#' - `help("[", "base")`.
+#' - `help(topic = "Extract", package = "base")`.
 #' - `selectSamples()` for subsetting based on sample metadata.
-#'
-#' @return Modified object.
 #'
 #' @examples
 #' cells <- head(colnames(indrops_small), 100L)

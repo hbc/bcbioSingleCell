@@ -2,18 +2,11 @@
 
 
 
-#' Update an Object to Its Current Class Definition
-#'
 #' @name updateObject
-#' @family S4 Functions
-#' @author Michael Steinbaugh
-#'
 #' @importFrom BiocGenerics updateObject
-#' @export
-#'
 #' @inherit BiocGenerics::updateObject
-#'
-#' @return Valid object.
+#' @author Michael Steinbaugh
+#' @export
 #'
 #' @examples
 #' x <- updateObject(indrops_small)

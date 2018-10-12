@@ -4,7 +4,7 @@
 \name{updateObject}
 \alias{updateObject}
 \alias{updateObject,bcbioSingleCell-method}
-\title{Update an Object to Its Current Class Definition}
+\title{Update an object to its current class definition}
 \usage{
 \S4method{updateObject}{bcbioSingleCell}(object)
 }
@@ -18,7 +18,13 @@
   }
 }
 \value{
-Valid object.
+\code{updateObject} returns a valid instance of \code{object}.
+
+  \code{updateObjectFromSlots} returns an instance of class
+  \code{objclass}.
+
+  \code{getObjectSlots} returns a list of named elements, with each
+  element corresponding to a slot in \code{object}.
 }
 \description{
 \code{updateObject} is a generic function that returns an instance
@@ -85,10 +91,24 @@ x <- updateObject(indrops_small)
 print(x)
 }
 \seealso{
-Other S4 Functions: \code{\link{extract}},
-  \code{\link{show}}
+\itemize{
+    \item \code{\link[Biobase]{updateObjectTo}} in the \pkg{Biobase} package
+          for updating an object to the class definition of a template (might
+          be useful for updating a virtual superclass).
+
+    \item \code{\link[methods]{validObject}} for testing the validity of an
+          object.
+
+    \item \code{\link[methods]{showMethods}} for displaying a summary of the
+          methods defined for a given generic function.
+
+    \item \code{\link[methods]{selectMethod}} for getting the definition of
+          a specific method.
+
+    \item \link{BiocGenerics} for a summary of all the generics defined
+          in the \pkg{BiocGenerics} package.
+  }
 }
 \author{
 Michael Steinbaugh
 }
-\concept{S4 Functions}
