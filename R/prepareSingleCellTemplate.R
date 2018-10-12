@@ -12,7 +12,7 @@
 #' x <- prepareSingleCellTemplate()
 #' x
 #'
-#' # Clean up
+#' ## Clean up
 #' unlink(c(
 #'     "_footer.Rmd",
 #'     "_header.Rmd",

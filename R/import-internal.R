@@ -4,7 +4,7 @@
         assert_all_are_dirs(sampleDirs)
         assert_has_names(sampleDirs)
 
-        message("Importing counts...")
+        message("Importing counts.")
 
         list <- mapply(
             sampleID = names(sampleDirs),
@@ -53,7 +53,7 @@
 #'   pre-filtered cellular barcode counts (`nCount`).
 .import.bcbio.barcodes <-  # nolint
     function(sampleDirs) {
-        message("Importing unfiltered cellular barcode distributions...")
+        message("Importing unfiltered cellular barcode distributions.")
         files <- file.path(
             normalizePath(sampleDirs, winslash = "/", mustWork = TRUE),
             paste(basename(sampleDirs), "barcodes.tsv", sep = "-")
@@ -130,7 +130,7 @@
         assert_all_are_existing_files(sampleFiles)
         assert_has_names(sampleFiles)
 
-        message("Importing counts...")
+        message("Importing counts.")
 
         if (all(grepl("\\.mtx$", sampleFiles))) {
             fun <- .import.cellranger.mtx

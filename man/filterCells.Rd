@@ -58,7 +58,7 @@ x <- filterCells(object)
 show(x)
 metadata(x)$filterParams
 
-# Per sample cutoffs
+## Per sample cutoffs
 sampleNames(object)
 x <- filterCells(
     object = object,

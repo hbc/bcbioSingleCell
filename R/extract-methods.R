@@ -25,13 +25,13 @@
 #' genes <- head(rownames(indrops_small), 100L)
 #' head(genes)
 #'
-#' # Subset by cell identifiers.
+#' ## Subset by cell identifiers.
 #' indrops_small[, cells]
 #'
-#' # Subset by genes.
+#' ## Subset by genes.
 #' indrops_small[genes, ]
 #'
-#' # Subset by both genes and cells.
+#' ## Subset by both genes and cells.
 #' indrops_small[genes, cells]
 NULL
 

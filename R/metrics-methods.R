@@ -27,7 +27,7 @@ NULL
     assert_is_any_of(rowRanges, c("GRanges", "NULL"))
     assert_is_a_bool(prefilter)
 
-    message("Calculating cellular barcode metrics...")
+    message("Calculating cellular barcode metrics.")
     message(paste(ncol(object), "cells detected."))
 
     codingGenes <- character()

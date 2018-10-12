@@ -26,9 +26,7 @@ NULL
     function(object) {
         version <- slot(object, "metadata")[["version"]]
         assert_is_all_of(version, c("package_version", "numeric_version"))
-        message(paste0(
-            "Upgrading from ", version, " to ", packageVersion, "..."
-        ))
+        message(paste0("Upgrading from ", version, " to ", packageVersion, "."))
 
         # Coerce to SingleCellExperiment
         sce <- as(object, "SingleCellExperiment")
