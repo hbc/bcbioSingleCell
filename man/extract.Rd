@@ -70,12 +70,16 @@
     \code{\link{drop}} for further details.
   }
 }
+\value{
+\code{SingleCellExperiment}.
+}
 \description{
-Operators acting on vectors, matrices, arrays and lists to extract or
-  replace parts.
+Extract genes by row and cells by column.
 }
 \details{
-Extract genes by row and cells by column from a \code{bcbioSingleCell} object.
+Refer to \code{\link[=cell2sample]{cell2sample()}} and \code{\link[=selectSamples]{selectSamples()}} if sample-level extraction
+is desired. Note that \code{sampleID} is slotted into \code{\link[=colData]{colData()}} and defines the
+cell-to-sample mappings.
 
 Unfiltered cellular barcode distributions for the entire dataset, including
 cells not kept in the matrix will be dropped in favor of the \code{nCount} column
@@ -100,12 +104,6 @@ indrops_small[genes, cells]
 Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth & Brooks/Cole.
-}
-\seealso{
-\itemize{
-\item \code{help(topic = "Extract", package = "base")}.
-\item \code{selectSamples()} for subsetting based on sample metadata.
-}
 }
 \author{
 Michael Steinbaugh

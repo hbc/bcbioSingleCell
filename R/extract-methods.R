@@ -1,9 +1,13 @@
 #' @name extract
-#' @inherit base::Extract title description params return references
+#' @inherit base::Extract title params references
 #' @author Michael Steinbaugh
 #'
+#' @description Extract genes by row and cells by column.
+#'
 #' @details
-#' Extract genes by row and cells by column from a `bcbioSingleCell` object.
+#' Refer to [cell2sample()] and [selectSamples()] if sample-level extraction
+#' is desired. Note that `sampleID` is slotted into [colData()] and defines the
+#' cell-to-sample mappings.
 #'
 #' Unfiltered cellular barcode distributions for the entire dataset, including
 #' cells not kept in the matrix will be dropped in favor of the `nCount` column
@@ -11,9 +15,7 @@
 #'
 #' @inheritParams general
 #'
-#' @seealso
-#' - `help(topic = "Extract", package = "base")`.
-#' - `selectSamples()` for subsetting based on sample metadata.
+#' @return `SingleCellExperiment`.
 #'
 #' @examples
 #' cells <- head(colnames(indrops_small), 100L)
