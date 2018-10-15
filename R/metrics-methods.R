@@ -17,7 +17,7 @@ NULL
 
 
 
-.metrics.matrix <- function(
+.metrics.matrix <- function(  # nolint
     object,
     rowRanges = NULL,
     prefilter = FALSE

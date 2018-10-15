@@ -219,7 +219,7 @@
 
 # Import Cell Ranger Sparse Counts
 # Matrix Market Exchange (MEX/MTX) format.
-.import.cellranger.mtx <-
+.import.cellranger.mtx <-  # nolint
     function(file) {
         assert_is_a_string(file)
         assert_all_are_existing_files(file)

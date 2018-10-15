@@ -399,7 +399,7 @@ bcbioSingleCell <- function(
 #' uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
 #' x <- CellRanger(uploadDir)
 #' print(x)
-CellRanger <- function(
+CellRanger <- function(  # nolint
     uploadDir,
     format = c("mtx", "hdf5"),
     filtered = TRUE,

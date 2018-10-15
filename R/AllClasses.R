@@ -90,12 +90,10 @@ setValidity(
         # - template: character
         # - yaml: list
 
-        # Legacy metadata:
-        # Switched to DataFrame in v0.1.17.
-        # Now using `colData()` directly in v0.2.2.
-        # sampleData = c("DataFrame", "data.frame")
+        # FIXME Ensure `sampleData` is moved to `colData`.
 
         # Class checks
+        # FIXME Switch to using basejump `checkSlotInfo()`.
         requiredMetadata <- list(
             allSamples = "logical",
             date = "Date",
