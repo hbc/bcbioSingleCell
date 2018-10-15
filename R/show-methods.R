@@ -39,6 +39,7 @@ NULL
         )
     }
 
+    # FIXME Use new `showSlotInfo()` function
     return <- c(
         return,
         paste(
@@ -69,6 +70,7 @@ NULL
     }
 
     # Gene annotations
+    # FIXME Update rowRangesMetadata handling.
     m <- metadata(object)[["rowRangesMetadata"]]
     if (is.data.frame(m) && length(m)) {
         annotationHub <-
