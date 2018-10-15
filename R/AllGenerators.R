@@ -133,16 +133,18 @@ bcbioSingleCell <- function(
     # bcbio run information ----------------------------------------------------
     dataVersions <-
         readDataVersions(file.path(projectDir, "data_versions.csv"))
+    assert_is_all_of(dataVersions, "DataFrame")
+
     programVersions <-
         readProgramVersions(file.path(projectDir, "programs.txt"))
+    assert_is_all_of(programVersions, "DataFrame")
+
     log <-
         import(file.path(projectDir, "bcbio-nextgen.log"))
+    assert_is_character(log)
+
     commands <-
         import(file.path(projectDir, "bcbio-nextgen-commands.log"))
-
-    assert_is_tbl_df(dataVersions)
-    assert_is_tbl_df(programVersions)
-    assert_is_character(log)
     assert_is_character(commands)
 
     cutoff <- getBarcodeCutoffFromCommands(commands)
