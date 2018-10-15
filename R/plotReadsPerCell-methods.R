@@ -45,17 +45,17 @@ NULL
             y = "reads per cell"
         )
 
-    # Cutoff line
+    # Cutoff line.
     if (min > 0L) {
         p <- p + basejump_geom_abline(yintercept = min)
     }
 
-    # Color palette
+    # Color palette.
     if (is(fill, "ScaleDiscrete")) {
         p <- p + fill
     }
 
-    # Facets
+    # Facets.
     facets <- NULL
     if (.isAggregate(data)) {
         facets <- c(facets, "aggregate")
@@ -91,17 +91,17 @@ NULL
         ) +
         scale_x_continuous(trans = "log10")
 
-    # Cutoff line
+    # Cutoff line.
     if (min > 0L) {
         p <- p + basejump_geom_abline(xintercept = min)
     }
 
-    # Color palette
+    # Color palette.
     if (is(color, "ScaleDiscrete")) {
         p <- p + color
     }
 
-    # Facets
+    # Facets.
     facets <- NULL
     if (.isAggregate(data)) {
         facets <- c(facets, "aggregate")
@@ -144,17 +144,17 @@ NULL
             y = NULL
         )
 
-    # Cutoff line
+    # Cutoff line.
     if (min > 0L) {
         p <- p + basejump_geom_abline(xintercept = min)
     }
 
-    # Color palette
+    # Color palette.
     if (is(fill, "ScaleDiscrete")) {
         p <- p + fill
     }
 
-    # Facets
+    # Facets.
     facets <- NULL
     if (.isAggregate(data)) {
         facets <- c(facets, "aggregate")
@@ -195,17 +195,17 @@ NULL
             y = "reads per cell"
         )
 
-    # Cutoff line
+    # Cutoff line.
     if (min > 0L) {
         p <- p + basejump_geom_abline(yintercept = min)
     }
 
-    # Color palette
+    # Color palette.
     if (is(fill, "ScaleDiscrete")) {
         p <- p + fill
     }
 
-    # Facets
+    # Facets.
     facets <- NULL
     if (.isAggregate(data)) {
         facets <- c(facets, "aggregate")
@@ -228,9 +228,9 @@ NULL
 #' @keywords internal
 #' @noRd
 #'
-#' @param data Cellular barcodes tibble containing the raw read counts.
+#' @param data `tbl_df`. Raw read counts per cellular barcode.
 #'
-#' @return `grouped_df`, grouped by `sampleID`.
+#' @return `grouped_df`. Grouped by `sampleID`.
 .proportionalReadsPerCell <- function(
     data,
     sampleData,
@@ -245,13 +245,13 @@ NULL
         X = levels(data[["sampleID"]]),
         FUN = function(sampleID) {
             subset <- data[data[["sampleID"]] == sampleID, , drop = FALSE]
-            # Histogram of log10-transformed counts
+            # Histogram of log10-transformed counts.
             h <- hist(
                 x = log10(subset[["nCount"]]),
                 n = breaks,
                 plot = FALSE
             )
-            # Klein Lab MATLAB code reference
+            # Klein Lab MATLAB code reference.
             # counts: fLog
             # mids: xLog
             proportion <- h[["counts"]] * (10L ^ h[["mids"]]) /
@@ -296,17 +296,17 @@ NULL
             y = "proportion of reads"
         )
 
-    # Cutoff line
+    # Cutoff line.
     if (min > 0L) {
         p <- p + basejump_geom_abline(xintercept = log10(min))
     }
 
-    # Color palette
+    # Color palette.
     if (is(color, "ScaleDiscrete")) {
         p <- p + color
     }
 
-    # Facets
+    # Facets.
     facets <- NULL
     if (.isAggregate(data)) {
         facets <- c(facets, "aggregate")
@@ -324,12 +324,13 @@ NULL
     function(
         object,
         interestingGroups = NULL,
+        # FIXME Set this as global formal.
         geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
         color = getOption("basejump.discrete.color", NULL),
         fill = getOption("basejump.discrete.fill", NULL),
         title = "reads per cell"
     ) {
-        # Passthrough: color, fill
+        # Passthrough: color, fill.
         validObject(object)
         interestingGroups <- matchInterestingGroups(
             object = object,
@@ -339,7 +340,7 @@ NULL
         geom <- match.arg(geom)
         assertIsAStringOrNULL(title)
 
-        # Minimum reads per barcode cutoff (for unfiltered data)
+        # Minimum reads per barcode cutoff (for unfiltered data).
         if (length(metadata(object)[["filterCells"]])) {
             min <- 0L
             subtitle <- NULL
@@ -349,19 +350,26 @@ NULL
         }
         assert_is_an_integer(min)
 
-        # Obtain the sample metadata
-        sampleData <- as_tibble(sampleData(object), rownames = "sampleID")
+        # Obtain the sample metadata.
+        sampleData <- sampleData(object) %>%
+            as_tibble(rownames = "sampleID")
 
-        # FIXME Need to improve this code.
         # Obtain the read counts. Use the unfiltered reads stashed in the
         # metadata if available, otherwise use the `nCount` column in colData.
-        # cbList <- metadata(object)[["cellularBarcodes"]]
-        # if (is.list(cbList)) {
-        #     nCount <- .nCount(cbList)
-        #     stop("Need to rework this per sample")
-        # } else {
-        #     data <- metrics(object)
-        # }
+        cbList <- metadata(object)[["cellularBarcodes"]]
+        if (is.list(cbList)) {
+            nCount <- .nCount(cbList)
+            # FIXME This isn't mapping per sample correctly.
+            stop("Need to improve per sample handling")
+        } else {
+            data <- metrics(object)
+            assert_is_subset(c("cellID", "nCount"), colnames(data))
+            nCount <- data[["nCount"]]
+            names(nCount) <- data[["cellID"]]
+        }
+
+        # FIXME
+        stop("Need to fix nCount handling")
 
         data <- metrics(object)
         assert_is_integer(data[["nCount"]])
@@ -423,7 +431,7 @@ NULL
             )
         }
 
-        # Add title and subtitle containing cutoff information
+        # Add title and subtitle containing cutoff information.
         p <- p +
             labs(
                 title = title,
