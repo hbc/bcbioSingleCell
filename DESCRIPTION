@@ -2,7 +2,7 @@ Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Toolkit for bcbio single-cell RNA-seq analysis.
 Version: 0.99.0
-Date: 2018-10-14
+Date: 2018-10-15
 Authors@R: c(
     person(
         given = "Michael",
@@ -50,7 +50,6 @@ URL:
 BugReports: https://github.com/hbc/bcbioSingleCell/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: TRUE
 Depends:
     R (>= 3.5),
     SingleCellExperiment,
