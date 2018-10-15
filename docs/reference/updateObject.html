@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Update an Object to Its Current Class Definition — updateObject • bcbioSingleCell</title>
+<title>Update an object to its current class definition — updateObject • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -32,7 +32,7 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Update an Object to Its Current Class Definition — updateObject" />
+<meta property="og:title" content="Update an object to its current class definition — updateObject" />
 
 <meta property="og:description" content="updateObject is a generic function that returns an instance
   of object updated to its current class definition." />
@@ -103,7 +103,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Update an Object to Its Current Class Definition</h1>
+    <h1>Update an object to its current class definition</h1>
     <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/updateObject-methods.R'><code>R/updateObject-methods.R</code></a></small>
     <div class="hidden name"><code>updateObject.Rd</code></div>
     </div>
@@ -132,7 +132,11 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Valid object.</p>
+    <p><code>updateObject</code> returns a valid instance of <code>object</code>.</p>
+<p><code>updateObjectFromSlots</code> returns an instance of class
+  <code>objclass</code>.</p>
+<p><code>getObjectSlots</code> returns a list of named elements, with each
+  element corresponding to a slot in <code>object</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -179,24 +183,35 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other S4 Functions: <code><a href='extract.html'>extract</a></code>,
-  <code><a href='show.html'>show</a></code></p></div>
+    <div class='dont-index'><ul>
+<li><p><code><a href='http://www.rdocumentation.org/packages/Biobase/topics/updateObjectTo'>updateObjectTo</a></code> in the <span class="pkg">Biobase</span> package
+          for updating an object to the class definition of a template (might
+          be useful for updating a virtual superclass).</p></li>
+<li><p><code><a href='http://www.rdocumentation.org/packages/methods/topics/validObject'>validObject</a></code> for testing the validity of an
+          object.</p></li>
+<li><p><code><a href='http://www.rdocumentation.org/packages/methods/topics/showMethods'>showMethods</a></code> for displaying a summary of the
+          methods defined for a given generic function.</p></li>
+<li><p><code><a href='http://www.rdocumentation.org/packages/methods/topics/getMethod'>selectMethod</a></code> for getting the definition of
+          a specific method.</p></li>
+<li><p>BiocGenerics for a summary of all the generics defined
+          in the <span class="pkg">BiocGenerics</span> package.</p></li>
+</ul></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>updateObject</span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; <span class='message'>Upgrading from 0.99.0 to 0.99.0...</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
+    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>updateObject</span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; <span class='message'>Upgrading from 0.99.0 to 0.99.0.</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
 #&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
 #&gt; citation("bcbioSingleCell")
-#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; ──────────────────────────────────────────────────────────
 #&gt; Upload Dir: "/home/bioinfo/git/bcbioSingleCell-private/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-09-28
+#&gt; R Load Date: 2018-10-14
 #&gt; Level: "genes"
 #&gt; Organism: "Homo sapiens"
 #&gt; Interesting Groups: "sampleName"
 #&gt; Metadata File: "inst/extdata/indrops/metadata.csv"
 #&gt; Filtered: FALSE
-#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; ──────────────────────────────────────────────────────────
 #&gt; class: SingleCellExperiment 
 #&gt; dim: 500 500 
 #&gt; metadata(29): version pipeline ... wd sessionInfo

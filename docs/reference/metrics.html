@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prepare Single-Cell RNA-Seq R Markdown Template — prepareSingleCellTemplate • bcbioSingleCell</title>
+<title>Metrics — metrics • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -32,13 +32,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Prepare Single-Cell RNA-Seq R Markdown Template — prepareSingleCellTemplate" />
+<meta property="og:title" content="Metrics — metrics" />
 
-<meta property="og:description" content="If the required template dependency files aren't present, copy them from the
-requested package. Existing files are not overwritten by default. This
-function will copy dependency files from a requested package inside the
-rmarkdown/shared directory. If a package doesn't contain this
-subdirectory, the function will return an error." />
+<meta property="og:description" content="This function takes data stored in colData() and consistently returns a
+tibble grouped by sample, to be used for plotting with ggplot2." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,65 +103,83 @@ subdirectory, the function will return an error." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Prepare Single-Cell RNA-Seq R Markdown Template</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/prepareSingleCellTemplate.R'><code>R/prepareSingleCellTemplate.R</code></a></small>
-    <div class="hidden name"><code>prepareSingleCellTemplate.Rd</code></div>
+    <h1>Metrics</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/metrics-methods.R'><code>R/metrics-methods.R</code></a></small>
+    <div class="hidden name"><code>metrics.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>If the required template dependency files aren't present, copy them from the
-requested package. Existing files are not overwritten by default. This
-function will copy dependency files from a requested package inside the
-<code>rmarkdown/shared</code> directory. If a package doesn't contain this
-subdirectory, the function will return an error.</p>
+    <p>This function takes data stored in <code>colData()</code> and consistently returns a
+tibble grouped by sample, to be used for plotting with <code>ggplot2</code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>prepareSingleCellTemplate</span>(<span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
+<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>recalculate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># S4 method for CellRanger</span>
+<span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>recalculate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>overwrite</th>
-      <td><p><code>boolean</code>. Should existing destination files be overwritten?</p></td>
+      <th>object</th>
+      <td><p>Object.</p></td>
+    </tr>
+    <tr>
+      <th>recalculate</th>
+      <td><p><code>boolean</code>. Force recalculation, using primary <code>counts()</code>
+matrix.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Invisible <code>logical</code>. Was the file copied?.</p>
+    <p><code>grouped_df</code>. Grouped by <code>sampleID</code> column.</p>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="singlecellexperiment"><a class="anchor" href="#singlecellexperiment"></a>SingleCellExperiment</h2>
 
-    <p>This code is used internally by:</p><ul>
-<li><p><code><a href='http://www.rdocumentation.org/packages/bcbioRNASeq/topics/prepareRNASeqTemplate'>bcbioRNASeq::prepareRNASeqTemplate()</a></code>.</p></li>
-<li><p><code>bcbioSingleCell::prepareSingleCellTemplate()</code>.</p></li>
-</ul>
+    
+    <p>Note that metrics are cell level but grouped by sample.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Markdown Functions: <code>markdownHeader</code>,
-  <code>markdownLink</code>, <code>markdownList</code>,
-  <code>markdownPlotlist</code>,
-  <code>markdownTables</code>, <code>markdown</code></p></div>
+    <div class='dont-index'><p>Other SummarizedExperiment Functions: <code>counts</code>,
+  <code>interestingGroups</code>,
+  <code>makeSummarizedExperiment</code>,
+  <code>mapGenes</code>, <code>meltCounts</code>,
+  <code>sampleData</code>, <code>sampleNames</code>,
+  <code>selectSamples</code>, <code>tpm</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>prepareSingleCellTemplate</span>()
-<span class='no'>x</span></div><div class='output co'>#&gt;      _footer.Rmd      _header.Rmd     _output.yaml         _setup.R 
-#&gt;             TRUE             TRUE             TRUE             TRUE 
-#&gt; bibliography.bib 
-#&gt;             TRUE </div><div class='input'>
-<span class='co'>## Clean up</span>
-<span class='fu'>unlink</span>(<span class='fu'>c</span>(
-    <span class='st'>"_footer.Rmd"</span>,
-    <span class='st'>"_header.Rmd"</span>,
-    <span class='st'>"_output.yaml"</span>,
-    <span class='st'>"_setup.R"</span>,
-    <span class='st'>"bibliography.bib"</span>
-))</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metrics</span>(<span class='no'>indrops_small</span>, <span class='kw'>recalculate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics.</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected.</span></div><div class='output co'>#&gt; <span class='message'>449 coding genes.</span></div><div class='output co'>#&gt; <span class='message'>13 mitochondrial genes.</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
+#&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
+#&gt; citation("bcbioSingleCell")
+#&gt; ──────────────────────────────────────────────────────────
+#&gt; Upload Dir: "/home/bioinfo/git/bcbioSingleCell-private/inst/extdata/indrops"
+#&gt; Upload Date: 2018-01-01
+#&gt; R Load Date: 2018-09-27
+#&gt; Level: "genes"
+#&gt; Organism: "Homo sapiens"
+#&gt; Interesting Groups: "sampleName"
+#&gt; Metadata File: "inst/extdata/indrops/metadata.csv"
+#&gt; Filtered: FALSE
+#&gt; ──────────────────────────────────────────────────────────
+#&gt; class: SingleCellExperiment 
+#&gt; dim: 500 500 
+#&gt; metadata(29): version pipeline ... wd sessionInfo
+#&gt; assays(1): counts
+#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
+#&gt;   ENSG00000283391
+#&gt; rowData names(4): broadClass geneBiotype geneID geneName
+#&gt; colnames(500): AAACACTA_ATCCCACG AAACACTA_CTTAGGTA ...
+#&gt;   TGTTATCA_ACGCAGAG TGTTATCA_CAAGTCAT
+#&gt; colData names(15): nUMI nGene ... aggregate revcomp
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -173,7 +188,7 @@ subdirectory, the function will return an error.</p>
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#details">Details</a></li>
+      <li><a href="#singlecellexperiment">SingleCellExperiment</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
@@ -182,7 +197,7 @@ subdirectory, the function will return an error.</p>
 
     <h2>Author</h2>
     
-Michael Steinbaugh
+Michael Steinbaugh, Rory Kirchner
 
   </div>
 </div>

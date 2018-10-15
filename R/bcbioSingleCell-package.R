@@ -4,6 +4,7 @@
 #' RNA-seq data.
 #'
 #' @aliases NULL
+#' @keywords internal
 #'
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
 #' @importMethodsFrom basejump coerce
