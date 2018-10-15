@@ -30,11 +30,11 @@
 #'   basejump_geom_abline basejump_geom_label basejump_geom_label_average
 #'   basejump_geom_label_repel camel cell2sample detectLanes emptyRanges
 #'   gene2symbol hasRownames import interestingGroups interestingGroups<-
-#'   initDir makeDimnames makeGRangesFromEnsembl makeGRangesFromGFF
-#'   makeNames makeSingleCellExperiment makeTx2geneFromGFF mapCellsToSamples
+#'   initDir makeDimnames makeGRangesFromEnsembl makeGRangesFromGFF makeNames
+#'   makeSingleCellExperiment makeTx2geneFromGFF mapCellsToSamples
 #'   matchArgsToDoCall matchInterestingGroups markdownHeader markdownPlotlist
 #'   methodFormals metrics minimalSampleData plotZerosVsDepth prepareTemplate
-#'   printString sanitizeSampleData separator standardizeCall
+#'   printString realpath sanitizeSampleData separator standardizeCall
 #'   stripTranscriptVersions theme_midnight theme_paperwhite tx2geneFromGFF
 #'   uniteInterestingGroups
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getLevelFromCommands
