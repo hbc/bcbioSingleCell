@@ -22,7 +22,6 @@ reference:
     - CellRanger
   - title: S4 Functions
     contents:
-    - combine
     - extract
     - show
     - updateObject
@@ -39,7 +38,6 @@ reference:
     - plotQC
     - plotReadsPerCell
     - starts_with("plotUMI")
-    - plotZerosVsDepth
   - title: R Markdown Functions
     contents:
     - ends_with("Template")
