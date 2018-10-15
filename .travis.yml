@@ -6,11 +6,16 @@ cache: packages
 
 r:
   - bioc-release
-  # - bioc-devel
+  - bioc-devel
 
 os:
-  # - linux
+  - linux
   - osx
+
+matrix:
+  exclude:
+  - os: osx
+    r: bioc-devel
 
 # blocklist
 # branches:
@@ -40,7 +45,7 @@ env:
 
 # Set true before submission to Bioconductor
 # Don't fail build due to "built with R 3.5.1"
-warnings_are_errors: false
+warnings_are_errors: true
 
 # Temporarily enable to cache packages
 # script: true
