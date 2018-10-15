@@ -11,9 +11,9 @@ library(Matrix)
 limit <- structure(1e6, class = "object_size")
 
 # Complete dataset =============================================================
-upload_dir <- initializeDirectory("data-raw/cellranger")
+upload_dir <- initDir("data-raw/cellranger")
 # Example dataset contains a single sample ("pbmc4k").
-outs_dir <- initializeDirectory(file.path(upload_dir, "pbmc", "outs"))
+outs_dir <- initDir(file.path(upload_dir, "pbmc", "outs"))
 
 # Directory structure:
 # - pbmc

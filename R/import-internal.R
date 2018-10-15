@@ -55,10 +55,10 @@
     function(sampleDirs) {
         message("Importing unfiltered cellular barcode distributions.")
         files <- file.path(
-            normalizePath(sampleDirs, winslash = "/", mustWork = TRUE),
+            sampleDirs,
             paste(basename(sampleDirs), "barcodes.tsv", sep = "-")
         )
-        assert_all_are_existing_files(files)
+        files <- realpath(files)
         names(files) <- names(sampleDirs)
         list <- lapply(files, function(file) {
             data <- read_tsv(

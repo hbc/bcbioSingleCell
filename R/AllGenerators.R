@@ -119,7 +119,7 @@ bcbioSingleCell <- function(
     assert_is_character(interestingGroups)
 
     # Directory paths ----------------------------------------------------------
-    uploadDir <- normalizePath(uploadDir, winslash = "/", mustWork = TRUE)
+    uploadDir <- realpath(uploadDir)
     projectDir <- projectDir(uploadDir)
     sampleDirs <- sampleDirs(uploadDir)
 
@@ -136,18 +136,18 @@ bcbioSingleCell <- function(
     programVersions <-
         readProgramVersions(file.path(projectDir, "programs.txt"))
     log <-
-        readLog(file.path(projectDir, "bcbio-nextgen.log"))
-    commandsLog <-
-        readLog(file.path(projectDir, "bcbio-nextgen-commands.log"))
+        import(file.path(projectDir, "bcbio-nextgen.log"))
+    commands <-
+        import(file.path(projectDir, "bcbio-nextgen-commands.log"))
 
     assert_is_tbl_df(dataVersions)
     assert_is_tbl_df(programVersions)
     assert_is_character(log)
-    assert_is_character(commandsLog)
+    assert_is_character(commands)
 
-    cutoff <- getBarcodeCutoffFromCommandsLog(commandsLog)
-    level <- getLevelFromCommandsLog(commandsLog)
-    umiType <- getUMITypeFromCommandsLog(commandsLog)
+    cutoff <- getBarcodeCutoffFromCommands(commands)
+    level <- getLevelFromCommands(commands)
+    umiType <- getUMITypeFromCommands(commands)
 
     # Check to see if we're dealing with a multiplexed platform.
     multiplexed <- any(vapply(
@@ -231,7 +231,7 @@ bcbioSingleCell <- function(
             ))
             sampleData <- minimalSampleData(basename(sampleDirs))
         } else {
-            sampleData <- readYAMLSampleData(yamlFile)
+            sampleData <- getSampleDataFromYAML(yaml)
         }
     }
     assert_is_subset(rownames(sampleData), names(sampleDirs))
@@ -307,7 +307,7 @@ bcbioSingleCell <- function(
         dataVersions = dataVersions,
         programVersions = programVersions,
         bcbioLog = log,
-        bcbioCommandsLog = commandsLog,
+        bcbioCommandsLog = commands,
         cellularBarcodes = cbList,
         cellularBarcodeCutoff = cutoff,
         call = match.call()
@@ -413,7 +413,7 @@ CellRanger <- function(
 ) {
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
-    uploadDir <- normalizePath(uploadDir, winslash = "/", mustWork = TRUE)
+    uploadDir <- realpath(uploadDir)
     format <- match.arg(format)
     assert_is_a_bool(filtered)
     assertIsAStringOrNULL(sampleMetadataFile)
@@ -423,7 +423,7 @@ CellRanger <- function(
     assertIsAStringOrNULL(refdataDir)
     if (is_a_string(refdataDir)) {
         assert_all_are_dirs(refdataDir)
-        refdataDir <- normalizePath(refdataDir, winslash = "/", mustWork = TRUE)
+        refdataDir <- realpath(refdataDir)
     }
     assertIsAStringOrNULL(gffFile)
     assert_is_any_of(transgeneNames, c("character", "NULL"))

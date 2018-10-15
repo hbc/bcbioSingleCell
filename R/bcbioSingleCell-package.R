@@ -29,16 +29,16 @@
 #'   basejump_geom_abline basejump_geom_label basejump_geom_label_average
 #'   basejump_geom_label_repel camel cell2sample detectLanes emptyRanges
 #'   gene2symbol hasRownames import interestingGroups interestingGroups<-
-#'   initializeDirectory makeDimnames makeGRangesFromEnsembl makeGRangesFromGFF
+#'   initDir makeDimnames makeGRangesFromEnsembl makeGRangesFromGFF
 #'   makeNames makeSingleCellExperiment makeTx2geneFromGFF mapCellsToSamples
 #'   matchArgsToDoCall matchInterestingGroups markdownHeader markdownPlotlist
 #'   methodFormals metrics minimalSampleData plotZerosVsDepth prepareTemplate
 #'   printString sanitizeSampleData separator standardizeCall
 #'   stripTranscriptVersions theme_midnight theme_paperwhite tx2geneFromGFF
 #'   uniteInterestingGroups
-#' @importFrom bcbioBase getBarcodeCutoffFromCommandsLog getLevelFromCommandsLog
-#'   getUMITypeFromCommandsLog projectDir readDataVersions readLog
-#'   readProgramVersions readSampleData readYAMLSampleData sampleDirs
+#' @importFrom bcbioBase getBarcodeCutoffFromCommands getLevelFromCommands
+#'   getSampleDataFromYAML getUMITypeFromCommands projectDir readDataVersions
+#'   readProgramVersions readSampleData sampleDirs
 #' @importFrom Biobase sampleNames
 #' @importFrom BiocGenerics cbind counts counts<- do.call rbind
 #' @importFrom BiocParallel SerialParam
