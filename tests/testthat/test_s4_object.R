@@ -44,14 +44,4 @@ test_that("CellRanger", {
         ensemblRelease = 87L
     )
     expect_s4_class(x, "CellRanger")
-
-    # Minimal example contains some genes that are dead on current Ensembl.
-    expect_warning(
-        object = CellRanger(
-            uploadDir = uploadDir,
-            organism = "Homo sapiens",
-            ensemblRelease = 92L
-        ),
-        regexp = "Genes missing in rowRanges."
-    )
 })
