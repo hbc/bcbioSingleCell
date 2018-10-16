@@ -29,13 +29,13 @@
 #'   assertIsFillScaleDiscreteOrNULL assertIsHeaderLevel assignAndSaveData
 #'   basejump_geom_abline basejump_geom_label basejump_geom_label_average
 #'   basejump_geom_label_repel camel cell2sample detectLanes emptyRanges
-#'   gene2symbol hasRownames import interestingGroups interestingGroups<-
-#'   initDir makeDimnames makeGRangesFromEnsembl makeGRangesFromGFF makeNames
-#'   makeSingleCellExperiment makeTx2geneFromGFF mapCellsToSamples
-#'   matchArgsToDoCall matchInterestingGroups markdownHeader markdownPlotlist
-#'   methodFormals metrics minimalSampleData plotZerosVsDepth prepareTemplate
-#'   printString realpath sanitizeSampleData separator standardizeCall
-#'   stripTranscriptVersions theme_midnight theme_paperwhite tx2geneFromGFF
+#'   hasRownames import interestingGroups interestingGroups<- initDir
+#'   makeDimnames makeGRangesFromEnsembl makeGRangesFromGFF makeNames
+#'   makeSingleCellExperiment mapCellsToSamples matchArgsToDoCall
+#'   matchInterestingGroups markdownHeader markdownPlotlist methodFormals
+#'   metrics minimalSampleData plotZerosVsDepth prepareTemplate printString
+#'   realpath sanitizeSampleData separator standardizeCall
+#'   stripTranscriptVersions theme_midnight theme_paperwhite
 #'   uniteInterestingGroups
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getLevelFromCommands
 #'   getSampleDataFromYAML getUMITypeFromCommands projectDir readDataVersions
