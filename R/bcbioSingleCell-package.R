@@ -34,7 +34,7 @@
 #'   makeSingleCellExperiment mapCellsToSamples matchArgsToDoCall
 #'   matchInterestingGroups markdownHeader markdownPlotlist methodFormals
 #'   metrics minimalSampleData plotZerosVsDepth prepareTemplate printString
-#'   realpath sanitizeSampleData separator standardizeCall
+#'   realpath sampleData sanitizeSampleData separator standardizeCall
 #'   stripTranscriptVersions theme_midnight theme_paperwhite
 #'   uniteInterestingGroups
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getLevelFromCommands

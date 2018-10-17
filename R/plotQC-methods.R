@@ -287,27 +287,25 @@ formals(.plotQCMetric)[["geom"]] <- geom
         assertIsHeaderLevel(headerLevel)
         return <- match.arg(return)
 
-        plotCellCounts <- plotCellCounts(object)
-        plotReadsPerCell <- NULL
+
+        # Don't show cell counts for unfiltered datasets.
+        if (!is.null(metadata(object)[["filterCells"]])) {
+            plotCellCounts <- plotCellCounts(object)
+            plotZerosVsDepth <- NULL
+        } else {
+            plotCellCounts <- NULL
+            plotZerosVsDepth <- plotZerosVsDepth(object)
+        }
+
         plotUMIsPerCell <- plotUMIsPerCell(object, geom = geom)
         plotGenesPerCell <- plotGenesPerCell(object, geom = geom)
         plotUMIsVsGenes <- plotUMIsVsGenes(object)
         plotNovelty <- plotNovelty(object, geom = geom)
         plotMitoRatio <- plotMitoRatio(object, geom = geom)
-        plotZerosVsDepth <- plotZerosVsDepth(object)
 
-        if (is(object, "bcbioSingleCell")) {
-            # Don't show cell counts for unfiltered bcbio datasets.
-            if (!length(metadata(object)[["filterCells"]])) {
-                plotCellCounts <- NULL
-            }
-            # Raw read counts are only stashed in bcbioSingleCell objects.
-            plotReadsPerCell <- plotReadsPerCell(object, geom = geom)
-        }
 
         plotlist <- list(
             "Cell Counts" = plotCellCounts,
-            "Reads per Cell" = plotReadsPerCell,
             "UMIs per Cell" = plotUMIsPerCell,
             "Genes per Cell" = plotGenesPerCell,
             "UMIs vs. Genes" = plotUMIsVsGenes,
@@ -320,6 +318,10 @@ formals(.plotQCMetric)[["geom"]] <- geom
         # `plotReadsPerCell()` return on an object that doesn't contain raw
         # cellular barcode counts.
         plotlist <- Filter(Negate(is.null), plotlist)
+
+        # Consistently show n plots.
+        n <- 6L
+        stopifnot(has_length(plotlist, n = n))
 
         # Hide the legends, if desired.
         if (identical(legend, FALSE)) {
@@ -334,7 +336,11 @@ formals(.plotQCMetric)[["geom"]] <- geom
             names(plotlist) <- camel(names(plotlist))
             plotlist
         } else if (return == "grid") {
-            plot_grid(plotlist = plotlist)
+            plot_grid(
+                plotlist = plotlist,
+                ncol = n / 2L,
+                nrow = 2L
+            )
         } else if (return == "markdown") {
             markdownHeader(
                 text = "Quality control metrics",
