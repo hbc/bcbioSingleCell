@@ -252,7 +252,7 @@ bcbioSingleCell <- function(
 
     # Bind the `nCount` column into the colData. These are the number of counts
     # bcbio uses for initial filtering (minimum_barcode_depth in YAML).
-    nCount <- .nCount(cbList, return = "integer")
+    nCount <- .nCount(cbList)
     assert_is_integer(nCount)
     assert_is_subset(rownames(colData), names(nCount))
     colData[["nCount"]] <- nCount[rownames(colData)]
