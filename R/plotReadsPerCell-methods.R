@@ -8,6 +8,7 @@
 #' @include globals.R
 #'
 #' @inheritParams general
+#' @param cutoffLine `boolean`. Include a line marking the cutoff.
 #'
 #' @return `ggplot`.
 #'
@@ -336,6 +337,7 @@ NULL
         object,
         interestingGroups = NULL,
         geom,
+        cutoffLine = FALSE,
         color = getOption("basejump.discrete.color", NULL),
         fill = getOption("basejump.discrete.fill", NULL),
         title = "reads per cell"
@@ -355,8 +357,13 @@ NULL
             min <- 0L
             subtitle <- NULL
         } else {
-            min <- metadata(object)[["cellularBarcodeCutoff"]]
-            subtitle <- paste("cutoff", min, sep = " = ")
+            cutoff <- metadata(object)[["cellularBarcodeCutoff"]]
+            subtitle <- paste("cutoff", cutoff, sep = " = ")
+            if (isTRUE(cutoffLine)) {
+                min <- cutoff
+            } else {
+                min <- 0L
+            }
         }
         assert_is_an_integer(min)
 
