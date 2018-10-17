@@ -1,5 +1,6 @@
 # FIXME Either make `sampleName` required or strip it from minimal examples.
 # TODO Check to see if we can import tx2gene.csv
+# FIXME Break these back out into separate files.
 
 
 
@@ -251,7 +252,8 @@ bcbioSingleCell <- function(
 
     # Bind the `nCount` column into the colData. These are the number of counts
     # bcbio uses for initial filtering (minimum_barcode_depth in YAML).
-    nCount <- .nCount(cbList)
+    nCount <- .nCount(cbList, return = "integer")
+    assert_is_integer(nCount)
     assert_is_subset(rownames(colData), names(nCount))
     colData[["nCount"]] <- nCount[rownames(colData)]
 
@@ -266,21 +268,14 @@ bcbioSingleCell <- function(
     }
     sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
     colData <- left_join(
-        x = colData,
-        y = sampleData,
+        x = as_tibble(colData, rownames = "rowname"),
+        y = as_tibble(sampleData, rownames = NULL),
         by = "sampleID"
     )
+    colData <- as(colData, "DataFrame")
 
     # Metadata -----------------------------------------------------------------
-    # TODO Make this a function in bcbioBase.
-    # Run date and template name.
-    match <- str_match(
-        string = basename(projectDir),
-        pattern = projectDirPattern
-    )
-    runDate <- as.Date(match[[2L]])
-    template <- match[[3L]]
-    rm(match)
+    runDate <- runDate(projectDir)
 
     # Interesting groups.
     interestingGroups <- camel(interestingGroups)
@@ -302,7 +297,6 @@ bcbioSingleCell <- function(
         lanes = lanes,
         # bcbio-specific -------------------------------------------------------
         projectDir = projectDir,
-        template = template,
         runDate = runDate,
         yaml = yaml,
         gffFile = as.character(gffFile),
