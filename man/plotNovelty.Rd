@@ -8,10 +8,11 @@
 \usage{
 plotNovelty(object, ...)
 
-\S4method{plotNovelty}{SingleCellExperiment}(object, geom = c("violin",
-  "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups = NULL,
-  min = 0L, fill = getOption("basejump.discrete.fill", NULL),
-  trans = "identity", title = "novelty : genes per UMI")
+\S4method{plotNovelty}{SingleCellExperiment}(object,
+  geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
+  interestingGroups = NULL, min = 0L,
+  fill = getOption("basejump.discrete.fill", NULL), trans = "identity",
+  title = "novelty : genes per UMI")
 }
 \arguments{
 \item{object}{Object.}

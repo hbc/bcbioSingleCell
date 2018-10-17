@@ -8,10 +8,11 @@
 \usage{
 plotMitoRatio(object, ...)
 
-\S4method{plotMitoRatio}{SingleCellExperiment}(object, geom = c("violin",
-  "ridgeline", "ecdf", "histogram", "boxplot"), interestingGroups = NULL,
-  max = 1L, fill = getOption("basejump.discrete.fill", NULL),
-  trans = "sqrt", title = "mito ratio")
+\S4method{plotMitoRatio}{SingleCellExperiment}(object,
+  geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
+  interestingGroups = NULL, max = 1L,
+  fill = getOption("basejump.discrete.fill", NULL), trans = "sqrt",
+  title = "mito ratio")
 }
 \arguments{
 \item{object}{Object.}

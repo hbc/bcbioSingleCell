@@ -12,7 +12,8 @@ cellranger_small
 Cell Ranger Example
 }
 \examples{
-bcbioSingleCell::cellranger_small
+data(cellranger_small)
+cellranger_small
 }
 \seealso{
 Other Minimal Example Data: \code{\link{indrops_small}}
