@@ -24,13 +24,3 @@ metricsCols <- c(
     "log10GenesPerUMI",
     "mitoRatio"
 )
-
-# Empty sample metadata support (e.g. for splatter simulation SCE).
-# Currently used by `plotCellCounts()`.
-unknownSampleData <- data.frame(
-    sampleID = "unknown",
-    sampleName = "unknown",
-    interestingGroups = "unknown",
-    row.names = "unknown",
-    stringsAsFactors = TRUE
-)

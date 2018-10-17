@@ -63,7 +63,7 @@
 
     sampleData <- sampleData(object) %>%
         as_tibble(rownames = "sampleID") %>%
-        mutate(!!sym("sampleID") := as.factor(!!sym("sampleID")))
+        mutate_all(as.factor)
 
     data <- data %>%
         mutate(!!sym("sampleID") := as.factor(!!sym("sampleID"))) %>%

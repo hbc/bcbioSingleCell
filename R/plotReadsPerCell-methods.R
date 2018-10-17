@@ -43,10 +43,9 @@ NULL
     assert_is_an_integer(breaks)
     assert_is_all_of(sampleData, "DataFrame")
 
-    # Ensure `sampleID` is set to factor for `sampleData()`.
     sampleData <- sampleData %>%
         as_tibble(rownames = "sampleID") %>%
-        mutate(!!"sampleID" := as.factor(!!sym("sampleID")))
+        mutate_all(as.factor)
 
     list <- lapply(
         X = levels(data[["sampleID"]]),
