@@ -9,6 +9,7 @@ plotQC <- basejump::plotQC
 #' @name plotQC
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh
+#' @include globals.R
 #'
 #' @inheritParams general
 #' @param headerLevel `scalar integer` (`1`-`7`). R Markdown header level.
@@ -30,7 +31,7 @@ NULL
 .plotQCMetric <- function(
     object,
     metricCol,
-    geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
+    geom,
     interestingGroups = NULL,
     min = 0L,
     max = Inf,
@@ -186,6 +187,7 @@ NULL
 
     p
 }
+formals(.plotQCMetric)[["geom"]] <- geom
 
 
 

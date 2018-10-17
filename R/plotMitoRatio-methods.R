@@ -3,6 +3,7 @@
 #' @name plotMitoRatio
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
+#' @include globals.R
 #'
 #' @inheritParams general
 #'
@@ -18,7 +19,7 @@ NULL
 .plotMitoRatio.SCE <-  # nolint
     function(
         object,
-        geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
+        geom,
         interestingGroups = NULL,
         max = 1L,
         fill = getOption("basejump.discrete.fill", NULL),
@@ -42,6 +43,7 @@ NULL
             )
         )
     }
+formals(.plotMitoRatio.SCE)[["geom"]] <- geom
 
 
 

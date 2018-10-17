@@ -5,6 +5,7 @@
 #' @name plotUMIsPerCell
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
+#' @include globals.R
 #'
 #' @inherit plotGenesPerCell
 #'
@@ -26,7 +27,7 @@ NULL
 .plotUMIsPerCell.SCE <-  # nolint
     function(
         object,
-        geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
+        geom,
         interestingGroups = NULL,
         min = 0L,
         max = Inf,
@@ -135,6 +136,7 @@ NULL
 
         p
     }
+formals(.plotUMIsPerCell.SCE)[["geom"]] <- geom
 
 
 
