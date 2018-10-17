@@ -7,12 +7,16 @@
 \alias{metrics,CellRanger-method}
 \title{Metrics}
 \usage{
+metrics(object, ...)
+
 \S4method{metrics}{bcbioSingleCell}(object, recalculate = FALSE)
 
 \S4method{metrics}{CellRanger}(object, recalculate = FALSE)
 }
 \arguments{
 \item{object}{Object.}
+
+\item{...}{Additional arguments.}
 
 \item{recalculate}{\code{boolean}. Force recalculation, using primary \code{\link[=counts]{counts()}}
 matrix.}
