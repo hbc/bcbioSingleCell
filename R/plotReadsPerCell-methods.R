@@ -15,6 +15,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
+#' data(indrops_small)
 #' plotReadsPerCell(indrops_small, geom = "histogram")
 #' plotReadsPerCell(indrops_small, geom = "ecdf")
 NULL

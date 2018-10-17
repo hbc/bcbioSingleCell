@@ -33,6 +33,7 @@ Note that metrics are cell level but grouped by sample.
 }
 
 \examples{
+data(indrops_small)
 x <- metrics(indrops_small, recalculate = TRUE)
 print(x)
 }

@@ -51,6 +51,7 @@ use the \code{\link[=sampleNames]{sampleNames()}} return values (i.e. the \code{
 \code{\link[=sampleData]{sampleData()}}).
 }
 \examples{
+data(indrops_small)
 object <- indrops_small
 show(object)
 

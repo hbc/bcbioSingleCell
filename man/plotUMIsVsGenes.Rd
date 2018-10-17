@@ -43,6 +43,7 @@ To set the discrete color palette globally, use
 Plot UMI and Gene Correlation
 }
 \examples{
+data(indrops_small)
 plotUMIsVsGenes(indrops_small)
 }
 \author{

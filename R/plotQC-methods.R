@@ -20,6 +20,7 @@
 #'   - `markdown`: R Markdown report, with reports separated by headers.
 #'
 #' @examples
+#' data(indrops_small)
 #' plotQC(indrops_small)
 NULL
 

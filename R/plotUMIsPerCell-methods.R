@@ -13,6 +13,7 @@
 #'   sample. To disable, use "`none`". Requires `geom = "ecdf"`.
 #'
 #' @examples
+#' data(indrops_small)
 #' plotUMIsPerCell(indrops_small, geom = "violin")
 #' plotUMIsPerCell(indrops_small, geom = "ridgeline")
 #' plotUMIsPerCell(indrops_small, geom = "ecdf")

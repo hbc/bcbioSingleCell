@@ -4,7 +4,7 @@
 #' @author Michael Steinbaugh
 #'
 #' @examples
-#' show(cellranger_small)
+#' bcbioSingleCell::cellranger_small
 "cellranger_small"
 
 
@@ -15,5 +15,5 @@
 #' @author Michael Steinbaugh
 #'
 #' @examples
-#' show(indrops_small)
+#' bcbioSingleCell::indrops_small
 "indrops_small"

@@ -43,6 +43,7 @@ To set the discrete color palette globally, use
 Plot Mitochondrial vs. Coding Counts
 }
 \examples{
+data(indrops_small)
 plotMitoVsCoding(indrops_small)
 }
 \seealso{

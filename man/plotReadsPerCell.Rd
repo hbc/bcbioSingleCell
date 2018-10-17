@@ -49,6 +49,7 @@ To set the discrete fill palette globally, use
 Plot the distribution of read counts for all unfiltered cellular barcodes.
 }
 \examples{
+data(indrops_small)
 plotReadsPerCell(indrops_small, geom = "histogram")
 plotReadsPerCell(indrops_small, geom = "ecdf")
 }

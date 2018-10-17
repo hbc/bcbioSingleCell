@@ -30,6 +30,7 @@
 #'   [metadata()] as `filterCells` and `filterParams`.
 #'
 #' @examples
+#' data(indrops_small)
 #' object <- indrops_small
 #' show(object)
 #'

@@ -49,6 +49,7 @@ To set the discrete fill palette globally, use
 Plot Genes per Cell
 }
 \examples{
+data(indrops_small)
 plotGenesPerCell(indrops_small)
 }
 \seealso{

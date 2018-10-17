@@ -37,6 +37,7 @@ To set the discrete fill palette globally, use
 Plot Cell Counts
 }
 \examples{
+data(indrops_small)
 plotCellCounts(indrops_small)
 }
 \seealso{

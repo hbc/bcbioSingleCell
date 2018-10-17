@@ -5,6 +5,7 @@
 #' @export
 #'
 #' @examples
+#' data(indrops_small)
 #' show(indrops_small)
 NULL
 

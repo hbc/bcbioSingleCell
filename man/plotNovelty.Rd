@@ -46,6 +46,7 @@ To set the discrete fill palette globally, use
 "Novelty" refers to log10 genes detected per count.
 }
 \examples{
+data(indrops_small)
 plotNovelty(indrops_small)
 }
 \seealso{

@@ -61,6 +61,7 @@ To set the discrete fill palette globally, use
 Plot the universal molecular identifiers (UMIs) per cell.
 }
 \examples{
+data(indrops_small)
 plotUMIsPerCell(indrops_small, geom = "violin")
 plotUMIsPerCell(indrops_small, geom = "ridgeline")
 plotUMIsPerCell(indrops_small, geom = "ecdf")

@@ -46,6 +46,7 @@ To set the discrete fill palette globally, use
 Plot Mitochondrial Transcript Abundance
 }
 \examples{
+data(indrops_small)
 plotMitoRatio(indrops_small)
 }
 \seealso{

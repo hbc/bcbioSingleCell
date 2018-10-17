@@ -9,6 +9,7 @@
 #' @export
 #'
 #' @examples
+#' data(indrops_small)
 #' x <- updateObject(indrops_small)
 #' print(x)
 NULL

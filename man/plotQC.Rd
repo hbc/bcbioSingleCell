@@ -40,6 +40,7 @@ Utility function that loops our standard quality control plots, for easy
 visualization.
 }
 \examples{
+data(indrops_small)
 plotQC(indrops_small)
 }
 \seealso{

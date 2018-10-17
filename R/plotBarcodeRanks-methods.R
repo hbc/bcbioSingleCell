@@ -11,6 +11,7 @@
 #' @return `ggplot` grid.
 #'
 #' @examples
+#' data(indrops_small)
 #' plotBarcodeRanks(indrops_small)
 NULL
 

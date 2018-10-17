@@ -9,6 +9,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
+#' data(indrops_small)
 #' plotCellCounts(indrops_small)
 NULL
 

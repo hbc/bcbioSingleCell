@@ -11,6 +11,7 @@
 #' @return `ggplot`.
 #'
 #' @examples
+#' data(indrops_small)
 #' plotNovelty(indrops_small)
 NULL
 
