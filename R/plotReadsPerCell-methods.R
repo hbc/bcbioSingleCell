@@ -9,6 +9,7 @@
 #' @name plotReadsPerCell
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
+#' @include globals.R
 #'
 #' @inheritParams general
 #'
@@ -220,7 +221,6 @@ NULL
 
 
 
-# Proportional -----------------------------------------------------------------
 #' Proportional Cellular Barcodes Data
 #'
 #' Modified version of Allon Klein Lab MATLAB code.
@@ -242,7 +242,14 @@ NULL
     assert_is_integer(data[["nCount"]])
     assert_is_factor(data[["sampleID"]])
     assert_is_an_integer(breaks)
-    lapply(
+    assert_is_all_of(sampleData, "DataFrame")
+
+    # Ensure `sampleID` is set to factor for `sampleData()`.
+    sampleData <- sampleData %>%
+        as_tibble(rownames = "sampleID") %>%
+        mutate(!!"sampleID" := as.factor(!!sym("sampleID")))
+
+    list <- lapply(
         X = levels(data[["sampleID"]]),
         FUN = function(sampleID) {
             subset <- data[data[["sampleID"]] == sampleID, , drop = FALSE]
@@ -263,7 +270,9 @@ NULL
                 proportion = proportion
             )
         }
-    ) %>%
+    )
+
+    list %>%
         bind_rows() %>%
         mutate_if(is.character, as.factor) %>%
         group_by(!!sym("sampleID")) %>%
@@ -321,12 +330,12 @@ NULL
 
 
 
+# bcbioSingleCell ==============================================================
 .plotReadsPerCell.bcbioSingleCell <-  # nolint
     function(
         object,
         interestingGroups = NULL,
-        # FIXME Set this as global formal.
-        geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
+        geom,
         color = getOption("basejump.discrete.color", NULL),
         fill = getOption("basejump.discrete.fill", NULL),
         title = "reads per cell"
@@ -351,28 +360,18 @@ NULL
         }
         assert_is_an_integer(min)
 
-        # Obtain the sample metadata.
-        sampleData <- sampleData(object) %>%
-            as_tibble(rownames = "sampleID")
-
         # Obtain the read counts. Use the unfiltered reads stashed in the
         # metadata if available, otherwise use the `nCount` column in colData.
         cbList <- metadata(object)[["cellularBarcodes"]]
         if (is.list(cbList)) {
-            nCount <- .nCount(cbList)
-            # FIXME This isn't mapping per sample correctly.
-            stop("Need to improve per sample handling")
+            data <- .nCount(cbList, return = "tbl_df")
         } else {
             data <- metrics(object)
-            assert_is_subset(c("cellID", "nCount"), colnames(data))
-            nCount <- data[["nCount"]]
-            names(nCount) <- data[["cellID"]]
         }
-
-        # FIXME
-        stop("Need to fix nCount handling")
-
-        data <- metrics(object)
+        assert_is_subset(
+            x = c("sampleID", "cellID", "nCount"),
+            y = colnames(data)
+        )
         assert_is_integer(data[["nCount"]])
 
         if (geom == "boxplot") {
@@ -394,14 +393,11 @@ NULL
                 )
             )
         } else if (geom == "histogram") {
-            sampleData <- sampleData(object) %>%
-                as.data.frame()
-            sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
             data <- do.call(
                 what = .proportionalReadsPerCell,
                 args = list(
                     data = data,
-                    sampleData = sampleData
+                    sampleData = sampleData(object)
                 )
             )
             p <- do.call(
@@ -443,6 +439,7 @@ NULL
 
         p
     }
+formals(.plotReadsPerCell.bcbioSingleCell)[["geom"]] <- geom
 
 
 
