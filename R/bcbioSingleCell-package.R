@@ -39,7 +39,7 @@
 #'   uniteInterestingGroups
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getLevelFromCommands
 #'   getSampleDataFromYAML getUMITypeFromCommands projectDir readDataVersions
-#'   readProgramVersions readSampleData sampleDirs
+#'   readProgramVersions readSampleData runDate sampleDirs
 #' @importFrom Biobase sampleNames
 #' @importFrom BiocGenerics cbind counts counts<- do.call rbind
 #' @importFrom BiocParallel SerialParam
@@ -63,7 +63,7 @@
 #' @importFrom purrr map
 #' @importFrom readr read_lines read_tsv
 #' @importFrom rhdf5 h5dump h5read
-#' @importFrom rlang !! !!! has_length sym syms UQ
+#' @importFrom rlang !! !!! := has_length sym syms UQ
 #' @importFrom S4Vectors DataFrame aggregate as.data.frame as.matrix
 #'   complete.cases mcols mcols<- merge metadata metadata<- na.omit
 #' @importFrom scales percent pretty_breaks
