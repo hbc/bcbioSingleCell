@@ -20,6 +20,7 @@ setClass(
 
 # FIXME Update and relax the check on `sessionInfo`.
 # See bcbioRNASeq approach for example.
+# FIXME Error for objects containing a legacy cellular barcode tibble.
 setValidity(
     Class = "bcbioSingleCell",
     method = function(object) {
