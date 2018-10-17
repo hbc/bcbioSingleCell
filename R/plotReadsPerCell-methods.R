@@ -1,7 +1,3 @@
-# FIXME Need to add legacy support for cellular barcodes list saved as tibble.
-
-
-
 #' Plot Read Counts per Cell
 #'
 #' Plot the distribution of read counts for all unfiltered cellular barcodes.
@@ -23,204 +19,7 @@ NULL
 
 
 
-.plotReadsPerCellBoxplot <- function(
-    data,
-    min = 0L,
-    fill = getOption("basejump.discrete.fill", NULL)
-) {
-    assert_is_data.frame(data)
-    assertIsFillScaleDiscreteOrNULL(fill)
-
-    p <- ggplot(
-        data = data,
-        mapping = aes(
-            x = !!sym("sampleName"),
-            y = !!sym("nCount"),
-            fill = !!sym("interestingGroups")
-        )
-    ) +
-        geom_boxplot(color = "black", outlier.shape = NA) +
-        scale_y_continuous(trans = "log10") +
-        basejump_geom_label_average(data, col = "nCount", digits = 0L) +
-        labs(
-            x = NULL,
-            y = "reads per cell"
-        )
-
-    # Cutoff line.
-    if (min > 0L) {
-        p <- p + basejump_geom_abline(yintercept = min)
-    }
-
-    # Color palette.
-    if (is(fill, "ScaleDiscrete")) {
-        p <- p + fill
-    }
-
-    # Facets.
-    facets <- NULL
-    if (.isAggregate(data)) {
-        facets <- c(facets, "aggregate")
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = syms(facets), scales = "free")
-    }
-
-    p
-}
-
-
-
-.plotReadsPerCellECDF <- function(
-    data,
-    min = 0L,
-    color = getOption("basejump.discrete.color", NULL)
-) {
-    assert_is_data.frame(data)
-    assertIsColorScaleDiscreteOrNULL(color)
-
-    p <- ggplot(
-        data = data,
-        mapping = aes(
-            x = !!sym("nCount"),
-            color = !!sym("interestingGroups")
-        )
-    ) +
-        stat_ecdf(geom = "step", size = 1L) +
-        labs(
-            x = "reads per cell",
-            y = "frequency"
-        ) +
-        scale_x_continuous(trans = "log10")
-
-    # Cutoff line.
-    if (min > 0L) {
-        p <- p + basejump_geom_abline(xintercept = min)
-    }
-
-    # Color palette.
-    if (is(color, "ScaleDiscrete")) {
-        p <- p + color
-    }
-
-    # Facets.
-    facets <- NULL
-    if (.isAggregate(data)) {
-        facets <- c(facets, "aggregate")
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = syms(facets), scales = "free")
-    }
-
-    p
-}
-
-
-
-.plotReadsPerCellRidgeline <- function(
-    data,
-    min = 0L,
-    fill = getOption("basejump.discrete.fill", NULL)
-) {
-    assert_is_data.frame(data)
-    assertIsFillScaleDiscreteOrNULL(fill)
-
-    p <- ggplot(
-        data = data,
-        mapping = aes(
-            x = !!sym("nCount"),
-            y = !!sym("sampleName"),
-            fill = !!sym("interestingGroups")
-        )
-    ) +
-        geom_density_ridges(
-            alpha = 0.75,
-            color = "black",
-            panel_scaling = TRUE,
-            scale = 10L
-        ) +
-        scale_x_continuous(trans = "log10") +
-        basejump_geom_label_average(data, col = "nCount", digits = 0L) +
-        labs(
-            x = "reads per cell",
-            y = NULL
-        )
-
-    # Cutoff line.
-    if (min > 0L) {
-        p <- p + basejump_geom_abline(xintercept = min)
-    }
-
-    # Color palette.
-    if (is(fill, "ScaleDiscrete")) {
-        p <- p + fill
-    }
-
-    # Facets.
-    facets <- NULL
-    if (.isAggregate(data)) {
-        facets <- c(facets, "aggregate")
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = syms(facets), scales = "free")
-    }
-
-    p
-}
-
-
-
-.plotReadsPerCellViolin <- function(
-    data,
-    min = 0L,
-    fill = getOption("basejump.discrete.fill", NULL)
-) {
-    assert_is_data.frame(data)
-    assertIsFillScaleDiscreteOrNULL(fill)
-
-    p <- ggplot(
-        data = data,
-        mapping = aes(
-            x = !!sym("sampleName"),
-            y = !!sym("nCount"),
-            fill = !!sym("interestingGroups")
-        )
-    ) +
-        geom_violin(
-            color = "black",
-            scale = "count"
-        ) +
-        scale_y_continuous(trans = "log10") +
-        basejump_geom_label_average(data, col = "nCount", digits = 0L) +
-        labs(
-            x = NULL,
-            y = "reads per cell"
-        )
-
-    # Cutoff line.
-    if (min > 0L) {
-        p <- p + basejump_geom_abline(yintercept = min)
-    }
-
-    # Color palette.
-    if (is(fill, "ScaleDiscrete")) {
-        p <- p + fill
-    }
-
-    # Facets.
-    facets <- NULL
-    if (.isAggregate(data)) {
-        facets <- c(facets, "aggregate")
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = syms(facets), scales = "free")
-    }
-
-    p
-}
-
-
-
+# Histogram ====================================================================
 #' Proportional Cellular Barcodes Data
 #'
 #' Modified version of Allon Klein Lab MATLAB code.
@@ -330,6 +129,208 @@ NULL
 
 
 
+# Boxplot ======================================================================
+.plotReadsPerCellBoxplot <- function(
+    data,
+    min = 0L,
+    fill = getOption("basejump.discrete.fill", NULL)
+) {
+    assert_is_data.frame(data)
+    assertIsFillScaleDiscreteOrNULL(fill)
+
+    p <- ggplot(
+        data = data,
+        mapping = aes(
+            x = !!sym("sampleName"),
+            y = !!sym("nCount"),
+            fill = !!sym("interestingGroups")
+        )
+    ) +
+        geom_boxplot(color = "black", outlier.shape = NA) +
+        scale_y_continuous(trans = "log10") +
+        basejump_geom_label_average(data, col = "nCount", digits = 0L) +
+        labs(
+            x = NULL,
+            y = "reads per cell"
+        )
+
+    # Cutoff line.
+    if (min > 0L) {
+        p <- p + basejump_geom_abline(yintercept = min)
+    }
+
+    # Color palette.
+    if (is(fill, "ScaleDiscrete")) {
+        p <- p + fill
+    }
+
+    # Facets.
+    facets <- NULL
+    if (.isAggregate(data)) {
+        facets <- c(facets, "aggregate")
+    }
+    if (is.character(facets)) {
+        p <- p + facet_wrap(facets = syms(facets), scales = "free")
+    }
+
+    p
+}
+
+
+
+# ECDF =========================================================================
+.plotReadsPerCellECDF <- function(
+    data,
+    min = 0L,
+    color = getOption("basejump.discrete.color", NULL)
+) {
+    assert_is_data.frame(data)
+    assertIsColorScaleDiscreteOrNULL(color)
+
+    p <- ggplot(
+        data = data,
+        mapping = aes(
+            x = !!sym("nCount"),
+            color = !!sym("interestingGroups")
+        )
+    ) +
+        stat_ecdf(geom = "step", size = 1L) +
+        labs(
+            x = "reads per cell",
+            y = "frequency"
+        ) +
+        scale_x_continuous(trans = "log10")
+
+    # Cutoff line.
+    if (min > 0L) {
+        p <- p + basejump_geom_abline(xintercept = min)
+    }
+
+    # Color palette.
+    if (is(color, "ScaleDiscrete")) {
+        p <- p + color
+    }
+
+    # Facets.
+    facets <- NULL
+    if (.isAggregate(data)) {
+        facets <- c(facets, "aggregate")
+    }
+    if (is.character(facets)) {
+        p <- p + facet_wrap(facets = syms(facets), scales = "free")
+    }
+
+    p
+}
+
+
+
+# Ridgeline ====================================================================
+.plotReadsPerCellRidgeline <- function(
+    data,
+    min = 0L,
+    fill = getOption("basejump.discrete.fill", NULL)
+) {
+    assert_is_data.frame(data)
+    assertIsFillScaleDiscreteOrNULL(fill)
+
+    p <- ggplot(
+        data = data,
+        mapping = aes(
+            x = !!sym("nCount"),
+            y = !!sym("sampleName"),
+            fill = !!sym("interestingGroups")
+        )
+    ) +
+        geom_density_ridges(
+            alpha = 0.75,
+            color = "black",
+            panel_scaling = TRUE,
+            scale = 10L
+        ) +
+        scale_x_continuous(trans = "log10") +
+        basejump_geom_label_average(data, col = "nCount", digits = 0L) +
+        labs(
+            x = "reads per cell",
+            y = NULL
+        )
+
+    # Cutoff line.
+    if (min > 0L) {
+        p <- p + basejump_geom_abline(xintercept = min)
+    }
+
+    # Color palette.
+    if (is(fill, "ScaleDiscrete")) {
+        p <- p + fill
+    }
+
+    # Facets.
+    facets <- NULL
+    if (.isAggregate(data)) {
+        facets <- c(facets, "aggregate")
+    }
+    if (is.character(facets)) {
+        p <- p + facet_wrap(facets = syms(facets), scales = "free")
+    }
+
+    p
+}
+
+
+
+# Violin =======================================================================
+.plotReadsPerCellViolin <- function(
+    data,
+    min = 0L,
+    fill = getOption("basejump.discrete.fill", NULL)
+) {
+    assert_is_data.frame(data)
+    assertIsFillScaleDiscreteOrNULL(fill)
+
+    p <- ggplot(
+        data = data,
+        mapping = aes(
+            x = !!sym("sampleName"),
+            y = !!sym("nCount"),
+            fill = !!sym("interestingGroups")
+        )
+    ) +
+        geom_violin(
+            color = "black",
+            scale = "count"
+        ) +
+        scale_y_continuous(trans = "log10") +
+        basejump_geom_label_average(data, col = "nCount", digits = 0L) +
+        labs(
+            x = NULL,
+            y = "reads per cell"
+        )
+
+    # Cutoff line.
+    if (min > 0L) {
+        p <- p + basejump_geom_abline(yintercept = min)
+    }
+
+    # Color palette.
+    if (is(fill, "ScaleDiscrete")) {
+        p <- p + fill
+    }
+
+    # Facets.
+    facets <- NULL
+    if (.isAggregate(data)) {
+        facets <- c(facets, "aggregate")
+    }
+    if (is.character(facets)) {
+        p <- p + facet_wrap(facets = syms(facets), scales = "free")
+    }
+
+    p
+}
+
+
+
 # bcbioSingleCell ==============================================================
 .plotReadsPerCell.bcbioSingleCell <-  # nolint
     function(
@@ -360,19 +361,7 @@ NULL
         }
         assert_is_an_integer(min)
 
-        # Obtain the read counts. Use the unfiltered reads stashed in the
-        # metadata if available, otherwise use the `nCount` column in colData.
-        cbList <- metadata(object)[["cellularBarcodes"]]
-        if (is.list(cbList)) {
-            data <- .nCount(cbList, return = "tbl_df")
-        } else {
-            data <- metrics(object)
-        }
-        assert_is_subset(
-            x = c("sampleID", "cellID", "nCount"),
-            y = colnames(data)
-        )
-        assert_is_integer(data[["nCount"]])
+        data <- .rawMetrics(object)
 
         if (geom == "boxplot") {
             p <- do.call(
