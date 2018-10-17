@@ -2,7 +2,7 @@ Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Toolkit for bcbio single-cell RNA-seq analysis.
 Version: 0.99.0
-Date: 2018-10-15
+Date: 2018-10-17
 Authors@R: c(
     person(
         given = "Michael",
@@ -52,9 +52,18 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
     R (>= 3.5),
-    SingleCellExperiment,
-    basejump (>= 0.99)
+    basejump (>= 0.99),
+    SingleCellExperiment
 Imports:
+    Biobase,
+    BiocGenerics,
+    BiocParallel,
+    DropletUtils,
+    Matrix,
+    Matrix.utils,
+    R.utils,
+    S4Vectors,
+    SummarizedExperiment,
     assertive.base,
     assertive.files,
     assertive.numbers,
@@ -63,32 +72,23 @@ Imports:
     assertive.strings,
     assertive.types,
     bcbioBase (>= 0.99),
-    Biobase,
-    BiocGenerics,
-    BiocParallel,
     cowplot (>= 0.9),
     crayon,
     dplyr (>= 0.7),
-    DropletUtils,
     ggplot2 (>= 3.0),
     ggridges (>= 0.5),
     graphics,
     magrittr (>= 1.5),
-    Matrix,
-    Matrix.utils,
     methods,
     purrr (>= 0.2),
-    R.utils,
     readr (>= 1.1),
     rhdf5 (>= 2.2),
     rlang (>= 0.2),
     rmarkdown,
-    S4Vectors,
     scales,
     sessioninfo,
     stats,
     stringr (>= 1.3),
-    SummarizedExperiment,
     tibble (>= 1.4),
     tidyverse (>= 1.2),
     utils
