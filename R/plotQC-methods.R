@@ -1,14 +1,14 @@
-#' Quality Control Plots
-#'
-#' Utility function that loops our standard quality control plots, for easy
-#' visualization.
-#'
+#' @rdname plotQC
+#' @importFrom basejump plotQC
+#' @export
+plotQC <- basejump::plotQC
+
+
+
+#' inherit basejump::plotQC
 #' @name plotQC
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh
-#'
-#' @importFrom basejump plotQC
-#' @export
 #'
 #' @inheritParams general
 #' @param headerLevel `scalar integer` (`1`-`7`). R Markdown header level.

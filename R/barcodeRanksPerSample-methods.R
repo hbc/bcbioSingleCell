@@ -3,7 +3,6 @@
 #' @name barcodeRanksPerSample
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh
-#' @export
 #'
 #' @inherit DropletUtils::barcodeRanks
 #'

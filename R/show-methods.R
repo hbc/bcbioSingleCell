@@ -1,5 +1,11 @@
-#' @name show
+#' @rdname show
 #' @importFrom methods show
+#' @export
+show <- methods::show
+
+
+
+#' @name show
 #' @inherit methods::show
 #' @author Michael Steinbuagh
 #' @export

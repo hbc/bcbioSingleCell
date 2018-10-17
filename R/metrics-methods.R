@@ -1,10 +1,15 @@
+#' @rdname metrics
+#' @importFrom basejump metrics
+#' @export
+metrics <- basejump::metrics
+
+
+
 #' Metrics
 #'
 #' @name metrics
 #' @author Michael Steinbaugh, Rory Kirchner
-#' @importFrom basejump metrics
 #' @inherit basejump::metrics
-#' @export
 #'
 #' @inheritParams general
 #' @param recalculate `boolean`. Force recalculation, using primary [counts()]

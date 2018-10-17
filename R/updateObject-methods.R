@@ -2,11 +2,16 @@
 
 
 
-#' @name updateObject
+#' @rdname updateObject
 #' @importFrom BiocGenerics updateObject
+#' @export
+updateObject <- BiocGenerics::updateObject
+
+
+
+#' @name updateObject
 #' @inherit BiocGenerics::updateObject
 #' @author Michael Steinbaugh
-#' @export
 #'
 #' @examples
 #' data(indrops_small)

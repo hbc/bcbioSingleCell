@@ -2,10 +2,8 @@
 #'
 #' @name prepareSingleCellTemplate
 #' @family R Markdown Functions
-#' @author Michael Steinbaugh
-#'
 #' @inherit basejump::prepareTemplate
-#'
+#' @author Michael Steinbaugh
 #' @export
 #'
 #' @examples
