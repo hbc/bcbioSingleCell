@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Quality Control Plots — plotQC • bcbioSingleCell</title>
+<title>inherit basejump::plotQC — plotQC • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -32,10 +32,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Quality Control Plots — plotQC" />
+<meta property="og:title" content="inherit basejump::plotQC — plotQC" />
 
-<meta property="og:description" content="Utility function that loops our standard quality control plots, for easy
-visualization." />
+<meta property="og:description" content="inherit basejump::plotQC" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -103,22 +102,23 @@ visualization." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Quality Control Plots</h1>
+    <h1>inherit basejump::plotQC</h1>
     <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/plotQC-methods.R'><code>R/plotQC-methods.R</code></a></small>
     <div class="hidden name"><code>plotQC.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Utility function that loops our standard quality control plots, for easy
-visualization.</p>
+    <p>inherit basejump::plotQC</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S4 method for SingleCellExperiment</span>
+    <pre class="usage"><span class='fu'>plotQC</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+
+<span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotQC</span>(<span class='no'>object</span>, <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"violin"</span>, <span class='st'>"ridgeline"</span>, <span class='st'>"ecdf"</span>, <span class='st'>"histogram"</span>, <span class='st'>"boxplot"</span>),
-  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.legend"</span>, <span class='fl'>FALSE</span>),
+  <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"histogram"</span>, <span class='st'>"ecdf"</span>, <span class='st'>"violin"</span>, <span class='st'>"ridgeline"</span>, <span class='st'>"boxplot"</span>),
+  <span class='kw'>headerLevel</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"basejump.legend"</span>, <span class='fl'>FALSE</span>),
   <span class='kw'>return</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"grid"</span>, <span class='st'>"list"</span>, <span class='st'>"markdown"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -127,6 +127,10 @@ visualization.</p>
     <tr>
       <th>object</th>
       <td><p>Object.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
       <th>interestingGroups</th>
@@ -175,12 +179,12 @@ defaults to the first argument in the <code>character</code> vector.</p></td>
   <code><a href='plotMitoVsCoding.html'>plotMitoVsCoding</a></code>,
   <code><a href='plotNovelty.html'>plotNovelty</a></code>,
   <code><a href='plotReadsPerCell.html'>plotReadsPerCell</a></code>,
-  <code><a href='plotUMIsPerCell.html'>plotUMIsPerCell</a></code>,
-  <code><a href='plotZerosVsDepth.html'>plotZerosVsDepth</a></code></p></div>
+  <code><a href='plotUMIsPerCell.html'>plotUMIsPerCell</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>plotQC</span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Column `sampleID` already exists</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>indrops_small</span>)
+<span class='fu'>plotQC</span>(<span class='no'>indrops_small</span>)</div><div class='img'><img src='plotQC-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

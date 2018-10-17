@@ -118,8 +118,9 @@
 <span class='co'># S4 method for bcbioSingleCell</span>
 <span class='fu'>plotReadsPerCell</span>(<span class='no'>object</span>,
   <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"histogram"</span>, <span class='st'>"ecdf"</span>, <span class='st'>"violin"</span>,
-  <span class='st'>"ridgeline"</span>, <span class='st'>"boxplot"</span>), <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.color"</span>,
-  <span class='kw'>NULL</span>), <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"bcbio.discrete.fill"</span>, <span class='kw'>NULL</span>),
+  <span class='st'>"ridgeline"</span>, <span class='st'>"boxplot"</span>), <span class='kw'>cutoffLine</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"basejump.discrete.color"</span>, <span class='kw'>NULL</span>),
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"basejump.discrete.fill"</span>, <span class='kw'>NULL</span>),
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"reads per cell"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -143,6 +144,10 @@ interesting groups. Must be formatted in camel case and intersect with
       <th>geom</th>
       <td><p><code>string</code>. Plot type. Uses <code>match.arg()</code> and defaults to the first
 argument in the <code>character</code> vector.</p></td>
+    </tr>
+    <tr>
+      <th>cutoffLine</th>
+      <td><p><code>boolean</code>. Include a line marking the cutoff.</p></td>
     </tr>
     <tr>
       <th>color</th>
@@ -182,12 +187,12 @@ To set the discrete fill palette globally, use
   <code><a href='plotMitoRatio.html'>plotMitoRatio</a></code>,
   <code><a href='plotMitoVsCoding.html'>plotMitoVsCoding</a></code>,
   <code><a href='plotNovelty.html'>plotNovelty</a></code>, <code><a href='plotQC.html'>plotQC</a></code>,
-  <code><a href='plotUMIsPerCell.html'>plotUMIsPerCell</a></code>,
-  <code><a href='plotZerosVsDepth.html'>plotZerosVsDepth</a></code></p></div>
+  <code><a href='plotUMIsPerCell.html'>plotUMIsPerCell</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>plotReadsPerCell</span>(<span class='no'>indrops_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"histogram"</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Column `sampleID` already exists</span></div><div class='input'><span class='fu'>plotReadsPerCell</span>(<span class='no'>indrops_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"ecdf"</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Column `sampleID` already exists</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>indrops_small</span>)
+<span class='fu'>plotReadsPerCell</span>(<span class='no'>indrops_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"histogram"</span>)</div><div class='img'><img src='plotReadsPerCell-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plotReadsPerCell</span>(<span class='no'>indrops_small</span>, <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"ecdf"</span>)</div><div class='img'><img src='plotReadsPerCell-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

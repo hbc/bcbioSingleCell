@@ -251,27 +251,27 @@ match, due to deprecation in the current Ensembl release.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>uploadDir</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata/cellranger"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>CellRanger</span>(<span class='no'>uploadDir</span>)</div><div class='output co'>#&gt; <span class='message'>Importing counts...</span></div><div class='output co'>#&gt; <span class='message'>Unknown organism. Skipping annotations.</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics...</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected.</span></div><div class='output co'>#&gt; <span class='message'>Calculating metrics without biotype information.</span>
-#&gt; <span class='message'>`rowRanges` is required to calculate: nCoding, nMito, mitoRatio</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; CellRanger 0.99.0
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>CellRanger</span>(<span class='no'>uploadDir</span>)</div><div class='output co'>#&gt; <span class='message'>Importing counts.</span></div><div class='output co'>#&gt; <span class='message'>Unknown organism. Skipping annotations.</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics.</span></div><div class='output co'>#&gt; <span class='message'>100 cells detected.</span></div><div class='output co'>#&gt; <span class='message'>Calculating metrics without biotype information.</span>
+#&gt; <span class='message'>`rowRanges` is required to calculate: nCoding, nMito, mitoRatio</span></div><div class='output co'>#&gt; <span class='message'>81 / 100 cellular barcodes passed pre-filtering (81.0%)</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; CellRanger 0.99.0
 #&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
 #&gt; citation("bcbioSingleCell")
 #&gt; ────────────────────────────────────────────────────────────────────────
-#&gt; Upload Dir: "/home/bioinfo/git/bcbioSingleCell-private/inst/extdata/cellranger"
-#&gt; R Load Date: 2018-09-28
+#&gt; Upload Dir: "/Users/mike/git/bcbioSingleCell-private/inst/extdata/cellranger"
+#&gt; R Load Date: 2018-10-17
 #&gt; Level: "genes"
 #&gt; Organism: NULL
 #&gt; Interesting Groups: "sampleName"
 #&gt; Filtered: FALSE
 #&gt; ────────────────────────────────────────────────────────────────────────
 #&gt; class: SingleCellExperiment 
-#&gt; dim: 500 500 
+#&gt; dim: 100 81 
 #&gt; metadata(16): version pipeline ... wd sessionInfo
 #&gt; assays(1): counts
-#&gt; rownames(500): ENSG00000004487 ENSG00000007923 ... ENSG00000282740
-#&gt;   ENSG00000282843
+#&gt; rownames(100): ENSG00000008128 ENSG00000008130 ... ENSG00000279457
+#&gt;   ENSG00000279928
 #&gt; rowData names(0):
-#&gt; colnames(500): AAACCTGAGAAGGCCT AAACCTGAGACAGACC ... ACTTACTCACTGCCAG
-#&gt;   ACTTACTCAGTACACT
+#&gt; colnames(81): AAACCTGAGACAGACC AAACCTGAGCGCCTCA ... AACTCAGTCCAACCAA
+#&gt;   AACTCCCAGAAACCTA
 #&gt; colData names(7): nUMI nGene ... mitoRatio sampleID
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div></pre>
