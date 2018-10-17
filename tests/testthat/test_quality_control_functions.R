@@ -1,5 +1,7 @@
 context("Quality Control Functions")
 
+data(indrops_small, envir = environment())
+
 
 
 # filterCells ==================================================================

@@ -12,7 +12,8 @@ indrops_small
 inDrops Example
 }
 \examples{
-bcbioSingleCell::indrops_small
+data(indrops_small)
+indrops_small
 }
 \seealso{
 Other Minimal Example Data: \code{\link{cellranger_small}}

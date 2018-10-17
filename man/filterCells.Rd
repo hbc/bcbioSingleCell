@@ -57,7 +57,7 @@ show(object)
 
 x <- filterCells(object)
 show(x)
-metadata(x)$filterParams
+S4Vectors::metadata(x)$filterParams
 
 ## Per sample cutoffs
 sampleNames(object)
@@ -66,7 +66,7 @@ x <- filterCells(
     minUMIs = c(rep_1 = 100)
 )
 show(x)
-metadata(x)$filterParams
+S4Vectors::metadata(x)$filterParams
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

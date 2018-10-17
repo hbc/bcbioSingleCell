@@ -10,8 +10,9 @@ plotReadsPerCell(object, ...)
 
 \S4method{plotReadsPerCell}{bcbioSingleCell}(object,
   interestingGroups = NULL, geom = c("histogram", "ecdf", "violin",
-  "ridgeline", "boxplot"), color = getOption("basejump.discrete.color",
-  NULL), fill = getOption("basejump.discrete.fill", NULL),
+  "ridgeline", "boxplot"), cutoffLine = FALSE,
+  color = getOption("basejump.discrete.color", NULL),
+  fill = getOption("basejump.discrete.fill", NULL),
   title = "reads per cell")
 }
 \arguments{
@@ -25,6 +26,8 @@ interesting groups. Must be formatted in camel case and intersect with
 
 \item{geom}{\code{string}. Plot type. Uses \code{\link[=match.arg]{match.arg()}} and defaults to the first
 argument in the \code{character} vector.}
+
+\item{cutoffLine}{\code{boolean}. Include a line marking the cutoff.}
 
 \item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 color
 scale. Must supply discrete values. When set to \code{NULL}, the default ggplot2

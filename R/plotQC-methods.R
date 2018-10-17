@@ -9,6 +9,7 @@ plotQC <- basejump::plotQC
 #' @name plotQC
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh
+#' @include globals.R
 #'
 #' @inheritParams general
 #' @param headerLevel `scalar integer` (`1`-`7`). R Markdown header level.
@@ -30,7 +31,7 @@ NULL
 .plotQCMetric <- function(
     object,
     metricCol,
-    geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
+    geom,
     interestingGroups = NULL,
     min = 0L,
     max = Inf,
@@ -186,6 +187,7 @@ NULL
 
     p
 }
+formals(.plotQCMetric)[["geom"]] <- geom
 
 
 
@@ -270,7 +272,7 @@ NULL
     function(
         object,
         interestingGroups = NULL,
-        geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
+        geom,
         headerLevel = 2L,
         legend = getOption("basejump.legend", FALSE),
         return = c("grid", "list", "markdown")
@@ -285,27 +287,25 @@ NULL
         assertIsHeaderLevel(headerLevel)
         return <- match.arg(return)
 
-        plotCellCounts <- plotCellCounts(object)
-        plotReadsPerCell <- NULL
+
+        # Don't show cell counts for unfiltered datasets.
+        if (!is.null(metadata(object)[["filterCells"]])) {
+            plotCellCounts <- plotCellCounts(object)
+            plotZerosVsDepth <- NULL
+        } else {
+            plotCellCounts <- NULL
+            plotZerosVsDepth <- plotZerosVsDepth(object)
+        }
+
         plotUMIsPerCell <- plotUMIsPerCell(object, geom = geom)
         plotGenesPerCell <- plotGenesPerCell(object, geom = geom)
         plotUMIsVsGenes <- plotUMIsVsGenes(object)
         plotNovelty <- plotNovelty(object, geom = geom)
         plotMitoRatio <- plotMitoRatio(object, geom = geom)
-        plotZerosVsDepth <- plotZerosVsDepth(object)
 
-        if (is(object, "bcbioSingleCell")) {
-            # Don't show cell counts for unfiltered bcbio datasets.
-            if (!length(metadata(object)[["filterCells"]])) {
-                plotCellCounts <- NULL
-            }
-            # Raw read counts are only stashed in bcbioSingleCell objects.
-            plotReadsPerCell <- plotReadsPerCell(object, geom = geom)
-        }
 
         plotlist <- list(
             "Cell Counts" = plotCellCounts,
-            "Reads per Cell" = plotReadsPerCell,
             "UMIs per Cell" = plotUMIsPerCell,
             "Genes per Cell" = plotGenesPerCell,
             "UMIs vs. Genes" = plotUMIsVsGenes,
@@ -318,6 +318,10 @@ NULL
         # `plotReadsPerCell()` return on an object that doesn't contain raw
         # cellular barcode counts.
         plotlist <- Filter(Negate(is.null), plotlist)
+
+        # Consistently show n plots.
+        n <- 6L
+        stopifnot(has_length(plotlist, n = n))
 
         # Hide the legends, if desired.
         if (identical(legend, FALSE)) {
@@ -332,7 +336,11 @@ NULL
             names(plotlist) <- camel(names(plotlist))
             plotlist
         } else if (return == "grid") {
-            plot_grid(plotlist = plotlist)
+            plot_grid(
+                plotlist = plotlist,
+                ncol = n / 2L,
+                nrow = 2L
+            )
         } else if (return == "markdown") {
             markdownHeader(
                 text = "Quality control metrics",
@@ -346,6 +354,7 @@ NULL
             )
         }
     }
+formals(.plotQC.SCE)[["geom"]] <- geom
 
 
 

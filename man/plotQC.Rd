@@ -9,7 +9,7 @@
 plotQC(object, ...)
 
 \S4method{plotQC}{SingleCellExperiment}(object, interestingGroups = NULL,
-  geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
+  geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
   headerLevel = 2L, legend = getOption("basejump.legend", FALSE),
   return = c("grid", "list", "markdown"))
 }

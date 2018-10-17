@@ -1,5 +1,7 @@
 context("Plot Functions")
 
+data(indrops_small, cellranger_small, envir = environment())
+
 
 
 # plotQC =======================================================================

@@ -3,6 +3,7 @@
 #' @name plotGenesPerCell
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
+#' @include globals.R
 #'
 #' @inheritParams general
 #'
@@ -18,7 +19,7 @@ NULL
 .plotGenesPerCell.SCE <-  # nolint
     function(
         object,
-        geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
+        geom,
         interestingGroups = NULL,
         min = 0L,
         max = Inf,
@@ -42,6 +43,7 @@ NULL
             )
         )
     }
+formals(.plotGenesPerCell.SCE)[["geom"]] <- geom
 
 
 

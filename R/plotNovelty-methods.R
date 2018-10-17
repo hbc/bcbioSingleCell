@@ -5,6 +5,7 @@
 #' @name plotNovelty
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh
+#' @include globals.R
 #'
 #' @inheritParams general
 #'
@@ -20,7 +21,7 @@ NULL
 .plotNovelty.SCE <-  # nolint
     function(
         object,
-        geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
+        geom,
         interestingGroups = NULL,
         min = 0L,
         fill = getOption("basejump.discrete.fill", NULL),
@@ -45,6 +46,7 @@ NULL
             )
         )
     }
+formals(.plotNovelty.SCE)[["geom"]] <- geom
 
 
 

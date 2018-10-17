@@ -32,21 +32,15 @@ NULL
         assertIsAStringOrNULL(title)
 
         metrics <- metrics(object)
-
         sampleData <- sampleData(object)
-        if (is.null(sampleData)) {
-            sampleData <- unknownSampleData
-        } else {
-            sampleData[["sampleID"]] <- factor(
-                x = rownames(sampleData),
-                levels = levels(metrics[["sampleID"]])
-            )
-        }
-        sampleData <- as.data.frame(sampleData)
 
-        # Remove user-defined `nCells` column, if present
+        # Remove user-defined `nCells` column, if present.
         metrics[["nCells"]] <- NULL
         sampleData[["nCells"]] <- NULL
+
+        sampleData <- sampleData %>%
+            as_tibble(rownames = "sampleID") %>%
+            mutate_all(as.factor)
 
         data <- metrics %>%
             group_by(!!sym("sampleID")) %>%

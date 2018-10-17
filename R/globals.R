@@ -9,6 +9,9 @@ updateMessage <- basejump::updateMessage
 
 requiredAssays <- "counts"
 
+geom <- c("histogram", "ecdf", "violin", "ridgeline", "boxplot")
+# c("violin", "ridgeline", "ecdf", "histogram", "boxplot")
+
 # Trailing number is to match cellranger output.
 barcodePattern <- ")_([ACGT_]{6,})(_[0-9]+)?$"
 
@@ -20,14 +23,4 @@ metricsCols <- c(
     "nMito",
     "log10GenesPerUMI",
     "mitoRatio"
-)
-
-# FIXME Can we take this out?
-# Empty sample metadata support (e.g. for splatter simulation SCE).
-unknownSampleData <- data.frame(
-    sampleID = "unknown",
-    sampleName = "unknown",
-    interestingGroups = "unknown",
-    row.names = "unknown",
-    stringsAsFactors = TRUE
 )
