@@ -272,7 +272,7 @@ formals(.plotQCMetric)[["geom"]] <- geom
     function(
         object,
         interestingGroups = NULL,
-        geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
+        geom,
         headerLevel = 2L,
         legend = getOption("basejump.legend", FALSE),
         return = c("grid", "list", "markdown")
@@ -348,6 +348,7 @@ formals(.plotQCMetric)[["geom"]] <- geom
             )
         }
     }
+formals(.plotQC.SCE)[["geom"]] <- geom
 
 
 
