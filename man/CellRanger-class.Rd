@@ -11,9 +11,9 @@ Extends \code{SingleCellExperiment}, with additional validity checks on the
 \seealso{
 \code{\link[=CellRanger]{CellRanger()}}.
 
-Other S4 Classes: \code{\link{bcbioSingleCell-class}}
+Other S4 classes: \code{\link{bcbioSingleCell-class}}
 }
 \author{
 Michael Steinbaugh
 }
-\concept{S4 Classes}
+\concept{S4 classes}

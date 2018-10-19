@@ -18,8 +18,8 @@ using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.
 To set the discrete fill palette globally, use
 \code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
 
-\item{geom}{\code{string}. Plot type. Uses \code{\link[=match.arg]{match.arg()}} and defaults to the first
-argument in the \code{character} vector.}
+\item{geom}{\code{string}. Plot type. Uses \code{\link[base:match.arg]{base::match.arg()}} and defaults to the
+first argument in the \code{character} vector.}
 
 \item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
 interesting groups. Must be formatted in camel case and intersect with

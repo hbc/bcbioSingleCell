@@ -3,7 +3,6 @@
 #' Plot the distribution of read counts for all unfiltered cellular barcodes.
 #'
 #' @name plotReadsPerCell
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #'

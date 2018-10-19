@@ -40,18 +40,6 @@ Plot Cell Counts
 data(indrops_small)
 plotCellCounts(indrops_small)
 }
-\seealso{
-Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
-  \code{\link{filterCells}},
-  \code{\link{plotBarcodeRanks}},
-  \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}},
-  \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}}
-}
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
-\concept{Quality Control Functions}

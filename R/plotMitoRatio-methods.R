@@ -1,7 +1,6 @@
 #' Plot Mitochondrial Transcript Abundance
 #'
 #' @name plotMitoRatio
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #'

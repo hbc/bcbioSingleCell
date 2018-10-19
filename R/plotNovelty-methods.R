@@ -3,7 +3,6 @@
 #' "Novelty" refers to log10 genes detected per count.
 #'
 #' @name plotNovelty
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh
 #' @include globals.R
 #'

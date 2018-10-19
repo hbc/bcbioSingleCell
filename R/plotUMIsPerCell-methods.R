@@ -3,7 +3,6 @@
 #' Plot the universal molecular identifiers (UMIs) per cell.
 #'
 #' @name plotUMIsPerCell
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #'

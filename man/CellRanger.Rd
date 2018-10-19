@@ -114,10 +114,6 @@ uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
 x <- CellRanger(uploadDir)
 print(x)
 }
-\seealso{
-Other S4 Generators: \code{\link{bcbioSingleCell}}
-}
 \author{
 Michael Steinbaugh
 }
-\concept{S4 Generators}

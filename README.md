@@ -8,9 +8,7 @@
 
 ## Installation
 
-This is an [R][] package.
-
-### [Bioconductor][]
+### [Bioconductor][] method
 
 We recommend installing the package with [BiocManager][].
 
@@ -35,7 +33,7 @@ For [R][] < 3.5, [BiocManager][] is not supported. Use `BiocInstaller::biocLite(
 source("https://bioconductor.org/biocLite.R")
 ```
 
-## Load [bcbio][] run
+## Load [bcbio][] single-cell RNA-seq data
 
 ```r
 library(bcbioSingleCell)

@@ -7,7 +7,6 @@ basejump::plotQC
 
 #' @inherit basejump::plotQC
 #' @name plotQC
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh
 #' @include globals.R
 #'
@@ -16,7 +15,7 @@ basejump::plotQC
 #' @param legend `boolean`. Include plot legend.
 #'
 #' @return
-#'   - `grid`: [cowplot::plot_grid()] graphical output.
+#'   - `grid`: Graphical output.
 #'   - `list`: `list` containing `ggplot` objects.
 #'   - `markdown`: R Markdown report, with reports separated by headers.
 #'

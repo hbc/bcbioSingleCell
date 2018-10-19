@@ -19,7 +19,7 @@
 }
 \value{
 \itemize{
-\item \code{"tbl_df"}: \code{grouped_df}. Grouped by \code{sampleID} column.
+\item \code{"tibble"}: \code{grouped_df}. Grouped by \code{sampleID} column.
 \item \code{"DataFrame"}: \code{DataFrame}. Rownames are identical to \code{\link[base:colnames]{base::colnames()}},
 of the object, like \code{\link[SummarizedExperiment:colData]{SummarizedExperiment::colData()}}.
 }
@@ -49,14 +49,6 @@ to \code{\link[base:colnames]{base::colnames()}}.
 data(indrops_small)
 x <- metrics(indrops_small, recalculate = TRUE)
 print(x)
-}
-\seealso{
-Other SummarizedExperiment Functions: \code{\link{counts}},
-  \code{\link{interestingGroups}},
-  \code{\link{makeSummarizedExperiment}},
-  \code{\link{mapGenes}}, \code{\link{meltCounts}},
-  \code{\link{sampleData}}, \code{\link{sampleNames}},
-  \code{\link{selectSamples}}, \code{\link{tpm}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

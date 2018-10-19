@@ -45,7 +45,6 @@
 #' most current annotations available from Ensembl, and some gene IDs may not
 #' match, due to deprecation in the current Ensembl release.
 #'
-#' @family S4 Generators
 #' @author Michael Steinbaugh
 #' @export
 #'

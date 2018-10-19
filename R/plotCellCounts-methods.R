@@ -1,7 +1,6 @@
 #' Plot Cell Counts
 #'
 #' @name plotCellCounts
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general

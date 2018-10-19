@@ -49,4 +49,3 @@ plotUMIsVsGenes(indrops_small)
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
-\concept{Quality Control Metrics}

@@ -19,8 +19,8 @@ plotGenesPerCell(object, ...)
 
 \item{...}{Additional arguments.}
 
-\item{geom}{\code{string}. Plot type. Uses \code{\link[=match.arg]{match.arg()}} and defaults to the first
-argument in the \code{character} vector.}
+\item{geom}{\code{string}. Plot type. Uses \code{\link[base:match.arg]{base::match.arg()}} and defaults to the
+first argument in the \code{character} vector.}
 
 \item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
 interesting groups. Must be formatted in camel case and intersect with
@@ -52,18 +52,6 @@ Plot Genes per Cell
 data(indrops_small)
 plotGenesPerCell(indrops_small)
 }
-\seealso{
-Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
-  \code{\link{filterCells}},
-  \code{\link{plotBarcodeRanks}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotMitoRatio}},
-  \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}}
-}
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
-\concept{Quality Control Functions}

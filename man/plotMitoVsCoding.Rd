@@ -46,17 +46,6 @@ Plot Mitochondrial vs. Coding Counts
 data(indrops_small)
 plotMitoVsCoding(indrops_small)
 }
-\seealso{
-Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
-  \code{\link{filterCells}},
-  \code{\link{plotBarcodeRanks}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}}, \code{\link{plotNovelty}},
-  \code{\link{plotQC}}, \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}}
-}
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
-\concept{Quality Control Functions}

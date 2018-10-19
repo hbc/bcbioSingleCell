@@ -6,7 +6,6 @@
 #' directory as a remote connection over
 #' [sshfs](https://github.com/osxfuse/osxfuse/wiki/SSHFS).
 #'
-#' @family S4 Generators
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @export
 #'

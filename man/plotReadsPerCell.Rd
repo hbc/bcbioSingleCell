@@ -24,8 +24,8 @@ plotReadsPerCell(object, ...)
 interesting groups. Must be formatted in camel case and intersect with
 \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{geom}{\code{string}. Plot type. Uses \code{\link[=match.arg]{match.arg()}} and defaults to the first
-argument in the \code{character} vector.}
+\item{geom}{\code{string}. Plot type. Uses \code{\link[base:match.arg]{base::match.arg()}} and defaults to the
+first argument in the \code{character} vector.}
 
 \item{cutoffLine}{\code{boolean}. Include a line marking the cutoff.}
 
@@ -56,18 +56,6 @@ data(indrops_small)
 plotReadsPerCell(indrops_small, geom = "histogram")
 plotReadsPerCell(indrops_small, geom = "ecdf")
 }
-\seealso{
-Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
-  \code{\link{filterCells}},
-  \code{\link{plotBarcodeRanks}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}},
-  \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotUMIsPerCell}}
-}
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
-\concept{Quality Control Functions}

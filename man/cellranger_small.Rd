@@ -15,11 +15,7 @@ Cell Ranger Example
 data(cellranger_small)
 cellranger_small
 }
-\seealso{
-Other Minimal Example Data: \code{\link{indrops_small}}
-}
 \author{
 Michael Steinbaugh
 }
-\concept{Minimal Example Data}
 \keyword{datasets}

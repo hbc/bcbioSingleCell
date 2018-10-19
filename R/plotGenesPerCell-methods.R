@@ -1,7 +1,6 @@
 #' Plot Genes per Cell
 #'
 #' @name plotGenesPerCell
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #'

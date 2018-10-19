@@ -60,16 +60,8 @@ data(indrops_small)
 plotBarcodeRanks(indrops_small)
 }
 \seealso{
-Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
-  \code{\link{filterCells}}, \code{\link{plotCellCounts}},
-  \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}},
-  \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}}
+\code{\link[DropletUtils:barcodeRanks]{DropletUtils::barcodeRanks()}}.
 }
 \author{
 Michael Steinbaugh
 }
-\concept{Quality Control Functions}

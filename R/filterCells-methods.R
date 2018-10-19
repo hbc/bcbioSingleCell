@@ -8,7 +8,6 @@
 #' in [basejump::sampleData()]).
 #'
 #' @name filterCells
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh
 #'
 #' @inheritParams general

@@ -3,10 +3,10 @@
 #'
 #' `bcbioSingleCell` is an S4 class that extends `SingleCellExperiment`, and is
 #' designed to store a bcbio single-cell RNA-seq analysis. This class contains
-#' read counts saved as a sparse matrix (`dgCMatrix`), sample metadata, and cell
-#' quality control metrics.
+#' read counts saved as a sparse matrix (`sparseMatrix`), sample metadata, and
+#' cell quality control metrics.
 #'
-#' @family S4 Classes
+#' @family S4 classes
 #' @author Michael Steinbaugh
 #' @export
 #'
@@ -154,7 +154,7 @@ setValidity(
 #' Extends `SingleCellExperiment`, with additional validity checks on the
 #' `metadata()` slot.
 #'
-#' @family S4 Classes
+#' @family S4 classes
 #' @author Michael Steinbaugh
 #' @export
 #'

@@ -2,7 +2,6 @@
 #'
 #'
 #' @name plotBarcodeRanks
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh
 #'
 #' @inherit barcodeRanksPerSample

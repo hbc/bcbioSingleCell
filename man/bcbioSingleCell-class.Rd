@@ -7,15 +7,15 @@
 \description{
 \code{bcbioSingleCell} is an S4 class that extends \code{SingleCellExperiment}, and is
 designed to store a bcbio single-cell RNA-seq analysis. This class contains
-read counts saved as a sparse matrix (\code{dgCMatrix}), sample metadata, and cell
-quality control metrics.
+read counts saved as a sparse matrix (\code{sparseMatrix}), sample metadata, and
+cell quality control metrics.
 }
 \seealso{
 \code{\link[=bcbioSingleCell]{bcbioSingleCell()}}.
 
-Other S4 Classes: \code{\link{CellRanger-class}}
+Other S4 classes: \code{\link{CellRanger-class}}
 }
 \author{
 Michael Steinbaugh
 }
-\concept{S4 Classes}
+\concept{S4 classes}

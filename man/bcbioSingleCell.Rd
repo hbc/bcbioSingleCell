@@ -89,10 +89,7 @@ print(x)
 \item \code{\link[SingleCellExperiment:SingleCellExperiment]{SingleCellExperiment::SingleCellExperiment()}}.
 \item \code{.S4methods(class = "bcbioSingleCell")}.
 }
-
-Other S4 Generators: \code{\link{CellRanger}}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner
 }
-\concept{S4 Generators}

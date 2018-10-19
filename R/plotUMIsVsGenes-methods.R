@@ -1,7 +1,6 @@
 #' Plot UMI and Gene Correlation
 #'
 #' @name plotUMIsVsGenes
-#' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams general

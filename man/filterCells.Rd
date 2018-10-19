@@ -69,18 +69,6 @@ x <- filterCells(
 show(x)
 metadata(x)$filterParams
 }
-\seealso{
-Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
-  \code{\link{plotBarcodeRanks}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}},
-  \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}}, \code{\link{plotQC}},
-  \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}}
-}
 \author{
 Michael Steinbaugh
 }
-\concept{Quality Control Functions}

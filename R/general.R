@@ -15,8 +15,8 @@
 #'   using [ggplot2::scale_fill_manual()].
 #'   To set the discrete fill palette globally, use
 #'   `options(bcbio.discrete.fill = scale_fill_viridis_d())`.
-#' @param geom `string`. Plot type. Uses [match.arg()] and defaults to the first
-#'   argument in the `character` vector.
+#' @param geom `string`. Plot type. Uses [base::match.arg()] and defaults to the
+#'   first argument in the `character` vector.
 #' @param interestingGroups `character` or `NULL`. Character vector of
 #'   interesting groups. Must be formatted in camel case and intersect with
 #'   [sampleData()] colnames.

@@ -18,8 +18,8 @@
 interesting groups. Must be formatted in camel case and intersect with
 \code{\link[=sampleData]{sampleData()}} colnames.}
 
-\item{geom}{\code{string}. Plot type. Uses \code{\link[=match.arg]{match.arg()}} and defaults to the first
-argument in the \code{character} vector.}
+\item{geom}{\code{string}. Plot type. Uses \code{\link[base:match.arg]{base::match.arg()}} and defaults to the
+first argument in the \code{character} vector.}
 
 \item{headerLevel}{\code{scalar integer} (\code{1}-\code{7}). R Markdown header level.}
 
@@ -30,7 +30,7 @@ defaults to the first argument in the \code{character} vector.}
 }
 \value{
 \itemize{
-\item \code{grid}: \code{\link[cowplot:plot_grid]{cowplot::plot_grid()}} graphical output.
+\item \code{grid}: Graphical output.
 \item \code{list}: \code{list} containing \code{ggplot} objects.
 \item \code{markdown}: R Markdown report, with reports separated by headers.
 }
@@ -42,19 +42,6 @@ Plot Quality Control
 data(indrops_small)
 plotQC(indrops_small)
 }
-\seealso{
-Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
-  \code{\link{filterCells}},
-  \code{\link{plotBarcodeRanks}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}},
-  \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}},
-  \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}}
-}
 \author{
 Michael Steinbaugh
 }
-\concept{Quality Control Functions}

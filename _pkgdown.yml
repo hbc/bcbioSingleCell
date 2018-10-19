@@ -13,14 +13,14 @@ authors:
     href: http://bioinformatics.sph.harvard.edu
 
 reference:
-  - title: S4 Classes
+  - title: S4 classes
     contents:
     - starts_with("bcbioSingleCell")
     - starts_with("CellRanger")
     - extract
     - show
     - updateObject
-  - title: Quality Control
+  - title: Quality qontrol
     contents:
     - filterCells
     - starts_with("metrics")
@@ -31,6 +31,6 @@ reference:
   - title: Markdown
     contents:
     - ends_with("Template")
-  - title: Example Data Sets
+  - title: Example data
     contents:
     - ends_with("_small")
