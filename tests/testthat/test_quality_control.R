@@ -1,6 +1,15 @@
-context("Quality Control Functions")
+context("Quality Control")
 
 data(indrops_small, envir = environment())
+
+
+
+# FIXME Tweak this check.
+#  6: filterCells(object = indrops_small, minUMIs = 1000L, maxUMIs = Inf, minGenes = 100L, 
+#         maxGenes = Inf, maxMitoRatio = 0.1, minNovelty = 0.7, minCellsPerGene = 3L)
+#  7: filterCells(object = indrops_small, minUMIs = 1000L, maxUMIs = Inf, minGenes = 100L, 
+#         maxGenes = Inf, maxMitoRatio = 0.1, minNovelty = 0.7, minCellsPerGene = 3L)
+#  8: .local(object, ...)
 
 
 

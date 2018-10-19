@@ -1,4 +1,4 @@
-context("Plot Functions")
+context("Plots")
 
 data(indrops_small, cellranger_small, envir = environment())
 

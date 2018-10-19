@@ -1,4 +1,4 @@
-context("S4 Objects")
+context("S4 Classes")
 
 
 
