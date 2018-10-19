@@ -4,39 +4,9 @@ data(indrops_small, envir = environment())
 
 
 
-# FIXME Tweak this check.
-#  6: filterCells(object = indrops_small, minUMIs = 1000L, maxUMIs = Inf, minGenes = 100L, 
-#         maxGenes = Inf, maxMitoRatio = 0.1, minNovelty = 0.7, minCellsPerGene = 3L)
-#  7: filterCells(object = indrops_small, minUMIs = 1000L, maxUMIs = Inf, minGenes = 100L, 
-#         maxGenes = Inf, maxMitoRatio = 0.1, minNovelty = 0.7, minCellsPerGene = 3L)
-#  8: .local(object, ...)
-
-
-
 # filterCells ==================================================================
-test_that("filterCells", {
-    invisible(capture.output(
-        x <- filterCells(
-            object = indrops_small,
-            minUMIs = 1000L,
-            maxUMIs = Inf,
-            minGenes = 100L,
-            maxGenes = Inf,
-            maxMitoRatio = 0.1,
-            minNovelty = 0.7,
-            minCellsPerGene = 3L
-        )
-    ))
-    expect_s4_class(x, "bcbioSingleCell")
-    expect_identical(dim(x), c(500L, 205L))
-    expect_is(metadata(x)[["filterParams"]], "list")
-    expect_is(metadata(x)[["filterCells"]], "character")
-    expect_is(metadata(x)[["filterGenes"]], "character")
-    expect_identical(metadata(x)[["subset"]], TRUE)
-})
-
-test_that("filterCells : Maximum parameters", {
-    # This should return an object with the same dimensions.
+test_that("filterCells : No filtering", {
+    # Expecting an object with the same dimensions by default.
     invisible(capture.output(
         x <- filterCells(indrops_small)
     ))
@@ -44,12 +14,47 @@ test_that("filterCells : Maximum parameters", {
     expect_identical(dim(x), dim(indrops_small))
 })
 
-test_that("filterCells : Cutoff failures", {
+test_that("filterCells: Expected cutoff failure", {
     expect_error(
         filterCells(indrops_small, minUMIs = Inf),
         "No cells passed `minUMIs` cutoff"
     )
 })
+
+with_parameters_test_that(
+    "filterCells : Parameterized cutoff tests", {
+        args[["object"]] <- indrops_small
+        invisible(capture.output(
+            x <- do.call(what = filterCells, args = args)
+        ))
+        expect_s4_class(x, "bcbioSingleCell")
+        expect_is(metadata(x)[["filterParams"]], "list")
+        expect_is(metadata(x)[["filterCells"]], "character")
+        expect_is(metadata(x)[["filterGenes"]], "character")
+        expect_identical(metadata(x)[["subset"]], TRUE)
+        expect_identical(dim(x), dim)
+    },
+    # Refer to the quality control R Markdown for actual recommended cutoffs.
+    # These are skewed, and designed to work with our minimal dataset.
+    args = list(
+        list(minUMIs = 2000L),
+        list(maxUMIs = 2500L),
+        list(minGenes = 45L),
+        list(maxGenes = 49L),
+        list(maxMitoRatio = 0.1),
+        list(minNovelty = 0.5),
+        list(minCellsPerGene = 95L)
+    ),
+    dim = list(
+        c(50L, 35L),
+        c(50L, 88L),
+        c(50L, 95L),
+        c(50L, 81L),
+        c(50L, 22L),
+        c(50L, 81L),
+        c(45L, 100L)
+    )
+)
 
 test_that("filterCells : Per sample cutoffs", {
     # Get the count of sample1 (run1_AGAGGATA)
