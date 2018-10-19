@@ -4,8 +4,8 @@
 #' cellular barcodes. By default we recommend applying the same filtering cutoff
 #' to all samples. The filtering parameters now support per-sample cutoffs,
 #' defined using a named `numeric` vector. When matching per sample, be sure to
-#' use the [sampleNames()] return values (i.e. the `sampleName` column in
-#' [sampleData()]).
+#' use the [Biobase::sampleNames()] return values (i.e. the `sampleName` column
+#' in [basejump::sampleData()]).
 #'
 #' @name filterCells
 #' @family Quality Control Functions
@@ -27,7 +27,7 @@
 #'   expression in at least this many cells.
 #'
 #' @return `bcbioSingleCell`, with filtering information slotted into
-#'   [metadata()] as `filterCells` and `filterParams`.
+#'   [S4Vectors::metadata()] as `filterCells` and `filterParams`.
 #'
 #' @examples
 #' data(indrops_small)
