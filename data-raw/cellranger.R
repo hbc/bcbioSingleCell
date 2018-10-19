@@ -1,14 +1,15 @@
 # Cell Ranger example data
-# 2018-09-30
+# 2018-10-18
 # 4k PBMCs from a Healthy Donor
 # https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k
 
-library(tidyverse)
-library(Seurat)
-library(Matrix)
-
-# Restrict to 1 MB per file.
+# Restrict to 1 MB.
+# Use `pryr::object_size()` instead of `utils::object.size()`.
+library(pryr)
 limit <- structure(1e6, class = "object_size")
+
+library(tidyverse)
+library(Matrix)
 
 # Complete dataset =============================================================
 upload_dir <- initDir("data-raw/cellranger")
@@ -60,9 +61,8 @@ sce <- CellRanger(
     organism = "Homo sapiens",
     gffFile = gtf_file
 )
-
-pbmc <- sce
-saveData(pbmc, dir = "~")
+object_size(sce)
+assignAndSaveData(name = "pbmc", object = sce, dir = "data-raw")
 
 # cellranger_small =============================================================
 counts <- counts(sce)
@@ -70,12 +70,12 @@ counts <- counts(sce)
 # Subset the matrix to include only the top genes and cells.
 top_genes <- Matrix::rowSums(counts) %>%
     sort(decreasing = TRUE) %>%
-    head(n = 200L)
+    head(n = 50L)
 genes <- sort(names(top_genes))
 
 top_cells <- Matrix::colSums(counts) %>%
     sort(decreasing = TRUE) %>%
-    head(n = 2000L)
+    head(n = 100L)
 cells <- sort(names(top_cells))
 
 # Subset the original pbmc dataset to contain only top genes and cells.
@@ -91,14 +91,15 @@ mcols(rowRanges(sce)) <- mcols(rowRanges(sce)) %>%
 # Report the size of each slot in bytes.
 vapply(
     X = coerceS4ToList(sce),
-    FUN = object.size,
+    FUN = object_size,
     FUN.VALUE = numeric(1L)
 )
-stopifnot(object.size(sce) < limit)
+object_size(sce)
+stopifnot(object_size(sce) < limit)
 stopifnot(validObject(sce))
 
 cellranger_small <- sce
-devtools::use_data(cellranger_small, compress = "xz", overwrite = TRUE)
+usethis::use_data(cellranger_small, compress = "xz", overwrite = TRUE)
 
 
 

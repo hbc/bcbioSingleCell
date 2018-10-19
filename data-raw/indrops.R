@@ -1,13 +1,14 @@
 # inDrops example data
 # Using harvard-indrop-v3 barcodes
-# 2018-09-27
+# 2018-10-18
+
+# Restrict to 1 MB.
+# Use `pryr::object_size()` instead of `utils::object.size()`.
+library(pryr)
+limit <- structure(1e6, class = "object_size")
 
 library(tidyverse)
-library(Seurat)
 library(Matrix)
-
-# Restrict to 1 MB per file.
-limit <- structure(1e6, class = "object_size")
 
 # Minimal example bcbio upload directory =======================================
 # Include the top 500 genes (rows) and cells (columns).
@@ -51,12 +52,12 @@ colnames(counts) <- colnames
 # Subset the matrix to include only the top genes and cells.
 top_genes <- Matrix::rowSums(counts) %>%
     sort(decreasing = TRUE) %>%
-    head(n = 500L)
+    head(n = 50L)
 genes <- sort(names(top_genes))
 
 top_cells <- Matrix::colSums(counts) %>%
     sort(decreasing = TRUE) %>%
-    head(n = 500L)
+    head(n = 100L)
 cells <- sort(names(top_cells))
 
 counts <- counts[genes, cells]
@@ -81,6 +82,7 @@ sce <- bcbioSingleCell(
     organism = "Homo sapiens",
     ensemblRelease = 90L
 )
+object_size(sce)
 
 # Include only minimal metadata columns in rowRanges.
 mcols(rowRanges(sce)) <- mcols(rowRanges(sce)) %>%
@@ -92,11 +94,12 @@ mcols(rowRanges(sce)) <- mcols(rowRanges(sce)) %>%
 # Report the size of each slot in bytes.
 vapply(
     X = coerceS4ToList(sce),
-    FUN = object.size,
+    FUN = object_size,
     FUN.VALUE = numeric(1L)
 )
-stopifnot(object.size(sce) < limit)
+object_size(sce)
+stopifnot(object_size(sce) < limit)
 stopifnot(validObject(sce))
 
 indrops_small <- sce
-devtools::use_data(indrops_small, compress = "xz", overwrite = TRUE)
+usethis::use_data(indrops_small, compress = "xz", overwrite = TRUE)
