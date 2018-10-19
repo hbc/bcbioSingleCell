@@ -1,4 +1,5 @@
 # TODO Update handling of `sessionInfo`?
+# FIXME Need to add support for CellRanger.
 
 
 

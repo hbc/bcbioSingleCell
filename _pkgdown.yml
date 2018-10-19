@@ -15,32 +15,22 @@ authors:
 reference:
   - title: S4 Classes
     contents:
-    - ends_with("-class")
-  - title: S4 Generators
-    contents:
-    - bcbioSingleCell
-    - CellRanger
-  - title: S4 Functions
-    contents:
+    - starts_with("bcbioSingleCell")
+    - starts_with("CellRanger")
     - extract
     - show
     - updateObject
-  - title: Quality Control Functions
+  - title: Quality Control
     contents:
-    - starts_with("barcode")
     - filterCells
     - starts_with("metrics")
-    - plotBarcodeRanks
-    - plotCellCounts
-    - plotGenesPerCell
-    - starts_with("plotMito")
-    - plotNovelty
-    - plotQC
-    - plotReadsPerCell
-    - starts_with("plotUMI")
-  - title: R Markdown Functions
+    - starts_with("barcode")
+  - title: Plots
+    contents:
+    - starts_with("plot")
+  - title: Markdown
     contents:
     - ends_with("Template")
-  - title: Example Data
+  - title: Example Data Sets
     contents:
     - ends_with("_small")
