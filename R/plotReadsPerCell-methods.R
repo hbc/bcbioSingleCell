@@ -332,7 +332,7 @@ NULL
 
 
 # bcbioSingleCell ==============================================================
-.plotReadsPerCell.bcbioSingleCell <-  # nolint
+plotReadsPerCell.bcbioSingleCell <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -434,7 +434,7 @@ NULL
 
         p
     }
-formals(.plotReadsPerCell.bcbioSingleCell)[["geom"]] <- geom
+formals(plotReadsPerCell.bcbioSingleCell)[["geom"]] <- geom
 
 
 
@@ -443,5 +443,5 @@ formals(.plotReadsPerCell.bcbioSingleCell)[["geom"]] <- geom
 setMethod(
     f = "plotReadsPerCell",
     signature = signature("bcbioSingleCell"),
-    definition = .plotReadsPerCell.bcbioSingleCell
+    definition = plotReadsPerCell.bcbioSingleCell
 )

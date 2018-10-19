@@ -24,7 +24,7 @@ NULL
 
 
 
-.plotUMIsPerCell.SingleCellExperiment <-  # nolint
+plotUMIsPerCell.SingleCellExperiment <-  # nolint
     function(
         object,
         geom,
@@ -136,7 +136,7 @@ NULL
 
         p
     }
-formals(.plotUMIsPerCell.SingleCellExperiment)[["geom"]] <- geom
+formals(plotUMIsPerCell.SingleCellExperiment)[["geom"]] <- geom
 
 
 
@@ -145,5 +145,5 @@ formals(.plotUMIsPerCell.SingleCellExperiment)[["geom"]] <- geom
 setMethod(
     f = "plotUMIsPerCell",
     signature = signature("SingleCellExperiment"),
-    definition = .plotUMIsPerCell.SingleCellExperiment
+    definition = plotUMIsPerCell.SingleCellExperiment
 )

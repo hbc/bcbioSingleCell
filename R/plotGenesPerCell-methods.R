@@ -16,7 +16,7 @@ NULL
 
 
 
-.plotGenesPerCell.SingleCellExperiment <-  # nolint
+plotGenesPerCell.SingleCellExperiment <-  # nolint
     function(
         object,
         geom,
@@ -43,7 +43,7 @@ NULL
             )
         )
     }
-formals(.plotGenesPerCell.SingleCellExperiment)[["geom"]] <- geom
+formals(plotGenesPerCell.SingleCellExperiment)[["geom"]] <- geom
 
 
 
@@ -52,5 +52,5 @@ formals(.plotGenesPerCell.SingleCellExperiment)[["geom"]] <- geom
 setMethod(
     f = "plotGenesPerCell",
     signature = signature("SingleCellExperiment"),
-    definition = .plotGenesPerCell.SingleCellExperiment
+    definition = plotGenesPerCell.SingleCellExperiment
 )

@@ -21,7 +21,7 @@ NULL
 
 
 
-.metrics.matrix <-
+metrics.matrix <-
     function(  # nolint
         object,
         rowRanges = NULL,
@@ -138,12 +138,14 @@ NULL
 
 
 
-.metrics.SingleCellExperiment <-  # nolint
+# Note that we're exporting this as specific S4 classes, since the metadata
+# columns are unique to this package.
+metrics.SingleCellExperiment <-  # nolint
     function(object, recalculate = FALSE) {
         validObject(object)
         if (isTRUE(recalculate)) {
             colData <- colData(object)
-            metrics <- .metrics.matrix(
+            metrics <- metrics.matrix(
                 object = counts(object),
                 rowRanges = rowRanges(object)
             )
@@ -167,7 +169,7 @@ NULL
 setMethod(
     f = "metrics",
     signature = signature("bcbioSingleCell"),
-    definition = .metrics.SingleCellExperiment
+    definition = metrics.SingleCellExperiment
 )
 
 
@@ -177,5 +179,5 @@ setMethod(
 setMethod(
     f = "metrics",
     signature = signature("CellRanger"),
-    definition = .metrics.SingleCellExperiment
+    definition = metrics.SingleCellExperiment
 )

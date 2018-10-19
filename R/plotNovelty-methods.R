@@ -18,7 +18,7 @@ NULL
 
 
 
-.plotNovelty.SingleCellExperiment <-  # nolint
+plotNovelty.SingleCellExperiment <-  # nolint
     function(
         object,
         geom,
@@ -46,7 +46,7 @@ NULL
             )
         )
     }
-formals(.plotNovelty.SingleCellExperiment)[["geom"]] <- geom
+formals(plotNovelty.SingleCellExperiment)[["geom"]] <- geom
 
 
 
@@ -55,5 +55,5 @@ formals(.plotNovelty.SingleCellExperiment)[["geom"]] <- geom
 setMethod(
     f = "plotNovelty",
     signature = signature("SingleCellExperiment"),
-    definition = .plotNovelty.SingleCellExperiment
+    definition = plotNovelty.SingleCellExperiment
 )

@@ -21,7 +21,7 @@ NULL
 
 
 
-.updateObject.bcbioSingleCell <-  # nolint
+updateObject.bcbioSingleCell <-  # nolint
     function(object) {
         version <- slot(object, "metadata")[["version"]]
         assert_is_all_of(version, c("package_version", "numeric_version"))
@@ -127,5 +127,5 @@ NULL
 setMethod(
     f = "updateObject",
     signature = signature("bcbioSingleCell"),
-    definition = .updateObject.bcbioSingleCell
+    definition = updateObject.bcbioSingleCell
 )

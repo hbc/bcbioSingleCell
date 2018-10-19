@@ -16,7 +16,7 @@ NULL
 
 
 
-.plotBarcodeRanks <- function(object) {
+plotBarcodeRanks.SingleCellExperiment <- function(object) {
     ranksPerSample <- do.call(
         what = barcodeRanksPerSample,
         args = matchArgsToDoCall(args = list(object = object))
@@ -113,7 +113,7 @@ NULL
     plot_grid(plotlist = plotlist)
 }
 
-formals(.plotBarcodeRanks) <- methodFormals(
+formals(plotBarcodeRanks.SingleCellExperiment) <- methodFormals(
     f = "barcodeRanksPerSample",
     signature = "SingleCellExperiment"
 )
@@ -125,5 +125,5 @@ formals(.plotBarcodeRanks) <- methodFormals(
 setMethod(
     f = "plotBarcodeRanks",
     signature = signature("SingleCellExperiment"),
-    definition = .plotBarcodeRanks
+    definition = plotBarcodeRanks.SingleCellExperiment
 )
