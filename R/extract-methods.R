@@ -54,7 +54,6 @@ extract.SingleCellExperiment <-  # nolint
             x = c(length(i), length(j)),
             y = dim(x)
         )) {
-            message("Returning object unmodified.")
             return(x)
         }
 

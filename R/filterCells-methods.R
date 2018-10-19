@@ -31,21 +31,22 @@
 #'
 #' @examples
 #' data(indrops_small)
+#'
 #' object <- indrops_small
 #' show(object)
 #'
 #' x <- filterCells(object)
 #' show(x)
-#' S4Vectors::metadata(x)$filterParams
+#' metadata(x)$filterParams
 #'
-#' ## Per sample cutoffs
+#' ## Per sample cutoffs.
 #' sampleNames(object)
 #' x <- filterCells(
 #'     object = object,
 #'     minUMIs = c(rep_1 = 100)
 #' )
 #' show(x)
-#' S4Vectors::metadata(x)$filterParams
+#' metadata(x)$filterParams
 NULL
 
 

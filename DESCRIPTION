@@ -112,11 +112,12 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.0
 Collate: 
     'AllClasses.R'
-    'AllGenerators.R'
     'AllGenerics.R'
+    'CellRanger.R'
     'assert-internal.R'
     'barcodeRanksPerSample-methods.R'
     'barcodes-internal.R'
+    'bcbioSingleCell-generator.R'
     'bcbioSingleCell-package.R'
     'cellranger-internal.R'
     'data.R'
