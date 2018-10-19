@@ -4,7 +4,7 @@
 \name{indrops_small}
 \alias{indrops_small}
 \title{inDrops Example}
-\format{An object of class \code{bcbioSingleCell} with 500 rows and 500 columns.}
+\format{An object of class \code{bcbioSingleCell} with 50 rows and 100 columns.}
 \usage{
 indrops_small
 }

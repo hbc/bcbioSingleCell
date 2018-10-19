@@ -4,10 +4,8 @@
 \name{plotQC}
 \alias{plotQC}
 \alias{plotQC,SingleCellExperiment-method}
-\title{inherit basejump::plotQC}
+\title{Plot Quality Control}
 \usage{
-plotQC(object, ...)
-
 \S4method{plotQC}{SingleCellExperiment}(object, interestingGroups = NULL,
   geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
   headerLevel = 2L, legend = getOption("basejump.legend", FALSE),
@@ -15,8 +13,6 @@ plotQC(object, ...)
 }
 \arguments{
 \item{object}{Object.}
-
-\item{...}{Additional arguments.}
 
 \item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
 interesting groups. Must be formatted in camel case and intersect with
@@ -40,7 +36,7 @@ defaults to the first argument in the \code{character} vector.}
 }
 }
 \description{
-inherit basejump::plotQC
+Plot Quality Control
 }
 \examples{
 data(indrops_small)

@@ -1,6 +1,6 @@
+# FIXME Break these back out into separate files.
 # FIXME Either make `sampleName` required or strip it from minimal examples.
 # TODO Check to see if we can import tx2gene.csv
-# FIXME Break these back out into separate files.
 
 
 

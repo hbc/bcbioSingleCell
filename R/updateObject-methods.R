@@ -2,10 +2,10 @@
 
 
 
-#' @rdname updateObject
 #' @importFrom BiocGenerics updateObject
+#' @aliases NULL
 #' @export
-updateObject <- BiocGenerics::updateObject
+BiocGenerics::updateObject
 
 
 

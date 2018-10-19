@@ -7,8 +7,6 @@
 \alias{metrics,CellRanger-method}
 \title{Metrics}
 \usage{
-metrics(object, ...)
-
 \S4method{metrics}{bcbioSingleCell}(object, recalculate = FALSE)
 
 \S4method{metrics}{CellRanger}(object, recalculate = FALSE)
@@ -16,24 +14,35 @@ metrics(object, ...)
 \arguments{
 \item{object}{Object.}
 
-\item{...}{Additional arguments.}
-
-\item{recalculate}{\code{boolean}. Force recalculation, using primary \code{\link[=counts]{counts()}}
-matrix.}
+\item{recalculate}{\code{boolean}. Force recalculation, using primary
+\code{\link[BiocGenerics:counts]{BiocGenerics::counts()}} matrix.}
 }
 \value{
-\code{grouped_df}. Grouped by \code{sampleID} column.
+\itemize{
+\item \code{"tbl_df"}: \code{grouped_df}. Grouped by \code{sampleID} column.
+\item \code{"DataFrame"}: \code{DataFrame}. Rownames are identical to \code{\link[base:colnames]{base::colnames()}},
+of the object, like \code{\link[SummarizedExperiment:colData]{SummarizedExperiment::colData()}}.
+}
 }
 \description{
-This function takes data stored in \code{\link[=colData]{colData()}} and consistently returns a
-tibble grouped by sample, to be used for plotting with \code{ggplot2}.
+This function takes data stored in \code{\link[SummarizedExperiment:colData]{SummarizedExperiment::colData()}} and
+consistently returns a tibble grouped by sample by default (\code{sampleID}).
 }
-\section{SingleCellExperiment}{
+\details{
+\code{\link[=metrics]{metrics()}} always returns \code{sampleName} and \code{interestingGroups} columns, even
+when these columns are not defined in \code{colData}. This is designed to
+integrate with plotting functions that use ggplot2 internally.
+}
+\section{Methods (by class)}{
 
+\itemize{
+\item \code{SummarizedExperiment}: Metrics are sample level. \code{sampleID} column corresponds
+to \code{\link[base:colnames]{base::colnames()}}.
 
-
-Note that metrics are cell level but grouped by sample.
-
+\item \code{SingleCellExperiment}: Metrics are cell level. \code{cellID} column corresponds to
+\code{\link[base:colnames]{base::colnames()}}. Tibble is returned grouped by sample
+(\code{sampleID} column).
+}
 }
 
 \examples{

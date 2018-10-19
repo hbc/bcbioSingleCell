@@ -1,11 +1,11 @@
-#' @rdname plotQC
 #' @importFrom basejump plotQC
+#' @aliases NULL
 #' @export
-plotQC <- basejump::plotQC
+basejump::plotQC
 
 
 
-#' inherit basejump::plotQC
+#' @inherit basejump::plotQC
 #' @name plotQC
 #' @family Quality Control Functions
 #' @author Michael Steinbaugh

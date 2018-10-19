@@ -7,8 +7,6 @@
 \alias{show,CellRanger-method}
 \title{Show an Object}
 \usage{
-show(object)
-
 \S4method{show}{bcbioSingleCell}(object)
 
 \S4method{show}{CellRanger}(object)
