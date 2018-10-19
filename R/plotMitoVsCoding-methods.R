@@ -15,7 +15,7 @@ NULL
 
 
 
-.plotMitoVsCoding.SCE <-  # nolint
+.plotMitoVsCoding.SingleCellExperiment <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -47,5 +47,5 @@ NULL
 setMethod(
     f = "plotMitoVsCoding",
     signature = signature("SingleCellExperiment"),
-    definition = .plotMitoVsCoding.SCE
+    definition = .plotMitoVsCoding.SingleCellExperiment
 )

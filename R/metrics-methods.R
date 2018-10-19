@@ -138,7 +138,7 @@ NULL
 
 
 
-.metrics.SCE <-  # nolint
+.metrics.SingleCellExperiment <-  # nolint
     function(object, recalculate = FALSE) {
         validObject(object)
         if (isTRUE(recalculate)) {
@@ -167,7 +167,7 @@ NULL
 setMethod(
     f = "metrics",
     signature = signature("bcbioSingleCell"),
-    definition = .metrics.SCE
+    definition = .metrics.SingleCellExperiment
 )
 
 
@@ -177,5 +177,5 @@ setMethod(
 setMethod(
     f = "metrics",
     signature = signature("CellRanger"),
-    definition = .metrics.SCE
+    definition = .metrics.SingleCellExperiment
 )
