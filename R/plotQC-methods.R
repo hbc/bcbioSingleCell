@@ -268,7 +268,7 @@ formals(.plotQCMetric)[["geom"]] <- geom
 
 
 
-.plotQC.SCE <-  # nolint
+.plotQC.SingleCellExperiment <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -354,7 +354,7 @@ formals(.plotQCMetric)[["geom"]] <- geom
             )
         }
     }
-formals(.plotQC.SCE)[["geom"]] <- geom
+formals(.plotQC.SingleCellExperiment)[["geom"]] <- geom
 
 
 
@@ -363,5 +363,5 @@ formals(.plotQC.SCE)[["geom"]] <- geom
 setMethod(
     f = "plotQC",
     signature = signature("SingleCellExperiment"),
-    definition = .plotQC.SCE
+    definition = .plotQC.SingleCellExperiment
 )

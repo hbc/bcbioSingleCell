@@ -16,7 +16,7 @@ NULL
 
 
 
-.plotMitoRatio.SCE <-  # nolint
+.plotMitoRatio.SingleCellExperiment <-  # nolint
     function(
         object,
         geom,
@@ -43,7 +43,7 @@ NULL
             )
         )
     }
-formals(.plotMitoRatio.SCE)[["geom"]] <- geom
+formals(.plotMitoRatio.SingleCellExperiment)[["geom"]] <- geom
 
 
 
@@ -52,5 +52,5 @@ formals(.plotMitoRatio.SCE)[["geom"]] <- geom
 setMethod(
     f = "plotMitoRatio",
     signature = signature("SingleCellExperiment"),
-    definition = .plotMitoRatio.SCE
+    definition = .plotMitoRatio.SingleCellExperiment
 )

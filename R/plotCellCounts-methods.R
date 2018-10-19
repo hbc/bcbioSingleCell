@@ -15,7 +15,7 @@ NULL
 
 
 
-.plotCellCounts.SCE <-  # nolint
+.plotCellCounts.SingleCellExperiment <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -99,5 +99,5 @@ NULL
 setMethod(
     f = "plotCellCounts",
     signature = signature("SingleCellExperiment"),
-    definition = .plotCellCounts.SCE
+    definition = .plotCellCounts.SingleCellExperiment
 )

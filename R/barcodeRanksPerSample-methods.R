@@ -19,7 +19,7 @@ NULL
 
 
 
-.barcodeRanksPerSample.SCE <-  # nolint
+.barcodeRanksPerSample.SingleCellExperiment <-  # nolint
     function(object) {
         which <- sys.parent()
 
@@ -51,11 +51,11 @@ NULL
         names(ranks) <- samples
         ranks
     }
-f1 <- formals(.barcodeRanksPerSample.SCE)
+f1 <- formals(.barcodeRanksPerSample.SingleCellExperiment)
 f2 <- formals(barcodeRanks)
 f2 <- f2[setdiff(names(f2), c(names(f1), "m", "..."))]
 f <- c(f1, f2)
-formals(.barcodeRanksPerSample.SCE) <- f
+formals(.barcodeRanksPerSample.SingleCellExperiment) <- f
 
 
 
@@ -64,5 +64,5 @@ formals(.barcodeRanksPerSample.SCE) <- f
 setMethod(
     f = "barcodeRanksPerSample",
     signature = signature("SingleCellExperiment"),
-    definition = .barcodeRanksPerSample.SCE
+    definition = .barcodeRanksPerSample.SingleCellExperiment
 )

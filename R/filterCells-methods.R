@@ -66,7 +66,7 @@ NULL
 
 
 
-.filterCells.SCE <-  # nolint
+.filterCells.SingleCellExperiment <-  # nolint
     function(
         object,
         nCells = Inf,
@@ -469,5 +469,5 @@ NULL
 setMethod(
     f = "filterCells",
     signature = signature("SingleCellExperiment"),
-    definition = .filterCells.SCE
+    definition = .filterCells.SingleCellExperiment
 )

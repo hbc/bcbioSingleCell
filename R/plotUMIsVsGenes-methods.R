@@ -15,7 +15,7 @@ NULL
 
 
 
-.plotUMIsVsGenes.SCE <-  # nolint
+.plotUMIsVsGenes.SingleCellExperiment <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -47,5 +47,5 @@ NULL
 setMethod(
     f = "plotUMIsVsGenes",
     signature = signature("SingleCellExperiment"),
-    definition = .plotUMIsVsGenes.SCE
+    definition = .plotUMIsVsGenes.SingleCellExperiment
 )

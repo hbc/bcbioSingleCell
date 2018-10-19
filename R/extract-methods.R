@@ -37,7 +37,7 @@ NULL
 
 
 
-.extract.SCE <-  # nolint
+.extract.SingleCellExperiment <-  # nolint
     function(x, i, j, ..., drop = FALSE) {
         validObject(x)
 
@@ -120,7 +120,7 @@ setMethod(
         j = "ANY",
         drop = "ANY"
     ),
-    definition = .extract.SCE
+    definition = .extract.SingleCellExperiment
 )
 
 
@@ -135,5 +135,5 @@ setMethod(
         j = "ANY",
         drop = "ANY"
     ),
-    definition = .extract.SCE
+    definition = .extract.SingleCellExperiment
 )
