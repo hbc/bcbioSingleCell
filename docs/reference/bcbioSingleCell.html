@@ -103,7 +103,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Read bcbio Single-Cell RNA-Seq Data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerators.R'><code>R/AllGenerators.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/bcbioSingleCell-generator.R'><code>R/bcbioSingleCell-generator.R</code></a></small>
     <div class="hidden name"><code>bcbioSingleCell.Rd</code></div>
     </div>
 
@@ -215,28 +215,28 @@ directory as a remote connection over
     <pre class="examples"><div class='input'><span class='no'>uploadDir</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata/indrops"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>)
 
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>bcbioSingleCell</span>(<span class='no'>uploadDir</span>)</div><div class='output co'>#&gt; <span class='message'>Dated project directory: 2018-01-01_bcbio</span></div><div class='output co'>#&gt; <span class='message'>1 sample(s) detected:</span>
-#&gt; <span class='message'>multiplexed_AAAAAAAA</span></div><div class='output co'>#&gt; <span class='message'>Reading project-summary.yaml.</span></div><div class='output co'>#&gt; <span class='message'>Data versions are missing.</span></div><div class='output co'>#&gt; <span class='message'>Reading bcbio-nextgen.log.</span></div><div class='output co'>#&gt; <span class='message'>Importing using `read_lines()`.</span></div><div class='output co'>#&gt; <span class='message'>Reading bcbio-nextgen-commands.log.</span></div><div class='output co'>#&gt; <span class='message'>Importing using `read_lines()`.</span></div><div class='output co'>#&gt; <span class='message'>1000 reads per cellular barcode cutoff detected.</span></div><div class='output co'>#&gt; <span class='message'>Counts will imported as genes.</span></div><div class='output co'>#&gt; <span class='message'>UMI type: harvard-indrop-v3</span></div><div class='output co'>#&gt; <span class='message'>Importing unfiltered cellular barcode distributions.</span></div><div class='output co'>#&gt; <span class='message'>Importing counts.</span></div><div class='output co'>#&gt; <span class='message'>Imported multiplexed-AAAAAAAA.</span></div><div class='output co'>#&gt; <span class='message'>Unknown organism. Skipping annotations.</span></div><div class='output co'>#&gt; <span class='message'>`sampleMetadataFile` is recommended for multiplexed samples (e.g. harvard-indrop-v3).</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics.</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected.</span></div><div class='output co'>#&gt; <span class='message'>Calculating metrics without biotype information.</span>
-#&gt; <span class='message'>`rowRanges` is required to calculate: nCoding, nMito, mitoRatio</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
+#&gt; <span class='message'>multiplexed_AAAAAAAA</span></div><div class='output co'>#&gt; <span class='message'>Reading project-summary.yaml.</span></div><div class='output co'>#&gt; <span class='message'>Data versions are missing.</span></div><div class='output co'>#&gt; <span class='message'>Reading bcbio-nextgen.log.</span></div><div class='output co'>#&gt; <span class='message'>Importing using `read_lines()`.</span></div><div class='output co'>#&gt; <span class='message'>Reading bcbio-nextgen-commands.log.</span></div><div class='output co'>#&gt; <span class='message'>Importing using `read_lines()`.</span></div><div class='output co'>#&gt; <span class='message'>1000 reads per cellular barcode cutoff detected.</span></div><div class='output co'>#&gt; <span class='message'>Counts will imported as genes.</span></div><div class='output co'>#&gt; <span class='message'>UMI type: harvard-indrop-v3</span></div><div class='output co'>#&gt; <span class='message'>Importing unfiltered cellular barcode distributions.</span></div><div class='output co'>#&gt; <span class='message'>Importing counts.</span></div><div class='output co'>#&gt; <span class='message'>Imported multiplexed-AAAAAAAA.</span></div><div class='output co'>#&gt; <span class='message'>Unknown organism. Skipping annotations.</span></div><div class='output co'>#&gt; <span class='message'>`sampleMetadataFile` is recommended for multiplexed samples (e.g. harvard-indrop-v3).</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics.</span></div><div class='output co'>#&gt; <span class='message'>100 cells detected.</span></div><div class='output co'>#&gt; <span class='message'>Calculating metrics without biotype information.</span>
+#&gt; <span class='message'>`rowRanges` is required to calculate: nCoding, nMito, mitoRatio</span></div><div class='output co'>#&gt; <span class='message'>100 / 100 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
 #&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
 #&gt; citation("bcbioSingleCell")
-#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; ────────────────────────────────────────
 #&gt; Upload Dir: "/Users/mike/git/bcbioSingleCell-private/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-10-17
+#&gt; R Load Date: 2018-10-19
 #&gt; Level: "genes"
 #&gt; Organism: character(0)
 #&gt; Interesting Groups: "sampleName"
 #&gt; Filtered: FALSE
-#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; ────────────────────────────────────────
 #&gt; class: SingleCellExperiment 
-#&gt; dim: 500 500 
+#&gt; dim: 50 100 
 #&gt; metadata(27): version pipeline ... wd sessionInfo
 #&gt; assays(1): counts
-#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
-#&gt;   ENSG00000283391
+#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
+#&gt;   ENSG00000282105
 #&gt; rowData names(0):
-#&gt; colnames(500): AAACACTA_ATCCCACG AAACACTA_CTTAGGTA ...
-#&gt;   TGTTATCA_ACGCAGAG TGTTATCA_CAAGTCAT
+#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
+#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
 #&gt; colData names(9): nUMI nGene ... sampleID sampleName
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div><div class='input'>
@@ -244,29 +244,29 @@ directory as a remote connection over
     <span class='kw'>uploadDir</span> <span class='kw'>=</span> <span class='no'>uploadDir</span>,
     <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='no'>uploadDir</span>, <span class='st'>"metadata.csv"</span>)
 )</div><div class='output co'>#&gt; <span class='message'>Dated project directory: 2018-01-01_bcbio</span></div><div class='output co'>#&gt; <span class='message'>1 sample(s) detected:</span>
-#&gt; <span class='message'>multiplexed_AAAAAAAA</span></div><div class='output co'>#&gt; <span class='message'>Reading project-summary.yaml.</span></div><div class='output co'>#&gt; <span class='message'>Data versions are missing.</span></div><div class='output co'>#&gt; <span class='message'>Reading bcbio-nextgen.log.</span></div><div class='output co'>#&gt; <span class='message'>Importing using `read_lines()`.</span></div><div class='output co'>#&gt; <span class='message'>Reading bcbio-nextgen-commands.log.</span></div><div class='output co'>#&gt; <span class='message'>Importing using `read_lines()`.</span></div><div class='output co'>#&gt; <span class='message'>1000 reads per cellular barcode cutoff detected.</span></div><div class='output co'>#&gt; <span class='message'>Counts will imported as genes.</span></div><div class='output co'>#&gt; <span class='message'>UMI type: harvard-indrop-v3</span></div><div class='output co'>#&gt; <span class='message'>Reading metadata.csv.</span></div><div class='output co'>#&gt; <span class='message'>Multiplexed samples detected.</span></div><div class='output co'>#&gt; <span class='message'>Importing unfiltered cellular barcode distributions.</span></div><div class='output co'>#&gt; <span class='message'>Importing counts.</span></div><div class='output co'>#&gt; <span class='message'>Imported multiplexed-AAAAAAAA.</span></div><div class='output co'>#&gt; <span class='message'>Unknown organism. Skipping annotations.</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics.</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected.</span></div><div class='output co'>#&gt; <span class='message'>Calculating metrics without biotype information.</span>
-#&gt; <span class='message'>`rowRanges` is required to calculate: nCoding, nMito, mitoRatio</span></div><div class='output co'>#&gt; <span class='message'>500 / 500 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
+#&gt; <span class='message'>multiplexed_AAAAAAAA</span></div><div class='output co'>#&gt; <span class='message'>Reading project-summary.yaml.</span></div><div class='output co'>#&gt; <span class='message'>Data versions are missing.</span></div><div class='output co'>#&gt; <span class='message'>Reading bcbio-nextgen.log.</span></div><div class='output co'>#&gt; <span class='message'>Importing using `read_lines()`.</span></div><div class='output co'>#&gt; <span class='message'>Reading bcbio-nextgen-commands.log.</span></div><div class='output co'>#&gt; <span class='message'>Importing using `read_lines()`.</span></div><div class='output co'>#&gt; <span class='message'>1000 reads per cellular barcode cutoff detected.</span></div><div class='output co'>#&gt; <span class='message'>Counts will imported as genes.</span></div><div class='output co'>#&gt; <span class='message'>UMI type: harvard-indrop-v3</span></div><div class='output co'>#&gt; <span class='message'>Reading metadata.csv.</span></div><div class='output co'>#&gt; <span class='message'>Multiplexed samples detected.</span></div><div class='output co'>#&gt; <span class='message'>Importing unfiltered cellular barcode distributions.</span></div><div class='output co'>#&gt; <span class='message'>Importing counts.</span></div><div class='output co'>#&gt; <span class='message'>Imported multiplexed-AAAAAAAA.</span></div><div class='output co'>#&gt; <span class='message'>Unknown organism. Skipping annotations.</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics.</span></div><div class='output co'>#&gt; <span class='message'>100 cells detected.</span></div><div class='output co'>#&gt; <span class='message'>Calculating metrics without biotype information.</span>
+#&gt; <span class='message'>`rowRanges` is required to calculate: nCoding, nMito, mitoRatio</span></div><div class='output co'>#&gt; <span class='message'>100 / 100 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
 #&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
 #&gt; citation("bcbioSingleCell")
-#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; ────────────────────────────────────────
 #&gt; Upload Dir: "/Users/mike/git/bcbioSingleCell-private/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-10-17
+#&gt; R Load Date: 2018-10-19
 #&gt; Level: "genes"
 #&gt; Organism: character(0)
 #&gt; Interesting Groups: "sampleName"
 #&gt; Metadata File: "/Users/mike/git/bcbioSingleCell-private/inst/extdata/indrops/metadata.csv"
 #&gt; Filtered: FALSE
-#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; ────────────────────────────────────────
 #&gt; class: SingleCellExperiment 
-#&gt; dim: 500 500 
+#&gt; dim: 50 100 
 #&gt; metadata(27): version pipeline ... wd sessionInfo
 #&gt; assays(1): counts
-#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
-#&gt;   ENSG00000283391
+#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
+#&gt;   ENSG00000282105
 #&gt; rowData names(0):
-#&gt; colnames(500): AAACACTA_ATCCCACG AAACACTA_CTTAGGTA ...
-#&gt;   TGTTATCA_ACGCAGAG TGTTATCA_CAAGTCAT
+#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
+#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
 #&gt; colData names(15): nUMI nGene ... aggregate revcomp
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div></pre>

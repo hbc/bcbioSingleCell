@@ -40,33 +40,34 @@ expression in at least this many cells.}
 }
 \value{
 \code{bcbioSingleCell}, with filtering information slotted into
-\code{\link[=metadata]{metadata()}} as \code{filterCells} and \code{filterParams}.
+\code{\link[S4Vectors:metadata]{S4Vectors::metadata()}} as \code{filterCells} and \code{filterParams}.
 }
 \description{
 Apply gene detection, novelty score, and mitochondrial abundance cutoffs to
 cellular barcodes. By default we recommend applying the same filtering cutoff
 to all samples. The filtering parameters now support per-sample cutoffs,
 defined using a named \code{numeric} vector. When matching per sample, be sure to
-use the \code{\link[=sampleNames]{sampleNames()}} return values (i.e. the \code{sampleName} column in
-\code{\link[=sampleData]{sampleData()}}).
+use the \code{\link[Biobase:sampleNames]{Biobase::sampleNames()}} return values (i.e. the \code{sampleName} column
+in \code{\link[basejump:sampleData]{basejump::sampleData()}}).
 }
 \examples{
 data(indrops_small)
+
 object <- indrops_small
 show(object)
 
 x <- filterCells(object)
 show(x)
-S4Vectors::metadata(x)$filterParams
+metadata(x)$filterParams
 
-## Per sample cutoffs
+## Per sample cutoffs.
 sampleNames(object)
 x <- filterCells(
     object = object,
     minUMIs = c(rep_1 = 100)
 )
 show(x)
-S4Vectors::metadata(x)$filterParams
+metadata(x)$filterParams
 }
 \seealso{
 Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},

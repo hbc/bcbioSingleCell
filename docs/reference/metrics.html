@@ -34,8 +34,8 @@
   
 <meta property="og:title" content="Metrics — metrics" />
 
-<meta property="og:description" content="This function takes data stored in colData() and consistently returns a
-tibble grouped by sample, to be used for plotting with ggplot2." />
+<meta property="og:description" content="This function takes data stored in SummarizedExperiment::colData() and
+consistently returns a tibble grouped by sample by default (sampleID)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -110,14 +110,12 @@ tibble grouped by sample, to be used for plotting with ggplot2." />
 
     <div class="ref-description">
     
-    <p>This function takes data stored in <code>colData()</code> and consistently returns a
-tibble grouped by sample, to be used for plotting with <code>ggplot2</code>.</p>
+    <p>This function takes data stored in <code><a href='http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class'>SummarizedExperiment::colData()</a></code> and
+consistently returns a tibble grouped by sample by default (<code>sampleID</code>).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for bcbioSingleCell</span>
+    <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
 <span class='fu'>metrics</span>(<span class='no'>object</span>, <span class='kw'>recalculate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'># S4 method for CellRanger</span>
@@ -131,24 +129,38 @@ tibble grouped by sample, to be used for plotting with <code>ggplot2</code>.</p>
       <td><p>Object.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Additional arguments.</p></td>
-    </tr>
-    <tr>
       <th>recalculate</th>
-      <td><p><code>boolean</code>. Force recalculation, using primary <code>counts()</code>
-matrix.</p></td>
+      <td><p><code>boolean</code>. Force recalculation, using primary
+<code><a href='http://www.rdocumentation.org/packages/BiocGenerics/topics/dge'>BiocGenerics::counts()</a></code> matrix.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>grouped_df</code>. Grouped by <code>sampleID</code> column.</p>
     
-    <h2 class="hasAnchor" id="singlecellexperiment"><a class="anchor" href="#singlecellexperiment"></a>SingleCellExperiment</h2>
+<ul>
+<li><p><code>"tbl_df"</code>: <code>grouped_df</code>. Grouped by <code>sampleID</code> column.</p></li>
+<li><p><code>"DataFrame"</code>: <code>DataFrame</code>. Rownames are identical to <code><a href='http://www.rdocumentation.org/packages/base/topics/colnames'>base::colnames()</a></code>,
+of the object, like <code><a href='http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class'>SummarizedExperiment::colData()</a></code>.</p></li>
+</ul>
 
     
-    <p>Note that metrics are cell level but grouped by sample.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>metrics()</code> always returns <code>sampleName</code> and <code>interestingGroups</code> columns, even
+when these columns are not defined in <code>colData</code>. This is designed to
+integrate with plotting functions that use ggplot2 internally.</p>
+    
+    <h2 class="hasAnchor" id="methods-by-class-"><a class="anchor" href="#methods-by-class-"></a>Methods (by class)</h2>
+
+    
+    <ul>
+<li><p><code>SummarizedExperiment</code>: Metrics are sample level. <code>sampleID</code> column corresponds
+to <code><a href='http://www.rdocumentation.org/packages/base/topics/colnames'>base::colnames()</a></code>.</p></li>
+<li><p><code>SingleCellExperiment</code>: Metrics are cell level. <code>cellID</code> column corresponds to
+<code><a href='http://www.rdocumentation.org/packages/base/topics/colnames'>base::colnames()</a></code>. Tibble is returned grouped by sample
+(<code>sampleID</code> column).</p></li>
+</ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -162,13 +174,13 @@ matrix.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>indrops_small</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metrics</span>(<span class='no'>indrops_small</span>, <span class='kw'>recalculate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics.</span></div><div class='output co'>#&gt; <span class='message'>500 cells detected.</span></div><div class='output co'>#&gt; <span class='message'>449 coding genes.</span></div><div class='output co'>#&gt; <span class='message'>13 mitochondrial genes.</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>metrics</span>(<span class='no'>indrops_small</span>, <span class='kw'>recalculate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics.</span></div><div class='output co'>#&gt; <span class='message'>100 cells detected.</span></div><div class='output co'>#&gt; <span class='message'>34 coding genes.</span></div><div class='output co'>#&gt; <span class='message'>11 mitochondrial genes.</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
 #&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
 #&gt; citation("bcbioSingleCell")
 #&gt; ────────────────────────────────────────────────────────────────────────
-#&gt; Upload Dir: "/home/bioinfo/git/bcbioSingleCell-private/inst/extdata/indrops"
+#&gt; Upload Dir: "/Users/mike/git/bcbioSingleCell-private/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-09-27
+#&gt; R Load Date: 2018-10-18
 #&gt; Level: "genes"
 #&gt; Organism: "Homo sapiens"
 #&gt; Interesting Groups: "sampleName"
@@ -176,14 +188,14 @@ matrix.</p></td>
 #&gt; Filtered: FALSE
 #&gt; ────────────────────────────────────────────────────────────────────────
 #&gt; class: SingleCellExperiment 
-#&gt; dim: 500 500 
-#&gt; metadata(29): version pipeline ... wd sessionInfo
+#&gt; dim: 50 100 
+#&gt; metadata(27): version pipeline ... wd sessionInfo
 #&gt; assays(1): counts
-#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
-#&gt;   ENSG00000283391
+#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
+#&gt;   ENSG00000282105
 #&gt; rowData names(4): broadClass geneBiotype geneID geneName
-#&gt; colnames(500): AAACACTA_ATCCCACG AAACACTA_CTTAGGTA ...
-#&gt;   TGTTATCA_ACGCAGAG TGTTATCA_CAAGTCAT
+#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
+#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
 #&gt; colData names(15): nUMI nGene ... aggregate revcomp
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div></pre>
@@ -195,7 +207,9 @@ matrix.</p></td>
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#singlecellexperiment">SingleCellExperiment</a></li>
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#methods-by-class-">Methods (by class)</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

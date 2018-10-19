@@ -197,7 +197,7 @@ CellRanger <- function(  # nolint
     }
 
     # Always prefilter, removing very low quality cells with no UMIs or genes.
-    colData <- .metrics.matrix(
+    colData <- metrics.matrix(
         object = counts,
         rowRanges = rowRanges,
         prefilter = TRUE

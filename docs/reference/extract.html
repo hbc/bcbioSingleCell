@@ -185,12 +185,12 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Refer to <code>cell2sample()</code> and <code>selectSamples()</code> if sample-level extraction
-is desired. Note that <code>sampleID</code> is slotted into <code>colData()</code> and defines the
-cell-to-sample mappings.</p>
+    <p>Refer to <code><a href='http://www.rdocumentation.org/packages/basejump/topics/cell2sample'>basejump::cell2sample()</a></code> and <code><a href='http://www.rdocumentation.org/packages/basejump/topics/selectSamples'>basejump::selectSamples()</a></code> if
+sample-level extraction is desired. Note that <code>sampleID</code> is slotted into
+<code><a href='http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class'>SummarizedExperiment::colData()</a></code> and defines the cell-to-sample mappings.</p>
 <p>Unfiltered cellular barcode distributions for the entire dataset, including
 cells not kept in the matrix will be dropped in favor of the <code>nCount</code> column
-of <code>colData()</code>.</p>
+of <code>colData</code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -203,33 +203,33 @@ of <code>colData()</code>.</p>
     <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>indrops_small</span>)
 
 <span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>colnames</span>(<span class='no'>indrops_small</span>), <span class='fl'>100L</span>)
-<span class='fu'>head</span>(<span class='no'>cells</span>)</div><div class='output co'>#&gt; [1] "AAACACTA_ATCCCACG" "AAACACTA_CTTAGGTA" "AAACACTA_CTTCGATT"
-#&gt; [4] "AAACCGCC_GAGTTTCG" "AAACCGCC_TAGCCTCG" "AAACGATC_TTTACCCT"</div><div class='input'><span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>rownames</span>(<span class='no'>indrops_small</span>), <span class='fl'>100L</span>)
-<span class='fu'>head</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000000457" "ENSG00000002586" "ENSG00000004939" "ENSG00000005022"
-#&gt; [5] "ENSG00000005100" "ENSG00000008988"</div><div class='input'>
+<span class='fu'>head</span>(<span class='no'>cells</span>)</div><div class='output co'>#&gt; [1] "AAACACTA_CTTCGATT" "AAACTACA_CCACATTA" "AACTGCCT_GCAAGGAC"
+#&gt; [4] "AAGAAGGT_TCTGTGGT" "AAGCCTTC_TAAATAGG" "AATAAGGA_CCACATTA"</div><div class='input'><span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>rownames</span>(<span class='no'>indrops_small</span>), <span class='fl'>100L</span>)
+<span class='fu'>head</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000071082" "ENSG00000100316" "ENSG00000106631" "ENSG00000108821"
+#&gt; [5] "ENSG00000112306" "ENSG00000115414"</div><div class='input'>
 <span class='co'>## Subset by cell identifiers.</span>
 <span class='no'>indrops_small</span>[, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
 #&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
 #&gt; citation("bcbioSingleCell")
-#&gt; ────────────────────────────────────────────────────────────────────────
-#&gt; Upload Dir: "/home/bioinfo/git/bcbioSingleCell-private/inst/extdata/indrops"
+#&gt; ────────────────────────────────────────
+#&gt; Upload Dir: "/Users/mike/git/bcbioSingleCell-private/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-10-17
+#&gt; R Load Date: 2018-10-18
 #&gt; Level: "genes"
 #&gt; Organism: "Homo sapiens"
 #&gt; Interesting Groups: "sampleName"
 #&gt; Metadata File: "inst/extdata/indrops/metadata.csv"
 #&gt; Filtered: FALSE
-#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; ────────────────────────────────────────
 #&gt; class: SingleCellExperiment 
-#&gt; dim: 500 100 
-#&gt; metadata(29): version pipeline ... sessionInfo subset
+#&gt; dim: 50 100 
+#&gt; metadata(27): version pipeline ... wd sessionInfo
 #&gt; assays(1): counts
-#&gt; rownames(500): ENSG00000000457 ENSG00000002586 ... ENSG00000283060
-#&gt;   ENSG00000283391
+#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
+#&gt;   ENSG00000282105
 #&gt; rowData names(4): broadClass geneBiotype geneID geneName
-#&gt; colnames(100): AAACACTA_ATCCCACG AAACACTA_CTTAGGTA ...
-#&gt;   AGTTGAAC_CTTCGCAC ATAACAGG_GGATAAAG
+#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
+#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
 #&gt; colData names(15): nUMI nGene ... aggregate revcomp
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div><div class='input'>
@@ -237,25 +237,25 @@ of <code>colData()</code>.</p>
 <span class='no'>indrops_small</span>[<span class='no'>genes</span>, ]</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
 #&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
 #&gt; citation("bcbioSingleCell")
-#&gt; ────────────────────────────────────────────────────────────────────────
-#&gt; Upload Dir: "/home/bioinfo/git/bcbioSingleCell-private/inst/extdata/indrops"
+#&gt; ────────────────────────────────────────
+#&gt; Upload Dir: "/Users/mike/git/bcbioSingleCell-private/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-10-17
+#&gt; R Load Date: 2018-10-18
 #&gt; Level: "genes"
 #&gt; Organism: "Homo sapiens"
 #&gt; Interesting Groups: "sampleName"
 #&gt; Metadata File: "inst/extdata/indrops/metadata.csv"
 #&gt; Filtered: FALSE
-#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; ────────────────────────────────────────
 #&gt; class: SingleCellExperiment 
-#&gt; dim: 100 500 
-#&gt; metadata(29): version pipeline ... sessionInfo subset
+#&gt; dim: 50 100 
+#&gt; metadata(27): version pipeline ... wd sessionInfo
 #&gt; assays(1): counts
-#&gt; rownames(100): ENSG00000000457 ENSG00000002586 ... ENSG00000111716
-#&gt;   ENSG00000111775
+#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
+#&gt;   ENSG00000282105
 #&gt; rowData names(4): broadClass geneBiotype geneID geneName
-#&gt; colnames(500): AAACACTA_ATCCCACG AAACACTA_CTTAGGTA ...
-#&gt;   TGTTATCA_ACGCAGAG TGTTATCA_CAAGTCAT
+#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
+#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
 #&gt; colData names(15): nUMI nGene ... aggregate revcomp
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div><div class='input'>
@@ -263,25 +263,25 @@ of <code>colData()</code>.</p>
 <span class='no'>indrops_small</span>[<span class='no'>genes</span>, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
 #&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
 #&gt; citation("bcbioSingleCell")
-#&gt; ────────────────────────────────────────────────────────────────────────
-#&gt; Upload Dir: "/home/bioinfo/git/bcbioSingleCell-private/inst/extdata/indrops"
+#&gt; ────────────────────────────────────────
+#&gt; Upload Dir: "/Users/mike/git/bcbioSingleCell-private/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-10-17
+#&gt; R Load Date: 2018-10-18
 #&gt; Level: "genes"
 #&gt; Organism: "Homo sapiens"
 #&gt; Interesting Groups: "sampleName"
 #&gt; Metadata File: "inst/extdata/indrops/metadata.csv"
 #&gt; Filtered: FALSE
-#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; ────────────────────────────────────────
 #&gt; class: SingleCellExperiment 
-#&gt; dim: 100 100 
-#&gt; metadata(29): version pipeline ... sessionInfo subset
+#&gt; dim: 50 100 
+#&gt; metadata(27): version pipeline ... wd sessionInfo
 #&gt; assays(1): counts
-#&gt; rownames(100): ENSG00000000457 ENSG00000002586 ... ENSG00000111716
-#&gt;   ENSG00000111775
+#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
+#&gt;   ENSG00000282105
 #&gt; rowData names(4): broadClass geneBiotype geneID geneName
-#&gt; colnames(100): AAACACTA_ATCCCACG AAACACTA_CTTAGGTA ...
-#&gt;   AGTTGAAC_CTTCGCAC ATAACAGG_GGATAAAG
+#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
+#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
 #&gt; colData names(15): nUMI nGene ... aggregate revcomp
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div></pre>
