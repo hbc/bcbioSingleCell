@@ -1,4 +1,4 @@
-# FIXME Update handling of `sessionInfo`
+# TODO Update handling of `sessionInfo`?
 
 
 

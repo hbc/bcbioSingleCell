@@ -18,10 +18,10 @@ NULL
 
 
 # Using the same internal method for bcbioSingleCell and CellRanger.
-.show <- function(object) {
+show.SingleCellExperiment <- function(object) {
     validObject(object)
 
-    # Extend the SingleCellExperiment method
+    # Extend the SingleCellExperiment method.
     sce <- as(object, "SingleCellExperiment")
 
     return <- c(
@@ -46,7 +46,7 @@ NULL
         )
     }
 
-    # FIXME Use new `showSlotInfo()` function
+    # FIXME Use new `showSlotInfo()` function.
     return <- c(
         return,
         paste(
@@ -76,7 +76,7 @@ NULL
         )
     }
 
-    # Gene annotations
+    # Gene annotations.
     # FIXME Update rowRangesMetadata handling.
     m <- metadata(object)[["rowRangesMetadata"]]
     if (is.data.frame(m) && length(m)) {
@@ -94,7 +94,7 @@ NULL
         )
     }
 
-    # GFF File
+    # GFF file.
     gffFile <- metadata(object)[["gffFile"]]
     if (length(gffFile)) {
         return <- c(
@@ -103,7 +103,7 @@ NULL
         )
     }
 
-    # Filtered counts logical
+    # Filtered counts logical.
     return <- c(
         return,
         paste(bold("Filtered:"), .isFiltered(object))
@@ -126,7 +126,7 @@ NULL
 setMethod(
     f = "show",
     signature = signature("bcbioSingleCell"),
-    definition = .show
+    definition = show.SingleCellExperiment
 )
 
 
@@ -136,5 +136,8 @@ setMethod(
 setMethod(
     f = "show",
     signature = signature("CellRanger"),
-    definition = .show
+    definition = getMethod(
+        f = "show",
+        signature = signature("bcbioSingleCell")
+    )
 )
