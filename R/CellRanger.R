@@ -11,8 +11,10 @@
 
 
 
-#' Read 10X Genomics Cell Ranger Single-Cell RNA-Seq Data
+#' @inherit CellRanger-class
+#' @export
 #'
+#' @details
 #' Read [10x Genomics Cell Ranger](https://www.10xgenomics.com/software/)
 #' counts into a `SingleCellExperiment` object.
 #'

@@ -1,13 +1,12 @@
-#' Read bcbio Single-Cell RNA-Seq Data
+#' @inherit bcbioSingleCell-class
+#' @author Michael Steinbaugh, Rory Kirchner
+#' @export
 #'
 #' @section Remote Data:
 #'
 #' When working in RStudio, we recommend connecting to the bcbio-nextgen run
 #' directory as a remote connection over
 #' [sshfs](https://github.com/osxfuse/osxfuse/wiki/SSHFS).
-#'
-#' @author Michael Steinbaugh, Rory Kirchner
-#' @export
 #'
 #' @inheritParams basejump::makeSummarizedExperiment
 #' @inheritParams general

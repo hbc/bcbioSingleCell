@@ -1,5 +1,5 @@
 # bcbioSingleCell ==============================================================
-#' `bcbioSingleCell` Class
+#' bcbio Single-Cell RNA-Seq Data Set
 #'
 #' `bcbioSingleCell` is an S4 class that extends `SingleCellExperiment`, and is
 #' designed to store a bcbio single-cell RNA-seq analysis. This class contains
@@ -16,11 +16,9 @@ setClass(
     contains = "SingleCellExperiment"
 )
 
-
-
-# FIXME Update and relax the check on `sessionInfo`.
+# TODO Update and relax the check on `sessionInfo`.
 # See bcbioRNASeq approach for example.
-# FIXME Error for objects containing a legacy cellular barcode tibble.
+# TODO Error for objects containing a legacy cellular barcode tibble.
 setValidity(
     Class = "bcbioSingleCell",
     method = function(object) {
@@ -149,7 +147,7 @@ setValidity(
 
 
 # CellRanger ===================================================================
-#' `CellRanger` Class
+#' 10X Genomics CellRanger Data Set
 #'
 #' Extends `SingleCellExperiment`, with additional validity checks on the
 #' `metadata()` slot.
@@ -164,9 +162,6 @@ setClass(
     contains = "SingleCellExperiment"
 )
 
-
-
-# FIXME Need to add validity checks for CellRanger
 setValidity(
     Class = "CellRanger",
     method = function(object) {

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read bcbio Single-Cell RNA-Seq Data — bcbioSingleCell • bcbioSingleCell</title>
+<title>bcbio Single-Cell RNA-Seq Data Set — bcbioSingleCell • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -32,9 +32,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Read bcbio Single-Cell RNA-Seq Data — bcbioSingleCell" />
+<meta property="og:title" content="bcbio Single-Cell RNA-Seq Data Set — bcbioSingleCell" />
 
-<meta property="og:description" content="Read bcbio Single-Cell RNA-Seq Data" />
+<meta property="og:description" content="bcbioSingleCell is an S4 class that extends SingleCellExperiment, and is
+designed to store a bcbio single-cell RNA-seq analysis. This class contains
+read counts saved as a sparse matrix (sparseMatrix), sample metadata, and
+cell quality control metrics." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -102,14 +105,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read bcbio Single-Cell RNA-Seq Data</h1>
+    <h1>bcbio Single-Cell RNA-Seq Data Set</h1>
     <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/bcbioSingleCell-generator.R'><code>R/bcbioSingleCell-generator.R</code></a></small>
     <div class="hidden name"><code>bcbioSingleCell.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Read bcbio Single-Cell RNA-Seq Data</p>
+    <p><code>bcbioSingleCell</code> is an S4 class that extends <code>SingleCellExperiment</code>, and is
+designed to store a bcbio single-cell RNA-seq analysis. This class contains
+read counts saved as a sparse matrix (<code>sparseMatrix</code>), sample metadata, and
+cell quality control metrics.</p>
     
     </div>
 
@@ -218,15 +224,15 @@ directory as a remote connection over
 #&gt; <span class='message'>`rowRanges` is required to calculate: nCoding, nMito, mitoRatio</span></div><div class='output co'>#&gt; <span class='message'>100 / 100 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
 #&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
 #&gt; citation("bcbioSingleCell")
-#&gt; ────────────────────────────────────────────────────────────────────────
-#&gt; Upload Dir: "/Users/mike/git/bcbioSingleCell-private/inst/extdata/indrops"
+#&gt; ────────────────────────────────────────────────────────────
+#&gt; Upload Dir: "/Users/mike/git/bcbioSingleCell/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-10-19
+#&gt; R Load Date: 2018-10-21
 #&gt; Level: "genes"
 #&gt; Organism: character(0)
 #&gt; Interesting Groups: "sampleName"
 #&gt; Filtered: FALSE
-#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; ────────────────────────────────────────────────────────────
 #&gt; class: SingleCellExperiment 
 #&gt; dim: 50 100 
 #&gt; metadata(27): version pipeline ... wd sessionInfo
@@ -247,16 +253,16 @@ directory as a remote connection over
 #&gt; <span class='message'>`rowRanges` is required to calculate: nCoding, nMito, mitoRatio</span></div><div class='output co'>#&gt; <span class='message'>100 / 100 cellular barcodes passed pre-filtering (100%)</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
 #&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
 #&gt; citation("bcbioSingleCell")
-#&gt; ────────────────────────────────────────────────────────────────────────
-#&gt; Upload Dir: "/Users/mike/git/bcbioSingleCell-private/inst/extdata/indrops"
+#&gt; ────────────────────────────────────────────────────────────
+#&gt; Upload Dir: "/Users/mike/git/bcbioSingleCell/inst/extdata/indrops"
 #&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-10-19
+#&gt; R Load Date: 2018-10-21
 #&gt; Level: "genes"
 #&gt; Organism: character(0)
 #&gt; Interesting Groups: "sampleName"
-#&gt; Metadata File: "/Users/mike/git/bcbioSingleCell-private/inst/extdata/indrops/metadata.csv"
+#&gt; Metadata File: "/Users/mike/git/bcbioSingleCell/inst/extdata/indrops/metadata.csv"
 #&gt; Filtered: FALSE
-#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; ────────────────────────────────────────────────────────────
 #&gt; class: SingleCellExperiment 
 #&gt; dim: 50 100 
 #&gt; metadata(27): version pipeline ... wd sessionInfo

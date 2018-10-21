@@ -2,7 +2,7 @@
 % Please edit documentation in R/bcbioSingleCell-generator.R
 \name{bcbioSingleCell}
 \alias{bcbioSingleCell}
-\title{Read bcbio Single-Cell RNA-Seq Data}
+\title{bcbio Single-Cell RNA-Seq Data Set}
 \usage{
 bcbioSingleCell(uploadDir, sampleMetadataFile = NULL, organism = NULL,
   ensemblRelease = NULL, genomeBuild = NULL, gffFile = NULL,
@@ -62,7 +62,10 @@ interesting groups. Must be formatted in camel case and intersect with
 \code{bcbioSingleCell}.
 }
 \description{
-Read bcbio Single-Cell RNA-Seq Data
+\code{bcbioSingleCell} is an S4 class that extends \code{SingleCellExperiment}, and is
+designed to store a bcbio single-cell RNA-seq analysis. This class contains
+read counts saved as a sparse matrix (\code{sparseMatrix}), sample metadata, and
+cell quality control metrics.
 }
 \section{Remote Data}{
 

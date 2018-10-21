@@ -3,7 +3,7 @@
 \docType{class}
 \name{CellRanger-class}
 \alias{CellRanger-class}
-\title{\code{CellRanger} Class}
+\title{10X Genomics CellRanger Data Set}
 \description{
 Extends \code{SingleCellExperiment}, with additional validity checks on the
 \code{metadata()} slot.
