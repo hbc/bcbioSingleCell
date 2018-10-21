@@ -199,14 +199,14 @@ bcbioSingleCell <- function(
         rowRanges <- makeGRangesFromEnsembl(
             organism = organism,
             level = level,
-            build = genomeBuild,
+            genomeBuild = genomeBuild,
             release = ensemblRelease
         )
         if (is.null(genomeBuild)) {
-            genomeBuild <- metadata(rowRanges)[["build"]]
+            genomeBuild <- metadata(rowRanges)[["genomeBuild"]]
         }
         if (is.null(ensemblRelease)) {
-            ensemblRelease <- metadata(rowRanges)[["release"]]
+            ensemblRelease <- metadata(rowRanges)[["ensemblRelease"]]
         }
     } else {
         message("Unknown organism. Skipping annotations.")
