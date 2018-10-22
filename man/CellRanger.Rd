@@ -2,7 +2,7 @@
 % Please edit documentation in R/CellRanger.R
 \name{CellRanger}
 \alias{CellRanger}
-\title{Read 10X Genomics Cell Ranger Single-Cell RNA-Seq Data}
+\title{10X Genomics CellRanger Data Set}
 \usage{
 CellRanger(uploadDir, format = c("mtx", "hdf5"), filtered = TRUE,
   sampleMetadataFile = NULL, organism = NULL, ensemblRelease = NULL,
@@ -71,6 +71,10 @@ interesting groups. Must be formatted in camel case and intersect with
 \code{CellRanger}.
 }
 \description{
+Extends \code{SingleCellExperiment}, with additional validity checks on the
+\code{metadata()} slot.
+}
+\details{
 Read \href{https://www.10xgenomics.com/software/}{10x Genomics Cell Ranger}
 counts into a \code{SingleCellExperiment} object.
 }
@@ -113,6 +117,11 @@ match, due to deprecation in the current Ensembl release.
 uploadDir <- system.file("extdata/cellranger", package = "bcbioSingleCell")
 x <- CellRanger(uploadDir)
 print(x)
+}
+\seealso{
+\code{\link[=CellRanger]{CellRanger()}}.
+
+Other S4 classes: \code{\link{bcbioSingleCell-class}}
 }
 \author{
 Michael Steinbaugh

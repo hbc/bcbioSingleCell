@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read 10X Genomics Cell Ranger Single-Cell RNA-Seq Data — CellRanger • bcbioSingleCell</title>
+<title>10X Genomics CellRanger Data Set — CellRanger • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -32,10 +32,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Read 10X Genomics Cell Ranger Single-Cell RNA-Seq Data — CellRanger" />
+<meta property="og:title" content="10X Genomics CellRanger Data Set — CellRanger" />
 
-<meta property="og:description" content="Read 10x Genomics Cell Ranger
-counts into a SingleCellExperiment object." />
+<meta property="og:description" content="Extends SingleCellExperiment, with additional validity checks on the
+metadata() slot." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -103,15 +103,15 @@ counts into a SingleCellExperiment object." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read 10X Genomics Cell Ranger Single-Cell RNA-Seq Data</h1>
+    <h1>10X Genomics CellRanger Data Set</h1>
     <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/CellRanger.R'><code>R/CellRanger.R</code></a></small>
     <div class="hidden name"><code>CellRanger.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Read <a href='https://www.10xgenomics.com/software/'>10x Genomics Cell Ranger</a>
-counts into a <code>SingleCellExperiment</code> object.</p>
+    <p>Extends <code>SingleCellExperiment</code>, with additional validity checks on the
+<code>metadata()</code> slot.</p>
     
     </div>
 
@@ -210,6 +210,11 @@ interesting groups. Must be formatted in camel case and intersect with
 
     <p><code>CellRanger</code>.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Read <a href='https://www.10xgenomics.com/software/'>10x Genomics Cell Ranger</a>
+counts into a <code>SingleCellExperiment</code> object.</p>
+    
     <h2 class="hasAnchor" id="directory-structure"><a class="anchor" href="#directory-structure"></a>Directory structure</h2>
 
     
@@ -244,6 +249,11 @@ slotted in <code>rowRanges()</code>. Otherwise, the function will attempt to use
 most current annotations available from Ensembl, and some gene IDs may not
 match, due to deprecation in the current Ensembl release.</p>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code>CellRanger()</code>.</p>
+<p>Other S4 classes: <code><a href='bcbioSingleCell-class.html'>bcbioSingleCell-class</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>uploadDir</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata/cellranger"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>)
@@ -251,14 +261,14 @@ match, due to deprecation in the current Ensembl release.</p>
 #&gt; <span class='message'>`rowRanges` is required to calculate: nCoding, nMito, mitoRatio</span></div><div class='output co'>#&gt; <span class='message'>81 / 100 cellular barcodes passed pre-filtering (81.0%)</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; CellRanger 0.99.0
 #&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
 #&gt; citation("bcbioSingleCell")
-#&gt; ────────────────────────────────────────────────────────────────────────
-#&gt; Upload Dir: "/Users/mike/git/bcbioSingleCell-private/inst/extdata/cellranger"
-#&gt; R Load Date: 2018-10-19
+#&gt; ────────────────────────────────────────────────────────────
+#&gt; Upload Dir: "/Users/mike/git/bcbioSingleCell/inst/extdata/cellranger"
+#&gt; R Load Date: 2018-10-21
 #&gt; Level: "genes"
 #&gt; Organism: NULL
 #&gt; Interesting Groups: "sampleName"
 #&gt; Filtered: FALSE
-#&gt; ────────────────────────────────────────────────────────────────────────
+#&gt; ────────────────────────────────────────────────────────────
 #&gt; class: SingleCellExperiment 
 #&gt; dim: 100 81 
 #&gt; metadata(16): version pipeline ... wd sessionInfo
@@ -279,11 +289,15 @@ match, due to deprecation in the current Ensembl release.</p>
       
       <li><a href="#value">Value</a></li>
 
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#directory-structure">Directory structure</a></li>
 
       <li><a href="#sample-metadata">Sample metadata</a></li>
 
       <li><a href="#reference-data">Reference data</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

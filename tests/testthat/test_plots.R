@@ -11,7 +11,7 @@ with_parameters_test_that(
         # Example dataset doesn't have a cellular barcode cutoff because we
         # removed the bcbio commands log file (which conflicts with Travis CI).
         p <- plotQC(object, return = "grid")
-        expect_is(p, "ggplot")
+        expect_s3_class(p, "ggplot")
 
         # List
         x <- plotQC(object, return = "list")
