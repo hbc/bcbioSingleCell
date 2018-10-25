@@ -16,13 +16,7 @@ We recommend installing the package with [BiocManager][].
 if (!require("BiocManager")) {
     install.packages("BiocManager")
 }
-BiocManager::install(
-    pkgs = c(
-        "devtools",
-        "remotes",
-        "GenomeInfoDbData"
-    )
-)
+BiocManager::install("remotes")
 BiocManager::install("hbc/bcbioSingleCell")
 ```
 
@@ -44,9 +38,7 @@ bcb <- bcbioSingleCell(
     organism = "Homo sapiens",
     ensemblRelease = 90L
 )
-# Back up all data inside bcbioSingleCell object
-flat <- flatFiles(bcb)
-saveData(bcb, flat, dir = "data")
+saveData(bcb, dir = ".")
 ```
 
 This will return a `bcbioSingleCell` object, which is an extension of the [Bioconductor][] [SingleCellExperiment][SCE] container class. Consult the `bcbioSingleCell()` constructor function documentation for detailed information on the supported parameters:
