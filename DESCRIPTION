@@ -2,7 +2,7 @@ Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Toolkit for bcbio single-cell RNA-seq analysis.
 Version: 0.99.0
-Date: 2018-10-21
+Date: 2018-10-25
 Authors@R: c(
     person(
         given = "Michael",
@@ -62,7 +62,7 @@ Imports:
     Matrix,
     Matrix.utils,
     R.utils,
-    S4Vectors,
+    S4Vectors (>= 0.19.11),
     SummarizedExperiment,
     assertive.base,
     assertive.files,
