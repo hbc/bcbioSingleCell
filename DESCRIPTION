@@ -62,7 +62,7 @@ Imports:
     Matrix,
     Matrix.utils,
     R.utils,
-    S4Vectors (>= 0.19.11),
+    S4Vectors,
     SummarizedExperiment,
     assertive.base,
     assertive.files,
