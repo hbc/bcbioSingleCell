@@ -1,8 +1,143 @@
 Package: bcbioSingleCell
-Title: TRAVIS BIOCONDUCTOR CACHE
-Description: TRAVIS BIOCONDUCTOR CACHE
-Version: 0.0.0.9000
+Title: Single-Cell RNA-Seq Utilities
+Description: Toolkit for bcbio single-cell RNA-seq analysis.
+Version: 0.99.0
+Date: 2018-10-25
+Authors@R: c(
+    person(
+        given = "Michael",
+        family = "Steinbaugh",
+        email = "mike@steinbaugh.com",
+        role = c("aut", "cre"),
+        comment = c(ORCID = "0000-0002-2403-2221")
+    ),
+    person(
+        given = "Rory",
+        family = "Kirchner",
+        email = "roryk@alum.mit.edu",
+        role = "aut",
+        comment = c(ORCID = "0000-0003-4814-5885")
+    ),
+    person(
+        given = "Mary",
+        family = "Piper",
+        email = "mary.piper@gmail.com",
+        role = "aut",
+        comment = c(ORCID = "0000-0003-2699-3840")
+    ),
+    person(
+        given = "Victor",
+        family = "Barrera",
+        email = "barrera.vic@gmail.com",
+        role = "aut",
+        comment = c(ORCID = "0000-0003-0590-4634")
+    ),
+    person(
+        given = "Shannan",
+        family = "Ho Sui",
+        email = "shosui@hsph.harvard.edu",
+        role = "aut",
+        comment = c(ORCID = "0000-0002-6191-4709")
+    ),
+    person(
+        given = "Harvard Chan Bioinformatics Core",
+        email = "bioinformatics@hsph.harvard.edu",
+        role = c("cph", "fnd")
+    ))
+URL:
+    http://bioinformatics.sph.harvard.edu/bcbioSingleCell,
+    https://github.com/hbc/bcbioSingleCell
+BugReports: https://github.com/hbc/bcbioSingleCell/issues
+License: MIT + file LICENSE
+Encoding: UTF-8
 Depends:
-    R (>= 3.5)
-Imports:
+    R (>= 3.5),
+    basejump (>= 0.99),
     SingleCellExperiment
+Imports:
+    Biobase,
+    BiocGenerics,
+    BiocParallel,
+    DropletUtils,
+    Matrix,
+    Matrix.utils,
+    R.utils,
+    S4Vectors,
+    SummarizedExperiment,
+    assertive.base,
+    assertive.files,
+    assertive.numbers,
+    assertive.properties,
+    assertive.sets,
+    assertive.strings,
+    assertive.types,
+    bcbioBase (>= 0.99),
+    cowplot (>= 0.9),
+    crayon,
+    dplyr (>= 0.7),
+    ggplot2 (>= 3.0),
+    ggridges (>= 0.5),
+    graphics,
+    magrittr (>= 1.5),
+    methods,
+    purrr (>= 0.2),
+    readr (>= 1.1),
+    rhdf5 (>= 2.2),
+    rlang (>= 0.3),
+    rmarkdown,
+    scales,
+    sessioninfo,
+    stats,
+    stringr (>= 1.3),
+    tibble (>= 1.4),
+    tidyverse (>= 1.2),
+    utils
+Suggests:
+    BiocStyle,
+    EnsDb.Hsapiens.v75,
+    patrick,
+    roxygen2,
+    testthat (>= 2.0)
+Remotes:
+    steinbaugh/basejump@bioconductor,
+    steinbaugh/bcbioBase@bioconductor
+biocViews:
+    DataImport,
+    DataRepresentation,
+    QualityControl,
+    ReportWriting,
+    RNASeq,
+    SingleCell
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.0
+Collate: 
+    'AllClasses.R'
+    'AllGenerics.R'
+    'CellRanger.R'
+    'assert-internal.R'
+    'barcodeRanksPerSample-methods.R'
+    'barcodes-internal.R'
+    'bcbioSingleCell-generator.R'
+    'bcbioSingleCell-package.R'
+    'cellranger-internal.R'
+    'data.R'
+    'deprecated.R'
+    'extract-methods.R'
+    'filterCells-methods.R'
+    'general.R'
+    'globals.R'
+    'import-internal.R'
+    'metrics-methods.R'
+    'plotBarcodeRanks-methods.R'
+    'plotCellCounts-methods.R'
+    'plotGenesPerCell-methods.R'
+    'plotMitoRatio-methods.R'
+    'plotMitoVsCoding-methods.R'
+    'plotNovelty-methods.R'
+    'plotQC-methods.R'
+    'plotReadsPerCell-methods.R'
+    'plotUMIsPerCell-methods.R'
+    'plotUMIsVsGenes-methods.R'
+    'prepareSingleCellTemplate.R'
+    'show-methods.R'
+    'updateObject-methods.R'
