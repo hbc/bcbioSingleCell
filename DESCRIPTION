@@ -52,7 +52,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
     R (>= 3.5),
-    basejump (= 0.99.0),
+    basejump (>= 0.99.0),
     SingleCellExperiment
 Imports:
     Biobase,
