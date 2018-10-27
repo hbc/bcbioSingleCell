@@ -52,7 +52,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
     R (>= 3.5),
-    basejump (>= 0.99),
+    basejump (= 0.99.0),
     SingleCellExperiment
 Imports:
     Biobase,
@@ -100,7 +100,7 @@ Suggests:
     testthat (>= 2.0)
 Remotes:
     steinbaugh/basejump@bioconductor,
-    steinbaugh/bcbioBase@bioconductor
+    hbc/bcbioBase@bioconductor
 biocViews:
     DataImport,
     DataRepresentation,
