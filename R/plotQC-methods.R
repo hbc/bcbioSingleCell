@@ -10,7 +10,7 @@ basejump::plotQC
 #' @author Michael Steinbaugh
 #' @include globals.R
 #'
-#' @inheritParams general
+#' @inheritParams basejump.globals::params
 #' @param headerLevel `scalar integer` (`1`-`7`). R Markdown header level.
 #' @param legend `boolean`. Include plot legend.
 #'
@@ -320,7 +320,7 @@ plotQC.SingleCellExperiment <-  # nolint
 
         # Consistently show n plots.
         n <- 6L
-        stopifnot(has_length(plotlist, n = n))
+        assert_that(has_length(plotlist, n = n))
 
         # Hide the legends, if desired.
         if (identical(legend, FALSE)) {

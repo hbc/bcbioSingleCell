@@ -1,3 +1,5 @@
+# FIXME Use `validate_that()` here.
+
 # bcbioSingleCell ==============================================================
 #' bcbio Single-Cell RNA-Seq Data Set
 #'
@@ -22,8 +24,8 @@ setClass(
 setValidity(
     Class = "bcbioSingleCell",
     method = function(object) {
-        stopifnot(metadata(object)[["version"]] >= 0.1)
-        stopifnot(!.hasSlot(object, "bcbio"))
+        assert_that(metadata(object)[["version"]] >= 0.1)
+        assert_that(!.hasSlot(object, "bcbio"))
 
         # Assays ---------------------------------------------------------------
         assert_is_subset("counts", names(assays(object)))

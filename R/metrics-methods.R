@@ -9,7 +9,7 @@ basejump::metrics
 #' @name metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @inheritParams general
+#' @inheritParams basejump.globals::params
 #' @param recalculate `boolean`. Force recalculation, using primary
 #'   [BiocGenerics::counts()] matrix.
 #'

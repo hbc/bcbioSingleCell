@@ -9,7 +9,7 @@
 #' [sshfs](https://github.com/osxfuse/osxfuse/wiki/SSHFS).
 #'
 #' @inheritParams basejump::makeSummarizedExperiment
-#' @inheritParams general
+#' @inheritParams basejump.globals::params
 #' @param uploadDir `string`. Path to final upload directory. This path is set
 #'   when running "`bcbio_nextgen -w template`".
 #' @param sampleMetadataFile `string` or `NULL`. Sample barcode metadata file.

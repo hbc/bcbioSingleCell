@@ -3,7 +3,7 @@
 #' @name plotUMIsVsGenes
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @inheritParams general
+#' @inheritParams basejump.globals::params
 #'
 #' @return `ggplot`.
 #'

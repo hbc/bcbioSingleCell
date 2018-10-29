@@ -10,7 +10,7 @@
 #' @name filterCells
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams general
+#' @inheritParams basejump.globals::params
 #' @param nCells `scalar integer`. Expected number of cells per sample.
 #' @param minUMIs `scalar integer`. Minimum number of UMI disambiguated counts
 #'   per cell.

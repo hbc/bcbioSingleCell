@@ -5,7 +5,7 @@
 #'
 #' @inherit DropletUtils::barcodeRanks
 #'
-#' @inheritParams general
+#' @inheritParams basejump.globals::params
 #' @param ... Additional arguments.
 #'
 #' @seealso [DropletUtils::barcodeRanks()].
