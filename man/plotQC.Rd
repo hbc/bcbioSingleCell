@@ -14,19 +14,9 @@
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
-interesting groups. Must be formatted in camel case and intersect with
-\code{\link[=sampleData]{sampleData()}} colnames.}
-
-\item{geom}{\code{string}. Plot type. Uses \code{\link[base:match.arg]{base::match.arg()}} and defaults to the
-first argument in the \code{character} vector.}
-
 \item{headerLevel}{\code{scalar integer} (\code{1}-\code{7}). R Markdown header level.}
 
 \item{legend}{\code{boolean}. Include plot legend.}
-
-\item{return}{\code{string}. Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and
-defaults to the first argument in the \code{character} vector.}
 }
 \value{
 \itemize{

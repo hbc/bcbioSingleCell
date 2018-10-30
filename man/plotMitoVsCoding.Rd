@@ -13,29 +13,6 @@ plotMitoVsCoding(object, ...)
   color = getOption("basejump.discrete.color", NULL), trans = "log2",
   title = "mito vs. coding")
 }
-\arguments{
-\item{object}{Object.}
-
-\item{...}{Additional arguments.}
-
-\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
-interesting groups. Must be formatted in camel case and intersect with
-\code{\link[=sampleData]{sampleData()}} colnames.}
-
-\item{trendline}{\code{boolean}. Include trendline on plot.}
-
-\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 color
-scale. Must supply discrete values. When set to \code{NULL}, the default ggplot2
-color palette will be used. If manual color definitions are desired, we
-recommend using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.
-To set the discrete color palette globally, use
-\code{options(bcbio.discrete.color = scale_color_viridis_d())}.}
-
-\item{trans}{\code{string}. Name of the axis scale transformation to apply. See
-\code{help("scale_x_continuous", "ggplot2")} for more information.}
-
-\item{title}{\code{string} or \code{NULL}. Plot title.}
-}
 \value{
 \code{ggplot}.
 }

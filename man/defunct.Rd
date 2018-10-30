@@ -106,9 +106,6 @@ sanitizeMarkers(...)
 
 topMarkers(...)
 }
-\arguments{
-\item{...}{Additional arguments.}
-}
 \value{
 \code{\link[=.Defunct]{.Defunct()}}.
 }

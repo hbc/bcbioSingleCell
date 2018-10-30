@@ -16,34 +16,7 @@ plotReadsPerCell(object, ...)
   title = "reads per cell")
 }
 \arguments{
-\item{object}{Object.}
-
-\item{...}{Additional arguments.}
-
-\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
-interesting groups. Must be formatted in camel case and intersect with
-\code{\link[=sampleData]{sampleData()}} colnames.}
-
-\item{geom}{\code{string}. Plot type. Uses \code{\link[base:match.arg]{base::match.arg()}} and defaults to the
-first argument in the \code{character} vector.}
-
 \item{cutoffLine}{\code{boolean}. Include a line marking the cutoff.}
-
-\item{color}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 color
-scale. Must supply discrete values. When set to \code{NULL}, the default ggplot2
-color palette will be used. If manual color definitions are desired, we
-recommend using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.
-To set the discrete color palette globally, use
-\code{options(bcbio.discrete.color = scale_color_viridis_d())}.}
-
-\item{fill}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 fill scale.
-Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
-palette will be used. If manual color definitions are desired, we recommend
-using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.
-To set the discrete fill palette globally, use
-\code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
-
-\item{title}{\code{string} or \code{NULL}. Plot title.}
 }
 \value{
 \code{ggplot}.

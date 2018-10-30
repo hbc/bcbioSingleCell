@@ -12,8 +12,6 @@ plotBarcodeRanks(object, ...)
   fit.bounds = NULL, df = 20)
 }
 \arguments{
-\item{object}{Object.}
-
 \item{...}{Additional arguments.}
 
 \item{lower}{A numeric scalar specifying the lower bound on the total UMI count, at or below which all barcodes are assumed to correspond to empty droplets.}

@@ -13,10 +13,6 @@ filterCells(object, ...)
   minNovelty = 0L, maxMitoRatio = 1L, minCellsPerGene = 1L)
 }
 \arguments{
-\item{object}{Object.}
-
-\item{...}{Additional arguments.}
-
 \item{nCells}{\code{scalar integer}. Expected number of cells per sample.}
 
 \item{minUMIs}{\code{scalar integer}. Minimum number of UMI disambiguated counts
