@@ -75,43 +75,33 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>This is an <a href="https://www.r-project.org">R</a> package.</p>
-<div id="bioconductor" class="section level3">
+<div id="bioconductor-method" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bioconductor" class="anchor"></a><a href="https://bioconductor.org">Bioconductor</a>
-</h3>
+<a href="#bioconductor-method" class="anchor"></a><a href="https://bioconductor.org">Bioconductor</a> method</h3>
 <p>We recommend installing the package with <a href="https://cran.r-project.org/package=BiocManager">BiocManager</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">"BiocManager"</span>)) {
     <span class="kw">install.packages</span>(<span class="st">"BiocManager"</span>)
 }
-BiocManager<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(
-    <span class="dt">pkgs =</span> <span class="kw">c</span>(
-        <span class="st">"devtools"</span>,
-        <span class="st">"remotes"</span>,
-        <span class="st">"GenomeInfoDbData"</span>
-    )
-)
+BiocManager<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"remotes"</span>)
 BiocManager<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"hbc/bcbioSingleCell"</span>)</code></pre></div>
 <p>For <a href="https://www.r-project.org">R</a> &lt; 3.5, <a href="https://cran.r-project.org/package=BiocManager">BiocManager</a> is not supported. Use <code><a href="http://www.rdocumentation.org/packages/BiocInstaller/topics/biocLite">BiocInstaller::biocLite()</a></code> instead of <code><a href="http://www.rdocumentation.org/packages/BiocManager/topics/install">BiocManager::install()</a></code>. This requires sourcing the legacy <a href="https://bioconductor.org">Bioconductor</a> <code>biocLite.R</code> script.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># try http:// if https:// URLs are not supported</span>
 <span class="kw">source</span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)</code></pre></div>
 </div>
 </div>
-<div id="load-bcbio-run" class="section level2">
+<div id="load-bcbio-single-cell-rna-seq-data" class="section level2">
 <h2 class="hasAnchor">
-<a href="#load-bcbio-run" class="anchor"></a>Load <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> run</h2>
+<a href="#load-bcbio-single-cell-rna-seq-data" class="anchor"></a>Load <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> single-cell RNA-seq data</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(bcbioSingleCell)
-bcb &lt;-<span class="st"> </span><span class="kw"><a href="reference/bcbioSingleCell.html">bcbioSingleCell</a></span>(
+bcb &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bcbioSingleCell/topics/bcbioSingleCell">bcbioSingleCell</a></span>(
     <span class="dt">uploadDir =</span> <span class="st">"indrops/final"</span>,
     <span class="dt">interestingGroups =</span> <span class="kw">c</span>(<span class="st">"genotype"</span>, <span class="st">"treatment"</span>),
     <span class="dt">sampleMetadataFile =</span> <span class="st">"sample_metadata.csv"</span>,
     <span class="dt">organism =</span> <span class="st">"Homo sapiens"</span>,
     <span class="dt">ensemblRelease =</span> 90L
 )
-<span class="co"># Back up all data inside bcbioSingleCell object</span>
-flat &lt;-<span class="st"> </span><span class="kw">flatFiles</span>(bcb)
-<span class="kw">saveData</span>(bcb, flat, <span class="dt">dir =</span> <span class="st">"data"</span>)</code></pre></div>
-<p>This will return a <code>bcbioSingleCell</code> object, which is an extension of the <a href="https://bioconductor.org">Bioconductor</a> <a href="https://doi.org/doi:10.18129/B9.bioc.SingleCellExperiment">SingleCellExperiment</a> container class. Consult the <code><a href="reference/bcbioSingleCell.html">bcbioSingleCell()</a></code> constructor function documentation for detailed information on the supported parameters:</p>
+<span class="kw">saveData</span>(bcb, <span class="dt">dir =</span> <span class="st">"."</span>)</code></pre></div>
+<p>This will return a <code>bcbioSingleCell</code> object, which is an extension of the <a href="https://bioconductor.org">Bioconductor</a> <a href="https://doi.org/doi:10.18129/B9.bioc.SingleCellExperiment">SingleCellExperiment</a> container class. Consult the <code><a href="http://www.rdocumentation.org/packages/bcbioSingleCell/topics/bcbioSingleCell">bcbioSingleCell()</a></code> constructor function documentation for detailed information on the supported parameters:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">help</span>(<span class="dt">topic =</span> <span class="st">"bcbioSingleCell"</span>, <span class="dt">package =</span> <span class="st">"bcbioSingleCell"</span>)</code></pre></div>
 </div>
 <div id="sample-metadata-examples" class="section level2">
@@ -122,7 +112,7 @@ flat &lt;-<span class="st"> </span><span class="kw">flatFiles</span>(bcb)
 <a href="#fastq-files-with-samples-multiplexed-by-index-barcode" class="anchor"></a>FASTQ files with samples multiplexed by index barcode</h3>
 <p>This is our current recommended method for analyzing an <a href="https://github.com/indrops/indrops">inDrops</a> dataset. The sample index barcodes are multiplexed per FASTQ set. For Illumina sequencing data, the raw binary base call (BCL) data must be converted into FASTQs (split into <code>R1</code>-<code>R4</code> files) using <a href="https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html">bcl2fastq</a>.</p>
 <p>The <a href="https://github.com/indrops/indrops">inDrops</a> library version is automatically detected by <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a>, but ensure that the sample index sequences provided match the library version when attempting to create a <code>bcbioSingleCell</code> object. A current list of <a href="https://github.com/seqcloud/seqcloud/blob/master/workflows/bcbio/scrnaseq/harvard_indrop_v3/index_barcodes.csv">inDrops v3 index barcodes</a> is available from <a href="http://seq.cloud">seqcloud</a>.</p>
-<p>Consult the <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> documentation for more information on how to configure an <a href="https://github.com/indrops/indrops">inDrops</a> run prior to loading into <a href="https://www.r-project.org">R</a> with the <code><a href="reference/bcbioSingleCell.html">bcbioSingleCell()</a></code> function.</p>
+<p>Consult the <a href="https://bcbio-nextgen.readthedocs.io">bcbio</a> documentation for more information on how to configure an <a href="https://github.com/indrops/indrops">inDrops</a> run prior to loading into <a href="https://www.r-project.org">R</a> with the <code><a href="http://www.rdocumentation.org/packages/bcbioSingleCell/topics/bcbioSingleCell">bcbioSingleCell()</a></code> function.</p>
 <table class="table">
 <thead><tr class="header">
 <th>description</th>
@@ -187,7 +177,7 @@ flat &lt;-<span class="st"> </span><span class="kw">flatFiles</span>(bcb)
 <div id="fastq-files-demultiplexed-per-sample" class="section level3">
 <h3 class="hasAnchor">
 <a href="#fastq-files-demultiplexed-per-sample" class="anchor"></a>FASTQ files demultiplexed per sample</h3>
-<p>This is our current method for handling <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">10X Genomics Cell Ranger</a> output (using <code><a href="reference/readCellRanger.html">readCellRanger()</a></code>) and <a href="https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html">Illumina SureCell</a> sample data.</p>
+<p>This is our current method for handling <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">10X Genomics Cell Ranger</a> output (using <code><a href="http://www.rdocumentation.org/packages/bcbioSingleCell/topics/deprecated">readCellRanger()</a></code>) and <a href="https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html">Illumina SureCell</a> sample data.</p>
 <table class="table">
 <thead><tr class="header">
 <th>description</th>
