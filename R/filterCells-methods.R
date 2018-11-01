@@ -316,7 +316,7 @@ setMethod(
         }
         summaryCells[["minNovelty"]] <- paste(
             paste(.paddedCount(nrow(metrics)), "cells"),
-            paste("minNovelty", "<=", min(minNovelty)),
+            paste("minNovelty", ">=", min(minNovelty)),
             sep = " | "
         )
 
@@ -334,7 +334,7 @@ setMethod(
                 FUN = function(sample, cutoff) {
                     metrics %>%
                         .[.[["sampleName"]] == sample, , drop = FALSE] %>%
-                        .[.[["mitoRatio"]] >= cutoff, , drop = FALSE]
+                        .[.[["mitoRatio"]] <= cutoff, , drop = FALSE]
                 },
                 SIMPLIFY = FALSE,
                 USE.NAMES = FALSE
