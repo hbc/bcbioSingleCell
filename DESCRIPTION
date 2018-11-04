@@ -1,8 +1,8 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Toolkit for bcbio single-cell RNA-seq analysis.
-Version: 0.99.2
-Date: 2018-11-03
+Version: 0.3.0
+Date: 2018-11-04
 Authors@R: c(
     person(
         given = "Michael",
@@ -71,15 +71,15 @@ Imports:
     assertive.strings,
     assertive.types,
     assertthat,
-    basejump.annotations,
-    basejump.assertions,
-    basejump.developer,
-    basejump.experiment,
-    basejump.io,
-    basejump.markdown,
-    basejump.plots,
-    basejump.sanitization,
-    bcbioBase (>= 0.99),
+    basejump.annotations (>= 0.8),
+    basejump.assertions (>= 0.8),
+    basejump.developer (>= 0.8),
+    basejump.experiment (>= 0.8),
+    basejump.io (>= 0.8),
+    basejump.markdown (>= 0.8),
+    basejump.plots (>= 0.8),
+    basejump.sanitization (>= 0.8),
+    bcbioBase (>= 0.5),
     cowplot (>= 0.9),
     crayon,
     dplyr (>= 0.7),
@@ -103,8 +103,8 @@ Imports:
 Suggests:
     BiocStyle,
     EnsDb.Hsapiens.v75,
-    basejump,
-    basejump.globals,
+    basejump (>= 0.8),
+    basejump.globals (>= 0.8),
     patrick,
     roxygen2,
     testthat (>= 2.0)
@@ -128,7 +128,7 @@ biocViews:
     RNASeq,
     SingleCell
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.0.9000
 Collate: 
     'AllClasses.R'
     'AllGenerics.R'
