@@ -26,12 +26,7 @@ Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
 be left \code{NULL}, but otherwise suggested for runs with multipliexed FASTQs
 containing multiple index barcodes (e.g. inDrops).}
 
-\item{organism}{\code{string} or \code{NULL}. Organism name. Use the full Latin name
-(e.g. "Homo sapiens"), since this will be input downstream to AnnotationHub
-and ensembldb, unless \code{gffFile} is set. If left \code{NULL} (\emph{not recommended}),
-the function call will skip loading gene-level annotations into
-\code{\link[=rowRanges]{rowRanges()}}. This can be useful for poorly annotation genomes or
-experiments involving multiple genomes.}
+\item{organism}{\code{string}. Full Latin organism name (e.g. "\code{Homo sapiens}").}
 
 \item{ensemblRelease}{\code{scalar integer} or \code{NULL}. Ensembl release version. If
 \code{NULL}, defaults to current release, and does not typically need to be
@@ -62,6 +57,9 @@ mappings and construct a \code{GRanges} object containing the genomic ranges
 
 \item{spikeNames}{\code{character} or \code{NULL}. Vector indicating which \code{\link[=assay]{assay()}}
 rows denote spike-in sequences (e.g. ERCCs).}
+
+\item{interestingGroups}{\code{character} or \code{NULL}. Groups of interest that
+define the samples. If left unset, defaults to \code{sampleName}.}
 }
 \value{
 \code{CellRanger}.

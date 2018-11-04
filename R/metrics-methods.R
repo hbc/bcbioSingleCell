@@ -1,11 +1,4 @@
-#' @importFrom basejump metrics
-#' @aliases NULL
-#' @export
-basejump::metrics
-
-
-
-#' @inherit basejump::metrics
+#' @inherit basejump.experiment::metrics
 #' @name metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
@@ -21,8 +14,16 @@ NULL
 
 
 
-metrics.matrix <-
-    function(  # nolint
+#' @importFrom basejump.generics metrics
+#' @aliases NULL
+#' @export
+basejump.generics::metrics
+
+
+
+# matrix =======================================================================
+metrics.matrix <-  # nolint
+    function(
         object,
         rowRanges = NULL,
         prefilter = FALSE

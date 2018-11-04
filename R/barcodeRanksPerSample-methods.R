@@ -1,9 +1,8 @@
 #' Barcode Ranks per Sample
 #'
 #' @name barcodeRanksPerSample
-#' @author Michael Steinbaugh
-#'
 #' @inherit DropletUtils::barcodeRanks
+#' @author Michael Steinbaugh
 #'
 #' @inheritParams basejump.globals::params
 #' @param ... Additional arguments.
@@ -18,6 +17,7 @@ NULL
 
 
 
+# SingleCellExperiment =========================================================
 barcodeRanksPerSample.SingleCellExperiment <-  # nolint
     function(object) {
         which <- sys.parent()

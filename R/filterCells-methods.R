@@ -5,7 +5,7 @@
 #' to all samples. The filtering parameters now support per-sample cutoffs,
 #' defined using a named `numeric` vector. When matching per sample, be sure to
 #' use the [Biobase::sampleNames()] return values (i.e. the `sampleName` column
-#' in [basejump::sampleData()]).
+#' in [basejump.experiment::sampleData()]).
 #'
 #' @name filterCells
 #' @author Michael Steinbaugh

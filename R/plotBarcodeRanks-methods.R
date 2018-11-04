@@ -1,8 +1,8 @@
 #' Plot Barcode Ranks
 #'
-#'
 #' @name plotBarcodeRanks
 #' @author Michael Steinbaugh
+#' @include barcodeRanksPerSample-methods.R
 #'
 #' @inherit barcodeRanksPerSample
 #'
@@ -15,6 +15,7 @@ NULL
 
 
 
+# SingleCellExperiment =========================================================
 plotBarcodeRanks.SingleCellExperiment <- function(object) {
     ranksPerSample <- do.call(
         what = barcodeRanksPerSample,
@@ -112,10 +113,8 @@ plotBarcodeRanks.SingleCellExperiment <- function(object) {
     plot_grid(plotlist = plotlist)
 }
 
-formals(plotBarcodeRanks.SingleCellExperiment) <- methodFormals(
-    f = "barcodeRanksPerSample",
-    signature = "SingleCellExperiment"
-)
+formals(plotBarcodeRanks.SingleCellExperiment) <-
+    formals(barcodeRanksPerSample.SingleCellExperiment)
 
 
 

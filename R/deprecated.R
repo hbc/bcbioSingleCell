@@ -3,24 +3,18 @@
 
 
 #' Deprecated Functions
-#'
 #' @name deprecated
 #' @keywords internal
-#'
 #' @inheritParams basejump.globals::params
-#'
 #' @return [.Deprecated()].
 NULL
 
 
 
 #' Defunct Functions
-#'
 #' @name defunct
 #' @keywords internal
-#'
 #' @inheritParams basejump.globals::params
-#'
 #' @return [.Defunct()].
 NULL
 
@@ -182,9 +176,9 @@ plotFeatureUMAP <- function(...) {
     .Defunct("pointillism::plotFeature")
 }
 
-#' @importFrom basejump plotGene
+#' @importFrom basejump.plots plotGene
 #' @export
-basejump::plotGene
+basejump.plots::plotGene
 
 #' @rdname defunct
 #' @export

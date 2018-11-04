@@ -1,8 +1,8 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Toolkit for bcbio single-cell RNA-seq analysis.
-Version: 0.99.1
-Date: 2018-10-30
+Version: 0.99.2
+Date: 2018-11-03
 Authors@R: c(
     person(
         given = "Michael",
@@ -52,7 +52,6 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
     R (>= 3.5),
-    basejump (>= 0.99.0),
     SingleCellExperiment
 Imports:
     Biobase,
@@ -72,6 +71,14 @@ Imports:
     assertive.strings,
     assertive.types,
     assertthat,
+    basejump.annotations,
+    basejump.assertions,
+    basejump.developer,
+    basejump.experiment,
+    basejump.io,
+    basejump.markdown,
+    basejump.plots,
+    basejump.sanitization,
     bcbioBase (>= 0.99),
     cowplot (>= 0.9),
     crayon,
@@ -96,12 +103,23 @@ Imports:
 Suggests:
     BiocStyle,
     EnsDb.Hsapiens.v75,
+    basejump,
+    basejump.globals,
     patrick,
     roxygen2,
     testthat (>= 2.0)
 Remotes:
+    hbc/bcbioBase@bioconductor,
     steinbaugh/basejump@bioconductor,
-    hbc/bcbioBase@bioconductor
+    steinbaugh/basejump.annotations,
+    steinbaugh/basejump.assertions,
+    steinbaugh/basejump.developer,
+    steinbaugh/basejump.experiment,
+    steinbaugh/basejump.globals,
+    steinbaugh/basejump.io,
+    steinbaugh/basejump.markdown,
+    steinbaugh/basejump.plots,
+    steinbaugh/basejump.sanitization
 biocViews:
     DataImport,
     DataRepresentation,
@@ -118,17 +136,17 @@ Collate:
     'assert-internal.R'
     'barcodeRanksPerSample-methods.R'
     'barcodes-internal.R'
-    'bcbioSingleCell-generator.R'
+    'bcbioSingleCell.R'
     'cellranger-internal.R'
     'data.R'
     'deprecated.R'
     'extract-methods.R'
     'filterCells-methods.R'
-    'general.R'
     'globals.R'
     'import-internal.R'
     'metrics-methods.R'
     'package.R'
+    'params.R'
     'plotBarcodeRanks-methods.R'
     'plotCellCounts-methods.R'
     'plotGenesPerCell-methods.R'

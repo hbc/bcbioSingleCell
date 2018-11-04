@@ -25,7 +25,7 @@ of the object, like \code{\link[SummarizedExperiment:colData]{SummarizedExperime
 }
 }
 \description{
-This function takes data stored in \code{\link[SummarizedExperiment:colData]{SummarizedExperiment::colData()}} and
+This function takes data stored in \code{SummarizedExperiment::colData()} and
 consistently returns a tibble grouped by sample by default (\code{sampleID}).
 }
 \details{

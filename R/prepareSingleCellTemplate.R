@@ -1,7 +1,7 @@
 #' Prepare Single-Cell RNA-Seq R Markdown Template
 #'
 #' @name prepareSingleCellTemplate
-#' @inherit basejump::prepareTemplate
+#' @inherit basejump.markdown::prepareTemplate
 #' @author Michael Steinbaugh
 #' @export
 #'
@@ -9,7 +9,7 @@
 #' x <- prepareSingleCellTemplate()
 #' x
 #'
-#' ## Clean up
+#' ## Clean up.
 #' unlink(c(
 #'     "_footer.Rmd",
 #'     "_header.Rmd",

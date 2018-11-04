@@ -62,6 +62,8 @@
     An index value of \code{NULL} is treated as if it were \code{integer(0)}.
   }
 
+\item{...}{Additional arguments.}
+
 \item{drop}{For matrices and arrays.  If \code{TRUE} the result is
     coerced to the lowest possible dimension (see the examples).  This
     only works for extracting elements, not for the replacement.  See

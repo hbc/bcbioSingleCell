@@ -2,10 +2,14 @@ globalVariables(".")
 
 packageVersion <- packageVersion("bcbioSingleCell")
 
-lanePattern <- basejump::lanePattern
+#' @importFrom basejump.globals lanePattern
+lanePattern <- basejump.globals::lanePattern
+
+#' @importFrom bcbioBase projectDirPattern
 projectDirPattern <- bcbioBase::projectDirPattern
-separatorBar <- basejump::separator()
-updateMessage <- basejump::updateMessage
+
+# FIXME Take this out
+separatorBar <- basejump.developer::separator()
 
 requiredAssays <- "counts"
 

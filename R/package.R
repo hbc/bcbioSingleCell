@@ -7,7 +7,9 @@
 #' @keywords internal
 #'
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
-#' @importMethodsFrom basejump coerce
+#'
+#' @importMethodsFrom basejump.coercion coerce
+#'
 #' @importFrom assertive.base assert_are_identical
 #' @importFrom assertive.files assert_all_are_dirs assert_all_are_existing_files
 #' @importFrom assertive.numbers assert_all_are_in_left_open_range
@@ -24,20 +26,25 @@
 #'   assert_is_factor assert_is_function assert_is_integer assert_is_list
 #'   assert_is_numeric assert_is_tbl_df is_a_string
 #' @importFrom assertthat assert_that validate_that
-#' @importFrom basejump assertFormalInterestingGroups assertHasRownames
-#'   assertIsAStringOrNULL assertIsAnImplicitInteger
+#' @importFrom basejump.annotations emptyRanges makeGRangesFromEnsembl
+#'   makeGRangesFromGFF
+#' @importFrom basejump.assertions assertFormalInterestingGroups
+#'   assertHasRownames assertIsAStringOrNULL assertIsAnImplicitInteger
 #'   assertIsAnImplicitIntegerOrNULL assertIsColorScaleDiscreteOrNULL
-#'   assertIsFillScaleDiscreteOrNULL assertIsHeaderLevel assignAndSaveData
-#'   basejump_geom_abline basejump_geom_label basejump_geom_label_average
-#'   basejump_geom_label_repel camel cell2sample detectLanes emptyRanges
-#'   hasRownames import interestingGroups interestingGroups<- initDir
-#'   makeDimnames makeGRangesFromEnsembl makeGRangesFromGFF makeNames
-#'   makeSingleCellExperiment mapCellsToSamples matchArgsToDoCall
-#'   matchInterestingGroups markdownHeader markdownPlotlist methodFormals
-#'   metrics minimalSampleData plotZerosVsDepth prepareTemplate printString
-#'   realpath sampleData sanitizeSampleData separator standardizeCall
-#'   stripTranscriptVersions theme_midnight theme_paperwhite
+#'   assertIsFillScaleDiscreteOrNULL assertIsHeaderLevel hasRownames
+#' @importFrom basejump.developer matchArgsToDoCall methodFormals printString
+#'   separator standardizeCall
+#' @importFrom basejump.experiment cell2sample detectLanes interestingGroups
+#'   interestingGroups<- makeSingleCellExperiment mapCellsToSamples
+#'   matchInterestingGroups metrics minimalSampleData sampleData
 #'   uniteInterestingGroups
+#' @importFrom basejump.io assignAndSaveData import initDir realpath
+#' @importFrom basejump.markdown markdownHeader markdownPlotlist prepareTemplate
+#' @importFrom basejump.plots basejump_geom_abline basejump_geom_label
+#'   basejump_geom_label_average basejump_geom_label_repel plotZerosVsDepth
+#'   theme_midnight theme_paperwhite
+#' @importFrom basejump.sanitization camel makeDimnames makeNames
+#'   sanitizeSampleData stripTranscriptVersions
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getLevelFromCommands
 #'   getSampleDataFromYAML getUMITypeFromCommands projectDir readDataVersions
 #'   readProgramVersions readSampleData runDate sampleDirs

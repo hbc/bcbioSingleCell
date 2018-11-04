@@ -13,6 +13,10 @@ filterCells(object, ...)
   minNovelty = 0L, maxMitoRatio = 1L, minCellsPerGene = 1L)
 }
 \arguments{
+\item{object}{Object.}
+
+\item{...}{Additional arguments.}
+
 \item{nCells}{\code{scalar integer}. Expected number of cells per sample.}
 
 \item{minUMIs}{\code{scalar integer}. Minimum number of UMI disambiguated counts
@@ -44,7 +48,7 @@ cellular barcodes. By default we recommend applying the same filtering cutoff
 to all samples. The filtering parameters now support per-sample cutoffs,
 defined using a named \code{numeric} vector. When matching per sample, be sure to
 use the \code{\link[Biobase:sampleNames]{Biobase::sampleNames()}} return values (i.e. the \code{sampleName} column
-in \code{\link[basejump:sampleData]{basejump::sampleData()}}).
+in \code{\link[basejump.experiment:sampleData]{basejump.experiment::sampleData()}}).
 }
 \examples{
 data(indrops_small)

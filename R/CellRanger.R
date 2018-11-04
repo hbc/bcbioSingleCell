@@ -1,12 +1,8 @@
 # FIXME Break these back out into separate files.
 # FIXME Either make `sampleName` required or strip it from minimal examples.
 # TODO Check to see if we can import tx2gene.csv
-
-
-
-# bcbioSingleCell ==============================================================
 # FIXME Can we parse the CellRanger `runDate` from the refData YAML?
-# FIXME Allow this function to work if the user points at dir containing matrix.mtx.
+# FIXME Allow this function to work if the user points at dir containing matrix.
 # FIXME Add documentation about simple mode.
 
 
@@ -50,8 +46,8 @@
 #' @author Michael Steinbaugh
 #' @export
 #'
-#' @inheritParams bcbioSingleCell
 #' @inheritParams basejump.globals::params
+#' @inheritParams bcbioSingleCell
 #' @param uploadDir `string`. Path to Cell Ranger output directory. This
 #'   directory path must contain `filtered_gene_bc_matrices*` as a child
 #'   directory.

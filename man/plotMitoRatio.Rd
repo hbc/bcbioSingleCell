@@ -14,6 +14,30 @@ plotMitoRatio(object, ...)
   fill = getOption("basejump.discrete.fill", NULL), trans = "sqrt",
   title = "mito ratio")
 }
+\arguments{
+\item{object}{Object.}
+
+\item{...}{Additional arguments.}
+
+\item{geom}{\code{string}. Plot type. Uses \code{\link[base:match.arg]{base::match.arg()}} and defaults to the
+first argument in the \code{character} vector.}
+
+\item{interestingGroups}{\code{character} or \code{NULL}. Groups of interest that
+define the samples. If left unset, defaults to \code{sampleName}.}
+
+\item{max}{\code{scalar numeric}. Recommended maximum value cutoff.}
+
+\item{fill}{\code{ggproto}/\code{ScaleDiscrete} or \code{NULL}. Desired ggplot2 fill scale.
+Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
+palette will be used. If manual color definitions are desired, we recommend
+using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}. To set the discrete fill palette
+globally, use \code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
+
+\item{trans}{\code{string}. Name of the axis scale transformation to apply. See
+\code{help("scale_x_continuous", "ggplot2")} for more information.}
+
+\item{title}{\code{string} or \code{NULL}. Plot title.}
+}
 \value{
 \code{ggplot}.
 }

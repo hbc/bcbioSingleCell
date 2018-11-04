@@ -12,7 +12,9 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{basejump}{\code{\link[basejump]{plotGene}}, \code{\link[basejump]{metrics}}, \code{\link[basejump]{plotQC}}}
+  \item{basejump.generics}{\code{\link[basejump.generics]{metrics}}, \code{\link[basejump.generics]{plotQC}}}
+
+  \item{basejump.plots}{\code{\link[basejump.plots]{plotGene}}}
 
   \item{BiocGenerics}{\code{\link[BiocGenerics]{updateObject}}}
 

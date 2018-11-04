@@ -1,3 +1,7 @@
+# TODO Move some of these params to basejump.globals.
+
+
+
 #' @inherit bcbioSingleCell-class
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @export
@@ -8,8 +12,8 @@
 #' directory as a remote connection over
 #' [sshfs](https://github.com/osxfuse/osxfuse/wiki/SSHFS).
 #'
-#' @inheritParams basejump::makeSummarizedExperiment
 #' @inheritParams basejump.globals::params
+#' @inheritParams basejump.experiment::makeSummarizedExperiment
 #' @param uploadDir `string`. Path to final upload directory. This path is set
 #'   when running "`bcbio_nextgen -w template`".
 #' @param sampleMetadataFile `string` or `NULL`. Sample barcode metadata file.

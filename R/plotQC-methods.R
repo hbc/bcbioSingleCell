@@ -1,11 +1,4 @@
-#' @importFrom basejump plotQC
-#' @aliases NULL
-#' @export
-basejump::plotQC
-
-
-
-#' @inherit basejump::plotQC
+#' @inherit basejump.generics::plotQC
 #' @name plotQC
 #' @author Michael Steinbaugh
 #' @include globals.R
@@ -23,6 +16,13 @@ basejump::plotQC
 #' data(indrops_small)
 #' plotQC(indrops_small)
 NULL
+
+
+
+#' @importFrom basejump.generics plotQC
+#' @aliases NULL
+#' @export
+basejump.generics::plotQC
 
 
 

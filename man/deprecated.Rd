@@ -13,6 +13,9 @@ loadSingleCell(...)
 
 readCellRanger(...)
 }
+\arguments{
+\item{...}{Additional arguments.}
+}
 \value{
 \code{\link[=.Deprecated]{.Deprecated()}}.
 }
