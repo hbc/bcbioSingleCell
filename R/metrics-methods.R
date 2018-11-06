@@ -1,8 +1,8 @@
-#' @inherit basejump.experiment::metrics
+#' @inherit basejump::metrics
 #' @name metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @inheritParams basejump.globals::params
+#' @inheritParams basejump::params
 #' @param recalculate `boolean`. Force recalculation, using primary
 #'   [BiocGenerics::counts()] matrix.
 #'
@@ -14,10 +14,10 @@ NULL
 
 
 
-#' @importFrom basejump.generics metrics
+#' @importFrom basejump metrics
 #' @aliases NULL
 #' @export
-basejump.generics::metrics
+basejump::metrics
 
 
 

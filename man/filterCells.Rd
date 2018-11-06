@@ -48,7 +48,7 @@ cellular barcodes. By default we recommend applying the same filtering cutoff
 to all samples. The filtering parameters now support per-sample cutoffs,
 defined using a named \code{numeric} vector. When matching per sample, be sure to
 use the \code{\link[Biobase:sampleNames]{Biobase::sampleNames()}} return values (i.e. the \code{sampleName} column
-in \code{\link[basejump.experiment:sampleData]{basejump.experiment::sampleData()}}).
+in \code{\link[basejump:sampleData]{basejump::sampleData()}}).
 }
 \examples{
 data(indrops_small)

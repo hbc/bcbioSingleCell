@@ -13,7 +13,7 @@
 #' cells not kept in the matrix will be dropped in favor of the `nCount` column
 #' of `colData`.
 #'
-#' @inheritParams basejump.globals::params
+#' @inheritParams basejump::params
 #'
 #' @return `SingleCellExperiment`.
 #'

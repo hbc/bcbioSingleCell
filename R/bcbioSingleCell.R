@@ -1,4 +1,4 @@
-# TODO Move some of these params to basejump.globals.
+# TODO Move some of these params to basejump.
 
 
 
@@ -12,8 +12,8 @@
 #' directory as a remote connection over
 #' [sshfs](https://github.com/osxfuse/osxfuse/wiki/SSHFS).
 #'
-#' @inheritParams basejump.globals::params
-#' @inheritParams basejump.experiment::makeSummarizedExperiment
+#' @inheritParams basejump::params
+#' @inheritParams basejump::makeSummarizedExperiment
 #' @param uploadDir `string`. Path to final upload directory. This path is set
 #'   when running "`bcbio_nextgen -w template`".
 #' @param sampleMetadataFile `string` or `NULL`. Sample barcode metadata file.

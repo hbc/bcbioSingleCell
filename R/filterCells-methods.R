@@ -5,12 +5,12 @@
 #' to all samples. The filtering parameters now support per-sample cutoffs,
 #' defined using a named `numeric` vector. When matching per sample, be sure to
 #' use the [Biobase::sampleNames()] return values (i.e. the `sampleName` column
-#' in [basejump.experiment::sampleData()]).
+#' in [basejump::sampleData()]).
 #'
 #' @name filterCells
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams basejump.globals::params
+#' @inheritParams basejump::params
 #' @param nCells `scalar integer`. Expected number of cells per sample.
 #' @param minUMIs `scalar integer`. Minimum number of UMI disambiguated counts
 #'   per cell.

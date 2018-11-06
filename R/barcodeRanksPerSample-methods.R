@@ -4,7 +4,7 @@
 #' @inherit DropletUtils::barcodeRanks
 #' @author Michael Steinbaugh
 #'
-#' @inheritParams basejump.globals::params
+#' @inheritParams basejump::params
 #' @param ... Additional arguments.
 #'
 #' @seealso [DropletUtils::barcodeRanks()].

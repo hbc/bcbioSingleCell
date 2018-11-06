@@ -46,7 +46,7 @@
 #' @author Michael Steinbaugh
 #' @export
 #'
-#' @inheritParams basejump.globals::params
+#' @inheritParams basejump::params
 #' @inheritParams bcbioSingleCell
 #' @param uploadDir `string`. Path to Cell Ranger output directory. This
 #'   directory path must contain `filtered_gene_bc_matrices*` as a child
