@@ -28,23 +28,18 @@
 #' @importFrom assertthat assert_that validate_that
 #' @importFrom basejump emptyRanges makeGRangesFromEnsembl
 #'   makeGRangesFromGFF
-#' @importFrom basejump assertFormalInterestingGroups
-#'   assertHasRownames assertIsAStringOrNULL assertIsAnImplicitInteger
+#' @importFrom basejump assertFormalInterestingGroups assertHasRownames
+#'   assertIsAStringOrNULL assertIsAnImplicitInteger
 #'   assertIsAnImplicitIntegerOrNULL assertIsColorScaleDiscreteOrNULL
-#'   assertIsFillScaleDiscreteOrNULL assertIsHeaderLevel hasRownames
-#' @importFrom basejump matchArgsToDoCall methodFormals printString
-#'   separator standardizeCall
-#' @importFrom basejump cell2sample detectLanes interestingGroups
-#'   interestingGroups<- makeSingleCellExperiment mapCellsToSamples
-#'   matchInterestingGroups metrics minimalSampleData sampleData
-#'   uniteInterestingGroups
-#' @importFrom basejump assignAndSaveData import initDir realpath
-#' @importFrom basejump markdownHeader markdownPlotlist prepareTemplate
-#' @importFrom basejump basejump_geom_abline basejump_geom_label
-#'   basejump_geom_label_average basejump_geom_label_repel plotZerosVsDepth
-#'   theme_midnight theme_paperwhite
-#' @importFrom basejump camel makeDimnames makeNames
-#'   sanitizeSampleData stripTranscriptVersions
+#'   assertIsFillScaleDiscreteOrNULL assertIsHeaderLevel assignAndSaveData
+#'   basejump_geom_abline basejump_geom_label basejump_geom_label_average
+#'   basejump_geom_label_repel camel cell2sample detectLanes hasRownames import
+#'   initDir interestingGroups interestingGroups<- makeDimnames makeNames
+#'   makeSingleCellExperiment mapCellsToSamples markdownHeader markdownPlotlist
+#'   matchArgsToDoCall matchInterestingGroups methodFormals metrics
+#'   minimalSampleData plotZerosVsDepth prepareTemplate printString realpath
+#'   sampleData sanitizeSampleData separator standardizeCall
+#'   stripTranscriptVersions uniteInterestingGroups
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getLevelFromCommands
 #'   getSampleDataFromYAML getUMITypeFromCommands projectDir readDataVersions
 #'   readProgramVersions readSampleData runDate sampleDirs
