@@ -3,7 +3,7 @@
 #' @name plotCellCounts
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @inheritParams basejump.globals::params
+#' @inheritParams basejump::params
 #'
 #' @return `ggplot`.
 #'
@@ -14,6 +14,7 @@ NULL
 
 
 
+# FIXME Set fill formal globally.
 plotCellCounts.SingleCellExperiment <-  # nolint
     function(
         object,

@@ -8,7 +8,7 @@
 #'
 #' @inherit plotGenesPerCell
 #'
-#' @inheritParams basejump.globals::params
+#' @inheritParams basejump::params
 #' @param point `string`. Label either the "`knee`" or "`inflection`" points per
 #'   sample. To disable, use "`none`". Requires `geom = "ecdf"`.
 #'

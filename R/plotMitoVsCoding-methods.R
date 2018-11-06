@@ -3,7 +3,7 @@
 #' @name plotMitoVsCoding
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
-#' @inheritParams basejump.globals::params
+#' @inheritParams basejump::params
 #'
 #' @return `ggplot`.
 #'

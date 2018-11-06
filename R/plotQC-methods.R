@@ -1,9 +1,9 @@
-#' @inherit basejump.generics::plotQC
+#' @inherit basejump::plotQC
 #' @name plotQC
 #' @author Michael Steinbaugh
 #' @include globals.R
 #'
-#' @inheritParams basejump.globals::params
+#' @inheritParams basejump::params
 #' @param headerLevel `scalar integer` (`1`-`7`). R Markdown header level.
 #' @param legend `boolean`. Include plot legend.
 #'
@@ -19,14 +19,15 @@ NULL
 
 
 
-#' @importFrom basejump.generics plotQC
+#' @importFrom basejump plotQC
 #' @aliases NULL
 #' @export
-basejump.generics::plotQC
+basejump::plotQC
 
 
 
 # Plot a single quality control metric.
+# FIXME Set these color/fill formals globally.
 .plotQCMetric <- function(
     object,
     metricCol,
@@ -267,6 +268,7 @@ formals(.plotQCMetric)[["geom"]] <- geom
 
 
 
+# FIXME Set the legend formal globally.
 plotQC.SingleCellExperiment <-  # nolint
     function(
         object,

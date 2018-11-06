@@ -6,7 +6,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #'
-#' @inheritParams basejump.globals::params
+#' @inheritParams basejump::params
 #' @param cutoffLine `boolean`. Include a line marking the cutoff.
 #'
 #' @return `ggplot`.

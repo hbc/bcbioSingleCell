@@ -6,7 +6,7 @@
 #' @author Michael Steinbaugh
 #' @include globals.R
 #'
-#' @inheritParams basejump.globals::params
+#' @inheritParams basejump::params
 #'
 #' @return `ggplot`.
 #'
