@@ -102,11 +102,11 @@ bcbioSingleCell <- function(
     # Assert checks ------------------------------------------------------------
     assert_is_a_string(uploadDir)
     assert_all_are_dirs(uploadDir)
-    assertIsAStringOrNULL(sampleMetadataFile)
-    assertIsAStringOrNULL(organism)
+    assertIsStringOrNULL(sampleMetadataFile)
+    assertIsStringOrNULL(organism)
     assertIsAnImplicitIntegerOrNULL(ensemblRelease)
-    assertIsAStringOrNULL(genomeBuild)
-    assertIsAStringOrNULL(gffFile)
+    assertIsStringOrNULL(genomeBuild)
+    assertIsStringOrNULL(gffFile)
     if (is_a_string(gffFile)) {
         assert_all_are_existing_files(gffFile)
     }
