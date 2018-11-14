@@ -1,14 +1,14 @@
 # inDrops example data
 # Using harvard-indrop-v3 barcodes
-# 2018-10-21
+# 2018-11-14
+
+library(pryr)
+library(tidyverse)
+library(Matrix)
 
 # Restrict to 1 MB.
 # Use `pryr::object_size()` instead of `utils::object.size()`.
-library(pryr)
 limit <- structure(1e6, class = "object_size")
-
-library(tidyverse)
-library(Matrix)
 
 # Minimal example bcbio upload directory =======================================
 # Include the top 500 genes (rows) and cells (columns).
@@ -41,9 +41,9 @@ stopifnot(all(file.exists(
 )))
 
 # Prepare the sparse matrix.
-counts <- readMM(counts_file)
-rownames <- read_lines(rownames_file)
-colnames <- read_lines(colnames_file)
+counts <- Matrix::readMM(counts_file)
+rownames <- readr::read_lines(rownames_file)
+colnames <- readr::read_lines(colnames_file)
 stopifnot(identical(nrow(counts), length(rownames)))
 stopifnot(identical(ncol(counts), length(colnames)))
 rownames(counts) <- rownames
@@ -63,17 +63,17 @@ cells <- sort(names(top_cells))
 counts <- counts[genes, cells]
 
 # Update the `barcodes.tsv` file to match.
-barcodes <- read_tsv(barcodes_file, col_names = FALSE)
+barcodes <- readr::read_tsv(barcodes_file, col_names = FALSE)
 match <- match(x = colnames(counts), table = barcodes[[1L]])
 stopifnot(!any(is.na(match)))
 barcodes <- barcodes[match, ]
 stopifnot(identical(colnames(counts), barcodes[[1L]]))
 
 # Write update files to disk.
-writeMM(counts, file = counts_file)
-write_lines(rownames(counts), path = rownames_file)
-write_lines(colnames(counts), path = colnames_file)
-write_tsv(barcodes, path = barcodes_file, col_names = FALSE)
+Matrix::writeMM(counts, file = counts_file)
+readr::write_lines(rownames(counts), path = rownames_file)
+readr::write_lines(colnames(counts), path = colnames_file)
+readr::write_tsv(barcodes, path = barcodes_file, col_names = FALSE)
 
 # bcbioSingleCell object =======================================================
 sce <- bcbioSingleCell(
@@ -85,11 +85,24 @@ sce <- bcbioSingleCell(
 object_size(sce)
 
 # Include only minimal metadata columns in rowRanges.
-mcols(rowRanges(sce)) <- mcols(rowRanges(sce)) %>%
-    as("tbl_df") %>%
-    select(rowname, broadClass, geneBiotype, geneID, geneName) %>%
-    mutate_if(is.factor, droplevels) %>%
-    as("DataFrame")
+mcols <- mcols(rowRanges(sce))
+mcols <- mcols[, c("broadClass", "geneBiotype", "geneID", "geneName")]
+# TODO Consider making this Rle factor level step a function in basejump.
+mcols <- DataFrame(lapply(
+    X = mcols,
+    FUN = function(x) {
+        if (is(x, "Rle")) {
+            x <- decode(x)
+            if (is.factor(x)) {
+                x <- droplevels(x)
+            }
+            Rle(x)
+        } else {
+            I(x)
+        }
+    }
+))
+mcols(rowRanges(sce)) <- mcols
 
 # Report the size of each slot in bytes.
 vapply(
@@ -101,5 +114,5 @@ object_size(sce)
 stopifnot(object_size(sce) < limit)
 stopifnot(validObject(sce))
 
-indrops_small <- sce
-usethis::use_data(indrops_small, compress = "xz", overwrite = TRUE)
+indrops <- sce
+usethis::use_data(indrops, compress = "xz", overwrite = TRUE)
