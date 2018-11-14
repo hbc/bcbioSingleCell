@@ -1,15 +1,15 @@
-#' Cell Ranger Example
+#' 10X Genomics Cell Ranger Example Data Set
 #' @author Michael Steinbaugh
 #' @examples
-#' data(cellranger_small)
-#' cellranger_small
-"cellranger_small"
+#' data(cellranger)
+#' cellranger
+"cellranger"
 
 
 
-#' inDrops Example
+#' inDrops Example Data Set
 #' @author Michael Steinbaugh
 #' @examples
-#' data(indrops_small)
-#' indrops_small
-"indrops_small"
+#' data(indrops)
+#' indrops
+"indrops"
