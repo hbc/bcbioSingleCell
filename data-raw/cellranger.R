@@ -1,15 +1,15 @@
 # Cell Ranger example data
-# 2018-10-21
+# 2018-11-14
 # 4k PBMCs from a Healthy Donor
 # https://support.10xgenomics.com/single-cell-gene-expression/datasets/2.1.0/pbmc4k
 
-# Restrict to 1 MB.
-# Use `pryr::object_size()` instead of `utils::object.size()`.
 library(pryr)
-limit <- structure(1e6, class = "object_size")
-
 library(tidyverse)
 library(Matrix)
+
+# Restrict to 1 MB.
+# Use `pryr::object_size()` instead of `utils::object.size()`.
+limit <- structure(1e6, class = "object_size")
 
 # Complete dataset =============================================================
 upload_dir <- initDir("data-raw/cellranger")
@@ -56,6 +56,7 @@ if (!file.exists(gtf_file)) {
     )
 }
 
+# Note that this blows up in memory too much to run on RStudio AMI.
 sce <- CellRanger(
     uploadDir = upload_dir,
     organism = "Homo sapiens",
