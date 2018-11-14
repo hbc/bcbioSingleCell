@@ -1,8 +1,8 @@
 Package: bcbioSingleCell
 Title: Single-Cell RNA-Seq Utilities
 Description: Toolkit for bcbio single-cell RNA-seq analysis.
-Version: 0.3.0
-Date: 2018-11-06
+Version: 0.3.1
+Date: 2018-11-14
 Authors@R: c(
     person(
         given = "Michael",
@@ -74,7 +74,6 @@ Imports:
     basejump (>= 0.8),
     bcbioBase (>= 0.5),
     cowplot (>= 0.9),
-    crayon,
     dplyr (>= 0.7),
     ggplot2 (>= 3.0),
     ggridges (>= 0.5),
@@ -96,7 +95,6 @@ Imports:
 Suggests:
     BiocStyle,
     EnsDb.Hsapiens.v75,
-    basejump (>= 0.8),
     patrick,
     roxygen2,
     testthat (>= 2.0)
@@ -111,7 +109,7 @@ biocViews:
     RNASeq,
     SingleCell
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.0.9000
+RoxygenNote: 6.1.1
 Collate: 
     'AllClasses.R'
     'AllGenerics.R'
@@ -129,7 +127,6 @@ Collate:
     'import-internal.R'
     'metrics-methods.R'
     'package.R'
-    'params.R'
     'plotBarcodeRanks-methods.R'
     'plotCellCounts-methods.R'
     'plotGenesPerCell-methods.R'
