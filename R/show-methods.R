@@ -1,10 +1,3 @@
-#' @importFrom methods show
-#' @aliases NULL
-#' @export
-methods::show
-
-
-
 #' @name show
 #' @inherit methods::show
 #' @author Michael Steinbuagh
@@ -17,106 +10,47 @@ NULL
 
 
 
+#' @importFrom methods show
+#' @aliases NULL
+#' @export
+methods::show
+
+
+
+.showHeader <- function(object, version = NULL) {
+    cat(paste(class(object), version), sep = "\n")
+}
+
+
+
 # Using the same internal method for bcbioSingleCell and CellRanger.
 show.SingleCellExperiment <- function(object) {
     validObject(object)
-
+    # Metadata.
+    m <- metadata(object)
+    # Row ranges metadata.
+    rrm <- metadata(rowRanges(object))
+    .showHeader(object, version = m[["version"]])
+    showSlotInfo(list(
+        uploadDir = m[["uploadDir"]],
+        # TODO CellRanger doesn't currently store `runDate`.
+        dates = as.character(c(
+            bcbio = m[["runDate"]],
+            R = m[["date"]]
+        )),
+        level = m[["level"]],
+        sampleMetadataFile = m[["sampleMetadataFile"]],
+        organism = m[["organism"]],
+        gffFile = m[["gffFile"]],
+        annotationHub = rrm[["annotationHub"]],
+        ensemblRelease = rrm[["release"]],
+        genomeBuild = rrm[["build"]],
+        interestingGroups = m[["interestingGroups"]],
+        filtered = .isFiltered(object)
+    ))
     # Extend the SingleCellExperiment method.
     sce <- as(object, "SingleCellExperiment")
-
-    return <- c(
-        bold(paste(class(object), metadata(object)[["version"]])),
-        "http://bioinformatics.sph.harvard.edu/bcbioSingleCell",
-        "citation(\"bcbioSingleCell\")",
-        separatorBar,
-        paste(
-            bold("Upload Dir:"),
-            deparse(metadata(object)[["uploadDir"]])
-        )
-    )
-
-    # FIXME CellRanger doesn't currently store `runDate`.
-    if (!is.null(metadata(object)[["runDate"]])) {
-        return <- c(
-            return,
-            paste(
-                bold("Upload Date:"),
-                metadata(object)[["runDate"]]
-            )
-        )
-    }
-
-    # FIXME Use new `showSlotInfo()` function.
-    return <- c(
-        return,
-        paste(
-            bold("R Load Date:"),
-            metadata(object)[["date"]]
-        ),
-        paste(
-            bold("Level:"),
-            deparse(metadata(object)[["level"]])
-        ),
-        paste(
-            bold("Organism:"),
-            deparse(metadata(object)[["organism"]])
-        ),
-        paste(
-            bold("Interesting Groups:"),
-            deparse(metadata(object)[["interestingGroups"]])
-        )
-    )
-
-    # sampleMetadataFile
-    sampleMetadataFile <- metadata(object)[["sampleMetadataFile"]]
-    if (length(sampleMetadataFile)) {
-        return <- c(
-            return,
-            paste(bold("Metadata File:"), deparse(sampleMetadataFile))
-        )
-    }
-
-    # Gene annotations.
-    # FIXME Update rowRangesMetadata handling.
-    m <- metadata(object)[["rowRangesMetadata"]]
-    if (is.data.frame(m) && length(m)) {
-        annotationHub <-
-            m[m[["name"]] == "id", "value", drop = TRUE]
-        ensemblRelease <-
-            m[m[["name"]] == "ensembl_version", "value", drop = TRUE]
-        genomeBuild <-
-            m[m[["name"]] == "genome_build", "value", drop = TRUE]
-        return <- c(
-            return,
-            paste(bold("AnnotationHub:"), deparse(annotationHub)),
-            paste(bold("Ensembl Release:"), deparse(ensemblRelease)),
-            paste(bold("Genome Build:"), deparse(genomeBuild))
-        )
-    }
-
-    # GFF file.
-    gffFile <- metadata(object)[["gffFile"]]
-    if (length(gffFile)) {
-        return <- c(
-            return,
-            paste(bold("GFF File:"), deparse(gffFile))
-        )
-    }
-
-    # Filtered counts logical.
-    return <- c(
-        return,
-        paste(bold("Filtered:"), .isFiltered(object))
-    )
-
-    # Include SingleCellExperiment show method.
-    return <- c(
-        return,
-        separatorBar,
-        capture.output(show(sce))
-    )
-
-    cat(return, sep = "\n")
+    cat(capture.output(show(sce)), sep = "\n")
 }
 
 
@@ -136,8 +70,5 @@ setMethod(
 setMethod(
     f = "show",
     signature = signature("CellRanger"),
-    definition = getMethod(
-        f = "show",
-        signature = signature("bcbioSingleCell")
-    )
+    definition = show.SingleCellExperiment
 )
