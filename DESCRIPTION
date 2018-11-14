@@ -52,7 +52,8 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
     R (>= 3.5),
-    SingleCellExperiment
+    SingleCellExperiment,
+    basejump (>= 0.8)
 Imports:
     Biobase,
     BiocGenerics,
@@ -71,7 +72,6 @@ Imports:
     assertive.strings,
     assertive.types,
     assertthat,
-    basejump (>= 0.8),
     bcbioBase (>= 0.5),
     cowplot (>= 0.9),
     dplyr (>= 0.7),
