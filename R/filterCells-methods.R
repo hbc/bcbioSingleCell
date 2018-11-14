@@ -29,9 +29,9 @@
 #'   [S4Vectors::metadata()] as `filterCells` and `filterParams`.
 #'
 #' @examples
-#' data(indrops_small)
+#' data(indrops)
 #'
-#' object <- indrops_small
+#' object <- indrops
 #' show(object)
 #'
 #' x <- filterCells(object)

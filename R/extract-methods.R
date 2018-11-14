@@ -1,3 +1,7 @@
+# FIXME Need to improve Rle levels in rowRanges (see bcbioRNASeq).
+
+
+
 #' @name extract
 #' @inherit base::Extract title params references
 #' @author Michael Steinbaugh
@@ -18,21 +22,21 @@
 #' @return `SingleCellExperiment`.
 #'
 #' @examples
-#' data(indrops_small)
+#' data(indrops)
 #'
-#' cells <- head(colnames(indrops_small), 100L)
+#' cells <- head(colnames(indrops), 100L)
 #' head(cells)
-#' genes <- head(rownames(indrops_small), 100L)
+#' genes <- head(rownames(indrops), 100L)
 #' head(genes)
 #'
 #' ## Subset by cell identifiers.
-#' indrops_small[, cells]
+#' indrops[, cells]
 #'
 #' ## Subset by genes.
-#' indrops_small[genes, ]
+#' indrops[genes, ]
 #'
 #' ## Subset by both genes and cells.
-#' indrops_small[genes, cells]
+#' indrops[genes, cells]
 NULL
 
 

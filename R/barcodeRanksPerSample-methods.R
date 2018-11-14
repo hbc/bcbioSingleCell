@@ -10,8 +10,8 @@
 #' @seealso [DropletUtils::barcodeRanks()].
 #'
 #' @examples
-#' data(indrops_small)
-#' x <- barcodeRanksPerSample(indrops_small)
+#' data(indrops)
+#' x <- barcodeRanksPerSample(indrops)
 #' names(x)
 NULL
 

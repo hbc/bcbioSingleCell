@@ -7,8 +7,8 @@
 #'   [BiocGenerics::counts()] matrix.
 #'
 #' @examples
-#' data(indrops_small)
-#' x <- metrics(indrops_small, recalculate = TRUE)
+#' data(indrops)
+#' x <- metrics(indrops, recalculate = TRUE)
 #' print(x)
 NULL
 

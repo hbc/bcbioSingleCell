@@ -33,4 +33,5 @@ reference:
     - ends_with("Template")
   - title: Example data
     contents:
-    - ends_with("_small")
+    - cellranger
+    - indrops
