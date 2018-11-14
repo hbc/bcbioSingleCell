@@ -152,7 +152,7 @@ setValidity(
 
 
 # CellRanger ===================================================================
-#' 10X Genomics CellRanger Data Set
+#' 10X Genomics Cell Ranger Data Set
 #'
 #' Extends `SingleCellExperiment`, with additional validity checks on the
 #' `metadata()` slot.

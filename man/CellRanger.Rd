@@ -2,7 +2,7 @@
 % Please edit documentation in R/CellRanger.R
 \name{CellRanger}
 \alias{CellRanger}
-\title{10X Genomics CellRanger Data Set}
+\title{10X Genomics Cell Ranger Data Set}
 \usage{
 CellRanger(uploadDir, format = c("mtx", "hdf5"), filtered = TRUE,
   sampleMetadataFile = NULL, organism = NULL, ensemblRelease = NULL,
