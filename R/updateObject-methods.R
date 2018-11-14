@@ -16,8 +16,8 @@ BiocGenerics::updateObject
 #' @author Michael Steinbaugh
 #'
 #' @examples
-#' data(indrops_small)
-#' x <- updateObject(indrops_small)
+#' data(indrops)
+#' x <- updateObject(indrops)
 #' print(x)
 NULL
 

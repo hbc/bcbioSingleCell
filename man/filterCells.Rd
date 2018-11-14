@@ -51,9 +51,9 @@ use the \code{\link[Biobase:sampleNames]{Biobase::sampleNames()}} return values 
 in \code{\link[basejump:sampleData]{basejump::sampleData()}}).
 }
 \examples{
-data(indrops_small)
+data(indrops)
 
-object <- indrops_small
+object <- indrops
 show(object)
 
 x <- filterCells(object)

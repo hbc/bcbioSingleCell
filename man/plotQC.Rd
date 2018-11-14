@@ -38,8 +38,8 @@ internally and defaults to the first argument in the \code{character} vector.}
 Plot Quality Control
 }
 \examples{
-data(indrops_small)
-plotQC(indrops_small)
+data(indrops)
+plotQC(indrops)
 }
 \author{
 Michael Steinbaugh

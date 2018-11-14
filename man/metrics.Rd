@@ -48,8 +48,8 @@ to \code{\link[base:colnames]{base::colnames()}}.
 }
 
 \examples{
-data(indrops_small)
-x <- metrics(indrops_small, recalculate = TRUE)
+data(indrops)
+x <- metrics(indrops, recalculate = TRUE)
 print(x)
 }
 \author{

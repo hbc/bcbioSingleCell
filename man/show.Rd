@@ -40,8 +40,8 @@ complete, original object, with misleading results.  See the
 the discussion in \code{\link{setIs}} for the general concept.
 }
 \examples{
-data(indrops_small)
-show(indrops_small)
+data(indrops)
+show(indrops)
 }
 \seealso{
 \code{\link{showMethods}} prints all the methods for one or more

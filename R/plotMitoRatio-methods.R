@@ -9,8 +9,8 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' data(indrops_small)
-#' plotMitoRatio(indrops_small)
+#' data(indrops)
+#' plotMitoRatio(indrops)
 NULL
 
 

@@ -87,8 +87,8 @@ Updating objects is primarily useful when an object has been
   \code{object} cannot be determined by accessing known slots.
 }
 \examples{
-data(indrops_small)
-x <- updateObject(indrops_small)
+data(indrops)
+x <- updateObject(indrops)
 print(x)
 }
 \seealso{

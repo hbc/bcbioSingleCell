@@ -9,8 +9,8 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' data(indrops_small)
-#' plotGenesPerCell(indrops_small)
+#' data(indrops)
+#' plotGenesPerCell(indrops)
 NULL
 
 

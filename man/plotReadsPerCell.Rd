@@ -50,9 +50,9 @@ globally, use \code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
 Plot the distribution of read counts for all unfiltered cellular barcodes.
 }
 \examples{
-data(indrops_small)
-plotReadsPerCell(indrops_small, geom = "histogram")
-plotReadsPerCell(indrops_small, geom = "ecdf")
+data(indrops)
+plotReadsPerCell(indrops, geom = "histogram")
+plotReadsPerCell(indrops, geom = "ecdf")
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

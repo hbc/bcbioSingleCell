@@ -8,8 +8,8 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' data(indrops_small)
-#' plotUMIsVsGenes(indrops_small)
+#' data(indrops)
+#' plotUMIsVsGenes(indrops)
 NULL
 
 

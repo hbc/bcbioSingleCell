@@ -45,8 +45,8 @@ globally, use \code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
 Plot Mitochondrial Transcript Abundance
 }
 \examples{
-data(indrops_small)
-plotMitoRatio(indrops_small)
+data(indrops)
+plotMitoRatio(indrops)
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

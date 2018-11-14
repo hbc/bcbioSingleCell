@@ -59,12 +59,12 @@ globally, use \code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
 Plot the universal molecular identifiers (UMIs) per cell.
 }
 \examples{
-data(indrops_small)
-plotUMIsPerCell(indrops_small, geom = "violin")
-plotUMIsPerCell(indrops_small, geom = "ridgeline")
-plotUMIsPerCell(indrops_small, geom = "ecdf")
-plotUMIsPerCell(indrops_small, geom = "histogram")
-plotUMIsPerCell(indrops_small, geom = "boxplot")
+data(indrops)
+plotUMIsPerCell(indrops, geom = "violin")
+plotUMIsPerCell(indrops, geom = "ridgeline")
+plotUMIsPerCell(indrops, geom = "ecdf")
+plotUMIsPerCell(indrops, geom = "histogram")
+plotUMIsPerCell(indrops, geom = "boxplot")
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

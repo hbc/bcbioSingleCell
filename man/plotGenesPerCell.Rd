@@ -47,8 +47,8 @@ globally, use \code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
 Plot Genes per Cell
 }
 \examples{
-data(indrops_small)
-plotGenesPerCell(indrops_small)
+data(indrops)
+plotGenesPerCell(indrops)
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

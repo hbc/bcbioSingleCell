@@ -9,8 +9,8 @@
 #' @return `ggplot` grid.
 #'
 #' @examples
-#' data(indrops_small)
-#' plotBarcodeRanks(indrops_small)
+#' data(indrops)
+#' plotBarcodeRanks(indrops)
 NULL
 
 

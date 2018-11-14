@@ -1,6 +1,6 @@
 context("Quality Control")
 
-data(indrops_small, envir = environment())
+data(indrops, envir = environment())
 
 
 
@@ -8,22 +8,22 @@ data(indrops_small, envir = environment())
 test_that("filterCells : No filtering", {
     # Expecting an object with the same dimensions by default.
     invisible(capture.output(
-        x <- filterCells(indrops_small)
+        x <- filterCells(indrops)
     ))
     expect_s4_class(x, "bcbioSingleCell")
-    expect_identical(dim(x), dim(indrops_small))
+    expect_identical(dim(x), dim(indrops))
 })
 
 test_that("filterCells: Expected cutoff failure", {
     expect_error(
-        filterCells(indrops_small, minUMIs = Inf),
+        filterCells(indrops, minUMIs = Inf),
         "No cells passed `minUMIs` cutoff"
     )
 })
 
 with_parameters_test_that(
     "filterCells : Parameterized cutoff tests", {
-        args[["object"]] <- indrops_small
+        args[["object"]] <- indrops
         invisible(capture.output(
             x <- do.call(what = filterCells, args = args)
         ))
@@ -59,14 +59,14 @@ with_parameters_test_that(
 test_that("filterCells : Per sample cutoffs", {
     # Get the count of sample1 (run1_AGAGGATA)
     # We're applying no filtering to that sample
-    sampleNames <- sampleNames(indrops_small)
+    sampleNames <- sampleNames(indrops)
     expect_identical(
         sampleNames,
         c(multiplexed_AAAAAAAA = "rep_1")
     )
     invisible(capture.output(
         object <- filterCells(
-            object = indrops_small,
+            object = indrops,
             minUMIs = c(rep_1 = 1L),
             maxUMIs = c(rep_1 = Inf),
             minGenes = c(rep_1 = 1L),

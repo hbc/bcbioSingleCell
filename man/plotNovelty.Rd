@@ -45,8 +45,8 @@ globally, use \code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
 "Novelty" refers to log10 genes detected per count.
 }
 \examples{
-data(indrops_small)
-plotNovelty(indrops_small)
+data(indrops)
+plotNovelty(indrops)
 }
 \author{
 Michael Steinbaugh

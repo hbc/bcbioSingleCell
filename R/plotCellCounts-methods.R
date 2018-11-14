@@ -8,8 +8,8 @@
 #' @return `ggplot`.
 #'
 #' @examples
-#' data(indrops_small)
-#' plotCellCounts(indrops_small)
+#' data(indrops)
+#' plotCellCounts(indrops)
 NULL
 
 

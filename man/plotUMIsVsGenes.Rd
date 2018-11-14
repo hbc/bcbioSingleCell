@@ -42,8 +42,8 @@ palette globally, use
 Plot UMI and Gene Correlation
 }
 \examples{
-data(indrops_small)
-plotUMIsVsGenes(indrops_small)
+data(indrops)
+plotUMIsVsGenes(indrops)
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

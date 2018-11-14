@@ -1,6 +1,6 @@
 context("Plots")
 
-data(indrops_small, cellranger_small, envir = environment())
+data(indrops, cellranger, envir = environment())
 
 
 
@@ -28,7 +28,7 @@ with_parameters_test_that(
         expect_true(all(names %in% names(x)))
 
         # Markdown
-        output <- capture.output(plotQC(indrops_small, return = "markdown"))
+        output <- capture.output(plotQC(indrops, return = "markdown"))
         sep <- c("", "", "")
         expect_identical(
             head(output, 3L),
@@ -36,8 +36,8 @@ with_parameters_test_that(
         )
     },
     object = list(
-        bcbioSingleCell = indrops_small,
-        CellRanger = cellranger_small
+        bcbioSingleCell = indrops,
+        CellRanger = cellranger
     )
 )
 
@@ -48,7 +48,7 @@ with_parameters_test_that(
 # bcbio commands log file (which conflicts with Travis CI).
 test_that("plotReadsPerCell", {
     # Histogram
-    x <- plotReadsPerCell(indrops_small, geom = "histogram")
+    x <- plotReadsPerCell(indrops, geom = "histogram")
     expect_is(x, "ggplot")
     expect_is(
         x %>%
@@ -59,7 +59,7 @@ test_that("plotReadsPerCell", {
     )
 
     # Ridgeline
-    x <- plotReadsPerCell(indrops_small, geom = "ridgeline")
+    x <- plotReadsPerCell(indrops, geom = "ridgeline")
     expect_is(x, "ggplot")
     expect_is(
         x %>%
@@ -70,7 +70,7 @@ test_that("plotReadsPerCell", {
     )
 
     # Violin
-    x <- plotReadsPerCell(indrops_small, geom = "violin")
+    x <- plotReadsPerCell(indrops, geom = "violin")
     expect_is(x, "ggplot")
     expect_is(
         x %>%
@@ -81,7 +81,7 @@ test_that("plotReadsPerCell", {
     )
 
     # ECDF
-    x <- plotReadsPerCell(indrops_small, geom = "ecdf")
+    x <- plotReadsPerCell(indrops, geom = "ecdf")
     expect_is(x, "ggplot")
     expect_is(
         x %>%

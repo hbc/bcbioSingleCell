@@ -42,8 +42,8 @@ palette globally, use
 Plot Mitochondrial vs. Coding Counts
 }
 \examples{
-data(indrops_small)
-plotMitoVsCoding(indrops_small)
+data(indrops)
+plotMitoVsCoding(indrops)
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

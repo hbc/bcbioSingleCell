@@ -35,8 +35,8 @@ globally, use \code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
 Plot Cell Counts
 }
 \examples{
-data(indrops_small)
-plotCellCounts(indrops_small)
+data(indrops)
+plotCellCounts(indrops)
 }
 \author{
 Michael Steinbaugh, Rory Kirchner
