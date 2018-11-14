@@ -4,4 +4,5 @@
 .Rhistory
 .Rproj.user
 data-raw/*/
+data-raw/*.rds
 *.pdf
