@@ -28,3 +28,5 @@ metricsCols <- c(
     "log10GenesPerUMI",
     "mitoRatio"
 )
+
+Rle <- structure("Rle", package = "S4Vectors")  # nolint

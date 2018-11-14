@@ -1,4 +1,11 @@
 # FIXME Use `validate_that()` here.
+# TODO Update and relax the check on `sessionInfo`.
+# See bcbioRNASeq approach for example.
+# TODO Error for objects containing a legacy cellular barcode tibble.
+# FIXME Add a rowRanges Rle class check.
+# FIXME Need to add a real validity method for CellRanger.
+
+
 
 # bcbioSingleCell ==============================================================
 #' bcbio Single-Cell RNA-Seq Data Set
@@ -17,10 +24,6 @@ setClass(
     Class = "bcbioSingleCell",
     contains = "SingleCellExperiment"
 )
-
-# TODO Update and relax the check on `sessionInfo`.
-# See bcbioRNASeq approach for example.
-# TODO Error for objects containing a legacy cellular barcode tibble.
 setValidity(
     Class = "bcbioSingleCell",
     method = function(object) {
@@ -163,7 +166,6 @@ setClass(
     Class = "CellRanger",
     contains = "SingleCellExperiment"
 )
-
 setValidity(
     Class = "CellRanger",
     method = function(object) {

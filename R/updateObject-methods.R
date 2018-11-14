@@ -1,5 +1,6 @@
 # TODO Update handling of `sessionInfo`?
 # FIXME Need to add support for CellRanger.
+# TODO Add update method for run-length encoding in rowRanges
 
 
 
