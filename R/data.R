@@ -1,4 +1,5 @@
 #' 10X Genomics Cell Ranger Example Data Set
+#' @name cellranger-data
 #' @author Michael Steinbaugh
 #' @examples
 #' data(cellranger)
