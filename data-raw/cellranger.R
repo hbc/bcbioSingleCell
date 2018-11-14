@@ -83,11 +83,24 @@ cells <- sort(names(top_cells))
 sce <- sce[genes, cells]
 
 # Include only minimal metadata columns in rowRanges.
-mcols(rowRanges(sce)) <- mcols(rowRanges(sce)) %>%
-    as("tbl_df") %>%
-    select(rowname, broadClass, geneBiotype, geneID, geneName) %>%
-    mutate_if(is.factor, droplevels) %>%
-    as("DataFrame")
+mcols <- mcols(rowRanges(sce))
+mcols <- mcols[, c("broadClass", "geneBiotype", "geneID", "geneName")]
+# TODO Consider making this Rle factor level step a function in basejump.
+mcols <- DataFrame(lapply(
+    X = mcols,
+    FUN = function(x) {
+        if (is(x, "Rle")) {
+            x <- decode(x)
+            if (is.factor(x)) {
+                x <- droplevels(x)
+            }
+            Rle(x)
+        } else {
+            I(x)
+        }
+    }
+))
+mcols(rowRanges(sce)) <- mcols
 
 # Report the size of each slot in bytes.
 vapply(
@@ -99,8 +112,8 @@ object_size(sce)
 stopifnot(object_size(sce) < limit)
 stopifnot(validObject(sce))
 
-cellranger_small <- sce
-usethis::use_data(cellranger_small, compress = "xz", overwrite = TRUE)
+cellranger <- sce
+usethis::use_data(cellranger, compress = "xz", overwrite = TRUE)
 
 
 
@@ -126,26 +139,26 @@ unlink("inst/extdata/cellranger", recursive = TRUE)
 dir.create(output_dir, recursive = TRUE)
 
 # Prepare the sparse matrix.
-counts <- readMM(file.path(input_dir, "matrix.mtx"))
+counts <- Matrix::readMM(file = file.path(input_dir, "matrix.mtx"))
 counts <- counts[seq_len(100), seq_len(100)]
-writeMM(counts, file = file.path(output_dir, "matrix.mtx"))
+Matrix::writeMM(counts, file = file.path(output_dir, "matrix.mtx"))
 
-genes <- read_tsv(
+genes <- readr::read_tsv(
     file = file.path(input_dir, "genes.tsv"),
     col_names = c("geneID", "geneName"),
     n_max = 100
 )
-write_tsv(
+readr::write_tsv(
     x = genes,
     path = file.path(output_dir, "genes.tsv"),
     col_names = FALSE
 )
 
-barcodes <- read_lines(
+barcodes <- readr::read_lines(
     file = file.path(input_dir, "barcodes.tsv"),
     n_max = 100
 )
-write_lines(
+readr::write_lines(
     x = barcodes,
     path = file.path(output_dir, "barcodes.tsv")
 )
