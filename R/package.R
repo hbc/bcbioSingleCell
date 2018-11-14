@@ -28,17 +28,14 @@
 #' @importFrom assertthat assert_that validate_that
 #' @importFrom basejump emptyRanges makeGRangesFromEnsembl
 #'   makeGRangesFromGFF
-#' @importFrom basejump assertFormalInterestingGroups assertHasRownames
-#'   assertIsAStringOrNULL assertIsAnImplicitInteger
-#'   assertIsAnImplicitIntegerOrNULL assertIsColorScaleDiscreteOrNULL
-#'   assertIsFillScaleDiscreteOrNULL assertIsHeaderLevel assignAndSaveData
+#' @importFrom basejump assertFormalInterestingGroups assignAndSaveData
 #'   basejump_geom_abline basejump_geom_label basejump_geom_label_average
-#'   basejump_geom_label_repel camel cell2sample detectLanes hasRownames import
-#'   initDir interestingGroups interestingGroups<- makeDimnames makeNames
+#'   basejump_geom_label_repel camel cell2sample detectLanes import initDir
+#'   interestingGroups interestingGroups<- makeDimnames makeNames
 #'   makeSingleCellExperiment mapCellsToSamples markdownHeader markdownPlotlist
 #'   matchArgsToDoCall matchInterestingGroups methodFormals metrics
 #'   minimalSampleData plotZerosVsDepth prepareTemplate printString realpath
-#'   sampleData sanitizeSampleData separator standardizeCall
+#'   sampleData sanitizeSampleData separator showSlotInfo standardizeCall
 #'   stripTranscriptVersions uniteInterestingGroups
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getLevelFromCommands
 #'   getSampleDataFromYAML getUMITypeFromCommands projectDir readDataVersions
@@ -47,7 +44,6 @@
 #' @importFrom BiocGenerics cbind counts counts<- do.call rbind
 #' @importFrom BiocParallel SerialParam
 #' @importFrom cowplot plot_grid
-#' @importFrom crayon bold
 #' @importFrom dplyr arrange bind_rows desc filter group_by left_join matches
 #'   mutate mutate_all mutate_if n pull rename select select_if slice summarize
 #'   summarize_all ungroup
@@ -57,6 +53,10 @@
 #'   geom_text geom_violin geom_vline ggplot labs scale_x_continuous
 #'   scale_y_continuous stat_ecdf theme
 #' @importFrom ggridges geom_density_ridges
+#' @importFrom goalie assertHasRownames assertIsStringOrNULL
+#'   assertIsAnImplicitInteger assertIsAnImplicitIntegerOrNULL
+#'   assertIsColorScaleDiscreteOrNULL assertIsFillScaleDiscreteOrNULL
+#'   assertIsHeaderLevel hasRownames
 #' @importFrom graphics hist
 #' @importFrom magrittr %>% set_colnames
 #' @importFrom Matrix colSums readMM rowSums sparseMatrix
@@ -79,3 +79,19 @@
 #' @importFrom tibble as_tibble column_to_rownames rownames_to_column tibble
 #' @importFrom utils capture.output globalVariables packageVersion
 "_PACKAGE"
+
+
+
+#' Parameters
+#'
+#' @name params
+#' @keywords internal
+#'
+#' @param object Object.
+#' @param value Object to assign.
+#' @param x Primary object.
+#' @param y Secondary object.
+#' @param ... Additional arguments.
+#'
+#' @return No value.
+NULL
