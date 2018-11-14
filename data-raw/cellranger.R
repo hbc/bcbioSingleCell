@@ -65,7 +65,7 @@ sce <- CellRanger(
 object_size(sce)
 assignAndSaveData(name = "pbmc", object = sce, dir = "data-raw")
 
-# cellranger_small =============================================================
+# cellranger =============================================================
 counts <- counts(sce)
 
 # Subset the matrix to include only the top genes and cells.
