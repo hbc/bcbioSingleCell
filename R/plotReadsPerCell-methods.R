@@ -349,7 +349,7 @@ plotReadsPerCell.bcbioSingleCell <-  # nolint
         )
         interestingGroups(object) <- interestingGroups
         geom <- match.arg(geom)
-        assertIsAStringOrNULL(title)
+        assertIsStringOrNULL(title)
 
         # Minimum reads per barcode cutoff (for unfiltered data).
         if (length(metadata(object)[["filterCells"]])) {

@@ -38,7 +38,7 @@ plotUMIsPerCell.SingleCellExperiment <-  # nolint
     ) {
         geom <- match.arg(geom)
         point <- match.arg(point)
-        assertIsAStringOrNULL(title)
+        assertIsStringOrNULL(title)
 
         # Override interestingGroups if labeling points
         if (point != "none") {

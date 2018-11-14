@@ -29,7 +29,7 @@ plotCellCounts.SingleCellExperiment <-  # nolint
         )
         interestingGroups(object) <- interestingGroups
         assertIsFillScaleDiscreteOrNULL(fill)
-        assertIsAStringOrNULL(title)
+        assertIsStringOrNULL(title)
 
         metrics <- metrics(object)
         sampleData <- sampleData(object)

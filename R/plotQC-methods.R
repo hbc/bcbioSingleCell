@@ -57,7 +57,7 @@ basejump::plotQC
     }
     assert_is_a_string(trans)
     assertIsFillScaleDiscreteOrNULL(fill)
-    assertIsAStringOrNULL(title)
+    assertIsStringOrNULL(title)
 
     data <- metrics(object)
     if (!metricCol %in% colnames(data)) {
@@ -213,7 +213,7 @@ formals(.plotQCMetric)[["geom"]] <- geom
     )
     interestingGroups(object) <- interestingGroups
     assertIsColorScaleDiscreteOrNULL(color)
-    assertIsAStringOrNULL(title)
+    assertIsStringOrNULL(title)
 
     data <- metrics(object)
     if (!all(c(xCol, yCol) %in% colnames(data))) {
