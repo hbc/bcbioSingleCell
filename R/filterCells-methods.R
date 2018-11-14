@@ -425,10 +425,10 @@ filterCells.SingleCellExperiment <-  # nolint
             paste(">=", min(minCellsPerGene), "cells per gene")
         ))
         summary <- c(
-            bold("Parameters:"),
+            "Parameters:",
             summaryParams,
             separatorBar,
-            bold("Cells:"),
+            "Cells:",
             as.character(summaryCells),
             paste(
                 .paddedCount(dim(object)[[2L]]), "of", originalDim[[2L]],
@@ -440,7 +440,7 @@ filterCells.SingleCellExperiment <-  # nolint
             # Number of cells per sample.
             printString(table(colData[["sampleName"]])),
             separatorBar,
-            bold("Genes:"),
+            "Genes:",
             as.character(summaryGenes),
             paste(
                 .paddedCount(dim(object)[[1L]]), "of", originalDim[[1L]],
