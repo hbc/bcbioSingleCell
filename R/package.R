@@ -10,6 +10,16 @@
 #'
 #' @importMethodsFrom basejump coerce
 #'
+#' @importFrom Biobase sampleNames
+#' @importFrom BiocGenerics cbind counts counts<- do.call rbind
+#' @importFrom Matrix colSums readMM rowSums sparseMatrix
+#' @importFrom Matrix.utils aggregate.Matrix
+#' @importFrom S4Vectors DataFrame aggregate as.data.frame as.matrix
+#'   complete.cases mcols mcols<- merge metadata metadata<- na.omit
+#' @importFrom SingleCellExperiment SingleCellExperiment isSpike isSpike<-
+#'   spikeNames
+#' @importFrom SummarizedExperiment assay assayNames assays assays<- colData
+#'   colData<- rowData rowRanges rowRanges<-
 #' @importFrom assertive.base assert_are_identical
 #' @importFrom assertive.files assert_all_are_dirs assert_all_are_existing_files
 #' @importFrom assertive.numbers assert_all_are_in_left_open_range
@@ -40,14 +50,10 @@
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getLevelFromCommands
 #'   getSampleDataFromYAML getUMITypeFromCommands projectDir readDataVersions
 #'   readProgramVersions readSampleData runDate sampleDirs
-#' @importFrom Biobase sampleNames
-#' @importFrom BiocGenerics cbind counts counts<- do.call rbind
-#' @importFrom BiocParallel SerialParam
 #' @importFrom cowplot plot_grid
 #' @importFrom dplyr arrange bind_rows desc filter group_by left_join matches
 #'   mutate mutate_all mutate_if n pull rename select select_if slice summarize
 #'   summarize_all ungroup
-#' @importFrom DropletUtils barcodeRanks
 #' @importFrom ggplot2 aes expand_limits facet_wrap geom_bar geom_boxplot
 #'   geom_histogram geom_hline geom_line geom_point geom_smooth geom_step
 #'   geom_text geom_violin geom_vline ggplot labs scale_x_continuous
@@ -59,39 +65,15 @@
 #'   assertIsHeaderLevel hasRownames
 #' @importFrom graphics hist
 #' @importFrom magrittr %>% set_colnames
-#' @importFrom Matrix colSums readMM rowSums sparseMatrix
-#' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom methods .hasSlot as as<- getMethod is new show slot slot<-
 #'   validObject
 #' @importFrom purrr map
 #' @importFrom readr read_lines read_tsv
 #' @importFrom rhdf5 h5dump h5read
 #' @importFrom rlang !! !!! := has_length sym syms UQ
-#' @importFrom S4Vectors DataFrame aggregate as.data.frame as.matrix
-#'   complete.cases mcols mcols<- merge metadata metadata<- na.omit
 #' @importFrom scales percent pretty_breaks
-#' @importFrom SingleCellExperiment SingleCellExperiment isSpike isSpike<-
-#'   spikeNames
 #' @importFrom stats ecdf
 #' @importFrom stringr str_extract str_match str_pad str_split
-#' @importFrom SummarizedExperiment assay assayNames assays assays<- colData
-#'   colData<- rowData rowRanges rowRanges<-
 #' @importFrom tibble as_tibble column_to_rownames rownames_to_column tibble
 #' @importFrom utils capture.output globalVariables packageVersion
 "_PACKAGE"
-
-
-
-#' Parameters
-#'
-#' @name params
-#' @keywords internal
-#'
-#' @param object Object.
-#' @param value Object to assign.
-#' @param x Primary object.
-#' @param y Secondary object.
-#' @param ... Additional arguments.
-#'
-#' @return No value.
-NULL

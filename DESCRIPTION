@@ -58,8 +58,6 @@ Depends:
 Imports:
     Biobase,
     BiocGenerics,
-    BiocParallel,
-    DropletUtils,
     Matrix,
     Matrix.utils,
     R.utils,
@@ -83,7 +81,6 @@ Imports:
     methods,
     purrr (>= 0.2),
     readr (>= 1.1),
-    rhdf5 (>= 2.2),
     rlang (>= 0.3),
     rmarkdown,
     scales,
@@ -116,7 +113,6 @@ Collate:
     'AllClasses.R'
     'AllGenerics.R'
     'assert-internal.R'
-    'barcodeRanksPerSample-methods.R'
     'barcodes-internal.R'
     'bcbioSingleCell.R'
     'data.R'
@@ -127,7 +123,6 @@ Collate:
     'import-internal.R'
     'metrics-methods.R'
     'package.R'
-    'plotBarcodeRanks-methods.R'
     'plotCellCounts-methods.R'
     'plotGenesPerCell-methods.R'
     'plotMitoRatio-methods.R'
