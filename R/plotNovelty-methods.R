@@ -1,15 +1,8 @@
-#' Plot Novelty Score
-#'
-#' "Novelty" refers to log10 genes detected per count.
-#'
 #' @name plotNovelty
 #' @author Michael Steinbaugh
 #' @include globals.R
-#'
+#' @inherit basejump::plotNovelty
 #' @inheritParams basejump::params
-#'
-#' @return `ggplot`.
-#'
 #' @examples
 #' data(indrops)
 #' plotNovelty(indrops)
@@ -17,6 +10,14 @@ NULL
 
 
 
+#' @importFrom basejump plotNovelty
+#' @aliases NULL
+#' @export
+basejump::plotNovelty
+
+
+
+# TODO Set fill globally.
 plotNovelty.SingleCellExperiment <-  # nolint
     function(
         object,

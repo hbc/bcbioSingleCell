@@ -1,14 +1,9 @@
-#' Plot UMIs per Cell
-#'
-#' Plot the universal molecular identifiers (UMIs) per cell.
-#'
 #' @name plotUMIsPerCell
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
-#'
-#' @inherit plotGenesPerCell
-#'
+#' @inherit basejump::plotUMIsPerCell
 #' @inheritParams basejump::params
+
 #' @param point `string`. Label either the "`knee`" or "`inflection`" points per
 #'   sample. To disable, use "`none`". Requires `geom = "ecdf"`.
 #'
@@ -23,6 +18,15 @@ NULL
 
 
 
+#' @importFrom basejump plotUMIsPerCell
+#' @aliases NULL
+#' @export
+basejump::plotUMIsPerCell
+
+
+
+# TODO Define the color and fill formals globally.
+# FIXME We need to keep the barcode ranks in the package or this won't work...
 plotUMIsPerCell.SingleCellExperiment <-  # nolint
     function(
         object,
@@ -60,7 +64,7 @@ plotUMIsPerCell.SingleCellExperiment <-  # nolint
             )
         )
 
-        # Calculate barcode ranks and label inflection or knee points
+        # Calculate barcode ranks and label inflection or knee points.
         if (point != "none") {
             # Require ecdf geom for now
             assert_are_identical(geom, "ecdf")
@@ -95,7 +99,7 @@ plotUMIsPerCell.SingleCellExperiment <-  # nolint
                             metrics[["sampleID"]] == sampleID,
                             "nUMI",
                             drop = TRUE
-                            ]
+                        ]
                         e <- ecdf(sort(nUMI))
                         e(point)
                     },
@@ -135,6 +139,7 @@ plotUMIsPerCell.SingleCellExperiment <-  # nolint
 
         p
     }
+
 formals(plotUMIsPerCell.SingleCellExperiment)[["geom"]] <- geom
 
 

@@ -15,8 +15,6 @@
 \code{\link[BiocGenerics:counts]{BiocGenerics::counts()}} matrix.}
 }
 \value{
-\code{DataFrame}.
-
 \itemize{
 \item \code{"tibble"}: \code{grouped_df}. Grouped by \code{sampleID} column.
 \item \code{"DataFrame"}: \code{DataFrame}. Rownames are identical to \code{\link[base:colnames]{base::colnames()}},

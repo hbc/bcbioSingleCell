@@ -1,12 +1,7 @@
-#' Plot UMI and Gene Correlation
-#'
 #' @name plotUMIsVsGenes
 #' @author Michael Steinbaugh, Rory Kirchner
-#'
+#' @inherit basejump::plotUMIsVsGenes
 #' @inheritParams basejump::params
-#'
-#' @return `ggplot`.
-#'
 #' @examples
 #' data(indrops)
 #' plotUMIsVsGenes(indrops)
@@ -14,6 +9,14 @@ NULL
 
 
 
+#' @importFrom basejump plotUMIsVsGenes
+#' @aliases NULL
+#' @export
+basejump::plotUMIsVsGenes
+
+
+
+# TODO Define the color globally.
 plotUMIsVsGenes.SingleCellExperiment <-  # nolint
     function(
         object,
@@ -38,6 +41,8 @@ plotUMIsVsGenes.SingleCellExperiment <-  # nolint
             )
         )
     }
+
+# FIXME Need to set the formals here.
 
 
 

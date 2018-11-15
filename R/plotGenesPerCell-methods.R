@@ -1,13 +1,8 @@
-#' Plot Genes per Cell
-#'
 #' @name plotGenesPerCell
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
-#'
+#' @inherit basejump::plotGenesPerCell
 #' @inheritParams basejump::params
-#'
-#' @return `ggplot`.
-#'
 #' @examples
 #' data(indrops)
 #' plotGenesPerCell(indrops)
@@ -15,6 +10,14 @@ NULL
 
 
 
+#' @importFrom basejump plotGenesPerCell
+#' @aliases NULL
+#' @export
+basejump::plotGenesPerCell
+
+
+
+# TODO Set fill globally.
 plotGenesPerCell.SingleCellExperiment <-  # nolint
     function(
         object,
@@ -42,6 +45,7 @@ plotGenesPerCell.SingleCellExperiment <-  # nolint
             )
         )
     }
+
 formals(plotGenesPerCell.SingleCellExperiment)[["geom"]] <- geom
 
 

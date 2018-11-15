@@ -58,6 +58,7 @@ Depends:
 Imports:
     Biobase,
     BiocGenerics,
+    DropletUtils,
     Matrix,
     Matrix.utils,
     R.utils,
@@ -111,8 +112,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Collate: 
     'AllClasses.R'
-    'AllGenerics.R'
     'assert-internal.R'
+    'barcodeRanksPerSample-methods.R'
     'barcodes-internal.R'
     'bcbioSingleCell.R'
     'data.R'
@@ -123,6 +124,7 @@ Collate:
     'import-internal.R'
     'metrics-methods.R'
     'package.R'
+    'plotBarcodeRanks-methods.R'
     'plotCellCounts-methods.R'
     'plotGenesPerCell-methods.R'
     'plotMitoRatio-methods.R'

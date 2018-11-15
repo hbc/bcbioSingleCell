@@ -1,9 +1,9 @@
-#' @inherit basejump::plotQC
 #' @name plotQC
 #' @author Michael Steinbaugh
 #' @include globals.R
-#'
+#' @inherit basejump::plotQC
 #' @inheritParams basejump::params
+#'
 #' @param headerLevel `scalar integer` (`1`-`7`). R Markdown header level.
 #' @param legend `boolean`. Include plot legend.
 #'

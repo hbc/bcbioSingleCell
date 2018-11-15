@@ -1,12 +1,7 @@
-#' Plot Cell Counts
-#'
 #' @name plotCellCounts
 #' @author Michael Steinbaugh, Rory Kirchner
-#'
+#' @inherit basejump::plotCellCounts
 #' @inheritParams basejump::params
-#'
-#' @return `ggplot`.
-#'
 #' @examples
 #' data(indrops)
 #' plotCellCounts(indrops)
@@ -14,7 +9,14 @@ NULL
 
 
 
-# FIXME Set fill formal globally.
+#' @importFrom basejump plotCellCounts
+#' @aliases NULL
+#' @export
+basejump::plotCellCounts
+
+
+
+# TODO Set fill formal globally.
 plotCellCounts.SingleCellExperiment <-  # nolint
     function(
         object,

@@ -1,21 +1,23 @@
-#' Plot Read Counts per Cell
-#'
-#' Plot the distribution of read counts for all unfiltered cellular barcodes.
-#'
 #' @name plotReadsPerCell
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
-#'
+#' @inherit basejump::plotReadsPerCell
 #' @inheritParams basejump::params
+
 #' @param cutoffLine `boolean`. Include a line marking the cutoff.
-#'
-#' @return `ggplot`.
 #'
 #' @examples
 #' data(indrops)
 #' plotReadsPerCell(indrops, geom = "histogram")
 #' plotReadsPerCell(indrops, geom = "ecdf")
 NULL
+
+
+
+#' @importFrom basejump plotReadsPerCell
+#' @aliases NULL
+#' @export
+basejump::plotReadsPerCell
 
 
 
@@ -433,6 +435,7 @@ plotReadsPerCell.bcbioSingleCell <-  # nolint
 
         p
     }
+
 formals(plotReadsPerCell.bcbioSingleCell)[["geom"]] <- geom
 
 

@@ -1,14 +1,14 @@
-#' Filter Cells
+#' @name filterCells
+#' @author Michael Steinbaugh
+#' @inherit basejump::filterCells
 #'
+#' @details
 #' Apply gene detection, novelty score, and mitochondrial abundance cutoffs to
 #' cellular barcodes. By default we recommend applying the same filtering cutoff
 #' to all samples. The filtering parameters now support per-sample cutoffs,
 #' defined using a named `numeric` vector. When matching per sample, be sure to
 #' use the [Biobase::sampleNames()] return values (i.e. the `sampleName` column
 #' in [basejump::sampleData()]).
-#'
-#' @name filterCells
-#' @author Michael Steinbaugh
 #'
 #' @inheritParams basejump::params
 #' @param nCells `scalar integer`. Expected number of cells per sample.
@@ -47,6 +47,13 @@
 #' show(x)
 #' metadata(x)$filterParams
 NULL
+
+
+
+#' @importFrom basejump filterCells
+#' @aliases NULL
+#' @export
+basejump::filterCells
 
 
 

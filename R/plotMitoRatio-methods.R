@@ -1,13 +1,8 @@
-#' Plot Mitochondrial Transcript Abundance
-#'
 #' @name plotMitoRatio
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
-#'
+#' @inherit basejump::plotMitoRatio
 #' @inheritParams basejump::params
-#'
-#' @return `ggplot`.
-#'
 #' @examples
 #' data(indrops)
 #' plotMitoRatio(indrops)
@@ -15,6 +10,14 @@ NULL
 
 
 
+#' @importFrom basejump plotMitoRatio
+#' @aliases NULL
+#' @export
+basejump::plotMitoRatio
+
+
+
+# TODO Set the fill globally.
 plotMitoRatio.SingleCellExperiment <-  # nolint
     function(
         object,
@@ -42,6 +45,7 @@ plotMitoRatio.SingleCellExperiment <-  # nolint
             )
         )
     }
+
 formals(plotMitoRatio.SingleCellExperiment)[["geom"]] <- geom
 
 

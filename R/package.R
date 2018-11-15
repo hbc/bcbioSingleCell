@@ -12,6 +12,7 @@
 #'
 #' @importFrom Biobase sampleNames
 #' @importFrom BiocGenerics cbind counts counts<- do.call rbind
+#' @importFrom DropletUtils barcodeRanks
 #' @importFrom Matrix colSums readMM rowSums sparseMatrix
 #' @importFrom Matrix.utils aggregate.Matrix
 #' @importFrom S4Vectors DataFrame aggregate as.data.frame as.matrix

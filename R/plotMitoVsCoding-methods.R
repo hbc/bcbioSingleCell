@@ -1,16 +1,18 @@
-#' Plot Mitochondrial vs. Coding Counts
-#'
 #' @name plotMitoVsCoding
 #' @author Michael Steinbaugh, Rory Kirchner
-#'
+#' @inherit basejump::plotMitoVsCoding
 #' @inheritParams basejump::params
-#'
-#' @return `ggplot`.
-#'
 #' @examples
 #' data(indrops)
 #' plotMitoVsCoding(indrops)
 NULL
+
+
+
+#' @importFrom basejump plotMitoVsCoding
+#' @aliases NULL
+#' @export
+basejump::plotMitoVsCoding
 
 
 
