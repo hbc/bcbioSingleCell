@@ -1,6 +1,6 @@
 # inDrops example data
 # Using harvard-indrop-v3 barcodes
-# 2018-11-14
+# 2018-11-15
 
 library(pryr)
 library(tidyverse)
@@ -87,21 +87,6 @@ object_size(sce)
 # Include only minimal metadata columns in rowRanges.
 mcols <- mcols(rowRanges(sce))
 mcols <- mcols[, c("broadClass", "geneBiotype", "geneID", "geneName")]
-# TODO Consider making this Rle factor level step a function in basejump.
-mcols <- DataFrame(lapply(
-    X = mcols,
-    FUN = function(x) {
-        if (is(x, "Rle")) {
-            x <- decode(x)
-            if (is.factor(x)) {
-                x <- droplevels(x)
-            }
-            Rle(x)
-        } else {
-            I(x)
-        }
-    }
-))
 mcols(rowRanges(sce)) <- mcols
 
 # Report the size of each slot in bytes.
