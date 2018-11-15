@@ -4,12 +4,9 @@
 \name{extract}
 \alias{extract}
 \alias{[,bcbioSingleCell,ANY,ANY,ANY-method}
-\alias{[,CellRanger,ANY,ANY,ANY-method}
 \title{Extract or Replace Parts of an Object}
 \usage{
 \S4method{[}{bcbioSingleCell,ANY,ANY,ANY}(x, i, j, ..., drop = FALSE)
-
-\S4method{[}{CellRanger,ANY,ANY,ANY}(x, i, j, ..., drop = FALSE)
 }
 \arguments{
 \item{x}{

@@ -8,6 +8,7 @@
 \alias{calculateMetrics}
 \alias{inflectionPoint}
 \alias{plotCumulativeUMIsPerCell}
+\alias{loadCellRanger}
 \alias{cellCountsPerCluster}
 \alias{cellTypesPerCluster}
 \alias{clusterCellCountsPerSample}
@@ -36,6 +37,7 @@
 \alias{readCellTypeMarkers}
 \alias{sanitizeMarkers}
 \alias{topMarkers}
+\alias{readCellRanger}
 \title{Defunct Functions}
 \usage{
 loadSingleCellRun(...)
@@ -49,6 +51,8 @@ calculateMetrics(...)
 inflectionPoint(...)
 
 plotCumulativeUMIsPerCell(...)
+
+loadCellRanger(...)
 
 cellCountsPerCluster(...)
 
@@ -105,6 +109,8 @@ readCellTypeMarkers(...)
 sanitizeMarkers(...)
 
 topMarkers(...)
+
+readCellRanger(...)
 }
 \arguments{
 \item{...}{Additional arguments.}
@@ -115,4 +121,3 @@ topMarkers(...)
 \description{
 Defunct Functions
 }
-\keyword{internal}

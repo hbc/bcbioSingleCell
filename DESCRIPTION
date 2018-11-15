@@ -115,12 +115,10 @@ RoxygenNote: 6.1.1
 Collate: 
     'AllClasses.R'
     'AllGenerics.R'
-    'CellRanger.R'
     'assert-internal.R'
     'barcodeRanksPerSample-methods.R'
     'barcodes-internal.R'
     'bcbioSingleCell.R'
-    'cellranger-internal.R'
     'data.R'
     'deprecated.R'
     'extract-methods.R'

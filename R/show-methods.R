@@ -24,7 +24,7 @@ methods::show
 
 
 # Using the same internal method for bcbioSingleCell and CellRanger.
-show.SingleCellExperiment <- function(object) {
+show.bcbioSingleCell <- function(object) {
     validObject(object)
     # Metadata.
     m <- metadata(object)
@@ -33,7 +33,6 @@ show.SingleCellExperiment <- function(object) {
     .showHeader(object, version = m[["version"]])
     showSlotInfo(list(
         uploadDir = m[["uploadDir"]],
-        # TODO CellRanger doesn't currently store `runDate`.
         dates = as.character(c(
             bcbio = m[["runDate"]],
             R = m[["date"]]
@@ -60,15 +59,5 @@ show.SingleCellExperiment <- function(object) {
 setMethod(
     f = "show",
     signature = signature("bcbioSingleCell"),
-    definition = show.SingleCellExperiment
-)
-
-
-
-#' @rdname show
-#' @export
-setMethod(
-    f = "show",
-    signature = signature("CellRanger"),
-    definition = show.SingleCellExperiment
+    definition = show.bcbioSingleCell
 )

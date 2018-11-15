@@ -12,8 +12,6 @@ cell quality control metrics.
 }
 \seealso{
 \code{\link[=bcbioSingleCell]{bcbioSingleCell()}}.
-
-Other S4 classes: \code{\link{CellRanger-class}}
 }
 \author{
 Michael Steinbaugh

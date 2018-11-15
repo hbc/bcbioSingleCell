@@ -2,20 +2,14 @@
 
 
 
-#' Deprecated Functions
 #' @name deprecated
-#' @keywords internal
-#' @inheritParams basejump::params
-#' @return [.Deprecated()].
+#' @inherit basejump::deprecated
 NULL
 
 
 
-#' Defunct Functions
 #' @name defunct
-#' @keywords internal
-#' @inheritParams basejump::params
-#' @return [.Defunct()].
+#' @inherit basejump::defunct
 NULL
 
 
@@ -73,11 +67,10 @@ plotCumulativeUMIsPerCell <- function(...) {
 
 
 # v0.1.2 =======================================================================
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 loadCellRanger <- function(...) {
-    .Deprecated("readCellRanger")
-    readCellRanger(...)
+    .Deprecated("CellRanger::CellRanger")
 }
 
 
@@ -267,11 +260,10 @@ topMarkers <- function(...) {
 
 
 # v0.2.2 =======================================================================
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 readCellRanger <- function(...) {
-    .Deprecated("CellRanger")
-    CellRanger(...)
+    .Defunct("CellRanger::CellRanger")
 }
 
 

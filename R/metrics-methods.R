@@ -1,5 +1,5 @@
-#' @inherit basejump::metrics
 #' @name metrics
+#' @inherit basejump::metrics
 #' @author Michael Steinbaugh, Rory Kirchner
 #'
 #' @inheritParams basejump::params
@@ -21,8 +21,7 @@ basejump::metrics
 
 
 
-# matrix =======================================================================
-metrics.matrix <-  # nolint
+.metrics.matrix <-  # nolint
     function(
         object,
         rowRanges = NULL,
@@ -139,14 +138,12 @@ metrics.matrix <-  # nolint
 
 
 
-# Note that we're exporting this as specific S4 classes, since the metadata
-# columns are unique to this package.
-metrics.SingleCellExperiment <-  # nolint
+metrics.bcbioSingleCell <-  # nolint
     function(object, recalculate = FALSE) {
         validObject(object)
         if (isTRUE(recalculate)) {
             colData <- colData(object)
-            metrics <- metrics.matrix(
+            metrics <- .metrics.matrix(
                 object = counts(object),
                 rowRanges = rowRanges(object)
             )
@@ -154,7 +151,7 @@ metrics.SingleCellExperiment <-  # nolint
                 ,
                 setdiff(colnames(colData), colnames(metrics)),
                 drop = FALSE
-                ]
+            ]
             colData <- cbind(metrics, colData)
             colData(object) <- colData
             object
@@ -170,15 +167,5 @@ metrics.SingleCellExperiment <-  # nolint
 setMethod(
     f = "metrics",
     signature = signature("bcbioSingleCell"),
-    definition = metrics.SingleCellExperiment
-)
-
-
-
-#' @rdname metrics
-#' @export
-setMethod(
-    f = "metrics",
-    signature = signature("CellRanger"),
-    definition = metrics.SingleCellExperiment
+    definition = metrics.bcbioSingleCell
 )

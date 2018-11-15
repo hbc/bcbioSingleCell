@@ -3,11 +3,9 @@
 # See bcbioRNASeq approach for example.
 # TODO Error for objects containing a legacy cellular barcode tibble.
 # FIXME Add a rowRanges Rle class check.
-# FIXME Need to add a real validity method for CellRanger.
 
 
 
-# bcbioSingleCell ==============================================================
 #' bcbio Single-Cell RNA-Seq Data Set
 #'
 #' `bcbioSingleCell` is an S4 class that extends `SingleCellExperiment`, and is
@@ -145,30 +143,6 @@ setValidity(
             y = c("genes", "transcripts")
         )
 
-        TRUE
-    }
-)
-
-
-
-# CellRanger ===================================================================
-#' 10X Genomics Cell Ranger Data Set
-#'
-#' Extends `SingleCellExperiment`, with additional validity checks on the
-#' `metadata()` slot.
-#'
-#' @family S4 classes
-#' @author Michael Steinbaugh
-#' @export
-#'
-#' @seealso [CellRanger()].
-setClass(
-    Class = "CellRanger",
-    contains = "SingleCellExperiment"
-)
-setValidity(
-    Class = "CellRanger",
-    method = function(object) {
         TRUE
     }
 )

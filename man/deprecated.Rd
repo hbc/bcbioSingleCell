@@ -2,16 +2,10 @@
 % Please edit documentation in R/deprecated.R
 \name{deprecated}
 \alias{deprecated}
-\alias{loadCellRanger}
 \alias{loadSingleCell}
-\alias{readCellRanger}
 \title{Deprecated Functions}
 \usage{
-loadCellRanger(...)
-
 loadSingleCell(...)
-
-readCellRanger(...)
 }
 \arguments{
 \item{...}{Additional arguments.}
@@ -22,4 +16,3 @@ readCellRanger(...)
 \description{
 Deprecated Functions
 }
-\keyword{internal}

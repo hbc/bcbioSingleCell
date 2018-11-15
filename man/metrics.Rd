@@ -4,12 +4,9 @@
 \name{metrics}
 \alias{metrics}
 \alias{metrics,bcbioSingleCell-method}
-\alias{metrics,CellRanger-method}
 \title{Metrics}
 \usage{
 \S4method{metrics}{bcbioSingleCell}(object, recalculate = FALSE)
-
-\S4method{metrics}{CellRanger}(object, recalculate = FALSE)
 }
 \arguments{
 \item{object}{Object.}
