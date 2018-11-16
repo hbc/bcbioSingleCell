@@ -26,8 +26,8 @@ metrics.bcbioSingleCell <-  # nolint
         validObject(object)
         if (isTRUE(recalculate)) {
             colData <- colData(object)
-            metrics <- .metrics.matrix(
-                object = counts(object),
+            metrics <- calculateMetrics(
+                counts = counts(object),
                 rowRanges = rowRanges(object)
             )
             colData <- colData[

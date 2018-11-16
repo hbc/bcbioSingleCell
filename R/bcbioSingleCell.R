@@ -235,8 +235,8 @@ bcbioSingleCell <- function(
     assert_is_subset(rownames(sampleData), names(sampleDirs))
 
     # Always prefilter, removing very low quality cells with no UMIs or genes.
-    colData <- metrics.matrix(
-        object = counts,
+    colData <- calculateMetrics(
+        counts = counts,
         rowRanges = rowRanges,
         prefilter = TRUE
     )
