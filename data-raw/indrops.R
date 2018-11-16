@@ -1,6 +1,6 @@
 # inDrops example data
 # Using harvard-indrop-v3 barcodes
-# 2018-11-15
+# 2018-11-16
 
 library(pryr)
 library(tidyverse)
@@ -85,9 +85,8 @@ sce <- bcbioSingleCell(
 object_size(sce)
 
 # Include only minimal metadata columns in rowRanges.
-mcols <- mcols(rowRanges(sce))
-mcols <- mcols[, c("broadClass", "geneBiotype", "geneID", "geneName")]
-mcols(rowRanges(sce)) <- mcols
+mcols(rowRanges(sce)) <- mcols(rowRanges(sce)) %>%
+    .[, c("broadClass", "geneBiotype", "geneID", "geneName")]
 
 # Report the size of each slot in bytes.
 vapply(
