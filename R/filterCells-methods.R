@@ -25,7 +25,7 @@
 #' @param minCellsPerGene `scalar integer`. Include genes with non-zero
 #'   expression in at least this many cells.
 #'
-#' @return `bcbioSingleCell`, with filtering information slotted into
+#' @return `SingleCellExperiment`, with filtering information slotted into
 #'   [S4Vectors::metadata()] as `filterCells` and `filterParams`.
 #'
 #' @examples

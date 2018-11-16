@@ -2,14 +2,12 @@
 
 
 
-#' @name deprecated
-#' @inherit basejump::deprecated
-NULL
-
-
-
 #' @name defunct
 #' @inherit basejump::defunct
+NULL
+
+#' @name deprecated
+#' @inherit basejump::deprecated
 NULL
 
 
@@ -265,6 +263,18 @@ topMarkers <- function(...) {
 readCellRanger <- function(...) {
     .Defunct("CellRanger::CellRanger")
 }
+
+
+
+# v0.3.2 =======================================================================
+# FIXME Improve this message, informing the user that we moved the `CellRanger`
+# S4 class to a separate package.
+# FIXME Or consider importing CellRanger as a dependency package....
+# #' @rdname defunct
+# #' @export
+# CellRanger <- function(...) {
+#     .Defunct("CellRanger::CellRanger")
+# }
 
 
 

@@ -1,8 +1,6 @@
 #' @name show
-#' @inherit methods::show
 #' @author Michael Steinbuagh
-#' @export
-#'
+#' @inherit methods::show
 #' @examples
 #' data(indrops)
 #' show(indrops)

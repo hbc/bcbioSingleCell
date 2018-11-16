@@ -1,8 +1,8 @@
 #' Prepare Single-Cell RNA-Seq R Markdown Template
 #'
 #' @name prepareSingleCellTemplate
-#' @inherit basejump::prepareTemplate
 #' @author Michael Steinbaugh
+#' @inherit basejump::prepareTemplate
 #' @export
 #'
 #' @examples

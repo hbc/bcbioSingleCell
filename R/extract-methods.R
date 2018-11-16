@@ -19,7 +19,7 @@
 #'
 #' @inheritParams basejump::params
 #'
-#' @return `SingleCellExperiment`.
+#' @return `bcbioSingleCell`.
 #'
 #' @examples
 #' data(indrops)
@@ -41,7 +41,7 @@ NULL
 
 
 
-extract.SingleCellExperiment <-  # nolint
+extract.bcbioSingleCell <-  # nolint
     function(x, i, j, ..., drop = FALSE) {
         validObject(x)
 
@@ -123,5 +123,5 @@ setMethod(
         j = "ANY",
         drop = "ANY"
     ),
-    definition = extract.SingleCellExperiment
+    definition = extract.bcbioSingleCell
 )

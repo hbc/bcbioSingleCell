@@ -1,8 +1,8 @@
 #' @name metrics
-#' @inherit basejump::metrics
 #' @author Michael Steinbaugh, Rory Kirchner
-#'
+#' @inherit basejump::metrics
 #' @inheritParams basejump::params
+#'
 #' @param recalculate `boolean`. Force recalculation, using primary
 #'   [BiocGenerics::counts()] matrix.
 #'
@@ -21,12 +21,14 @@ basejump::metrics
 
 
 
+# Using this method internally for `recalculate = TRUE` option (see below).
 .metrics.matrix <-  # nolint
     function(
         object,
         rowRanges = NULL,
         prefilter = FALSE
     ) {
+        # Using shared method code for dense and sparseMatrix.
         assert_is_any_of(object, c("matrix", "sparseMatrix"))
         assert_has_rows(object)
         assert_is_any_of(rowRanges, c("GRanges", "NULL"))
@@ -138,7 +140,7 @@ basejump::metrics
 
 
 
-metrics.bcbioSingleCell <-  # nolint
+metrics.SingleCellExperiment <-  # nolint
     function(object, recalculate = FALSE) {
         validObject(object)
         if (isTRUE(recalculate)) {
@@ -166,6 +168,6 @@ metrics.bcbioSingleCell <-  # nolint
 #' @export
 setMethod(
     f = "metrics",
-    signature = signature("bcbioSingleCell"),
-    definition = metrics.bcbioSingleCell
+    signature = signature("SingleCellExperiment"),
+    definition = metrics.SingleCellExperiment
 )

@@ -3,22 +3,22 @@
 
 
 
-#' @importFrom BiocGenerics updateObject
-#' @aliases NULL
-#' @export
-BiocGenerics::updateObject
-
-
-
 #' @name updateObject
-#' @inherit BiocGenerics::updateObject
 #' @author Michael Steinbaugh
+#' @inherit BiocGenerics::updateObject
 #'
 #' @examples
 #' data(indrops)
 #' x <- updateObject(indrops)
 #' print(x)
 NULL
+
+
+
+#' @importFrom BiocGenerics updateObject
+#' @aliases NULL
+#' @export
+BiocGenerics::updateObject
 
 
 

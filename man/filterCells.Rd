@@ -35,7 +35,7 @@ mitochondrial abundance.}
 expression in at least this many cells.}
 }
 \value{
-\code{bcbioSingleCell}, with filtering information slotted into
+\code{SingleCellExperiment}, with filtering information slotted into
 \code{\link[S4Vectors:metadata]{S4Vectors::metadata()}} as \code{filterCells} and \code{filterParams}.
 }
 \description{

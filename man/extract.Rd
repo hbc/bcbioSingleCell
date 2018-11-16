@@ -68,7 +68,7 @@
   }
 }
 \value{
-\code{SingleCellExperiment}.
+\code{bcbioSingleCell}.
 }
 \description{
 Extract genes by row and cells by column.
