@@ -1,5 +1,3 @@
-* * *
-
 # R session information {.tabset}
 
 ```{r session_info}
