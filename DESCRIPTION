@@ -116,6 +116,7 @@ Collate:
     'barcodeRanksPerSample-methods.R'
     'barcodes-internal.R'
     'bcbioSingleCell.R'
+    'calculateMetrics.R'
     'data.R'
     'deprecated.R'
     'extract-methods.R'

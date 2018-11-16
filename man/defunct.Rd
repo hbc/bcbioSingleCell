@@ -5,7 +5,6 @@
 \alias{loadSingleCellRun}
 \alias{darkTheme}
 \alias{pcCutoff}
-\alias{calculateMetrics}
 \alias{inflectionPoint}
 \alias{plotCumulativeUMIsPerCell}
 \alias{loadCellRanger}
@@ -45,8 +44,6 @@ loadSingleCellRun(...)
 darkTheme(...)
 
 pcCutoff(...)
-
-calculateMetrics(...)
 
 inflectionPoint(...)
 

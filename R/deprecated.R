@@ -38,15 +38,6 @@ pcCutoff <- function(...) {
 
 
 
-# v0.1.0 =======================================================================
-#' @rdname defunct
-#' @export
-calculateMetrics <- function(...) {
-    .Defunct("metrics")
-}
-
-
-
 # v0.1.1 =======================================================================
 #' @rdname defunct
 #' @export
@@ -268,8 +259,7 @@ readCellRanger <- function(...) {
 
 # v0.3.2 =======================================================================
 # FIXME Improve this message, informing the user that we moved the `CellRanger`
-# S4 class to a separate package.
-# FIXME Or consider importing CellRanger as a dependency package....
+# S4 class to a separate package. Or consider importing CellRanger....
 # #' @rdname defunct
 # #' @export
 # CellRanger <- function(...) {
