@@ -34,7 +34,7 @@
   
 <meta property="og:title" content="Plot Barcode Ranks — plotBarcodeRanks" />
 
-<meta property="og:description" content="Compute barcode rank statistics and identifry the knee and inflection points on the total count curve." />
+<meta property="og:description" content="Plot Barcode Ranks" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.2</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/hbc/bcbioSingleCell">
+  <a href="https://github.com/hbc/bcbioSingleCell/">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -103,19 +103,17 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot Barcode Ranks</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/plotBarcodeRanks-methods.R'><code>R/plotBarcodeRanks-methods.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell//blob/master/R/plotBarcodeRanks-methods.R'><code>R/plotBarcodeRanks-methods.R</code></a></small>
     <div class="hidden name"><code>plotBarcodeRanks.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Compute barcode rank statistics and identifry the knee and inflection points on the total count curve.</p>
+    <p>Plot Barcode Ranks</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>plotBarcodeRanks</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for SingleCellExperiment</span>
+    <pre class="usage"><span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotBarcodeRanks</span>(<span class='no'>object</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>100</span>,
   <span class='kw'>fit.bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>df</span> <span class='kw'>=</span> <span class='fl'>20</span>)</pre>
     
@@ -125,10 +123,6 @@
     <tr>
       <th>object</th>
       <td><p>Object.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
       <th>lower</th>
@@ -178,8 +172,8 @@ Note that only points with total counts above <code>lower</code> will be conside
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>indrops_small</span>)
-<span class='fu'>plotBarcodeRanks</span>(<span class='no'>indrops_small</span>)</div><div class='img'><img src='plotBarcodeRanks-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>indrops</span>)
+<span class='fu'>plotBarcodeRanks</span>(<span class='no'>indrops</span>)</div><div class='img'><img src='plotBarcodeRanks-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -204,7 +198,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/vbarrera'>Victor Barrera</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com/'>Michael Steinbaugh</a>, <a href='https://github.com/roryk/'>Rory Kirchner</a>, <a href='https://github.com/marypiper/'>Mary Piper</a>, <a href='https://github.com/vbarrera/'>Victor Barrera</a>, <a href='https://github.com/sjhosui/'>Shannan Ho Sui</a>, <a href='https://bioinformatics.sph.harvard.edu/'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

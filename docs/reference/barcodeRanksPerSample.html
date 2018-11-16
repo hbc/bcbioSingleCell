@@ -34,7 +34,7 @@
   
 <meta property="og:title" content="Barcode Ranks per Sample — barcodeRanksPerSample" />
 
-<meta property="og:description" content="Compute barcode rank statistics and identifry the knee and inflection points on the total count curve." />
+<meta property="og:description" content="Barcode Ranks per Sample" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.2</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/hbc/bcbioSingleCell">
+  <a href="https://github.com/hbc/bcbioSingleCell/">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -103,19 +103,17 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Barcode Ranks per Sample</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/barcodeRanksPerSample-methods.R'><code>R/barcodeRanksPerSample-methods.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell//blob/master/R/barcodeRanksPerSample-methods.R'><code>R/barcodeRanksPerSample-methods.R</code></a></small>
     <div class="hidden name"><code>barcodeRanksPerSample.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Compute barcode rank statistics and identifry the knee and inflection points on the total count curve.</p>
+    <p>Barcode Ranks per Sample</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>barcodeRanksPerSample</span>(<span class='no'>object</span>, <span class='no'>...</span>)
-
-<span class='co'># S4 method for SingleCellExperiment</span>
+    <pre class="usage"><span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>barcodeRanksPerSample</span>(<span class='no'>object</span>,
   <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>fit.bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>df</span> <span class='kw'>=</span> <span class='fl'>20</span>)</pre>
     
@@ -125,10 +123,6 @@
     <tr>
       <th>object</th>
       <td><p>Object.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments.</p></td>
     </tr>
     <tr>
       <th>lower</th>
@@ -142,19 +136,15 @@
       <th>df</th>
       <td><p>Further arguments to pass to <code>smooth.spline</code>.</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list with the following elements:</p><dl class='dl-horizontal'>
-<dt><code>rank</code>:</dt><dd><p>A numeric vector of average ranks for each column of <code>m</code>.</p></dd>
-<dt><code>total</code>:</dt><dd><p>A numeric vector of total counts for each column of <code>m</code>.</p></dd>
-<dt><code>fitted</code>:</dt><dd><p>A numeric vector of fitted total counts from the spline for each column of <code>m</code>.
-This is <code>NA</code> for points with <code>x</code> outside of <code>fit.bounds</code>.</p></dd>
-<dt><code>knee</code>:</dt><dd><p>A numeric scalar containing the total count at the knee point.</p></dd>
-<dt><code>inflection</code>:</dt><dd><p>A numeric scalar containing the total count at the inflection point.</p></dd>
-</dl>
-
+    <p><code>list</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -186,8 +176,8 @@ Note that only points with total counts above <code>lower</code> will be conside
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>indrops_small</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>barcodeRanksPerSample</span>(<span class='no'>indrops_small</span>)
+    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>indrops</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>barcodeRanksPerSample</span>(<span class='no'>indrops</span>)
 <span class='fu'>names</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -213,7 +203,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/vbarrera'>Victor Barrera</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com/'>Michael Steinbaugh</a>, <a href='https://github.com/roryk/'>Rory Kirchner</a>, <a href='https://github.com/marypiper/'>Mary Piper</a>, <a href='https://github.com/vbarrera/'>Victor Barrera</a>, <a href='https://github.com/sjhosui/'>Shannan Ho Sui</a>, <a href='https://bioinformatics.sph.harvard.edu/'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

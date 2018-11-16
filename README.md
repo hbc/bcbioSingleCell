@@ -85,17 +85,17 @@ This is our current method for handling [10X Genomics Cell Ranger][cellranger] o
 
 The papers and software cited in our workflows are available as a [shared library](https://paperpile.com/shared/C8EMxl) on [Paperpile][].
 
-[bcbio]: https://bcbio-nextgen.readthedocs.io
+[bcbio]: https://bcbio-nextgen.readthedocs.io/
 [bcl2fastq]: https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html
-[Bioconductor]: https://bioconductor.org
+[Bioconductor]: https://bioconductor.org/
 [BiocManager]: https://cran.r-project.org/package=BiocManager
-[CellRanger]: https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger
-[conda]: https://conda.io
+[CellRanger]: https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger/
+[conda]: https://conda.io/
 [devtools]: https://cran.r-project.org/package=devtools
-[inDrops]: https://github.com/indrops/indrops
+[inDrops]: https://github.com/indrops/indrops/
 [inDrops v3 index barcodes]: https://github.com/steinbaugh/koopa/blob/master/workflows/indrops/harvard_v3_sample_barcodes.csv
-[koopa]: https://github.com/steinbaugh/koopa
-[Paperpile]: https://paperpile.com
-[R]: https://www.r-project.org
-[SCE]: https://doi.org/doi:10.18129/B9.bioc.SingleCellExperiment
+[koopa]: https://github.com/steinbaugh/koopa/
+[Paperpile]: https://paperpile.com/
+[R]: https://www.r-project.org/
+[SCE]: https://bioconductor.org/packages/SingleCellExperiment/
 [SureCell]: https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>10X Genomics CellRanger Data Set — CellRanger-class • bcbioSingleCell</title>
+<title>inDrops Example Data Set — indrops • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -32,10 +32,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="10X Genomics CellRanger Data Set — CellRanger-class" />
+<meta property="og:title" content="inDrops Example Data Set — indrops" />
 
-<meta property="og:description" content="Extends SingleCellExperiment, with additional validity checks on the
-metadata() slot." />
+<meta property="og:description" content="inDrops Example Data Set" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -64,7 +63,7 @@ metadata() slot." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.2</span>
       </span>
     </div>
 
@@ -86,7 +85,7 @@ metadata() slot." />
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/hbc/bcbioSingleCell">
+  <a href="https://github.com/hbc/bcbioSingleCell/">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -103,32 +102,55 @@ metadata() slot." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>10X Genomics CellRanger Data Set</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/AllClasses.R'><code>R/AllClasses.R</code></a></small>
-    <div class="hidden name"><code>CellRanger-class.Rd</code></div>
+    <h1>inDrops Example Data Set</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell//blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>indrops.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Extends <code>SingleCellExperiment</code>, with additional validity checks on the
-<code>metadata()</code> slot.</p>
+    <p>inDrops Example Data Set</p>
     
     </div>
 
+    <pre class="usage"><span class='no'>indrops</span></pre>
         
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <div class='dont-index'><p><code><a href='CellRanger.html'>CellRanger()</a></code>.</p>
-<p>Other S4 classes: <code><a href='bcbioSingleCell-class.html'>bcbioSingleCell-class</a></code></p></div>
+    <p>An object of class <code>bcbioSingleCell</code> with 50 rows and 100 columns.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>indrops</span>)
+<span class='no'>indrops</span></div><div class='output co'>#&gt; bcbioSingleCell 0.3.2
+#&gt; uploadDir: /data01/git/bcbioSingleCell/inst/extdata/indrops
+#&gt; dates(2): [bcbio] 2018-01-01; [R] 2018-11-16
+#&gt; level: genes
+#&gt; sampleMetadataFile: inst/extdata/indrops/metadata.csv
+#&gt; organism: Homo sapiens
+#&gt; interestingGroups: sampleName
+#&gt; filtered: FALSE
+#&gt; class: SingleCellExperiment 
+#&gt; dim: 50 100 
+#&gt; metadata(27): version pipeline ... wd sessionInfo
+#&gt; assays(1): counts
+#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
+#&gt;   ENSG00000282105
+#&gt; rowData names(4): broadClass geneBiotype geneID geneName
+#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
+#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
+#&gt; colData names(15): nUMI nGene ... aggregate revcomp
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
-      <li><a href="#see-also">See also</a></li>
-          </ul>
+      <li><a href="#format">Format</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     
@@ -139,7 +161,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/vbarrera'>Victor Barrera</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com/'>Michael Steinbaugh</a>, <a href='https://github.com/roryk/'>Rory Kirchner</a>, <a href='https://github.com/marypiper/'>Mary Piper</a>, <a href='https://github.com/vbarrera/'>Victor Barrera</a>, <a href='https://github.com/sjhosui/'>Shannan Ho Sui</a>, <a href='https://bioinformatics.sph.harvard.edu/'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

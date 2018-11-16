@@ -67,7 +67,7 @@ Formal methods for show will
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.2</span>
       </span>
     </div>
 
@@ -89,7 +89,7 @@ Formal methods for show will
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/hbc/bcbioSingleCell">
+  <a href="https://github.com/hbc/bcbioSingleCell/">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -107,7 +107,7 @@ Formal methods for show will
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Show an Object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/show-methods.R'><code>R/show-methods.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell//blob/master/R/show-methods.R'><code>R/show-methods.R</code></a></small>
     <div class="hidden name"><code>show.Rd</code></div>
     </div>
 
@@ -122,9 +122,6 @@ Formal methods for show will
     </div>
 
     <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>show</span>(<span class='no'>object</span>)
-
-<span class='co'># S4 method for CellRanger</span>
 <span class='fu'>show</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -161,20 +158,15 @@ the discussion in <code>setIs</code> for the general concept.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>indrops_small</span>)
-<span class='fu'>show</span>(<span class='no'>indrops_small</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
-#&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
-#&gt; citation("bcbioSingleCell")
-#&gt; ────────────────────────────────────────────────────────────────────────
-#&gt; Upload Dir: "/Users/mike/git/bcbioSingleCell-private/inst/extdata/indrops"
-#&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-10-18
-#&gt; Level: "genes"
-#&gt; Organism: "Homo sapiens"
-#&gt; Interesting Groups: "sampleName"
-#&gt; Metadata File: "inst/extdata/indrops/metadata.csv"
-#&gt; Filtered: FALSE
-#&gt; ────────────────────────────────────────────────────────────────────────
+    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>indrops</span>)
+<span class='fu'>show</span>(<span class='no'>indrops</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.3.2
+#&gt; uploadDir: /data01/git/bcbioSingleCell/inst/extdata/indrops
+#&gt; dates(2): [bcbio] 2018-01-01; [R] 2018-11-16
+#&gt; level: genes
+#&gt; sampleMetadataFile: inst/extdata/indrops/metadata.csv
+#&gt; organism: Homo sapiens
+#&gt; interestingGroups: sampleName
+#&gt; filtered: FALSE
 #&gt; class: SingleCellExperiment 
 #&gt; dim: 50 100 
 #&gt; metadata(27): version pipeline ... wd sessionInfo
@@ -211,7 +203,7 @@ Michael Steinbuagh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/vbarrera'>Victor Barrera</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com/'>Michael Steinbaugh</a>, <a href='https://github.com/roryk/'>Rory Kirchner</a>, <a href='https://github.com/marypiper/'>Mary Piper</a>, <a href='https://github.com/vbarrera/'>Victor Barrera</a>, <a href='https://github.com/sjhosui/'>Shannan Ho Sui</a>, <a href='https://bioinformatics.sph.harvard.edu/'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

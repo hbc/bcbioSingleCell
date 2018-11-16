@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.2</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/hbc/bcbioSingleCell">
+  <a href="https://github.com/hbc/bcbioSingleCell/">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -103,7 +103,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Extract or Replace Parts of an Object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/extract-methods.R'><code>R/extract-methods.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell//blob/master/R/extract-methods.R'><code>R/extract-methods.R</code></a></small>
     <div class="hidden name"><code>extract.Rd</code></div>
     </div>
 
@@ -114,9 +114,6 @@
     </div>
 
     <pre class="usage"># S4 method for bcbioSingleCell,ANY,ANY,ANY
-[(x, i, j, ..., drop = FALSE)
-
-# S4 method for CellRanger,ANY,ANY,ANY
 [(x, i, j, ..., drop = FALSE)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -181,7 +178,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>SingleCellExperiment</code>.</p>
+    <p><code>bcbioSingleCell</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -200,27 +197,22 @@ of <code>colData</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>indrops_small</span>)
+    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>indrops</span>)
 
-<span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>colnames</span>(<span class='no'>indrops_small</span>), <span class='fl'>100L</span>)
+<span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>colnames</span>(<span class='no'>indrops</span>), <span class='fl'>100L</span>)
 <span class='fu'>head</span>(<span class='no'>cells</span>)</div><div class='output co'>#&gt; [1] "AAACACTA_CTTCGATT" "AAACTACA_CCACATTA" "AACTGCCT_GCAAGGAC"
-#&gt; [4] "AAGAAGGT_TCTGTGGT" "AAGCCTTC_TAAATAGG" "AATAAGGA_CCACATTA"</div><div class='input'><span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>rownames</span>(<span class='no'>indrops_small</span>), <span class='fl'>100L</span>)
+#&gt; [4] "AAGAAGGT_TCTGTGGT" "AAGCCTTC_TAAATAGG" "AATAAGGA_CCACATTA"</div><div class='input'><span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'>head</span>(<span class='fu'>rownames</span>(<span class='no'>indrops</span>), <span class='fl'>100L</span>)
 <span class='fu'>head</span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000071082" "ENSG00000100316" "ENSG00000106631" "ENSG00000108821"
 #&gt; [5] "ENSG00000112306" "ENSG00000115414"</div><div class='input'>
 <span class='co'>## Subset by cell identifiers.</span>
-<span class='no'>indrops_small</span>[, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
-#&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
-#&gt; citation("bcbioSingleCell")
-#&gt; ────────────────────────────────────────────────────────────
-#&gt; Upload Dir: "/Users/mike/git/bcbioSingleCell-private/inst/extdata/indrops"
-#&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-10-18
-#&gt; Level: "genes"
-#&gt; Organism: "Homo sapiens"
-#&gt; Interesting Groups: "sampleName"
-#&gt; Metadata File: "inst/extdata/indrops/metadata.csv"
-#&gt; Filtered: FALSE
-#&gt; ────────────────────────────────────────────────────────────
+<span class='no'>indrops</span>[, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.3.2
+#&gt; uploadDir: /data01/git/bcbioSingleCell/inst/extdata/indrops
+#&gt; dates(2): [bcbio] 2018-01-01; [R] 2018-11-16
+#&gt; level: genes
+#&gt; sampleMetadataFile: inst/extdata/indrops/metadata.csv
+#&gt; organism: Homo sapiens
+#&gt; interestingGroups: sampleName
+#&gt; filtered: FALSE
 #&gt; class: SingleCellExperiment 
 #&gt; dim: 50 100 
 #&gt; metadata(27): version pipeline ... wd sessionInfo
@@ -234,19 +226,14 @@ of <code>colData</code>.</p>
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div><div class='input'>
 <span class='co'>## Subset by genes.</span>
-<span class='no'>indrops_small</span>[<span class='no'>genes</span>, ]</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
-#&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
-#&gt; citation("bcbioSingleCell")
-#&gt; ────────────────────────────────────────────────────────────
-#&gt; Upload Dir: "/Users/mike/git/bcbioSingleCell-private/inst/extdata/indrops"
-#&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-10-18
-#&gt; Level: "genes"
-#&gt; Organism: "Homo sapiens"
-#&gt; Interesting Groups: "sampleName"
-#&gt; Metadata File: "inst/extdata/indrops/metadata.csv"
-#&gt; Filtered: FALSE
-#&gt; ────────────────────────────────────────────────────────────
+<span class='no'>indrops</span>[<span class='no'>genes</span>, ]</div><div class='output co'>#&gt; bcbioSingleCell 0.3.2
+#&gt; uploadDir: /data01/git/bcbioSingleCell/inst/extdata/indrops
+#&gt; dates(2): [bcbio] 2018-01-01; [R] 2018-11-16
+#&gt; level: genes
+#&gt; sampleMetadataFile: inst/extdata/indrops/metadata.csv
+#&gt; organism: Homo sapiens
+#&gt; interestingGroups: sampleName
+#&gt; filtered: FALSE
 #&gt; class: SingleCellExperiment 
 #&gt; dim: 50 100 
 #&gt; metadata(27): version pipeline ... wd sessionInfo
@@ -260,19 +247,14 @@ of <code>colData</code>.</p>
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div><div class='input'>
 <span class='co'>## Subset by both genes and cells.</span>
-<span class='no'>indrops_small</span>[<span class='no'>genes</span>, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.99.0
-#&gt; http://bioinformatics.sph.harvard.edu/bcbioSingleCell
-#&gt; citation("bcbioSingleCell")
-#&gt; ────────────────────────────────────────────────────────────
-#&gt; Upload Dir: "/Users/mike/git/bcbioSingleCell-private/inst/extdata/indrops"
-#&gt; Upload Date: 2018-01-01
-#&gt; R Load Date: 2018-10-18
-#&gt; Level: "genes"
-#&gt; Organism: "Homo sapiens"
-#&gt; Interesting Groups: "sampleName"
-#&gt; Metadata File: "inst/extdata/indrops/metadata.csv"
-#&gt; Filtered: FALSE
-#&gt; ────────────────────────────────────────────────────────────
+<span class='no'>indrops</span>[<span class='no'>genes</span>, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.3.2
+#&gt; uploadDir: /data01/git/bcbioSingleCell/inst/extdata/indrops
+#&gt; dates(2): [bcbio] 2018-01-01; [R] 2018-11-16
+#&gt; level: genes
+#&gt; sampleMetadataFile: inst/extdata/indrops/metadata.csv
+#&gt; organism: Homo sapiens
+#&gt; interestingGroups: sampleName
+#&gt; filtered: FALSE
 #&gt; class: SingleCellExperiment 
 #&gt; dim: 50 100 
 #&gt; metadata(27): version pipeline ... wd sessionInfo
@@ -309,7 +291,7 @@ Michael Steinbaugh
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://steinbaugh.com'>Michael Steinbaugh</a>, <a href='https://github.com/roryk'>Rory Kirchner</a>, <a href='https://github.com/marypiper'>Mary Piper</a>, <a href='https://github.com/vbarrera'>Victor Barrera</a>, <a href='https://github.com/sjhosui'>Shannan Ho Sui</a>, <a href='http://bioinformatics.sph.harvard.edu'>Harvard Chan Bioinformatics Core</a>.</p>
+  <p>Developed by <a href='https://steinbaugh.com/'>Michael Steinbaugh</a>, <a href='https://github.com/roryk/'>Rory Kirchner</a>, <a href='https://github.com/marypiper/'>Mary Piper</a>, <a href='https://github.com/vbarrera/'>Victor Barrera</a>, <a href='https://github.com/sjhosui/'>Shannan Ho Sui</a>, <a href='https://bioinformatics.sph.harvard.edu/'>Harvard Chan Bioinformatics Core</a>.</p>
 </div>
 
 <div class="pkgdown">

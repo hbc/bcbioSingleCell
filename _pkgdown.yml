@@ -1,22 +1,21 @@
 authors:
   Michael Steinbaugh:
-    href: https://steinbaugh.com
+    href: https://steinbaugh.com/
   Rory Kirchner:
-    href: https://github.com/roryk
+    href: https://github.com/roryk/
   Mary Piper:
-    href: https://github.com/marypiper
+    href: https://github.com/marypiper/
   Victor Barrera:
-    href: https://github.com/vbarrera
+    href: https://github.com/vbarrera/
   Shannan Ho Sui:
-    href: https://github.com/sjhosui
+    href: https://github.com/sjhosui/
   Harvard Chan Bioinformatics Core:
-    href: http://bioinformatics.sph.harvard.edu
+    href: https://bioinformatics.sph.harvard.edu/
 
 reference:
   - title: S4 classes
     contents:
     - starts_with("bcbioSingleCell")
-    - starts_with("CellRanger")
     - extract
     - show
     - updateObject
@@ -33,5 +32,4 @@ reference:
     - ends_with("Template")
   - title: Example data
     contents:
-    - cellranger
     - indrops
