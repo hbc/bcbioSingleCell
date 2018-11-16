@@ -319,7 +319,7 @@ plotQC(
 )
 ```
 
-# Save filtered object
+# Save filtered data
 
 ```{r save}
 assignAndSaveData(
@@ -329,47 +329,8 @@ assignAndSaveData(
 )
 ```
 
-# Export to disk
-
-```{r counts}
-# FIXME Switch to using `export()` here instead.
-
-counts <- counts(bcb)
-saveData(counts, dir = params$data_dir)
-
-# MatrixMarket Exchange format (.mtx)
-writeCounts(counts, dir = params$results_dir)
-
-# Comma separated values (.csv)
-write.csv(
-    x = as.matrix(counts),
-    file = file.path(params$results_dir, "counts.csv")
-)
-R.utils::gzip(
-    filename = file.path(params$results_dir, "counts.csv"),
-    overwrite = TRUE,
-    remove = TRUE
-)
-```
-
-## Quality metrics
-
-```{r metrics}
-metrics <- metrics(bcb)
-write.csv(
-    x = metrics,
-    file = file.path(params$results_dir, "metrics.csv")
-)
-```
-
-## Gene annotations
-
-```{r gene_annotations}
-gene_annotations <- rowRanges(bcb) %>% as.data.frame()
-write.csv(
-    x = gene_annotations,
-    file = file.path(params$results_dir, "gene_annotations.csv")
-)
+```{r export}
+export(object)
 ```
 
 ```{r footer, child="_footer.Rmd"}
