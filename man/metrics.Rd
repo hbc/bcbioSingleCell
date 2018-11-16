@@ -3,10 +3,10 @@
 \docType{methods}
 \name{metrics}
 \alias{metrics}
-\alias{metrics,SingleCellExperiment-method}
+\alias{metrics,bcbioSingleCell-method}
 \title{Metrics}
 \usage{
-\S4method{metrics}{SingleCellExperiment}(object, recalculate = FALSE)
+\S4method{metrics}{bcbioSingleCell}(object, recalculate = FALSE)
 }
 \arguments{
 \item{object}{Object.}

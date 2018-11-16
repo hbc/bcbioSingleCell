@@ -140,7 +140,7 @@ basejump::metrics
 
 
 
-metrics.SingleCellExperiment <-  # nolint
+metrics.bcbioSingleCell <-  # nolint
     function(object, recalculate = FALSE) {
         validObject(object)
         if (isTRUE(recalculate)) {
@@ -168,6 +168,6 @@ metrics.SingleCellExperiment <-  # nolint
 #' @export
 setMethod(
     f = "metrics",
-    signature = signature("SingleCellExperiment"),
-    definition = metrics.SingleCellExperiment
+    signature = signature("bcbioSingleCell"),
+    definition = metrics.bcbioSingleCell
 )
