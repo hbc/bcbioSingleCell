@@ -10,9 +10,9 @@ RNA-seq data.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{http://bioinformatics.sph.harvard.edu/bcbioSingleCell}
-  \item \url{https://github.com/hbc/bcbioSingleCell}
-  \item Report bugs at \url{https://github.com/hbc/bcbioSingleCell/issues}
+  \item \url{https://bioinformatics.sph.harvard.edu/bcbioSingleCell/}
+  \item \url{https://github.com/hbc/bcbioSingleCell/}
+  \item Report bugs at \url{https://github.com/hbc/bcbioSingleCell/issues/}
 }
 
 }

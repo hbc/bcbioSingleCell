@@ -20,7 +20,7 @@ define the samples. If left unset, defaults to \code{sampleName}.}
 Must supply discrete values. When set to \code{NULL}, the default ggplot2 color
 palette will be used. If manual color definitions are desired, we recommend
 using \code{ggplot2::scale_fill_manual()}. To set the discrete fill palette
-globally, use \code{options(bcbio.discrete.fill = scale_fill_viridis_d())}.}
+globally, use \code{options(basejump.fill.discrete = scale_fill_viridis_d())}.}
 
 \item{title}{\code{string} or \code{NULL}. Plot title.}
 }

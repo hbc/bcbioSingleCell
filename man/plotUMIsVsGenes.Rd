@@ -24,7 +24,7 @@ scale. Must supply discrete values. When set to \code{NULL}, the default ggplot2
 color palette will be used. If manual color definitions are desired, we
 recommend using \code{ggplot2::scale_color_manual()}. To set the discrete color
 palette globally, use
-\code{options(basejump.discrete.color = ggplot2::scale_color_viridis_d())}.}
+\code{options(basejump.color.discrete = ggplot2::scale_color_viridis_d())}.}
 
 \item{trans}{\code{string}. Name of the axis scale transformation to apply. See
 \code{help("scale_x_continuous", "ggplot2")} for more information.}
