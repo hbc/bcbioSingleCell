@@ -116,7 +116,7 @@
     <pre class="usage"><span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotMitoVsCoding</span>(<span class='no'>object</span>,
   <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trendline</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"basejump.discrete.color"</span>, <span class='kw'>NULL</span>), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"log2"</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"basejump.color.discrete"</span>, <span class='kw'>NULL</span>), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"log2"</span>,
   <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"mito vs. coding"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -142,7 +142,7 @@ scale. Must supply discrete values. When set to <code>NULL</code>, the default g
 color palette will be used. If manual color definitions are desired, we
 recommend using <code><a href='ggplot2.tidyverse.org/reference/scale_manual.html'>ggplot2::scale_color_manual()</a></code>. To set the discrete color
 palette globally, use
-<code>options(basejump.discrete.color = ggplot2::scale_color_viridis_d())</code>.</p></td>
+<code>options(basejump.color.discrete = ggplot2::scale_color_viridis_d())</code>.</p></td>
     </tr>
     <tr>
       <th>trans</th>
