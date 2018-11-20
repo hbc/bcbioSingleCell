@@ -26,7 +26,8 @@
 #'   assert_all_are_non_negative assert_all_are_positive
 #' @importFrom assertive.properties assert_has_names assert_has_rows
 #'   assert_is_non_empty
-#' @importFrom assertive.sets assert_are_set_equal assert_is_subset
+#' @importFrom assertive.sets assert_are_disjoint_sets assert_are_set_equal
+#'   assert_is_subset
 #' @importFrom assertive.types assert_is_a_bool assert_is_a_number
 #'   assert_is_a_string assert_is_all_of assert_is_an_integer assert_is_any_of
 #'   assert_is_character assert_is_data.frame assert_is_factor assert_is_integer
@@ -35,12 +36,11 @@
 #' @importFrom basejump emptyRanges makeGRangesFromEnsembl makeGRangesFromGFF
 #' @importFrom basejump basejump_geom_abline basejump_geom_label
 #'   basejump_geom_label_average basejump_geom_label_repel camel cell2sample
-#'   detectLanes formalsList import interestingGroups
-#'   interestingGroups<- makeDimnames makeNames makeSingleCellExperiment
-#'   mapCellsToSamples markdownHeader markdownPlotlist matchArgsToDoCall
-#'   matchInterestingGroups metrics minimalSampleData
-#'   plotZerosVsDepth prepareTemplate printString realpath sampleData
-#'   separator showSlotInfo
+#'   detectLanes formalsList import interestingGroups interestingGroups<-
+#'   makeDimnames makeNames makeSingleCellExperiment mapCellsToSamples
+#'   markdownHeader markdownPlotlist matchArgsToDoCall matchInterestingGroups
+#'   metrics minimalSampleData plotZerosVsDepth prepareTemplate printString
+#'   realpath sampleData separator showSlotInfo
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getLevelFromCommands
 #'   getSampleDataFromYAML getUMITypeFromCommands projectDir readDataVersions
 #'   readProgramVersions readSampleData runDate sampleDirs
