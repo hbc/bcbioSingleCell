@@ -23,7 +23,7 @@ BiocManager::install("hbc/bcbioSingleCell")
 For [R][] < 3.5, [BiocManager][] is not supported. Use `BiocInstaller::biocLite()` instead of `BiocManager::install()`. This requires sourcing the legacy [Bioconductor][] `biocLite.R` script.
 
 ```r
-# try http:// if https:// URLs are not supported
+# Try `http://` if `https://` URLs are not supported.
 source("https://bioconductor.org/biocLite.R")
 ```
 
