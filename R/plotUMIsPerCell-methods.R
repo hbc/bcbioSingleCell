@@ -25,8 +25,6 @@ basejump::plotUMIsPerCell
 
 
 
-# TODO Define the color and fill formals globally.
-# FIXME We need to keep the barcode ranks in the package or this won't work...
 plotUMIsPerCell.SingleCellExperiment <-  # nolint
     function(
         object,
@@ -36,8 +34,8 @@ plotUMIsPerCell.SingleCellExperiment <-  # nolint
         max = Inf,
         point = c("none", "inflection", "knee"),
         trans = "log10",
-        color = getOption("basejump.discrete.color", NULL),
-        fill = getOption("basejump.discrete.fill", NULL),
+        color,
+        fill,
         title = "UMIs per cell"
     ) {
         geom <- match.arg(geom)
@@ -140,6 +138,10 @@ plotUMIsPerCell.SingleCellExperiment <-  # nolint
         p
     }
 
+formals(plotUMIsPerCell.SingleCellExperiment)[["color"]] <-
+    formalsList[["color.discrete"]]
+formals(plotUMIsPerCell.SingleCellExperiment)[["fill"]] <-
+    formalsList[["fill.discrete"]]
 formals(plotUMIsPerCell.SingleCellExperiment)[["geom"]] <- geom
 
 

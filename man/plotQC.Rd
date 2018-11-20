@@ -8,7 +8,7 @@
 \usage{
 \S4method{plotQC}{SingleCellExperiment}(object, interestingGroups = NULL,
   geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
-  headerLevel = 2L, legend = getOption("basejump.legend", FALSE),
+  headerLevel = 2L, legend = getOption("basejump.legend", TRUE),
   return = c("grid", "list", "markdown"))
 }
 \arguments{

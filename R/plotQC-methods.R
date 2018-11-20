@@ -27,7 +27,6 @@ basejump::plotQC
 
 
 # Plot a single quality control metric.
-# FIXME Set these color/fill formals globally.
 .plotQCMetric <- function(
     object,
     metricCol,
@@ -37,8 +36,8 @@ basejump::plotQC
     max = Inf,
     trans = "identity",
     ratio = FALSE,
-    color = getOption("basejump.discrete.color", NULL),
-    fill = getOption("basejump.discrete.fill", NULL),
+    color,
+    fill,
     title = NULL
 ) {
     assert_is_a_string(metricCol)
@@ -187,6 +186,11 @@ basejump::plotQC
 
     p
 }
+
+formals(.plotQCMetric)[["color"]] <-
+    formalsList[["color.discrete"]]
+formals(.plotQCMetric)[["fill"]] <-
+    formalsList[["fill.discrete"]]
 formals(.plotQCMetric)[["geom"]] <- geom
 
 
@@ -268,14 +272,13 @@ formals(.plotQCMetric)[["geom"]] <- geom
 
 
 
-# FIXME Set the legend formal globally.
 plotQC.SingleCellExperiment <-  # nolint
     function(
         object,
         interestingGroups = NULL,
         geom,
         headerLevel = 2L,
-        legend = getOption("basejump.legend", FALSE),
+        legend,
         return = c("grid", "list", "markdown")
     ) {
         validObject(object)
@@ -355,8 +358,9 @@ plotQC.SingleCellExperiment <-  # nolint
             )
         }
     }
-formals(plotQC.SingleCellExperiment)[["geom"]] <- geom
 
+formals(plotQC.SingleCellExperiment)[["geom"]] <- geom
+formals(plotQC.SingleCellExperiment)[["legend"]] <- formalsList[["legend"]]
 
 
 #' @rdname plotQC

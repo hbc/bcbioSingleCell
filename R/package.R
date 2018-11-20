@@ -41,8 +41,8 @@
 #'   makeGRangesFromGFF
 #' @importFrom basejump assertFormalInterestingGroups assignAndSaveData
 #'   basejump_geom_abline basejump_geom_label basejump_geom_label_average
-#'   basejump_geom_label_repel camel cell2sample detectLanes import initDir
-#'   interestingGroups interestingGroups<- makeDimnames makeNames
+#'   basejump_geom_label_repel camel cell2sample detectLanes formalsList import
+#'   initDir interestingGroups interestingGroups<- makeDimnames makeNames
 #'   makeSingleCellExperiment mapCellsToSamples markdownHeader markdownPlotlist
 #'   matchArgsToDoCall matchInterestingGroups methodFormals metrics
 #'   minimalSampleData plotZerosVsDepth prepareTemplate printString realpath

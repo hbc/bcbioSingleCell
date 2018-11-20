@@ -8,7 +8,7 @@
 \usage{
 \S4method{plotUMIsVsGenes}{SingleCellExperiment}(object,
   interestingGroups = NULL, trendline = FALSE,
-  color = getOption("basejump.discrete.color", NULL), trans = "log2",
+  color = getOption("basejump.color.discrete", NULL), trans = "log2",
   title = "UMIs vs. genes")
 }
 \arguments{

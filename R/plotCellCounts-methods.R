@@ -16,12 +16,11 @@ basejump::plotCellCounts
 
 
 
-# TODO Set fill formal globally.
 plotCellCounts.SingleCellExperiment <-  # nolint
     function(
         object,
         interestingGroups = NULL,
-        fill = getOption("basejump.discrete.fill", NULL),
+        fill,
         title = "cell counts"
     ) {
         validObject(object)
@@ -94,6 +93,8 @@ plotCellCounts.SingleCellExperiment <-  # nolint
         p
     }
 
+formals(plotCellCounts.SingleCellExperiment)[["fill"]] <-
+    formalsList[["fill.discrete"]]
 
 
 #' @rdname plotCellCounts

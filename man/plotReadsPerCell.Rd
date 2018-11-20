@@ -9,8 +9,8 @@
 \S4method{plotReadsPerCell}{bcbioSingleCell}(object,
   interestingGroups = NULL, geom = c("histogram", "ecdf", "violin",
   "ridgeline", "boxplot"), cutoffLine = FALSE,
-  color = getOption("basejump.discrete.color", NULL),
-  fill = getOption("basejump.discrete.fill", NULL),
+  color = getOption("basejump.color.discrete", NULL),
+  fill = getOption("basejump.fill.discrete", NULL),
   title = "reads per cell")
 }
 \arguments{

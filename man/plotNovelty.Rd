@@ -9,7 +9,7 @@
 \S4method{plotNovelty}{SingleCellExperiment}(object,
   geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
   interestingGroups = NULL, min = 0L,
-  fill = getOption("basejump.discrete.fill", NULL), trans = "identity",
+  fill = getOption("basejump.fill.discrete", NULL), trans = "identity",
   title = "novelty : genes per UMI")
 }
 \arguments{

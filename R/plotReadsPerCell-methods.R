@@ -339,8 +339,8 @@ plotReadsPerCell.bcbioSingleCell <-  # nolint
         interestingGroups = NULL,
         geom,
         cutoffLine = FALSE,
-        color = getOption("basejump.discrete.color", NULL),
-        fill = getOption("basejump.discrete.fill", NULL),
+        color,
+        fill,
         title = "reads per cell"
     ) {
         # Passthrough: color, fill.
@@ -436,6 +436,10 @@ plotReadsPerCell.bcbioSingleCell <-  # nolint
         p
     }
 
+formals(plotReadsPerCell.bcbioSingleCell)[["color"]] <-
+    formalsList[["color.discrete"]]
+formals(plotReadsPerCell.bcbioSingleCell)[["fill"]] <-
+    formalsList[["fill.discrete"]]
 formals(plotReadsPerCell.bcbioSingleCell)[["geom"]] <- geom
 
 

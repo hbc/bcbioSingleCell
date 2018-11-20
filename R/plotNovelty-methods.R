@@ -17,14 +17,13 @@ basejump::plotNovelty
 
 
 
-# TODO Set fill globally.
 plotNovelty.SingleCellExperiment <-  # nolint
     function(
         object,
         geom,
         interestingGroups = NULL,
         min = 0L,
-        fill = getOption("basejump.discrete.fill", NULL),
+        fill,
         trans = "identity",
         title = "novelty : genes per UMI"
     ) {
@@ -46,6 +45,9 @@ plotNovelty.SingleCellExperiment <-  # nolint
             )
         )
     }
+
+formals(plotNovelty.SingleCellExperiment)[["fill"]] <-
+    formalsList[["fill.discrete"]]
 formals(plotNovelty.SingleCellExperiment)[["geom"]] <- geom
 
 

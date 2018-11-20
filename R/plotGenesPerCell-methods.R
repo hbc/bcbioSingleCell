@@ -17,7 +17,6 @@ basejump::plotGenesPerCell
 
 
 
-# TODO Set fill globally.
 plotGenesPerCell.SingleCellExperiment <-  # nolint
     function(
         object,
@@ -26,7 +25,7 @@ plotGenesPerCell.SingleCellExperiment <-  # nolint
         min = 0L,
         max = Inf,
         trans = "log2",
-        fill = getOption("basejump.discrete.fill", NULL),
+        fill,
         title = "genes per cell"
     ) {
         geom <- match.arg(geom)
@@ -46,6 +45,8 @@ plotGenesPerCell.SingleCellExperiment <-  # nolint
         )
     }
 
+formals(plotGenesPerCell.SingleCellExperiment)[["fill"]] <-
+    formalsList[["fill.discrete"]]
 formals(plotGenesPerCell.SingleCellExperiment)[["geom"]] <- geom
 
 

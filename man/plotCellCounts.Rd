@@ -7,7 +7,7 @@
 \title{Plot Cell Counts}
 \usage{
 \S4method{plotCellCounts}{SingleCellExperiment}(object,
-  interestingGroups = NULL, fill = getOption("basejump.discrete.fill",
+  interestingGroups = NULL, fill = getOption("basejump.fill.discrete",
   NULL), title = "cell counts")
 }
 \arguments{

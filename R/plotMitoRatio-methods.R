@@ -17,14 +17,13 @@ basejump::plotMitoRatio
 
 
 
-# TODO Set the fill globally.
 plotMitoRatio.SingleCellExperiment <-  # nolint
     function(
         object,
         geom,
         interestingGroups = NULL,
         max = 1L,
-        fill = getOption("basejump.discrete.fill", NULL),
+        fill,
         trans = "sqrt",
         title = "mito ratio"
     ) {
@@ -46,6 +45,8 @@ plotMitoRatio.SingleCellExperiment <-  # nolint
         )
     }
 
+formals(plotMitoRatio.SingleCellExperiment)[["fill"]] <-
+    formalsList[["fill.discrete"]]
 formals(plotMitoRatio.SingleCellExperiment)[["geom"]] <- geom
 
 

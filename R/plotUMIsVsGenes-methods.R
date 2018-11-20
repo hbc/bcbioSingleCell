@@ -16,13 +16,12 @@ basejump::plotUMIsVsGenes
 
 
 
-# TODO Define the color globally.
 plotUMIsVsGenes.SingleCellExperiment <-  # nolint
     function(
         object,
         interestingGroups = NULL,
         trendline = FALSE,
-        color = getOption("basejump.discrete.color", NULL),
+        color,
         trans = "log2",
         title = "UMIs vs. genes"
     ) {
@@ -42,7 +41,8 @@ plotUMIsVsGenes.SingleCellExperiment <-  # nolint
         )
     }
 
-# FIXME Need to set the formals here.
+formals(plotUMIsVsGenes.SingleCellExperiment)[["color"]] <-
+    formalsList[["color.discrete"]]
 
 
 

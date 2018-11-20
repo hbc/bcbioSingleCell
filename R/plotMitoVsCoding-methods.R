@@ -21,7 +21,7 @@ plotMitoVsCoding.SingleCellExperiment <-  # nolint
         object,
         interestingGroups = NULL,
         trendline = FALSE,
-        color = getOption("basejump.discrete.color", NULL),
+        color,
         trans = "log2",
         title = "mito vs. coding"
     ) {
@@ -40,6 +40,9 @@ plotMitoVsCoding.SingleCellExperiment <-  # nolint
             )
         )
     }
+
+formals(plotMitoVsCoding.SingleCellExperiment)[["color"]] <-
+    formalsList[["color.discrete"]]
 
 
 
