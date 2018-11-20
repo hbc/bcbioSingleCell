@@ -45,7 +45,7 @@ plotCellCounts.SingleCellExperiment <-  # nolint
 
         data <- metrics %>%
             group_by(!!sym("sampleID")) %>%
-            summarize(nCells = n()) %>%
+            summarise(nCells = n()) %>%
             left_join(sampleData, by = "sampleID")
 
         p <- ggplot(
