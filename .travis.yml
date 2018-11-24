@@ -36,7 +36,6 @@ addons:
 env:
   global:
     - LINTR_COMMENT_BOT=true
-    - R_MAX_NUM_DLLS=150
 
 r_packages:
   - covr
