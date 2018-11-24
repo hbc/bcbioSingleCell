@@ -134,5 +134,6 @@ Collate:
     'plotUMIsPerCell-methods.R'
     'plotUMIsVsGenes-methods.R'
     'prepareSingleCellTemplate.R'
+    'reexports.R'
     'show-methods.R'
     'updateObject-methods.R'

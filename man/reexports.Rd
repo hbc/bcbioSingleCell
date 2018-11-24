@@ -5,11 +5,13 @@
 %   R/plotGenesPerCell-methods.R, R/plotMitoRatio-methods.R,
 %   R/plotMitoVsCoding-methods.R, R/plotNovelty-methods.R, R/plotQC-methods.R,
 %   R/plotReadsPerCell-methods.R, R/plotUMIsPerCell-methods.R,
-%   R/plotUMIsVsGenes-methods.R, R/show-methods.R, R/updateObject-methods.R
+%   R/plotUMIsVsGenes-methods.R, R/reexports.R, R/show-methods.R,
+%   R/updateObject-methods.R
 \docType{import}
 \name{reexports}
 \alias{reexports}
 \alias{plotGene}
+\alias{\%>\%}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -20,6 +22,8 @@ below to see their documentation.
   \item{basejump}{\code{\link[basejump]{barcodeRanksPerSample}}, \code{\link[basejump]{plotGene}}, \code{\link[basejump]{filterCells}}, \code{\link[basejump]{metrics}}, \code{\link[basejump]{plotBarcodeRanks}}, \code{\link[basejump]{plotCellCounts}}, \code{\link[basejump]{plotGenesPerCell}}, \code{\link[basejump]{plotMitoRatio}}, \code{\link[basejump]{plotMitoVsCoding}}, \code{\link[basejump]{plotNovelty}}, \code{\link[basejump]{plotQC}}, \code{\link[basejump]{plotReadsPerCell}}, \code{\link[basejump]{plotUMIsPerCell}}, \code{\link[basejump]{plotUMIsVsGenes}}}
 
   \item{BiocGenerics}{\code{\link[BiocGenerics]{updateObject}}}
+
+  \item{magrittr}{\code{\link[magrittr]{\%>\%}}}
 
   \item{methods}{\code{\link[methods]{show}}}
 }}
