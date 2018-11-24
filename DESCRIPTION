@@ -53,8 +53,7 @@ Encoding: UTF-8
 LazyData: false
 Depends:
     R (>= 3.5),
-    SingleCellExperiment,
-    basejump (>= 0.8)
+    SingleCellExperiment
 Imports:
     Biobase,
     BiocGenerics,
@@ -70,6 +69,7 @@ Imports:
     assertive.sets,
     assertive.types,
     assertthat,
+    basejump (>= 0.8),
     bcbioBase (>= 0.5),
     cowplot (>= 0.9),
     dplyr (>= 0.7),
