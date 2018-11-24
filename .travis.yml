@@ -1,26 +1,29 @@
 # Travis-CI configuration for Bioconductor packages
 # https://docs.travis-ci.com/user/languages/r
 
+# Temporarily enable when caching package library.
+script: true
+
 language: r
 cache: packages
+sudo: false
+bioc_required: true
 
-r:
-  - bioc-release
-  # - bioc-devel
-
-os:
-  # - linux
-  - osx
-
-# blocklist
-# branches:
-#   except:
-#   - develop
-
-# safelist
-# branches:
-#   only:
-#   - master
+matrix:
+  include:
+  - os: osx
+    r: bioc-release
+    fortran: false
+    latex: false
+    warnings_are_errors: true
+  - os: linux
+    r: bioc-release
+    warnings_are_errors: true
+  # - os: linux
+  #   r: bioc-devel
+  #   latex: false
+  #   warnings_are_errors: false
+  fast_finish: true
 
 # External dependencies
 # dependency for gsl > copula > zinbwave
@@ -34,16 +37,6 @@ env:
   global:
     - LINTR_COMMENT_BOT=true
     - R_MAX_NUM_DLLS=150
-
-# r_build_args: "--no-build-vignettes"
-# r_check_args: "--no-vignettes"
-
-# Set true before submission to Bioconductor
-# Don't fail build due to "built with R 3.5.1"
-warnings_are_errors: false
-
-# Temporarily enable to cache packages
-# script: true
 
 r_packages:
   - covr
