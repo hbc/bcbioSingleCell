@@ -1,6 +1,7 @@
-library(bcbioSingleCell)
 library(knitr)
 library(rmarkdown)
+library(basejump)
+library(bcbioSingleCell)
 library(tidyverse)
 
 # Set seed for reproducibility.
