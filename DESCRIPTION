@@ -1,7 +1,7 @@
 Package: bcbioSingleCell
 Title: bcbio Single-Cell RNA-Seq
 Description: Toolkit for bcbio single-cell RNA-seq analysis.
-Version: 0.3.3
+Version: 0.3.4
 Date: 2018-11-25
 Authors@R: c(
     person(
@@ -121,7 +121,6 @@ Collate:
     'filterCells-methods.R'
     'globals.R'
     'import-internal.R'
-    'metrics-methods.R'
     'package.R'
     'plotBarcodeRanks-methods.R'
     'plotCellCounts-methods.R'
