@@ -1,3 +1,6 @@
+# FIXME Need to explain the annotation priority more clearly in the
+# documentation here. AnnotationHub takes priority over GFF, if set.
+
 # TODO Move some of these params to basejump.
 
 
