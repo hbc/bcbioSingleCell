@@ -194,6 +194,8 @@ bcbioSingleCell <- function(
     counts <- .import.bcbio(sampleDirs)
 
     # Row data -----------------------------------------------------------------
+    # FIXME Add support for loading bcbio GTF (see bcbioRNASeq).
+
     if (is_a_string(gffFile)) {
         rowRanges <- makeGRangesFromGFF(gffFile, level = level)
     } else if (is_a_string(organism)) {
