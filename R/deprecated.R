@@ -4,10 +4,12 @@
 
 #' @name defunct
 #' @inherit basejump::defunct
+#' @keywords internal
 NULL
 
 #' @name deprecated
 #' @inherit basejump::deprecated
+#' @keywords internal
 NULL
 
 

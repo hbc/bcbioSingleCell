@@ -21,7 +21,7 @@
 #' @return `bcbioSingleCell`.
 #'
 #' @seealso
-#' - [SingleCellExperiment::SingleCellExperiment()].
+#' - `SingleCellExperiment::SingleCellExperiment()`.
 #' - `.S4methods(class = "bcbioSingleCell")`.
 #'
 #' @examples

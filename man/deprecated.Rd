@@ -16,3 +16,4 @@ loadSingleCell(...)
 \description{
 Deprecated Functions
 }
+\keyword{internal}

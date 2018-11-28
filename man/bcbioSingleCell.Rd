@@ -71,7 +71,7 @@ print(x)
 }
 \seealso{
 \itemize{
-\item \code{\link[SingleCellExperiment:SingleCellExperiment]{SingleCellExperiment::SingleCellExperiment()}}.
+\item \code{SingleCellExperiment::SingleCellExperiment()}.
 \item \code{.S4methods(class = "bcbioSingleCell")}.
 }
 }

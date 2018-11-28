@@ -118,3 +118,4 @@ readCellRanger(...)
 \description{
 Defunct Functions
 }
+\keyword{internal}
