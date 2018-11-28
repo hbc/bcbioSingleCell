@@ -10,7 +10,8 @@ calculateMetrics(counts, rowRanges = NULL, prefilter = FALSE)
 \item{counts}{\code{matrix} or \code{sparseMatrix}. Raw counts. Do not input
 log-normalized or library scaled counts.}
 
-\item{rowRanges}{\code{GRanges}. Genomic ranges (e.g. genome annotations).}
+\item{rowRanges}{\code{GRanges}. Genomic ranges (e.g. genome annotations).
+Metadata describing the assay rows.}
 
 \item{prefilter}{\code{boolean}. Apply prefiltering to remove zero count genes.}
 }

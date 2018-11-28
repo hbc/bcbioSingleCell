@@ -13,49 +13,32 @@ bcbioSingleCell(uploadDir, sampleMetadataFile = NULL, organism = NULL,
 \item{uploadDir}{\code{string}. Path to final upload directory. This path is set
 when running "\code{bcbio_nextgen -w template}".}
 
-\item{sampleMetadataFile}{\code{string} or \code{NULL}. Sample barcode metadata file.
-Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
-be left \code{NULL}, but otherwise suggested for runs with multipliexed FASTQs
-containing multiple index barcodes (e.g. inDrops).}
+\item{sampleMetadataFile}{\code{string}. Sample metadata file path. CSV
+or TSV is preferred, but Excel worksheets are also supported. Check the
+documentation for conventions and required columns.}
 
-\item{organism}{\code{string} or \code{NULL}. Organism name. Use the full Latin name
-(e.g. "Homo sapiens"), since this will be input downstream to AnnotationHub
-and ensembldb, unless \code{gffFile} is set. If left \code{NULL} (\emph{not recommended}),
-the function call will skip loading gene-level annotations into
-\code{\link[=rowRanges]{rowRanges()}}. This can be useful for poorly annotation genomes or
-experiments involving multiple genomes.}
+\item{organism}{\code{string}. Full Latin organism name (e.g. "\code{Homo sapiens}").}
 
-\item{ensemblRelease}{\code{scalar integer} or \code{NULL}. Ensembl release version. If
-\code{NULL}, defaults to current release, and does not typically need to be
-user-defined. Passed to AnnotationHub for \code{EnsDb} annotation matching,
-unless \code{gffFile} is set.}
+\item{ensemblRelease}{\code{scalar integer}. Ensembl release version (e.g. \code{90}).
+We recommend setting this value if possible, for improved reproducibility.
+When left unset, the latest release available via AnnotationHub/ensembldb
+is used. Note that the latest version available can vary, depending on the
+versions of AnnotationHub and ensembldb in use.}
 
-\item{genomeBuild}{\code{string} or \code{NULL}. Ensembl genome build name (e.g.
-"GRCh38"). This will be passed to AnnotationHub for \code{EnsDb} annotation
-matching, unless \code{gffFile} is set.}
+\item{gffFile}{\code{string}. GFF/GTF (General Feature Format) file.
+Generally, we recommend using a GTF (GFFv2) instead of a GFFv3 file if
+possible.}
 
-\item{gffFile}{\code{string} or \code{NULL}. \emph{Advanced use only; not recommended.} By
-default, we recommend leaving this \code{NULL} for genomes that are supported on
-Ensembl. In this case, the row annotations (\code{\link[=rowRanges]{rowRanges()}}) will be obtained
-automatically from Ensembl by passing the \code{organism}, \code{genomeBuild}, and
-\code{ensemblRelease} arguments to AnnotationHub and ensembldb. For a genome
-that is not supported on Ensembl and/or AnnotationHub, a GFF/GTF (General
-Feature Format) file is required. Generally, we recommend using a GTF
-(GFFv2) file here over a GFF3 file if possible, although all GFF formats
-are supported. The function will internally generate transcript-to-gene
-mappings and construct a \code{GRanges} object containing the genomic ranges
-(\code{\link[=rowRanges]{rowRanges()}}).}
+\item{transgeneNames}{\code{character}. Vector indicating which assay
+rows denote transgenes (e.g. EGFP, TDTOMATO).}
 
-\item{transgeneNames}{\code{character} or \code{NULL}. Vector indicating which
-\code{\link[=assay]{assay()}} rows denote transgenes (e.g. EGFP, TDTOMATO).}
+\item{spikeNames}{\code{character}. Vector indicating which assay rows denote
+spike-in sequences (e.g. ERCCs).}
 
-\item{spikeNames}{\code{character} or \code{NULL}. Vector indicating which \code{\link[=assay]{assay()}}
-rows denote spike-in sequences (e.g. ERCCs).}
-
-\item{interestingGroups}{\code{character} or \code{NULL}. Groups of interest that
+\item{interestingGroups}{\code{character}. Groups of interest that
 define the samples. If left unset, defaults to \code{sampleName}.}
 
-\item{...}{Additional arguments, to be stashed in the \code{\link[=metadata]{metadata()}} slot.}
+\item{...}{Additional arguments.}
 }
 \value{
 \code{bcbioSingleCell}.
