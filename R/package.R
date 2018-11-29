@@ -38,7 +38,7 @@
 #'   basejump_geom_label_average basejump_geom_label_repel camel cell2sample
 #'   detectLanes formalsList import interestingGroups interestingGroups<-
 #'   makeDimnames makeNames makeSingleCellExperiment mapCellsToSamples
-#'   markdownHeader markdownPlotlist matchArgsToDoCall matchInterestingGroups
+#'   markdownHeader markdownPlots matchArgsToDoCall matchInterestingGroups
 #'   metrics minimalSampleData plotZerosVsDepth prepareTemplate printString
 #'   realpath sampleData separator showSlotInfo
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getLevelFromCommands
