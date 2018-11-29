@@ -16,25 +16,23 @@ markdownHeader("`utils::sessionInfo()`", level = 2)
 utils::sessionInfo()
 ```
 
-[bcbio]: https://bcbio-nextgen.readthedocs.io
-[bcbioSingleCell]: http://bioinformatics.sph.harvard.edu/bcbioSingleCell
-[bcl2fastq]: https://support.illumina.com/downloads/bcl2fastq-conversion-software-v217.html
-[biomaRt]: https://bioconductor.org/packages/release/bioc/html/biomaRt.html
-[conda]: https://conda.io
-[DESeq2]: https://doi.org/doi:10.18129/B9.bioc.DESeq2
-[edgeR]: https://doi.org/doi:10.18129/B9.bioc.edgeR
-[Ensembl]: http://useast.ensembl.org
-[inDrops]: http://1cell-bio.com
-[Matrix]: https://cran.r-project.org/web/packages/Matrix/index.html
-[Orchestra]: https://wiki.med.harvard.edu/Orchestra
-[Python]: https://python.org
-[R]: https://www.r-project.org
-[rapmap]: https://github.com/COMBINE-lab/RapMap
-[scater]: https://doi.org/doi:10.18129/B9.bioc.scater
-[scran]: https://doi.org/doi:10.18129/B9.bioc.scran
+[bcbio]: https://bcbio-nextgen.readthedocs.io/
+[bcbioSingleCell]: https://bioinformatics.sph.harvard.edu/bcbioSingleCell/
+[bcl2fastq]: https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html
+[conda]: https://conda.io/
+[DESeq2]: https://bioconductor.org/packages/DESeq2/
+[edgeR]: https://bioconductor.org/packages/edgeR/
+[Ensembl]: https://ensembl.org/
+[inDrops]: http://1cell-bio.com/
+[Matrix]: https://cran.r-project.org/package=Matrix
+[Python]: https://python.org/
+[R]: https://www.r-project.org/
+[rapmap]: https://github.com/COMBINE-lab/RapMap/
+[scater]: https://bioconductor.org/packages/scater/
+[scran]: https://bioconductor.org/packages/scran/
 [scRNA-seq]: http://bcbio-nextgen.readthedocs.io/en/latest/contents/configuration.html#single-cell-rna-sequencing
-[Seurat]: http://satijalab.org/seurat
-[UMAP]: https://github.com/lmcinnes/umap
-[umis]: https://github.com/vals/umis
-[zinbwave]: https://doi.org/doi:10.18129/B9.bioc.zinbwave
-[zingeR]: https://github.com/statOmics/zingeR
+[Seurat]: http://satijalab.org/seurat/
+[UMAP]: https://github.com/lmcinnes/umap/
+[umis]: https://github.com/vals/umis/
+[zinbwave]: https://bioconductor.org/packages/zinbwave/
+[zingeR]: https://github.com/statOmics/zingeR/

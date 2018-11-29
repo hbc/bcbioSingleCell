@@ -9,7 +9,8 @@ set.seed(1454944673L)
 
 opts_chunk[["set"]](
     audodep = TRUE,
-    cache = TRUE,
+    # Enable caching with caution.
+    cache = FALSE,
     cache.lazy = FALSE,
     dev = c("png", "pdf"),
     fig.height = 10L,
