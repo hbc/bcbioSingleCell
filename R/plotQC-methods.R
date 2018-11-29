@@ -361,6 +361,7 @@ formals(plotQC.SingleCellExperiment)[["geom"]] <- geom
 formals(plotQC.SingleCellExperiment)[["legend"]] <- formalsList[["legend"]]
 
 
+
 #' @rdname plotQC
 #' @export
 setMethod(
