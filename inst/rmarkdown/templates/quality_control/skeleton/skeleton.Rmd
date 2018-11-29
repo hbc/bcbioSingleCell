@@ -1,10 +1,7 @@
 ---
-title: "Quality Control"
-author: "`r getOption('author')`"
-date: "`r Sys.Date()`"
-bibliography: bibliography.bib
 params:
-  bcbioSingleCell_file: "data/YYYY-MM-DD/bcb.rds"
+  title: Quality Control
+  object_file: "data/YYYY-MM-DD/object.rds"
   n_cells: !r Inf
   min_umis: 1000
   max_umis: !r Inf
@@ -14,39 +11,45 @@ params:
   max_mito_ratio: 0.1
   min_cells_per_gene: 10
   data_dir: !r file.path("data", Sys.Date())
-  results_dir: !r file.path("results", Sys.Date(), "quality_control")
+  output_dir: !r file.path("results", Sys.Date(), "quality_control")
+title: "`r params$title`"
+author: "`r getOption('author')`"
+date: "`r Sys.Date()`"
+bibliography: bibliography.bib
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-11-16
+# Last modified 2018-11-29
 bcbioSingleCell::prepareSingleCellTemplate()
 source("_setup.R")
-```
-
-```{r dirs}
-invisible(mapply(
-    FUN = dir.create,
-    path = c(params$data_dir, params$results_dir),
-    MoreArgs = list(showWarnings = FALSE, recursive = TRUE)
-))
-```
-
-```{r object}
-object <- readRDS(params$bcbioSingleCell_file)
-name <- tools::file_path_sans_ext(basename(params$bcbioSingleCell_file))
-stopifnot(is(object, "SingleCellExperiment"))
-invisible(validObject(object))
-print(object)
 ```
 
 ```{r header, child="_header.Rmd"}
 ```
 
-```{r sample_data}
-markdown(object)
+```{r dirs}
+invisible(mapply(
+    FUN = dir.create,
+    path = c(params$data_dir, params$output_dir),
+    MoreArgs = list(showWarnings = FALSE, recursive = TRUE)
+))
+```
+
+```{r object}
+name <- basenameSansExt(params$object_file)
+object <- readRDS(params$object_file)
+stopifnot(is(object, "SingleCellExperiment"))
+invisible(validObject(object))
+print(object)
 ```
 
 [bcbio][] run data was imported from **`r metadata(bcb)$uploadDir`**.
+
+# Sample metadata
+
+```{r sample_data}
+sampleData(object, clean = TRUE) %>% as.data.frame()
+```
 
 # Reads per cell {.tabset}
 
@@ -330,7 +333,7 @@ assignAndSaveData(
 ```
 
 ```{r export}
-export(object)
+export(object, name = name, dir = params$output_dir)
 ```
 
 ```{r footer, child="_footer.Rmd"}
