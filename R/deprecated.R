@@ -259,15 +259,4 @@ readCellRanger <- function(...) {
 
 
 
-# v0.3.2 =======================================================================
-# FIXME Improve this message, informing the user that we moved the `CellRanger`
-# S4 class to a separate package. Or consider importing CellRanger....
-# #' @rdname defunct
-# #' @export
-# CellRanger <- function(...) {
-#     .Defunct("CellRanger::CellRanger")
-# }
-
-
-
 # nocov end

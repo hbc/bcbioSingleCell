@@ -90,15 +90,12 @@ Imports:
     utils
 Suggests:
     BiocStyle,
-    CellRanger,
-    EnsDb.Hsapiens.v75,
     patrick,
     roxygen2,
     testthat (>= 2.0),
     tidyverse (>= 1.2)
 Remotes:
     hbc/bcbioBase@develop,
-    steinbaugh/CellRanger@develop,
     steinbaugh/basejump@develop,
     steinbaugh/goalie
 biocViews:
