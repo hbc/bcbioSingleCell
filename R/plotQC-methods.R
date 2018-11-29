@@ -40,12 +40,10 @@ basejump::plotQC
     fill,
     title = NULL
 ) {
+    validObject(object)
     assert_is_a_string(metricCol)
     geom <- match.arg(geom)
-    interestingGroups <- matchInterestingGroups(
-        object = object,
-        interestingGroups = interestingGroups
-    )
+    interestingGroups <- matchInterestingGroups(object, interestingGroups)
     interestingGroups(object) <- interestingGroups
     assert_all_are_non_negative(c(min, max))
     # Support for per sample filtering cutoffs.
@@ -60,7 +58,7 @@ basejump::plotQC
 
     data <- metrics(object)
     if (!metricCol %in% colnames(data)) {
-        return(invisible())
+        stop(paste(metricCol, "is not defined in colData()."))
     }
 
     mapping <- aes(
@@ -308,7 +306,7 @@ plotQC.SingleCellExperiment <-  # nolint
         plotMitoRatio <- plotMitoRatio(object, geom = geom)
 
 
-        plotlist <- list(
+        list <- list(
             "Cell Counts" = plotCellCounts,
             "UMIs per Cell" = plotUMIsPerCell,
             "Genes per Cell" = plotGenesPerCell,
@@ -321,27 +319,27 @@ plotQC.SingleCellExperiment <-  # nolint
         # Remove any `NULL` plots. This is useful for nuking the
         # `plotReadsPerCell()` return on an object that doesn't contain raw
         # cellular barcode counts.
-        plotlist <- Filter(Negate(is.null), plotlist)
+        list <- Filter(f = Negate(is.null), x = list)
 
         # Consistently show n plots.
         n <- 6L
-        assert_that(has_length(plotlist, n = n))
+        assert_that(has_length(list, n = n))
 
         # Hide the legends, if desired.
         if (identical(legend, FALSE)) {
             .hideLegend <- function(gg) {
                 gg + theme(legend.position = "none")
             }
-            plotlist <- lapply(plotlist, .hideLegend)
+            list <- lapply(list, .hideLegend)
         }
 
         # Return.
         if (return == "list") {
-            names(plotlist) <- camel(names(plotlist))
-            plotlist
+            names(list) <- camel(names(list))
+            list
         } else if (return == "grid") {
             plot_grid(
-                plotlist = plotlist,
+                plotlist = list,
                 ncol = n / 2L,
                 nrow = 2L
             )
@@ -352,8 +350,8 @@ plotQC.SingleCellExperiment <-  # nolint
                 tabset = TRUE,
                 asis = TRUE
             )
-            markdownPlotlist(
-                plotlist = plotlist,
+            markdownPlots(
+                list = list,
                 headerLevel = headerLevel + 1L
             )
         }
