@@ -36,7 +36,7 @@ expression in at least this many cells.}
 }
 \value{
 \code{SingleCellExperiment}, with filtering information slotted into
-\code{\link[S4Vectors:metadata]{S4Vectors::metadata()}} as \code{filterCells} and \code{filterParams}.
+\code{metadata()} as \code{filterCells} and \code{filterParams}.
 }
 \description{
 Filter Cells
@@ -46,8 +46,8 @@ Apply gene detection, novelty score, and mitochondrial abundance cutoffs to
 cellular barcodes. By default we recommend applying the same filtering cutoff
 to all samples. The filtering parameters now support per-sample cutoffs,
 defined using a named \code{numeric} vector. When matching per sample, be sure to
-use the \code{\link[Biobase:sampleNames]{Biobase::sampleNames()}} return values (i.e. the \code{sampleName} column
-in \code{\link[basejump:sampleData]{basejump::sampleData()}}).
+use the \code{sampleNames()} return values (i.e. the \code{sampleName} column in
+\code{sampleData()}).
 }
 \examples{
 data(indrops)

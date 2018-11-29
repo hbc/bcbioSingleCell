@@ -14,7 +14,7 @@
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroups}{\code{character} or \code{NULL}. Groups of interest that
+\item{interestingGroups}{\code{character}. Groups of interest that
 define the samples. If left unset, defaults to \code{sampleName}.}
 
 \item{geom}{\code{string}. Plot type. Uses \code{base::match.arg()} and defaults to the

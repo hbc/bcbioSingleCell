@@ -11,7 +11,7 @@ read counts saved as a sparse matrix (\code{sparseMatrix}), sample metadata, and
 cell quality control metrics.
 }
 \seealso{
-\code{\link[=bcbioSingleCell]{bcbioSingleCell()}}.
+\code{bcbioSingleCell()}.
 }
 \author{
 Michael Steinbaugh

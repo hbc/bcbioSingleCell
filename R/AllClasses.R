@@ -17,7 +17,7 @@
 #' @author Michael Steinbaugh
 #' @export
 #'
-#' @seealso [bcbioSingleCell()].
+#' @seealso `bcbioSingleCell()`.
 setClass(
     Class = "bcbioSingleCell",
     contains = "SingleCellExperiment"

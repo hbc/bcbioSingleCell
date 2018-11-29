@@ -1,3 +1,6 @@
+# FIXME Need to explain the annotation priority more clearly in the
+# documentation here. AnnotationHub takes priority over GFF, if set.
+
 # TODO Move some of these params to basejump.
 
 
@@ -13,43 +16,12 @@
 #' [sshfs](https://github.com/osxfuse/osxfuse/wiki/SSHFS).
 #'
 #' @inheritParams basejump::params
-#' @inheritParams basejump::makeSummarizedExperiment
-#' @param uploadDir `string`. Path to final upload directory. This path is set
-#'   when running "`bcbio_nextgen -w template`".
-#' @param sampleMetadataFile `string` or `NULL`. Sample barcode metadata file.
-#'   Optional for runs with demultiplixed index barcodes (e.g. SureCell) and can
-#'   be left `NULL`, but otherwise suggested for runs with multipliexed FASTQs
-#'   containing multiple index barcodes (e.g. inDrops).
-#' @param organism `string` or `NULL`. Organism name. Use the full Latin name
-#'   (e.g. "Homo sapiens"), since this will be input downstream to AnnotationHub
-#'   and ensembldb, unless `gffFile` is set. If left `NULL` (*not recommended*),
-#'   the function call will skip loading gene-level annotations into
-#'   [rowRanges()]. This can be useful for poorly annotation genomes or
-#'   experiments involving multiple genomes.
-#' @param ensemblRelease `scalar integer` or `NULL`. Ensembl release version. If
-#'   `NULL`, defaults to current release, and does not typically need to be
-#'   user-defined. Passed to AnnotationHub for `EnsDb` annotation matching,
-#'   unless `gffFile` is set.
-#' @param genomeBuild `string` or `NULL`. Ensembl genome build name (e.g.
-#'   "GRCh38"). This will be passed to AnnotationHub for `EnsDb` annotation
-#'   matching, unless `gffFile` is set.
-#' @param gffFile `string` or `NULL`. *Advanced use only; not recommended.* By
-#'   default, we recommend leaving this `NULL` for genomes that are supported on
-#'   Ensembl. In this case, the row annotations ([rowRanges()]) will be obtained
-#'   automatically from Ensembl by passing the `organism`, `genomeBuild`, and
-#'   `ensemblRelease` arguments to AnnotationHub and ensembldb. For a genome
-#'   that is not supported on Ensembl and/or AnnotationHub, a GFF/GTF (General
-#'   Feature Format) file is required. Generally, we recommend using a GTF
-#'   (GFFv2) file here over a GFF3 file if possible, although all GFF formats
-#'   are supported. The function will internally generate transcript-to-gene
-#'   mappings and construct a `GRanges` object containing the genomic ranges
-#'   ([rowRanges()]).
-#' @param ... Additional arguments, to be stashed in the [metadata()] slot.
+#' @inheritParams bcbioBase::params
 #'
 #' @return `bcbioSingleCell`.
 #'
 #' @seealso
-#' - [SingleCellExperiment::SingleCellExperiment()].
+#' - `SingleCellExperiment::SingleCellExperiment()`.
 #' - `.S4methods(class = "bcbioSingleCell")`.
 #'
 #' @examples
@@ -194,6 +166,8 @@ bcbioSingleCell <- function(
     counts <- .import.bcbio(sampleDirs)
 
     # Row data -----------------------------------------------------------------
+    # FIXME Add support for loading bcbio GTF (see bcbioRNASeq).
+
     if (is_a_string(gffFile)) {
         rowRanges <- makeGRangesFromGFF(gffFile, level = level)
     } else if (is_a_string(organism)) {
@@ -319,8 +293,5 @@ bcbioSingleCell <- function(
 
 .new.bcbioSingleCell <-  # nolint
     function(...) {
-        new(
-            Class = "bcbioSingleCell",
-            makeSingleCellExperiment(...)
-        )
+        new(Class = "bcbioSingleCell", makeSingleCellExperiment(...))
     }
