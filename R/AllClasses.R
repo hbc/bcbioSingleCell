@@ -1,7 +1,6 @@
 # FIXME Use `validate_that()` here.
-# TODO Update and relax the check on `sessionInfo`.
-# See bcbioRNASeq approach for example.
-# TODO Error for objects containing a legacy cellular barcode tibble.
+# FIXME Update and relax the check on `sessionInfo`. See bcbioRNASeq approach.
+# FIXME Error for objects containing a legacy cellular barcode tibble.
 # FIXME Add a rowRanges Rle class check.
 
 

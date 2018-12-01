@@ -1,5 +1,5 @@
-# TODO Update handling of `sessionInfo`?
-# TODO Add update method for run-length encoding in rowRanges
+# FIXME Update handling of `sessionInfo`?
+# FIXME Add update method for run-length encoding in rowRanges
 
 
 
