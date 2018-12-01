@@ -1,0 +1,65 @@
+# AppVeyor-CI configuration for Bioconductor packages
+# https://www.appveyor.com/docs/appveyor-yml/
+# https://github.com/krlmlr/r-appveyor
+
+# Download script file from GitHub.
+init:
+  ps: |
+        $ErrorActionPreference = "Stop"
+        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+        Import-Module '..\appveyor-tool.ps1'
+
+install:
+  ps: Bootstrap
+
+platform: x64
+
+cache:
+  - C:\RLibrary
+
+environment:
+  global:
+    R_ARCH: x64
+    USE_RTOOLS: true
+
+build_script:
+  - travis-tool.sh install_bioc GenomeInfoDbData
+  - travis-tool.sh install_bioc DelayedArray
+  - travis-tool.sh install_bioc ensembldb
+  - travis-tool.sh install_bioc EnsDb.Hsapiens.v75
+  - travis-tool.sh install_bioc_deps
+  - travis-tool.sh install_deps
+
+test_script:
+  - travis-tool.sh run_tests
+
+on_failure:
+  - 7z a failure.zip *.Rcheck\*
+  - appveyor PushArtifact failure.zip
+
+artifacts:
+  - path: '*.Rcheck\**\*.log'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.out'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.fail'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.Rout'
+    name: Logs
+
+  - path: '\*_*.tar.gz'
+    name: Bits
+
+  - path: '\*_*.zip'
+    name: Bits
+
+notifications:
+  - provider: Email
+    to:
+      - mike@steinbaugh.com
+    on_build_success: false
+    on_build_failure: true
+    on_build_status_changed: true
