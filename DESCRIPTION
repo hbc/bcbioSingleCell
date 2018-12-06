@@ -54,7 +54,7 @@ LazyData: false
 Depends:
     R (>= 3.5),
     SingleCellExperiment (>= 1.2),
-    basejump (>= 0.8.5)
+    basejump (>= 0.8.6)
 Imports:
     Biobase,
     BiocGenerics,
