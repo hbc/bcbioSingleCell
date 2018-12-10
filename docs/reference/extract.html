@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -184,9 +184,9 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Refer to <code><a href='https://www.rdocumentation.org/packages/basejump/topics/cell2sample'>basejump::cell2sample()</a></code> and <code><a href='https://www.rdocumentation.org/packages/basejump/topics/selectSamples'>basejump::selectSamples()</a></code> if
-sample-level extraction is desired. Note that <code>sampleID</code> is slotted into
-<code><a href='https://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class'>SummarizedExperiment::colData()</a></code> and defines the cell-to-sample mappings.</p>
+    <p>Refer to <code>cell2sample()</code> and <code>selectSamples()</code> if sample-level extraction is
+desired. Note that <code>sampleID</code> is slotted into <code>colData()</code> and defines the
+cell-to-sample mappings.</p>
 <p>Unfiltered cellular barcode distributions for the entire dataset, including
 cells not kept in the matrix will be dropped in favor of the <code>nCount</code> column
 of <code>colData</code>.</p>
