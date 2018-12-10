@@ -1,12 +1,7 @@
-# FIXME Need to explain the annotation priority more clearly in the
-# documentation here. AnnotationHub takes priority over GFF, if set.
-
-# TODO Move some of these params to basejump.
-
-
-
 #' @inherit bcbioSingleCell-class
 #' @author Michael Steinbaugh, Rory Kirchner
+#' @inheritParams basejump::params
+#' @inheritParams bcbioBase::params
 #' @export
 #'
 #' @section Remote Data:
@@ -14,9 +9,6 @@
 #' When working in RStudio, we recommend connecting to the bcbio-nextgen run
 #' directory as a remote connection over
 #' [sshfs](https://github.com/osxfuse/osxfuse/wiki/SSHFS).
-#'
-#' @inheritParams basejump::params
-#' @inheritParams bcbioBase::params
 #'
 #' @return `bcbioSingleCell`.
 #'

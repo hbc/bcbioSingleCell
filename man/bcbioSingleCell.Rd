@@ -25,6 +25,10 @@ When left unset, the latest release available via AnnotationHub/ensembldb
 is used. Note that the latest version available can vary, depending on the
 versions of AnnotationHub and ensembldb in use.}
 
+\item{genomeBuild}{\code{string}. Ensembl genome build assembly nam (e.g.
+\code{"GRCh38"}). If set \code{NULL}, defaults to the most recent build available.
+Note: don't pass in UCSC build IDs (e.g. \code{"hg38"}).}
+
 \item{gffFile}{\code{string}. GFF/GTF (General Feature Format) file.
 Generally, we recommend using a GTF (GFFv2) instead of a GFFv3 file if
 possible.}
