@@ -59,7 +59,7 @@
 #' @importFrom magrittr %>%
 #' @importFrom methods .hasSlot as as<- is new show slot slot<- validObject
 #' @importFrom readr read_lines read_tsv
-#' @importFrom rlang !! := has_length sym syms UQ
+#' @importFrom rlang !! := sym syms UQ
 #' @importFrom scales percent
 #' @importFrom stats ecdf
 #' @importFrom stringr str_extract str_pad

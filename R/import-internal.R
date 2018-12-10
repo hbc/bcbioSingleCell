@@ -27,7 +27,7 @@
         # Remove any empty items in list, which can result from low quality
         # samples with empty matrices in bcbio pipeline.
         list <- Filter(Negate(is.null), list)
-        if (!has_length(list)) {
+        if (length(list) == 0L) {
             stop(paste(
                 "bcbio didn't return any cells.",
                 "Check your `minimum_barcode_depth` setting."

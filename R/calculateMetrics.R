@@ -56,7 +56,7 @@ calculateMetrics <-  # nolint
             assert_is_all_of(rowRanges, "GRanges")
 
             setdiff <- setdiff(rownames(counts), names(rowRanges))
-            if (has_length(setdiff)) {
+            if (length(setdiff) > 0L) {
                 warning(paste(
                     "Genes missing in rowRanges.",
                     rowRangesMessage,
