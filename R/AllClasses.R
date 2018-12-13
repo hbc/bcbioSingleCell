@@ -1,4 +1,4 @@
-# FIXME Use `validate_that()` here.
+# FIXME Use `validate()` here.
 # TODO Update and relax the check on `sessionInfo`.
 # See bcbioRNASeq approach for example.
 # TODO Error for objects containing a legacy cellular barcode tibble.
@@ -25,8 +25,8 @@ setClass(
 setValidity(
     Class = "bcbioSingleCell",
     method = function(object) {
-        assert_that(metadata(object)[["version"]] >= 0.1)
-        assert_that(!.hasSlot(object, "bcbio"))
+        assert(metadata(object)[["version"]] >= 0.1)
+        assert(!.hasSlot(object, "bcbio"))
 
         # Assays ---------------------------------------------------------------
         assert_is_subset("counts", names(assays(object)))

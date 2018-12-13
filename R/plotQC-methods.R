@@ -323,7 +323,7 @@ plotQC.SingleCellExperiment <-  # nolint
 
         # Consistently show n plots.
         n <- 6L
-        assert_that(hasLength(list, n = n))
+        assert(hasLength(list, n = n))
 
         # Hide the legends, if desired.
         if (identical(legend, FALSE)) {
