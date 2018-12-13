@@ -25,7 +25,7 @@ BiocGenerics::updateObject
 updateObject.bcbioSingleCell <-  # nolint
     function(object) {
         version <- slot(object, "metadata")[["version"]]
-        assert_is_all_of(version, c("package_version", "numeric_version"))
+        assert(is(version, c("package_version", "numeric_version")))
         message(paste0("Upgrading from ", version, " to ", packageVersion, "."))
 
         # Coerce to SingleCellExperiment
@@ -41,7 +41,7 @@ updateObject.bcbioSingleCell <-  # nolint
         # Coerce ShallowSimpleListAssays to list
         assays <- lapply(seq_along(assays), function(a) {
             assay <- assays[[a]]
-            assert_are_identical(colnames(assay), colnames(sce))
+            assert(identical(colnames(assay), colnames(sce)))
             assay
         })
         names(assays) <- assayNames(sce)
@@ -56,7 +56,7 @@ updateObject.bcbioSingleCell <-  # nolint
         assays <- Filter(Negate(is.null), assays)
         # Put the required assays first, in order
         assays <- assays[unique(c(requiredAssays, names(assays)))]
-        assert_is_subset(requiredAssays, names(assays))
+        assert(isSubset(requiredAssays, names(assays)))
 
         # Column data ----------------------------------------------------------
         # Require that all `sampleData` columns are now slotted in `colData`.
@@ -69,9 +69,9 @@ updateObject.bcbioSingleCell <-  # nolint
                 ,
                 setdiff(colnames(colData), colnames(sampleData)),
                 drop = FALSE
-                ]
+            ]
             cell2sample <- cell2sample(sce)
-            assert_is_factor(cell2sample)
+            assert(is.factor(cell2sample))
             colData[["rowname"]] <- rownames(colData)
             colData[["sampleID"]] <- cell2sample
             sampleData[["sampleID"]] <- rownames(sampleData)
@@ -103,13 +103,7 @@ updateObject.bcbioSingleCell <-  # nolint
 
 .updateMetadata <- function(metadata) {
     # Drop legacy slots.
-    keep <- setdiff(
-        x = names(metadata),
-        y = c(
-            "cell2sample",
-            "sampleData"
-        )
-    )
+    keep <- setdiff(x = names(metadata), y = c("cell2sample", "sampleData"))
     metadata <- metadata[keep]
 
     # Update the version, if necessary.
