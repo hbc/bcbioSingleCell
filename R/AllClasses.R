@@ -1,5 +1,3 @@
-# FIXME Switch to validate approach here.
-
 #' bcbio Single-Cell RNA-Seq Data Set
 #'
 #' `bcbioSingleCell` is an S4 class that extends `SingleCellExperiment`, and is
