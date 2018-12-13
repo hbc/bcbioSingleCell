@@ -11,22 +11,26 @@
 #' `sampleData`).
 #'
 #' @inheritParams basejump::params
-#' @param nCells `integer(1)`. Expected number of cells per sample.
-#' @param minUMIs `integer(1)`. Minimum number of UMI disambiguated counts
-#'   per cell.
-#' @param maxUMIs `integer(1)`. Maximum number of UMI disambiguated counts
-#'   per cell.
-#' @param minGenes `integer(1)`. Minimum number of genes detected.
-#' @param maxGenes `integer(1)`. Maximum number of genes detected.
-#' @param minNovelty `integer(1)` (`0`-`1`). Minimum novelty score (log10
-#'   genes per UMI).
-#' @param maxMitoRatio `integer(1)` (`0`-`1`). Maximum relative
-#'   mitochondrial abundance.
-#' @param minCellsPerGene `integer(1)`. Include genes with non-zero
-#'   expression in at least this many cells.
+#' @param nCells `integer(1)`.
+#'   Expected number of cells per sample.
+#' @param minUMIs `integer(1)`.
+#'   Minimum number of UMI disambiguated counts per cell.
+#' @param maxUMIs `integer(1)`.
+#'   Maximum number of UMI disambiguated counts per cell.
+#' @param minGenes `integer(1)`.
+#'   Minimum number of genes detected.
+#' @param maxGenes `integer(1)`.
+#'   Maximum number of genes detected.
+#' @param minNovelty `integer(1)` (`0`-`1`).
+#'   Minimum novelty score (log10 genes per UMI).
+#' @param maxMitoRatio `integer(1)` (`0`-`1`).
+#'   Maximum relative mitochondrial abundance.
+#' @param minCellsPerGene `integer(1)`.
+#'   Include genes with non-zero expression in at least this many cells.
 #'
-#' @return `SingleCellExperiment`, with filtering information slotted into
-#'   `metadata` as `filterCells` and `filterParams`.
+#' @return `SingleCellExperiment`.
+#' Filtering information gets slotted into `metadata` as `filterCells` and
+#' `filterParams`.
 #'
 #' @examples
 #' data(indrops)
@@ -93,45 +97,53 @@ filterCells.SingleCellExperiment <-  # nolint
         colData <- as(object = colData(object), Class = "tbl_df")
 
         # Parameter integrity checks -------------------------------------------
-        # Expected nCells per sample.
-        assert_is_a_number(nCells)
-        assert_all_are_positive(nCells)
+        assert(
+            # Expected nCells per sample.
+            is.numeric(nCells),
+            all(isPositive(nCells)),
 
-        # minUMIs
-        assert_is_any_of(minUMIs, c("numeric", "character"))
+            # minUMIs (see below)
+            isAny(minUMIs, c("numeric", "character")),
+
+            # maxUMIs
+            is.numeric(maxUMIs),
+            all(isPositive(maxUMIs)),
+
+            # minGenes
+            is.numeric(minGenes),
+            all(isPositive(minGenes)),
+
+            # maxGenes
+            is.numeric(maxGenes),
+            all(isNonNegative(maxGenes)),
+
+            # minNovelty
+            is.numeric(minNovelty),
+            all(isInRange(minNovelty, lower = 0L, upper = 1L)),
+
+            # maxMitoRatio
+            is.numeric(maxMitoRatio),
+            # Don't allow the user to set at 0.
+            all(isInLeftOpenRange(maxMitoRatio, lower = 0L, upper = 1L)),
+
+            # minCellsPerGene
+            is.numeric(minCellsPerGene),
+            # Don't allow genes with all zero counts, so require at least 1 here.
+            all(isPositive(minCellsPerGene))
+        )
+
+        # minUMIs supports barcode ranks filtering.
         if (is.character(minUMIs)) {
-            assert_is_a_string(minUMIs)
-            assert_is_subset(minUMIs, c("inflection", "knee"))
+            assert(
+                isString(minUMIs),
+                isSubset(minUMIs, c("inflection", "knee"))
+            )
         } else {
-            assert_is_numeric(minUMIs)
-            assert_all_are_positive(minUMIs)
+            assert(
+                is.numeric(minUMIs),
+                all(isPositive(minUMIs))
+            )
         }
-
-        # maxUMIs
-        assert_is_numeric(maxUMIs)
-        assert_all_are_positive(maxUMIs)
-
-        # minGenes
-        assert_is_numeric(minGenes)
-        assert_all_are_positive(minGenes)
-
-        # maxGenes
-        assert_is_numeric(maxGenes)
-        assert_all_are_non_negative(maxGenes)
-
-        # minNovelty
-        assert_is_numeric(minNovelty)
-        assert_all_are_in_range(minNovelty, lower = 0L, upper = 1L)
-
-        # maxMitoRatio
-        assert_is_numeric(maxMitoRatio)
-        # Don't allow the user to set at 0.
-        assert_all_are_in_left_open_range(maxMitoRatio, lower = 0L, upper = 1L)
-
-        # minCellsPerGene
-        # Don't allow genes with all zero counts, so require at least 1 here.
-        assert_is_numeric(minCellsPerGene)
-        assert_all_are_positive(minCellsPerGene)
 
         params <- list(
             nCells = nCells,
@@ -153,7 +165,7 @@ filterCells.SingleCellExperiment <-  # nolint
         )
 
         # minUMIs
-        if (is_a_string(minUMIs)) {
+        if (isString(minUMIs)) {
             ranks <- barcodeRanksPerSample(object)
             minUMIs <- vapply(
                 X = ranks,
@@ -166,7 +178,7 @@ filterCells.SingleCellExperiment <-  # nolint
             minUMIs <- minUMIs[sort(names(minUMIs))]
         }
         if (!is.null(names(minUMIs))) {
-            assert_are_set_equal(names(minUMIs), sampleNames)
+            assert(areSetEqual(names(minUMIs), sampleNames))
             message(paste(
                 "minUMIs: per sample mode",
                 printString(minUMIs),
@@ -200,7 +212,7 @@ filterCells.SingleCellExperiment <-  # nolint
 
         # maxUMIs
         if (!is.null(names(maxUMIs))) {
-            assert_are_set_equal(names(maxUMIs), sampleNames)
+            assert(areSetEqual(names(maxUMIs), sampleNames))
             message(paste(
                 "maxUMIs: per sample mode",
                 printString(maxUMIs),
@@ -234,7 +246,7 @@ filterCells.SingleCellExperiment <-  # nolint
 
         # minGenes
         if (!is.null(names(minGenes))) {
-            assert_are_set_equal(names(minGenes), sampleNames)
+            assert(areSetEqual(names(minGenes), sampleNames))
             message(paste(
                 "minGenes: per sample mode",
                 printString(minGenes),
@@ -268,7 +280,7 @@ filterCells.SingleCellExperiment <-  # nolint
 
         # maxGenes
         if (!is.null(names(maxGenes))) {
-            assert_are_set_equal(names(maxGenes), sampleNames)
+            assert(areSetEqual(names(maxGenes), sampleNames))
             message(paste(
                 "maxGenes: per sample mode",
                 printString(maxGenes),
@@ -302,7 +314,7 @@ filterCells.SingleCellExperiment <-  # nolint
 
         # minNovelty
         if (!is.null(names(minNovelty))) {
-            assert_are_set_equal(names(minNovelty), sampleNames)
+            assert(areSetEqual(names(minNovelty), sampleNames))
             message(paste(
                 "minNovelty: per sample mode",
                 printString(minNovelty),
@@ -338,7 +350,7 @@ filterCells.SingleCellExperiment <-  # nolint
 
         # maxMitoRatio
         if (!is.null(names(maxMitoRatio))) {
-            assert_are_set_equal(names(maxMitoRatio), sampleNames)
+            assert(areSetEqual(names(maxMitoRatio), sampleNames))
             message(paste(
                 "maxMitoRatio: per sample mode",
                 printString(maxMitoRatio),
@@ -389,9 +401,9 @@ filterCells.SingleCellExperiment <-  # nolint
 
         # Now coerce back to DataFrame from tibble.
         colData <- as(colData, "DataFrame")
-        assertHasRownames(colData)
+        assert(hasRownames(colData))
         cells <- sort(rownames(colData))
-        assert_is_subset(cells, colnames(object))
+        assert(isSubset(cells, colnames(object)))
         object <- object[, cells, drop = FALSE]
 
         # Filter low quality genes ---------------------------------------------
@@ -417,7 +429,7 @@ filterCells.SingleCellExperiment <-  # nolint
             sep = " | "
         )
         genes <- sort(genes)
-        assert_is_subset(genes, rownames(object))
+        assert(isSubset(genes, rownames(object)))
         object <- object[genes, , drop = FALSE]
 
         # Summary --------------------------------------------------------------
