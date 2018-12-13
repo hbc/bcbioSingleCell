@@ -38,8 +38,9 @@
 #'   labs scale_x_continuous scale_y_continuous stat_ecdf theme
 #' @importFrom ggridges geom_density_ridges
 #' @importFrom goalie areDisjointSets assert containsAURL containsHeaderLevel
-#'   hasLength hasNames hasRownames isADirectory isAFile isAny isCharacter
-#'   isGGScale isInt isNonEmpty isString isSubset validate validateClasses
+#'   hasLength hasNames hasRows hasRownames isADirectory isAFile isAny
+#'   isCharacter isGGScale isInt isNonEmpty isString isSubset validate
+#'   validateClasses
 #' @importFrom graphics hist
 #' @importFrom magrittr %>%
 #' @importFrom methods .hasSlot as as<- is new show slot slot<- validObject
