@@ -44,8 +44,10 @@ stopifnot(all(file.exists(
 counts <- Matrix::readMM(counts_file)
 rownames <- readr::read_lines(rownames_file)
 colnames <- readr::read_lines(colnames_file)
-stopifnot(identical(nrow(counts), length(rownames)))
-stopifnot(identical(ncol(counts), length(colnames)))
+stopifnot(
+    identical(nrow(counts), length(rownames)),
+    identical(ncol(counts), length(colnames))
+)
 rownames(counts) <- rownames
 colnames(counts) <- colnames
 
@@ -96,7 +98,7 @@ vapply(
 )
 object_size(sce)
 stopifnot(object_size(sce) < limit)
-stopifnot(validObject(sce))
+validObject(sce)
 
 indrops <- sce
 usethis::use_data(indrops, compress = "xz", overwrite = TRUE)

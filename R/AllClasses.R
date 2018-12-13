@@ -1,10 +1,4 @@
-# FIXME Use `validate()` here.
-# TODO Update and relax the check on `sessionInfo`.
-# See bcbioRNASeq approach for example.
-# TODO Error for objects containing a legacy cellular barcode tibble.
-# FIXME Add a rowRanges Rle class check.
-
-
+# FIXME Switch to validate approach here.
 
 #' bcbio Single-Cell RNA-Seq Data Set
 #'

@@ -4,8 +4,10 @@
 #' @inherit basejump::plotQC
 #' @inheritParams basejump::params
 #'
-#' @param headerLevel `scalar integer` (`1`-`7`). R Markdown header level.
-#' @param legend `boolean`. Include plot legend.
+#' @param headerLevel `integer(1)` (`1`-`7`).
+#'   R Markdown header level.
+#' @param legend `logical(1)`.
+#'   Include plot legend.
 #'
 #' @return
 #'   - `grid`: Graphical output.
