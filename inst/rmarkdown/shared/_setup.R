@@ -1,13 +1,7 @@
-library(knitr)
-library(rmarkdown)
-library(basejump)
-library(bcbioSingleCell)
-library(tidyverse)
-
 # Set seed for reproducibility.
 set.seed(1454944673L)
 
-opts_chunk[["set"]](
+knitr::opts_chunk[["set"]](
     audodep = TRUE,
     # Enable caching with caution.
     cache = FALSE,
@@ -19,8 +13,8 @@ opts_chunk[["set"]](
     tidy = FALSE
 )
 
-theme_set(
-    theme_paperwhite(
+ggplot2::theme_set(
+    basejump::theme_paperwhite(
         base_size = 14L,
         legend_position = "right"
     )
