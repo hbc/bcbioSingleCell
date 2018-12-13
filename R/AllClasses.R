@@ -19,30 +19,36 @@ setClass(
 setValidity(
     Class = "bcbioSingleCell",
     method = function(object) {
-        assert(metadata(object)[["version"]] >= 0.1)
-        assert(!.hasSlot(object, "bcbio"))
+        valid <- list()
+
+        colData <- colData(object)
+        metadata <- metadata(object)
+        sampleData <- sampleData(object)
+
+        # Return invalid for all objects older than v0.1.
+        version <- metadata[["version"]]
+        valid[["version"]] <- validate(
+            is(version, "package_version"),
+            version >= 0.1
+        )
+
+        valid[["general"]] <- validate(
+            !.hasSlot(object, "bcbio")
+        )
 
         # Assays ---------------------------------------------------------------
-        assert_is_subset("counts", names(assays(object)))
+        valid[["assays"]] <- validate(
+            isSubset("counts", names(assays(object)))
+        )
 
         # Row data -------------------------------------------------------------
-        assert_is_all_of(rowRanges(object), "GRanges")
-        assert_is_all_of(rowData(object), "DataFrame")
+        valid[["rowData"]] <- validate(
+            is(rowRanges(object), "GRanges"),
+            is(rowData(object), "DataFrame")
+        )
 
         # Column data ----------------------------------------------------------
-        colData <- colData(object)
-        sampleData <- sampleData(object)
         sampleData[["interestingGroups"]] <- NULL
-
-        # Require that metrics columns are defined.
-        assert_is_subset(metricsCols, colnames(colData))
-
-        # Ensure that `interestingGroups` isn't slotted in colData.
-        assert_are_disjoint_sets("interestingGroups", colnames(colData))
-
-        # Ensure that sample-level metadata is also defined at cell-level.
-        # We're doing this in long format in the colData slot.
-        assert_is_subset(colnames(sampleData), colnames(colData))
 
         # Check that the levels set in `sampleData` match `colData`
         sampleDataLevels <- lapply(
@@ -60,11 +66,19 @@ setValidity(
             X = colData[, names(sampleDataLevels), drop = FALSE],
             FUN = levels
         )
-        assert_are_identical(sampleDataLevels, colDataLevels)
+
+        valid[["colData"]] <- validate(
+            # Require that metrics columns are defined.
+            isSubset(metricsCols, colnames(colData)),
+            # Ensure that `interestingGroups` isn't slotted in colData.
+            areDisjointSets("interestingGroups", colnames(colData)),
+            # Ensure that sample-level metadata is also defined at cell-level.
+            # We're doing this in long format in the colData slot.
+            isSubset(colnames(sampleData), colnames(colData)),
+            identical(sampleDataLevels, colDataLevels)
+        )
 
         # Metadata -------------------------------------------------------------
-        metadata <- metadata(object)
-
         # Optional metadata:
         # - filterCells
         # - filterGenes
@@ -85,58 +99,44 @@ setValidity(
         # - runDate: Date
         # - template: character
         # - yaml: list
-
-        # FIXME Ensure `sampleData` is moved to `colData`.
-
-        # Class checks
-        # FIXME Switch to using basejump `checkSlotInfo`.
-        requiredMetadata <- list(
-            allSamples = "logical",
-            date = "Date",
-            ensemblRelease = "integer",
-            genomeBuild = "character",
-            interestingGroups = "character",
-            level = "character",
-            organism = "character",
-            pipeline = "character",
-            sampleDirs = "character",
-            sampleMetadataFile = "character",
-            sessionInfo = "session_info",
-            umiType = "character",
-            uploadDir = "character",
-            version = "package_version",
-            wd = "character"
-        )
-        classChecks <- invisible(mapply(
-            name <- names(requiredMetadata),
-            expected <- requiredMetadata,
-            MoreArgs = list(metadata = metadata),
-            FUN = function(name, expected, metadata) {
-                actual <- class(metadata[[name]])
-                if (!length(intersect(expected, actual))) {
-                    FALSE
-                } else {
-                    TRUE
-                }
-            },
-            SIMPLIFY = TRUE,
-            USE.NAMES = TRUE
-        ))
-        if (!all(classChecks)) {
-            stop(paste(
-                "Metadata class checks failed.",
-                updateMessage,
-                printString(classChecks),
-                sep = "\n"
-            ))
-        }
-
-        # level
-        assert_is_subset(
-            x = metadata[["level"]],
-            y = c("genes", "transcripts")
+        valid[["metadata"]] <- validateClasses(
+            object = metadata,
+            expected = list(
+                allSamples = "logical",
+                date = "Date",
+                ensemblRelease = "integer",
+                genomeBuild = "character",
+                interestingGroups = "character",
+                level = "character",
+                organism = "character",
+                pipeline = "character",
+                sampleDirs = "character",
+                sampleMetadataFile = "character",
+                sessionInfo = "session_info",
+                umiType = "character",
+                uploadDir = "character",
+                version = "package_version",
+                wd = "character"
+            ),
+            subset = TRUE
         )
 
-        TRUE
+        valid[["metadata2"]] <- validate(
+            !isSubset("sampleName", names(metadata)),
+            isSubset(metadata[["level"]], c("genes", "transcripts"))
+        )
+
+        .valid(list = valid)
     }
 )
+
+
+
+.valid <- function(list) {
+    invalid <- Filter(f = Negate(isTRUE), x = list)
+    if (hasLength(invalid)) {
+        unlist(invalid)
+    } else {
+        TRUE
+    }
+}
