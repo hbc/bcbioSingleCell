@@ -9,10 +9,12 @@
 #' @return `integer`. Cell identifiers are the names and raw read counts
 #'   are the values.
 .nCount <- function(list) {
-    assert_is_list(list)
-    assert_has_names(list)
-    assert_is_integer(list[[1L]])
-    assert_has_names(list[[1L]])
+    assert(
+        is.list(list),
+        hasNames(list),
+        is.integer(list[[1L]]),
+        hasNames(list[[1L]])
+    )
     if (hasLength(list, n = 1L)) {
         list[[1L]]
     } else {
@@ -35,8 +37,7 @@
         return(metrics(object))
     }
 
-    assert_is_list(list)
-    assert_is_non_empty(list)
+    assert(is.list(list), isNonEmpty(list))
 
     if (hasLength(list, n = 1L)) {
         data <- tibble(
@@ -70,11 +71,11 @@
         left_join(sampleData, by = "sampleID") %>%
         group_by(!!sym("sampleID"))
 
-    assert_is_subset(
-        x = c("sampleID", "cellID", "nCount"),
-        y = colnames(data)
+    assert(
+        isSubset(c("sampleID", "cellID", "nCount"), colnames(data)),
+        is.integer(data[["nCount"]])
+
     )
-    assert_is_integer(data[["nCount"]])
 
     data
 }
