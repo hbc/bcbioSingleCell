@@ -27,7 +27,7 @@ plotNovelty.SingleCellExperiment <-  # nolint
         trans = "identity",
         title = "novelty : genes per UMI"
     ) {
-        assert_all_are_in_right_open_range(min, lower = 0L, upper = 1L)
+        assert(isInRightOpenRange(min, lower = 0L, upper = 1L))
         geom <- match.arg(geom)
         do.call(
             what = .plotQCMetric,

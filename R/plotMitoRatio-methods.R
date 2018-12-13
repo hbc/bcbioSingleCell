@@ -27,8 +27,8 @@ plotMitoRatio.SingleCellExperiment <-  # nolint
         trans = "sqrt",
         title = "mito ratio"
     ) {
+        assert(isInLeftOpenRange(max, lower = 0L, upper = 1L))
         geom <- match.arg(geom)
-        assert_all_are_in_left_open_range(max, lower = 0L, upper = 1L)
         do.call(
             what = .plotQCMetric,
             args = list(
