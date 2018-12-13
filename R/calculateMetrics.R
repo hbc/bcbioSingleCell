@@ -28,10 +28,12 @@ calculateMetrics <-  # nolint
         prefilter = FALSE
     ) {
         # Using shared method code for dense and sparseMatrix.
-        assert_is_any_of(counts, c("matrix", "sparseMatrix"))
-        assert_has_rows(counts)
-        assert_is_any_of(rowRanges, c("GRanges", "NULL"))
-        assert_is_a_bool(prefilter)
+        assert(
+            isAny(counts, c("matrix", "sparseMatrix")),
+            hasRows(counts),
+            isAny(rowRanges, c("GRanges", "NULL")),
+            isFlag(prefilter)
+        )
 
         message("Calculating cellular barcode metrics.")
         message(paste(ncol(counts), "cells detected."))
@@ -53,7 +55,7 @@ calculateMetrics <-  # nolint
 
         # Calculate nCoding and nMito, which requires annotations.
         if (length(rowRanges) > 0L) {
-            assert_is_all_of(rowRanges, "GRanges")
+            assert(is(rowRanges, "GRanges"))
 
             setdiff <- setdiff(rownames(counts), names(rowRanges))
             if (hasLength(setdiff)) {
@@ -75,7 +77,7 @@ calculateMetrics <-  # nolint
             }
 
             # Subset ranges to match matrix.
-            assert_is_subset(rownames(counts), names(rowRanges))
+            assert(isSubset(rownames(counts), names(rowRanges)))
             rowRanges <- rowRanges[rownames(counts)]
             rowData <- as(rowRanges, "tbl_df")
             if ("broadClass" %in% colnames(rowData)) {
