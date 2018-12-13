@@ -14,22 +14,29 @@
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroups}{\code{character}. Groups of interest that
-define the samples. If left unset, defaults to \code{sampleName}.}
+\item{interestingGroups}{\code{character}.
+Groups of interest that define the samples. If left unset, defaults to
+\code{sampleName}.}
 
-\item{trendline}{\code{boolean}. Include trendline on plot.}
+\item{trendline}{\code{logical(1)}.
+Include trendline on plot.}
 
-\item{color}{\code{ggproto}/\code{ScaleDiscrete}. Desired ggplot2 color
-scale. Must supply discrete values. When set to \code{NULL}, the default ggplot2
-color palette will be used. If manual color definitions are desired, we
-recommend using \code{ggplot2::scale_color_manual()}. To set the discrete color
-palette globally, use
-\code{options(basejump.color.discrete = ggplot2::scale_color_viridis_d())}.}
+\item{color}{\code{ScaleDiscrete}.
+Desired ggplot2 color scale. Must supply discrete values. When set \code{NULL},
+the default ggplot2 color palette will be used. If manual color definitions
+are desired, we recommend using \code{ggplot2::scale_color_manual}.
 
-\item{trans}{\code{string}. Name of the axis scale transformation to apply. See
-\code{help("scale_x_continuous", "ggplot2")} for more information.}
+To set the discrete color palette globally, use:\preformatted{options(basejump.color.discrete = ggplot2::scale_color_viridis_d())
+}}
 
-\item{title}{\code{string}. Plot title.}
+\item{trans}{\code{character(1)}.
+Name of the axis scale transformation to apply.
+
+For more information:\preformatted{help(topic = "scale_x_continuous", package = "ggplot2")
+}}
+
+\item{title}{\code{character(1)}.
+Plot title.}
 }
 \value{
 \code{ggplot}.
@@ -40,6 +47,12 @@ Plot Mitochondrial vs. Coding Counts
 \examples{
 data(indrops)
 plotMitoVsCoding(indrops)
+}
+\seealso{
+\itemize{
+\item bcbioSingleCell.
+\item Chromium.
+}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

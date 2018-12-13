@@ -15,26 +15,36 @@
 \arguments{
 \item{object}{Object.}
 
-\item{geom}{\code{string}. Plot type. Uses \code{base::match.arg()} and defaults to the
-first argument in the \code{character} vector.}
+\item{geom}{\code{character(1)}.
+Plot type. Uses \code{match.arg} and defaults to the first argument in the
+\code{character} vector.}
 
-\item{interestingGroups}{\code{character}. Groups of interest that
-define the samples. If left unset, defaults to \code{sampleName}.}
+\item{interestingGroups}{\code{character}.
+Groups of interest that define the samples. If left unset, defaults to
+\code{sampleName}.}
 
-\item{min}{\code{scalar numeric}. Recommended minimum value cutoff.}
+\item{min}{\code{numeric(1)}.
+Recommended minimum value cutoff.}
 
-\item{max}{\code{scalar numeric}. Recommended maximum value cutoff.}
+\item{max}{\code{numeric(1)}.
+Recommended maximum value cutoff.}
 
-\item{trans}{\code{string}. Name of the axis scale transformation to apply. See
-\code{help("scale_x_continuous", "ggplot2")} for more information.}
+\item{trans}{\code{character(1)}.
+Name of the axis scale transformation to apply.
 
-\item{fill}{\code{ggproto}/\code{ScaleDiscrete}. Desired ggplot2 fill scale. Must
-supply discrete values. When set to \code{NULL}, the default ggplot2 color
-palette will be used. If manual color definitions are desired, we recommend
-using \code{ggplot2::scale_fill_manual()}. To set the discrete fill palette
-globally, use \code{options(basejump.fill.discrete = scale_fill_viridis_d())}.}
+For more information:\preformatted{help(topic = "scale_x_continuous", package = "ggplot2")
+}}
 
-\item{title}{\code{string}. Plot title.}
+\item{fill}{\code{ggproto}/\code{ScaleDiscrete}.
+Desired ggplot2 fill scale. Must supply discrete values. When set to
+\code{NULL}, the default ggplot2 color palette will be used. If manual color
+definitions are desired, we recommend using \code{ggplot2::scale_fill_manual}.
+
+To set the discrete fill palette globally, use:\preformatted{options(basejump.fill.discrete = ggplot2::scale_fill_viridis_d())
+}}
+
+\item{title}{\code{character(1)}.
+Plot title.}
 }
 \value{
 \code{ggplot}.
@@ -45,6 +55,12 @@ Plot Genes per Cell
 \examples{
 data(indrops)
 plotGenesPerCell(indrops)
+}
+\seealso{
+\itemize{
+\item bcbioSingleCell.
+\item Chromium.
+}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

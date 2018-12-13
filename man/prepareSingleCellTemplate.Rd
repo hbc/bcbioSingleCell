@@ -7,10 +7,12 @@
 prepareSingleCellTemplate(overwrite = FALSE)
 }
 \arguments{
-\item{overwrite}{\code{boolean}. Should existing destination files be overwritten?}
+\item{overwrite}{\code{logical(1)}.
+Should existing destination files be overwritten?}
 }
 \value{
-Invisible \code{logical}. Was the file copied?.
+Invisible \code{logical}.
+Was the file copied?.
 }
 \description{
 If the required template dependency files aren't present, copy them from the
@@ -22,8 +24,8 @@ subdirectory, the function will return an error.
 \details{
 This code is used internally by:
 \itemize{
-\item \code{bcbioRNASeq::prepareRNASeqTemplate()}.
-\item \code{bcbioSingleCell::prepareSingleCellTemplate()}.
+\item \code{bcbioRNASeq::prepareRNASeqTemplate}.
+\item \code{bcbioSingleCell::prepareSingleCellTemplate}.
 }
 }
 \examples{

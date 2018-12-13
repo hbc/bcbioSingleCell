@@ -13,7 +13,7 @@
     assert_has_names(list)
     assert_is_integer(list[[1L]])
     assert_has_names(list[[1L]])
-    if (has_length(list, n = 1L)) {
+    if (hasLength(list, n = 1L)) {
         list[[1L]]
     } else {
         # This will unlist using a "." separator.
@@ -30,7 +30,7 @@
 .rawMetrics <- function(object) {
     list <- metadata(object)[["cellularBarcodes"]]
 
-    if (!has_length(list)) {
+    if (!hasLength(list)) {
         message("Object is filtered. Using `metrics()` return.")
         return(metrics(object))
     }
@@ -38,7 +38,7 @@
     assert_is_list(list)
     assert_is_non_empty(list)
 
-    if (has_length(list, n = 1L)) {
+    if (hasLength(list, n = 1L)) {
         data <- tibble(
             sampleID = names(list)[[1L]],
             cellID = names(list[[1L]]),

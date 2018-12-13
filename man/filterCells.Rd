@@ -68,6 +68,12 @@ x <- filterCells(
 show(x)
 metadata(x)$filterParams
 }
+\seealso{
+\itemize{
+\item bcbioSingleCell.
+\item Chromium.
+}
+}
 \author{
 Michael Steinbaugh
 }

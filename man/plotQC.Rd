@@ -14,18 +14,21 @@
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroups}{\code{character}. Groups of interest that
-define the samples. If left unset, defaults to \code{sampleName}.}
+\item{interestingGroups}{\code{character}.
+Groups of interest that define the samples. If left unset, defaults to
+\code{sampleName}.}
 
-\item{geom}{\code{string}. Plot type. Uses \code{base::match.arg()} and defaults to the
-first argument in the \code{character} vector.}
+\item{geom}{\code{character(1)}.
+Plot type. Uses \code{match.arg} and defaults to the first argument in the
+\code{character} vector.}
 
 \item{headerLevel}{\code{scalar integer} (\code{1}-\code{7}). R Markdown header level.}
 
 \item{legend}{\code{boolean}. Include plot legend.}
 
-\item{return}{\code{string}. Return type. Uses \code{base::match.arg()}
-internally and defaults to the first argument in the \code{character} vector.}
+\item{return}{\code{character(1)}.
+Return type. Uses \code{match.arg} internally and defaults to the first argument
+in the \code{character} vector.}
 }
 \value{
 \itemize{

@@ -227,7 +227,7 @@ bcbioSingleCell <- function(
     colData[["nCount"]] <- nCount[rownames(colData)]
 
     # Join `sampleData` into cell-level `colData`.
-    if (has_length(nrow(sampleData), n = 1L)) {
+    if (hasLength(nrow(sampleData), n = 1L)) {
         colData[["sampleID"]] <- as.factor(rownames(sampleData))
     } else {
         colData[["sampleID"]] <- mapCellsToSamples(

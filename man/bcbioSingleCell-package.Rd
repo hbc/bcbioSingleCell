@@ -4,7 +4,7 @@
 \name{bcbioSingleCell-package}
 \title{bcbioSingleCell}
 \description{
-Import and analyze \href{http://bcbio-nextgen.readthedocs.io}{bcbio} single-cell
+Import and analyze \href{https://bcbio-nextgen.readthedocs.io/}{bcbio} single-cell
 RNA-seq data.
 }
 \seealso{

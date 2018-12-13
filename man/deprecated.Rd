@@ -11,7 +11,7 @@ loadSingleCell(...)
 \item{...}{Additional arguments.}
 }
 \value{
-\code{.Deprecated()}.
+\code{.Deprecated}.
 }
 \description{
 Deprecated Functions
