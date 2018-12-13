@@ -4,7 +4,8 @@
 #' @inherit basejump::plotReadsPerCell
 #' @inheritParams basejump::params
 
-#' @param cutoffLine `logical(1)`. Include a line marking the cutoff.
+#' @param cutoffLine `logical(1)`.
+#'   Include a line marking the cutoff.
 #'
 #' @examples
 #' data(indrops)
@@ -38,12 +39,14 @@ basejump::plotReadsPerCell
     sampleData,
     breaks = 100L
 ) {
-    assert_is_all_of(data, "grouped_df")
-    assert_is_subset(c("nCount", "sampleID"), colnames(data))
-    assert_is_integer(data[["nCount"]])
-    assert_is_factor(data[["sampleID"]])
-    assert_is_an_integer(breaks)
-    assert_is_all_of(sampleData, "DataFrame")
+    assert(
+        is(data, "grouped_df"),
+        isSubset(c("nCount", "sampleID"), colnames(data)),
+        is.integer(data[["nCount"]]),
+        is.factor(data[["sampleID"]]),
+        is.(sampleData, "DataFrame"),
+        isInt(breaks)
+    )
 
     sampleData <- sampleData %>%
         as_tibble(rownames = "sampleID") %>%
@@ -86,8 +89,10 @@ basejump::plotReadsPerCell
     min = 0L,
     color = getOption("basejump.discrete.color", NULL)
 ) {
-    assert_is_data.frame(data)
-    assertIsColorScaleDiscreteOrNULL(color)
+    assert(
+        is.data.frame(data),
+        isGGScale(color, scale = "discrete", aes = "colour") || is.null(color)
+    )
 
     p <- ggplot(
         data = data,
@@ -136,8 +141,10 @@ basejump::plotReadsPerCell
     min = 0L,
     fill = getOption("basejump.discrete.fill", NULL)
 ) {
-    assert_is_data.frame(data)
-    assertIsFillScaleDiscreteOrNULL(fill)
+    assert(
+        is.data.frame(data),
+        isGGScale(fill, scale = "discrete", aes = "fill") || is.null(fill)
+    )
 
     p <- ggplot(
         data = data,
@@ -185,8 +192,10 @@ basejump::plotReadsPerCell
     min = 0L,
     color = getOption("basejump.discrete.color", NULL)
 ) {
-    assert_is_data.frame(data)
-    assertIsColorScaleDiscreteOrNULL(color)
+    assert(
+        is.data.frame(data),
+        isGGScale(color, scale = "discrete", aes = "colour") || is.null(color)
+    )
 
     p <- ggplot(
         data = data,
@@ -232,8 +241,10 @@ basejump::plotReadsPerCell
     min = 0L,
     fill = getOption("basejump.discrete.fill", NULL)
 ) {
-    assert_is_data.frame(data)
-    assertIsFillScaleDiscreteOrNULL(fill)
+    assert(
+        is.data.frame(data),
+        isGGScale(fill, scale = "discrete", aes = "fill") || is.null(fill)
+    )
 
     p <- ggplot(
         data = data,
@@ -286,8 +297,10 @@ basejump::plotReadsPerCell
     min = 0L,
     fill = getOption("basejump.discrete.fill", NULL)
 ) {
-    assert_is_data.frame(data)
-    assertIsFillScaleDiscreteOrNULL(fill)
+    assert(
+        is.data.frame(data),
+        isGGScale(fill, scale = "discrete", aes = "fill") || is.null(fill)
+    )
 
     p <- ggplot(
         data = data,
@@ -345,13 +358,10 @@ plotReadsPerCell.bcbioSingleCell <-  # nolint
     ) {
         # Passthrough: color, fill.
         validObject(object)
-        interestingGroups <- matchInterestingGroups(
-            object = object,
-            interestingGroups = interestingGroups
-        )
-        interestingGroups(object) <- interestingGroups
+        assert(isString(title) || is.null(title))
+        interestingGroups(object) <-
+            matchInterestingGroups(object, interestingGroups)
         geom <- match.arg(geom)
-        assertIsStringOrNULL(title)
 
         # Minimum reads per barcode cutoff (for unfiltered data).
         if (length(metadata(object)[["filterCells"]])) {
@@ -366,7 +376,7 @@ plotReadsPerCell.bcbioSingleCell <-  # nolint
                 min <- 0L
             }
         }
-        assert_is_an_integer(min)
+        assert(isInt(min))
 
         data <- .rawMetrics(object)
 

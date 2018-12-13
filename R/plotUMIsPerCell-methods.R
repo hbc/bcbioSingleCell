@@ -38,9 +38,9 @@ plotUMIsPerCell.SingleCellExperiment <-  # nolint
         fill,
         title = "UMIs per cell"
     ) {
+        assert(isString(title) || is.null(title))
         geom <- match.arg(geom)
         point <- match.arg(point)
-        assertIsStringOrNULL(title)
 
         # Override interestingGroups if labeling points
         if (point != "none") {
@@ -65,7 +65,7 @@ plotUMIsPerCell.SingleCellExperiment <-  # nolint
         # Calculate barcode ranks and label inflection or knee points.
         if (point != "none") {
             # Require ecdf geom for now
-            assert_are_identical(geom, "ecdf")
+            assert(identical(geom, "ecdf"))
 
             if (length(title)) {
                 p <- p + labs(subtitle = paste(point, "point per sample"))
@@ -81,10 +81,7 @@ plotUMIsPerCell.SingleCellExperiment <-  # nolint
             points <- unlist(points)
             names(points) <- names(ranks)
 
-            assert_are_identical(
-                x = names(sampleNames),
-                y = names(points)
-            )
+            assert(identical(names(sampleNames), names(points)))
 
             if (geom == "ecdf") {
                 # Calculate the y-intercept per sample

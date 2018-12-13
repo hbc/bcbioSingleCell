@@ -24,13 +24,12 @@ plotCellCounts.SingleCellExperiment <-  # nolint
         title = "cell counts"
     ) {
         validObject(object)
-        interestingGroups <- matchInterestingGroups(
-            object = object,
-            interestingGroups = interestingGroups
+        assert(
+            isGGScale(fill, scale = "discrete", aes = "fill") || is.null(fill),
+            isString(title) || is.null(title)
         )
-        interestingGroups(object) <- interestingGroups
-        assert(isGGScale(fill, scale = "discrete", aes = "fill"))
-        assert(isString(title) || is.null(title))
+        interestingGroups(object) <-
+            matchInterestingGroups(object, interestingGroups)
 
         metrics <- metrics(object)
         sampleData <- sampleData(object)

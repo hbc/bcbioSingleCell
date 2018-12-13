@@ -13,30 +13,34 @@
 \arguments{
 \item{object}{Object.}
 
-\item{nCells}{\code{integer(1)}. Expected number of cells per sample.}
+\item{nCells}{\code{integer(1)}.
+Expected number of cells per sample.}
 
-\item{minUMIs}{\code{integer(1)}. Minimum number of UMI disambiguated counts
-per cell.}
+\item{minUMIs}{\code{integer(1)}.
+Minimum number of UMI disambiguated counts per cell.}
 
-\item{maxUMIs}{\code{integer(1)}. Maximum number of UMI disambiguated counts
-per cell.}
+\item{maxUMIs}{\code{integer(1)}.
+Maximum number of UMI disambiguated counts per cell.}
 
-\item{minGenes}{\code{integer(1)}. Minimum number of genes detected.}
+\item{minGenes}{\code{integer(1)}.
+Minimum number of genes detected.}
 
-\item{maxGenes}{\code{integer(1)}. Maximum number of genes detected.}
+\item{maxGenes}{\code{integer(1)}.
+Maximum number of genes detected.}
 
-\item{minNovelty}{\code{integer(1)} (\code{0}-\code{1}). Minimum novelty score (log10
-genes per UMI).}
+\item{minNovelty}{\code{integer(1)} (\code{0}-\code{1}).
+Minimum novelty score (log10 genes per UMI).}
 
-\item{maxMitoRatio}{\code{integer(1)} (\code{0}-\code{1}). Maximum relative
-mitochondrial abundance.}
+\item{maxMitoRatio}{\code{integer(1)} (\code{0}-\code{1}).
+Maximum relative mitochondrial abundance.}
 
-\item{minCellsPerGene}{\code{integer(1)}. Include genes with non-zero
-expression in at least this many cells.}
+\item{minCellsPerGene}{\code{integer(1)}.
+Include genes with non-zero expression in at least this many cells.}
 }
 \value{
-\code{SingleCellExperiment}, with filtering information slotted into
-\code{metadata} as \code{filterCells} and \code{filterParams}.
+\code{SingleCellExperiment}.
+Filtering information gets slotted into \code{metadata} as \code{filterCells} and
+\code{filterParams}.
 }
 \description{
 Filter Cells

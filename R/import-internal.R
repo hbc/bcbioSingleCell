@@ -1,9 +1,10 @@
 .import.bcbio <-  # nolint
     function(sampleDirs) {
-        assert_all_are_dirs(sampleDirs)
-        assert_has_names(sampleDirs)
-
         message("Importing counts.")
+        assert(
+            all(isDirectory(sampleDirs)),
+            hasNames(sampleDirs)
+        )
 
         list <- mapply(
             sampleID = names(sampleDirs),
@@ -67,7 +68,7 @@
             )
             x <- data[["n"]]
             names(x) <- makeNames(data[["barcode"]])
-            assert_is_integer(x)
+            assert(is.integer(x))
             x
         })
         names(list) <- names(sampleDirs)
@@ -82,14 +83,13 @@
 # can parallelize with BiocParallel.
 .import.bcbio.mtx <-  # nolint
     function(dir) {
-        assert_is_a_string(dir)
-        assert_all_are_dirs(dir)
+        assert(isADirectory(dir))
 
         # Require that all of the files exist, even if they are empty.
         file <- file.path(dir, paste0(basename(dir), ".mtx"))
         rownamesFile <- paste0(file, ".rownames")
         colnamesFile <- paste0(file, ".colnames")
-        assert_all_are_existing_files(c(file, rownamesFile, colnamesFile))
+        assert(all(isFile(c(file, rownamesFile, colnamesFile))))
 
         # Attempt to load the column and rowname files first. If they're empty,
         # skip loading the MatrixMarket file, which will error otherwise. The
@@ -110,8 +110,10 @@
         # Import counts.
         counts <- readMM(file)
 
-        assert_are_identical(length(rownames), nrow(counts))
-        assert_are_identical(length(colnames), ncol(counts))
+        assert(
+            identical(length(rownames), nrow(counts)),
+            identical(length(colnames), ncol(counts))
+        )
 
         rownames(counts) <- rownames
         colnames(counts) <- colnames

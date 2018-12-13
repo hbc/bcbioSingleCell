@@ -37,10 +37,11 @@
 #'   geom_hline geom_line geom_point geom_smooth geom_step geom_violin ggplot
 #'   labs scale_x_continuous scale_y_continuous stat_ecdf theme
 #' @importFrom ggridges geom_density_ridges
-#' @importFrom goalie areDisjointSets assert containsAURL containsHeaderLevel
-#'   hasLength hasNames hasRows hasRownames isADirectory isAFile isAny
-#'   isCharacter isGGScale isInt isNonEmpty isString isSubset validate
-#'   validateClasses
+#' @importFrom goalie areDisjointSets areSetEqual assert containsAURL
+#'   containsHeaderLevel hasLength hasNames hasRows hasRownames isADirectory
+#'   isAFile isAny isCharacter isDirectory isGGScale isInLeftOpenRange isInRange
+#'   isInt isNonEmpty isNonNegative isNumber isPositive isString isSubset
+#'   validate validateClasses
 #' @importFrom graphics hist
 #' @importFrom magrittr %>%
 #' @importFrom methods .hasSlot as as<- is new show slot slot<- validObject

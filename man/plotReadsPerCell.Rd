@@ -24,7 +24,8 @@ Groups of interest that define the samples. If left unset, defaults to
 Plot type. Uses \code{match.arg} and defaults to the first argument in the
 \code{character} vector.}
 
-\item{cutoffLine}{\code{logical(1)}. Include a line marking the cutoff.}
+\item{cutoffLine}{\code{logical(1)}.
+Include a line marking the cutoff.}
 
 \item{color}{\code{ScaleDiscrete}.
 Desired ggplot2 color scale. Must supply discrete values. When set \code{NULL},

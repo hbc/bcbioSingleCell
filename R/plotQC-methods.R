@@ -43,20 +43,23 @@ basejump::plotQC
     title = NULL
 ) {
     validObject(object)
-    assert_is_a_string(metricCol)
+    assert(
+        isString(metricCol),
+        all(isNonNegative(c(min, max))),
+        isString(trans),
+        isGGScale(fill, scale = "discrete", aes = "fill") || is.null(fill),
+        isString(title) || is.null(title)
+    )
     geom <- match.arg(geom)
-    interestingGroups <- matchInterestingGroups(object, interestingGroups)
-    interestingGroups(object) <- interestingGroups
-    assert_all_are_non_negative(c(min, max))
+    interestingGroups(object) <-
+        matchInterestingGroups(object, interestingGroups)
+
     # Support for per sample filtering cutoffs.
     min <- min(min)
     max <- max(max)
     if (isTRUE(ratio)) {
-        assert_all_are_in_range(c(min, max), lower = 0L, upper = 1L)
+        assert(all(isInRange(c(min, max), lower = 0L, upper = 1L)))
     }
-    assert_is_a_string(trans)
-    assertIsFillScaleDiscreteOrNULL(fill)
-    assertIsStringOrNULL(title)
 
     data <- metrics(object)
     if (!metricCol %in% colnames(data)) {
@@ -207,17 +210,16 @@ formals(.plotQCMetric)[["geom"]] <- geom
     color = getOption("basejump.discrete.color", NULL),
     title = NULL
 ) {
-    assert_is_a_string(xCol)
-    assert_is_a_string(yCol)
-    assert_is_a_string(xTrans)
-    assert_is_a_string(yTrans)
-    interestingGroups <- matchInterestingGroups(
-        object = object,
-        interestingGroups = interestingGroups
+    assert(
+        isString(xCol),
+        isString(yCol),
+        isString(xTrans),
+        isString(yTrans),
+        isGGScale(color, scale = "discrete", aes = "colour") || is.null(color),
+        isString(title) || is.null(title)
     )
-    interestingGroups(object) <- interestingGroups
-    assertIsColorScaleDiscreteOrNULL(color)
-    assertIsStringOrNULL(title)
+    interestingGroups(object) <-
+        matchInterestingGroups(object, interestingGroups)
 
     data <- metrics(object)
     if (!all(c(xCol, yCol) %in% colnames(data))) {
@@ -282,15 +284,11 @@ plotQC.SingleCellExperiment <-  # nolint
         return = c("grid", "list", "markdown")
     ) {
         validObject(object)
-        interestingGroups <- matchInterestingGroups(
-            object = object,
-            interestingGroups = interestingGroups
-        )
-        interestingGroups(object) <- interestingGroups
+        assert(containsHeaderLevel(headerLevel))
+        interestingGroups(object) <-
+            matchInterestingGroups(object, interestingGroups)
         geom <- match.arg(geom)
-        assertIsHeaderLevel(headerLevel)
         return <- match.arg(return)
-
 
         # Don't show cell counts for unfiltered datasets.
         if (!is.null(metadata(object)[["filterCells"]])) {
@@ -306,7 +304,6 @@ plotQC.SingleCellExperiment <-  # nolint
         plotUMIsVsGenes <- plotUMIsVsGenes(object)
         plotNovelty <- plotNovelty(object, geom = geom)
         plotMitoRatio <- plotMitoRatio(object, geom = geom)
-
 
         list <- list(
             "Cell Counts" = plotCellCounts,
@@ -352,10 +349,7 @@ plotQC.SingleCellExperiment <-  # nolint
                 tabset = TRUE,
                 asis = TRUE
             )
-            markdownPlots(
-                list = list,
-                headerLevel = headerLevel + 1L
-            )
+            markdownPlots(list = list, headerLevel = headerLevel + 1L)
         }
     }
 
