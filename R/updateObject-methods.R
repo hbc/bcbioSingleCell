@@ -62,7 +62,7 @@ updateObject.bcbioSingleCell <-  # nolint
         # Require that all `sampleData` columns are now slotted in `colData`.
         sampleData <- metadata[["sampleData"]]
         if (!is.null(sampleData)) {
-            message("Moving `sampleData()` columns to `colData()`.")
+            message("Moving `sampleData` columns to `colData`.")
             # Starting using `DataFrame` in place of `data.frame` in v0.1.7.
             sampleData <- as(sampleData, "DataFrame")
             colData <- colData[

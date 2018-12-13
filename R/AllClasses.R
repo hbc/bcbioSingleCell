@@ -1,4 +1,4 @@
-# FIXME Use `validate_that()` here.
+# FIXME Use `validate` here.
 # FIXME Update and relax the check on `sessionInfo`. See bcbioRNASeq approach.
 # FIXME Error for objects containing a legacy cellular barcode tibble.
 # FIXME Add a rowRanges Rle class check.
@@ -16,7 +16,7 @@
 #' @author Michael Steinbaugh
 #' @export
 #'
-#' @seealso `bcbioSingleCell()`.
+#' @seealso `bcbioSingleCell`.
 setClass(
     Class = "bcbioSingleCell",
     contains = "SingleCellExperiment"
@@ -24,8 +24,8 @@ setClass(
 setValidity(
     Class = "bcbioSingleCell",
     method = function(object) {
-        assert_that(metadata(object)[["version"]] >= 0.1)
-        assert_that(!.hasSlot(object, "bcbio"))
+        assert(metadata(object)[["version"]] >= 0.1)
+        assert(!.hasSlot(object, "bcbio"))
 
         # Assays ---------------------------------------------------------------
         assert_is_subset("counts", names(assays(object)))
@@ -49,7 +49,7 @@ setValidity(
         # We're doing this in long format in the colData slot.
         assert_is_subset(colnames(sampleData), colnames(colData))
 
-        # Check that the levels set in `sampleData()` match `colData()`
+        # Check that the levels set in `sampleData` match `colData`
         sampleDataLevels <- lapply(
             X = sampleData,
             FUN = function(x) {
@@ -94,7 +94,7 @@ setValidity(
         # FIXME Ensure `sampleData` is moved to `colData`.
 
         # Class checks
-        # FIXME Switch to using basejump `checkSlotInfo()`.
+        # FIXME Switch to using basejump `checkSlotInfo`.
         requiredMetadata <- list(
             allSamples = "logical",
             date = "Date",

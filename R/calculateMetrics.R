@@ -64,7 +64,7 @@ calculateMetrics <-  # nolint
                     sep = "\n"
                 ))
                 # Slot the rowRanges with empty ranges for these genes.
-                # The same approach is used in `makeSummarizedExperiment()`.
+                # The same approach is used in `makeSummarizedExperiment`.
                 rowRanges <- suppressWarnings(c(
                     rowRanges,
                     emptyRanges(

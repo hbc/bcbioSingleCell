@@ -9,8 +9,8 @@
 #' @description Extract genes by row and cells by column.
 #'
 #' @details
-#' Refer to `cell2sample()` and `selectSamples()` if sample-level extraction is
-#' desired. Note that `sampleID` is slotted into `colData()` and defines the
+#' Refer to `cell2sample` and `selectSamples` if sample-level extraction is
+#' desired. Note that `sampleID` is slotted into `colData` and defines the
 #' cell-to-sample mappings.
 #'
 #' Unfiltered cellular barcode distributions for the entire dataset, including

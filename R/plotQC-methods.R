@@ -4,8 +4,8 @@
 #' @inherit basejump::plotQC
 #' @inheritParams basejump::params
 #'
-#' @param headerLevel `scalar integer` (`1`-`7`). R Markdown header level.
-#' @param legend `boolean`. Include plot legend.
+#' @param headerLevel `integer(1)` (`1`-`7`). R Markdown header level.
+#' @param legend `logical(1)`. Include plot legend.
 #'
 #' @return
 #'   - `grid`: Graphical output.
@@ -222,7 +222,7 @@ formals(.plotQCMetric)[["geom"]] <- geom
         warning(paste(
             deparse(substitute(object)), "must contain",
             toString(c(xCol, yCol)),
-            "columns in `colData()`."
+            "columns in `colData`."
         ))
         return(invisible())
     }
@@ -317,13 +317,13 @@ plotQC.SingleCellExperiment <-  # nolint
         )
 
         # Remove any `NULL` plots. This is useful for nuking the
-        # `plotReadsPerCell()` return on an object that doesn't contain raw
+        # `plotReadsPerCell` return on an object that doesn't contain raw
         # cellular barcode counts.
         list <- Filter(f = Negate(is.null), x = list)
 
         # Consistently show n plots.
         n <- 6L
-        assert_that(length(list) == n)
+        assert(length(list) == n)
 
         # Hide the legends, if desired.
         if (identical(legend, FALSE)) {

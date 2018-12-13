@@ -31,7 +31,7 @@
     list <- metadata(object)[["cellularBarcodes"]]
 
     if (length(list) == 0L) {
-        message("Object is filtered. Using `metrics()` return.")
+        message("Object is filtered. Using `metrics` return.")
         return(metrics(object))
     }
 
