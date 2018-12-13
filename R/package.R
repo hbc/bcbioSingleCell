@@ -37,8 +37,8 @@
 #'   geom_hline geom_line geom_point geom_smooth geom_step geom_violin ggplot
 #'   labs scale_x_continuous scale_y_continuous stat_ecdf theme
 #' @importFrom ggridges geom_density_ridges
-#' @importFrom goalie containsHeaderLevel hasLength hasRownames isGGScale isInt
-#'   isString
+#' @importFrom goalie areDisjointSets assert containsHeaderLevel hasLength
+#'   hasRownames isGGScale isInt isString isSubset validate validateClasses
 #' @importFrom graphics hist
 #' @importFrom magrittr %>%
 #' @importFrom methods .hasSlot as as<- is new show slot slot<- validObject
