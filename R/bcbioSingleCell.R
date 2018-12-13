@@ -13,7 +13,7 @@
 #' @return `bcbioSingleCell`.
 #'
 #' @seealso
-#' - `SingleCellExperiment::SingleCellExperiment()`.
+#' - `SingleCellExperiment::SingleCellExperiment`.
 #' - `.S4methods(class = "bcbioSingleCell")`.
 #'
 #' @examples
@@ -164,7 +164,7 @@ bcbioSingleCell <- function(
         rowRanges <- makeGRangesFromGFF(gffFile, level = level)
     } else if (is_a_string(organism)) {
         # Using AnnotationHub/ensembldb to obtain the annotations.
-        message("Using `makeGRangesFromEnsembl()` for annotations.")
+        message("Using `makeGRangesFromEnsembl` for annotations.")
         rowRanges <- makeGRangesFromEnsembl(
             organism = organism,
             level = level,

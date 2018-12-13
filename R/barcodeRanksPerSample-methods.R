@@ -4,7 +4,7 @@
 #' @inherit DropletUtils::barcodeRanks
 #' @inheritParams basejump::params
 #' @param ... Additional arguments.
-#' @seealso `DropletUtils::barcodeRanks()`.
+#' @seealso `DropletUtils::barcodeRanks`.
 #' @examples
 #' data(indrops)
 #' x <- barcodeRanksPerSample(indrops)

@@ -4,7 +4,7 @@
 #' @inherit basejump::plotReadsPerCell
 #' @inheritParams basejump::params
 
-#' @param cutoffLine `boolean`. Include a line marking the cutoff.
+#' @param cutoffLine `logical(1)`. Include a line marking the cutoff.
 #'
 #' @examples
 #' data(indrops)

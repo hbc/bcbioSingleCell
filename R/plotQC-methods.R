@@ -224,7 +224,7 @@ formals(.plotQCMetric)[["geom"]] <- geom
         warning(paste(
             deparse(substitute(object)), "must contain",
             toString(c(xCol, yCol)),
-            "columns in `colData()`."
+            "columns in `colData`."
         ))
         return(invisible())
     }
@@ -319,7 +319,7 @@ plotQC.SingleCellExperiment <-  # nolint
         )
 
         # Remove any `NULL` plots. This is useful for nuking the
-        # `plotReadsPerCell()` return on an object that doesn't contain raw
+        # `plotReadsPerCell` return on an object that doesn't contain raw
         # cellular barcode counts.
         list <- Filter(f = Negate(is.null), x = list)
 

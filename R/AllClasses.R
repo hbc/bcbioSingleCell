@@ -11,7 +11,7 @@
 #' @author Michael Steinbaugh
 #' @export
 #'
-#' @seealso `bcbioSingleCell()`.
+#' @seealso `bcbioSingleCell`.
 setClass(
     Class = "bcbioSingleCell",
     contains = "SingleCellExperiment"
@@ -44,7 +44,7 @@ setValidity(
         # We're doing this in long format in the colData slot.
         assert_is_subset(colnames(sampleData), colnames(colData))
 
-        # Check that the levels set in `sampleData()` match `colData()`
+        # Check that the levels set in `sampleData` match `colData`
         sampleDataLevels <- lapply(
             X = sampleData,
             FUN = function(x) {
@@ -89,7 +89,7 @@ setValidity(
         # FIXME Ensure `sampleData` is moved to `colData`.
 
         # Class checks
-        # FIXME Switch to using basejump `checkSlotInfo()`.
+        # FIXME Switch to using basejump `checkSlotInfo`.
         requiredMetadata <- list(
             allSamples = "logical",
             date = "Date",

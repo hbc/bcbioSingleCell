@@ -7,26 +7,26 @@
 #' cellular barcodes. By default we recommend applying the same filtering cutoff
 #' to all samples. The filtering parameters now support per-sample cutoffs,
 #' defined using a named `numeric` vector. When matching per sample, be sure to
-#' use the `sampleNames()` return values (i.e. the `sampleName` column in
-#' `sampleData()`).
+#' use the `sampleNames` return values (i.e. the `sampleName` column in
+#' `sampleData`).
 #'
 #' @inheritParams basejump::params
-#' @param nCells `scalar integer`. Expected number of cells per sample.
-#' @param minUMIs `scalar integer`. Minimum number of UMI disambiguated counts
+#' @param nCells `integer(1)`. Expected number of cells per sample.
+#' @param minUMIs `integer(1)`. Minimum number of UMI disambiguated counts
 #'   per cell.
-#' @param maxUMIs `scalar integer`. Maximum number of UMI disambiguated counts
+#' @param maxUMIs `integer(1)`. Maximum number of UMI disambiguated counts
 #'   per cell.
-#' @param minGenes `scalar integer`. Minimum number of genes detected.
-#' @param maxGenes `scalar integer`. Maximum number of genes detected.
-#' @param minNovelty `scalar integer` (`0`-`1`). Minimum novelty score (log10
+#' @param minGenes `integer(1)`. Minimum number of genes detected.
+#' @param maxGenes `integer(1)`. Maximum number of genes detected.
+#' @param minNovelty `integer(1)` (`0`-`1`). Minimum novelty score (log10
 #'   genes per UMI).
-#' @param maxMitoRatio `scalar integer` (`0`-`1`). Maximum relative
+#' @param maxMitoRatio `integer(1)` (`0`-`1`). Maximum relative
 #'   mitochondrial abundance.
-#' @param minCellsPerGene `scalar integer`. Include genes with non-zero
+#' @param minCellsPerGene `integer(1)`. Include genes with non-zero
 #'   expression in at least this many cells.
 #'
 #' @return `SingleCellExperiment`, with filtering information slotted into
-#'   `metadata()` as `filterCells` and `filterParams`.
+#'   `metadata` as `filterCells` and `filterParams`.
 #'
 #' @examples
 #' data(indrops)

@@ -4,7 +4,7 @@
 #' @inherit basejump::plotUMIsPerCell
 #' @inheritParams basejump::params
 
-#' @param point `string`. Label either the "`knee`" or "`inflection`" points per
+#' @param point `character(1)`. Label either the "`knee`" or "`inflection`" points per
 #'   sample. To disable, use "`none`". Requires `geom = "ecdf"`.
 #'
 #' @examples
