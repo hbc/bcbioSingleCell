@@ -1,3 +1,5 @@
+# FIXME Need to include the GTF in the YAML example.
+
 #' @inherit bcbioSingleCell-class
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inheritParams basejump::params
@@ -165,6 +167,7 @@ bcbioSingleCell <- function(
     # Assays -------------------------------------------------------------------
     # Note that we're now allowing transcript-level counts.
     counts <- .import.bcbio(sampleDirs)
+    assays <- list(counts = counts)
 
     # Row data -----------------------------------------------------------------
     # Annotation priority:
@@ -299,7 +302,7 @@ bcbioSingleCell <- function(
 
     # Return -------------------------------------------------------------------
     .new.bcbioSingleCell(
-        assays = list(counts = counts),
+        assays = assays,
         rowRanges = rowRanges,
         colData = colData,
         metadata = metadata,

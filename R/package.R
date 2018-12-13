@@ -27,9 +27,10 @@
 #'   markdownPlots matchArgsToDoCall matchInterestingGroups metrics
 #'   minimalSampleData plotZerosVsDepth prepareTemplate printString realpath
 #'   sampleData separator showSlotInfo
-#' @importFrom bcbioBase getBarcodeCutoffFromCommands getLevelFromCommands
-#'   getSampleDataFromYAML getUMITypeFromCommands projectDir readDataVersions
-#'   readProgramVersions readSampleData runDate sampleDirs
+#' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
+#'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
+#'   projectDir readDataVersions readProgramVersions readSampleData runDate
+#'   sampleDirs
 #' @importFrom cowplot plot_grid
 #' @importFrom dplyr arrange bind_rows desc filter group_by left_join mutate
 #'   mutate_all mutate_if n pull slice summarise
@@ -39,9 +40,10 @@
 #' @importFrom ggridges geom_density_ridges
 #' @importFrom goalie areDisjointSets areSetEqual assert containsAURL
 #'   containsHeaderLevel hasLength hasNames hasRows hasRownames isADirectory
-#'   isAFile isAny isCharacter isDirectory isGGScale isInLeftOpenRange isInRange
-#'   isInt isNonEmpty isNonNegative isNumber isPositive isString isSubset
-#'   validate validateClasses
+#'   isAFile isAny isCharacter isDirectory isFile isFlag isGGScale
+#'   isInLeftOpenRange isInRange isInRightOpenRange isInt isNonEmpty
+#'   isNonNegative isNumber isPositive isString isSubset validate
+#'   validateClasses
 #' @importFrom graphics hist
 #' @importFrom magrittr %>%
 #' @importFrom methods .hasSlot as as<- is new show slot slot<- validObject

@@ -44,7 +44,7 @@ basejump::plotReadsPerCell
         isSubset(c("nCount", "sampleID"), colnames(data)),
         is.integer(data[["nCount"]]),
         is.factor(data[["sampleID"]]),
-        is.(sampleData, "DataFrame"),
+        is(sampleData, "DataFrame"),
         isInt(breaks)
     )
 

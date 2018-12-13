@@ -6,17 +6,9 @@
 #' @export
 #'
 #' @examples
-#' x <- prepareSingleCellTemplate()
-#' x
-#'
-#' ## Clean up.
-#' unlink(c(
-#'     "_footer.Rmd",
-#'     "_header.Rmd",
-#'     "_output.yaml",
-#'     "_setup.R",
-#'     "bibliography.bib"
-#' ))
+#' \dontrun{
+#' ## prepareSingleCellTemplate()
+#' }
 prepareSingleCellTemplate <- function(overwrite = FALSE) {
     prepareTemplate(package = "bcbioSingleCell", overwrite = overwrite)
 }
