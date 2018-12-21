@@ -1,7 +1,7 @@
 #' @name plotMitoRatio
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
-#' @inherit basejump::plotMitoRatio
+#' @inherit bioverbs::plotMitoRatio
 #' @inheritParams basejump::params
 #' @examples
 #' data(indrops)
@@ -10,10 +10,10 @@ NULL
 
 
 
-#' @importFrom basejump plotMitoRatio
+#' @importFrom bioverbs plotMitoRatio
 #' @aliases NULL
 #' @export
-basejump::plotMitoRatio
+bioverbs::plotMitoRatio
 
 
 

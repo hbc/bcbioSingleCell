@@ -4,7 +4,7 @@
 \name{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes,SingleCellExperiment-method}
-\title{Plot UMI and Gene Correlation}
+\title{Plot UMI and gene correlation}
 \usage{
 \S4method{plotUMIsVsGenes}{SingleCellExperiment}(object,
   interestingGroups = NULL, trendline = FALSE,
@@ -24,7 +24,7 @@ Include trendline on plot.}
 \item{color}{\code{ScaleDiscrete}.
 Desired ggplot2 color scale. Must supply discrete values. When set \code{NULL},
 the default ggplot2 color palette will be used. If manual color definitions
-are desired, we recommend using \code{ggplot2::scale_color_manual}.
+are desired, we recommend using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.
 
 To set the discrete color palette globally, use:\preformatted{options(basejump.color.discrete = ggplot2::scale_color_viridis_d())
 }}
@@ -42,17 +42,11 @@ Plot title.}
 \code{ggplot}.
 }
 \description{
-Plot UMI and Gene Correlation
+Plot UMI and gene correlation
 }
 \examples{
 data(indrops)
 plotUMIsVsGenes(indrops)
-}
-\seealso{
-\itemize{
-\item bcbioSingleCell.
-\item Chromium.
-}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

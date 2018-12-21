@@ -18,9 +18,11 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{basejump}{\code{\link[basejump]{barcodeRanksPerSample}}, \code{\link[basejump]{plotGene}}, \code{\link[basejump]{filterCells}}, \code{\link[basejump]{plotBarcodeRanks}}, \code{\link[basejump]{plotCellCounts}}, \code{\link[basejump]{plotGenesPerCell}}, \code{\link[basejump]{plotMitoRatio}}, \code{\link[basejump]{plotMitoVsCoding}}, \code{\link[basejump]{plotNovelty}}, \code{\link[basejump]{plotQC}}, \code{\link[basejump]{plotReadsPerCell}}, \code{\link[basejump]{plotUMIsPerCell}}, \code{\link[basejump]{plotUMIsVsGenes}}}
+  \item{basejump}{\code{\link[basejump]{plotGene}}}
 
   \item{BiocGenerics}{\code{\link[BiocGenerics]{updateObject}}}
+
+  \item{bioverbs}{\code{\link[bioverbs]{barcodeRanksPerSample}}, \code{\link[bioverbs]{filterCells}}, \code{\link[bioverbs]{plotBarcodeRanks}}, \code{\link[bioverbs]{plotCellCounts}}, \code{\link[bioverbs]{plotGenesPerCell}}, \code{\link[bioverbs]{plotMitoRatio}}, \code{\link[bioverbs]{plotMitoVsCoding}}, \code{\link[bioverbs]{plotNovelty}}, \code{\link[bioverbs]{plotQC}}, \code{\link[bioverbs]{plotReadsPerCell}}, \code{\link[bioverbs]{plotUMIsPerCell}}, \code{\link[bioverbs]{plotUMIsVsGenes}}}
 
   \item{magrittr}{\code{\link[magrittr]{\%>\%}}}
 

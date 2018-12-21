@@ -1,7 +1,7 @@
 #' @name plotNovelty
 #' @author Michael Steinbaugh
 #' @include globals.R
-#' @inherit basejump::plotNovelty
+#' @inherit bioverbs::plotNovelty
 #' @inheritParams basejump::params
 #' @examples
 #' data(indrops)
@@ -10,10 +10,10 @@ NULL
 
 
 
-#' @importFrom basejump plotNovelty
+#' @importFrom bioverbs plotNovelty
 #' @aliases NULL
 #' @export
-basejump::plotNovelty
+bioverbs::plotNovelty
 
 
 

@@ -4,7 +4,7 @@
 \name{plotBarcodeRanks}
 \alias{plotBarcodeRanks}
 \alias{plotBarcodeRanks,SingleCellExperiment-method}
-\title{Plot Barcode Ranks}
+\title{Plot barcode ranks}
 \usage{
 \S4method{plotBarcodeRanks}{SingleCellExperiment}(object, lower = 100,
   fit.bounds = NULL, df = 20)
@@ -22,7 +22,7 @@
 \code{ggplot} grid.
 }
 \description{
-Plot Barcode Ranks
+Plot barcode ranks
 }
 \details{
 Analyses of droplet-based scRNA-seq data often show a plot of the log-total count against the log-rank of each barcode, where the highest ranks have the largest totals.
@@ -56,7 +56,7 @@ data(indrops)
 plotBarcodeRanks(indrops)
 }
 \seealso{
-bcbioRNASeq.
+\code{DropletUtils::barcodeRanks}.
 }
 \author{
 Michael Steinbaugh

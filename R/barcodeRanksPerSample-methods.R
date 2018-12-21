@@ -1,6 +1,6 @@
 #' @name barcodeRanksPerSample
 #' @author Michael Steinbaugh
-#' @inherit basejump::barcodeRanksPerSample
+#' @inherit bioverbs::barcodeRanksPerSample
 #' @inherit DropletUtils::barcodeRanks
 #' @inheritParams basejump::params
 #' @param ... Additional arguments.
@@ -13,10 +13,10 @@ NULL
 
 
 
-#' @importFrom basejump barcodeRanksPerSample
+#' @importFrom bioverbs barcodeRanksPerSample
 #' @aliases NULL
 #' @export
-basejump::barcodeRanksPerSample
+bioverbs::barcodeRanksPerSample
 
 
 

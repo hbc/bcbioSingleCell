@@ -4,7 +4,7 @@
 \name{barcodeRanksPerSample}
 \alias{barcodeRanksPerSample}
 \alias{barcodeRanksPerSample,SingleCellExperiment-method}
-\title{Barcode Ranks per Sample}
+\title{Barcode ranks per sample}
 \usage{
 \S4method{barcodeRanksPerSample}{SingleCellExperiment}(object,
   lower = 100, fit.bounds = NULL, df = 20)
@@ -24,7 +24,7 @@
 \code{list}.
 }
 \description{
-Barcode Ranks per Sample
+Barcode ranks per sample
 }
 \details{
 Analyses of droplet-based scRNA-seq data often show a plot of the log-total count against the log-rank of each barcode, where the highest ranks have the largest totals.

@@ -1,11 +1,12 @@
 #' @name plotUMIsPerCell
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
-#' @inherit basejump::plotUMIsPerCell
+#' @inherit bioverbs::plotUMIsPerCell
 #' @inheritParams basejump::params
 
-#' @param point `character(1)`. Label either the "`knee`" or "`inflection`" points per
-#'   sample. To disable, use "`none`". Requires `geom = "ecdf"`.
+#' @param point `character(1)`.
+#'   Label either the "`knee`" or "`inflection`" points per sample. To disable,
+#'   use "`none`". Requires `geom = "ecdf"`.
 #'
 #' @examples
 #' data(indrops)
@@ -18,10 +19,10 @@ NULL
 
 
 
-#' @importFrom basejump plotUMIsPerCell
+#' @importFrom bioverbs plotUMIsPerCell
 #' @aliases NULL
 #' @export
-basejump::plotUMIsPerCell
+bioverbs::plotUMIsPerCell
 
 
 

@@ -4,7 +4,7 @@
 \name{plotQC}
 \alias{plotQC}
 \alias{plotQC,SingleCellExperiment-method}
-\title{Plot Quality Control}
+\title{Quality control}
 \usage{
 \S4method{plotQC}{SingleCellExperiment}(object, interestingGroups = NULL,
   geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
@@ -19,8 +19,9 @@ Groups of interest that define the samples. If left unset, defaults to
 \code{sampleName}.}
 
 \item{geom}{\code{character(1)}.
-Plot type. Uses \code{match.arg} and defaults to the first argument in the
-\code{character} vector.}
+Plot type.
+Uses \link[base:match.arg]{match.arg()} internally and defaults to the first
+argument in the \code{character} vector.}
 
 \item{headerLevel}{\code{integer(1)} (\code{1}-\code{7}).
 R Markdown header level.}
@@ -29,8 +30,9 @@ R Markdown header level.}
 Include plot legend.}
 
 \item{return}{\code{character(1)}.
-Return type. Uses \code{match.arg} internally and defaults to the first argument
-in the \code{character} vector.}
+Return type.
+Uses \link[base:match.arg]{match.arg()} internally and defaults to the first
+argument in the \code{character} vector.}
 }
 \value{
 \itemize{
@@ -40,7 +42,7 @@ in the \code{character} vector.}
 }
 }
 \description{
-Plot Quality Control
+Quality control
 }
 \examples{
 data(indrops)

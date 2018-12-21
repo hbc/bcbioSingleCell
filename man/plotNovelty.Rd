@@ -4,7 +4,7 @@
 \name{plotNovelty}
 \alias{plotNovelty}
 \alias{plotNovelty,SingleCellExperiment-method}
-\title{Plot Novelty Score}
+\title{Plot novelty score}
 \usage{
 \S4method{plotNovelty}{SingleCellExperiment}(object,
   geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
@@ -16,8 +16,9 @@
 \item{object}{Object.}
 
 \item{geom}{\code{character(1)}.
-Plot type. Uses \code{match.arg} and defaults to the first argument in the
-\code{character} vector.}
+Plot type.
+Uses \link[base:match.arg]{match.arg()} internally and defaults to the first
+argument in the \code{character} vector.}
 
 \item{interestingGroups}{\code{character}.
 Groups of interest that define the samples. If left unset, defaults to
@@ -29,7 +30,7 @@ Recommended minimum value cutoff.}
 \item{fill}{\code{ggproto}/\code{ScaleDiscrete}.
 Desired ggplot2 fill scale. Must supply discrete values. When set to
 \code{NULL}, the default ggplot2 color palette will be used. If manual color
-definitions are desired, we recommend using \code{ggplot2::scale_fill_manual}.
+definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.
 
 To set the discrete fill palette globally, use:\preformatted{options(basejump.fill.discrete = ggplot2::scale_fill_viridis_d())
 }}
@@ -52,12 +53,6 @@ Plot title.}
 \examples{
 data(indrops)
 plotNovelty(indrops)
-}
-\seealso{
-\itemize{
-\item bcbioSingleCell.
-\item Chromium.
-}
 }
 \author{
 Michael Steinbaugh

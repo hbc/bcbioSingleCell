@@ -4,7 +4,7 @@
 \name{filterCells}
 \alias{filterCells}
 \alias{filterCells,SingleCellExperiment-method}
-\title{Filter Cells}
+\title{Filter cells}
 \usage{
 \S4method{filterCells}{SingleCellExperiment}(object, nCells = Inf,
   minUMIs = 1L, maxUMIs = Inf, minGenes = 1L, maxGenes = Inf,
@@ -43,7 +43,7 @@ Filtering information gets slotted into \code{metadata} as \code{filterCells} an
 \code{filterParams}.
 }
 \description{
-Filter Cells
+Filter cells
 }
 \details{
 Apply gene detection, novelty score, and mitochondrial abundance cutoffs to
@@ -71,12 +71,6 @@ x <- filterCells(
 )
 show(x)
 metadata(x)$filterParams
-}
-\seealso{
-\itemize{
-\item bcbioSingleCell.
-\item Chromium.
-}
 }
 \author{
 Michael Steinbaugh

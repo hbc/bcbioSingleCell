@@ -4,7 +4,7 @@
 \name{plotCellCounts}
 \alias{plotCellCounts}
 \alias{plotCellCounts,SingleCellExperiment-method}
-\title{Plot Cell Counts}
+\title{Plot cell counts}
 \usage{
 \S4method{plotCellCounts}{SingleCellExperiment}(object,
   interestingGroups = NULL, fill = getOption("basejump.fill.discrete",
@@ -20,7 +20,7 @@ Groups of interest that define the samples. If left unset, defaults to
 \item{fill}{\code{ggproto}/\code{ScaleDiscrete}.
 Desired ggplot2 fill scale. Must supply discrete values. When set to
 \code{NULL}, the default ggplot2 color palette will be used. If manual color
-definitions are desired, we recommend using \code{ggplot2::scale_fill_manual}.
+definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.
 
 To set the discrete fill palette globally, use:\preformatted{options(basejump.fill.discrete = ggplot2::scale_fill_viridis_d())
 }}
@@ -32,14 +32,11 @@ Plot title.}
 \code{ggplot}.
 }
 \description{
-Plot Cell Counts
+Plot cell counts
 }
 \examples{
 data(indrops)
 plotCellCounts(indrops)
-}
-\seealso{
-bcbioRNASeq.
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

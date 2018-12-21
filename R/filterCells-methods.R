@@ -1,6 +1,6 @@
 #' @name filterCells
 #' @author Michael Steinbaugh
-#' @inherit basejump::filterCells
+#' @inherit bioverbs::filterCells
 #'
 #' @details
 #' Apply gene detection, novelty score, and mitochondrial abundance cutoffs to
@@ -54,10 +54,10 @@ NULL
 
 
 
-#' @importFrom basejump filterCells
+#' @importFrom bioverbs filterCells
 #' @aliases NULL
 #' @export
-basejump::filterCells
+bioverbs::filterCells
 
 
 

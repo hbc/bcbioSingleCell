@@ -1,7 +1,7 @@
 #' @name plotReadsPerCell
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
-#' @inherit basejump::plotReadsPerCell
+#' @inherit bioverbs::plotReadsPerCell
 #' @inheritParams basejump::params
 
 #' @param cutoffLine `logical(1)`.
@@ -15,10 +15,10 @@ NULL
 
 
 
-#' @importFrom basejump plotReadsPerCell
+#' @importFrom bioverbs plotReadsPerCell
 #' @aliases NULL
 #' @export
-basejump::plotReadsPerCell
+bioverbs::plotReadsPerCell
 
 
 

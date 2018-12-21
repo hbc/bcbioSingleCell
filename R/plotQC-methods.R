@@ -21,10 +21,10 @@ NULL
 
 
 
-#' @importFrom basejump plotQC
+#' @importFrom bioverbs plotQC
 #' @aliases NULL
 #' @export
-basejump::plotQC
+bioverbs::plotQC
 
 
 
@@ -284,7 +284,7 @@ plotQC.SingleCellExperiment <-  # nolint
         return = c("grid", "list", "markdown")
     ) {
         validObject(object)
-        assert(containsHeaderLevel(headerLevel))
+        assert(isHeaderLevel(headerLevel))
         interestingGroups(object) <-
             matchInterestingGroups(object, interestingGroups)
         geom <- match.arg(geom)

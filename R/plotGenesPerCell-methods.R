@@ -1,7 +1,7 @@
 #' @name plotGenesPerCell
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
-#' @inherit basejump::plotGenesPerCell
+#' @inherit bioverbs::plotGenesPerCell
 #' @inheritParams basejump::params
 #' @examples
 #' data(indrops)
@@ -10,10 +10,10 @@ NULL
 
 
 
-#' @importFrom basejump plotGenesPerCell
+#' @importFrom bioverbs plotGenesPerCell
 #' @aliases NULL
 #' @export
-basejump::plotGenesPerCell
+bioverbs::plotGenesPerCell
 
 
 

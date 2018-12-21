@@ -4,7 +4,7 @@
 \name{plotReadsPerCell}
 \alias{plotReadsPerCell}
 \alias{plotReadsPerCell,bcbioSingleCell-method}
-\title{Plot Read Counts per Cell}
+\title{Plot read counts per cell}
 \usage{
 \S4method{plotReadsPerCell}{bcbioSingleCell}(object,
   interestingGroups = NULL, geom = c("histogram", "ecdf", "violin",
@@ -21,8 +21,9 @@ Groups of interest that define the samples. If left unset, defaults to
 \code{sampleName}.}
 
 \item{geom}{\code{character(1)}.
-Plot type. Uses \code{match.arg} and defaults to the first argument in the
-\code{character} vector.}
+Plot type.
+Uses \link[base:match.arg]{match.arg()} internally and defaults to the first
+argument in the \code{character} vector.}
 
 \item{cutoffLine}{\code{logical(1)}.
 Include a line marking the cutoff.}
@@ -30,7 +31,7 @@ Include a line marking the cutoff.}
 \item{color}{\code{ScaleDiscrete}.
 Desired ggplot2 color scale. Must supply discrete values. When set \code{NULL},
 the default ggplot2 color palette will be used. If manual color definitions
-are desired, we recommend using \code{ggplot2::scale_color_manual}.
+are desired, we recommend using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.
 
 To set the discrete color palette globally, use:\preformatted{options(basejump.color.discrete = ggplot2::scale_color_viridis_d())
 }}
@@ -38,7 +39,7 @@ To set the discrete color palette globally, use:\preformatted{options(basejump.c
 \item{fill}{\code{ggproto}/\code{ScaleDiscrete}.
 Desired ggplot2 fill scale. Must supply discrete values. When set to
 \code{NULL}, the default ggplot2 color palette will be used. If manual color
-definitions are desired, we recommend using \code{ggplot2::scale_fill_manual}.
+definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.
 
 To set the discrete fill palette globally, use:\preformatted{options(basejump.fill.discrete = ggplot2::scale_fill_viridis_d())
 }}
@@ -56,9 +57,6 @@ Plot the distribution of read counts for all unfiltered cellular barcodes.
 data(indrops)
 plotReadsPerCell(indrops, geom = "histogram")
 plotReadsPerCell(indrops, geom = "ecdf")
-}
-\seealso{
-bcbioSingleCell.
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

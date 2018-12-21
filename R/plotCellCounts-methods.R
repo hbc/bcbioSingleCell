@@ -1,6 +1,6 @@
 #' @name plotCellCounts
 #' @author Michael Steinbaugh, Rory Kirchner
-#' @inherit basejump::plotCellCounts
+#' @inherit bioverbs::plotCellCounts
 #' @inheritParams basejump::params
 #' @examples
 #' data(indrops)
@@ -9,10 +9,10 @@ NULL
 
 
 
-#' @importFrom basejump plotCellCounts
+#' @importFrom bioverbs plotCellCounts
 #' @aliases NULL
 #' @export
-basejump::plotCellCounts
+bioverbs::plotCellCounts
 
 
 

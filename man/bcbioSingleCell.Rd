@@ -10,8 +10,9 @@ bcbioSingleCell(uploadDir, sampleMetadataFile = NULL, organism = NULL,
   interestingGroups = "sampleName", ...)
 }
 \arguments{
-\item{uploadDir}{\code{character(1)}. Path to final upload directory. This path is
-set when running "\code{bcbio_nextgen -w template}".}
+\item{uploadDir}{\code{character(1)}.
+Path to final upload directory.
+This path is set when running "\code{bcbio_nextgen -w template}".}
 
 \item{sampleMetadataFile}{\code{character(1)}.
 Sample metadata file path. CSV or TSV is preferred, but Excel worksheets

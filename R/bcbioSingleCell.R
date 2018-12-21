@@ -77,7 +77,7 @@ bcbioSingleCell <- function(
         isCharacter(interestingGroups)
     )
     if (isString(gffFile)) {
-        isAFile(gffFile) || containsAURL(gffFile)
+        isAFile(gffFile) || isAURL(gffFile)
     }
 
     # Directory paths ----------------------------------------------------------

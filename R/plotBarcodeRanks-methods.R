@@ -1,7 +1,7 @@
 #' @name plotBarcodeRanks
 #' @author Michael Steinbaugh
 #' @include barcodeRanksPerSample-methods.R
-#' @inherit basejump::plotBarcodeRanks
+#' @inherit bioverbs::plotBarcodeRanks
 #' @inherit barcodeRanksPerSample
 #' @examples
 #' data(indrops)
@@ -10,10 +10,10 @@ NULL
 
 
 
-#' @importFrom basejump plotBarcodeRanks
+#' @importFrom bioverbs plotBarcodeRanks
 #' @aliases NULL
 #' @export
-basejump::plotBarcodeRanks
+bioverbs::plotBarcodeRanks
 
 
 

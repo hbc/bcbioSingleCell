@@ -1,6 +1,6 @@
 #' @name plotUMIsVsGenes
 #' @author Michael Steinbaugh, Rory Kirchner
-#' @inherit basejump::plotUMIsVsGenes
+#' @inherit bioverbs::plotUMIsVsGenes
 #' @inheritParams basejump::params
 #' @examples
 #' data(indrops)
@@ -9,10 +9,10 @@ NULL
 
 
 
-#' @importFrom basejump plotUMIsVsGenes
+#' @importFrom bioverbs plotUMIsVsGenes
 #' @aliases NULL
 #' @export
-basejump::plotUMIsVsGenes
+bioverbs::plotUMIsVsGenes
 
 
 

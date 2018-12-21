@@ -1,6 +1,6 @@
 #' @name plotMitoVsCoding
 #' @author Michael Steinbaugh, Rory Kirchner
-#' @inherit basejump::plotMitoVsCoding
+#' @inherit bioverbs::plotMitoVsCoding
 #' @inheritParams basejump::params
 #' @examples
 #' data(indrops)
@@ -9,10 +9,10 @@ NULL
 
 
 
-#' @importFrom basejump plotMitoVsCoding
+#' @importFrom bioverbs plotMitoVsCoding
 #' @aliases NULL
 #' @export
-basejump::plotMitoVsCoding
+bioverbs::plotMitoVsCoding
 
 
 

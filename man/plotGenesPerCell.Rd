@@ -4,7 +4,7 @@
 \name{plotGenesPerCell}
 \alias{plotGenesPerCell}
 \alias{plotGenesPerCell,SingleCellExperiment-method}
-\title{Plot Genes per Cell}
+\title{Plot genes per cell}
 \usage{
 \S4method{plotGenesPerCell}{SingleCellExperiment}(object,
   geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
@@ -16,8 +16,9 @@
 \item{object}{Object.}
 
 \item{geom}{\code{character(1)}.
-Plot type. Uses \code{match.arg} and defaults to the first argument in the
-\code{character} vector.}
+Plot type.
+Uses \link[base:match.arg]{match.arg()} internally and defaults to the first
+argument in the \code{character} vector.}
 
 \item{interestingGroups}{\code{character}.
 Groups of interest that define the samples. If left unset, defaults to
@@ -38,7 +39,7 @@ For more information:\preformatted{help(topic = "scale_x_continuous", package = 
 \item{fill}{\code{ggproto}/\code{ScaleDiscrete}.
 Desired ggplot2 fill scale. Must supply discrete values. When set to
 \code{NULL}, the default ggplot2 color palette will be used. If manual color
-definitions are desired, we recommend using \code{ggplot2::scale_fill_manual}.
+definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.
 
 To set the discrete fill palette globally, use:\preformatted{options(basejump.fill.discrete = ggplot2::scale_fill_viridis_d())
 }}
@@ -50,17 +51,11 @@ Plot title.}
 \code{ggplot}.
 }
 \description{
-Plot Genes per Cell
+Plot genes per cell
 }
 \examples{
 data(indrops)
 plotGenesPerCell(indrops)
-}
-\seealso{
-\itemize{
-\item bcbioSingleCell.
-\item Chromium.
-}
 }
 \author{
 Michael Steinbaugh, Rory Kirchner
