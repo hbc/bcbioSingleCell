@@ -104,7 +104,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Collate: 
     'AllClasses.R'
-    'assert-internal.R'
+    'assertions-internal.R'
     'barcodeRanksPerSample-methods.R'
     'barcodes-internal.R'
     'bcbioSingleCell.R'
@@ -127,6 +127,5 @@ Collate:
     'plotUMIsPerCell-methods.R'
     'plotUMIsVsGenes-methods.R'
     'prepareSingleCellTemplate.R'
-    'reexports.R'
     'show-methods.R'
     'updateObject-methods.R'

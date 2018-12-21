@@ -1,4 +1,4 @@
-#' bcbio Single-Cell RNA-Seq Data Set
+#' bcbio single-cell RNA-seq data set
 #'
 #' `bcbioSingleCell` is an S4 class that extends `SingleCellExperiment`, and is
 #' designed to store a bcbio single-cell RNA-seq analysis. This class contains

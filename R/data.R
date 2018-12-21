@@ -1,4 +1,4 @@
-#' inDrops Example Data Set
+#' inDrops example data set
 #' @author Michael Steinbaugh
 #' @examples
 #' data(indrops)

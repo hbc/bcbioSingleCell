@@ -1,4 +1,4 @@
-#' Prepare Single-Cell RNA-Seq R Markdown Template
+#' Prepare single-cell RNA-seq R Markdown template
 #'
 #' @name prepareSingleCellTemplate
 #' @author Michael Steinbaugh

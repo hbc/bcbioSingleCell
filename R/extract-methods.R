@@ -2,21 +2,22 @@
 
 
 
-#' @name extract
-#' @inherit base::Extract title params references
-#' @author Michael Steinbaugh
+#' Extract or replace parts of an object
 #'
-#' @description Extract genes by row and cells by column.
+#' Extract genes by row and cells by column.
 #'
-#' @details
-#' Refer to `cell2sample` and `selectSamples` if sample-level extraction is
+#' Refer to [`cell2sample()`][basejump::cell2sample] and
+#' [selectSamples()][basejump::selectSamples] if sample-level extraction is
 #' desired. Note that `sampleID` is slotted into `colData` and defines the
 #' cell-to-sample mappings.
 #'
 #' Unfiltered cellular barcode distributions for the entire dataset, including
 #' cells not kept in the matrix will be dropped in favor of the `nCount` column
-#' of `colData`.
+#' of [`colData()`][SummarizedExperiment::colData].
 #'
+#' @name extract
+#' @author Michael Steinbaugh
+#' @inherit base::Extract params references
 #' @inheritParams basejump::params
 #'
 #' @return `bcbioSingleCell`.

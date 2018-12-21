@@ -1,11 +1,11 @@
-#' Calculate Cellular Barcode Quality Metrics
+#' Calculate cellular barcode quality metrics
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inheritParams basejump::params
 #' @export
 #'
-#' @param counts `matrix` or `sparseMatrix`. Raw counts. Do not input
-#'   log-normalized or library scaled counts.
+#' @param counts `matrix` or `sparseMatrix`.
+#'   Raw counts. Do not input log-normalized or library scaled counts.
 #'
 #' @return `DataFrame`.
 #'

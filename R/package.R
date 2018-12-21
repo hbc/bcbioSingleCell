@@ -54,3 +54,7 @@
 #' @importFrom tibble as_tibble tibble
 #' @importFrom utils capture.output globalVariables packageVersion
 "_PACKAGE"
+
+#' @importFrom magrittr %>%
+#' @export
+magrittr::`%>%`

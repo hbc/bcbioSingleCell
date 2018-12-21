@@ -3,7 +3,7 @@
 \docType{class}
 \name{bcbioSingleCell-class}
 \alias{bcbioSingleCell-class}
-\title{bcbio Single-Cell RNA-Seq Data Set}
+\title{bcbio single-cell RNA-seq data set}
 \description{
 \code{bcbioSingleCell} is an S4 class that extends \code{SingleCellExperiment}, and is
 designed to store a bcbio single-cell RNA-seq analysis. This class contains

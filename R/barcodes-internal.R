@@ -1,13 +1,14 @@
-#' Counts per Cellular Barcode
+#' Counts per cellular barcode
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
 #' @noRd
 #'
-#' @param list `list`. Cellular barcodes per sample.
+#' @param list `list`.
+#'   Cellular barcodes per sample.
 #'
-#' @return `integer`. Cell identifiers are the names and raw read counts
-#'   are the values.
+#' @return `integer`.
+#' Cell identifiers are the names and raw read counts are the values.
 .nCount <- function(list) {
     assert(
         is.list(list),

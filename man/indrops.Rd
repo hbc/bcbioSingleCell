@@ -3,13 +3,13 @@
 \docType{data}
 \name{indrops}
 \alias{indrops}
-\title{inDrops Example Data Set}
+\title{inDrops example data set}
 \format{An object of class \code{bcbioSingleCell} with 50 rows and 100 columns.}
 \usage{
 indrops
 }
 \description{
-inDrops Example Data Set
+inDrops example data set
 }
 \examples{
 data(indrops)

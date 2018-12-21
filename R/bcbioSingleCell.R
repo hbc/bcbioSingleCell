@@ -1,12 +1,14 @@
 # FIXME Need to include the GTF in the YAML example.
 
+
+
 #' @inherit bcbioSingleCell-class
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inheritParams basejump::params
 #' @inheritParams bcbioBase::params
 #' @export
 #'
-#' @section Remote Data:
+#' @section Remote data:
 #'
 #' When working in RStudio, we recommend connecting to the bcbio-nextgen run
 #' directory as a remote connection over

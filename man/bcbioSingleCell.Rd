@@ -2,7 +2,7 @@
 % Please edit documentation in R/bcbioSingleCell.R
 \name{bcbioSingleCell}
 \alias{bcbioSingleCell}
-\title{bcbio Single-Cell RNA-Seq Data Set}
+\title{bcbio single-cell RNA-seq data set}
 \usage{
 bcbioSingleCell(uploadDir, sampleMetadataFile = NULL, organism = NULL,
   ensemblRelease = NULL, genomeBuild = NULL, gffFile = NULL,
@@ -59,7 +59,7 @@ designed to store a bcbio single-cell RNA-seq analysis. This class contains
 read counts saved as a sparse matrix (\code{sparseMatrix}), sample metadata, and
 cell quality control metrics.
 }
-\section{Remote Data}{
+\section{Remote data}{
 
 
 When working in RStudio, we recommend connecting to the bcbio-nextgen run

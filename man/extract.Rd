@@ -4,7 +4,7 @@
 \name{extract}
 \alias{extract}
 \alias{[,bcbioSingleCell,ANY,ANY,ANY-method}
-\title{Extract or Replace Parts of an Object}
+\title{Extract or replace parts of an object}
 \usage{
 \S4method{[}{bcbioSingleCell,ANY,ANY,ANY}(x, i, j, ..., drop = FALSE)
 }
@@ -74,13 +74,14 @@
 Extract genes by row and cells by column.
 }
 \details{
-Refer to \code{cell2sample} and \code{selectSamples} if sample-level extraction is
+Refer to \code{\link[basejump:cell2sample]{cell2sample()}} and
+\link[basejump:selectSamples]{selectSamples()} if sample-level extraction is
 desired. Note that \code{sampleID} is slotted into \code{colData} and defines the
 cell-to-sample mappings.
 
 Unfiltered cellular barcode distributions for the entire dataset, including
 cells not kept in the matrix will be dropped in favor of the \code{nCount} column
-of \code{colData}.
+of \code{\link[SummarizedExperiment:colData]{colData()}}.
 }
 \examples{
 data(indrops)

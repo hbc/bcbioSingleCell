@@ -2,13 +2,13 @@
 % Please edit documentation in R/calculateMetrics.R
 \name{calculateMetrics}
 \alias{calculateMetrics}
-\title{Calculate Cellular Barcode Quality Metrics}
+\title{Calculate cellular barcode quality metrics}
 \usage{
 calculateMetrics(counts, rowRanges = NULL, prefilter = FALSE)
 }
 \arguments{
-\item{counts}{\code{matrix} or \code{sparseMatrix}. Raw counts. Do not input
-log-normalized or library scaled counts.}
+\item{counts}{\code{matrix} or \code{sparseMatrix}.
+Raw counts. Do not input log-normalized or library scaled counts.}
 
 \item{rowRanges}{\code{GRanges}.
 Genomic ranges (e.g. genome annotations). Metadata describing the assay
@@ -21,7 +21,7 @@ Apply prefiltering to remove zero count genes.}
 \code{DataFrame}.
 }
 \description{
-Calculate Cellular Barcode Quality Metrics
+Calculate cellular barcode quality metrics
 }
 \examples{
 data(indrops)

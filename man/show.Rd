@@ -4,7 +4,7 @@
 \name{show}
 \alias{show}
 \alias{show,bcbioSingleCell-method}
-\title{Show an Object}
+\title{Show an object}
 \usage{
 \S4method{show}{bcbioSingleCell}(object)
 }

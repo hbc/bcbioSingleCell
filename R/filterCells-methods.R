@@ -1,6 +1,7 @@
 #' @name filterCells
 #' @author Michael Steinbaugh
 #' @inherit bioverbs::filterCells
+#' @inheritParams basejump::params
 #'
 #' @details
 #' Apply gene detection, novelty score, and mitochondrial abundance cutoffs to
@@ -10,7 +11,6 @@
 #' use the `sampleNames` return values (i.e. the `sampleName` column in
 #' `sampleData`).
 #'
-#' @inheritParams basejump::params
 #' @param nCells `integer(1)`.
 #'   Expected number of cells per sample.
 #' @param minUMIs `integer(1)`.
@@ -29,8 +29,8 @@
 #'   Include genes with non-zero expression in at least this many cells.
 #'
 #' @return `SingleCellExperiment`.
-#' Filtering information gets slotted into `metadata` as `filterCells` and
-#' `filterParams`.
+#' Filtering information gets slotted into [`metadata()`][S4Vectors::metadata]
+#' as `filterCells` and `filterParams`.
 #'
 #' @examples
 #' data(indrops)

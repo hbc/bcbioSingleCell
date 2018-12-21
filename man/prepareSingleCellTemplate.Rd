@@ -2,7 +2,7 @@
 % Please edit documentation in R/prepareSingleCellTemplate.R
 \name{prepareSingleCellTemplate}
 \alias{prepareSingleCellTemplate}
-\title{Prepare Single-Cell RNA-Seq R Markdown Template}
+\title{Prepare single-cell RNA-seq R Markdown template}
 \usage{
 prepareSingleCellTemplate(overwrite = FALSE)
 }

@@ -39,8 +39,8 @@ Include genes with non-zero expression in at least this many cells.}
 }
 \value{
 \code{SingleCellExperiment}.
-Filtering information gets slotted into \code{metadata} as \code{filterCells} and
-\code{filterParams}.
+Filtering information gets slotted into \code{\link[S4Vectors:metadata]{metadata()}}
+as \code{filterCells} and \code{filterParams}.
 }
 \description{
 Filter cells
