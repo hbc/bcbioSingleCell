@@ -17,33 +17,32 @@ setClass(
 setValidity(
     Class = "bcbioSingleCell",
     method = function(object) {
-        valid <- list()
-
         colData <- colData(object)
         metadata <- metadata(object)
         sampleData <- sampleData(object)
 
         # Return invalid for all objects older than v0.1.
         version <- metadata[["version"]]
-        valid[["version"]] <- validate(
+        ok <- validate(
             is(version, "package_version"),
             version >= 0.1
         )
+        if (!isTRUE(ok)) return(ok)
 
-        valid[["general"]] <- validate(
-            !.hasSlot(object, "bcbio")
-        )
+        # Check for legacy bcbio slot.
+        ok <- validate(!.hasSlot(object, "bcbio"))
+        if (!isTRUE(ok)) return(ok)
 
         # Assays ---------------------------------------------------------------
-        valid[["assays"]] <- validate(
-            isSubset("counts", names(assays(object)))
-        )
+        ok <- validate(isSubset("counts", names(assays(object))))
+        if (!isTRUE(ok)) return(ok)
 
         # Row data -------------------------------------------------------------
-        valid[["rowData"]] <- validate(
+        ok <- validate(
             is(rowRanges(object), "GRanges"),
             is(rowData(object), "DataFrame")
         )
+        if (!isTRUE(ok)) return(ok)
 
         # Column data ----------------------------------------------------------
         sampleData[["interestingGroups"]] <- NULL
@@ -65,7 +64,7 @@ setValidity(
             FUN = levels
         )
 
-        valid[["colData"]] <- validate(
+        ok <- validate(
             # Require that metrics columns are defined.
             isSubset(metricsCols, colnames(colData)),
             # Ensure that `interestingGroups` isn't slotted in colData.
@@ -75,6 +74,7 @@ setValidity(
             isSubset(colnames(sampleData), colnames(colData)),
             identical(sampleDataLevels, colDataLevels)
         )
+        if (!isTRUE(ok)) return(ok)
 
         # Metadata -------------------------------------------------------------
         # Optional metadata:
@@ -97,7 +97,7 @@ setValidity(
         # - runDate: Date
         # - template: character
         # - yaml: list
-        valid[["metadata"]] <- validateClasses(
+        ok <- validateClasses(
             object = metadata,
             expected = list(
                 allSamples = "logical",
@@ -118,23 +118,14 @@ setValidity(
             ),
             subset = TRUE
         )
+        if (!isTRUE(ok)) return(ok)
 
-        valid[["metadata2"]] <- validate(
+        ok <- validate(
             !isSubset("sampleName", names(metadata)),
             isSubset(metadata[["level"]], c("genes", "transcripts"))
         )
+        if (!isTRUE(ok)) return(ok)
 
-        .valid(list = valid)
-    }
-)
-
-
-
-.valid <- function(list) {
-    invalid <- Filter(f = Negate(isTRUE), x = list)
-    if (hasLength(invalid)) {
-        unlist(invalid)
-    } else {
         TRUE
     }
-}
+)
