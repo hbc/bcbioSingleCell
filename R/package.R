@@ -45,7 +45,8 @@
 #'   isPositive isString isSubset validate validateClasses
 #' @importFrom graphics hist
 #' @importFrom magrittr %>%
-#' @importFrom methods .hasSlot as as<- is new show slot slot<- validObject
+#' @importFrom methods as as<- is new setClass show slot slot<- validObject
+#'   .hasSlot
 #' @importFrom readr read_lines read_tsv
 #' @importFrom rlang !! := sym syms UQ
 #' @importFrom scales percent

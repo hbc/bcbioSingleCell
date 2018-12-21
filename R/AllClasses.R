@@ -12,11 +12,8 @@
 #' @seealso `bcbioSingleCell`.
 setClass(
     Class = "bcbioSingleCell",
-    contains = "SingleCellExperiment"
-)
-setValidity(
-    Class = "bcbioSingleCell",
-    method = function(object) {
+    contains = "SingleCellExperiment",
+    validity = function(object) {
         colData <- colData(object)
         metadata <- metadata(object)
         sampleData <- sampleData(object)
