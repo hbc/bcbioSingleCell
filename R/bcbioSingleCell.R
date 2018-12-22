@@ -69,13 +69,13 @@ bcbioSingleCell <- function(
     # Assert checks ------------------------------------------------------------
     assert(
         isADirectory(uploadDir),
-        isString(sampleMetadataFile) || is.null(sampleMetadataFile),
-        isString(organism) || is.null(organism),
-        isInt(ensemblRelease) || is.null(ensemblRelease),
-        isString(genomeBuild) || is.null(genomeBuild),
-        isString(gffFile) || is.null(gffFile),
-        isAny(transgeneNames, c("character", "NULL")),
-        isAny(spikeNames, c("character", "NULL")),
+        isString(sampleMetadataFile, nullOK = TRUE),
+        isString(organism, nullOK = TRUE),
+        isInt(ensemblRelease, nullOK = TRUE),
+        isString(genomeBuild, nullOK = TRUE),
+        isString(gffFile, nullOK = TRUE),
+        isCharacter(transgeneNames, nullOK = TRUE),
+        isCharacter(spikeNames, nullOK = TRUE),
         isCharacter(interestingGroups)
     )
     if (isString(gffFile)) {

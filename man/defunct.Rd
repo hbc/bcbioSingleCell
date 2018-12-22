@@ -37,7 +37,7 @@
 \alias{sanitizeMarkers}
 \alias{topMarkers}
 \alias{readCellRanger}
-\title{Defunct Functions}
+\title{Defunct functions}
 \usage{
 loadSingleCellRun(...)
 
@@ -116,6 +116,6 @@ readCellRanger(...)
 \code{.Defunct}.
 }
 \description{
-Defunct Functions
+Defunct functions
 }
 \keyword{internal}

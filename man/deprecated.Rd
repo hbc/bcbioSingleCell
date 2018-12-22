@@ -3,7 +3,7 @@
 \name{deprecated}
 \alias{deprecated}
 \alias{loadSingleCell}
-\title{Deprecated Functions}
+\title{Deprecated functions}
 \usage{
 loadSingleCell(...)
 }
@@ -14,6 +14,6 @@ loadSingleCell(...)
 \code{.Deprecated}.
 }
 \description{
-Deprecated Functions
+Deprecated functions
 }
 \keyword{internal}

@@ -13,7 +13,6 @@ separatorBar <- basejump::separator()
 requiredAssays <- "counts"
 
 geom <- c("histogram", "ecdf", "violin", "ridgeline", "boxplot")
-# c("violin", "ridgeline", "ecdf", "histogram", "boxplot")
 
 # `nCount` column is bcbioSingleCell class specific.
 metricsCols <- c(

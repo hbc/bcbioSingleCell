@@ -47,8 +47,8 @@ bioverbs::plotQC
         isString(metricCol),
         all(isNonNegative(c(min, max))),
         isString(trans),
-        isGGScale(fill, scale = "discrete", aes = "fill") || is.null(fill),
-        isString(title) || is.null(title)
+        isGGScale(fill, scale = "discrete", aes = "fill", nullOK = TRUE),
+        isString(title, nullOK = TRUE)
     )
     geom <- match.arg(geom)
     interestingGroups(object) <-
@@ -215,8 +215,8 @@ formals(.plotQCMetric)[["geom"]] <- geom
         isString(yCol),
         isString(xTrans),
         isString(yTrans),
-        isGGScale(color, scale = "discrete", aes = "colour") || is.null(color),
-        isString(title) || is.null(title)
+        isGGScale(color, scale = "discrete", aes = "colour", nullOK = TRUE),
+        isString(title, nullOK = TRUE)
     )
     interestingGroups(object) <-
         matchInterestingGroups(object, interestingGroups)

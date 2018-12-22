@@ -128,7 +128,7 @@ filterCells.SingleCellExperiment <-  # nolint
 
             # minCellsPerGene
             is.numeric(minCellsPerGene),
-            # Don't allow genes with all zero counts, so require at least 1 here.
+            # Don't allow genes with all zero counts.
             all(isPositive(minCellsPerGene))
         )
 

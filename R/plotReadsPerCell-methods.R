@@ -91,7 +91,7 @@ bioverbs::plotReadsPerCell
 ) {
     assert(
         is.data.frame(data),
-        isGGScale(color, scale = "discrete", aes = "colour") || is.null(color)
+        isGGScale(color, scale = "discrete", aes = "colour", nullOK = TRUE)
     )
 
     p <- ggplot(
@@ -143,7 +143,7 @@ bioverbs::plotReadsPerCell
 ) {
     assert(
         is.data.frame(data),
-        isGGScale(fill, scale = "discrete", aes = "fill") || is.null(fill)
+        isGGScale(fill, scale = "discrete", aes = "fill", nullOK = TRUE)
     )
 
     p <- ggplot(
@@ -194,7 +194,7 @@ bioverbs::plotReadsPerCell
 ) {
     assert(
         is.data.frame(data),
-        isGGScale(color, scale = "discrete", aes = "colour") || is.null(color)
+        isGGScale(color, scale = "discrete", aes = "colour", nullOK = TRUE)
     )
 
     p <- ggplot(
@@ -243,7 +243,7 @@ bioverbs::plotReadsPerCell
 ) {
     assert(
         is.data.frame(data),
-        isGGScale(fill, scale = "discrete", aes = "fill") || is.null(fill)
+        isGGScale(fill, scale = "discrete", aes = "fill", nullOK = TRUE)
     )
 
     p <- ggplot(
@@ -299,7 +299,7 @@ bioverbs::plotReadsPerCell
 ) {
     assert(
         is.data.frame(data),
-        isGGScale(fill, scale = "discrete", aes = "fill") || is.null(fill)
+        isGGScale(fill, scale = "discrete", aes = "fill", nullOK = TRUE)
     )
 
     p <- ggplot(
@@ -358,7 +358,7 @@ plotReadsPerCell.bcbioSingleCell <-  # nolint
     ) {
         # Passthrough: color, fill.
         validObject(object)
-        assert(isString(title) || is.null(title))
+        assert(isString(title, nullOK = TRUE))
         interestingGroups(object) <-
             matchInterestingGroups(object, interestingGroups)
         geom <- match.arg(geom)

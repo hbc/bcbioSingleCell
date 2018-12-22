@@ -39,7 +39,7 @@ plotUMIsPerCell.SingleCellExperiment <-  # nolint
         fill,
         title = "UMIs per cell"
     ) {
-        assert(isString(title) || is.null(title))
+        assert(isString(title, nullOK = TRUE))
         geom <- match.arg(geom)
         point <- match.arg(point)
 

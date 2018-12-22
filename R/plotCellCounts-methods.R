@@ -25,8 +25,8 @@ plotCellCounts.SingleCellExperiment <-  # nolint
     ) {
         validObject(object)
         assert(
-            isGGScale(fill, scale = "discrete", aes = "fill") || is.null(fill),
-            isString(title) || is.null(title)
+            isGGScale(fill, scale = "discrete", aes = "fill", nullOK = TRUE),
+            isString(title, nullOK = TRUE)
         )
         interestingGroups(object) <-
             matchInterestingGroups(object, interestingGroups)
