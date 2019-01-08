@@ -1,43 +1,70 @@
-#' Barcode Ranks per Sample
-#'
 #' @name barcodeRanksPerSample
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh
-#'
+#' @inherit bioverbs::barcodeRanksPerSample
 #' @inherit DropletUtils::barcodeRanks
-#'
-#' @inheritParams general
-#' @param ... Passthrough arguments to [DropletUtils::barcodeRanks()].
-#'
-#' @seealso [DropletUtils::barcodeRanks()].
-#'
+#' @inheritParams basejump::params
+#' @param ... Additional arguments.
+#' @seealso `DropletUtils::barcodeRanks()`.
 #' @examples
-#' x <- barcodeRanksPerSample(indrops_small)
+#' data(indrops)
+#' x <- barcodeRanksPerSample(indrops)
 #' names(x)
 NULL
+
+
+
+#' @importFrom bioverbs barcodeRanksPerSample
+#' @aliases NULL
+#' @export
+bioverbs::barcodeRanksPerSample
+
+
+
+barcodeRanksPerSample.SingleCellExperiment <-  # nolint
+    function(object) {
+        which <- sys.parent()
+
+        counts <- counts(object)
+        cell2sample <- cell2sample(object)
+        samples <- levels(cell2sample)
+
+        # Subset the counts per sample into a list.
+        countsPerSample <- lapply(samples, function(sample) {
+            cells <- names(cell2sample)[which(cell2sample == sample)]
+            counts[, cells, drop = FALSE]
+        })
+
+        # Calculate the ranks per sample.
+        ranks <- lapply(
+            X = countsPerSample,
+            FUN = function(counts) {
+                do.call(
+                    what = barcodeRanks,
+                    args = matchArgsToDoCall(
+                        args = list(m = as.matrix(counts)),
+                        removeFormals = "object",
+                        which = which
+                    )
+                )
+            }
+        )
+
+        names(ranks) <- samples
+        ranks
+    }
+
+f1 <- formals(barcodeRanksPerSample.SingleCellExperiment)
+f2 <- formals(barcodeRanks)
+f2 <- f2[setdiff(names(f2), c(names(f1), "m", "..."))]
+f <- c(f1, f2)
+formals(barcodeRanksPerSample.SingleCellExperiment) <- f
 
 
 
 #' @rdname barcodeRanksPerSample
 #' @export
 setMethod(
-    "barcodeRanksPerSample",
-    signature("SingleCellExperiment"),
-    function(object, ...) {
-        # DropletUtils requires R 3.5, which isn't on conda.
-        # Don't import the package as a dependency for the time being.
-        requireNamespace("DropletUtils")
-        counts <- counts(object)
-        cell2sample <- cell2sample(object)
-        samples <- levels(cell2sample)
-        perSampleCounts <- lapply(samples, function(sample) {
-            cells <- names(cell2sample)[which(cell2sample == sample)]
-            counts[, cells]
-        })
-        ranks <- lapply(perSampleCounts, function(object) {
-            DropletUtils::barcodeRanks(as.matrix(object), ...)
-        })
-        names(ranks) <- samples
-        ranks
-    }
+    f = "barcodeRanksPerSample",
+    signature = signature("SingleCellExperiment"),
+    definition = barcodeRanksPerSample.SingleCellExperiment
 )

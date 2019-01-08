@@ -2,12 +2,19 @@ globalVariables(".")
 
 packageVersion <- packageVersion("bcbioSingleCell")
 
-# Trailing number is to match cellranger output
-barcodePattern <- ")_([ACGT_]{6,})(_[0-9]+)?$"
+#' @importFrom basejump lanePattern
+lanePattern <- basejump::lanePattern
+
+#' @importFrom bcbioBase projectDirPattern
+projectDirPattern <- bcbioBase::projectDirPattern
+
+separatorBar <- basejump::separator()
 
 requiredAssays <- "counts"
 
-# `nCount` column is bcbioSingleCell class specific
+geom <- c("histogram", "ecdf", "violin", "ridgeline", "boxplot")
+
+# `nCount` column is bcbioSingleCell class specific.
 metricsCols <- c(
     "nUMI",
     "nGene",
@@ -17,11 +24,4 @@ metricsCols <- c(
     "mitoRatio"
 )
 
-# Empty sample metadata support (e.g. for splatter simulation SCE)
-unknownSampleData <- data.frame(
-    sampleID = "unknown",
-    sampleName = "unknown",
-    interestingGroups = "unknown",
-    row.names = "unknown",
-    stringsAsFactors = TRUE
-)
+Rle <- structure("Rle", package = "S4Vectors")  # nolint

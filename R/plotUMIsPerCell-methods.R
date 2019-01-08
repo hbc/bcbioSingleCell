@@ -1,69 +1,72 @@
-#' Plot UMIs per Cell
-#'
-#' Plot the universal molecular identifiers (UMIs) per cell.
-#'
 #' @name plotUMIsPerCell
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
-#'
-#' @inherit plotGenesPerCell
-#'
-#' @inheritParams general
-#' @param point `string`. Label either the "`knee`" or "`inflection`" points per
-#'   sample. To disable, use "`none`". Requires `geom = "ecdf"`.
+#' @include globals.R
+#' @inherit bioverbs::plotUMIsPerCell
+#' @inheritParams basejump::params
+
+#' @param point `character(1)`.
+#'   Label either the "`knee`" or "`inflection`" points per sample. To disable,
+#'   use "`none`". Requires `geom = "ecdf"`.
 #'
 #' @examples
-#' plotUMIsPerCell(indrops_small, geom = "violin")
-#' plotUMIsPerCell(indrops_small, geom = "ridgeline")
-#' plotUMIsPerCell(indrops_small, geom = "ecdf")
-#' plotUMIsPerCell(indrops_small, geom = "histogram")
-#' plotUMIsPerCell(indrops_small, geom = "boxplot")
+#' data(indrops)
+#' plotUMIsPerCell(indrops, geom = "violin")
+#' plotUMIsPerCell(indrops, geom = "ridgeline")
+#' plotUMIsPerCell(indrops, geom = "ecdf")
+#' plotUMIsPerCell(indrops, geom = "histogram")
+#' plotUMIsPerCell(indrops, geom = "boxplot")
 NULL
 
 
 
-#' @rdname plotUMIsPerCell
+#' @importFrom bioverbs plotUMIsPerCell
+#' @aliases NULL
 #' @export
-setMethod(
-    "plotUMIsPerCell",
-    signature("SingleCellExperiment"),
+bioverbs::plotUMIsPerCell
+
+
+
+plotUMIsPerCell.SingleCellExperiment <-  # nolint
     function(
         object,
-        geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
-        interestingGroups,
+        geom,
+        interestingGroups = NULL,
         min = 0L,
         max = Inf,
         point = c("none", "inflection", "knee"),
         trans = "log10",
-        color = getOption("bcbio.discrete.color", NULL),
-        fill = getOption("bcbio.discrete.fill", NULL),
+        color,
+        fill,
         title = "UMIs per cell"
     ) {
+        assert(isString(title, nullOK = TRUE))
         geom <- match.arg(geom)
         point <- match.arg(point)
-        assertIsAStringOrNULL(title)
 
         # Override interestingGroups if labeling points
         if (point != "none") {
             interestingGroups <- "sampleName"
         }
 
-        p <- .plotQCMetric(
-            object = object,
-            metricCol = "nUMI",
-            geom = geom,
-            interestingGroups = interestingGroups,
-            min = min,
-            max = max,
-            trans = trans,
-            color = color,
-            fill = fill
+        p <- do.call(
+            what = .plotQCMetric,
+            args = list(
+                object = object,
+                metricCol = "nUMI",
+                geom = geom,
+                interestingGroups = interestingGroups,
+                min = min,
+                max = max,
+                trans = trans,
+                color = color,
+                fill = fill
+            )
         )
 
-        # Calculate barcode ranks and label inflection or knee points
+        # Calculate barcode ranks and label inflection or knee points.
         if (point != "none") {
             # Require ecdf geom for now
-            assert_are_identical(geom, "ecdf")
+            assert(identical(geom, "ecdf"))
 
             if (length(title)) {
                 p <- p + labs(subtitle = paste(point, "point per sample"))
@@ -79,10 +82,7 @@ setMethod(
             points <- unlist(points)
             names(points) <- names(ranks)
 
-            assert_are_identical(
-                x = names(sampleNames),
-                y = names(points)
-            )
+            assert(identical(names(sampleNames), names(points)))
 
             if (geom == "ecdf") {
                 # Calculate the y-intercept per sample
@@ -95,7 +95,7 @@ setMethod(
                             metrics[["sampleID"]] == sampleID,
                             "nUMI",
                             drop = TRUE
-                            ]
+                        ]
                         e <- ecdf(sort(nUMI))
                         e(point)
                     },
@@ -119,7 +119,7 @@ setMethod(
                         size = 5L,
                         show.legend = FALSE
                     ) +
-                    bcbio_geom_label_repel(
+                    basejump_geom_label_repel(
                         data = pointData,
                         mapping = aes(
                             x = !!sym("x"),
@@ -135,4 +135,19 @@ setMethod(
 
         p
     }
+
+formals(plotUMIsPerCell.SingleCellExperiment)[["color"]] <-
+    formalsList[["color.discrete"]]
+formals(plotUMIsPerCell.SingleCellExperiment)[["fill"]] <-
+    formalsList[["fill.discrete"]]
+formals(plotUMIsPerCell.SingleCellExperiment)[["geom"]] <- geom
+
+
+
+#' @rdname plotUMIsPerCell
+#' @export
+setMethod(
+    f = "plotUMIsPerCell",
+    signature = signature("SingleCellExperiment"),
+    definition = plotUMIsPerCell.SingleCellExperiment
 )

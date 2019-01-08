@@ -2,44 +2,37 @@
 % Please edit documentation in R/prepareSingleCellTemplate.R
 \name{prepareSingleCellTemplate}
 \alias{prepareSingleCellTemplate}
-\title{Prepare Single-Cell RNA-Seq R Markdown Template}
+\title{Prepare single-cell RNA-seq R Markdown template}
 \usage{
 prepareSingleCellTemplate(overwrite = FALSE)
 }
 \arguments{
-\item{overwrite}{\code{boolean}. Should existing destination files be overwritten?}
+\item{overwrite}{\code{logical(1)}.
+Should existing destination files be overwritten?}
 }
 \value{
-Invisible \code{logical} indicating which files were copied.
+Invisible \code{logical}.
+Was the file copied?.
 }
 \description{
 If the required template dependency files aren't present, copy them from the
 requested package. Existing files are not overwritten by default. This
 function will copy dependency files from a requested package inside the
-\code{rmarkdown/shared} directory. If a package doesn't contain this
+\code{rmarkdown/shared/} directory. If a package doesn't contain this
 subdirectory, the function will return an error.
 }
 \details{
 This code is used internally by:
 \itemize{
-\item \code{bcbioRNASeq::prepareRNASeqTemplate()}.
-\item \code{bcbioSingleCell::prepareSingleCellTemplate()}.
+\item \code{bcbioRNASeq::prepareRNASeqTemplate}.
+\item \code{bcbioSingleCell::prepareSingleCellTemplate}.
 }
 }
 \examples{
-x <- prepareSingleCellTemplate()
-x
-
-# Clean up
-unlink(c(
-    "_footer.Rmd",
-    "_header.Rmd",
-    "_output.yaml",
-    "_setup.R",
-    "bibliography.bib"
-))
+\dontrun{
+## prepareSingleCellTemplate()
+}
 }
 \author{
 Michael Steinbaugh
 }
-\concept{R Markdown Functions}

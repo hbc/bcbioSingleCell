@@ -1,28 +1,28 @@
-#' Plot Barcode Ranks
-#'
 #' @name plotBarcodeRanks
 #' @author Michael Steinbaugh
-#'
-#' @inheritParams general
-#' @param ... Passthrough arguments to [DropletUtils::barcodeRanks()].
-#'
-#' @seealso [DropletUtils::barcodeRanks()].
-#'
-#' @return `ggplot` grid.
-#'
+#' @include barcodeRanksPerSample-methods.R
+#' @inherit bioverbs::plotBarcodeRanks
+#' @inherit barcodeRanksPerSample
 #' @examples
-#' plotBarcodeRanks(indrops_small)
+#' data(indrops)
+#' plotBarcodeRanks(indrops)
 NULL
 
 
 
-#' @rdname plotBarcodeRanks
+#' @importFrom bioverbs plotBarcodeRanks
+#' @aliases NULL
 #' @export
-setMethod(
-    "plotBarcodeRanks",
-    signature("SingleCellExperiment"),
-    function(object, ...) {
-        ranksPerSample <- barcodeRanksPerSample(object, ...)
+bioverbs::plotBarcodeRanks
+
+
+
+plotBarcodeRanks.SingleCellExperiment <-  # nolint
+    function(object) {
+        ranksPerSample <- do.call(
+            what = barcodeRanksPerSample,
+            args = matchArgsToDoCall(args = list(object = object))
+        )
 
         sampleData <- sampleData(object)
         if (is.null(sampleData)) {
@@ -37,12 +37,11 @@ setMethod(
             sampleName = sampleNames,
             ranks = ranksPerSample,
             FUN = function(sampleName, ranks) {
-                data <- cbind(
+                data <- tibble(
                     rank = ranks[["rank"]],
                     total = ranks[["total"]],  # nUMI
                     fitted = ranks[["fitted"]]
-                ) %>%
-                    as("tbl_df")
+                )
 
                 p <- ggplot(data = data) +
                     geom_point(
@@ -96,7 +95,7 @@ setMethod(
                     paste("inflection", "=", ranks[["inflection"]])
                 )
                 p +
-                    bcbio_geom_label_repel(
+                    basejump_geom_label_repel(
                         data = labelData,
                         mapping = aes(
                             x = !!sym("rank"),
@@ -115,4 +114,16 @@ setMethod(
 
         plot_grid(plotlist = plotlist)
     }
+
+formals(plotBarcodeRanks.SingleCellExperiment) <-
+    formals(barcodeRanksPerSample.SingleCellExperiment)
+
+
+
+#' @rdname plotBarcodeRanks
+#' @export
+setMethod(
+    f = "plotBarcodeRanks",
+    signature = signature("SingleCellExperiment"),
+    definition = plotBarcodeRanks.SingleCellExperiment
 )

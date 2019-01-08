@@ -1,64 +1,69 @@
-#' Quality Control Plots
-#'
-#' Utility function that loops our standard quality control plots, for easy
-#' visualization.
-#'
 #' @name plotQC
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh
+#' @include globals.R
+#' @inherit basejump::plotQC
+#' @inheritParams basejump::params
 #'
-#' @importFrom basejump plotQC
-#' @export
-#'
-#' @inheritParams general
-#' @param headerLevel `scalar integer` (`1`-`7`). R Markdown header level.
-#' @param legend `boolean`. Include plot legend.
+#' @param headerLevel `integer(1)` (`1`-`7`).
+#'   R Markdown header level.
+#' @param legend `logical(1)`.
+#'   Include plot legend.
 #'
 #' @return
-#'   - `grid`: [cowplot::plot_grid()] graphical output.
+#'   - `grid`: Graphical output.
 #'   - `list`: `list` containing `ggplot` objects.
 #'   - `markdown`: R Markdown report, with reports separated by headers.
 #'
 #' @examples
-#' plotQC(indrops_small)
+#' data(indrops)
+#' plotQC(indrops)
 NULL
 
 
 
-# Plot a single quality control metric
+#' @importFrom bioverbs plotQC
+#' @aliases NULL
+#' @export
+bioverbs::plotQC
+
+
+
+# Plot a single quality control metric.
 .plotQCMetric <- function(
     object,
     metricCol,
-    geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
-    interestingGroups,
+    geom,
+    interestingGroups = NULL,
     min = 0L,
     max = Inf,
     trans = "identity",
     ratio = FALSE,
-    color = getOption("bcbio.discrete.color", NULL),
-    fill = getOption("bcbio.discrete.fill", NULL),
+    color,
+    fill,
     title = NULL
 ) {
-    assert_is_a_string(metricCol)
-    geom <- match.arg(geom)
-    interestingGroups <- matchInterestingGroups(
-        object = object,
-        interestingGroups = interestingGroups
+    validObject(object)
+    assert(
+        isString(metricCol),
+        all(isNonNegative(c(min, max))),
+        isString(trans),
+        isGGScale(fill, scale = "discrete", aes = "fill", nullOK = TRUE),
+        isString(title, nullOK = TRUE)
     )
-    assert_all_are_non_negative(c(min, max))
-    # Support for per sample filtering cutoffs
+    geom <- match.arg(geom)
+    interestingGroups(object) <-
+        matchInterestingGroups(object, interestingGroups)
+
+    # Support for per sample filtering cutoffs.
     min <- min(min)
     max <- max(max)
     if (isTRUE(ratio)) {
-        assert_all_are_in_range(c(min, max), lower = 0L, upper = 1L)
+        assert(all(isInRange(c(min, max), lower = 0L, upper = 1L)))
     }
-    assert_is_a_string(trans)
-    assertIsFillScaleDiscreteOrNULL(fill)
-    assertIsAStringOrNULL(title)
 
-    data <- metrics(object, interestingGroups = interestingGroups)
+    data <- metrics(object)
     if (!metricCol %in% colnames(data)) {
-        return(invisible())
+        stop(paste(metricCol, "is not defined in colData()."))
     }
 
     mapping <- aes(
@@ -70,7 +75,7 @@ NULL
         mapping[["x"]] <- as.symbol("sampleName")
         mapping[["y"]] <- as.symbol(metricCol)
     } else if (geom == "ridgeline") {
-        # ridgeline flips the axes
+        # Ridgeline flips the axes.
         mapping[["x"]] <- as.symbol(metricCol)
         mapping[["y"]] <- as.symbol("sampleName")
     } else if (geom %in% c("ecdf", "histogram")) {
@@ -120,30 +125,30 @@ NULL
             labs(x = NULL)
     }
 
-    # Cutoff lines
+    # Cutoff lines.
     if (geom %in% c("boxplot", "violin")) {
         if (min > 0L) {
-            p <- p + bcbio_geom_abline(yintercept = min)
+            p <- p + basejump_geom_abline(yintercept = min)
         }
         if (
             (max < Inf && identical(ratio, FALSE)) ||
             (max < 1L && identical(ratio, TRUE))
         ) {
-            p <- p + bcbio_geom_abline(yintercept = max)
+            p <- p + basejump_geom_abline(yintercept = max)
         }
     } else {
         if (min > 0L) {
-            p <- p + bcbio_geom_abline(xintercept = min)
+            p <- p + basejump_geom_abline(xintercept = min)
         }
         if (
             (max < Inf && identical(ratio, FALSE)) ||
             (max < 1L && identical(ratio, TRUE))
         ) {
-            p <- p + bcbio_geom_abline(xintercept = max)
+            p <- p + basejump_geom_abline(xintercept = max)
         }
     }
 
-    # Label interesting groups
+    # Label interesting groups.
     p <- p +
         labs(
             title = title,
@@ -151,7 +156,7 @@ NULL
             fill = paste(interestingGroups, collapse = ":\n")
         )
 
-    # Color palette
+    # Color palette.
     if (geom == "ecdf") {
         if (is(color, "ScaleDiscrete")) {
             p <- p + color
@@ -162,7 +167,7 @@ NULL
         }
     }
 
-    # Median labels
+    # Median labels.
     if (!geom %in% c("ecdf", "histogram")) {
         if (metricCol %in% c("log10GenesPerUMI", "mitoRatio")) {
             digits <- 2L
@@ -170,10 +175,10 @@ NULL
             digits <- 0L
         }
         p <- p +
-            bcbio_geom_label_average(data, col = metricCol, digits = digits)
+            basejump_geom_label_average(data, col = metricCol, digits = digits)
     }
 
-    # Facets
+    # Facets.
     facets <- NULL
     if (.isAggregate(data)) {
         facets <- "aggregate"
@@ -185,37 +190,43 @@ NULL
     p
 }
 
+formals(.plotQCMetric)[["color"]] <-
+    formalsList[["color.discrete"]]
+formals(.plotQCMetric)[["fill"]] <-
+    formalsList[["fill.discrete"]]
+formals(.plotQCMetric)[["geom"]] <- geom
 
 
-# Compare two quality control metrics
+
+# Compare two quality control metrics.
 .plotQCScatterplot <- function(
     object,
     xCol,
     yCol,
     xTrans = "identity",
     yTrans = "identity",
-    interestingGroups,
+    interestingGroups = NULL,
     trendline = FALSE,
-    color = getOption("bcbio.discrete.color", NULL),
+    color = getOption("basejump.discrete.color", NULL),
     title = NULL
 ) {
-    assert_is_a_string(xCol)
-    assert_is_a_string(yCol)
-    assert_is_a_string(xTrans)
-    assert_is_a_string(yTrans)
-    interestingGroups <- matchInterestingGroups(
-        object = object,
-        interestingGroups = interestingGroups
+    assert(
+        isString(xCol),
+        isString(yCol),
+        isString(xTrans),
+        isString(yTrans),
+        isGGScale(color, scale = "discrete", aes = "colour", nullOK = TRUE),
+        isString(title, nullOK = TRUE)
     )
-    assertIsColorScaleDiscreteOrNULL(color)
-    assertIsAStringOrNULL(title)
+    interestingGroups(object) <-
+        matchInterestingGroups(object, interestingGroups)
 
-    data <- metrics(object, interestingGroups = interestingGroups)
+    data <- metrics(object)
     if (!all(c(xCol, yCol) %in% colnames(data))) {
         warning(paste(
             deparse(substitute(object)), "must contain",
             toString(c(xCol, yCol)),
-            "columns in `metrics()`"
+            "columns in `colData`."
         ))
         return(invisible())
     }
@@ -238,18 +249,18 @@ NULL
         p <- p + geom_smooth(method = "glm", se = FALSE, size = 1L)
     }
 
-    # Label interesting groups
+    # Label interesting groups.
     p <- p + labs(
         title = title,
         color = paste(interestingGroups, collapse = ":\n")
     )
 
-    # Color palette
+    # Color palette.
     if (is(color, "ScaleDiscrete")) {
         p <- p + color
     }
 
-    # Facets
+    # Facets.
     facets <- NULL
     if (.isAggregate(data)) {
         facets <- c(facets, "aggregate")
@@ -263,49 +274,39 @@ NULL
 
 
 
-#' @rdname plotQC
-#' @export
-setMethod(
-    "plotQC",
-    signature("SingleCellExperiment"),
+plotQC.SingleCellExperiment <-  # nolint
     function(
         object,
-        interestingGroups,
-        geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
+        interestingGroups = NULL,
+        geom,
         headerLevel = 2L,
-        legend = getOption("bcbio.legend", FALSE),
+        legend,
         return = c("grid", "list", "markdown")
     ) {
         validObject(object)
-        interestingGroups <- matchInterestingGroups(
-            object = object,
-            interestingGroups = interestingGroups
-        )
+        assert(isHeaderLevel(headerLevel))
+        interestingGroups(object) <-
+            matchInterestingGroups(object, interestingGroups)
         geom <- match.arg(geom)
-        assertIsAHeaderLevel(headerLevel)
         return <- match.arg(return)
 
-        plotCellCounts <- plotCellCounts(object)
-        plotReadsPerCell <- NULL
+        # Don't show cell counts for unfiltered datasets.
+        if (!is.null(metadata(object)[["filterCells"]])) {
+            plotCellCounts <- plotCellCounts(object)
+            plotZerosVsDepth <- NULL
+        } else {
+            plotCellCounts <- NULL
+            plotZerosVsDepth <- plotZerosVsDepth(object)
+        }
+
         plotUMIsPerCell <- plotUMIsPerCell(object, geom = geom)
         plotGenesPerCell <- plotGenesPerCell(object, geom = geom)
         plotUMIsVsGenes <- plotUMIsVsGenes(object)
         plotNovelty <- plotNovelty(object, geom = geom)
         plotMitoRatio <- plotMitoRatio(object, geom = geom)
-        plotZerosVsDepth <- plotZerosVsDepth(object)
 
-        if (is(object, "bcbioSingleCell")) {
-            # Don't show cell counts for unfiltered bcbio datasets
-            if (!length(metadata(object)[["filterCells"]])) {
-                plotCellCounts <- NULL
-            }
-            # Raw read counts are only stashed in bcbioSingleCell objects
-            plotReadsPerCell <- plotReadsPerCell(object, geom = geom)
-        }
-
-        plotlist <- list(
+        list <- list(
             "Cell Counts" = plotCellCounts,
-            "Reads per Cell" = plotReadsPerCell,
             "UMIs per Cell" = plotUMIsPerCell,
             "Genes per Cell" = plotGenesPerCell,
             "UMIs vs. Genes" = plotUMIsVsGenes,
@@ -315,34 +316,52 @@ setMethod(
         )
 
         # Remove any `NULL` plots. This is useful for nuking the
-        # `plotReadsPerCell()` return on an object that doesn't contain raw
+        # `plotReadsPerCell` return on an object that doesn't contain raw
         # cellular barcode counts.
-        plotlist <- Filter(Negate(is.null), plotlist)
+        list <- Filter(f = Negate(is.null), x = list)
 
-        # Hide the legends, if desired
+        # Consistently show n plots.
+        n <- 6L
+        assert(hasLength(list, n = n))
+
+        # Hide the legends, if desired.
         if (identical(legend, FALSE)) {
             .hideLegend <- function(gg) {
                 gg + theme(legend.position = "none")
             }
-            plotlist <- lapply(plotlist, .hideLegend)
+            list <- lapply(list, .hideLegend)
         }
 
-        # Grid return mode
+        # Return.
         if (return == "list") {
-            plotlist
+            names(list) <- camel(names(list))
+            list
         } else if (return == "grid") {
-            plot_grid(plotlist = plotlist)
+            plot_grid(
+                plotlist = list,
+                ncol = n / 2L,
+                nrow = 2L
+            )
         } else if (return == "markdown") {
             markdownHeader(
-                text = "Filtered quality control metrics",
+                text = "Quality control metrics",
                 level = headerLevel,
                 tabset = TRUE,
                 asis = TRUE
             )
-            markdownPlotlist(
-                plotlist = plotlist,
-                headerLevel = headerLevel + 1L
-            )
+            markdownPlots(list = list, headerLevel = headerLevel + 1L)
         }
     }
+
+formals(plotQC.SingleCellExperiment)[["geom"]] <- geom
+formals(plotQC.SingleCellExperiment)[["legend"]] <- formalsList[["legend"]]
+
+
+
+#' @rdname plotQC
+#' @export
+setMethod(
+    f = "plotQC",
+    signature = signature("SingleCellExperiment"),
+    definition = plotQC.SingleCellExperiment
 )

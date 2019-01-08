@@ -4,57 +4,50 @@
 \name{plotQC}
 \alias{plotQC}
 \alias{plotQC,SingleCellExperiment-method}
-\title{Quality Control Plots}
+\title{Quality control}
 \usage{
-\S4method{plotQC}{SingleCellExperiment}(object, interestingGroups,
-  geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
-  headerLevel = 2L, legend = getOption("bcbio.legend", FALSE),
+\S4method{plotQC}{SingleCellExperiment}(object, interestingGroups = NULL,
+  geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
+  headerLevel = 2L, legend = getOption("basejump.legend", TRUE),
   return = c("grid", "list", "markdown"))
 }
 \arguments{
 \item{object}{Object.}
 
-\item{interestingGroups}{\code{character} or \code{NULL}. Character vector of
-interesting groups. Must be formatted in camel case and intersect with
-\code{\link[=sampleData]{sampleData()}} colnames.}
+\item{interestingGroups}{\code{character}.
+Groups of interest that define the samples. If left unset, defaults to
+\code{sampleName}.}
 
-\item{geom}{\code{string}. Plot type. Uses \code{\link[=match.arg]{match.arg()}} and defaults to the first
+\item{geom}{\code{character(1)}.
+Plot type.
+Uses \link[base:match.arg]{match.arg()} internally and defaults to the first
 argument in the \code{character} vector.}
 
-\item{headerLevel}{\code{scalar integer} (\code{1}-\code{7}). R Markdown header level.}
+\item{headerLevel}{\code{integer(1)} (\code{1}-\code{7}).
+R Markdown header level.}
 
-\item{legend}{\code{boolean}. Include plot legend.}
+\item{legend}{\code{logical(1)}.
+Include plot legend.}
 
-\item{return}{\code{string}. Return type. Uses \code{\link[base:match.arg]{base::match.arg()}} internally and
-defaults to the first argument in the \code{character} vector.}
+\item{return}{\code{character(1)}.
+Return type.
+Uses \link[base:match.arg]{match.arg()} internally and defaults to the first
+argument in the \code{character} vector.}
 }
 \value{
 \itemize{
-\item \code{grid}: \code{\link[cowplot:plot_grid]{cowplot::plot_grid()}} graphical output.
+\item \code{grid}: Graphical output.
 \item \code{list}: \code{list} containing \code{ggplot} objects.
 \item \code{markdown}: R Markdown report, with reports separated by headers.
 }
 }
 \description{
-Utility function that loops our standard quality control plots, for easy
-visualization.
+Quality control
 }
 \examples{
-plotQC(indrops_small)
-}
-\seealso{
-Other Quality Control Functions: \code{\link{barcodeRanksPerSample}},
-  \code{\link{filterCells}}, \code{\link{metrics}},
-  \code{\link{plotCellCounts}},
-  \code{\link{plotGenesPerCell}},
-  \code{\link{plotMitoRatio}},
-  \code{\link{plotMitoVsCoding}},
-  \code{\link{plotNovelty}},
-  \code{\link{plotReadsPerCell}},
-  \code{\link{plotUMIsPerCell}},
-  \code{\link{plotZerosVsDepth}}
+data(indrops)
+plotQC(indrops)
 }
 \author{
 Michael Steinbaugh
 }
-\concept{Quality Control Functions}

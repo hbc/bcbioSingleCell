@@ -2,26 +2,14 @@
 
 
 
-#' Deprecated Functions
-#'
-#' @name deprecated
+#' @name defunct
+#' @inherit basejump::defunct
 #' @keywords internal
-#'
-#' @inheritParams general
-#'
-#' @return [.Deprecated()].
 NULL
 
-
-
-#' Defunct Functions
-#'
-#' @name defunct
+#' @name deprecated
+#' @inherit basejump::deprecated
 #' @keywords internal
-#'
-#' @inheritParams general
-#'
-#' @return [.Defunct()].
 NULL
 
 
@@ -52,15 +40,6 @@ pcCutoff <- function(...) {
 
 
 
-# v0.1.0 =======================================================================
-#' @rdname defunct
-#' @export
-calculateMetrics <- function(...) {
-    .Defunct("metrics")
-}
-
-
-
 # v0.1.1 =======================================================================
 #' @rdname defunct
 #' @export
@@ -79,11 +58,10 @@ plotCumulativeUMIsPerCell <- function(...) {
 
 
 # v0.1.2 =======================================================================
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 loadCellRanger <- function(...) {
-    .Deprecated("readCellRanger")
-    readCellRanger(...)
+    .Deprecated("CellRanger::CellRanger")
 }
 
 
@@ -268,6 +246,15 @@ sanitizeMarkers <- function(...) {
 #' @export
 topMarkers <- function(...) {
     .Defunct("pointillism::topMarkers")
+}
+
+
+
+# v0.2.2 =======================================================================
+#' @rdname defunct
+#' @export
+readCellRanger <- function(...) {
+    .Defunct("CellRanger::CellRanger")
 }
 
 

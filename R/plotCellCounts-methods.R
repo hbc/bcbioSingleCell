@@ -1,61 +1,50 @@
-#' Plot Cell Counts
-#'
 #' @name plotCellCounts
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
-#'
-#' @inheritParams general
-#'
-#' @return `ggplot`.
-#'
+#' @inherit bioverbs::plotCellCounts
+#' @inheritParams basejump::params
 #' @examples
-#' plotCellCounts(indrops_small)
+#' data(indrops)
+#' plotCellCounts(indrops)
 NULL
 
 
 
-#' @rdname plotCellCounts
+#' @importFrom bioverbs plotCellCounts
+#' @aliases NULL
 #' @export
-setMethod(
-    "plotCellCounts",
-    signature("SingleCellExperiment"),
+bioverbs::plotCellCounts
+
+
+
+plotCellCounts.SingleCellExperiment <-  # nolint
     function(
         object,
-        interestingGroups,
-        fill = getOption("bcbio.discrete.fill", NULL),
+        interestingGroups = NULL,
+        fill,
         title = "cell counts"
     ) {
         validObject(object)
-        interestingGroups <- matchInterestingGroups(
-            object = object,
-            interestingGroups = interestingGroups
+        assert(
+            isGGScale(fill, scale = "discrete", aes = "fill", nullOK = TRUE),
+            isString(title, nullOK = TRUE)
         )
-        assertIsFillScaleDiscreteOrNULL(fill)
-        assertIsAStringOrNULL(title)
+        interestingGroups(object) <-
+            matchInterestingGroups(object, interestingGroups)
 
-        metrics <- metrics(object, interestingGroups = interestingGroups)
+        metrics <- metrics(object)
+        sampleData <- sampleData(object)
 
-        sampleData <- sampleData(
-            object = object,
-            interestingGroups = interestingGroups
-        )
-        if (is.null(sampleData)) {
-            sampleData <- unknownSampleData
-        } else {
-            sampleData[["sampleID"]] <- factor(
-                x = rownames(sampleData),
-                levels = levels(metrics[["sampleID"]])
-            )
-        }
-        sampleData <- as.data.frame(sampleData)
-
-        # Remove user-defined `nCells` column, if present
+        # Remove user-defined `nCells` column, if present.
         metrics[["nCells"]] <- NULL
         sampleData[["nCells"]] <- NULL
 
+        sampleData <- sampleData %>%
+            as_tibble(rownames = "sampleID") %>%
+            mutate_all(as.factor)
+
         data <- metrics %>%
             group_by(!!sym("sampleID")) %>%
-            summarize(nCells = n()) %>%
+            summarise(nCells = n()) %>%
             left_join(sampleData, by = "sampleID")
 
         p <- ggplot(
@@ -83,7 +72,7 @@ setMethod(
 
         # Labels
         if (nrow(data) <= 16L) {
-            p <- p + bcbio_geom_label(
+            p <- p + basejump_geom_label(
                 data = data,
                 mapping = aes(label = !!sym("nCells")),
                 # Align the label just under the top of the bar
@@ -102,4 +91,15 @@ setMethod(
 
         p
     }
+
+formals(plotCellCounts.SingleCellExperiment)[["fill"]] <-
+    formalsList[["fill.discrete"]]
+
+
+#' @rdname plotCellCounts
+#' @export
+setMethod(
+    f = "plotCellCounts",
+    signature = signature("SingleCellExperiment"),
+    definition = plotCellCounts.SingleCellExperiment
 )

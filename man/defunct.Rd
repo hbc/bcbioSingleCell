@@ -5,9 +5,9 @@
 \alias{loadSingleCellRun}
 \alias{darkTheme}
 \alias{pcCutoff}
-\alias{calculateMetrics}
 \alias{inflectionPoint}
 \alias{plotCumulativeUMIsPerCell}
+\alias{loadCellRanger}
 \alias{cellCountsPerCluster}
 \alias{cellTypesPerCluster}
 \alias{clusterCellCountsPerSample}
@@ -36,7 +36,8 @@
 \alias{readCellTypeMarkers}
 \alias{sanitizeMarkers}
 \alias{topMarkers}
-\title{Defunct Functions}
+\alias{readCellRanger}
+\title{Defunct functions}
 \usage{
 loadSingleCellRun(...)
 
@@ -44,11 +45,11 @@ darkTheme(...)
 
 pcCutoff(...)
 
-calculateMetrics(...)
-
 inflectionPoint(...)
 
 plotCumulativeUMIsPerCell(...)
+
+loadCellRanger(...)
 
 cellCountsPerCluster(...)
 
@@ -105,14 +106,16 @@ readCellTypeMarkers(...)
 sanitizeMarkers(...)
 
 topMarkers(...)
+
+readCellRanger(...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 }
 \value{
-\code{\link[=.Defunct]{.Defunct()}}.
+\code{.Defunct}.
 }
 \description{
-Defunct Functions
+Defunct functions
 }
 \keyword{internal}

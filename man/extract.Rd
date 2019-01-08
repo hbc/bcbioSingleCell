@@ -4,7 +4,7 @@
 \name{extract}
 \alias{extract}
 \alias{[,bcbioSingleCell,ANY,ANY,ANY-method}
-\title{Extract or Replace Parts of an Object}
+\title{Extract or replace parts of an object}
 \usage{
 \S4method{[}{bcbioSingleCell,ANY,ANY,ANY}(x, i, j, ..., drop = FALSE)
 }
@@ -71,38 +71,40 @@
 \code{bcbioSingleCell}.
 }
 \description{
-Extract genes by row and cells by column from a \code{bcbioSingleCell} object.
+Extract genes by row and cells by column.
 }
-\note{
-Unfiltered cellular barcode distributions for the entire dataset,
-including cells not kept in the matrix will be dropped in favor of the
-\code{nCount} column of \code{colData()}.
+\details{
+Refer to \code{\link[basejump:cell2sample]{cell2sample()}} and
+\link[basejump:selectSamples]{selectSamples()} if sample-level extraction is
+desired. Note that \code{sampleID} is slotted into \code{colData} and defines the
+cell-to-sample mappings.
+
+Unfiltered cellular barcode distributions for the entire dataset, including
+cells not kept in the matrix will be dropped in favor of the \code{nCount} column
+of \code{\link[SummarizedExperiment:colData]{colData()}}.
 }
 \examples{
-cells <- head(colnames(indrops_small), 100L)
+data(indrops)
+
+cells <- head(colnames(indrops), 100L)
 head(cells)
-genes <- head(rownames(indrops_small), 100L)
+genes <- head(rownames(indrops), 100L)
 head(genes)
 
-# Subset by cell identifiers
-indrops_small[, cells]
+## Subset by cell identifiers.
+indrops[, cells]
 
-# Subset by genes
-indrops_small[genes, ]
+## Subset by genes.
+indrops[genes, ]
 
-# Subset by both genes and cells
-indrops_small[genes, cells]
+## Subset by both genes and cells.
+indrops[genes, cells]
 }
-\seealso{
-\itemize{
-\item \code{help("[", "base")}.
-\item \code{selectSamples()} for subsetting based on sample metadata.
-}
-
-Other S4 Object: \code{\link{bcbioSingleCell}},
-  \code{\link{show}}, \code{\link{updateObject}}
+\references{
+Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
+  \emph{The New S Language}.
+  Wadsworth & Brooks/Cole.
 }
 \author{
 Michael Steinbaugh
 }
-\concept{S4 Object}

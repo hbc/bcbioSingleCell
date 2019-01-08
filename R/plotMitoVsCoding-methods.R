@@ -1,42 +1,55 @@
-#' Plot Mitochondrial vs. Coding Counts
-#'
 #' @name plotMitoVsCoding
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
-#'
-#' @inheritParams general
-#'
-#' @return `ggplot`.
-#'
+#' @inherit bioverbs::plotMitoVsCoding
+#' @inheritParams basejump::params
 #' @examples
-#' plotMitoVsCoding(indrops_small)
+#' data(indrops)
+#' plotMitoVsCoding(indrops)
 NULL
+
+
+
+#' @importFrom bioverbs plotMitoVsCoding
+#' @aliases NULL
+#' @export
+bioverbs::plotMitoVsCoding
+
+
+
+plotMitoVsCoding.SingleCellExperiment <-  # nolint
+    function(
+        object,
+        interestingGroups = NULL,
+        trendline = FALSE,
+        color,
+        trans = "log2",
+        title = "mito vs. coding"
+    ) {
+        do.call(
+            what = .plotQCScatterplot,
+            args = list(
+                object = object,
+                interestingGroups = interestingGroups,
+                trendline = trendline,
+                xCol = "nCoding",
+                yCol = "nMito",
+                color = color,
+                xTrans = trans,
+                yTrans = trans,
+                title = title
+            )
+        )
+    }
+
+formals(plotMitoVsCoding.SingleCellExperiment)[["color"]] <-
+    formalsList[["color.discrete"]]
 
 
 
 #' @rdname plotMitoVsCoding
 #' @export
 setMethod(
-    "plotMitoVsCoding",
-    signature("SingleCellExperiment"),
-    function(
-        object,
-        interestingGroups,
-        trendline = FALSE,
-        color = getOption("bcbio.discrete.color", NULL),
-        trans = "log2",
-        title = "mito vs. coding"
-    ) {
-        .plotQCScatterplot(
-            object = object,
-            interestingGroups = interestingGroups,
-            trendline = trendline,
-            xCol = "nCoding",
-            yCol = "nMito",
-            color = color,
-            xTrans = trans,
-            yTrans = trans,
-            title = title
-        )
-    }
+    f = "plotMitoVsCoding",
+    signature = signature("SingleCellExperiment"),
+    definition = plotMitoVsCoding.SingleCellExperiment
 )

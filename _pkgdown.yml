@@ -1,58 +1,35 @@
 authors:
   Michael Steinbaugh:
-    href: https://steinbaugh.com
+    href: https://steinbaugh.com/
   Rory Kirchner:
-    href: https://github.com/roryk
+    href: https://github.com/roryk/
   Mary Piper:
-    href: https://github.com/marypiper
+    href: https://github.com/marypiper/
   Victor Barrera:
-    href: https://github.com/vbarrera
+    href: https://github.com/vbarrera/
   Shannan Ho Sui:
-    href: https://github.com/sjhosui
+    href: https://github.com/sjhosui/
   Harvard Chan Bioinformatics Core:
-    href: http://bioinformatics.sph.harvard.edu
+    href: https://bioinformatics.sph.harvard.edu/
 
 reference:
-  - title: Package Information
+  - title: S4 classes
     contents:
-    - bcbioSingleCell-package
-  - title: S4 Object
-    contents:
-    - bcbioSingleCell
-    - combine
+    - starts_with("bcbioSingleCell")
     - extract
     - show
     - updateObject
-  - title: Read Functions
+  - title: Quality qontrol
     contents:
-    - starts_with("read")
-  - title: Data Functions
-    contents:
-    - starts_with("aggregate")
-    - cell2sample
-    - starts_with("map")
-    - sampleData
-    - starts_with("select")
-    - subsetPerSample
-    - topBarcodes
-    - matches("2")
-  - title: Quality Control Functions
-    contents:
-    - starts_with("barcode")
     - filterCells
     - starts_with("metrics")
-    - plotBarcodeRanks
-    - plotCellCounts
-    - plotGenesPerCell
-    - starts_with("plotMito")
-    - plotNovelty
-    - plotQC
-    - plotReadsPerCell
-    - starts_with("plotUMI")
-    - plotZerosVsDepth
-  - title: R Markdown Functions
+    - starts_with("barcode")
+  - title: Plots
+    contents:
+    - starts_with("plot")
+  - title: Markdown
     contents:
     - ends_with("Template")
-  - title: Example Data
+  - title: Example data
     contents:
-    - ends_with("_small")
+    - indrops

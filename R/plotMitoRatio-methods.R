@@ -1,45 +1,60 @@
-#' Plot Mitochondrial Transcript Abundance
-#'
 #' @name plotMitoRatio
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
-#'
-#' @inheritParams general
-#'
-#' @return `ggplot`.
-#'
+#' @include globals.R
+#' @inherit bioverbs::plotMitoRatio
+#' @inheritParams basejump::params
 #' @examples
-#' plotMitoRatio(indrops_small)
+#' data(indrops)
+#' plotMitoRatio(indrops)
 NULL
+
+
+
+#' @importFrom bioverbs plotMitoRatio
+#' @aliases NULL
+#' @export
+bioverbs::plotMitoRatio
+
+
+
+plotMitoRatio.SingleCellExperiment <-  # nolint
+    function(
+        object,
+        geom,
+        interestingGroups = NULL,
+        max = 1L,
+        fill,
+        trans = "sqrt",
+        title = "mito ratio"
+    ) {
+        assert(isInLeftOpenRange(max, lower = 0L, upper = 1L))
+        geom <- match.arg(geom)
+        do.call(
+            what = .plotQCMetric,
+            args = list(
+                object = object,
+                metricCol = "mitoRatio",
+                geom = geom,
+                interestingGroups = interestingGroups,
+                max = max,
+                trans = trans,
+                ratio = TRUE,
+                fill = fill,
+                title = title
+            )
+        )
+    }
+
+formals(plotMitoRatio.SingleCellExperiment)[["fill"]] <-
+    formalsList[["fill.discrete"]]
+formals(plotMitoRatio.SingleCellExperiment)[["geom"]] <- geom
 
 
 
 #' @rdname plotMitoRatio
 #' @export
 setMethod(
-    "plotMitoRatio",
-    signature("SingleCellExperiment"),
-    function(
-        object,
-        geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
-        interestingGroups,
-        max = 1L,
-        fill = getOption("bcbio.discrete.fill", NULL),
-        trans = "sqrt",
-        title = "mito ratio"
-    ) {
-        geom <- match.arg(geom)
-        assert_all_are_in_left_open_range(max, lower = 0L, upper = 1L)
-        .plotQCMetric(
-            object = object,
-            metricCol = "mitoRatio",
-            geom = geom,
-            interestingGroups = interestingGroups,
-            max = max,
-            trans = trans,
-            ratio = TRUE,
-            fill = fill,
-            title = title
-        )
-    }
+    f = "plotMitoRatio",
+    signature = signature("SingleCellExperiment"),
+    definition = plotMitoRatio.SingleCellExperiment
 )

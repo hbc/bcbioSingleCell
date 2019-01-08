@@ -1,4 +1,5 @@
 ^_pkgdown\.yml$
+^.*\.pdf$
 ^.*\.Rproj$
 ^.*\.sh$
 ^\.httr-oauth$
