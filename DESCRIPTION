@@ -2,7 +2,7 @@ Package: bcbioSingleCell
 Title: bcbio Single-Cell RNA-Seq
 Description: Toolkit for bcbio single-cell RNA-seq analysis.
 Version: 0.3.5
-Date: 2018-12-22
+Date: 2018-01-08
 Authors@R: c(
     person(
         given = "Michael",
@@ -54,45 +54,25 @@ LazyData: false
 Depends:
     R (>= 3.5),
     SingleCellExperiment (>= 1.2),
-    basejump (>= 0.9.1)
+    basejump (>= 0.9.3)
 Imports:
-    Biobase,
-    BiocGenerics,
-    DropletUtils,
-    Matrix,
-    R.utils,
-    S4Vectors,
-    SummarizedExperiment,
-    bcbioBase (>= 0.5.6),
-    bioverbs (>= 0.1),
-    cowplot (>= 0.9),
-    dplyr (>= 0.7),
-    ggplot2 (>= 3.0),
-    ggridges (>= 0.5),
-    goalie (>= 0.2.1),
-    graphics,
-    magrittr (>= 1.5),
-    methods,
-    readr (>= 1.1),
-    rlang (>= 0.3),
-    rmarkdown,
-    scales,
-    sessioninfo,
-    stats,
-    stringr (>= 1.3),
-    tibble (>= 1.4),
-    utils
+    S4Transformer (>= 0.1), bcbioBase (>= 0.5.6), bioverbs (>= 0.1),
+        goalie (>= 0.2.1),
+    Biobase, BiocGenerics, DropletUtils, S4Vectors, SummarizedExperiment,
+    Matrix (>= 1.2), R.utils (>= 2.7), cowplot (>= 0.9), dplyr (>= 0.7),
+        ggplot2 (>= 3.0), ggridges (>= 0.5), magrittr (>= 1.5), readr (>= 1.1),
+        rlang (>= 0.3), rmarkdown (>= 1.11), sessioninfo (>= 1.1),
+        stringr (>= 1.3), tibble (>= 2.0),
+    graphics, methods, scales, stats, utils
 Suggests:
     BiocStyle,
-    patrick,
-    roxygen2,
-    testthat (>= 2.0),
-    tidyverse (>= 1.2)
+    patrick, roxygen2, testthat (>= 2.0), tidyverse (>= 1.2)
 Remotes:
-    hbc/bcbioBase@develop,
-    steinbaugh/basejump@develop,
-    steinbaugh/bioverbs@develop,
-    steinbaugh/goalie@develop
+    steinbaugh/S4Transformer,
+    steinbaugh/basejump,
+    steinbaugh/bcbioBase,
+    steinbaugh/bioverbs,
+    steinbaugh/goalie
 biocViews:
     DataImport,
     DataRepresentation,
@@ -115,6 +95,7 @@ Collate:
     'filterCells-methods.R'
     'globals.R'
     'import-internal.R'
+    'imports.R'
     'package.R'
     'plotBarcodeRanks-methods.R'
     'plotCellCounts-methods.R'
