@@ -11,16 +11,12 @@ bioc_required: true
 
 matrix:
   include:
-  - os: osx
-    r: bioc-release
-    fortran: false
-    latex: false
-    warnings_are_errors: false
   - os: linux
     r: bioc-release
     warnings_are_errors: true
-  - os: linux
-    r: bioc-devel
+  - os: osx
+    r: bioc-release
+    fortran: false
     latex: false
     warnings_are_errors: false
   fast_finish: true
