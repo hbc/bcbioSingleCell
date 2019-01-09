@@ -6,8 +6,6 @@
 
 language: r
 cache: packages
-sudo: false
-bioc_required: true
 
 matrix:
   include:
@@ -20,6 +18,10 @@ matrix:
     latex: false
     warnings_are_errors: false
   fast_finish: true
+
+branches:
+  only:
+  - master
 
 env:
   global:
