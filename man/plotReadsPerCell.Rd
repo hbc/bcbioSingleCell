@@ -21,9 +21,8 @@ Groups of interest that define the samples. If left unset, defaults to
 \code{sampleName}.}
 
 \item{geom}{\code{character(1)}.
-Plot type.
-Uses \link[base:match.arg]{match.arg()} internally and defaults to the first
-argument in the \code{character} vector.}
+Plot type. Uses \code{\link[base:match.arg]{match.arg()}} internally and defaults to
+the first argument in the \code{character} vector.}
 
 \item{cutoffLine}{\code{logical(1)}.
 Include a line marking the cutoff.}
