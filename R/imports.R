@@ -1,6 +1,6 @@
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
 #'
-#' @importMethodsFrom S4Transformer coerce
+#' @importMethodsFrom basejump coerce
 #'
 #' @importFrom Biobase sampleNames
 #' @importFrom BiocGenerics cbind counts do.call
@@ -40,16 +40,10 @@
 #' @importFrom methods as as<- is new setClass show slot slot<- validObject
 #'   .hasSlot
 #' @importFrom readr read_lines read_tsv
-#' @importFrom rlang !! := sym syms UQ
+#' @importFrom rlang !! := UQ sym syms
 #' @importFrom scales percent
 #' @importFrom stats ecdf
 #' @importFrom stringr str_extract str_pad
 #' @importFrom tibble as_tibble tibble
 #' @importFrom utils capture.output globalVariables packageVersion
 NULL
-
-
-
-#' @importFrom magrittr %>%
-#' @export
-magrittr::`%>%`
