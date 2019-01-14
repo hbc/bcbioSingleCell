@@ -1,12 +1,11 @@
-# FIXME Need to include the GTF in the YAML example.
+# TODO Need to include the GTF in the YAML example.
 
 
 
-#' @inherit bcbioSingleCell-class
-#' @author Michael Steinbaugh, Rory Kirchner
+#' @rdname bcbioSingleCell-class
+#' @export
 #' @inheritParams basejump::params
 #' @inheritParams bcbioBase::params
-#' @export
 #'
 #' @section Remote data:
 #'
@@ -17,7 +16,7 @@
 #' @return `bcbioSingleCell`.
 #'
 #' @seealso
-#' - `SingleCellExperiment::SingleCellExperiment`.
+#' - `SingleCellExperiment::SingleCellExperiment()`.
 #' - `.S4methods(class = "bcbioSingleCell")`.
 #'
 #' @examples

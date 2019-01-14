@@ -15,15 +15,14 @@ authors:
 reference:
   - title: S4 classes
     contents:
-    - starts_with("bcbioSingleCell")
+    - ends_with("-class")
     - extract
     - show
     - updateObject
   - title: Quality qontrol
     contents:
-    - filterCells
-    - starts_with("metrics")
     - starts_with("barcode")
+    - filterCells
   - title: Plots
     contents:
     - starts_with("plot")
