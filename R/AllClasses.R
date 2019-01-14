@@ -5,11 +5,8 @@
 #' read counts saved as a sparse matrix (`sparseMatrix`), sample metadata, and
 #' cell quality control metrics.
 #'
-#' @family S4 classes
-#' @author Michael Steinbaugh
+#' @author Michael Steinbaugh, Rory Kirchner
 #' @export
-#'
-#' @seealso `bcbioSingleCell`.
 setClass(
     Class = "bcbioSingleCell",
     contains = "SingleCellExperiment",
