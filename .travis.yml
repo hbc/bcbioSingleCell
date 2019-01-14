@@ -24,7 +24,6 @@ r_packages:
   - covr
 bioc_packages:
   - BiocCheck
-  - EnsDb.Hsapiens.v75
 r_github_packages:
   - mjsteinbaugh/lintr
 
