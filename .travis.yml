@@ -1,22 +1,15 @@
 # Travis-CI configuration for Bioconductor packages
 # https://docs.travis-ci.com/user/languages/r
 
-# Temporarily enable when caching package library.
-# script: true
-
 language: r
 cache: packages
 
 matrix:
   include:
-  # - os: linux
-  #   r: bioc-release
-  #   warnings_are_errors: true
+  - os: linux
+    r: bioc-release
   - os: osx
     r: bioc-release
-    fortran: false
-    latex: false
-    warnings_are_errors: false
   fast_finish: true
 
 branches:
@@ -29,6 +22,8 @@ env:
 
 r_packages:
   - covr
+r_binary_packages:
+  - data.table
 bioc_packages:
   - BiocCheck
   - GenomeInfoDbData
