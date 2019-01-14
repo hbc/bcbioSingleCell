@@ -22,8 +22,6 @@ env:
 
 r_packages:
   - covr
-r_binary_packages:
-  - data.table
 bioc_packages:
   - BiocCheck
   - GenomeInfoDbData
