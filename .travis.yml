@@ -8,9 +8,9 @@ matrix:
   include:
   - os: linux
     r: bioc-release
-  - os: osx
-    r: bioc-release
-  fast_finish: true
+  # Diabled until binary release of data.table gets updated.
+  # - os: osx
+  #   r: bioc-release
 
 branches:
   only:
