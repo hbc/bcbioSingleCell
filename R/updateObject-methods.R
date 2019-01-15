@@ -1,8 +1,3 @@
-# FIXME Update handling of `sessionInfo`?
-# FIXME Add update method for run-length encoding in rowRanges
-
-
-
 #' @name updateObject
 #' @author Michael Steinbaugh
 #' @inherit BiocGenerics::updateObject

@@ -1,7 +1,3 @@
-# TODO Need to include the GTF in the YAML example.
-
-
-
 #' @rdname bcbioSingleCell-class
 #' @export
 #' @inheritParams basejump::params
