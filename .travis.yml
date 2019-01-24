@@ -8,9 +8,8 @@ matrix:
   include:
   - os: linux
     r: bioc-release
-  # Diabled until binary release of data.table gets updated.
-  # - os: osx
-  #   r: bioc-release
+  - os: osx
+    r: bioc-release
 
 branches:
   only:
@@ -34,7 +33,5 @@ after_success:
 
 notifications:
   email:
-    recipients:
-      - mike@steinbaugh.com
     on_success: change
-    on_failure: always
+    on_failure: change
