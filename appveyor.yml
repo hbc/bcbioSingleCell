@@ -64,6 +64,4 @@ notifications:
   - provider: Email
     to:
       - mike@steinbaugh.com
-    on_build_success: false
-    on_build_failure: true
     on_build_status_changed: true
