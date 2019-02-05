@@ -246,6 +246,7 @@ bcbioSingleCell <- function(
     colData[["nCount"]] <- nCount[rownames(colData)]
 
     # Join `sampleData` into cell-level `colData`.
+    # FIXME This step isn't working quite right.
     if (hasLength(nrow(sampleData), n = 1L)) {
         colData[["sampleID"]] <- as.factor(rownames(sampleData))
     } else {
