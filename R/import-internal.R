@@ -1,6 +1,6 @@
 .import.bcbio <-  # nolint
     function(sampleDirs) {
-        message("Importing counts.")
+        message("Importing counts...")
         assert(
             all(isDirectory(sampleDirs)),
             hasNames(sampleDirs)
@@ -53,7 +53,7 @@
 #'   pre-filtered cellular barcode counts (`nCount`).
 .import.bcbio.barcodes <-  # nolint
     function(sampleDirs) {
-        message("Importing unfiltered cellular barcode distributions.")
+        message("Importing unfiltered cellular barcode distributions...")
         files <- file.path(
             sampleDirs,
             paste(basename(sampleDirs), "barcodes.tsv", sep = "-")
