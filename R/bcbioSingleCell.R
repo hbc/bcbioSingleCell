@@ -245,17 +245,25 @@ bcbioSingleCell <- function(
     )
     colData[["nCount"]] <- nCount[rownames(colData)]
 
-    # Join `sampleData` into cell-level `colData`.
-    # FIXME This step isn't working quite right.
-    if (hasLength(nrow(sampleData), n = 1L)) {
+    # Join `sampleData()` into cell-level `colData()`.
+    if (nrow(sampleData) == 1L) {
         colData[["sampleID"]] <- as.factor(rownames(sampleData))
     } else {
-        colData[["sampleID"]] <- mapCellsToSamples(
+        cell2sample <- mapCellsToSamples(
             cells = rownames(colData),
             samples = rownames(sampleData)
         )
+        assert(identical(names(cell2sample), rownames(colData)))
+        colData[["sampleID"]] <- cell2sample
     }
     sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
+    # Need to ensure the `sampleID` factor levels match up, otherwise we'll get
+    # a warning during the `left_join()` call below.
+    assert(areSetEqual(
+        x = levels(colData[["sampleID"]]),
+        y = levels(sampleData[["sampleID"]])
+    ))
+    levels(sampleData[["sampleID"]]) <- levels(colData[["sampleID"]])
     colData <- left_join(
         x = as_tibble(colData, rownames = "rowname"),
         y = as_tibble(sampleData, rownames = NULL),
