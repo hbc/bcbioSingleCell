@@ -160,10 +160,6 @@ plotFeatureUMAP <- function(...) {
     .Defunct("pointillism::plotFeature")
 }
 
-#' @importFrom basejump plotGene
-#' @export
-basejump::plotGene
-
 #' @rdname defunct
 #' @export
 plotKnownMarkers <- function(...) {
