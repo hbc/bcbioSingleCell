@@ -22,6 +22,7 @@ reference:
   - title: Quality qontrol
     contents:
     - starts_with("barcode")
+    - calculateMetrics
     - filterCells
   - title: Plots
     contents:
