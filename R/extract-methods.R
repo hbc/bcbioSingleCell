@@ -1,7 +1,3 @@
-# FIXME Need to improve Rle levels in rowRanges (see bcbioRNASeq).
-
-
-
 #' Extract or replace parts of an object
 #'
 #' Extract genes by row and cells by column.
