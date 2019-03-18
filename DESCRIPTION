@@ -1,8 +1,8 @@
 Package: bcbioSingleCell
 Title: bcbio Single-Cell RNA-Seq
 Description: Toolkit for bcbio single-cell RNA-seq analysis.
-Version: 0.3.7
-Date: 2018-02-12
+Version: 0.3.8
+Date: 2018-03-18
 Authors@R: c(
     person(
         given = "Michael",
@@ -54,14 +54,14 @@ LazyData: false
 Depends:
     R (>= 3.5),
     SingleCellExperiment (>= 1.2),
-    basejump (>= 0.9.9)
+    basejump (>= 0.9.14)
 Imports:
-    bcbioBase (>= 0.5.12), bioverbs (>= 0.1.6), goalie (>= 0.2.8),
+    bcbioBase (>= 0.5.13), bioverbs (>= 0.1.8), goalie (>= 0.2.11),
     Biobase, BiocGenerics, DropletUtils, S4Vectors, SummarizedExperiment,
     Matrix (>= 1.2), R.utils (>= 2.7), cowplot (>= 0.9), dplyr (>= 0.7),
-        ggplot2 (>= 3.0), ggridges (>= 0.5), magrittr (>= 1.5), readr (>= 1.1),
-        rlang (>= 0.3), rmarkdown (>= 1.11), sessioninfo (>= 1.1),
-        stringr (>= 1.3), tibble (>= 2.0),
+        ggplot2 (>= 3.1), ggridges (>= 0.5), magrittr (>= 1.5), readr (>= 1.3),
+        rlang (>= 0.3), rmarkdown (>= 1.12), sessioninfo (>= 1.1),
+        stringr (>= 1.4), tibble (>= 2.0),
     graphics, methods, scales, stats, utils
 Suggests:
     BiocStyle,

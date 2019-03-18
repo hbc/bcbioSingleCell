@@ -9,8 +9,8 @@
 \S4method{plotMitoRatio}{SingleCellExperiment}(object,
   geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
   interestingGroups = NULL, max = 1L,
-  fill = getOption("basejump.fill.discrete", NULL), trans = "sqrt",
-  title = "mito ratio")
+  fill = getOption("basejump.fill.discrete", default = NULL),
+  trans = "sqrt", title = "mito ratio")
 }
 \arguments{
 \item{object}{Object.}

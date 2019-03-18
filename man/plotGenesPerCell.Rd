@@ -9,7 +9,7 @@
 \S4method{plotGenesPerCell}{SingleCellExperiment}(object,
   geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
   interestingGroups = NULL, min = 0L, max = Inf, trans = "log2",
-  fill = getOption("basejump.fill.discrete", NULL),
+  fill = getOption("basejump.fill.discrete", default = NULL),
   title = "genes per cell")
 }
 \arguments{
