@@ -10,8 +10,8 @@
   geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
   interestingGroups = NULL, min = 0L, max = Inf, point = c("none",
   "inflection", "knee"), trans = "log10",
-  color = getOption("basejump.color.discrete", NULL),
-  fill = getOption("basejump.fill.discrete", NULL),
+  color = getOption("basejump.color.discrete", default = NULL),
+  fill = getOption("basejump.fill.discrete", default = NULL),
   title = "UMIs per cell")
 }
 \arguments{

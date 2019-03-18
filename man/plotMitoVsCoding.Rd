@@ -8,8 +8,8 @@
 \usage{
 \S4method{plotMitoVsCoding}{SingleCellExperiment}(object,
   interestingGroups = NULL, trendline = FALSE,
-  color = getOption("basejump.color.discrete", NULL), trans = "log2",
-  title = "mito vs. coding")
+  color = getOption("basejump.color.discrete", default = NULL),
+  trans = "log2", title = "mito vs. coding")
 }
 \arguments{
 \item{object}{Object.}
