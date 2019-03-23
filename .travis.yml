@@ -30,7 +30,7 @@ r_packages:
 bioc_packages:
   - BiocCheck
 r_github_packages:
-  - steinbaugh/lintr
+  - acidgenomics/lintr
 
 after_success:
   - Rscript -e 'lintr::lint_package()'
