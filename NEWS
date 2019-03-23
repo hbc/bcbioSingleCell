@@ -1373,7 +1373,8 @@ removal with the `filterCells` function.
 
 
 [10X Genomics]: https://www.10xgenomics.com/
-[basejump]: https://basejump.steinbaugh.com/
+[Acid Genomics]: https://acidgenomics.com/
+[basejump]: https://basejump.acidgenomics.com/
 [bcbio]: https://bcbio-nextgen.readthedocs.io/
 [bcbioBase]: https://bioinformatics.sph.harvard.edu/bcbioBase/
 [bcbioRNASeq]: https://bioinformatics.sph.harvard.edu/bcbioRNASeq/
