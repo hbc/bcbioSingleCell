@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.9</span>
       </span>
     </div>
 
@@ -105,12 +105,23 @@
       <small>Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="bcbiosinglecell-0-3-8-2019-03-18" class="section level2">
+    <div id="bcbiosinglecell-0-3-9-2019-03-23" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bcbiosinglecell-0-3-8-2019-03-18" class="anchor"></a>bcbioSingleCell 0.3.8 (2019-03-18)</h2>
+<a href="#bcbiosinglecell-0-3-9-2019-03-23" class="anchor"></a>bcbioSingleCell 0.3.9 (2019-03-23)</h2>
 <div id="minor-changes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h3>
+<ul>
+<li>Migrate development code to [Acid Genomics][].</li>
+</ul>
+</div>
+</div>
+    <div id="bcbiosinglecell-0-3-8-2019-03-18" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-3-8-2019-03-18" class="anchor"></a>bcbioSingleCell 0.3.8 (2019-03-18)</h2>
+<div id="minor-changes-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Updated basejump and bcbioBase dependencies.</li>
 <li>Updated documentation.</li>
@@ -121,9 +132,9 @@
     <div id="bcbiosinglecell-0-3-7-2019-02-12" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-7-2019-02-12" class="anchor"></a>bcbioSingleCell 0.3.7 (2019-02-12)</h2>
-<div id="minor-changes-1" class="section level3">
+<div id="minor-changes-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>bcbioSingleCell</code> generator: improved internal handling of <code>mapCellsToSamples</code> call. This reworked join step checks the sampleID mapping more carefully.</li>
@@ -134,9 +145,9 @@
     <div id="bcbiosinglecell-0-3-6-2019-01-13" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-6-2019-01-13" class="anchor"></a>bcbioSingleCell 0.3.6 (2019-01-13)</h2>
-<div id="minor-changes-2" class="section level3">
+<div id="minor-changes-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-3" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Updated basejump and bcbioBase dependencies, to pass build checks.</li>
 <li>Split out imports into a separate R file.</li>
@@ -157,9 +168,9 @@
 <li>Migrated to inheriting S4 generics from bioverbs, where applicable.</li>
 </ul>
 </div>
-<div id="minor-changes-3" class="section level3">
+<div id="minor-changes-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-4" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Reworked documentation to use sentence case instead of title case.</li>
 </ul>
@@ -176,9 +187,9 @@
 <code>metrics</code>: Removed code and consolidated <code>SingleCellExperiment</code> method support in basejump package.</li>
 </ul>
 </div>
-<div id="minor-changes-4" class="section level3">
+<div id="minor-changes-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-4" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-5" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Documentation improvements.</li>
 <li>
@@ -189,9 +200,9 @@
     <div id="bcbiosinglecell-0-3-3-2018-11-25" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-3-2018-11-25" class="anchor"></a>bcbioSingleCell 0.3.3 (2018-11-25)</h2>
-<div id="minor-changes-5" class="section level3">
+<div id="minor-changes-6" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-5" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-6" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Updated basejump and bcbioBase dependencies, to tighten up build checks.</li>
 <li>Documentation and CI configuration fixes.</li>
@@ -214,9 +225,9 @@
 <li>Improved plotting functions to inherit params from basejump.</li>
 </ul>
 </div>
-<div id="minor-changes-6" class="section level3">
+<div id="minor-changes-7" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-6" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-7" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Removed <code>barcodePattern</code> global variable.</li>
 </ul>
@@ -233,9 +244,9 @@
 <li>Renamed example data from <code>cellranger_small</code> to <code>cellranger</code>, and <code>indrops_small</code> to simply <code>indrops</code>.</li>
 </ul>
 </div>
-<div id="minor-changes-7" class="section level3">
+<div id="minor-changes-8" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-7" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-8" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Transitioning to goalie for assert checks in place of assertive package.</li>
 <li>Miscellaneous documentation improvements.</li>
@@ -248,7 +259,7 @@
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-0-2018-11-06" class="anchor"></a>bcbioSingleCell 0.3.0 (2018-11-06)</h2>
 <p>Fork of <code>hbc/bcbioSingleCell</code> code base, for additional development and improvements prior to Bioconductor submission. The v0.2 release series is being maintained on the <code>hbc</code> organization page for stability.</p>
-<p>The v0.3 release series serves to offload some of the code base to the <a href="http://steinbaugh.com/basejump">basejump</a> package, freeing <a href="http://bioinformatics.sph.harvard.edu/bcbioSingleCell">bcbioSingleCell</a> up to be lighterweight and easier to maintain long-term.</p>
+<p>The v0.3 release series serves to offload some of the code base to the <a href="https://basejump.steinbaugh.com/">basejump</a> package, freeing <a href="https://bioinformatics.sph.harvard.edu/bcbioSingleCell/">bcbioSingleCell</a> up to be lighterweight and easier to maintain long-term.</p>
 <p>Note that v0.2 release series will remain pinned to basejump v0.7 series.</p>
 <p>CellRanger code will be split out into a separate Chromium R package in a future update, so some of these <code>SingleCellExperiment</code>-specific methods need to be consolidated into the basejump package.</p>
 <div id="major-changes-4" class="section level3">
@@ -264,9 +275,9 @@
 <li>Reorganized <code>metricsPerSample</code> code approach.</li>
 </ul>
 </div>
-<div id="minor-changes-8" class="section level3">
+<div id="minor-changes-9" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-8" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-9" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Consolidated S4 validity check code into <code>AllClasses.R</code> file.</li>
 <li>Updated Travis and AppVeyor CI configuration.</li>
@@ -286,15 +297,15 @@
 <h3 class="hasAnchor">
 <a href="#major-changes-5" class="anchor"></a>Major changes</h3>
 <ul>
-<li>Moved clustering and marker templates to <a href="https://steinbaugh.com/pointillism">pointillism</a> package, since all clustering code has been moved there. The quality control template using the <code>filterCells</code> function is still provided here.</li>
+<li>Moved clustering and marker templates to <a href="https://pointillism.acidgenomics.com/">pointillism</a> package, since all clustering code has been moved there. The quality control template using the <code>filterCells</code> function is still provided here.</li>
 </ul>
 </div>
-<div id="minor-changes-9" class="section level3">
+<div id="minor-changes-10" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-9" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-10" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
-<code>prepareSingleCellTemplate</code>: Improved internal code to use updated <code>prepareTemplate</code>, which has been migrated to <a href="http://steinbaugh.com/basejump">basejump</a> package.</li>
+<code>prepareSingleCellTemplate</code>: Improved internal code to use updated <code>prepareTemplate</code>, which has been migrated to <a href="https://basejump.steinbaugh.com/">basejump</a> package.</li>
 <li>Added back the <code>cellranger_small</code> example dataset.</li>
 </ul>
 </div>
@@ -302,13 +313,13 @@
     <div id="bcbiosinglecell-0-2-0-2018-08-09" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-2-0-2018-08-09" class="anchor"></a>bcbioSingleCell 0.2.0 (2018-08-09)</h2>
-<p>This is a significant maintenance release designed to simplify the package for long-term stability. Here we are removing code support for <a href="http://satijalab.org/seurat">Seurat</a> and visualization of cell clustering. This functionality has been moved to the new <a href="https://steinbaugh.com/pointillism">pointillism</a> package. We have streamlined <a href="http://bioinformatics.sph.harvard.edu/bcbioSingleCell">bcbioSingleCell</a> to simply import <a href="http://bcb.io">bcbio</a> single-cell data using the <code>bcbioSingleCell</code> constructor or <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> data with the <code>readCellRanger</code> function. The package continues to provide quality control visualization (see <code>plotQC</code>) and low-quality cell removal with the <code>filterCells</code> function.</p>
+<p>This is a significant maintenance release designed to simplify the package for long-term stability. Here we are removing code support for <a href="http://satijalab.org/seurat/">Seurat</a> and visualization of cell clustering. This functionality has been moved to the new <a href="https://pointillism.acidgenomics.com/">pointillism</a> package. We have streamlined <a href="https://bioinformatics.sph.harvard.edu/bcbioSingleCell/">bcbioSingleCell</a> to simply import <a href="https://bcbio-nextgen.readthedocs.io/">bcbio</a> single-cell data using the <code>bcbioSingleCell</code> constructor or <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> data with the <code>readCellRanger</code> function. The package continues to provide quality control visualization (see <code>plotQC</code>) and low-quality cell removal with the <code>filterCells</code> function.</p>
 <div id="major-changes-6" class="section level3">
 <h3 class="hasAnchor">
 <a href="#major-changes-6" class="anchor"></a>Major changes</h3>
 <ul>
-<li>Moved clustering and <code>seurat</code> object support to <a href="https://steinbaugh.com/pointillism">pointillism</a>: <code>cellCountsPerCluster</code>, <code>cellTypesPerCluster</code>, <code>clusterCellCountsPerSample</code>, <code>fetchData</code> functions, <code>plotFeature</code> functions, <code>plotGene</code> functions, <code>plotMarker</code> functions, <code>plotPCA</code>, plotTSNE<code>,</code>plotUMAP`.</li>
-<li>Now requiring <a href="http://bioinformatics.sph.harvard.edu/bcbioBase">bcbioBase</a> v0.4+ and <a href="http://steinbaugh.com/basejump">basejump</a> v0.7+.</li>
+<li>Moved clustering and <code>seurat</code> object support to <a href="https://pointillism.acidgenomics.com/">pointillism</a>: <code>cellCountsPerCluster</code>, <code>cellTypesPerCluster</code>, <code>clusterCellCountsPerSample</code>, <code>fetchData</code> functions, <code>plotFeature</code> functions, <code>plotGene</code> functions, <code>plotMarker</code> functions, <code>plotPCA</code>, plotTSNE<code>,</code>plotUMAP`.</li>
+<li>Now requiring <a href="https://bioinformatics.sph.harvard.edu/bcbioBase/">bcbioBase</a> v0.4+ and <a href="https://basejump.steinbaugh.com/">basejump</a> v0.7+.</li>
 </ul>
 </div>
 <div id="defunct-functions" class="section level3">
@@ -318,12 +329,12 @@
 <li>Removed from exports (for simplicifcation): <code>plotClusters</code>, <code>plotFeatures</code>, <code>quantileHeatmap</code>, <code>readMarkers</code>, <code>readMarkersFile</code>.</li>
 </ul>
 </div>
-<div id="minor-changes-10" class="section level3">
+<div id="minor-changes-11" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-10" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-11" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>No longer exporting <code>mapCellsToSamples</code>. This is now only called internally.</li>
-<li>Updated documentation to use <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html">roxygen2</a> v6.1.</li>
+<li>Updated documentation to use <a href="https://cran.r-project.org/package=roxygen2">roxygen2</a> v6.1.</li>
 </ul>
 </div>
 </div>
@@ -334,21 +345,21 @@
 <h3 class="hasAnchor">
 <a href="#major-changes-7" class="anchor"></a>Major changes</h3>
 <ul>
-<li>Now recommending <a href="https://cran.r-project.org/package=BiocManager">BiocManager</a> instead of <a href="https://doi.org/doi:10.18129/B9.bioc.BiocInstaller">BiocInstaller</a> to install.</li>
+<li>Now recommending <a href="https://bioconductor.org/packages/BiocManager/">BiocManager</a> instead of <a href="https://bioconductor.org/packages/BiocInstaller/">BiocInstaller</a> to install.</li>
 <li>
-<code>filterCells</code> now supports <code>zinbwave = TRUE</code> for automatic zero-inflation weights calculation, using the <a href="https://doi.org/doi:10.18129/B9.bioc.zinbwave">zinbwave</a> package.</li>
-<li>Now requiring in <code>bcbioSingleCell</code> object validity checks that all <code>sampleData</code> columns are defined in <code>colData</code>, and that the factor levels also match. If you run into an error because of this change, post an issue on <a href="https://github.com">GitHub</a> and we’ll sort it out. The validity check method now also checks to make sure that all <code>metricsCols</code> are defined in <code>colData</code>.</li>
+<code>filterCells</code> now supports <code>zinbwave = TRUE</code> for automatic zero-inflation weights calculation, using the <a href="https://bioconductor.org/packages/zinbwave/">zinbwave</a> package.</li>
+<li>Now requiring in <code>bcbioSingleCell</code> object validity checks that all <code>sampleData</code> columns are defined in <code>colData</code>, and that the factor levels also match. If you run into an error because of this change, post an issue on <a href="https://github.com/">GitHub</a> and we’ll sort it out. The validity check method now also checks to make sure that all <code>metricsCols</code> are defined in <code>colData</code>.</li>
 <li>
 <code>aggregateReplicates</code> now keeps track of interesting groups metadata better and returns a <code>SingleCellExperiment</code> containing this information.</li>
 <li>
 <code>seurat</code> to <code>SingleCellExperiment</code> now keeps track of <code>rowRanges</code>, if they have been stashed inside the <code>seurat</code> object.</li>
-<li>Minimal <code>bcbioSingleCell</code> (<code>indrops_small</code>) and <code>SingleCellExperiment</code> (<code>cellranger_small</code>) objects now contain dimensionality reduction information calculated with <a href="http://satijalab.org/seurat">Seurat</a>. See the scripts in <code>data-raw/</code> for how this was performed.</li>
+<li>Minimal <code>bcbioSingleCell</code> (<code>indrops_small</code>) and <code>SingleCellExperiment</code> (<code>cellranger_small</code>) objects now contain dimensionality reduction information calculated with <a href="http://satijalab.org/seurat/">Seurat</a>. See the scripts in <code>data-raw/</code> for how this was performed.</li>
 <li>
 <code>metrics</code>: <code>SingleCellExperiment</code> method now just returns <code>colData</code> with <code>interestingGroups</code> column defined internally with <code>uniteInterestingGroups</code>. Previously we updated the <code>sampleData</code> to long format here dynamically, but this is no longer needed now that <code>colData</code> always must contain sample data in long format.</li>
 <li>
 <code>sampleData&lt;-</code> assignment method now dynamically updates the sample metadata in <code>colData</code> to match.</li>
 <li>Simplified <code>SingleCellExperiment</code> method extension for <code>seurat</code> objects.</li>
-<li>Added support for global <a href="https://ggplot2.tidyverse.org">ggplot2</a> discrete color palettes using <code>bcbio.discrete.color</code> and <code>bcbio.discrete.fill</code> with <code>options</code>.</li>
+<li>Added support for global <a href="https://ggplot2.tidyverse.org/">ggplot2</a> discrete color palettes using <code>bcbio.discrete.color</code> and <code>bcbio.discrete.fill</code> with <code>options</code>.</li>
 </ul>
 </div>
 </div>
@@ -361,22 +372,22 @@
 <ul>
 <li>
 <code>readCellRanger</code> now supports HDF5 data (.h5 files) or MatrixMarket Exchange Format explicitly, using the <code>format</code> argument. The function also now supports user-requested import of raw whitelisted cellular barcodes, using the <code>filtered</code> argument. By default, filtered counts from <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> are imported.</li>
-<li>Removed support for <a href="https://github.com/statOmics/zingeR">zingeR</a> in <code>diffExp</code>. We will consider adding this functionality back in a future update, once the package is available on <a href="https://bioconductor.org">Bioconductor</a>. For now, we’re recommending usage of <a href="https://doi.org/doi:10.18129/B9.bioc.zinbwave">zinbwave</a>.</li>
+<li>Removed support for <a href="https://github.com/statOmics/zingeR/">zingeR</a> in <code>diffExp</code>. We will consider adding this functionality back in a future update, once the package is available on <a href="https://bioconductor.org/">Bioconductor</a>. For now, we’re recommending usage of <a href="https://bioconductor.org/packages/zinbwave/">zinbwave</a>.</li>
 <li>
 <code>filterCells</code> now supports <code>nCells</code> argument for hard cutoffs, applied after other QC filtering cutoffs using <code>nUMI</code>.</li>
 <li>Internal data has been renamed to snake_case format, for improved consistency. Note that <code>cell_cycle_markers</code> is used in place of <code>cellCycleMarkers</code>, and <code>cell_type_markers</code> in place of <code>cellTypeMarkers</code>. There’s no easy way to link these files as aliases, so this is a necessary breaking change.</li>
 </ul>
 </div>
-<div id="minor-changes-12" class="section level3">
+<div id="minor-changes-13" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-12" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-13" class="anchor"></a>Minor changes</h3>
 <ul>
-<li>Improved <a href="http://rmarkdown.rstudio.com">R Markdown</a> template defaults for quality control and clustering.</li>
-<li>Now importing functions related to differential expression into the package NAMESPACE, including <a href="https://doi.org/doi:10.18129/B9.bioc.DESeq2">DESeq2</a>, <a href="https://doi.org/doi:10.18129/B9.bioc.edgeR">edgeR</a>, and <a href="https://doi.org/doi:10.18129/B9.bioc.zinbwave">zinbwave</a>.</li>
-<li>Parallelization is no longer used to load samples, improving handling in an HPC cluster environment. We will consider using <a href="https://doi.org/doi:10.18129/B9.bioc.BiocParallel">BiocParallel</a> in a future update.</li>
-<li>Now requiring <a href="https://ggplot2.tidyverse.org">ggplot2</a> v3.0. Switched to using <code>aes</code> instead of <code>aes_string</code> internally, using new <a href="https://dplyr.tidyverse.org/articles/programming.html">tidyeval</a> syntax.</li>
-<li>Removed additional single-cell toolkit packages in Suggests, including <a href="http://bioconductor.org/packages/release/bioc/html/scater.html">scater</a> and <a href="https://doi.org/doi:10.18129/B9.bioc.scran">scran</a>. This helps speed up build checks on <a href="https://travis-ci.org">Travis CI</a>.</li>
-<li>Reexported functions have been moved to the <a href="http://bioinformatics.sph.harvard.edu/bcbioBase">bcbioBase</a> package.</li>
+<li>Improved <a href="http://rmarkdown.rstudio.com/">R Markdown</a> template defaults for quality control and clustering.</li>
+<li>Now importing functions related to differential expression into the package NAMESPACE, including <a href="https://bioconductor.org/packages/DESeq2/">DESeq2</a>, <a href="https://bioconductor.org/packages/edgeR/">edgeR</a>, and <a href="https://bioconductor.org/packages/zinbwave/">zinbwave</a>.</li>
+<li>Parallelization is no longer used to load samples, improving handling in an HPC cluster environment. We will consider using <a href="https://bioconductor.org/packages/BiocParallel/">BiocParallel</a> in a future update.</li>
+<li>Now requiring <a href="https://ggplot2.tidyverse.org/">ggplot2</a> v3.0. Switched to using <code>aes</code> instead of <code>aes_string</code> internally, using new <a href="https://dplyr.tidyverse.org/articles/programming.html">tidyeval</a> syntax.</li>
+<li>Removed additional single-cell toolkit packages in Suggests, including <a href="https://bioconductor.org/packages/scater/">scater</a> and <a href="https://bioconductor.org/packages/scran/">scran</a>. This helps speed up build checks on <a href="https://travis-ci.org/">Travis CI</a>.</li>
+<li>Reexported functions have been moved to the <a href="https://bioinformatics.sph.harvard.edu/bcbioBase/">bcbioBase</a> package.</li>
 <li>Improved internal consistency between the <code>bcbioSingleCell</code> and <code>readCellRanger</code> data import functions.</li>
 </ul>
 </div>
@@ -384,7 +395,7 @@
 <h3 class="hasAnchor">
 <a href="#additional-notes" class="anchor"></a>Additional notes</h3>
 <ul>
-<li>Package still works with <a href="https://bioconductor.org">Bioconductor</a> 3.6 / <a href="https://www.r-project.org">R</a> 3.4, but we will be migrating to <a href="https://bioconductor.org">Bioconductor</a> 3.7 / <a href="https://www.r-project.org">R</a> 3.5 when <a href="https://conda.io">conda</a> r-base is updated to 3.5.1.</li>
+<li>Package still works with <a href="https://bioconductor.org/">Bioconductor</a> 3.6 / <a href="https://www.r-project.org/">R</a> 3.4, but we will be migrating to <a href="https://bioconductor.org/">Bioconductor</a> 3.7 / <a href="https://www.r-project.org/">R</a> 3.5 when <a href="https://conda.io/">conda</a> r-base is updated to 3.5.1.</li>
 </ul>
 </div>
 </div>
@@ -405,12 +416,12 @@
 <ul>
 <li>Now recommending 1000 UMIs by default, and a maximum of 10% mitochondrial transcripts.</li>
 <li>
-<a href="http://satijalab.org/seurat">Seurat</a> clustering now calculates multiple resolutions, suggesting 0.4, 0.8, and 1.2 by default. Dimensional reduction plots have been updated to support looping of these multiple resolutions.</li>
+<a href="http://satijalab.org/seurat/">Seurat</a> clustering now calculates multiple resolutions, suggesting 0.4, 0.8, and 1.2 by default. Dimensional reduction plots have been updated to support looping of these multiple resolutions.</li>
 </ul>
 </div>
-<div id="minor-changes-13" class="section level3">
+<div id="minor-changes-14" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-13" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-14" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>as(object, "SingleCellExperiment")</code> coercion now slots stashed metadata into <code>SingleCellExperiment</code>, if defined.</li>
@@ -427,9 +438,9 @@
     <div id="bcbiosinglecell-0-1-15-2018-06-13" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-1-15-2018-06-13" class="anchor"></a>bcbioSingleCell 0.1.15 (2018-06-13)</h2>
-<div id="minor-changes-14" class="section level3">
+<div id="minor-changes-15" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-14" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-15" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Updated internal code to use <code>text</code> as primary argument in <code>markdownHeader</code> calls.</li>
 <li>Updated example datasets and unit tests to match.</li>
@@ -444,17 +455,17 @@
 <h3 class="hasAnchor">
 <a href="#major-changes-9" class="anchor"></a>Major changes</h3>
 <ul>
-<li>Multiplexed <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> barcodes are now reformatted to be more readable and compatible with the <code>mapCellsToSamples</code> utility function. This change helps simplify the internal code for <code>cell2sample</code>. For example in the pbmc4k dataset, the barcode IDs are sanitized from <code>TTTGGTTTCGCTAGCG-1</code> to “<code>pbmc4k_1_TTTGGTTTCGCTAGCG</code>”. The “<code>1</code>” here denotes 1 sample in the matrix, which is how <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> denotes multiplexed samples in a single counts matrix. Note that the “<code>-</code>” character is illegal in names, so we consistently sanitize barcodes to contain “<code>_</code>” instead. See <code><a href="https://www.rdocumentation.org/packages/utils/topics/help">help("make.names")</a></code> for more information on syntactically valid names in <a href="https://www.r-project.org">R</a>.</li>
+<li>Multiplexed <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> barcodes are now reformatted to be more readable and compatible with the <code>mapCellsToSamples</code> utility function. This change helps simplify the internal code for <code>cell2sample</code>. For example in the pbmc4k dataset, the barcode IDs are sanitized from <code>TTTGGTTTCGCTAGCG-1</code> to “<code>pbmc4k_1_TTTGGTTTCGCTAGCG</code>”. The “<code>1</code>” here denotes 1 sample in the matrix, which is how <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> denotes multiplexed samples in a single counts matrix. Note that the “<code>-</code>” character is illegal in names, so we consistently sanitize barcodes to contain “<code>_</code>” instead. See <code><a href="https://www.rdocumentation.org/packages/utils/topics/help">help("make.names")</a></code> for more information on syntactically valid names in <a href="https://www.r-project.org/">R</a>.</li>
 <li>
 <code>readCellRanger</code> no longer requires reference data defined by <code>refdataDir</code>, although this is still recommended.</li>
 </ul>
 </div>
-<div id="minor-changes-15" class="section level3">
+<div id="minor-changes-16" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-15" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-16" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Resaved example datasets.</li>
-<li>Switched the example <code>cellranger_small</code> and <code>seurat_small</code> datasets to the publicly available pbmc4k dataset from <a href="https://www.10xgenomics.com">10X Genomics</a>. Here we’ve subset the top 500 cells and genes by abundance. We’ll use either the pbmc4k or pbmc8k dataset for the vignette in a future update.</li>
+<li>Switched the example <code>cellranger_small</code> and <code>seurat_small</code> datasets to the publicly available pbmc4k dataset from <a href="https://www.10xgenomics.com/">10X Genomics</a>. Here we’ve subset the top 500 cells and genes by abundance. We’ll use either the pbmc4k or pbmc8k dataset for the vignette in a future update.</li>
 <li>
 <code>bcbioSingleCell</code> and <code>readCellRanger</code> functions now consistently default to not requiring <code>sampleMetadataFile</code>, which is now <code>NULL</code> by default. For <code>bcbioSingleCell</code>, if a custom sample metadata file is not provided, the function reads from the bcbio YAML metadata. For <code>readCellRanger</code>, the function uses <code>minimalSampleData</code> internally to return minimal metadata, containing <code>sampleName</code> and <code>description</code> columns.</li>
 <li>Broke out internal <code>.sampleDirs</code> function to <code>bcbioSingleCell</code> and <code>readCellRanger</code> functions.</li>
@@ -466,16 +477,16 @@
 <h3 class="hasAnchor">
 <a href="#internal-code-changes" class="anchor"></a>Internal code changes</h3>
 <ul>
-<li>Now consistently using <a href="https://dplyr.tidyverse.org">dplyr</a> for piped <code>data.frame</code> as much as possible, where applicable. Code is being updated to use <a href="https://dplyr.tidyverse.org/articles/programming.html">tidyeval</a>.</li>
+<li>Now consistently using <a href="https://dplyr.tidyverse.org/">dplyr</a> for piped <code>data.frame</code> as much as possible, where applicable. Code is being updated to use <a href="https://dplyr.tidyverse.org/articles/programming.html">tidyeval</a>.</li>
 </ul>
 </div>
 </div>
     <div id="bcbiosinglecell-0-1-13-2018-05-29" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-1-13-2018-05-29" class="anchor"></a>bcbioSingleCell 0.1.13 (2018-05-29)</h2>
-<div id="minor-changes-16" class="section level3">
+<div id="minor-changes-17" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-16" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-17" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>t-SNE and UMAP plot improvements.</li>
 </ul>
@@ -489,17 +500,17 @@
 <a href="#major-changes-10" class="anchor"></a>Major changes</h3>
 <ul>
 <li>No longer using automatic camel case sanitization for <code>metrics</code> or <code>fetchData</code> return column names.</li>
-<li>Improved <a href="http://rmarkdown.rstudio.com">R Markdown</a> clustering and marker templates to optionally support UMAP and dark mode in the YAML parameters.</li>
+<li>Improved <a href="http://rmarkdown.rstudio.com/">R Markdown</a> clustering and marker templates to optionally support UMAP and dark mode in the YAML parameters.</li>
 </ul>
 </div>
-<div id="minor-changes-17" class="section level3">
+<div id="minor-changes-18" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-17" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-18" class="anchor"></a>Minor changes</h3>
 <ul>
-<li>Using original <a href="http://satijalab.org/seurat">Seurat</a> mapping names for data: tSNE_1, tSNE_2, PC1, PC2, UMAP1, UMAP2.</li>
-<li>Ensure transcript-level counts always have <code>stripTranscriptVersions</code> command applied, to remove the <a href="https://www.ensembl.org">Ensembl</a> transcript versions if present.</li>
+<li>Using original <a href="http://satijalab.org/seurat/">Seurat</a> mapping names for data: tSNE_1, tSNE_2, PC1, PC2, UMAP1, UMAP2.</li>
+<li>Ensure transcript-level counts always have <code>stripTranscriptVersions</code> command applied, to remove the <a href="https://www.ensembl.org/">Ensembl</a> transcript versions if present.</li>
 <li>No longer using labels (e.g. A, B, C, D) on <code>ggplot</code> grid return.</li>
-<li>Note that “phase” has been renamed to “Phase” in the <a href="http://rmarkdown.rstudio.com">R Markdown</a> clustering for cell-cycle regression PCA.</li>
+<li>Note that “phase” has been renamed to “Phase” in the <a href="http://rmarkdown.rstudio.com/">R Markdown</a> clustering for cell-cycle regression PCA.</li>
 </ul>
 </div>
 </div>
@@ -512,24 +523,24 @@
 <ul>
 <li>UMAP is now supported. This functionality is provided in: <code>plotUMAP</code>, <code>plotMarkerUMAP</code>, and <code>plotFeatureUMAP</code>. Corresponding fetch functions, <code>fetchUMAPData</code> and <code>fetchUMAPExpressionData</code>, have also been added.</li>
 <li>
-<code>plotGene</code>: Added <code>seurat</code> method support. If advanced customization of the plot is needed, use <code>plotDot</code> or <code>plotViolin</code> instead, or refer to the <a href="http://satijalab.org/seurat">Seurat</a> documentation for alternates.</li>
+<code>plotGene</code>: Added <code>seurat</code> method support. If advanced customization of the plot is needed, use <code>plotDot</code> or <code>plotViolin</code> instead, or refer to the <a href="http://satijalab.org/seurat/">Seurat</a> documentation for alternates.</li>
 </ul>
 </div>
 <div id="major-changes-11" class="section level3">
 <h3 class="hasAnchor">
 <a href="#major-changes-11" class="anchor"></a>Major changes</h3>
 <ul>
-<li>Dimensional reduction and marker plots no longer use dark mode by default. The default color palette support for marker plots has been improved to consistently use <a href="https://cran.r-project.org/web/packages/viridis/index.html">viridis</a>.</li>
+<li>Dimensional reduction and marker plots no longer use dark mode by default. The default color palette support for marker plots has been improved to consistently use <a href="https://cran.r-project.org/package=viridis">viridis</a>.</li>
 <li>
-<code>diffExp</code>: improved internal code to work directly on <code>SingleCellExperiment</code>, removing the need to pass <code>design</code> and <code>group</code> parameters internally. Also added unit testing against <a href="https://doi.org/doi:10.18129/B9.bioc.zinbwave">zinbwave</a>, <a href="https://github.com/statOmics/zingeR">zingeR</a>, and <a href="https://doi.org/doi:10.18129/B9.bioc.edgeR">edgeR</a> support. <a href="https://doi.org/doi:10.18129/B9.bioc.DESeq2">DESeq2</a> is supported but runs slowly.</li>
-<li>Reworked <code>plotFeature</code> and <code>plotMarker</code> family of functions. Improved the color palette support when <code>dark = FALSE</code>, now using a flipped <a href="https://cran.r-project.org/web/packages/viridis/index.html">viridis</a> plasma color palette.</li>
+<code>diffExp</code>: improved internal code to work directly on <code>SingleCellExperiment</code>, removing the need to pass <code>design</code> and <code>group</code> parameters internally. Also added unit testing against <a href="https://bioconductor.org/packages/zinbwave/">zinbwave</a>, <a href="https://github.com/statOmics/zingeR/">zingeR</a>, and <a href="https://bioconductor.org/packages/edgeR/">edgeR</a> support. <a href="https://bioconductor.org/packages/DESeq2/">DESeq2</a> is supported but runs slowly.</li>
+<li>Reworked <code>plotFeature</code> and <code>plotMarker</code> family of functions. Improved the color palette support when <code>dark = FALSE</code>, now using a flipped <a href="https://cran.r-project.org/package=viridis">viridis</a> plasma color palette.</li>
 <li>
-<code>aggregateReplicates</code> function has been reworked to return a <code>SingleCellExperiment</code> object instead of <code>bcbioSingleCell</code>. The v0.2.4 update of <a href="http://bioinformatics.sph.harvard.edu/bcbioRNASeq">bcbioRNASeq</a> behaves similarly with this generic.</li>
+<code>aggregateReplicates</code> function has been reworked to return a <code>SingleCellExperiment</code> object instead of <code>bcbioSingleCell</code>. The v0.2.4 update of <a href="https://bioinformatics.sph.harvard.edu/bcbioRNASeq/">bcbioRNASeq</a> behaves similarly with this generic.</li>
 </ul>
 </div>
-<div id="minor-changes-18" class="section level3">
+<div id="minor-changes-19" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-18" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-19" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Reworked the internal handling of some <code>seurat</code> <code>SingleCellExperiment</code> method support, using <code>as(x, "SingleCellExperiment")</code> internally, which uses the new <code><a href="https://www.rdocumentation.org/packages/Seurat/topics/Convert">Seurat::Convert</a></code> function.</li>
 <li>Made some previously deprecated functions now defunct: <code>plotClusters</code>, <code>plotTSNEExpressionData</code>, <code>loadSingleCellRun</code>, <code>darkTheme</code>, <code>pcCutoff</code>, <code>quantileHeatmap</code>, <code>plotKnownMarkers</code>, <code>readMarkers</code>, <code>readMarkersFile</code>.</li>
@@ -544,14 +555,14 @@
     <div id="bcbiosinglecell-0-1-10-2018-05-19" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-1-10-2018-05-19" class="anchor"></a>bcbioSingleCell 0.1.10 (2018-05-19)</h2>
-<div id="minor-changes-19" class="section level3">
+<div id="minor-changes-20" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-19" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-20" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>plotCellTypesPerCluster</code> is using <code>dark = TRUE</code> by default again.</li>
 <li>Fixed <code>cell2sample</code> handling for multiplexed <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> data loaded up with <code>readCellRanger</code>. Need to use stashed <code>cell2sample</code> factor saved in <code>metadata</code>, rather than attempting to calculate on the fly with <code>mapCellsToSamples</code>.</li>
-<li>Updated <a href="https://travis-ci.org">Travis CI</a> build checks to include bioc-release on <a href="https://www.apple.com/macos">macOS</a>.</li>
+<li>Updated <a href="https://travis-ci.org/">Travis CI</a> build checks to include bioc-release on <a href="https://www.apple.com/macos/">macOS</a>.</li>
 </ul>
 </div>
 </div>
@@ -565,9 +576,9 @@
 <li>No longer attempting to sanitize the rownames for <code>seurat</code> objects in coercion method. This helps maintain the gene symbol appearance in plotting functions for genes with hyphens in the names.</li>
 </ul>
 </div>
-<div id="minor-changes-20" class="section level3">
+<div id="minor-changes-21" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-20" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-21" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Using <code><a href="https://www.rdocumentation.org/packages/BiocParallel/topics/SerialParam-class">BiocParallel::SerialParam</a></code> internally for zinbwave in <code>diffExp</code>.</li>
 <li>Simplified <code>cell2sample</code> internal code to always use <code>mapCellsToSamples</code> instead of attempting to use a stashed <code>vector</code> inside <code>metadata</code> for <code>SingleCellExperiment</code> method.</li>
@@ -586,9 +597,9 @@
     <div id="bcbiosinglecell-0-1-8-2018-05-16" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-1-8-2018-05-16" class="anchor"></a>bcbioSingleCell 0.1.8 (2018-05-16)</h2>
-<div id="minor-changes-21" class="section level3">
+<div id="minor-changes-22" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-21" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-22" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Initial <code>updateObject</code> method support for <code>bcbioSingleCell</code> class.</li>
 <li>Relaxed <code>validObject</code> validity check to not require sample-level metadata in <code>colData</code> yet.</li>
@@ -615,17 +626,17 @@
 <code>filterCells</code> now supports <code>minUMIs = c("knee", "inflection")</code> for automatic filtering based on the cellular barcode ranks. Internally this is handled by <code><a href="https://www.rdocumentation.org/packages/DropletUtils/topics/barcodeRanks">DropletUtils::barcodeRanks</a></code>.</li>
 </ul>
 </div>
-<div id="minor-changes-22" class="section level3">
+<div id="minor-changes-23" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-22" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-23" class="anchor"></a>Minor changes</h3>
 <ul>
-<li>Attempting to re-enable <code>libgsl-dev</code> installation for <a href="https://doi.org/doi:10.18129/B9.bioc.zinbwave">zinbwave</a> on <a href="https://travis-ci.org">Travis CI</a>.</li>
-<li>Suggesting <a href="https://doi.org/doi:10.18129/B9.bioc.BiocParallel">BiocParallel</a> for <a href="https://doi.org/doi:10.18129/B9.bioc.zinbwave">zinbwave</a> call in <code>diffExp</code>.</li>
-<li>Now importing <a href="http://satijalab.org/seurat">Seurat</a> functions into NAMESPACE.</li>
+<li>Attempting to re-enable <code>libgsl-dev</code> installation for <a href="https://bioconductor.org/packages/zinbwave/">zinbwave</a> on <a href="https://travis-ci.org/">Travis CI</a>.</li>
+<li>Suggesting <a href="https://bioconductor.org/packages/BiocParallel/">BiocParallel</a> for <a href="https://bioconductor.org/packages/zinbwave/">zinbwave</a> call in <code>diffExp</code>.</li>
+<li>Now importing <a href="http://satijalab.org/seurat/">Seurat</a> functions into NAMESPACE.</li>
 <li>Consolidated <code>fetchData</code> functions in the documentation.</li>
 <li>Consolidated <code>plotDimensionalReduction</code> functions in the documentation.</li>
 <li>Updated <code>aggregateReplicates</code> internal code. This function again only supports aggregation of <code>bcbioSingleCell</code> objects that have been filtered using the <code>filterCells</code> function.</li>
-<li>Now using <code><a href="https://www.rdocumentation.org/packages/Seurat/topics/Convert">Seurat::Convert</a></code> internally to coerce <code>seurat</code> class object to <code>SingleCellExperiment</code>, using <code>as(seurat, "SingleCellExperiment")</code>. This utility function was added to <a href="http://satijalab.org/seurat">Seurat</a> v2.3.1.</li>
+<li>Now using <code><a href="https://www.rdocumentation.org/packages/Seurat/topics/Convert">Seurat::Convert</a></code> internally to coerce <code>seurat</code> class object to <code>SingleCellExperiment</code>, using <code>as(seurat, "SingleCellExperiment")</code>. This utility function was added to <a href="http://satijalab.org/seurat/">Seurat</a> v2.3.1.</li>
 </ul>
 </div>
 </div>
@@ -635,6 +646,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#bcbiosinglecell-0-3-9-2019-03-23">0.3.9</a></li>
         <li><a href="#bcbiosinglecell-0-3-8-2019-03-18">0.3.8</a></li>
         <li><a href="#bcbiosinglecell-0-3-7-2019-02-12">0.3.7</a></li>
         <li><a href="#bcbiosinglecell-0-3-6-2019-01-13">0.3.6</a></li>

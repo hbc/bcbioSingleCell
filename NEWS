@@ -1,3 +1,11 @@
+## bcbioSingleCell 0.3.9 (2019-03-23)
+
+### Minor changes
+
+- Migrate development code to [Acid Genomics][].
+
+
+
 ## bcbioSingleCell 0.3.8 (2019-03-18)
 
 ### Minor changes
@@ -1364,48 +1372,48 @@ removal with the `filterCells` function.
 
 
 
-[10X Genomics]: https://www.10xgenomics.com
-[basejump]: http://steinbaugh.com/basejump
-[bcbio]: http://bcb.io
-[bcbioBase]: http://bioinformatics.sph.harvard.edu/bcbioBase
-[bcbioRNASeq]: http://bioinformatics.sph.harvard.edu/bcbioRNASeq
-[bcbioSingleCell]: http://bioinformatics.sph.harvard.edu/bcbioSingleCell
-[BiocInstaller]: https://doi.org/doi:10.18129/B9.bioc.BiocInstaller
-[BiocManager]: https://cran.r-project.org/package=BiocManager
-[Bioconductor]: https://bioconductor.org
-[BiocParallel]: https://doi.org/doi:10.18129/B9.bioc.BiocParallel
+[10X Genomics]: https://www.10xgenomics.com/
+[basejump]: https://basejump.steinbaugh.com/
+[bcbio]: https://bcbio-nextgen.readthedocs.io/
+[bcbioBase]: https://bioinformatics.sph.harvard.edu/bcbioBase/
+[bcbioRNASeq]: https://bioinformatics.sph.harvard.edu/bcbioRNASeq/
+[bcbioSingleCell]: https://bioinformatics.sph.harvard.edu/bcbioSingleCell/
+[BiocInstaller]: https://bioconductor.org/packages/BiocInstaller/
+[BiocManager]: https://bioconductor.org/packages/BiocManager/
+[Bioconductor]: https://bioconductor.org/
+[BiocParallel]: https://bioconductor.org/packages/BiocParallel/
 [Cell Ranger]: https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger
-[conda]: https://conda.io
-[covr]: https://github.com/jimhester/covr
-[DESeq2]: https://doi.org/doi:10.18129/B9.bioc.DESeq2
-[dplyr]: https://dplyr.tidyverse.org
-[edgeR]: https://doi.org/doi:10.18129/B9.bioc.edgeR
-[Ensembl]: https://www.ensembl.org
-[ensembldb]: http://bioconductor.org/packages/release/bioc/html/ensembldb.html
-[ggplot2]: https://ggplot2.tidyverse.org
-[GitHub]: https://github.com
-[Google Sheets]: https://www.google.com/sheets
-[inDrop]: https://1cell-bio.com
-[lintr]: https://github.com/jimhester/lintr
-[macOS]: https://www.apple.com/macos
+[conda]: https://conda.io/
+[covr]: https://github.com/jimhester/covr/
+[DESeq2]: https://bioconductor.org/packages/DESeq2/
+[dplyr]: https://dplyr.tidyverse.org/
+[edgeR]: https://bioconductor.org/packages/edgeR/
+[Ensembl]: https://www.ensembl.org/
+[ensembldb]: https://bioconductor.org/packages/ensembldb/
+[ggplot2]: https://ggplot2.tidyverse.org/
+[GitHub]: https://github.com/
+[Google Sheets]: https://www.google.com/sheets/
+[inDrop]: https://1cell-bio.com/
+[lintr]: https://github.com/jimhester/lintr/
+[macOS]: https://www.apple.com/macos/
 [monocle]: http://cole-trapnell-lab.github.io/monocle-release/
-[pkgdown]: https://github.com/hadley/pkgdown
-[pointillism]: https://steinbaugh.com/pointillism
-[R Markdown]: http://rmarkdown.rstudio.com
-[R]: https://www.r-project.org
-[rlang]: http://rlang.r-lib.org
-[roxygen2]: https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html
-[scater]: http://bioconductor.org/packages/release/bioc/html/scater.html
-[scde]: http://bioconductor.org/packages/release/bioc/html/scde.html
-[scone]: https://bioconductor.org/packages/release/bioc/html/scone.html
-[scran]: https://doi.org/doi:10.18129/B9.bioc.scran
-[Seurat]: http://satijalab.org/seurat
-[SummarizedExperiment]: https://www.bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html
+[pkgdown]: https://pkgdown.r-lib.org/
+[pointillism]: https://pointillism.acidgenomics.com/
+[R Markdown]: http://rmarkdown.rstudio.com/
+[R]: https://www.r-project.org/
+[rlang]: http://rlang.r-lib.org/
+[roxygen2]: https://cran.r-project.org/package=roxygen2
+[scater]: https://bioconductor.org/packages/scater/
+[scde]: https://bioconductor.org/packages/scde/
+[scone]: https://bioconductor.org/packages/scone/
+[scran]: https://bioconductor.org/packages/scran/
+[Seurat]: http://satijalab.org/seurat/
+[SummarizedExperiment]: https://bioconductor.org/packages/SummarizedExperiment/
 [SureCell]: https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html
-[testthat]: https://github.com/hadley/testthat
+[testthat]: https://github.com/hadley/testthat/
 [tidyeval]: https://dplyr.tidyverse.org/articles/programming.html
-[tidyverse]: http://www.tidyverse.org
-[Travis CI]: https://travis-ci.org
-[viridis]: https://cran.r-project.org/web/packages/viridis/index.html
-[zinbwave]: https://doi.org/doi:10.18129/B9.bioc.zinbwave
-[zingeR]: https://github.com/statOmics/zingeR
+[tidyverse]: http://www.tidyverse.org/
+[Travis CI]: https://travis-ci.org/
+[viridis]: https://cran.r-project.org/package=viridis
+[zinbwave]: https://bioconductor.org/packages/zinbwave/
+[zingeR]: https://github.com/statOmics/zingeR/
