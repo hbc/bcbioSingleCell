@@ -119,7 +119,7 @@ plotUMIsPerCell.SingleCellExperiment <-  # nolint
                         size = 5L,
                         show.legend = FALSE
                     ) +
-                    basejump_geom_label_repel(
+                    acid_geom_label_repel(
                         data = pointData,
                         mapping = aes(
                             x = !!sym("x"),

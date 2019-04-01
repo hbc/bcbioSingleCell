@@ -95,7 +95,7 @@ plotBarcodeRanks.SingleCellExperiment <-  # nolint
                     paste("inflection", "=", ranks[["inflection"]])
                 )
                 p +
-                    basejump_geom_label_repel(
+                    acid_geom_label_repel(
                         data = labelData,
                         mapping = aes(
                             x = !!sym("rank"),
