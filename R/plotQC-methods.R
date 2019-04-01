@@ -1,7 +1,8 @@
 #' @name plotQC
 #' @author Michael Steinbaugh
 #' @include globals.R
-#' @inherit basejump::plotQC
+#' @inherit minimalism::plotQC
+#' @inheritParams minimalism::params
 #' @inheritParams basejump::params
 #'
 #' @param headerLevel `integer(1)` (`1`-`7`).
@@ -128,23 +129,23 @@ bioverbs::plotQC
     # Cutoff lines.
     if (geom %in% c("boxplot", "violin")) {
         if (min > 0L) {
-            p <- p + basejump_geom_abline(yintercept = min)
+            p <- p + acid_geom_abline(yintercept = min)
         }
         if (
             (max < Inf && identical(ratio, FALSE)) ||
             (max < 1L && identical(ratio, TRUE))
         ) {
-            p <- p + basejump_geom_abline(yintercept = max)
+            p <- p + acid_geom_abline(yintercept = max)
         }
     } else {
         if (min > 0L) {
-            p <- p + basejump_geom_abline(xintercept = min)
+            p <- p + acid_geom_abline(xintercept = min)
         }
         if (
             (max < Inf && identical(ratio, FALSE)) ||
             (max < 1L && identical(ratio, TRUE))
         ) {
-            p <- p + basejump_geom_abline(xintercept = max)
+            p <- p + acid_geom_abline(xintercept = max)
         }
     }
 
@@ -175,7 +176,7 @@ bioverbs::plotQC
             digits <- 0L
         }
         p <- p +
-            basejump_geom_label_average(data, col = metricCol, digits = digits)
+            acid_geom_label_average(data, col = metricCol, digits = digits)
     }
 
     # Facets.

@@ -2,6 +2,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #' @inherit bioverbs::plotReadsPerCell
+#' @inheritParams minimalism::params
 #' @inheritParams basejump::params
 
 #' @param cutoffLine `logical(1)`.
@@ -63,8 +64,7 @@ bioverbs::plotReadsPerCell
                 plot = FALSE
             )
             # Klein Lab MATLAB code reference.
-            # counts: fLog
-            # mids: xLog
+            # counts: fLog; mids: xLog
             proportion <- h[["counts"]] * (10L ^ h[["mids"]]) /
                 sum(h[["counts"]] * (10L ^ h[["mids"]]))
             tibble(
@@ -113,7 +113,7 @@ bioverbs::plotReadsPerCell
 
     # Cutoff line.
     if (min > 0L) {
-        p <- p + basejump_geom_abline(xintercept = log10(min))
+        p <- p + acid_geom_abline(xintercept = log10(min))
     }
 
     # Color palette.
@@ -156,7 +156,7 @@ bioverbs::plotReadsPerCell
     ) +
         geom_boxplot(color = "black", outlier.shape = NA) +
         scale_y_continuous(trans = "log10") +
-        basejump_geom_label_average(data, col = "nCount", digits = 0L) +
+        acid_geom_label_average(data, col = "nCount", digits = 0L) +
         labs(
             x = NULL,
             y = "reads per cell"
@@ -164,7 +164,7 @@ bioverbs::plotReadsPerCell
 
     # Cutoff line.
     if (min > 0L) {
-        p <- p + basejump_geom_abline(yintercept = min)
+        p <- p + acid_geom_abline(yintercept = min)
     }
 
     # Color palette.
@@ -213,7 +213,7 @@ bioverbs::plotReadsPerCell
 
     # Cutoff line.
     if (min > 0L) {
-        p <- p + basejump_geom_abline(xintercept = min)
+        p <- p + acid_geom_abline(xintercept = min)
     }
 
     # Color palette.
@@ -261,7 +261,7 @@ bioverbs::plotReadsPerCell
             scale = 10L
         ) +
         scale_x_continuous(trans = "log10") +
-        basejump_geom_label_average(data, col = "nCount", digits = 0L) +
+        acid_geom_label_average(data, col = "nCount", digits = 0L) +
         labs(
             x = "reads per cell",
             y = NULL
@@ -269,7 +269,7 @@ bioverbs::plotReadsPerCell
 
     # Cutoff line.
     if (min > 0L) {
-        p <- p + basejump_geom_abline(xintercept = min)
+        p <- p + acid_geom_abline(xintercept = min)
     }
 
     # Color palette.
@@ -315,7 +315,7 @@ bioverbs::plotReadsPerCell
             scale = "count"
         ) +
         scale_y_continuous(trans = "log10") +
-        basejump_geom_label_average(data, col = "nCount", digits = 0L) +
+        acid_geom_label_average(data, col = "nCount", digits = 0L) +
         labs(
             x = NULL,
             y = "reads per cell"
@@ -323,7 +323,7 @@ bioverbs::plotReadsPerCell
 
     # Cutoff line.
     if (min > 0L) {
-        p <- p + basejump_geom_abline(yintercept = min)
+        p <- p + acid_geom_abline(yintercept = min)
     }
 
     # Color palette.

@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.9</span>
       </span>
     </div>
 
@@ -118,7 +118,7 @@
     <pre class="usage"><span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>plotUMIsVsGenes</span>(<span class='no'>object</span>,
   <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trendline</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"basejump.color.discrete"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='kw'>NULL</span>),
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"acid.color.discrete"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='kw'>NULL</span>),
   <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"log2"</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"UMIs vs. genes"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -144,8 +144,8 @@ Include trendline on plot.</p></td>
       <td><p><code>ScaleDiscrete</code>.
 Desired ggplot2 color scale. Must supply discrete values. When set <code>NULL</code>,
 the default ggplot2 color palette will be used. If manual color definitions
-are desired, we recommend using <code><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>ggplot2::scale_color_manual()</a></code>.</p>
-<p>To set the discrete color palette globally, use:</p><pre>options(basejump.color.discrete = ggplot2::scale_color_viridis_d())
+are desired, we recommend using <code><a href='https://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_color_manual()</a></code>.</p>
+<p>To set the discrete color palette globally, use:</p><pre>options(acid.color.discrete = ggplot2::scale_color_viridis_d())
 </pre></td>
     </tr>
     <tr>

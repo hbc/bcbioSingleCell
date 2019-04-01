@@ -8,7 +8,7 @@
 \usage{
 \S4method{plotUMIsVsGenes}{SingleCellExperiment}(object,
   interestingGroups = NULL, trendline = FALSE,
-  color = getOption("basejump.color.discrete", default = NULL),
+  color = getOption("acid.color.discrete", default = NULL),
   trans = "log2", title = "UMIs vs. genes")
 }
 \arguments{
@@ -26,7 +26,7 @@ Desired ggplot2 color scale. Must supply discrete values. When set \code{NULL},
 the default ggplot2 color palette will be used. If manual color definitions
 are desired, we recommend using \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}.
 
-To set the discrete color palette globally, use:\preformatted{options(basejump.color.discrete = ggplot2::scale_color_viridis_d())
+To set the discrete color palette globally, use:\preformatted{options(acid.color.discrete = ggplot2::scale_color_viridis_d())
 }}
 
 \item{trans}{\code{character(1)}.

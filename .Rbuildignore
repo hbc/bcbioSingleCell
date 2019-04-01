@@ -2,6 +2,7 @@
 ^.*\.pdf$
 ^.*\.Rproj$
 ^.*\.sh$
+^\.git$
 ^\.httr-oauth$
 ^\.lintr$
 ^\.Rprofile$

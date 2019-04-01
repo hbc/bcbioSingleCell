@@ -2,6 +2,7 @@
 #' @author Michael Steinbaugh
 #' @include globals.R
 #' @inherit bioverbs::plotNovelty
+#' @inheritParams minimalism::params
 #' @inheritParams basejump::params
 #' @examples
 #' data(indrops)

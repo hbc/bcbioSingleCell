@@ -11,14 +11,12 @@
 #' @importFrom SingleCellExperiment isSpike
 #' @importFrom SummarizedExperiment assayNames assays colData colData<-
 #'   rowRanges rowRanges<-
-#' @importFrom basejump basejump_geom_abline basejump_geom_label
-#'   basejump_geom_label_average basejump_geom_label_repel camel cell2sample
-#'   detectLanes emptyRanges formalsList import interestingGroups
-#'   interestingGroups<- makeDimnames makeGRangesFromEnsembl makeGRangesFromGFF
-#'   makeNames makeSingleCellExperiment mapCellsToSamples markdownHeader
-#'   markdownPlots matchArgsToDoCall matchInterestingGroups metrics
-#'   minimalSampleData plotZerosVsDepth prepareTemplate printString realpath
-#'   sampleData separator showSlotInfo
+#' @importFrom basejump camel cell2sample detectLanes emptyRanges formalsList
+#'   import interestingGroups interestingGroups<- makeDimnames
+#'   makeGRangesFromEnsembl makeGRangesFromGFF makeNames
+#'   makeSingleCellExperiment mapCellsToSamples markdownHeader markdownPlots
+#'   matchArgsToDoCall matchInterestingGroups metrics minimalSampleData
+#'   prepareTemplate printString realpath sampleData separator showSlotInfo
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
 #'   projectDir readDataVersions readProgramVersions readSampleData runDate
@@ -39,6 +37,8 @@
 #' @importFrom magrittr %>%
 #' @importFrom methods as as<- is new setClass show slot slot<- validObject
 #'   .hasSlot
+#' @importFrom minimalism acid_geom_abline acid_geom_label
+#'   acid_geom_label_average acid_geom_label_repel plotQC plotZerosVsDepth
 #' @importFrom readr read_lines read_tsv
 #' @importFrom rlang !! := UQ sym syms
 #' @importFrom scales percent
