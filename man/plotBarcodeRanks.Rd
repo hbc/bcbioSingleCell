@@ -56,7 +56,7 @@ data(indrops)
 plotBarcodeRanks(indrops)
 }
 \seealso{
-\code{DropletUtils::barcodeRanks()}.
+\code{\link[DropletUtils:barcodeRanks]{DropletUtils::barcodeRanks()}}.
 }
 \author{
 Michael Steinbaugh

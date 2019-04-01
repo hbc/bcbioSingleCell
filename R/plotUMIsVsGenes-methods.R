@@ -1,6 +1,7 @@
 #' @name plotUMIsVsGenes
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inherit bioverbs::plotUMIsVsGenes
+#' @inheritParams minimalism::params
 #' @inheritParams basejump::params
 #' @examples
 #' data(indrops)

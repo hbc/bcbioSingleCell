@@ -2,6 +2,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #' @inherit bioverbs::plotGenesPerCell
+#' @inheritParams minimalism::params
 #' @inheritParams basejump::params
 #' @examples
 #' data(indrops)

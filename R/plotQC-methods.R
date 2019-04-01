@@ -2,6 +2,7 @@
 #' @author Michael Steinbaugh
 #' @include globals.R
 #' @inherit minimalism::plotQC
+#' @inheritParams minimalism::params
 #' @inheritParams basejump::params
 #'
 #' @param headerLevel `integer(1)` (`1`-`7`).

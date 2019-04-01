@@ -59,7 +59,7 @@ x <- barcodeRanksPerSample(indrops)
 names(x)
 }
 \seealso{
-\code{DropletUtils::barcodeRanks()}.
+\code{\link[DropletUtils:barcodeRanks]{DropletUtils::barcodeRanks()}}.
 }
 \author{
 Michael Steinbaugh

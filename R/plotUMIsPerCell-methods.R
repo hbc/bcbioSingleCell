@@ -2,6 +2,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #' @inherit bioverbs::plotUMIsPerCell
+#' @inheritParams minimalism::params
 #' @inheritParams basejump::params
 
 #' @param point `character(1)`.
@@ -43,7 +44,7 @@ plotUMIsPerCell.SingleCellExperiment <-  # nolint
         geom <- match.arg(geom)
         point <- match.arg(point)
 
-        # Override interestingGroups if labeling points
+        # Override `interestingGroups` argument when labeling points.
         if (point != "none") {
             interestingGroups <- "sampleName"
         }
@@ -85,7 +86,7 @@ plotUMIsPerCell.SingleCellExperiment <-  # nolint
             assert(identical(names(sampleNames), names(points)))
 
             if (geom == "ecdf") {
-                # Calculate the y-intercept per sample
+                # Calculate the y-intercept per sample.
                 freq <- mapply(
                     sampleID = names(points),
                     point = points,

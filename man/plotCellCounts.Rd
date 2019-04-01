@@ -7,7 +7,7 @@
 \title{Plot cell counts}
 \usage{
 \S4method{plotCellCounts}{SingleCellExperiment}(object,
-  interestingGroups = NULL, fill = getOption("basejump.fill.discrete",
+  interestingGroups = NULL, fill = getOption("acid.fill.discrete",
   default = NULL), title = "cell counts")
 }
 \arguments{
@@ -22,7 +22,7 @@ Desired ggplot2 fill scale. Must supply discrete values. When set to
 \code{NULL}, the default ggplot2 color palette will be used. If manual color
 definitions are desired, we recommend using \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}}.
 
-To set the discrete fill palette globally, use:\preformatted{options(basejump.fill.discrete = ggplot2::scale_fill_viridis_d())
+To set the discrete fill palette globally, use:\preformatted{options(acid.fill.discrete = ggplot2::scale_fill_viridis_d())
 }}
 
 \item{title}{\code{character(1)}.

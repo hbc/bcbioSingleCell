@@ -1,6 +1,7 @@
 #' @name plotCellCounts
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inherit bioverbs::plotCellCounts
+#' @inheritParams minimalism::params
 #' @inheritParams basejump::params
 #' @examples
 #' data(indrops)
@@ -75,7 +76,7 @@ plotCellCounts.SingleCellExperiment <-  # nolint
             p <- p + acid_geom_label(
                 data = data,
                 mapping = aes(label = !!sym("nCells")),
-                # Align the label just under the top of the bar
+                # Align the label just under the top of the bar.
                 vjust = 1.25
             )
         }

@@ -2,6 +2,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #' @inherit bioverbs::plotReadsPerCell
+#' @inheritParams minimalism::params
 #' @inheritParams basejump::params
 
 #' @param cutoffLine `logical(1)`.
@@ -63,8 +64,7 @@ bioverbs::plotReadsPerCell
                 plot = FALSE
             )
             # Klein Lab MATLAB code reference.
-            # counts: fLog
-            # mids: xLog
+            # counts: fLog; mids: xLog
             proportion <- h[["counts"]] * (10L ^ h[["mids"]]) /
                 sum(h[["counts"]] * (10L ^ h[["mids"]]))
             tibble(

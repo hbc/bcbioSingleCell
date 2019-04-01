@@ -2,9 +2,10 @@
 #' @author Michael Steinbaugh
 #' @inherit bioverbs::barcodeRanksPerSample
 #' @inherit DropletUtils::barcodeRanks
+#' @inheritParams minimalism::params
 #' @inheritParams basejump::params
 #' @param ... Additional arguments.
-#' @seealso `DropletUtils::barcodeRanks()`.
+#' @seealso [DropletUtils::barcodeRanks()].
 #' @examples
 #' data(indrops)
 #' x <- barcodeRanksPerSample(indrops)

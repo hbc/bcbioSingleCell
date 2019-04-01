@@ -1,6 +1,7 @@
 #' @name plotMitoVsCoding
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inherit bioverbs::plotMitoVsCoding
+#' @inheritParams minimalism::params
 #' @inheritParams basejump::params
 #' @examples
 #' data(indrops)

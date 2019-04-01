@@ -1,5 +1,7 @@
 #' @rdname bcbioSingleCell-class
 #' @export
+#'
+#' @inheritParams basejump::makeSingleCellExperiment
 #' @inheritParams basejump::params
 #' @inheritParams bcbioBase::params
 #'
