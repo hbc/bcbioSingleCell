@@ -54,7 +54,7 @@ LazyData: false
 Depends:
     R (>= 3.5),
     SingleCellExperiment (>= 1.2),
-    basejump (>= 0.10)
+    basejump (>= 0.10.1)
 Imports:
     bcbioBase (>= 0.6), bioverbs (>= 0.1.10), goalie (>= 0.2.13),
         minimalism (>= 0.1),
