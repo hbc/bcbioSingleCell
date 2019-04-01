@@ -3,6 +3,7 @@
 ### Minor changes
 
 - Migrated development code to [Acid Genomics][].
+- Updated [basejump][] dependency to v0.10 release series.
 
 
 
