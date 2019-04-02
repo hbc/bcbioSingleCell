@@ -24,6 +24,7 @@ updateObject.bcbioSingleCell <-  # nolint
         assert(isAny(rowRanges, classes = c("GRanges", "NULL")))
 
         assays <- slot(object, name = "assays")
+        cells <- colnames(assays[[1L]])
         if (is.null(rowRanges)) {
             rowRanges <- slot(object, name = "rowRanges")
         }
@@ -36,12 +37,14 @@ updateObject.bcbioSingleCell <-  # nolint
 
         # Assays ---------------------------------------------------------------
         # Coerce `ShallowSimpleListAssays` S4 class to standard list.
+        names <- names(assays)
         assays <- lapply(seq_along(assays), function(a) {
             assay <- assays[[a]]
-            assert(identical(colnames(assay), colnames(sce)))
+            assert(identical(colnames(assay), cells))
             assay
         })
-        names(assays) <- assayNames(sce)
+        names(assays) <- names
+        rm(names)
 
         # Ensure raw counts are always named "counts".
         if ("assay" %in% names(assays)) {
@@ -61,8 +64,6 @@ updateObject.bcbioSingleCell <-  # nolint
         assert(isSubset(requiredAssays, names(assays)))
 
         # Move sampleData into colData -----------------------------------------
-        cells <- colnames(assays[[1]])
-
         # Require that all `sampleData` columns are now slotted in `colData`.
         if ("sampleData" %in% names(metadata)) {
             sampleData <- metadata[["sampleData"]]
@@ -103,7 +104,81 @@ updateObject.bcbioSingleCell <-  # nolint
         }
 
         # Metadata -------------------------------------------------------------
-        metadata <- .updateMetadata(metadata)
+        # dataVersions
+        dataVersions <- metadata[["dataVersions"]]
+        if (is(dataVersions, "data.frame")) {
+            message("Setting dataVersions as DataFrame.")
+            metadata[["dataVersions"]] <- as(dataVersions, "DataFrame")
+        }
+
+        # ensemblRelease
+        if ("ensemblVersion" %in% names(metadata)) {
+            message("Renaming ensemblVersion to ensemblRelease.")
+            metadata[["ensemblRelease"]] <- metadata[["ensemblVersion"]]
+            metadata[["ensemblVersion"]] <- NULL
+        }
+        if (
+            is.numeric(metadata[["ensemblRelease"]]) &&
+            !is.integer(metadata[["ensemblRelease"]])
+        ) {
+            message("Setting ensemblRelease as integer.")
+            metadata[["ensemblRelease"]] <-
+                as.integer(metadata[["ensemblRelease"]])
+        }
+
+        # Update the version, if necessary.
+        if (!identical(metadata[["version"]], packageVersion)) {
+            metadata[["originalVersion"]] <- metadata[["version"]]
+            metadata[["version"]] <- packageVersion
+        }
+
+        # gffFile
+        if ("gtfFile" %in% names(metadata)) {
+            message("Renaming gtfFile to gffFile.")
+            metadata[["gffFile"]] <- metadata[["gtfFile"]]
+            metadata[["gtfFile"]] <- NULL
+        }
+        if (!"gffFile" %in% names(metadata)) {
+            message("Setting gffFile as empty character")
+            metadata[["gffFile"]] <- character()
+        }
+
+        # lanes
+        if (!is.integer(metadata[["lanes"]])) {
+            message("Setting lanes as integer.")
+            metadata[["lanes"]] <- as.integer(metadata[["lanes"]])
+        }
+
+        # level
+        if (!"level" %in% names(metadata)) {
+            message("Setting level as genes.")
+            metadata[["level"]] <- "genes"
+        }
+
+        # programVersions
+        if (!"programVersions" %in% names(metadata) &&
+            "programs" %in% names(metadata)) {
+            message("Renaming programs to programVersions.")
+            metadata[["programVersions"]] <- metadata[["programs"]]
+            metadata <- metadata[setdiff(names(metadata), "programs")]
+        }
+        programVersions <- metadata[["programVersions"]]
+        if (is(programVersions, "data.frame")) {
+            metadata[["programVersions"]] <- as(programVersions, "DataFrame")
+        }
+
+        # sampleMetadataFile
+        if (!is.character(metadata[["sampleMetadataFile"]])) {
+            message("Setting sampleMetadataFile as empty character.")
+            metadata[["sampleMetadataFile"]] <- character()
+        }
+
+        # Drop legacy slots.
+        keep <- setdiff(
+            x = names(metadata),
+            y = c("cell2sample", "sampleData", "sampleMetadata")
+        )
+        metadata <- metadata[keep]
 
         # Return ---------------------------------------------------------------
         .new.bcbioSingleCell(
@@ -113,31 +188,6 @@ updateObject.bcbioSingleCell <-  # nolint
             metadata = metadata
         )
     }
-
-
-
-.updateMetadata <- function(metadata) {
-    # Drop legacy slots.
-    keep <- setdiff(
-        x = names(metadata),
-        y = c("cell2sample", "sampleData", "sampleMetadata")
-    )
-    metadata <- metadata[keep]
-
-    # Update the version, if necessary.
-    if (!identical(metadata[["version"]], packageVersion)) {
-        metadata[["originalVersion"]] <- metadata[["version"]]
-        metadata[["version"]] <- packageVersion
-    }
-
-    # ensemblRelease
-    if ("ensemblVersion" %in% names(metadata)) {
-        metadata[["ensemblRelease"]] <- metadata[["ensemblVersion"]]
-        metadata[["ensemblVersion"]] <- NULL
-    }
-
-    metadata
-}
 
 
 

@@ -75,7 +75,6 @@ extract.bcbioSingleCell <-  # nolint
 
         # Metadata -------------------------------------------------------------
         metadata <- metadata(sce)
-        metadata <- .updateMetadata(metadata)
         metadata[["subset"]] <- TRUE
 
         # Drop unfiltered cellular barcode list.
