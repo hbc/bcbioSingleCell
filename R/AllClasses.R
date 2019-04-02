@@ -77,6 +77,7 @@ setClass(
         # - filterGenes
         # - filterParams
         # - filterSummary
+        # - tx2gene
         ok <- validateClasses(
             object = metadata,
             expected = list(
@@ -99,7 +100,6 @@ setClass(
                 sampleDirs = "character",
                 sampleMetadataFile = "character",
                 sessionInfo = "session_info",
-                tx2gene = "Tx2Gene",
                 umiType = "character",
                 uploadDir = "character",
                 version = "package_version",
