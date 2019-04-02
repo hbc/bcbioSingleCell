@@ -71,41 +71,35 @@ setClass(
         if (!isTRUE(ok)) return(ok)
 
         # Metadata -------------------------------------------------------------
-        # Legacy undefined:
-        # - level
-        # - sampleMetadataFile
-        #
         # Optional metadata:
+        # - cellularBarcodes
         # - filterCells
         # - filterGenes
         # - filterParams
         # - filterSummary
-        # - lanes
-        # - rowRangesMetadata
-        # - tx2gene
-        #
-        # bcbio-specific:
-        # - cellularBarcodes
-        # - dataVersions
-        # - programVersions
-        # - projectDir
-        # - template
         ok <- validateClasses(
             object = metadata,
             expected = list(
                 allSamples = "logical",
                 bcbioCommandsLog = "character",
                 bcbioLog = "character",
+                dataVersions = "DataFrame",
                 date = "Date",
                 ensemblRelease = "integer",
                 genomeBuild = "character",
                 gffFile = "character",
                 interestingGroups = "character",
+                lanes = "integer",
+                level = "character",
                 organism = "character",
                 pipeline = "character",
+                programVersions = "DataFrame",
+                projectDir = "character",
                 runDate = "Date",
                 sampleDirs = "character",
+                sampleMetadataFile = "character",
                 sessionInfo = "session_info",
+                tx2gene = "Tx2Gene",
                 umiType = "character",
                 uploadDir = "character",
                 version = "package_version",
