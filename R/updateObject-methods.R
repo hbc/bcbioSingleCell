@@ -1,6 +1,8 @@
 #' @name updateObject
 #' @author Michael Steinbaugh
+#'
 #' @inherit BiocGenerics::updateObject
+#' @inheritParams basejump::params
 #'
 #' @examples
 #' data(indrops)
@@ -18,22 +20,22 @@ BiocGenerics::updateObject
 
 
 updateObject.bcbioSingleCell <-  # nolint
-    function(object) {
-        version <- slot(object, "metadata")[["version"]]
+    function(object, rowRanges = NULL) {
+        assert(isAny(rowRanges, classes = c("GRanges", "NULL")))
+
+        assays <- slot(object, name = "assays")
+        if (is.null(rowRanges)) {
+            rowRanges <- slot(object, name = "rowRanges")
+        }
+        colData <- slot(object, name = "colData")
+        metadata <- slot(object, name = "metadata")
+
+        version <- metadata[["version"]]
         assert(is(version, c("package_version", "numeric_version")))
         message(paste0("Upgrading from ", version, " to ", packageVersion, "."))
 
-        # Coerce to SingleCellExperiment
-        sce <- as(object, "SingleCellExperiment")
-        validObject(sce)
-
-        assays <- slot(sce, "assays")
-        rowRanges <- rowRanges(sce)
-        colData <- colData(sce)
-        metadata <- metadata(sce)
-
         # Assays ---------------------------------------------------------------
-        # Coerce ShallowSimpleListAssays to list
+        # Coerce `ShallowSimpleListAssays` S4 class to standard list.
         assays <- lapply(seq_along(assays), function(a) {
             assay <- assays[[a]]
             assert(identical(colnames(assay), colnames(sce)))
@@ -41,9 +43,14 @@ updateObject.bcbioSingleCell <-  # nolint
         })
         names(assays) <- assayNames(sce)
 
-        # raw counts
-        if ("raw" %in% names(assays)) {
-            message("Renaming primary assay to `counts`.")
+        # Ensure raw counts are always named "counts".
+        if ("assay" %in% names(assays)) {
+            # Versions < 0.1 (e.g. 0.0.21).
+            message("Renaming `assay` to `counts`.")
+            assays[["counts"]] <- assays[["assay"]]
+            assays[["assay"]] <- NULL
+        } else if ("raw" %in% names(assays)) {
+            message("Renaming `raw` assay to `counts`.")
             assays[["counts"]] <- assays[["raw"]]
             assays[["raw"]] <- NULL
         }
@@ -53,11 +60,20 @@ updateObject.bcbioSingleCell <-  # nolint
         assays <- assays[unique(c(requiredAssays, names(assays)))]
         assert(isSubset(requiredAssays, names(assays)))
 
-        # Column data ----------------------------------------------------------
+        # Move sampleData into colData -----------------------------------------
+        cells <- colnames(assays[[1]])
+
         # Require that all `sampleData` columns are now slotted in `colData`.
-        sampleData <- metadata[["sampleData"]]
+        if ("sampleData" %in% names(metadata)) {
+            sampleData <- metadata[["sampleData"]]
+        } else if ("sampleMetadata" %in% names(metadata)) {
+            sampleData <- metadata[["sampleMetadata"]]
+        } else {
+            sampleData <- NULL
+        }
         if (!is.null(sampleData)) {
             message("Moving `sampleData` columns to `colData`.")
+            assert(isSubset("sampleID", colnames(sampleData)))
             # Starting using `DataFrame` in place of `data.frame` in v0.1.7.
             sampleData <- as(sampleData, "DataFrame")
             colData <- colData[
@@ -65,7 +81,11 @@ updateObject.bcbioSingleCell <-  # nolint
                 setdiff(colnames(colData), colnames(sampleData)),
                 drop = FALSE
             ]
-            cell2sample <- cell2sample(sce)
+            message("Mapping cells to samples...")
+            cell2sample <- mapCellsToSamples(
+                cells = cells,
+                samples = sampleData[["sampleID"]]
+            )
             assert(is.factor(cell2sample))
             colData[["rowname"]] <- rownames(colData)
             colData[["sampleID"]] <- cell2sample
@@ -79,7 +99,7 @@ updateObject.bcbioSingleCell <-  # nolint
             rownames(colData) <- colData[["rowname"]]
             colData[["rowname"]] <- NULL
             # Ensure rows are ordered to match the object.
-            colData <- colData[colnames(sce), , drop = FALSE]
+            colData <- colData[cells, , drop = FALSE]
         }
 
         # Metadata -------------------------------------------------------------
@@ -88,7 +108,7 @@ updateObject.bcbioSingleCell <-  # nolint
         # Return ---------------------------------------------------------------
         .new.bcbioSingleCell(
             assays = assays,
-            rowRanges = rowRanges(sce),
+            rowRanges = rowRanges,
             colData = colData,
             metadata = metadata
         )
@@ -98,7 +118,10 @@ updateObject.bcbioSingleCell <-  # nolint
 
 .updateMetadata <- function(metadata) {
     # Drop legacy slots.
-    keep <- setdiff(x = names(metadata), y = c("cell2sample", "sampleData"))
+    keep <- setdiff(
+        x = names(metadata),
+        y = c("cell2sample", "sampleData", "sampleMetadata")
+    )
     metadata <- metadata[keep]
 
     # Update the version, if necessary.
