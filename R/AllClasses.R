@@ -71,6 +71,10 @@ setClass(
         if (!isTRUE(ok)) return(ok)
 
         # Metadata -------------------------------------------------------------
+        # Legacy undefined:
+        # - level
+        # - sampleMetadataFile
+        #
         # Optional metadata:
         # - filterCells
         # - filterGenes
@@ -99,11 +103,9 @@ setClass(
                 ensemblRelease = "integer",
                 genomeBuild = "character",
                 interestingGroups = "character",
-                level = "character",
                 organism = "character",
                 pipeline = "character",
                 sampleDirs = "character",
-                sampleMetadataFile = "character",
                 sessionInfo = "session_info",
                 umiType = "character",
                 uploadDir = "character",

@@ -81,7 +81,7 @@ updateObject.bcbioSingleCell <-  # nolint
                 setdiff(colnames(colData), colnames(sampleData)),
                 drop = FALSE
             ]
-            message("Mapping cells to samples...")
+            message("Mapping cells to samples.")
             cell2sample <- mapCellsToSamples(
                 cells = cells,
                 samples = sampleData[["sampleID"]]
@@ -128,6 +128,12 @@ updateObject.bcbioSingleCell <-  # nolint
     if (!identical(metadata[["version"]], packageVersion)) {
         metadata[["originalVersion"]] <- metadata[["version"]]
         metadata[["version"]] <- packageVersion
+    }
+
+    # ensemblRelease
+    if ("ensemblVersion" %in% names(metadata)) {
+        metadata[["ensemblRelease"]] <- metadata[["ensemblVersion"]]
+        metadata[["ensemblVersion"]] <- NULL
     }
 
     metadata
