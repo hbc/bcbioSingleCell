@@ -1,3 +1,26 @@
+## bcbioSingleCell 0.3.10 (2019-04-07)
+
+### Major changes
+
+- `updateObject` is now fully backward compatible for all objects created by
+  the package, including versions prior to v0.1.
+- Tightened up S4 validity class checks for `bcbioSingleCell`. Similar to
+  `bcbioRNASeq` class checks, now requiring these elements in `metadata`:
+  `bcbioCommandsLog`, `bcbioLog`, `dataVersions`, `gffFile`, `lanes`,
+  `programVersions`, `projectDir`, `runDate`, `wd`, and `yaml`. Previously,
+  these weren't required because we were sharing internal validity code checks
+  with the `CellRanger` S4 class. `CellRanger` has since been moved to the
+  new Chromium package, so it's now appropriate to tighten up bcbioSingleCell.
+- Extract method `[` on `bcbioSingleCell` class objects no longer alters the
+  version of the object. It only sets `subset = TRUE`, similar to bcbioRNASeq.
+
+### Minor changes
+
+- Bug fix release for formal rename in `emptyRanges` from `mcolsNames` to
+  `mcolnames`. This has been changed in [basejump][] 0.10.3.
+
+
+
 ## bcbioSingleCell 0.3.9 (2019-04-01)
 
 ### Minor changes

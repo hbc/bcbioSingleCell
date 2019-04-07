@@ -71,7 +71,7 @@ calculateMetrics <-  # nolint
                     rowRanges,
                     emptyRanges(
                         names = setdiff,
-                        mcolsNames = colnames(mcols(rowRanges))
+                        mcolnames = colnames(mcols(rowRanges))
                     )
                 ))
             }

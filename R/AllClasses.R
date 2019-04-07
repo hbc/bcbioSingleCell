@@ -72,43 +72,39 @@ setClass(
 
         # Metadata -------------------------------------------------------------
         # Optional metadata:
+        # - cellularBarcodes
         # - filterCells
         # - filterGenes
         # - filterParams
         # - filterSummary
-        # - lanes: integer
-        # - rowRangesMetadata: tbl_df
-        # - tx2gene: data.frame
-        #
-        # bcbio-specific:
-        # - bcbioCommandsLog: character
-        # - bcbioLog: character
-        # - cellularBarcodes: list
-        # - dataVersions: tbl_df
-        # - gffFile: character
-        # - programVersions: tbl_df
-        # - projectDir: character
-        # - runDate: Date
-        # - template: character
-        # - yaml: list
+        # - tx2gene
         ok <- validateClasses(
             object = metadata,
             expected = list(
                 allSamples = "logical",
+                bcbioCommandsLog = "character",
+                bcbioLog = "character",
+                dataVersions = "DataFrame",
                 date = "Date",
                 ensemblRelease = "integer",
                 genomeBuild = "character",
+                gffFile = "character",
                 interestingGroups = "character",
+                lanes = "integer",
                 level = "character",
                 organism = "character",
                 pipeline = "character",
+                programVersions = "DataFrame",
+                projectDir = "character",
+                runDate = "Date",
                 sampleDirs = "character",
                 sampleMetadataFile = "character",
                 sessionInfo = "session_info",
                 umiType = "character",
                 uploadDir = "character",
                 version = "package_version",
-                wd = "character"
+                wd = "character",
+                yaml = "list"
             ),
             subset = TRUE
         )

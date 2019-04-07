@@ -6,7 +6,7 @@
 \alias{updateObject,bcbioSingleCell-method}
 \title{Update an object to its current class definition}
 \usage{
-\S4method{updateObject}{bcbioSingleCell}(object)
+\S4method{updateObject}{bcbioSingleCell}(object, rowRanges = NULL)
 }
 \arguments{
 \item{object}{
@@ -16,6 +16,10 @@
     Object for slot information to be extracted from for
     \code{getObjectSlots}.
   }
+
+\item{rowRanges}{\code{GRanges}.
+Genomic ranges (e.g. genome annotations). Metadata describing the assay
+rows.}
 }
 \value{
 \code{updateObject} returns a valid instance of \code{object}.
