@@ -27,7 +27,7 @@ bioverbs::plotUMIsPerCell
 
 
 
-plotUMIsPerCell.SingleCellExperiment <-  # nolint
+plotUMIsPerCell.bcbioSingleCell <-  # nolint
     function(
         object,
         geom,
@@ -137,11 +137,11 @@ plotUMIsPerCell.SingleCellExperiment <-  # nolint
         p
     }
 
-formals(plotUMIsPerCell.SingleCellExperiment)[["color"]] <-
+formals(plotUMIsPerCell.bcbioSingleCell)[["color"]] <-
     formalsList[["color.discrete"]]
-formals(plotUMIsPerCell.SingleCellExperiment)[["fill"]] <-
+formals(plotUMIsPerCell.bcbioSingleCell)[["fill"]] <-
     formalsList[["fill.discrete"]]
-formals(plotUMIsPerCell.SingleCellExperiment)[["geom"]] <- geom
+formals(plotUMIsPerCell.bcbioSingleCell)[["geom"]] <- geom
 
 
 
@@ -149,6 +149,6 @@ formals(plotUMIsPerCell.SingleCellExperiment)[["geom"]] <- geom
 #' @export
 setMethod(
     f = "plotUMIsPerCell",
-    signature = signature("SingleCellExperiment"),
-    definition = plotUMIsPerCell.SingleCellExperiment
+    signature = signature("bcbioSingleCell"),
+    definition = plotUMIsPerCell.bcbioSingleCell
 )
