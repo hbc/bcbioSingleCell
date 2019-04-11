@@ -275,7 +275,7 @@ formals(.plotQCMetric)[["geom"]] <- geom
 
 
 
-plotQC.SingleCellExperiment <-  # nolint
+plotQC.bcbioSingleCell <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -354,8 +354,8 @@ plotQC.SingleCellExperiment <-  # nolint
         }
     }
 
-formals(plotQC.SingleCellExperiment)[["geom"]] <- geom
-formals(plotQC.SingleCellExperiment)[["legend"]] <- formalsList[["legend"]]
+formals(plotQC.bcbioSingleCell)[["geom"]] <- geom
+formals(plotQC.bcbioSingleCell)[["legend"]] <- formalsList[["legend"]]
 
 
 
@@ -363,6 +363,6 @@ formals(plotQC.SingleCellExperiment)[["legend"]] <- formalsList[["legend"]]
 #' @export
 setMethod(
     f = "plotQC",
-    signature = signature("SingleCellExperiment"),
-    definition = plotQC.SingleCellExperiment
+    signature = signature("bcbioSingleCell"),
+    definition = plotQC.bcbioSingleCell
 )
