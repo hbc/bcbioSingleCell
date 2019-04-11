@@ -40,7 +40,7 @@ barcodeRanksPerSample.bcbioSingleCell <-  # nolint
         ranks <- lapply(
             X = countsPerSample,
             FUN = function(counts) {
-                do.call(
+                x <- do.call(
                     what = barcodeRanks,
                     args = matchArgsToDoCall(
                         args = list(m = as.matrix(counts)),
@@ -48,6 +48,11 @@ barcodeRanksPerSample.bcbioSingleCell <-  # nolint
                         which = which
                     )
                 )
+                assert(identical(
+                    x = names(x),
+                    y = c("rank", "total", "fitted", "knee", "inflection")
+                ))
+                x
             }
         )
 
