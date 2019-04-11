@@ -1,3 +1,23 @@
+## bcbioSingleCell 0.3.11 (2019-04-11)
+
+### Major changes
+
+- Restricted S4 methods back to `bcbioSingleCell` from `SingleCellExperiment`
+  where applicable. Generally, this applies to the supported QC plotting
+  functions. Previously, the methods were defined against `SingleCellExperiment`
+  to also support `CellRanger` S4 class, which has since been moved to the
+  [Chromium][] package.
+
+### Minor changes
+
+- Improved code coverage by adding additional unit tests.
+- Updated internal reexport method for S4 generics, making `reexports.Rd` file
+  no longer necessary.
+- Renamed R Markdown QC template from `quality_control` to `quality-control`,
+  using kebab case instead of snake case.
+  
+
+
 ## bcbioSingleCell 0.3.10 (2019-04-07)
 
 ### Major changes
@@ -1408,6 +1428,7 @@ removal with the `filterCells` function.
 [Bioconductor]: https://bioconductor.org/
 [BiocParallel]: https://bioconductor.org/packages/BiocParallel/
 [Cell Ranger]: https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger
+[Chromium]: https://chromium.acidgenomics.com/
 [conda]: https://conda.io/
 [covr]: https://github.com/jimhester/covr/
 [DESeq2]: https://bioconductor.org/packages/DESeq2/
