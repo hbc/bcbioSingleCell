@@ -14,6 +14,6 @@ basejump::export
 #' @export
 basejump::markdownHeader
 
-#' @importFrom basejump SaveData
+#' @importFrom basejump saveData
 #' @export
 basejump::saveData
