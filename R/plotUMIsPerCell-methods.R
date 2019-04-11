@@ -20,10 +20,11 @@ NULL
 
 
 
+#' @rdname plotUMIsPerCell
+#' @name plotUMIsPerCell
 #' @importFrom bioverbs plotUMIsPerCell
-#' @aliases NULL
 #' @export
-bioverbs::plotUMIsPerCell
+NULL
 
 
 

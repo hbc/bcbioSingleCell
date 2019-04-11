@@ -14,10 +14,11 @@ NULL
 
 
 
+#' @rdname barcodeRanksPerSample
+#' @name barcodeRanksPerSample
 #' @importFrom bioverbs barcodeRanksPerSample
-#' @aliases NULL
 #' @export
-bioverbs::barcodeRanksPerSample
+NULL
 
 
 

@@ -3,10 +3,10 @@
 \docType{methods}
 \name{plotUMIsVsGenes}
 \alias{plotUMIsVsGenes}
-\alias{plotUMIsVsGenes,SingleCellExperiment-method}
+\alias{plotUMIsVsGenes,bcbioSingleCell-method}
 \title{Plot UMI and gene correlation}
 \usage{
-\S4method{plotUMIsVsGenes}{SingleCellExperiment}(object,
+\S4method{plotUMIsVsGenes}{bcbioSingleCell}(object,
   interestingGroups = NULL, trendline = FALSE,
   color = getOption("acid.color.discrete", default = NULL),
   trans = "log2", title = "UMIs vs. genes")

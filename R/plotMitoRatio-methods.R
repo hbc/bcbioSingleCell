@@ -11,14 +11,15 @@ NULL
 
 
 
+#' @rdname plotMitoRatio
+#' @name plotMitoRatio
 #' @importFrom bioverbs plotMitoRatio
-#' @aliases NULL
 #' @export
-bioverbs::plotMitoRatio
+NULL
 
 
 
-plotMitoRatio.SingleCellExperiment <-  # nolint
+plotMitoRatio.bcbioSingleCell <-  # nolint
     function(
         object,
         geom,
@@ -46,9 +47,9 @@ plotMitoRatio.SingleCellExperiment <-  # nolint
         )
     }
 
-formals(plotMitoRatio.SingleCellExperiment)[["fill"]] <-
+formals(plotMitoRatio.bcbioSingleCell)[["fill"]] <-
     formalsList[["fill.discrete"]]
-formals(plotMitoRatio.SingleCellExperiment)[["geom"]] <- geom
+formals(plotMitoRatio.bcbioSingleCell)[["geom"]] <- geom
 
 
 
@@ -56,6 +57,6 @@ formals(plotMitoRatio.SingleCellExperiment)[["geom"]] <- geom
 #' @export
 setMethod(
     f = "plotMitoRatio",
-    signature = signature("SingleCellExperiment"),
-    definition = plotMitoRatio.SingleCellExperiment
+    signature = signature("bcbioSingleCell"),
+    definition = plotMitoRatio.bcbioSingleCell
 )

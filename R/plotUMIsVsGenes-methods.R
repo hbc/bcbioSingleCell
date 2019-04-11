@@ -10,14 +10,15 @@ NULL
 
 
 
+#' @rdname plotUMIsVsGenes
+#' @name plotUMIsVsGenes
 #' @importFrom bioverbs plotUMIsVsGenes
-#' @aliases NULL
 #' @export
-bioverbs::plotUMIsVsGenes
+NULL
 
 
 
-plotUMIsVsGenes.SingleCellExperiment <-  # nolint
+plotUMIsVsGenes.bcbioSingleCell <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -42,7 +43,7 @@ plotUMIsVsGenes.SingleCellExperiment <-  # nolint
         )
     }
 
-formals(plotUMIsVsGenes.SingleCellExperiment)[["color"]] <-
+formals(plotUMIsVsGenes.bcbioSingleCell)[["color"]] <-
     formalsList[["color.discrete"]]
 
 
@@ -51,6 +52,6 @@ formals(plotUMIsVsGenes.SingleCellExperiment)[["color"]] <-
 #' @export
 setMethod(
     f = "plotUMIsVsGenes",
-    signature = signature("SingleCellExperiment"),
-    definition = plotUMIsVsGenes.SingleCellExperiment
+    signature = signature("bcbioSingleCell"),
+    definition = plotUMIsVsGenes.bcbioSingleCell
 )

@@ -3,13 +3,12 @@
 \docType{methods}
 \name{plotNovelty}
 \alias{plotNovelty}
-\alias{plotNovelty,SingleCellExperiment-method}
+\alias{plotNovelty,bcbioSingleCell-method}
 \title{Plot novelty score}
 \usage{
-\S4method{plotNovelty}{SingleCellExperiment}(object,
-  geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
-  interestingGroups = NULL, min = 0L,
-  fill = getOption("acid.fill.discrete", default = NULL),
+\S4method{plotNovelty}{bcbioSingleCell}(object, geom = c("histogram",
+  "ecdf", "violin", "ridgeline", "boxplot"), interestingGroups = NULL,
+  min = 0L, fill = getOption("acid.fill.discrete", default = NULL),
   trans = "identity", title = "novelty : genes per UMI")
 }
 \arguments{

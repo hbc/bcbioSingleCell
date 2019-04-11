@@ -10,14 +10,15 @@ NULL
 
 
 
+#' @rdname plotCellCounts
+#' @name plotCellCounts
 #' @importFrom bioverbs plotCellCounts
-#' @aliases NULL
 #' @export
-bioverbs::plotCellCounts
+NULL
 
 
 
-plotCellCounts.SingleCellExperiment <-  # nolint
+plotCellCounts.bcbioSingleCell <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -93,7 +94,7 @@ plotCellCounts.SingleCellExperiment <-  # nolint
         p
     }
 
-formals(plotCellCounts.SingleCellExperiment)[["fill"]] <-
+formals(plotCellCounts.bcbioSingleCell)[["fill"]] <-
     formalsList[["fill.discrete"]]
 
 
@@ -101,6 +102,6 @@ formals(plotCellCounts.SingleCellExperiment)[["fill"]] <-
 #' @export
 setMethod(
     f = "plotCellCounts",
-    signature = signature("SingleCellExperiment"),
-    definition = plotCellCounts.SingleCellExperiment
+    signature = signature("bcbioSingleCell"),
+    definition = plotCellCounts.bcbioSingleCell
 )

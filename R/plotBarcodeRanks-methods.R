@@ -10,10 +10,11 @@ NULL
 
 
 
+#' @rdname plotBarcodeRanks
+#' @name plotBarcodeRanks
 #' @importFrom bioverbs plotBarcodeRanks
-#' @aliases NULL
 #' @export
-bioverbs::plotBarcodeRanks
+NULL
 
 
 

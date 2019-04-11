@@ -3,10 +3,10 @@
 \docType{methods}
 \name{plotGenesPerCell}
 \alias{plotGenesPerCell}
-\alias{plotGenesPerCell,SingleCellExperiment-method}
+\alias{plotGenesPerCell,bcbioSingleCell-method}
 \title{Plot genes per cell}
 \usage{
-\S4method{plotGenesPerCell}{SingleCellExperiment}(object,
+\S4method{plotGenesPerCell}{bcbioSingleCell}(object,
   geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
   interestingGroups = NULL, min = 0L, max = Inf, trans = "log2",
   fill = getOption("acid.fill.discrete", default = NULL),

@@ -54,10 +54,11 @@ NULL
 
 
 
+#' @rdname filterCells
+#' @name filterCells
 #' @importFrom bioverbs filterCells
-#' @aliases NULL
 #' @export
-bioverbs::filterCells
+NULL
 
 
 

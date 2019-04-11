@@ -11,14 +11,15 @@ NULL
 
 
 
+#' @rdname plotNovelty
+#' @name plotNovelty
 #' @importFrom bioverbs plotNovelty
-#' @aliases NULL
 #' @export
-bioverbs::plotNovelty
+NULL
 
 
 
-plotNovelty.SingleCellExperiment <-  # nolint
+plotNovelty.bcbioSingleCell <-  # nolint
     function(
         object,
         geom,
@@ -47,9 +48,9 @@ plotNovelty.SingleCellExperiment <-  # nolint
         )
     }
 
-formals(plotNovelty.SingleCellExperiment)[["fill"]] <-
+formals(plotNovelty.bcbioSingleCell)[["fill"]] <-
     formalsList[["fill.discrete"]]
-formals(plotNovelty.SingleCellExperiment)[["geom"]] <- geom
+formals(plotNovelty.bcbioSingleCell)[["geom"]] <- geom
 
 
 
@@ -57,6 +58,6 @@ formals(plotNovelty.SingleCellExperiment)[["geom"]] <- geom
 #' @export
 setMethod(
     f = "plotNovelty",
-    signature = signature("SingleCellExperiment"),
-    definition = plotNovelty.SingleCellExperiment
+    signature = signature("bcbioSingleCell"),
+    definition = plotNovelty.bcbioSingleCell
 )

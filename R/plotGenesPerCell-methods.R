@@ -11,14 +11,15 @@ NULL
 
 
 
+#' @rdname plotGenesPerCell
+#' @name plotGenesPerCell
 #' @importFrom bioverbs plotGenesPerCell
-#' @aliases NULL
 #' @export
-bioverbs::plotGenesPerCell
+NULL
 
 
 
-plotGenesPerCell.SingleCellExperiment <-  # nolint
+plotGenesPerCell.bcbioSingleCell <-  # nolint
     function(
         object,
         geom,
@@ -46,9 +47,9 @@ plotGenesPerCell.SingleCellExperiment <-  # nolint
         )
     }
 
-formals(plotGenesPerCell.SingleCellExperiment)[["fill"]] <-
+formals(plotGenesPerCell.bcbioSingleCell)[["fill"]] <-
     formalsList[["fill.discrete"]]
-formals(plotGenesPerCell.SingleCellExperiment)[["geom"]] <- geom
+formals(plotGenesPerCell.bcbioSingleCell)[["geom"]] <- geom
 
 
 
@@ -56,6 +57,6 @@ formals(plotGenesPerCell.SingleCellExperiment)[["geom"]] <- geom
 #' @export
 setMethod(
     f = "plotGenesPerCell",
-    signature = signature("SingleCellExperiment"),
-    definition = plotGenesPerCell.SingleCellExperiment
+    signature = signature("bcbioSingleCell"),
+    definition = plotGenesPerCell.bcbioSingleCell
 )
