@@ -21,7 +21,7 @@ bioverbs::barcodeRanksPerSample
 
 
 
-barcodeRanksPerSample.SingleCellExperiment <-  # nolint
+barcodeRanksPerSample.bcbioSingleCell <-  # nolint
     function(object) {
         which <- sys.parent()
 
@@ -54,11 +54,11 @@ barcodeRanksPerSample.SingleCellExperiment <-  # nolint
         ranks
     }
 
-f1 <- formals(barcodeRanksPerSample.SingleCellExperiment)
+f1 <- formals(barcodeRanksPerSample.bcbioSingleCell)
 f2 <- formals(barcodeRanks)
 f2 <- f2[setdiff(names(f2), c(names(f1), "m", "..."))]
 f <- c(f1, f2)
-formals(barcodeRanksPerSample.SingleCellExperiment) <- f
+formals(barcodeRanksPerSample.bcbioSingleCell) <- f
 
 
 
@@ -66,6 +66,6 @@ formals(barcodeRanksPerSample.SingleCellExperiment) <- f
 #' @export
 setMethod(
     f = "barcodeRanksPerSample",
-    signature = signature("SingleCellExperiment"),
-    definition = barcodeRanksPerSample.SingleCellExperiment
+    signature = signature("bcbioSingleCell"),
+    definition = barcodeRanksPerSample.bcbioSingleCell
 )
