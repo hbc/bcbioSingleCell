@@ -14,14 +14,15 @@ NULL
 
 
 
+#' @rdname barcodeRanksPerSample
+#' @name barcodeRanksPerSample
 #' @importFrom bioverbs barcodeRanksPerSample
-#' @aliases NULL
 #' @export
-bioverbs::barcodeRanksPerSample
+NULL
 
 
 
-barcodeRanksPerSample.SingleCellExperiment <-  # nolint
+barcodeRanksPerSample.bcbioSingleCell <-  # nolint
     function(object) {
         which <- sys.parent()
 
@@ -39,7 +40,7 @@ barcodeRanksPerSample.SingleCellExperiment <-  # nolint
         ranks <- lapply(
             X = countsPerSample,
             FUN = function(counts) {
-                do.call(
+                x <- do.call(
                     what = barcodeRanks,
                     args = matchArgsToDoCall(
                         args = list(m = as.matrix(counts)),
@@ -47,6 +48,11 @@ barcodeRanksPerSample.SingleCellExperiment <-  # nolint
                         which = which
                     )
                 )
+                assert(identical(
+                    x = names(x),
+                    y = c("rank", "total", "fitted", "knee", "inflection")
+                ))
+                x
             }
         )
 
@@ -54,11 +60,11 @@ barcodeRanksPerSample.SingleCellExperiment <-  # nolint
         ranks
     }
 
-f1 <- formals(barcodeRanksPerSample.SingleCellExperiment)
+f1 <- formals(barcodeRanksPerSample.bcbioSingleCell)
 f2 <- formals(barcodeRanks)
 f2 <- f2[setdiff(names(f2), c(names(f1), "m", "..."))]
 f <- c(f1, f2)
-formals(barcodeRanksPerSample.SingleCellExperiment) <- f
+formals(barcodeRanksPerSample.bcbioSingleCell) <- f
 
 
 
@@ -66,6 +72,6 @@ formals(barcodeRanksPerSample.SingleCellExperiment) <- f
 #' @export
 setMethod(
     f = "barcodeRanksPerSample",
-    signature = signature("SingleCellExperiment"),
-    definition = barcodeRanksPerSample.SingleCellExperiment
+    signature = signature("bcbioSingleCell"),
+    definition = barcodeRanksPerSample.bcbioSingleCell
 )

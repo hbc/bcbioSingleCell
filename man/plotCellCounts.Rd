@@ -3,10 +3,10 @@
 \docType{methods}
 \name{plotCellCounts}
 \alias{plotCellCounts}
-\alias{plotCellCounts,SingleCellExperiment-method}
+\alias{plotCellCounts,bcbioSingleCell-method}
 \title{Plot cell counts}
 \usage{
-\S4method{plotCellCounts}{SingleCellExperiment}(object,
+\S4method{plotCellCounts}{bcbioSingleCell}(object,
   interestingGroups = NULL, fill = getOption("acid.fill.discrete",
   default = NULL), title = "cell counts")
 }

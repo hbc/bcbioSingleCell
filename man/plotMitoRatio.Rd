@@ -3,13 +3,12 @@
 \docType{methods}
 \name{plotMitoRatio}
 \alias{plotMitoRatio}
-\alias{plotMitoRatio,SingleCellExperiment-method}
+\alias{plotMitoRatio,bcbioSingleCell-method}
 \title{Plot mitochondrial transcript abundance}
 \usage{
-\S4method{plotMitoRatio}{SingleCellExperiment}(object,
-  geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
-  interestingGroups = NULL, max = 1L,
-  fill = getOption("acid.fill.discrete", default = NULL),
+\S4method{plotMitoRatio}{bcbioSingleCell}(object, geom = c("histogram",
+  "ecdf", "violin", "ridgeline", "boxplot"), interestingGroups = NULL,
+  max = 1L, fill = getOption("acid.fill.discrete", default = NULL),
   trans = "sqrt", title = "mito ratio")
 }
 \arguments{

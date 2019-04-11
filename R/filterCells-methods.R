@@ -28,7 +28,7 @@
 #' @param minCellsPerGene `integer(1)`.
 #'   Include genes with non-zero expression in at least this many cells.
 #'
-#' @return `SingleCellExperiment`.
+#' @return `bcbioSingleCell`.
 #' Filtering information gets slotted into [`metadata()`][S4Vectors::metadata]
 #' as `filterCells` and `filterParams`.
 #'
@@ -54,10 +54,11 @@ NULL
 
 
 
+#' @rdname filterCells
+#' @name filterCells
 #' @importFrom bioverbs filterCells
-#' @aliases NULL
 #' @export
-bioverbs::filterCells
+NULL
 
 
 
@@ -77,7 +78,7 @@ bioverbs::filterCells
 
 
 
-filterCells.SingleCellExperiment <-  # nolint
+filterCells.bcbioSingleCell <-  # nolint
     function(
         object,
         nCells = Inf,
@@ -487,6 +488,6 @@ filterCells.SingleCellExperiment <-  # nolint
 #' @export
 setMethod(
     f = "filterCells",
-    signature = signature("SingleCellExperiment"),
-    definition = filterCells.SingleCellExperiment
+    signature = signature("bcbioSingleCell"),
+    definition = filterCells.bcbioSingleCell
 )

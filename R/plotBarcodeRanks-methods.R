@@ -10,14 +10,15 @@ NULL
 
 
 
+#' @rdname plotBarcodeRanks
+#' @name plotBarcodeRanks
 #' @importFrom bioverbs plotBarcodeRanks
-#' @aliases NULL
 #' @export
-bioverbs::plotBarcodeRanks
+NULL
 
 
 
-plotBarcodeRanks.SingleCellExperiment <-  # nolint
+plotBarcodeRanks.bcbioSingleCell <-  # nolint
     function(object) {
         ranksPerSample <- do.call(
             what = barcodeRanksPerSample,
@@ -115,8 +116,8 @@ plotBarcodeRanks.SingleCellExperiment <-  # nolint
         plot_grid(plotlist = plotlist)
     }
 
-formals(plotBarcodeRanks.SingleCellExperiment) <-
-    formals(barcodeRanksPerSample.SingleCellExperiment)
+formals(plotBarcodeRanks.bcbioSingleCell) <-
+    formals(barcodeRanksPerSample.bcbioSingleCell)
 
 
 
@@ -124,6 +125,6 @@ formals(plotBarcodeRanks.SingleCellExperiment) <-
 #' @export
 setMethod(
     f = "plotBarcodeRanks",
-    signature = signature("SingleCellExperiment"),
-    definition = plotBarcodeRanks.SingleCellExperiment
+    signature = signature("bcbioSingleCell"),
+    definition = plotBarcodeRanks.bcbioSingleCell
 )

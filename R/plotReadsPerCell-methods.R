@@ -16,10 +16,11 @@ NULL
 
 
 
+#' @rdname plotReadsPerCell
+#' @name plotReadsPerCell
 #' @importFrom bioverbs plotReadsPerCell
-#' @aliases NULL
 #' @export
-bioverbs::plotReadsPerCell
+NULL
 
 
 

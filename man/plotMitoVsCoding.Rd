@@ -3,10 +3,10 @@
 \docType{methods}
 \name{plotMitoVsCoding}
 \alias{plotMitoVsCoding}
-\alias{plotMitoVsCoding,SingleCellExperiment-method}
+\alias{plotMitoVsCoding,bcbioSingleCell-method}
 \title{Plot mitochondrial vs. coding counts}
 \usage{
-\S4method{plotMitoVsCoding}{SingleCellExperiment}(object,
+\S4method{plotMitoVsCoding}{bcbioSingleCell}(object,
   interestingGroups = NULL, trendline = FALSE,
   color = getOption("acid.color.discrete", default = NULL),
   trans = "log2", title = "mito vs. coding")

@@ -3,10 +3,10 @@
 \docType{methods}
 \name{plotBarcodeRanks}
 \alias{plotBarcodeRanks}
-\alias{plotBarcodeRanks,SingleCellExperiment-method}
+\alias{plotBarcodeRanks,bcbioSingleCell-method}
 \title{Plot barcode ranks}
 \usage{
-\S4method{plotBarcodeRanks}{SingleCellExperiment}(object, lower = 100,
+\S4method{plotBarcodeRanks}{bcbioSingleCell}(object, lower = 100,
   fit.bounds = NULL, df = 20)
 }
 \arguments{

@@ -3,15 +3,14 @@
 \docType{methods}
 \name{plotUMIsPerCell}
 \alias{plotUMIsPerCell}
-\alias{plotUMIsPerCell,SingleCellExperiment-method}
+\alias{plotUMIsPerCell,bcbioSingleCell-method}
 \title{Plot UMIs per cell}
 \usage{
-\S4method{plotUMIsPerCell}{SingleCellExperiment}(object,
-  geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
-  interestingGroups = NULL, min = 0L, max = Inf, point = c("none",
-  "inflection", "knee"), trans = "log10",
-  color = getOption("acid.color.discrete", default = NULL),
-  fill = getOption("acid.fill.discrete", default = NULL),
+\S4method{plotUMIsPerCell}{bcbioSingleCell}(object, geom = c("histogram",
+  "ecdf", "violin", "ridgeline", "boxplot"), interestingGroups = NULL,
+  min = 0L, max = Inf, point = c("none", "inflection", "knee"),
+  trans = "log10", color = getOption("acid.color.discrete", default =
+  NULL), fill = getOption("acid.fill.discrete", default = NULL),
   title = "UMIs per cell")
 }
 \arguments{

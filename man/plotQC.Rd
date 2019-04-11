@@ -3,10 +3,10 @@
 \docType{methods}
 \name{plotQC}
 \alias{plotQC}
-\alias{plotQC,SingleCellExperiment-method}
+\alias{plotQC,bcbioSingleCell-method}
 \title{Quality control}
 \usage{
-\S4method{plotQC}{SingleCellExperiment}(object, interestingGroups = NULL,
+\S4method{plotQC}{bcbioSingleCell}(object, interestingGroups = NULL,
   geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
   headerLevel = 2L, legend = getOption("acid.legend", default = TRUE),
   return = c("grid", "list", "markdown"))

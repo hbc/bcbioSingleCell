@@ -3,11 +3,11 @@
 \docType{methods}
 \name{barcodeRanksPerSample}
 \alias{barcodeRanksPerSample}
-\alias{barcodeRanksPerSample,SingleCellExperiment-method}
+\alias{barcodeRanksPerSample,bcbioSingleCell-method}
 \title{Barcode ranks per sample}
 \usage{
-\S4method{barcodeRanksPerSample}{SingleCellExperiment}(object,
-  lower = 100, fit.bounds = NULL, df = 20)
+\S4method{barcodeRanksPerSample}{bcbioSingleCell}(object, lower = 100,
+  fit.bounds = NULL, df = 20)
 }
 \arguments{
 \item{object}{Object.}

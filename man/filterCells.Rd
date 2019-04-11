@@ -3,10 +3,10 @@
 \docType{methods}
 \name{filterCells}
 \alias{filterCells}
-\alias{filterCells,SingleCellExperiment-method}
+\alias{filterCells,bcbioSingleCell-method}
 \title{Filter cells}
 \usage{
-\S4method{filterCells}{SingleCellExperiment}(object, nCells = Inf,
+\S4method{filterCells}{bcbioSingleCell}(object, nCells = Inf,
   minUMIs = 1L, maxUMIs = Inf, minGenes = 1L, maxGenes = Inf,
   minNovelty = 0L, maxMitoRatio = 1L, minCellsPerGene = 1L)
 }
@@ -38,7 +38,7 @@ Maximum relative mitochondrial abundance.}
 Include genes with non-zero expression in at least this many cells.}
 }
 \value{
-\code{SingleCellExperiment}.
+\code{bcbioSingleCell}.
 Filtering information gets slotted into \code{\link[S4Vectors:metadata]{metadata()}}
 as \code{filterCells} and \code{filterParams}.
 }

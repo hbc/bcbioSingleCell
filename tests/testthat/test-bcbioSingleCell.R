@@ -1,6 +1,4 @@
-context("S4 class")
-
-
+context("bcbioSingleCell")
 
 test_that("bcbioSingleCell", {
     uploadDir <- system.file("extdata/indrops", package = "bcbioSingleCell")

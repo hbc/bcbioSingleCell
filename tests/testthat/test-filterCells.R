@@ -1,11 +1,6 @@
-context("Quality Control")
+context("filterCells")
 
-data(indrops, envir = environment())
-
-
-
-# filterCells ==================================================================
-test_that("filterCells : No filtering", {
+test_that("No filtering", {
     # Expecting an object with the same dimensions by default.
     invisible(capture.output(
         x <- filterCells(indrops)
@@ -14,7 +9,7 @@ test_that("filterCells : No filtering", {
     expect_identical(dim(x), dim(indrops))
 })
 
-test_that("filterCells: Expected cutoff failure", {
+test_that("Expected cutoff failure", {
     expect_error(
         filterCells(indrops, minUMIs = Inf),
         "No cells passed `minUMIs` cutoff"
@@ -22,7 +17,7 @@ test_that("filterCells: Expected cutoff failure", {
 })
 
 with_parameters_test_that(
-    "filterCells : Parameterized cutoff tests", {
+    "Parameterized cutoff tests", {
         args[["object"]] <- indrops
         invisible(capture.output(
             x <- do.call(what = filterCells, args = args)
@@ -56,7 +51,7 @@ with_parameters_test_that(
     )
 )
 
-test_that("filterCells : Per sample cutoffs", {
+test_that("Per sample cutoffs", {
     # Get the count of sample1 (run1_AGAGGATA)
     # We're applying no filtering to that sample
     sampleNames <- sampleNames(indrops)

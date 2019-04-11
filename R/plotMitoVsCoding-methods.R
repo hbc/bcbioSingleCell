@@ -10,14 +10,15 @@ NULL
 
 
 
+#' @rdname plotMitoVsCoding
+#' @name plotMitoVsCoding
 #' @importFrom bioverbs plotMitoVsCoding
-#' @aliases NULL
 #' @export
-bioverbs::plotMitoVsCoding
+NULL
 
 
 
-plotMitoVsCoding.SingleCellExperiment <-  # nolint
+plotMitoVsCoding.bcbioSingleCell <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -42,7 +43,7 @@ plotMitoVsCoding.SingleCellExperiment <-  # nolint
         )
     }
 
-formals(plotMitoVsCoding.SingleCellExperiment)[["color"]] <-
+formals(plotMitoVsCoding.bcbioSingleCell)[["color"]] <-
     formalsList[["color.discrete"]]
 
 
@@ -51,6 +52,6 @@ formals(plotMitoVsCoding.SingleCellExperiment)[["color"]] <-
 #' @export
 setMethod(
     f = "plotMitoVsCoding",
-    signature = signature("SingleCellExperiment"),
-    definition = plotMitoVsCoding.SingleCellExperiment
+    signature = signature("bcbioSingleCell"),
+    definition = plotMitoVsCoding.bcbioSingleCell
 )

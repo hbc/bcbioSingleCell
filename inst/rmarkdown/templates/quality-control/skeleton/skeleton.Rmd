@@ -1,7 +1,11 @@
 ---
 params:
   title: "Quality Control"
-  object_file: "data/YYYY-MM-DD/object.rds"
+  
+  # Use saved bcbioSingleCell object file as input.
+  object_file: "rds/YYYY-MM-DD/object.rds"
+  
+  # Filtering parameters
   n_cells: !r Inf
   min_umis: 1000
   max_umis: !r Inf
@@ -10,8 +14,10 @@ params:
   min_novelty: 0.85
   max_mito_ratio: 0.1
   min_cells_per_gene: 10
-  data_dir: !r file.path("data", Sys.Date())
-  output_dir: !r file.path("results", Sys.Date(), "quality_control")
+  
+  data_dir: !r file.path("rds", Sys.Date())
+  output_dir: !r file.path("results", Sys.Date(), "quality-control")
+
 title: "`r params$title`"
 author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
@@ -19,48 +25,52 @@ bibliography: bibliography.bib
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2018-11-29
-bcbioSingleCell::prepareSingleCellTemplate()
+# Last modified 2019-04-10
+library(bcbioSingleCell)
+library(ggplot2)
+prepareSingleCellTemplate()
 source("_setup.R")
 ```
 
 ```{r header, child="_header.Rmd"}
 ```
 
-```{r dirs}
-invisible(mapply(
-    FUN = dir.create,
-    path = c(params$data_dir, params$output_dir),
-    MoreArgs = list(showWarnings = FALSE, recursive = TRUE)
-))
-```
+# Load bcbioSingleCell object
 
 ```{r object}
-name <- basenameSansExt(params$object_file)
-object <- readRDS(params$object_file)
-stopifnot(is(object, "SingleCellExperiment"))
+stopifnot(file.exists(params$object))
+if (fileExt(params$object) == "rds") {
+    object <- readRDS(file = params$object)
+    name <- basenameSansExt(params$object)
+} else if (fileExt(params$object) == "rda") {
+    name <- load(file = params$object)
+    object <- get(x = name, inherits = FALSE)
+}
+stopifnot(
+    is(object, "bcbioRNASeq"),
+    is.character(name)
+)
 invisible(validObject(object))
 print(object)
 ```
 
-[bcbio][] run data was imported from **`r metadata(bcb)$uploadDir`**.
+[bcbio][] run data was imported from **`r metadata(object)$uploadDir`**.
 
 # Sample metadata
 
-```{r sample_data}
-sampleData(object, clean = TRUE) %>% as.data.frame()
+```{r sample-data}
+sampleData(object)
 ```
 
 # Reads per cell {.tabset}
 
-These are counts of how many reads are assigned to a given cellular barcode. It is normal for single cell RNA-seq data to contain a large number of low complexity barcodes. The bcbio pipeline filters out most of these barcodes, and here we have applied a threshold cutoff of a minimum of `r metadata(bcb)$cellularBarcodeCutoff` reads per cell. The unfiltered read count distributions are shown here.
+These are counts of how many reads are assigned to a given cellular barcode. It is normal for single cell RNA-seq data to contain a large number of low complexity barcodes. The bcbio pipeline filters out most of these barcodes, and here we have applied a threshold cutoff of a minimum of `r metadata(object)$cellularBarcodeCutoff` reads per cell. The unfiltered read count distributions are shown here.
 
 ## Histogram
 
 For high quality data, the proportional histogram should contain a single large peak that represents cells that were encapsulated. If we see a strong shoulder, or a bimodal distribution of the cells, that can indicate a couple problems. It might be that there is free floating RNA, which happens when cells are dying. It could also be that there are a set of cells that failed for some reason. Finally, it could also be that there are biologically different types of cells, and one type is much smaller than the other. If this is the case we would expect to see less RNA being sequenced from the smaller cells.
 
-```{r plot_reads_per_cell_histogram}
-# getMethod("plotReadsPerCell", "bcbioSingleCell")
+```{r plot-reads-per-cell-histogram}
 plotReadsPerCell(
     object = object,
     geom = "histogram",
@@ -79,8 +89,7 @@ plotReadsPerCell(
 
 An empirical distribution function (ECDF) plot will show the frequency distribution of the reads per cell. You can see that the vast majority of low complexity barcodes plateau at a read depth below 1000 reads per cell.
 
-```{r plot_reads_per_cell_ecdf}
-# getMethod("plotReadsPerCell", "bcbioSingleCell")
+```{r plot-reads-per-cell-ecdf}
 plotReadsPerCell(
     object = object,
     geom = "ecdf",
@@ -92,9 +101,7 @@ plotReadsPerCell(
 
 Now let's assess the distribution of unique molecular identifier (UMI)-deconvoluted counts per cell. In general, the distributions should be relatively uniform per sample. Here we are also including violin and ridgeline plots, with the average number of genes per cell labeled.
 
-```{r plot_umis_per_cell_prefilter}
-# getMethod("plotUMIsPerCell", "bcbioSingleCell")
-
+```{r plot-umis-per-cell-prefilter}
 markdownHeader("Violin", level = 2)
 plotUMIsPerCell(
     object = object,
@@ -136,8 +143,7 @@ plotUMIsPerCell(
 
 Let's apply this step first and then proceed to evaluating gene detection, mitocondrial transcript abundance, and novelty scores.
 
-```{r filter_cells_by_umi}
-# getMethod("filterCells", "SingleCellExperiment")
+```{r filter-cells-by-umi}
 object <- filterCells(
     object = object,
     minUMIs = params$min_umis,
@@ -147,8 +153,7 @@ object <- filterCells(
 
 Let's take a look at the UMI per cell distributions after this filtering step. Note that we haven't applied very strict filtering here — we're going to cut off the "low quality" cells based on the gene detection rate, novelty score, and mitochondrial abundance.
 
-```{r plot_umis_per_cell_postfilter}
-# getMethod("plotUMIsPerCell", "SingleCellExperiment")
+```{r plot-umis-per-cell-postfilter}
 plotUMIsPerCell(
     object = object,
     geom = "histogram",
@@ -162,9 +167,7 @@ plotUMIsPerCell(
 
 Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `500`-`5000` is normal for most single-cell experiments.
 
-```{r plot_genes_per_cell}
-# getMethod("plotGenesPerCell", "SingleCellExperiment")
-
+```{r plot-genes-per-cell}
 markdownHeader("Violin", level = 2)
 plotGenesPerCell(
     object = object,
@@ -206,8 +209,7 @@ plotGenesPerCell(
 
 If we graph out the total number of UMI counts per cell vs. the genes detected per cell, we can assess whether there is a large population of low quality cells with low counts and/or gene detection.
 
-```{r plot_umis_vs_genes}
-# getMethod("plotUMIsVsGenes", "SingleCellExperiment")
+```{r plot-umis-vs-genes}
 plotUMIsVsGenes(
     object = object,
     interestingGroups = "sampleName"
@@ -218,9 +220,7 @@ plotUMIsVsGenes(
 
 Another way to QC the data is to look for less novelty, that is cells that have less genes detected per count than other cells. We can see the samples where we sequenced each cell less have a higher overall novelty, that is because we have not started saturated the sequencing for any given gene for these samples. Outlier cells in these samples might be cells that we have a less complex RNA species than other cells. Sometimes we can detect contamination with low complexity cell types like red blood cells via this metric.
 
-```{r plot_novelty}
-# getMethod("plotNovelty", "SingleCellExperiment")
-
+```{r plot-novelty}
 markdownHeader("Violin", level = 2)
 plotNovelty(
     object = object,
@@ -258,9 +258,7 @@ plotNovelty(
 
 We evaluate overall mitochondrial gene expression as a biomarker of cellular stress during sample preparation.
 
-```{r plot_mito_ratio}
-# getMethod("plotMitoRatio", "SingleCellExperiment")
-
+```{r plot-mito-ratio}
 markdownHeader("Violin", level = 2)
 plotMitoRatio(
     object = object,
@@ -296,8 +294,7 @@ plotMitoRatio(
 
 # Filter cells
 
-```{r filter_cells}
-# getMethod("filterCells", "SingleCellExperiment")
+```{r filter-cells}
 object <- filterCells(
     object = object,
     nCells = params$n_cells,
@@ -311,8 +308,7 @@ object <- filterCells(
 )
 ```
 
-```{r plot_filtered_qc, results="asis"}
-# getMethod("plotQC", "SingleCellExperiment")
+```{r plot-filtered-qc, results="asis"}
 plotQC(
     object = object,
     geom = "violin",
