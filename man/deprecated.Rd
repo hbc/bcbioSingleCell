@@ -2,10 +2,10 @@
 % Please edit documentation in R/deprecated.R
 \name{deprecated}
 \alias{deprecated}
-\alias{loadSingleCell}
+\alias{prepareSingleCellTemplate}
 \title{Deprecated functions}
 \usage{
-loadSingleCell(...)
+prepareSingleCellTemplate(...)
 }
 \arguments{
 \item{...}{Additional arguments.}
