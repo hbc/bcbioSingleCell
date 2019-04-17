@@ -1,3 +1,5 @@
+script: true
+
 language: r
 cache: packages
 
