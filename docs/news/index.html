@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.12</span>
       </span>
     </div>
 
@@ -584,7 +584,7 @@
 <h3 class="hasAnchor">
 <a href="#minor-changes-21" class="anchor"></a>Minor changes</h3>
 <ul>
-<li>Reworked the internal handling of some <code>seurat</code> <code>SingleCellExperiment</code> method support, using <code>as(x, "SingleCellExperiment")</code> internally, which uses the new <code><a href="https://www.rdocumentation.org/packages/Seurat/topics/Convert">Seurat::Convert</a></code> function.</li>
+<li>Reworked the internal handling of some <code>seurat</code> <code>SingleCellExperiment</code> method support, using <code>as(x, "SingleCellExperiment")</code> internally, which uses the new <code>Seurat::Convert</code> function.</li>
 <li>Made some previously deprecated functions now defunct: <code>plotClusters</code>, <code>plotTSNEExpressionData</code>, <code>loadSingleCellRun</code>, <code>darkTheme</code>, <code>pcCutoff</code>, <code>quantileHeatmap</code>, <code>plotKnownMarkers</code>, <code>readMarkers</code>, <code>readMarkersFile</code>.</li>
 <li>Made <code>plotFeatures</code>, <code>plotMarker</code>, and <code>plotMarkers</code> functions defunct.</li>
 <li>
@@ -678,7 +678,7 @@
 <li>Consolidated <code>fetchData</code> functions in the documentation.</li>
 <li>Consolidated <code>plotDimensionalReduction</code> functions in the documentation.</li>
 <li>Updated <code>aggregateReplicates</code> internal code. This function again only supports aggregation of <code>bcbioSingleCell</code> objects that have been filtered using the <code>filterCells</code> function.</li>
-<li>Now using <code><a href="https://www.rdocumentation.org/packages/Seurat/topics/Convert">Seurat::Convert</a></code> internally to coerce <code>seurat</code> class object to <code>SingleCellExperiment</code>, using <code>as(seurat, "SingleCellExperiment")</code>. This utility function was added to <a href="http://satijalab.org/seurat/">Seurat</a> v2.3.1.</li>
+<li>Now using <code>Seurat::Convert</code> internally to coerce <code>seurat</code> class object to <code>SingleCellExperiment</code>, using <code>as(seurat, "SingleCellExperiment")</code>. This utility function was added to <a href="http://satijalab.org/seurat/">Seurat</a> v2.3.1.</li>
 </ul>
 </div>
 </div>

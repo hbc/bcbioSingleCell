@@ -1,11 +1,9 @@
 ---
 params:
   title: "Quality Control"
-  
-  # Use saved bcbioSingleCell object file as input.
-  object_file: "rds/YYYY-MM-DD/object.rds"
-  
-  # Filtering parameters
+  bcbiosinglecell_file: "rds/YYYY-MM-DD/object.rds"
+ 
+  # Filtering parameters 
   n_cells: !r Inf
   min_umis: 1000
   max_umis: !r Inf
@@ -25,10 +23,10 @@ bibliography: bibliography.bib
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-# Last modified 2019-04-10
+# Last modified 2019-04-17
 library(bcbioSingleCell)
 library(ggplot2)
-prepareSingleCellTemplate()
+prepareTemplate(package = "bcbioSingleCell")
 source("_setup.R")
 ```
 
@@ -37,7 +35,8 @@ source("_setup.R")
 
 # Load bcbioSingleCell object
 
-```{r object}
+```{r load-object}
+
 stopifnot(file.exists(params$object))
 if (fileExt(params$object) == "rds") {
     object <- readRDS(file = params$object)
@@ -47,7 +46,7 @@ if (fileExt(params$object) == "rds") {
     object <- get(x = name, inherits = FALSE)
 }
 stopifnot(
-    is(object, "bcbioRNASeq"),
+    is(object, "bcbioSingleCell"),
     is.character(name)
 )
 invisible(validObject(object))

@@ -1,3 +1,12 @@
+## bcbioSingleCell 0.3.12 (2019-04-18)
+
+### Minor changes
+
+- Deprecated `prepareSingleCellTemplate`, in favor of `prepareTemplate`.
+- Switched Travis CI configuration to use `singlecell` Docker image.
+
+
+
 ## bcbioSingleCell 0.3.11 (2019-04-11)
 
 ### Major changes
