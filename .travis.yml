@@ -1,40 +1,16 @@
-script: true
+language: general
 
-language: r
-cache: packages
+services:
+  - docker
 
-matrix:
-  include:
-    - os: linux
-      r: bioc-release
-    - os: linux
-      r: bioc-devel
-    - os: osx
-      r: bioc-release
-  allow_failures:
-    - os: osx
-    - r: bioc-devel
-  fast_finish: true
+before_install:
+  - docker pull acidgenomics/singlecell
+  - docker images
+  # Prevent BiocCheck > checkCodingPractice > checkLogicalUseFiles error.
+  - touch inst/rmarkdown/templates/quality-control/skeleton/_{footer,header,links}.Rmd
 
-branches:
-  only:
-    - master
-
-env:
-  global:
-    - LINTR_COMMENT_BOT=true
-
-r_packages:
-  - covr
-bioc_packages:
-  - BiocCheck
-r_github_packages:
-  - acidgenomics/lintr
-
-after_success:
-  - R CMD BiocCheck .
-  - Rscript -e 'lintr::lint_package()'
-  - Rscript -e 'covr::codecov()'
+script:
+  - docker run -ti --user="bioc" --volume="${PWD}:/bcbioSingleCell" --workdir="/bcbioSingleCell" acidgenomics/singlecell Rscript -e 'source("travis-docker.R")'
 
 notifications:
   email:
