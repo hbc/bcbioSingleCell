@@ -37,7 +37,7 @@
 #' @importFrom magrittr %>%
 #' @importFrom methods as as<- is new setClass show slot slot<- validObject
 #'   .hasSlot
-#' @importFrom minimalism acid_geom_abline acid_geom_label
+#' @importFrom acidplots acid_geom_abline acid_geom_label
 #'   acid_geom_label_average acid_geom_label_repel plotQC plotZerosVsDepth
 #' @importFrom readr read_lines read_tsv
 #' @importFrom rlang !! := UQ sym syms
