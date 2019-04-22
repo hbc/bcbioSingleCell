@@ -15,7 +15,6 @@ branches:
 
 environment:
   global:
-    _R_CHECK_FORCE_SUGGESTS_: false
     GCC_PATH: mingw_64
     R_ARCH: x64
     USE_RTOOLS: true
