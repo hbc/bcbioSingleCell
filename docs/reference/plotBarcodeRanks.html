@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.13</span>
       </span>
     </div>
 
@@ -116,7 +116,8 @@
     </div>
 
     <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>plotBarcodeRanks</span>(<span class='no'>object</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+<span class='fu'>plotBarcodeRanks</span>(<span class='no'>object</span>, <span class='kw'>colors</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>fitline</span> <span class='kw'>=</span>
+  <span class='st'>"#9A32CD"</span>, <span class='kw'>inflection</span> <span class='kw'>=</span> <span class='st'>"#0FBE7F"</span>, <span class='kw'>knee</span> <span class='kw'>=</span> <span class='st'>"#EE7600"</span>), <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>100</span>,
   <span class='kw'>fit.bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>df</span> <span class='kw'>=</span> <span class='fl'>20</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -125,6 +126,12 @@
     <tr>
       <th>object</th>
       <td><p>Object.</p></td>
+    </tr>
+    <tr>
+      <th>colors</th>
+      <td><p><code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(3)</a></code>.
+Character vector denoting <code>fitline</code>, <code>inflection</code>, and <code>knee</code> point colors.
+Must pass in color names or hexadecimal values.</p></td>
     </tr>
     <tr>
       <th>lower</th>

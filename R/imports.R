@@ -11,6 +11,7 @@
 #' @importFrom SingleCellExperiment isSpike
 #' @importFrom SummarizedExperiment assayNames assays colData colData<-
 #'   rowRanges rowRanges<-
+#' @importFrom acidplots acid_geom_bar acid_scale_y_continuous_nopad synesthesia
 #' @importFrom basejump camel cell2sample detectLanes emptyRanges formalsList
 #'   import interestingGroups interestingGroups<- makeDimnames
 #'   makeGRangesFromEnsembl makeGRangesFromGFF makeNames
@@ -28,16 +29,17 @@
 #'   geom_hline geom_line geom_point geom_smooth geom_step geom_violin ggplot
 #'   labs scale_x_continuous scale_y_continuous stat_ecdf theme
 #' @importFrom ggridges geom_density_ridges
-#' @importFrom goalie areDisjointSets areSetEqual assert hasLength hasNames
-#'   hasRows hasRownames isADirectory isAFile isAURL isAny isCharacter
-#'   isDirectory isFile isFlag isGGScale isHeaderLevel isInLeftOpenRange
-#'   isInRange isInRightOpenRange isInt isNonEmpty isNonNegative isNumber
-#'   isPositive isString isSubset validate validateClasses
+#' @importFrom goalie allAreHexColors areDisjointSets areSetEqual assert
+#'   hasLength hasNames hasRows hasRownames isADirectory isAFile isAURL isAny
+#'   isCharacter isDirectory isFile isFlag isGGScale isHeaderLevel
+#'   isInLeftOpenRange isInRange isInRightOpenRange isInt isNonEmpty
+#'   isNonNegative isNumber isPositive isString isSubset validate
+#'   validateClasses
 #' @importFrom graphics hist
-#' @importFrom magrittr %>%
+#' @importFrom magrittr %>% set_names
 #' @importFrom methods as as<- is new setClass show slot slot<- validObject
 #'   .hasSlot
-#' @importFrom minimalism acid_geom_abline acid_geom_label
+#' @importFrom acidplots acid_geom_abline acid_geom_label
 #'   acid_geom_label_average acid_geom_label_repel plotQC plotZerosVsDepth
 #' @importFrom readr read_lines read_tsv
 #' @importFrom rlang !! := UQ sym syms

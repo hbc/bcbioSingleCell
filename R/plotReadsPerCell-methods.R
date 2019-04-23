@@ -2,7 +2,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #' @inherit bioverbs::plotReadsPerCell
-#' @inheritParams minimalism::params
+#' @inheritParams acidplots::params
 #' @inheritParams basejump::params
 
 #' @param cutoffLine `logical(1)`.

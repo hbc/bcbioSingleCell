@@ -8,8 +8,9 @@
 \usage{
 \S4method{plotMitoRatio}{bcbioSingleCell}(object, geom = c("histogram",
   "ecdf", "violin", "ridgeline", "boxplot"), interestingGroups = NULL,
-  max = 1L, fill = getOption("acid.fill.discrete", default = NULL),
-  trans = "sqrt", title = "mito ratio")
+  max = 1L, fill = getOption(x = "acid.fill.discrete", default =
+  acidplots::scale_fill_synesthesia_d()), trans = "sqrt",
+  title = "mito ratio")
 }
 \arguments{
 \item{object}{Object.}

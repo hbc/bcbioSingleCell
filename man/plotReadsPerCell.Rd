@@ -8,9 +8,10 @@
 \usage{
 \S4method{plotReadsPerCell}{bcbioSingleCell}(object,
   interestingGroups = NULL, geom = c("histogram", "ecdf", "violin",
-  "ridgeline", "boxplot"), cutoffLine = FALSE,
-  color = getOption("acid.color.discrete", default = NULL),
-  fill = getOption("acid.fill.discrete", default = NULL),
+  "ridgeline", "boxplot"), cutoffLine = FALSE, color = getOption(x =
+  "acid.color.discrete", default =
+  acidplots::scale_colour_synesthesia_d()), fill = getOption(x =
+  "acid.fill.discrete", default = acidplots::scale_fill_synesthesia_d()),
   title = "reads per cell")
 }
 \arguments{

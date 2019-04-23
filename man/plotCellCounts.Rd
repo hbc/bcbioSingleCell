@@ -7,8 +7,9 @@
 \title{Plot cell counts}
 \usage{
 \S4method{plotCellCounts}{bcbioSingleCell}(object,
-  interestingGroups = NULL, fill = getOption("acid.fill.discrete",
-  default = NULL), title = "cell counts")
+  interestingGroups = NULL, fill = getOption(x = "acid.fill.discrete",
+  default = acidplots::scale_fill_synesthesia_d()),
+  title = "cell counts")
 }
 \arguments{
 \item{object}{Object.}

@@ -22,9 +22,6 @@ environment:
     - configuration: release
       R_VERSION: release
       BIOC_USE_DEVEL: "FALSE"
-    - configuration: oldrel
-      R_VERSION: oldrel
-      BIOC_USE_DEVEL: "FALSE"
     - configuration: devel
       R_VERSION: devel
       BIOC_USE_DEVEL: "TRUE"

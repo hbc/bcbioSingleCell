@@ -1,3 +1,13 @@
+## bcbioSingleCell 0.3.13 (2019-04-23)
+
+### Minor changes
+
+- Now importing ggplot2 code from [acidplots][] package.
+- `plotCellCounts`: Improved default appearance, removing black border.
+- Updated basejump and bcbio R package dependencies.
+
+
+
 ## bcbioSingleCell 0.3.12 (2019-04-18)
 
 ### Minor changes
@@ -1427,6 +1437,7 @@ removal with the `filterCells` function.
 
 [10X Genomics]: https://www.10xgenomics.com/
 [Acid Genomics]: https://acidgenomics.com/
+[acidplots]: https://acidplots.acidgenomics.com/
 [basejump]: https://basejump.acidgenomics.com/
 [bcbio]: https://bcbio-nextgen.readthedocs.io/
 [bcbioBase]: https://bioinformatics.sph.harvard.edu/bcbioBase/

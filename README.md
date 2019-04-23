@@ -94,7 +94,7 @@ The papers and software cited in our workflows are available as a [shared librar
 [devtools]: https://cran.r-project.org/package=devtools
 [inDrops]: https://github.com/indrops/indrops/
 [inDrops v3 index barcodes]: https://github.com/steinbaugh/koopa/blob/master/workflows/indrops/harvard_v3_sample_barcodes.csv
-[koopa]: https://github.com/steinbaugh/koopa/
+[koopa]: https://github.com/acidgenomics/koopa/
 [Paperpile]: https://paperpile.com/
 [R]: https://www.r-project.org/
 [SCE]: https://bioconductor.org/packages/SingleCellExperiment/

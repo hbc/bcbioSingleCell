@@ -7,9 +7,10 @@
 \title{Plot mitochondrial vs. coding counts}
 \usage{
 \S4method{plotMitoVsCoding}{bcbioSingleCell}(object,
-  interestingGroups = NULL, trendline = FALSE,
-  color = getOption("acid.color.discrete", default = NULL),
-  trans = "log2", title = "mito vs. coding")
+  interestingGroups = NULL, trendline = FALSE, color = getOption(x =
+  "acid.color.discrete", default =
+  acidplots::scale_colour_synesthesia_d()), trans = "log2",
+  title = "mito vs. coding")
 }
 \arguments{
 \item{object}{Object.}

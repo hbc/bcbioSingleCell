@@ -7,9 +7,10 @@
 \title{Plot UMI and gene correlation}
 \usage{
 \S4method{plotUMIsVsGenes}{bcbioSingleCell}(object,
-  interestingGroups = NULL, trendline = FALSE,
-  color = getOption("acid.color.discrete", default = NULL),
-  trans = "log2", title = "UMIs vs. genes")
+  interestingGroups = NULL, trendline = FALSE, color = getOption(x =
+  "acid.color.discrete", default =
+  acidplots::scale_colour_synesthesia_d()), trans = "log2",
+  title = "UMIs vs. genes")
 }
 \arguments{
 \item{object}{Object.}

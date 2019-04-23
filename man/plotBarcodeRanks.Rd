@@ -6,11 +6,16 @@
 \alias{plotBarcodeRanks,bcbioSingleCell-method}
 \title{Plot barcode ranks}
 \usage{
-\S4method{plotBarcodeRanks}{bcbioSingleCell}(object, lower = 100,
-  fit.bounds = NULL, df = 20)
+\S4method{plotBarcodeRanks}{bcbioSingleCell}(object, colors = c(fitline =
+  "dodgerblue", inflection = "darkorchid3", knee = "darkorange2"),
+  lower = 100, fit.bounds = NULL, df = 20)
 }
 \arguments{
 \item{object}{Object.}
+
+\item{colors}{\code{character(3)}.
+Character vector denoting \code{fitline}, \code{inflection}, and \code{knee} point colors.
+Must pass in color names or hexadecimal values.}
 
 \item{lower}{A numeric scalar specifying the lower bound on the total UMI count, at or below which all barcodes are assumed to correspond to empty droplets.}
 

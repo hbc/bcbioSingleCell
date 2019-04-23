@@ -1,7 +1,7 @@
 #' @name plotCellCounts
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inherit bioverbs::plotCellCounts
-#' @inheritParams minimalism::params
+#' @inheritParams acidplots::params
 #' @inheritParams basejump::params
 #' @examples
 #' data(indrops)
@@ -57,10 +57,8 @@ plotCellCounts.bcbioSingleCell <-  # nolint
                 fill = !!sym("interestingGroups")
             )
         ) +
-            geom_bar(
-                color = "black",
-                stat = "identity"
-            ) +
+            acid_geom_bar() +
+            acid_scale_y_continuous_nopad() +
             labs(
                 title = title,
                 x = NULL,

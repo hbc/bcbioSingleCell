@@ -3,6 +3,11 @@
 #' @include barcodeRanksPerSample-methods.R
 #' @inherit bioverbs::plotBarcodeRanks
 #' @inherit barcodeRanksPerSample
+#'
+#' @param colors `character(3)`.
+#'   Character vector denoting `fitline`, `inflection`, and `knee` point colors.
+#'   Must pass in color names or hexadecimal values.
+#'
 #' @examples
 #' data(indrops)
 #' plotBarcodeRanks(indrops)
@@ -19,10 +24,29 @@ NULL
 
 
 plotBarcodeRanks.bcbioSingleCell <-  # nolint
-    function(object) {
+    function(
+        object,
+        colors = c(
+            fitline = "dodgerblue",
+            inflection = "darkorchid3",
+            knee = "darkorange2"
+        )
+    ) {
+        validObject(object)
+        assert(
+            isCharacter(colors),
+            areSetEqual(
+                x = names(colors),
+                y = c("fitline", "inflection", "knee")
+            )
+        )
+
         ranksPerSample <- do.call(
             what = barcodeRanksPerSample,
-            args = matchArgsToDoCall(args = list(object = object))
+            args = matchArgsToDoCall(
+                args = list(object = object),
+                removeFormals = "colors"
+            )
         )
 
         sampleData <- sampleData(object)
@@ -65,20 +89,18 @@ plotBarcodeRanks.bcbioSingleCell <-  # nolint
                         x = !!sym("rank"),
                         y = !!sym("fitted")
                     ),
-                    color = "red",
+                    colour = colors[["fitline"]],
                     size = 1L
                 )
 
-                # Knee and inflection points
-                colors <- c("dodgerblue", "forestgreen")
                 p <- p +
                     geom_hline(
-                        color = colors[[1L]],
+                        colour = colors[["knee"]],
                         linetype = "dashed",
                         yintercept = ranks[["knee"]]
                     ) +
                     geom_hline(
-                        color = colors[[2L]],
+                        colour = colors[["inflection"]],
                         linetype = "dashed",
                         yintercept = ranks[["inflection"]]
                     )
@@ -103,7 +125,7 @@ plotBarcodeRanks.bcbioSingleCell <-  # nolint
                             y = !!sym("total"),
                             label = !!sym("label")
                         ),
-                        color = colors
+                        colour = colors[c("knee", "inflection")]
                     )
             },
             SIMPLIFY = FALSE,
@@ -116,8 +138,11 @@ plotBarcodeRanks.bcbioSingleCell <-  # nolint
         plot_grid(plotlist = plotlist)
     }
 
-formals(plotBarcodeRanks.bcbioSingleCell) <-
-    formals(barcodeRanksPerSample.bcbioSingleCell)
+f1 <- formals(plotBarcodeRanks.bcbioSingleCell)
+f2 <- formals(barcodeRanksPerSample.bcbioSingleCell)
+f2 <- f2[setdiff(names(f2), names(f1))]
+f <- c(f1, f2)
+formals(plotBarcodeRanks.bcbioSingleCell) <- f
 
 
 

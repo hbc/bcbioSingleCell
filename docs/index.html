@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bcbioSingleCell</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.13</span>
       </span>
     </div>
 
@@ -112,7 +112,7 @@
 <h3 class="hasAnchor">
 <a href="#fastq-files-with-samples-multiplexed-by-index-barcode" class="anchor"></a>FASTQ files with samples multiplexed by index barcode</h3>
 <p>This is our current recommended method for analyzing an <a href="https://github.com/indrops/indrops/">inDrops</a> dataset. The sample index barcodes are multiplexed per FASTQ set. For Illumina sequencing data, the raw binary base call (BCL) data must be converted into FASTQs (split into <code>R1</code>-<code>R4</code> files) using <a href="https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html">bcl2fastq</a>.</p>
-<p>The <a href="https://github.com/indrops/indrops/">inDrops</a> library version is automatically detected by <a href="https://bcbio-nextgen.readthedocs.io/">bcbio</a>, but ensure that the sample index sequences provided match the library version when attempting to create a <code>bcbioSingleCell</code> object. A current list of <a href="https://github.com/steinbaugh/koopa/blob/master/workflows/indrops/harvard_v3_sample_barcodes.csv">inDrops v3 index barcodes</a> is available in the <a href="https://github.com/steinbaugh/koopa/">koopa</a> shell bootloader.</p>
+<p>The <a href="https://github.com/indrops/indrops/">inDrops</a> library version is automatically detected by <a href="https://bcbio-nextgen.readthedocs.io/">bcbio</a>, but ensure that the sample index sequences provided match the library version when attempting to create a <code>bcbioSingleCell</code> object. A current list of <a href="https://github.com/steinbaugh/koopa/blob/master/workflows/indrops/harvard_v3_sample_barcodes.csv">inDrops v3 index barcodes</a> is available in the <a href="https://github.com/acidgenomics/koopa/">koopa</a> shell bootloader.</p>
 <p>Consult the <a href="https://bcbio-nextgen.readthedocs.io/">bcbio</a> documentation for more information on how to configure an <a href="https://github.com/indrops/indrops/">inDrops</a> run prior to loading into <a href="https://www.r-project.org/">R</a> with the <code><a href="reference/bcbioSingleCell-class.html">bcbioSingleCell()</a></code> function.</p>
 <table class="table">
 <thead><tr class="header">

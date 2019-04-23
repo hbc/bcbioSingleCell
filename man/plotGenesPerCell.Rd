@@ -9,8 +9,8 @@
 \S4method{plotGenesPerCell}{bcbioSingleCell}(object,
   geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
   interestingGroups = NULL, min = 0L, max = Inf, trans = "log2",
-  fill = getOption("acid.fill.discrete", default = NULL),
-  title = "genes per cell")
+  fill = getOption(x = "acid.fill.discrete", default =
+  acidplots::scale_fill_synesthesia_d()), title = "genes per cell")
 }
 \arguments{
 \item{object}{Object.}
