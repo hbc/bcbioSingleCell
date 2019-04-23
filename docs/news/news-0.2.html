@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot cell counts — plotCellCounts • bcbioSingleCell</title>
+<title>Version 0.2 • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,10 +32,7 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Plot cell counts — plotCellCounts" />
-
-<meta property="og:description" content="Plot cell counts" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="Version 0.2" />
 
 
 
@@ -52,7 +49,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -104,74 +101,70 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot cell counts</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/plotCellCounts-methods.R'><code>R/plotCellCounts-methods.R</code></a></small>
-    <div class="hidden name"><code>plotCellCounts.Rd</code></div>
+      <h1>Changelog <small>0.2</small></h1>
+      
     </div>
 
-    <div class="ref-description">
-    
-    <p>Plot cell counts</p>
-    
-    </div>
-
-    <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>plotCellCounts</span>(<span class='no'>object</span>,
-  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='st'>"acid.fill.discrete"</span>,
-  <span class='kw'>default</span> <span class='kw'>=</span> <span class='kw pkg'>acidplots</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/acidplots/topics/synesthesia'>scale_fill_synesthesia_d</a></span>()),
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"cell counts"</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>object</th>
-      <td><p>Object.</p></td>
-    </tr>
-    <tr>
-      <th>interestingGroups</th>
-      <td><p><code>character</code>.
-Groups of interest that define the samples. If left unset, defaults to
-<code>sampleName</code>.</p></td>
-    </tr>
-    <tr>
-      <th>fill</th>
-      <td><p><code>ggproto</code>/<code>ScaleDiscrete</code>.
-Desired ggplot2 fill scale. Must supply discrete values. When set to
-<code>NULL</code>, the default ggplot2 color palette will be used. If manual color
-definitions are desired, we recommend using <code><a href='https://www.rdocumentation.org/packages/ggplot2/topics/scale_manual'>ggplot2::scale_fill_manual()</a></code>.</p>
-<p>To set the discrete fill palette globally, use:</p><pre>options(acid.fill.discrete = ggplot2::scale_fill_viridis_d())
-</pre></td>
-    </tr>
-    <tr>
-      <th>title</th>
-      <td><p><code><a href='https://www.rdocumentation.org/packages/base/topics/character'>character(1)</a></code>.
-Plot title.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p><code>ggplot</code>.</p>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>indrops</span>)
-<span class='fu'>plotCellCounts</span>(<span class='no'>indrops</span>)</div><div class='img'><img src='plotCellCounts-1.png' alt='' width='700' height='433' /></div></pre>
+    <div id="bcbiosinglecell-0-2-0-2018-08-09" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-2-0-2018-08-09" class="anchor"></a>bcbioSingleCell 0.2.0 (2018-08-09)</h2>
+<p>This is a significant maintenance release designed to simplify the package for long-term stability. Here we are removing code support for <a href="http://satijalab.org/seurat/">Seurat</a> and visualization of cell clustering. This functionality has been moved to the new <a href="https://pointillism.acidgenomics.com/">pointillism</a> package. We have streamlined <a href="https://bioinformatics.sph.harvard.edu/bcbioSingleCell/">bcbioSingleCell</a> to simply import <a href="https://bcbio-nextgen.readthedocs.io/">bcbio</a> single-cell data using the <code>bcbioSingleCell</code> constructor or <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> data with the <code>readCellRanger</code> function. The package continues to provide quality control visualization (see <code>plotQC</code>) and low-quality cell removal with the <code>filterCells</code> function.</p>
+<div id="major-changes-8" class="section level3">
+<h3 class="hasAnchor">
+<a href="#major-changes-8" class="anchor"></a>Major changes</h3>
+<ul>
+<li>Moved clustering and <code>seurat</code> object support to <a href="https://pointillism.acidgenomics.com/">pointillism</a>: <code>cellCountsPerCluster</code>, <code>cellTypesPerCluster</code>, <code>clusterCellCountsPerSample</code>, <code>fetchData</code> functions, <code>plotFeature</code> functions, <code>plotGene</code> functions, <code>plotMarker</code> functions, <code>plotPCA</code>, plotTSNE<code>,</code>plotUMAP`.</li>
+<li>Now requiring <a href="https://bioinformatics.sph.harvard.edu/bcbioBase/">bcbioBase</a> v0.4+ and <a href="https://basejump.acidgenomics.com/">basejump</a> v0.7+.</li>
+</ul>
+</div>
+<div id="defunct-functions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#defunct-functions" class="anchor"></a>Defunct functions</h3>
+<ul>
+<li>Removed from exports (for simplicifcation): <code>plotClusters</code>, <code>plotFeatures</code>, <code>quantileHeatmap</code>, <code>readMarkers</code>, <code>readMarkersFile</code>.</li>
+</ul>
+</div>
+<div id="minor-changes-14" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-changes-14" class="anchor"></a>Minor changes</h3>
+<ul>
+<li>No longer exporting <code>mapCellsToSamples</code>. This is now only called internally.</li>
+<li>Updated documentation to use <a href="https://cran.r-project.org/package=roxygen2">roxygen2</a> v6.1.</li>
+</ul>
+</div>
+</div>
+    <div id="bcbiosinglecell-0-2-1-2018-08-19" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-2-1-2018-08-19" class="anchor"></a>bcbioSingleCell 0.2.1 (2018-08-19)</h2>
+<div id="major-changes-7" class="section level3">
+<h3 class="hasAnchor">
+<a href="#major-changes-7" class="anchor"></a>Major changes</h3>
+<ul>
+<li>Moved clustering and marker templates to <a href="https://pointillism.acidgenomics.com/">pointillism</a> package, since all clustering code has been moved there. The quality control template using the <code>filterCells</code> function is still provided here.</li>
+</ul>
+</div>
+<div id="minor-changes-13" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-changes-13" class="anchor"></a>Minor changes</h3>
+<ul>
+<li>
+<code>prepareSingleCellTemplate</code>: Improved internal code to use updated <code>prepareTemplate</code>, which has been migrated to <a href="https://basejump.acidgenomics.com/">basejump</a> package.</li>
+<li>Added back the <code>cellranger_small</code> example dataset.</li>
+</ul>
+</div>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Michael Steinbaugh, Rory Kirchner</p>
+    <div id="tocnav">
+      <h2>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="#bcbiosinglecell-0-2-0-2018-08-09">0.2.0</a></li>
+        <li><a href="#bcbiosinglecell-0-2-1-2018-08-19">0.2.1</a></li>
+      </ul>
+    </div>
   </div>
+
 </div>
 
       <footer>

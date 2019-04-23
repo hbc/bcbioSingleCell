@@ -12,6 +12,9 @@ authors:
   Harvard Chan Bioinformatics Core:
     href: https://bioinformatics.sph.harvard.edu/
 
+news:
+  - one_page: false
+
 reference:
   - title: S4 classes
     contents:
@@ -27,9 +30,6 @@ reference:
   - title: Plots
     contents:
     - starts_with("plot")
-  - title: Markdown
-    contents:
-    - ends_with("Template")
   - title: Example data
     contents:
     - indrops
