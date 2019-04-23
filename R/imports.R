@@ -11,6 +11,7 @@
 #' @importFrom SingleCellExperiment isSpike
 #' @importFrom SummarizedExperiment assayNames assays colData colData<-
 #'   rowRanges rowRanges<-
+#' @importFrom acidplots acid_geom_bar acid_scale_y_continuous_nopad
 #' @importFrom basejump camel cell2sample detectLanes emptyRanges formalsList
 #'   import interestingGroups interestingGroups<- makeDimnames
 #'   makeGRangesFromEnsembl makeGRangesFromGFF makeNames
