@@ -8,6 +8,7 @@
 \alias{export}
 \alias{markdownHeader}
 \alias{saveData}
+\alias{set_names}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -16,5 +17,7 @@ below to see their documentation.
 
 \describe{
   \item{basejump}{\code{\link[basejump]{assignAndSaveData}}, \code{\link[basejump]{basenameSansExt}}, \code{\link[basejump]{export}}, \code{\link[basejump]{markdownHeader}}, \code{\link[basejump]{saveData}}}
+
+  \item{magrittr}{\code{\link[magrittr]{set_names}}}
 }}
 

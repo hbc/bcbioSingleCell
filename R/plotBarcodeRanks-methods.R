@@ -19,7 +19,13 @@ NULL
 
 
 plotBarcodeRanks.bcbioSingleCell <-  # nolint
-    function(object) {
+    function(
+        object,
+        colors = set_names(
+            x = synesthesia(n = 3L),
+            value = c("knee", "inflection", "fitline")
+        )
+    ) {
         ranksPerSample <- do.call(
             what = barcodeRanksPerSample,
             args = matchArgsToDoCall(args = list(object = object))
@@ -65,20 +71,18 @@ plotBarcodeRanks.bcbioSingleCell <-  # nolint
                         x = !!sym("rank"),
                         y = !!sym("fitted")
                     ),
-                    color = "red",
+                    colour = colors[["fitline"]],
                     size = 1L
                 )
 
-                # Knee and inflection points
-                colors <- c("dodgerblue", "forestgreen")
                 p <- p +
                     geom_hline(
-                        color = colors[[1L]],
+                        colour = colors[["knee"]],
                         linetype = "dashed",
                         yintercept = ranks[["knee"]]
                     ) +
                     geom_hline(
-                        color = colors[[2L]],
+                        colour = colors[["inflection"]],
                         linetype = "dashed",
                         yintercept = ranks[["inflection"]]
                     )
@@ -103,7 +107,7 @@ plotBarcodeRanks.bcbioSingleCell <-  # nolint
                             y = !!sym("total"),
                             label = !!sym("label")
                         ),
-                        color = colors
+                        colour = colors[c("knee", "inflection")]
                     )
             },
             SIMPLIFY = FALSE,
