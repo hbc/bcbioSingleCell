@@ -8,8 +8,9 @@
 \usage{
 \S4method{plotNovelty}{bcbioSingleCell}(object, geom = c("histogram",
   "ecdf", "violin", "ridgeline", "boxplot"), interestingGroups = NULL,
-  min = 0L, fill = getOption("acid.fill.discrete", default = NULL),
-  trans = "identity", title = "novelty : genes per UMI")
+  min = 0L, fill = getOption(x = "acid.fill.discrete", default =
+  acidplots::scale_fill_synesthesia_d()), trans = "identity",
+  title = "novelty : genes per UMI")
 }
 \arguments{
 \item{object}{Object.}

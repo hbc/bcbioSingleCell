@@ -8,8 +8,8 @@
 \usage{
 \S4method{plotQC}{bcbioSingleCell}(object, interestingGroups = NULL,
   geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
-  headerLevel = 2L, legend = getOption("acid.legend", default = TRUE),
-  return = c("grid", "list", "markdown"))
+  headerLevel = 2L, legend = getOption(x = "acid.legend", default =
+  TRUE), return = c("grid", "list", "markdown"))
 }
 \arguments{
 \item{object}{Object.}
