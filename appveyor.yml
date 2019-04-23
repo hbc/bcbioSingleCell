@@ -1,7 +1,7 @@
 init:
   ps: |
         $ErrorActionPreference = "Stop"
-        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+        Invoke-WebRequest http://raw.github.com/acidgenomics/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
         Import-Module '..\appveyor-tool.ps1'
 
 install:
@@ -9,28 +9,29 @@ install:
 
 platform: x64
 
-cache:
-  - C:\RLibrary -> appveyor.yml
-
 branches:
   only:
     - master
 
 environment:
   global:
-    _R_CHECK_FORCE_SUGGESTS_: false
     GCC_PATH: mingw_64
     R_ARCH: x64
     USE_RTOOLS: true
   matrix:
-    - R_VERSION: patched
+    - configuration: release
+      R_VERSION: release
       BIOC_USE_DEVEL: "FALSE"
-    # - R_VERSION: devel
-    #   BIOC_USE_DEVEL: "TRUE"
+    - configuration: oldrel
+      R_VERSION: oldrel
+      BIOC_USE_DEVEL: "FALSE"
+    - configuration: devel
+      R_VERSION: devel
+      BIOC_USE_DEVEL: "TRUE"
 
 matrix:
   allow_failures:
-    - R_VERSION: devel
+    - configuration: devel
   fast_finish: true
 
 build_script:
