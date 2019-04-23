@@ -3,6 +3,11 @@
 #' @include barcodeRanksPerSample-methods.R
 #' @inherit bioverbs::plotBarcodeRanks
 #' @inherit barcodeRanksPerSample
+#'
+#' @param colors `character(3)`.
+#'   Character vector denoting `fitline`, `inflection`, and `knee` point colors.
+#'   Must pass in color names or hexadecimal values.
+#'
 #' @examples
 #' data(indrops)
 #' plotBarcodeRanks(indrops)
@@ -23,12 +28,24 @@ plotBarcodeRanks.bcbioSingleCell <-  # nolint
         object,
         colors = set_names(
             x = synesthesia(n = 3L),
-            value = c("knee", "inflection", "fitline")
+            value = c("fitline", "inflection", "knee")
         )
     ) {
+        validObject(object)
+        assert(
+            isCharacter(colors),
+            areSetEqual(
+                x = names(colors),
+                y = c("fitline", "inflection", "knee")
+            )
+        )
+
         ranksPerSample <- do.call(
             what = barcodeRanksPerSample,
-            args = matchArgsToDoCall(args = list(object = object))
+            args = matchArgsToDoCall(
+                args = list(object = object),
+                removeFormals = "colors"
+            )
         )
 
         sampleData <- sampleData(object)
@@ -120,8 +137,11 @@ plotBarcodeRanks.bcbioSingleCell <-  # nolint
         plot_grid(plotlist = plotlist)
     }
 
-formals(plotBarcodeRanks.bcbioSingleCell) <-
-    formals(barcodeRanksPerSample.bcbioSingleCell)
+f1 <- formals(plotBarcodeRanks.bcbioSingleCell)
+f2 <- formals(barcodeRanksPerSample.bcbioSingleCell)
+f2 <- f2[setdiff(names(f2), names(f1))]
+f <- c(f1, f2)
+formals(plotBarcodeRanks.bcbioSingleCell) <- f
 
 
 
