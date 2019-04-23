@@ -4,6 +4,7 @@
 
 - Now importing ggplot2 code from [acidplots][] package.
 - `plotCellCounts`: Improved default appearance, removing black border.
+- Updated basejump and bcbio R package dependencies.
 
 
 

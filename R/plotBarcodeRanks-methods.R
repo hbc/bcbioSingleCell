@@ -26,10 +26,7 @@ NULL
 plotBarcodeRanks.bcbioSingleCell <-  # nolint
     function(
         object,
-        colors = set_names(
-            x = synesthesia(n = 3L),
-            value = c("fitline", "inflection", "knee")
-        )
+        colors
     ) {
         validObject(object)
         assert(
@@ -138,6 +135,9 @@ plotBarcodeRanks.bcbioSingleCell <-  # nolint
     }
 
 f1 <- formals(plotBarcodeRanks.bcbioSingleCell)
+f1[["colors"]] <-
+    synesthesia(n = 3L) %>%
+    set_names(c("fitline", "inflection", "knee"))
 f2 <- formals(barcodeRanksPerSample.bcbioSingleCell)
 f2 <- f2[setdiff(names(f2), names(f1))]
 f <- c(f1, f2)

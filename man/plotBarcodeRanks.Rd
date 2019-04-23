@@ -6,9 +6,9 @@
 \alias{plotBarcodeRanks,bcbioSingleCell-method}
 \title{Plot barcode ranks}
 \usage{
-\S4method{plotBarcodeRanks}{bcbioSingleCell}(object, colors = set_names(x
-  = synesthesia(n = 3L), value = c("fitline", "inflection", "knee")),
-  lower = 100, fit.bounds = NULL, df = 20)
+\S4method{plotBarcodeRanks}{bcbioSingleCell}(object, colors = c(fitline =
+  "#9A32CD", inflection = "#0FBE7F", knee = "#EE7600"), lower = 100,
+  fit.bounds = NULL, df = 20)
 }
 \arguments{
 \item{object}{Object.}
