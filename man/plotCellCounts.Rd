@@ -6,6 +6,8 @@
 \alias{plotCellCounts,bcbioSingleCell-method}
 \title{Plot cell counts}
 \usage{
+plotCellCounts(object, ...)
+
 \S4method{plotCellCounts}{bcbioSingleCell}(object,
   interestingGroups = NULL, fill = getOption(x = "acid.fill.discrete",
   default = acidplots::scale_fill_synesthesia_d()),
@@ -28,6 +30,8 @@ To set the discrete fill palette globally, use:\preformatted{options(acid.fill.d
 
 \item{title}{\code{character(1)}.
 Plot title.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \code{ggplot}.

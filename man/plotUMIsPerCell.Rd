@@ -6,6 +6,8 @@
 \alias{plotUMIsPerCell,bcbioSingleCell-method}
 \title{Plot UMIs per cell}
 \usage{
+plotUMIsPerCell(object, ...)
+
 \S4method{plotUMIsPerCell}{bcbioSingleCell}(object, geom = c("histogram",
   "ecdf", "violin", "ridgeline", "boxplot"), interestingGroups = NULL,
   min = 0L, max = Inf, point = c("none", "inflection", "knee"),
@@ -59,6 +61,8 @@ To set the discrete fill palette globally, use:\preformatted{options(acid.fill.d
 
 \item{title}{\code{character(1)}.
 Plot title.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \code{ggplot}.

@@ -2,13 +2,14 @@
 #' @author Michael Steinbaugh
 #' @include globals.R
 #' @inherit acidplots::plotQC
+#'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params
-#'
 #' @param headerLevel `integer(1)` (`1`-`7`).
 #'   R Markdown header level.
 #' @param legend `logical(1)`.
 #'   Include plot legend.
+#' @param ... Additional arguments.
 #'
 #' @return
 #'   - `grid`: Graphical output.
@@ -25,6 +26,7 @@ NULL
 #' @rdname plotQC
 #' @name plotQC
 #' @importFrom bioverbs plotQC
+#' @usage plotQC(object, ...)
 #' @export
 NULL
 

@@ -17,6 +17,7 @@ NULL
 #' @rdname barcodeRanksPerSample
 #' @name barcodeRanksPerSample
 #' @importFrom bioverbs barcodeRanksPerSample
+#' @usage barcodeRanksPerSample(object, ...)
 #' @export
 NULL
 

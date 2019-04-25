@@ -6,6 +6,8 @@
 \alias{plotGenesPerCell,bcbioSingleCell-method}
 \title{Plot genes per cell}
 \usage{
+plotGenesPerCell(object, ...)
+
 \S4method{plotGenesPerCell}{bcbioSingleCell}(object,
   geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
   interestingGroups = NULL, min = 0L, max = Inf, trans = "log2",
@@ -45,6 +47,8 @@ To set the discrete fill palette globally, use:\preformatted{options(acid.fill.d
 
 \item{title}{\code{character(1)}.
 Plot title.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \code{ggplot}.

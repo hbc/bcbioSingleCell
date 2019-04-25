@@ -6,6 +6,8 @@
 \alias{plotReadsPerCell,bcbioSingleCell-method}
 \title{Plot read counts per cell}
 \usage{
+plotReadsPerCell(object, ...)
+
 \S4method{plotReadsPerCell}{bcbioSingleCell}(object,
   interestingGroups = NULL, geom = c("histogram", "ecdf", "violin",
   "ridgeline", "boxplot"), cutoffLine = FALSE, color = getOption(x =
@@ -46,6 +48,8 @@ To set the discrete fill palette globally, use:\preformatted{options(acid.fill.d
 
 \item{title}{\code{character(1)}.
 Plot title.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \code{ggplot}.

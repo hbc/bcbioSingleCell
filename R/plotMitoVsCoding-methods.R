@@ -1,8 +1,11 @@
 #' @name plotMitoVsCoding
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inherit bioverbs::plotMitoVsCoding
+#'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params
+#' @param ... Additional arguments.
+#'
 #' @examples
 #' data(indrops)
 #' plotMitoVsCoding(indrops)
@@ -13,6 +16,7 @@ NULL
 #' @rdname plotMitoVsCoding
 #' @name plotMitoVsCoding
 #' @importFrom bioverbs plotMitoVsCoding
+#' @usage plotMitoVsCoding(object, ...)
 #' @export
 NULL
 

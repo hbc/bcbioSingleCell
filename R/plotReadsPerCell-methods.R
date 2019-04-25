@@ -2,11 +2,12 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #' @inherit bioverbs::plotReadsPerCell
+#'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params
-
 #' @param cutoffLine `logical(1)`.
 #'   Include a line marking the cutoff.
+#' @param ... Additional arguments.
 #'
 #' @examples
 #' data(indrops)
@@ -19,6 +20,7 @@ NULL
 #' @rdname plotReadsPerCell
 #' @name plotReadsPerCell
 #' @importFrom bioverbs plotReadsPerCell
+#' @usage plotReadsPerCell(object, ...)
 #' @export
 NULL
 

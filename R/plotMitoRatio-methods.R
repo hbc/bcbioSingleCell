@@ -2,8 +2,11 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #' @inherit bioverbs::plotMitoRatio
+#'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params
+#' @param ... Additional arguments.
+#'
 #' @examples
 #' data(indrops)
 #' plotMitoRatio(indrops)
@@ -14,6 +17,7 @@ NULL
 #' @rdname plotMitoRatio
 #' @name plotMitoRatio
 #' @importFrom bioverbs plotMitoRatio
+#' @usage plotMitoRatio(object, ...)
 #' @export
 NULL
 
