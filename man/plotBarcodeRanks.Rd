@@ -6,6 +6,8 @@
 \alias{plotBarcodeRanks,bcbioSingleCell-method}
 \title{Plot barcode ranks}
 \usage{
+plotBarcodeRanks(object, ...)
+
 \S4method{plotBarcodeRanks}{bcbioSingleCell}(object, colors = c(fitline =
   "dodgerblue", inflection = "darkorchid3", knee = "darkorange2"),
   lower = 100, fit.bounds = NULL, df = 20)
@@ -22,6 +24,8 @@ Must pass in color names or hexadecimal values.}
 \item{fit.bounds}{A numeric vector of length 2, specifying the lower and upper bouunds on the total UMI count for spline fitting.}
 
 \item{df}{Further arguments to pass to \code{\link{smooth.spline}}.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \code{ggplot} grid.

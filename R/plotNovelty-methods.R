@@ -2,8 +2,11 @@
 #' @author Michael Steinbaugh
 #' @include globals.R
 #' @inherit bioverbs::plotNovelty
+#'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params
+#' @param ... Additional arguments.
+#'
 #' @examples
 #' data(indrops)
 #' plotNovelty(indrops)
@@ -14,6 +17,7 @@ NULL
 #' @rdname plotNovelty
 #' @name plotNovelty
 #' @importFrom bioverbs plotNovelty
+#' @usage plotNovelty(object, ...)
 #' @export
 NULL
 

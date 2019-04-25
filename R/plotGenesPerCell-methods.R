@@ -2,8 +2,11 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #' @inherit bioverbs::plotGenesPerCell
+#'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params
+#' @param ... Additional arguments.
+#'
 #' @examples
 #' data(indrops)
 #' plotGenesPerCell(indrops)
@@ -14,6 +17,7 @@ NULL
 #' @rdname plotGenesPerCell
 #' @name plotGenesPerCell
 #' @importFrom bioverbs plotGenesPerCell
+#' @usage plotGenesPerCell(object, ...)
 #' @export
 NULL
 

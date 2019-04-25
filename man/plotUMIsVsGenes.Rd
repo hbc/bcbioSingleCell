@@ -6,6 +6,8 @@
 \alias{plotUMIsVsGenes,bcbioSingleCell-method}
 \title{Plot UMI and gene correlation}
 \usage{
+plotUMIsVsGenes(object, ...)
+
 \S4method{plotUMIsVsGenes}{bcbioSingleCell}(object,
   interestingGroups = NULL, trendline = FALSE, color = getOption(x =
   "acid.color.discrete", default =
@@ -38,6 +40,8 @@ For more information:\preformatted{help(topic = "scale_x_continuous", package = 
 
 \item{title}{\code{character(1)}.
 Plot title.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \code{ggplot}.

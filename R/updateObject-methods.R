@@ -12,14 +12,6 @@ NULL
 
 
 
-#' @rdname updateObject
-#' @name updateObject
-#' @importFrom BiocGenerics updateObject
-#' @export
-NULL
-
-
-
 updateObject.bcbioSingleCell <-  # nolint
     function(object, rowRanges = NULL) {
         assert(isAny(rowRanges, classes = c("GRanges", "NULL")))

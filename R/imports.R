@@ -3,7 +3,7 @@
 #' @importMethodsFrom basejump coerce
 #'
 #' @importFrom Biobase sampleNames
-#' @importFrom BiocGenerics cbind counts do.call
+#' @importFrom BiocGenerics cbind counts do.call updateObject
 #' @importFrom DropletUtils barcodeRanks
 #' @importFrom Matrix colSums readMM rowSums
 #' @importFrom S4Vectors as.data.frame as.matrix mcols mcols<- merge metadata

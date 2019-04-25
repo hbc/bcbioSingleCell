@@ -6,6 +6,8 @@
 \alias{plotQC,bcbioSingleCell-method}
 \title{Quality control}
 \usage{
+plotQC(object, ...)
+
 \S4method{plotQC}{bcbioSingleCell}(object, interestingGroups = NULL,
   geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
   headerLevel = 2L, legend = getOption(x = "acid.legend", default =
@@ -31,6 +33,8 @@ Include plot legend.}
 \item{return}{\code{character(1)}.
 Return type. Uses \code{\link[base:match.arg]{match.arg()}} internally and defaults
 to the first argument in the \code{character} vector.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 \itemize{

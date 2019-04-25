@@ -1,8 +1,11 @@
 #' @name plotUMIsVsGenes
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inherit bioverbs::plotUMIsVsGenes
+#'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params
+#' @param ... Additional arguments.
+#'
 #' @examples
 #' data(indrops)
 #' plotUMIsVsGenes(indrops)
@@ -13,6 +16,7 @@ NULL
 #' @rdname plotUMIsVsGenes
 #' @name plotUMIsVsGenes
 #' @importFrom bioverbs plotUMIsVsGenes
+#' @usage plotUMIsVsGenes(object, ...)
 #' @export
 NULL
 

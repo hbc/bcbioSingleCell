@@ -1,8 +1,11 @@
 #' @name plotCellCounts
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inherit bioverbs::plotCellCounts
+#'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params
+#' @param ... Additional arguments.
+#'
 #' @examples
 #' data(indrops)
 #' plotCellCounts(indrops)
@@ -13,6 +16,7 @@ NULL
 #' @rdname plotCellCounts
 #' @name plotCellCounts
 #' @importFrom bioverbs plotCellCounts
+#' @usage plotCellCounts(object, ...)
 #' @export
 NULL
 

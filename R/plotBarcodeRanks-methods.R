@@ -7,6 +7,7 @@
 #' @param colors `character(3)`.
 #'   Character vector denoting `fitline`, `inflection`, and `knee` point colors.
 #'   Must pass in color names or hexadecimal values.
+#' @param ... Additional arguments.
 #'
 #' @examples
 #' data(indrops)
@@ -18,6 +19,7 @@ NULL
 #' @rdname plotBarcodeRanks
 #' @name plotBarcodeRanks
 #' @importFrom bioverbs plotBarcodeRanks
+#' @usage plotBarcodeRanks(object, ...)
 #' @export
 NULL
 
