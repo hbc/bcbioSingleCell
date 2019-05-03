@@ -1,8 +1,3 @@
-# AppVeyor-CI configuration for Bioconductor packages
-# https://www.appveyor.com/docs/appveyor-yml/
-# https://github.com/krlmlr/r-appveyor
-
-# Download script file from GitHub.
 init:
   ps: |
         $ErrorActionPreference = "Stop"
@@ -14,13 +9,29 @@ install:
 
 platform: x64
 
-cache:
-  - C:\RLibrary
+branches:
+  only:
+    - master
 
 environment:
   global:
+    GCC_PATH: mingw_64
     R_ARCH: x64
     USE_RTOOLS: true
+  matrix:
+    - configuration: oldrel
+      R_VERSION: oldrel
+    - configuration: release
+      R_VERSION: release
+      BIOC_USE_DEVEL: "FALSE"
+    - configuration: devel
+      R_VERSION: devel
+      BIOC_USE_DEVEL: "TRUE"
+
+matrix:
+  allow_failures:
+    - configuration: devel
+  fast_finish: true
 
 build_script:
   - travis-tool.sh install_bioc GenomeInfoDbData
@@ -28,7 +39,6 @@ build_script:
   - travis-tool.sh install_bioc ensembldb
   - travis-tool.sh install_bioc EnsDb.Hsapiens.v75
   - travis-tool.sh install_bioc_deps
-  - travis-tool.sh install_deps
 
 test_script:
   - travis-tool.sh run_tests
@@ -40,26 +50,21 @@ on_failure:
 artifacts:
   - path: '*.Rcheck\**\*.log'
     name: Logs
-
   - path: '*.Rcheck\**\*.out'
     name: Logs
-
   - path: '*.Rcheck\**\*.fail'
     name: Logs
-
   - path: '*.Rcheck\**\*.Rout'
     name: Logs
-
   - path: '\*_*.tar.gz'
     name: Bits
-
   - path: '\*_*.zip'
     name: Bits
+  - path: all-Rout.zip
+    name: AllRout
 
 notifications:
   - provider: Email
     to:
       - mike@steinbaugh.com
-    on_build_success: false
-    on_build_failure: true
-    on_build_status_changed: true
+on_build_status_changed: true
