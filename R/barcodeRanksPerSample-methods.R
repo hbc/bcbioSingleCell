@@ -49,10 +49,36 @@ barcodeRanksPerSample.bcbioSingleCell <-  # nolint
                         which = which
                     )
                 )
-                assert(identical(
-                    x = names(x),
-                    y = c("rank", "total", "fitted", "knee", "inflection")
-                ))
+
+                # DropletUtils return assert checks.
+                if (packageVersion("DropletUtils") >= "1.4") {
+                    assert(
+                        is(x, "DataFrame"),
+                        identical(
+                            x = colnames(x),
+                            y = c("rank", "total", "fitted")
+                        ),
+                        isSubset(
+                            x = names(metadata(x)),
+                            y = c("knee", "inflection")
+                        )
+                    )
+                } else {
+                    assert(
+                        is.list(x),
+                        identical(
+                            x = names(x),
+                            y = c(
+                                "rank",
+                                "total",
+                                "fitted",
+                                "knee",
+                                "inflection"
+                            )
+                        )
+                    )
+                }
+
                 x
             }
         )
