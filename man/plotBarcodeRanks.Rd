@@ -62,7 +62,9 @@ Note that only points with total counts above \code{lower} will be considered, r
 }
 \examples{
 data(indrops)
-plotBarcodeRanks(indrops)
+if (packageVersion("DropletUtils") >= "1.4") {
+    plotBarcodeRanks(indrops)
+}
 }
 \seealso{
 \code{\link[DropletUtils:barcodeRanks]{DropletUtils::barcodeRanks()}}.

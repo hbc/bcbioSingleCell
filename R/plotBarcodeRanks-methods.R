@@ -11,7 +11,9 @@
 #'
 #' @examples
 #' data(indrops)
-#' plotBarcodeRanks(indrops)
+#' if (packageVersion("DropletUtils") >= "1.4") {
+#'     plotBarcodeRanks(indrops)
+#' }
 NULL
 
 
@@ -64,11 +66,9 @@ plotBarcodeRanks.bcbioSingleCell <-  # nolint
             sampleName = sampleNames,
             ranks = ranksPerSample,
             FUN = function(sampleName, ranks) {
-                data <- tibble(
-                    rank = ranks[["rank"]],
-                    total = ranks[["total"]],  # nUMI
-                    fitted = ranks[["fitted"]]
-                )
+                data <- as_tibble(ranks, rownames = NULL)
+                inflection <- metadata(ranks)[["inflection"]]
+                knee <- metadata(ranks)[["knee"]]
 
                 p <- ggplot(data = data) +
                     geom_point(
@@ -99,25 +99,21 @@ plotBarcodeRanks.bcbioSingleCell <-  # nolint
                     geom_hline(
                         colour = colors[["knee"]],
                         linetype = "dashed",
-                        yintercept = ranks[["knee"]]
+                        yintercept = knee
                     ) +
                     geom_hline(
                         colour = colors[["inflection"]],
                         linetype = "dashed",
-                        yintercept = ranks[["inflection"]]
+                        yintercept = inflection
                     )
 
                 # Label the knee and inflection points more clearly
-                knee <- which.min(abs(
-                    data[["total"]] - ranks[["knee"]]
-                ))
-                inflection <- which.min(abs(
-                    data[["total"]] - ranks[["inflection"]]
-                ))
-                labelData <- data[c(knee, inflection), ]
+                knee <- which.min(abs(data[["total"]] - knee))
+                inflection <- which.min(abs(data[["total"]] - inflection))
+                labelData <- data[c(knee, inflection), , drop = FALSE]
                 labelData[["label"]] <- c(
-                    paste("knee", "=", ranks[["knee"]]),
-                    paste("inflection", "=", ranks[["inflection"]])
+                    paste("knee", "=", knee),
+                    paste("inflection", "=", inflection)
                 )
                 p +
                     acid_geom_label_repel(

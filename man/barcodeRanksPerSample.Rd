@@ -57,8 +57,10 @@ Note that only points with total counts above \code{lower} will be considered, r
 }
 \examples{
 data(indrops)
-x <- barcodeRanksPerSample(indrops)
-names(x)
+if (packageVersion("DropletUtils") >= "1.4") {
+    x <- barcodeRanksPerSample(indrops)
+    names(x)
+}
 }
 \seealso{
 \code{\link[DropletUtils:barcodeRanks]{DropletUtils::barcodeRanks()}}.
