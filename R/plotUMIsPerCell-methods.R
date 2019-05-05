@@ -79,10 +79,16 @@ plotUMIsPerCell.bcbioSingleCell <-  # nolint
             sampleNames <- sampleNames(object)
 
             ranks <- barcodeRanksPerSample(object)
-            # Inflection or knee points per sample
-            points <- lapply(seq_along(ranks), function(x) {
-                ranks[[x]][[point]]
-            })
+            # Inflection or knee points per sample.
+            points <- lapply(
+                X = ranks,
+                FUN = function(x) {
+                    assert(is(x, "DataFrame"))
+                    out <- metadata(x)[[point]]
+                    assert(is.numeric(out))
+                    out
+                }
+            )
             points <- unlist(points)
             names(points) <- names(ranks)
 

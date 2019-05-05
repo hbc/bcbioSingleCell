@@ -8,8 +8,10 @@
 #' @seealso [DropletUtils::barcodeRanks()].
 #' @examples
 #' data(indrops)
-#' x <- barcodeRanksPerSample(indrops)
-#' names(x)
+#' if (packageVersion("DropletUtils") >= "1.4") {
+#'     x <- barcodeRanksPerSample(indrops)
+#'     names(x)
+#' }
 NULL
 
 
@@ -25,6 +27,7 @@ NULL
 
 barcodeRanksPerSample.bcbioSingleCell <-  # nolint
     function(object) {
+        assert(packageVersion("DropletUtils") >= "1.4")
         which <- sys.parent()
 
         counts <- counts(object)
@@ -49,10 +52,20 @@ barcodeRanksPerSample.bcbioSingleCell <-  # nolint
                         which = which
                     )
                 )
-                assert(identical(
-                    x = names(x),
-                    y = c("rank", "total", "fitted", "knee", "inflection")
-                ))
+
+                # Check DropletUtils return.
+                assert(
+                    is(x, "DataFrame"),
+                    identical(
+                        x = colnames(x),
+                        y = c("rank", "total", "fitted")
+                    ),
+                    isSubset(
+                        x = names(metadata(x)),
+                        y = c("knee", "inflection")
+                    )
+                )
+
                 x
             }
         )
