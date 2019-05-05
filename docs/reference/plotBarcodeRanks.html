@@ -173,12 +173,12 @@ This avoids issues with erratic behaviour of the curve at lower totals.</p></li>
 This requires calculation of the second derivative, which is much more sensitive to noise in the curve.
 To overcome this, a smooth spline is fitted to the log-total counts against the log-rank using the <code><a href='https://www.rdocumentation.org/packages/stats/topics/smooth.spline'>smooth.spline</a></code> function.
 Derivatives are then calculated from the fitted spline using <code><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></code>.</p></li>
-</ul><p>We supply a default setting of <code>df</code> to avoid overfitting the spline, which results in unstability in the higher derivatives (and thus the curvature).
-This and other arguments to <code><a href='https://www.rdocumentation.org/packages/stats/topics/smooth.spline'>smooth.spline</a></code> can be tuned if the estimated knee point is not at an appropriate location.
+</ul><p>We supply a default setting of <code>df</code> to avoid overfitting the spline, as this results in unstability in the higher derivatives (and thus the curvature).
+<code>df</code> and other arguments to <code><a href='https://www.rdocumentation.org/packages/stats/topics/smooth.spline'>smooth.spline</a></code> can be tuned if the estimated knee point is not at an appropriate location.
 We also restrict the fit to lie within the bounds defined by <code>fit.bounds</code> to focus on the region containing the knee point.
 This allows us to obtain an accurate fit with low <code>df</code>, rather than attempting to model the entire curve.</p>
-<p>If <code>fit.bounds</code> is not specified, the upper bound is automatically set to the inflection point, which should lie after the knee point.
-The lower bound is set to the point at which the first derivative is closest to zero, i.e., the &#8220;plateau&#8221; region before the knee point.
+<p>If <code>fit.bounds</code> is not specified, the lower bound is automatically set to the inflection point, which should lie after the knee point.
+The upper bound is set to the point at which the first derivative is closest to zero, i.e., the &#8220;plateau&#8221; region before the knee point.
 Note that only points with total counts above <code>lower</code> will be considered, regardless of how <code>fit.bounds</code> is defined.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -188,8 +188,9 @@ Note that only points with total counts above <code>lower</code> will be conside
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>indrops</span>)
-<span class='fu'>plotBarcodeRanks</span>(<span class='no'>indrops</span>)</div><div class='output co'>#&gt; <span class='error'>Error in FUN(X[[i]], ...): Assert failure.</span>
-#&gt; <span class='error'>identical(x = names(x), y = c("rank", "total", "fitted", "knee",  .... is not TRUE.</span></div></pre>
+<span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/packageDescription'>packageVersion</a></span>(<span class='st'>"DropletUtils"</span>) <span class='kw'>&gt;=</span> <span class='st'>"1.4"</span>) {
+    <span class='fu'>plotBarcodeRanks</span>(<span class='no'>indrops</span>)
+}</div><div class='img'><img src='plotBarcodeRanks-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
