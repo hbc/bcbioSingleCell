@@ -1,3 +1,13 @@
+## bcbioSingleCell 0.3.15 (2019-05-05)
+
+### Minor changes
+
+- Updated `barcodeRanksPerSample` and `plotBarcodeRanks` to support DropletUtils
+  update in Bioconductor 3.9.
+- Improved Travis and AppVeyor CI configuration.
+
+
+
 ## bcbioSingleCell 0.3.14 (2019-04-25)
 
 - S4 generic reexport documentation fixes.
