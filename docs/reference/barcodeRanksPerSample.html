@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -73,7 +74,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -88,7 +89,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/hbc/bcbioSingleCell">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -138,7 +139,7 @@
     </tr>
     <tr>
       <th>df</th>
-      <td><p>Further arguments to pass to <code><a href='https://www.rdocumentation.org/packages/stats/topics/smooth.spline'>smooth.spline</a></code>.</p></td>
+      <td><p>Further arguments to pass to <code><a href='https://rdrr.io/r/stats/smooth.spline.html'>smooth.spline</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -164,10 +165,10 @@ The derivative is computed directly from all points on the curve with total coun
 This avoids issues with erratic behaviour of the curve at lower totals.</p></li>
 <li><p>The knee point is defined as the point on the curve where the signed curvature is minimized.
 This requires calculation of the second derivative, which is much more sensitive to noise in the curve.
-To overcome this, a smooth spline is fitted to the log-total counts against the log-rank using the <code><a href='https://www.rdocumentation.org/packages/stats/topics/smooth.spline'>smooth.spline</a></code> function.
-Derivatives are then calculated from the fitted spline using <code><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></code>.</p></li>
+To overcome this, a smooth spline is fitted to the log-total counts against the log-rank using the <code><a href='https://rdrr.io/r/stats/smooth.spline.html'>smooth.spline</a></code> function.
+Derivatives are then calculated from the fitted spline using <code><a href='https://rdrr.io/r/stats/predict.html'>predict</a></code>.</p></li>
 </ul><p>We supply a default setting of <code>df</code> to avoid overfitting the spline, as this results in unstability in the higher derivatives (and thus the curvature).
-<code>df</code> and other arguments to <code><a href='https://www.rdocumentation.org/packages/stats/topics/smooth.spline'>smooth.spline</a></code> can be tuned if the estimated knee point is not at an appropriate location.
+<code>df</code> and other arguments to <code><a href='https://rdrr.io/r/stats/smooth.spline.html'>smooth.spline</a></code> can be tuned if the estimated knee point is not at an appropriate location.
 We also restrict the fit to lie within the bounds defined by <code>fit.bounds</code> to focus on the region containing the knee point.
 This allows us to obtain an accurate fit with low <code>df</code>, rather than attempting to model the entire curve.</p>
 <p>If <code>fit.bounds</code> is not specified, the lower bound is automatically set to the inflection point, which should lie after the knee point.
@@ -176,14 +177,14 @@ Note that only points with total counts above <code>lower</code> will be conside
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/DropletUtils/topics/barcodeRanks'>DropletUtils::barcodeRanks()</a></code>.</p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/DropletUtils/man/barcodeRanks.html'>DropletUtils::barcodeRanks()</a></code>.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>indrops</span>)
-<span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/packageDescription'>packageVersion</a></span>(<span class='st'>"DropletUtils"</span>) <span class='kw'>&gt;=</span> <span class='st'>"1.4"</span>) {
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>indrops</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/utils/packageDescription.html'>packageVersion</a></span>(<span class='st'>"DropletUtils"</span>) <span class='kw'>&gt;=</span> <span class='st'>"1.4"</span>) {
     <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>barcodeRanksPerSample</span>(<span class='no'>indrops</span>)
-    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>x</span>)
+    <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>x</span>)
 }</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -211,7 +212,7 @@ Note that only points with total counts above <code>lower</code> will be conside
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
    </div>
