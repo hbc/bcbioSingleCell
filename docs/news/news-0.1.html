@@ -16,7 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -70,7 +71,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -85,7 +86,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/hbc/bcbioSingleCell">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -122,7 +123,7 @@
 <li>Now adding sample-level metadata into <code>colData</code> slot, for better downstream compatibility with other packages that work with <code>SingleCellExperiment</code> container class. Unique per-sample rows are still saved internally in the <code>sampleData</code> slot.</li>
 <li>Now recommending ECDF as the default geom for quality control plots, where applicable.</li>
 <li>
-<code>filterCells</code> now supports <code>minUMIs = c("knee", "inflection")</code> for automatic filtering based on the cellular barcode ranks. Internally this is handled by <code><a href="https://www.rdocumentation.org/packages/DropletUtils/topics/barcodeRanks">DropletUtils::barcodeRanks</a></code>.</li>
+<code>filterCells</code> now supports <code>minUMIs = c("knee", "inflection")</code> for automatic filtering based on the cellular barcode ranks. Internally this is handled by <code><a href="https://rdrr.io/pkg/DropletUtils/man/barcodeRanks.html">DropletUtils::barcodeRanks</a></code>.</li>
 </ul>
 </div>
 <div id="minor-changes-28" class="section level3">
@@ -165,7 +166,7 @@
 <h3 class="hasAnchor">
 <a href="#minor-changes-26" class="anchor"></a>Minor changes</h3>
 <ul>
-<li>Using <code><a href="https://www.rdocumentation.org/packages/BiocParallel/topics/SerialParam-class">BiocParallel::SerialParam</a></code> internally for zinbwave in <code>diffExp</code>.</li>
+<li>Using <code><a href="https://rdrr.io/pkg/BiocParallel/man/SerialParam-class.html">BiocParallel::SerialParam</a></code> internally for zinbwave in <code>diffExp</code>.</li>
 <li>Simplified <code>cell2sample</code> internal code to always use <code>mapCellsToSamples</code> instead of attempting to use a stashed <code>vector</code> inside <code>metadata</code> for <code>SingleCellExperiment</code> method.</li>
 <li>Removed internal <code>.applyFilterCutoffs</code>, which is no longer necessary since this functionality is supported in the S4 subset method.</li>
 <li>Simplified assert checks inside <code>fetchGene</code> functions.</li>
@@ -271,7 +272,7 @@
 <h3 class="hasAnchor">
 <a href="#major-changes-11" class="anchor"></a>Major changes</h3>
 <ul>
-<li>Multiplexed <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> barcodes are now reformatted to be more readable and compatible with the <code>mapCellsToSamples</code> utility function. This change helps simplify the internal code for <code>cell2sample</code>. For example in the pbmc4k dataset, the barcode IDs are sanitized from <code>TTTGGTTTCGCTAGCG-1</code> to “<code>pbmc4k_1_TTTGGTTTCGCTAGCG</code>”. The “<code>1</code>” here denotes 1 sample in the matrix, which is how <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> denotes multiplexed samples in a single counts matrix. Note that the “<code>-</code>” character is illegal in names, so we consistently sanitize barcodes to contain “<code>_</code>” instead. See <code><a href="https://www.rdocumentation.org/packages/utils/topics/help">help("make.names")</a></code> for more information on syntactically valid names in <a href="https://www.r-project.org/">R</a>.</li>
+<li>Multiplexed <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> barcodes are now reformatted to be more readable and compatible with the <code>mapCellsToSamples</code> utility function. This change helps simplify the internal code for <code>cell2sample</code>. For example in the pbmc4k dataset, the barcode IDs are sanitized from <code>TTTGGTTTCGCTAGCG-1</code> to “<code>pbmc4k_1_TTTGGTTTCGCTAGCG</code>”. The “<code>1</code>” here denotes 1 sample in the matrix, which is how <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> denotes multiplexed samples in a single counts matrix. Note that the “<code>-</code>” character is illegal in names, so we consistently sanitize barcodes to contain “<code>_</code>” instead. See <code><a href="https://rdrr.io/r/utils/help.html">help("make.names")</a></code> for more information on syntactically valid names in <a href="https://www.r-project.org/">R</a>.</li>
 <li>
 <code>readCellRanger</code> no longer requires reference data defined by <code>refdataDir</code>, although this is still recommended.</li>
 </ul>
@@ -286,7 +287,7 @@
 <code>bcbioSingleCell</code> and <code>readCellRanger</code> functions now consistently default to not requiring <code>sampleMetadataFile</code>, which is now <code>NULL</code> by default. For <code>bcbioSingleCell</code>, if a custom sample metadata file is not provided, the function reads from the bcbio YAML metadata. For <code>readCellRanger</code>, the function uses <code>minimalSampleData</code> internally to return minimal metadata, containing <code>sampleName</code> and <code>description</code> columns.</li>
 <li>Broke out internal <code>.sampleDirs</code> function to <code>bcbioSingleCell</code> and <code>readCellRanger</code> functions.</li>
 <li>Improved <code>plotMarker</code> documentation examples to use mitochondrial genes.</li>
-<li>Using <code>seurat_small</code> in place of <code><a href="https://www.rdocumentation.org/packages/Seurat/topics/pbmc_small">Seurat::pbmc_small</a></code> in working examples.</li>
+<li>Using <code>seurat_small</code> in place of <code><a href="https://rdrr.io/pkg/Seurat/man/pbmc_small.html">Seurat::pbmc_small</a></code> in working examples.</li>
 </ul>
 </div>
 <div id="internal-code-changes" class="section level3">
@@ -437,7 +438,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
    </div>
