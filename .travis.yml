@@ -20,9 +20,6 @@ jobs:
     - stage: test
       name: "Docker: Bioconductor 3.8"
       script: image="singlecell" tag="bioc-3.8" ./docker.sh
-    - stage: test
-      name: "Docker: Bioconductor 3.7"
-      script: image="singlecell" tag="bioc-3.7" ./docker.sh
 
 matrix:
   fast_finish: true
