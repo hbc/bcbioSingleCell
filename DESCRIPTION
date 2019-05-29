@@ -72,9 +72,9 @@ Suggests:
 Remotes:
     acidgenomics/acidplots,
     acidgenomics/basejump,
-    acidgenomics/bcbioBase,
     acidgenomics/bioverbs,
-    acidgenomics/goalie
+    acidgenomics/goalie,
+    hbc/bcbioBase
 biocViews:
     DataImport,
     DataRepresentation,
