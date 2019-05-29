@@ -2,7 +2,7 @@ Package: bcbioSingleCell
 Title: bcbio Single-Cell RNA-Seq
 Description: Toolkit for bcbio single-cell RNA-seq analysis.
 Version: 0.3.15
-Date: 2018-05-05
+Date: 2018-05-29
 Authors@R: c(
     person(
         given = "Michael",
@@ -92,9 +92,9 @@ Suggests:
 Remotes:
     acidgenomics/acidplots,
     acidgenomics/basejump,
-    acidgenomics/bcbioBase,
     acidgenomics/bioverbs,
-    acidgenomics/goalie
+    acidgenomics/goalie,
+    hbc/bcbioBase
 biocViews:
     DataImport,
     DataRepresentation,
