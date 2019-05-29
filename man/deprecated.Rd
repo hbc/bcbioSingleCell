@@ -2,21 +2,18 @@
 % Please edit documentation in R/deprecated.R
 \name{deprecated}
 \alias{deprecated}
-\alias{loadCellRanger}
-\alias{loadSingleCell}
-\title{Deprecated Functions}
+\alias{prepareSingleCellTemplate}
+\title{Deprecated functions}
 \usage{
-loadCellRanger(...)
-
-loadSingleCell(...)
+prepareSingleCellTemplate(...)
 }
 \arguments{
 \item{...}{Additional arguments.}
 }
 \value{
-\code{\link[=.Deprecated]{.Deprecated()}}.
+\code{.Deprecated}.
 }
 \description{
-Deprecated Functions
+Deprecated functions
 }
 \keyword{internal}

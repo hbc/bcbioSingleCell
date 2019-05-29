@@ -1,52 +1,44 @@
-#' Extract or Replace Parts of an Object
+#' Extract or replace parts of an object
 #'
-#' Extract genes by row and cells by column from a `bcbioSingleCell` object.
+#' Extract genes by row and cells by column.
 #'
-#' @note Unfiltered cellular barcode distributions for the entire dataset,
-#'   including cells not kept in the matrix will be dropped in favor of the
-#'   `nCount` column of `colData()`.
+#' Refer to [`cell2sample()`][basejump::cell2sample] and
+#' [selectSamples()][basejump::selectSamples] if sample-level extraction is
+#' desired. Note that `sampleID` is slotted into `colData` and defines the
+#' cell-to-sample mappings.
+#'
+#' Unfiltered cellular barcode distributions for the entire dataset, including
+#' cells not kept in the matrix will be dropped in favor of the `nCount` column
+#' of [`colData()`][SummarizedExperiment::colData].
 #'
 #' @name extract
-#' @family S4 Object
 #' @author Michael Steinbaugh
-#'
-#' @inheritParams base::`[`
-#' @inheritParams general
-#'
-#' @seealso
-#' - `help("[", "base")`.
-#' - `selectSamples()` for subsetting based on sample metadata.
+#' @inherit base::Extract params references
+#' @inheritParams basejump::params
 #'
 #' @return `bcbioSingleCell`.
 #'
 #' @examples
-#' cells <- head(colnames(indrops_small), 100L)
+#' data(indrops)
+#'
+#' cells <- head(colnames(indrops), 100L)
 #' head(cells)
-#' genes <- head(rownames(indrops_small), 100L)
+#' genes <- head(rownames(indrops), 100L)
 #' head(genes)
 #'
-#' # Subset by cell identifiers
-#' indrops_small[, cells]
+#' ## Subset by cell identifiers.
+#' indrops[, cells]
 #'
-#' # Subset by genes
-#' indrops_small[genes, ]
+#' ## Subset by genes.
+#' indrops[genes, ]
 #'
-#' # Subset by both genes and cells
-#' indrops_small[genes, cells]
+#' ## Subset by both genes and cells.
+#' indrops[genes, cells]
 NULL
 
 
 
-#' @rdname extract
-#' @export
-setMethod(
-    "[",
-    signature(
-        x = "bcbioSingleCell",
-        i = "ANY",
-        j = "ANY",
-        drop = "ANY"
-    ),
+extract.bcbioSingleCell <-  # nolint
     function(x, i, j, ..., drop = FALSE) {
         validObject(x)
 
@@ -59,72 +51,34 @@ setMethod(
             j <- 1L:ncol(x)
         }
 
-        # Regenerate and subset SummarizedExperiment
-        sce <- as(x, "SingleCellExperiment")
-        sce <- sce[i, j, drop = drop]
-
-        # Early return if dimensions are unmodified
-        if (identical(dim(sce), dim(x))) {
+        if (identical(
+            x = c(length(i), length(j)),
+            y = dim(x)
+        )) {
             return(x)
         }
+
+        # Subset using SCE method.
+        sce <- as(x, "SingleCellExperiment")
+        sce <- sce[i, j, drop = drop]
 
         genes <- rownames(sce)
         cells <- colnames(sce)
 
         # Column data ----------------------------------------------------------
-        # Ensure factors get releveled
+        # Ensure factors get releveled.
         colData <- colData(sce) %>%
-            as.data.frame() %>%
-            rownames_to_column() %>%
+            as("tbl_df") %>%
             mutate_if(is.character, as.factor) %>%
             mutate_if(is.factor, droplevels) %>%
-            column_to_rownames() %>%
             as("DataFrame")
 
         # Metadata -------------------------------------------------------------
         metadata <- metadata(sce)
-
-        # cellularBarcodes
-        # Drop the raw cellular barcode distributions for all cells
-        metadata[["cellularBarcodes"]] <- NULL
-
         metadata[["subset"]] <- TRUE
-        # Update version, if necessary
-        if (!identical(metadata[["version"]], packageVersion)) {
-            metadata[["originalVersion"]] <- metadata[["version"]]
-            metadata[["version"]] <- packageVersion
-        }
 
-        # cell2sample
-        cell2sample <- metadata[["cell2sample"]]
-        # Note that we're subsetting `sampleData` by the factor levels in
-        # `cell2sample`, so this must come first
-        cell2sample <- droplevels(cell2sample[cells])
-        metadata[["cell2sample"]] <- cell2sample
-
-        # sampleData
-        sampleData <- metadata[["sampleData"]]
-        assert_is_non_empty(sampleData)
-        sampleData <- sampleData %>%
-            as.data.frame() %>%
-            .[levels(cell2sample), , drop = FALSE] %>%
-            rownames_to_column() %>%
-            mutate_all(as.factor) %>%
-            mutate_all(droplevels) %>%
-            column_to_rownames()
-        metadata[["sampleData"]] <- sampleData
-
-        # sampleIDs
-        sampleIDs <- as.character(sampleData[["sampleID"]])
-
-        # aggregateReplicates
-        aggregateReplicates <- metadata[["aggregateReplicates"]]
-        if (!is.null(aggregateReplicates)) {
-            intersect <- intersect(cells, aggregateReplicates)
-            aggregateReplicates <- aggregateReplicates %>%
-                .[. %in% intersect]
-            metadata[["aggregateReplicates"]] <- aggregateReplicates
-        }
+        # Drop unfiltered cellular barcode list.
+        metadata[["cellularBarcodes"]] <- NULL
 
         # filterCells
         filterCells <- metadata[["filterCells"]]
@@ -141,12 +95,29 @@ setMethod(
         }
 
         # Return ---------------------------------------------------------------
-        .new.bcbioSingleCell(
-            assays = assays(sce),
-            rowRanges <- rowRanges(sce),
-            colData <- colData,
-            metadata = metadata,
-            spikeNames = rownames(sce)[isSpike(sce)]
+        new(
+            Class = class(x)[[1L]],
+            makeSingleCellExperiment(
+                assays = assays(sce),
+                rowRanges <- rowRanges(sce),
+                colData <- colData,
+                metadata = metadata,
+                spikeNames = rownames(sce)[isSpike(sce)]
+            )
         )
     }
+
+
+
+#' @rdname extract
+#' @export
+setMethod(
+    "[",
+    signature(
+        x = "bcbioSingleCell",
+        i = "ANY",
+        j = "ANY",
+        drop = "ANY"
+    ),
+    definition = extract.bcbioSingleCell
 )

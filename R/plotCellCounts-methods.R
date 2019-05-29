@@ -1,61 +1,56 @@
-#' Plot Cell Counts
-#'
 #' @name plotCellCounts
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
+#' @inherit bioverbs::plotCellCounts
 #'
-#' @inheritParams general
-#'
-#' @return `ggplot`.
+#' @inheritParams acidplots::params
+#' @inheritParams basejump::params
+#' @param ... Additional arguments.
 #'
 #' @examples
-#' plotCellCounts(indrops_small)
+#' data(indrops)
+#' plotCellCounts(indrops)
 NULL
 
 
 
 #' @rdname plotCellCounts
+#' @name plotCellCounts
+#' @importFrom bioverbs plotCellCounts
+#' @usage plotCellCounts(object, ...)
 #' @export
-setMethod(
-    "plotCellCounts",
-    signature("SingleCellExperiment"),
+NULL
+
+
+
+plotCellCounts.bcbioSingleCell <-  # nolint
     function(
         object,
-        interestingGroups,
-        fill = getOption("bcbio.discrete.fill", NULL),
+        interestingGroups = NULL,
+        fill,
         title = "cell counts"
     ) {
         validObject(object)
-        interestingGroups <- matchInterestingGroups(
-            object = object,
-            interestingGroups = interestingGroups
+        assert(
+            isGGScale(fill, scale = "discrete", aes = "fill", nullOK = TRUE),
+            isString(title, nullOK = TRUE)
         )
-        assertIsFillScaleDiscreteOrNULL(fill)
-        assertIsAStringOrNULL(title)
+        interestingGroups(object) <-
+            matchInterestingGroups(object, interestingGroups)
 
-        metrics <- metrics(object, interestingGroups = interestingGroups)
+        metrics <- metrics(object)
+        sampleData <- sampleData(object)
 
-        sampleData <- sampleData(
-            object = object,
-            interestingGroups = interestingGroups
-        )
-        if (is.null(sampleData)) {
-            sampleData <- unknownSampleData
-        } else {
-            sampleData[["sampleID"]] <- factor(
-                x = rownames(sampleData),
-                levels = levels(metrics[["sampleID"]])
-            )
-        }
-        sampleData <- as.data.frame(sampleData)
-
-        # Remove user-defined `nCells` column, if present
+        # Remove user-defined `nCells` column, if present.
         metrics[["nCells"]] <- NULL
         sampleData[["nCells"]] <- NULL
 
+        sampleData <- sampleData %>%
+            as_tibble(rownames = "sampleID") %>%
+            mutate_all(as.factor)
+
         data <- metrics %>%
             group_by(!!sym("sampleID")) %>%
-            summarize(nCells = n()) %>%
+            summarise(nCells = n()) %>%
             left_join(sampleData, by = "sampleID")
 
         p <- ggplot(
@@ -66,10 +61,8 @@ setMethod(
                 fill = !!sym("interestingGroups")
             )
         ) +
-            geom_bar(
-                color = "black",
-                stat = "identity"
-            ) +
+            acid_geom_bar() +
+            acid_scale_y_continuous_nopad() +
             labs(
                 title = title,
                 x = NULL,
@@ -83,10 +76,10 @@ setMethod(
 
         # Labels
         if (nrow(data) <= 16L) {
-            p <- p + bcbio_geom_label(
+            p <- p + acid_geom_label(
                 data = data,
                 mapping = aes(label = !!sym("nCells")),
-                # Align the label just under the top of the bar
+                # Align the label just under the top of the bar.
                 vjust = 1.25
             )
         }
@@ -102,4 +95,15 @@ setMethod(
 
         p
     }
+
+formals(plotCellCounts.bcbioSingleCell)[["fill"]] <-
+    formalsList[["fill.discrete"]]
+
+
+#' @rdname plotCellCounts
+#' @export
+setMethod(
+    f = "plotCellCounts",
+    signature = signature("bcbioSingleCell"),
+    definition = plotCellCounts.bcbioSingleCell
 )

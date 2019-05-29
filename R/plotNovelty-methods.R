@@ -1,48 +1,67 @@
-#' Plot Novelty Score
-#'
-#' "Novelty" refers to log10 genes detected per count.
-#'
 #' @name plotNovelty
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh
+#' @include globals.R
+#' @inherit bioverbs::plotNovelty
 #'
-#' @inheritParams general
-#'
-#' @return `ggplot`.
+#' @inheritParams acidplots::params
+#' @inheritParams basejump::params
+#' @param ... Additional arguments.
 #'
 #' @examples
-#' plotNovelty(indrops_small)
+#' data(indrops)
+#' plotNovelty(indrops)
 NULL
+
+
+
+#' @rdname plotNovelty
+#' @name plotNovelty
+#' @importFrom bioverbs plotNovelty
+#' @usage plotNovelty(object, ...)
+#' @export
+NULL
+
+
+
+plotNovelty.bcbioSingleCell <-  # nolint
+    function(
+        object,
+        geom,
+        interestingGroups = NULL,
+        min = 0L,
+        fill,
+        trans = "identity",
+        title = "novelty : genes per UMI"
+    ) {
+        assert(isInRightOpenRange(min, lower = 0L, upper = 1L))
+        geom <- match.arg(geom)
+        do.call(
+            what = .plotQCMetric,
+            args = list(
+                object = object,
+                metricCol = "log10GenesPerUMI",
+                geom = geom,
+                interestingGroups = interestingGroups,
+                min = min,
+                max = 1L,
+                trans = trans,
+                ratio = TRUE,
+                fill = fill,
+                title = title
+            )
+        )
+    }
+
+formals(plotNovelty.bcbioSingleCell)[["fill"]] <-
+    formalsList[["fill.discrete"]]
+formals(plotNovelty.bcbioSingleCell)[["geom"]] <- geom
 
 
 
 #' @rdname plotNovelty
 #' @export
 setMethod(
-    "plotNovelty",
-    signature("SingleCellExperiment"),
-    function(
-        object,
-        geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
-        interestingGroups,
-        min = 0L,
-        fill = getOption("bcbio.discrete.fill", NULL),
-        trans = "identity",
-        title = "genes per UMI (novelty)"
-    ) {
-        assert_all_are_in_right_open_range(min, lower = 0L, upper = 1L)
-        geom <- match.arg(geom)
-        .plotQCMetric(
-            object = object,
-            metricCol = "log10GenesPerUMI",
-            geom = geom,
-            interestingGroups = interestingGroups,
-            min = min,
-            max = 1L,
-            trans = trans,
-            ratio = TRUE,
-            fill = fill,
-            title = title
-        )
-    }
+    f = "plotNovelty",
+    signature = signature("bcbioSingleCell"),
+    definition = plotNovelty.bcbioSingleCell
 )

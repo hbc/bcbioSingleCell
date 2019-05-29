@@ -1,42 +1,61 @@
-#' Plot Mitochondrial vs. Coding Counts
-#'
 #' @name plotMitoVsCoding
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
+#' @inherit bioverbs::plotMitoVsCoding
 #'
-#' @inheritParams general
-#'
-#' @return `ggplot`.
+#' @inheritParams acidplots::params
+#' @inheritParams basejump::params
+#' @param ... Additional arguments.
 #'
 #' @examples
-#' plotMitoVsCoding(indrops_small)
+#' data(indrops)
+#' plotMitoVsCoding(indrops)
 NULL
+
+
+
+#' @rdname plotMitoVsCoding
+#' @name plotMitoVsCoding
+#' @importFrom bioverbs plotMitoVsCoding
+#' @usage plotMitoVsCoding(object, ...)
+#' @export
+NULL
+
+
+
+plotMitoVsCoding.bcbioSingleCell <-  # nolint
+    function(
+        object,
+        interestingGroups = NULL,
+        trendline = FALSE,
+        color,
+        trans = "log2",
+        title = "mito vs. coding"
+    ) {
+        do.call(
+            what = .plotQCScatterplot,
+            args = list(
+                object = object,
+                interestingGroups = interestingGroups,
+                trendline = trendline,
+                xCol = "nCoding",
+                yCol = "nMito",
+                color = color,
+                xTrans = trans,
+                yTrans = trans,
+                title = title
+            )
+        )
+    }
+
+formals(plotMitoVsCoding.bcbioSingleCell)[["color"]] <-
+    formalsList[["color.discrete"]]
 
 
 
 #' @rdname plotMitoVsCoding
 #' @export
 setMethod(
-    "plotMitoVsCoding",
-    signature("SingleCellExperiment"),
-    function(
-        object,
-        interestingGroups,
-        trendline = FALSE,
-        color = getOption("bcbio.discrete.color", NULL),
-        trans = "log2",
-        title = "mito vs. coding"
-    ) {
-        .plotQCScatterplot(
-            object = object,
-            interestingGroups = interestingGroups,
-            trendline = trendline,
-            xCol = "nCoding",
-            yCol = "nMito",
-            color = color,
-            xTrans = trans,
-            yTrans = trans,
-            title = title
-        )
-    }
+    f = "plotMitoVsCoding",
+    signature = signature("bcbioSingleCell"),
+    definition = plotMitoVsCoding.bcbioSingleCell
 )

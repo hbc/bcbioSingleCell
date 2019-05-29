@@ -1,28 +1,57 @@
-#' Plot Barcode Ranks
-#'
 #' @name plotBarcodeRanks
 #' @author Michael Steinbaugh
+#' @include barcodeRanksPerSample-methods.R
+#' @inherit bioverbs::plotBarcodeRanks
+#' @inherit barcodeRanksPerSample
 #'
-#' @inheritParams general
-#' @param ... Passthrough arguments to [DropletUtils::barcodeRanks()].
-#'
-#' @seealso [DropletUtils::barcodeRanks()].
-#'
-#' @return `ggplot` grid.
+#' @param colors `character(3)`.
+#'   Character vector denoting `fitline`, `inflection`, and `knee` point colors.
+#'   Must pass in color names or hexadecimal values.
+#' @param ... Additional arguments.
 #'
 #' @examples
-#' plotBarcodeRanks(indrops_small)
+#' data(indrops)
+#' if (packageVersion("DropletUtils") >= "1.4") {
+#'     plotBarcodeRanks(indrops)
+#' }
 NULL
 
 
 
 #' @rdname plotBarcodeRanks
+#' @name plotBarcodeRanks
+#' @importFrom bioverbs plotBarcodeRanks
+#' @usage plotBarcodeRanks(object, ...)
 #' @export
-setMethod(
-    "plotBarcodeRanks",
-    signature("SingleCellExperiment"),
-    function(object, ...) {
-        ranksPerSample <- barcodeRanksPerSample(object, ...)
+NULL
+
+
+
+plotBarcodeRanks.bcbioSingleCell <-  # nolint
+    function(
+        object,
+        colors = c(
+            fitline = "dodgerblue",
+            inflection = "darkorchid3",
+            knee = "darkorange2"
+        )
+    ) {
+        validObject(object)
+        assert(
+            isCharacter(colors),
+            areSetEqual(
+                x = names(colors),
+                y = c("fitline", "inflection", "knee")
+            )
+        )
+
+        ranksPerSample <- do.call(
+            what = barcodeRanksPerSample,
+            args = matchArgsToDoCall(
+                args = list(object = object),
+                removeFormals = "colors"
+            )
+        )
 
         sampleData <- sampleData(object)
         if (is.null(sampleData)) {
@@ -37,12 +66,9 @@ setMethod(
             sampleName = sampleNames,
             ranks = ranksPerSample,
             FUN = function(sampleName, ranks) {
-                data <- cbind(
-                    rank = ranks[["rank"]],
-                    total = ranks[["total"]],  # nUMI
-                    fitted = ranks[["fitted"]]
-                ) %>%
-                    as("tbl_df")
+                data <- as_tibble(ranks, rownames = NULL)
+                inflection <- metadata(ranks)[["inflection"]]
+                knee <- metadata(ranks)[["knee"]]
 
                 p <- ggplot(data = data) +
                     geom_point(
@@ -65,45 +91,39 @@ setMethod(
                         x = !!sym("rank"),
                         y = !!sym("fitted")
                     ),
-                    color = "red",
+                    colour = colors[["fitline"]],
                     size = 1L
                 )
 
-                # Knee and inflection points
-                colors <- c("dodgerblue", "forestgreen")
                 p <- p +
                     geom_hline(
-                        color = colors[[1L]],
+                        colour = colors[["knee"]],
                         linetype = "dashed",
-                        yintercept = ranks[["knee"]]
+                        yintercept = knee
                     ) +
                     geom_hline(
-                        color = colors[[2L]],
+                        colour = colors[["inflection"]],
                         linetype = "dashed",
-                        yintercept = ranks[["inflection"]]
+                        yintercept = inflection
                     )
 
                 # Label the knee and inflection points more clearly
-                knee <- which.min(abs(
-                    data[["total"]] - ranks[["knee"]]
-                ))
-                inflection <- which.min(abs(
-                    data[["total"]] - ranks[["inflection"]]
-                ))
-                labelData <- data[c(knee, inflection), ]
+                knee <- which.min(abs(data[["total"]] - knee))
+                inflection <- which.min(abs(data[["total"]] - inflection))
+                labelData <- data[c(knee, inflection), , drop = FALSE]
                 labelData[["label"]] <- c(
-                    paste("knee", "=", ranks[["knee"]]),
-                    paste("inflection", "=", ranks[["inflection"]])
+                    paste("knee", "=", knee),
+                    paste("inflection", "=", inflection)
                 )
                 p +
-                    bcbio_geom_label_repel(
+                    acid_geom_label_repel(
                         data = labelData,
                         mapping = aes(
                             x = !!sym("rank"),
                             y = !!sym("total"),
                             label = !!sym("label")
                         ),
-                        color = colors
+                        colour = colors[c("knee", "inflection")]
                     )
             },
             SIMPLIFY = FALSE,
@@ -115,4 +135,19 @@ setMethod(
 
         plot_grid(plotlist = plotlist)
     }
+
+f1 <- formals(plotBarcodeRanks.bcbioSingleCell)
+f2 <- formals(barcodeRanksPerSample.bcbioSingleCell)
+f2 <- f2[setdiff(names(f2), names(f1))]
+f <- c(f1, f2)
+formals(plotBarcodeRanks.bcbioSingleCell) <- f
+
+
+
+#' @rdname plotBarcodeRanks
+#' @export
+setMethod(
+    f = "plotBarcodeRanks",
+    signature = signature("bcbioSingleCell"),
+    definition = plotBarcodeRanks.bcbioSingleCell
 )

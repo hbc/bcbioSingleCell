@@ -1,60 +1,35 @@
-# Travis-CI configuration for Bioconductor packages
-# https://docs.travis-ci.com/user/languages/r
+language: general
 
-# Temporarily enable when caching package library.
-script: true
+services:
+  - docker
 
-language: r
-cache: packages
-sudo: false
-bioc_required: true
+branches:
+  only:
+    - master
+
+before_script:
+  - chmod +x *.sh
+    # Avoid BiocCheck > checkCodingPractice > checkLogicalUseFiles error.
+  - touch inst/rmarkdown/templates/quality-control/skeleton/_{footer,header,links}.Rmd
+
+jobs:
+  include:
+    - stage: test
+      name: "Docker: Bioconductor 3.9"
+      script: image="singlecell" tag="bioc-3.9" ./docker.sh
+    - stage: test
+      name: "Docker: Bioconductor 3.8"
+      script: image="singlecell" tag="bioc-3.8" ./docker.sh
 
 matrix:
-  include:
-  - os: osx
-    r: bioc-release
-    fortran: false
-    latex: false
-    warnings_are_errors: true
-  - os: linux
-    r: bioc-release
-    warnings_are_errors: true
-  # - os: linux
-  #   r: bioc-devel
-  #   latex: false
-  #   warnings_are_errors: false
   fast_finish: true
 
-# External dependencies
-# dependency for gsl > copula > zinbwave
-addons:
-  apt:
-    update: true
-    packages:
-      - libgsl-dev
-
-env:
-  global:
-    - LINTR_COMMENT_BOT=true
-
-r_packages:
-  - covr
-bioc_packages:
-  - BiocCheck
-  - GenomeInfoDbData
-  - S4Vectors
-  - EnsDb.Hsapiens.v75
-r_github_packages:
-  - jimhester/lintr
-
-after_success:
-  - Rscript -e 'lintr::lint_package()'
-  - Rscript -e 'covr::codecov()'
-  - R CMD BiocCheck .
+after_failure:
+  - ./docker-failure.sh
 
 notifications:
   email:
     recipients:
       - mike@steinbaugh.com
     on_success: change
-    on_failure: always
+    on_failure: change

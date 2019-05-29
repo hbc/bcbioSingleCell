@@ -1,45 +1,66 @@
-#' Plot Mitochondrial Transcript Abundance
-#'
 #' @name plotMitoRatio
-#' @family Quality Control Functions
 #' @author Michael Steinbaugh, Rory Kirchner
+#' @include globals.R
+#' @inherit bioverbs::plotMitoRatio
 #'
-#' @inheritParams general
-#'
-#' @return `ggplot`.
+#' @inheritParams acidplots::params
+#' @inheritParams basejump::params
+#' @param ... Additional arguments.
 #'
 #' @examples
-#' plotMitoRatio(indrops_small)
+#' data(indrops)
+#' plotMitoRatio(indrops)
 NULL
+
+
+
+#' @rdname plotMitoRatio
+#' @name plotMitoRatio
+#' @importFrom bioverbs plotMitoRatio
+#' @usage plotMitoRatio(object, ...)
+#' @export
+NULL
+
+
+
+plotMitoRatio.bcbioSingleCell <-  # nolint
+    function(
+        object,
+        geom,
+        interestingGroups = NULL,
+        max = 1L,
+        fill,
+        trans = "sqrt",
+        title = "mito ratio"
+    ) {
+        assert(isInLeftOpenRange(max, lower = 0L, upper = 1L))
+        geom <- match.arg(geom)
+        do.call(
+            what = .plotQCMetric,
+            args = list(
+                object = object,
+                metricCol = "mitoRatio",
+                geom = geom,
+                interestingGroups = interestingGroups,
+                max = max,
+                trans = trans,
+                ratio = TRUE,
+                fill = fill,
+                title = title
+            )
+        )
+    }
+
+formals(plotMitoRatio.bcbioSingleCell)[["fill"]] <-
+    formalsList[["fill.discrete"]]
+formals(plotMitoRatio.bcbioSingleCell)[["geom"]] <- geom
 
 
 
 #' @rdname plotMitoRatio
 #' @export
 setMethod(
-    "plotMitoRatio",
-    signature("SingleCellExperiment"),
-    function(
-        object,
-        geom = c("violin", "ridgeline", "ecdf", "histogram", "boxplot"),
-        interestingGroups,
-        max = 1L,
-        fill = getOption("bcbio.discrete.fill", NULL),
-        trans = "sqrt",
-        title = "mito ratio"
-    ) {
-        geom <- match.arg(geom)
-        assert_all_are_in_left_open_range(max, lower = 0L, upper = 1L)
-        .plotQCMetric(
-            object = object,
-            metricCol = "mitoRatio",
-            geom = geom,
-            interestingGroups = interestingGroups,
-            max = max,
-            trans = trans,
-            ratio = TRUE,
-            fill = fill,
-            title = title
-        )
-    }
+    f = "plotMitoRatio",
+    signature = signature("bcbioSingleCell"),
+    definition = plotMitoRatio.bcbioSingleCell
 )

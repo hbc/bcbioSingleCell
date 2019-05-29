@@ -9,6 +9,10 @@ samples:
     flowcell: null
     galaxy: /n/app/bcbio/dev/galaxy
     work: /n/scratch2/XXX/data/bcbio
+  genome_build: hg38
+  genome_resources:
+    rnaseq:
+      transcripts: /n/app/bcbio/dev/genomes/Hsapiens/hg38/rnaseq/ref-transcripts.gtf
   metadata:
     batch: null
     phenotype: ''

@@ -1,42 +1,61 @@
-#' Plot UMI and Gene Correlation
-#'
 #' @name plotUMIsVsGenes
-#' @family Quality Control Metrics
 #' @author Michael Steinbaugh, Rory Kirchner
+#' @inherit bioverbs::plotUMIsVsGenes
 #'
-#' @inheritParams general
-#'
-#' @return `ggplot`.
+#' @inheritParams acidplots::params
+#' @inheritParams basejump::params
+#' @param ... Additional arguments.
 #'
 #' @examples
-#' plotUMIsVsGenes(indrops_small)
+#' data(indrops)
+#' plotUMIsVsGenes(indrops)
 NULL
+
+
+
+#' @rdname plotUMIsVsGenes
+#' @name plotUMIsVsGenes
+#' @importFrom bioverbs plotUMIsVsGenes
+#' @usage plotUMIsVsGenes(object, ...)
+#' @export
+NULL
+
+
+
+plotUMIsVsGenes.bcbioSingleCell <-  # nolint
+    function(
+        object,
+        interestingGroups = NULL,
+        trendline = FALSE,
+        color,
+        trans = "log2",
+        title = "UMIs vs. genes"
+    ) {
+        do.call(
+            what = .plotQCScatterplot,
+            args = list(
+                object = object,
+                interestingGroups = interestingGroups,
+                trendline = trendline,
+                xCol = "nUMI",
+                yCol = "nGene",
+                color = color,
+                xTrans = trans,
+                yTrans = trans,
+                title = title
+            )
+        )
+    }
+
+formals(plotUMIsVsGenes.bcbioSingleCell)[["color"]] <-
+    formalsList[["color.discrete"]]
 
 
 
 #' @rdname plotUMIsVsGenes
 #' @export
 setMethod(
-    "plotUMIsVsGenes",
-    signature("SingleCellExperiment"),
-    function(
-        object,
-        interestingGroups,
-        trendline = FALSE,
-        color = getOption("bcbio.discrete.color", NULL),
-        trans = "log2",
-        title = "UMIs vs. genes"
-    ) {
-        .plotQCScatterplot(
-            object = object,
-            interestingGroups = interestingGroups,
-            trendline = trendline,
-            xCol = "nUMI",
-            yCol = "nGene",
-            color = color,
-            xTrans = trans,
-            yTrans = trans,
-            title = title
-        )
-    }
+    f = "plotUMIsVsGenes",
+    signature = signature("bcbioSingleCell"),
+    definition = plotUMIsVsGenes.bcbioSingleCell
 )

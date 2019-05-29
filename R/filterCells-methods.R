@@ -1,43 +1,48 @@
-#' Filter Cells
+#' @name filterCells
+#' @author Michael Steinbaugh
+#' @inherit bioverbs::filterCells
+#' @inheritParams basejump::params
 #'
+#' @details
 #' Apply gene detection, novelty score, and mitochondrial abundance cutoffs to
 #' cellular barcodes. By default we recommend applying the same filtering cutoff
 #' to all samples. The filtering parameters now support per-sample cutoffs,
 #' defined using a named `numeric` vector. When matching per sample, be sure to
-#' use the [sampleNames()] return values (i.e. the `sampleName` column in
-#' [sampleData()]).
+#' use the `sampleNames` return values (i.e. the `sampleName` column in
+#' `sampleData`).
 #'
-#' @name filterCells
-#' @family Quality Control Functions
-#' @author Michael Steinbaugh
+#' @param nCells `integer(1)`.
+#'   Expected number of cells per sample.
+#' @param minUMIs `integer(1)`.
+#'   Minimum number of UMI disambiguated counts per cell.
+#' @param maxUMIs `integer(1)`.
+#'   Maximum number of UMI disambiguated counts per cell.
+#' @param minGenes `integer(1)`.
+#'   Minimum number of genes detected.
+#' @param maxGenes `integer(1)`.
+#'   Maximum number of genes detected.
+#' @param minNovelty `integer(1)` (`0`-`1`).
+#'   Minimum novelty score (log10 genes per UMI).
+#' @param maxMitoRatio `integer(1)` (`0`-`1`).
+#'   Maximum relative mitochondrial abundance.
+#' @param minCellsPerGene `integer(1)`.
+#'   Include genes with non-zero expression in at least this many cells.
 #'
-#' @inheritParams general
-#' @param nCells `scalar integer`. Expected number of cells per sample.
-#' @param minUMIs `scalar integer`. Minimum number of UMI disambiguated counts
-#'   per cell.
-#' @param maxUMIs `scalar integer`. Maximum number of UMI disambiguated counts
-#'   per cell.
-#' @param minGenes `scalar integer`. Minimum number of genes detected.
-#' @param maxGenes `scalar integer`. Maximum number of genes detected.
-#' @param minNovelty `scalar integer` (`0`-`1`). Minimum novelty score (log10
-#'   genes per UMI).
-#' @param maxMitoRatio `scalar integer` (`0`-`1`). Maximum relative
-#'   mitochondrial abundance.
-#' @param minCellsPerGene `scalar integer`. Include genes with non-zero
-#'   expression in at least this many cells.
-#'
-#' @return `bcbioSingleCell`, with filtering information slotted into
-#'   [metadata()] as `filterCells` and `filterParams`.
+#' @return `bcbioSingleCell`.
+#' Filtering information gets slotted into [`metadata()`][S4Vectors::metadata]
+#' as `filterCells` and `filterParams`.
 #'
 #' @examples
-#' object <- indrops_small
+#' data(indrops)
+#'
+#' object <- indrops
 #' show(object)
 #'
 #' x <- filterCells(object)
 #' show(x)
 #' metadata(x)$filterParams
 #'
-#' # Per sample cutoffs
+#' ## Per sample cutoffs.
 #' sampleNames(object)
 #' x <- filterCells(
 #'     object = object,
@@ -45,6 +50,14 @@
 #' )
 #' show(x)
 #' metadata(x)$filterParams
+NULL
+
+
+
+#' @rdname filterCells
+#' @name filterCells
+#' @importFrom bioverbs filterCells
+#' @export
 NULL
 
 
@@ -65,17 +78,13 @@ NULL
 
 
 
-#' @rdname filterCells
-#' @export
-setMethod(
-    "filterCells",
-    signature("SingleCellExperiment"),
+filterCells.bcbioSingleCell <-  # nolint
     function(
         object,
         nCells = Inf,
-        minUMIs = 0L,
+        minUMIs = 1L,
         maxUMIs = Inf,
-        minGenes = 0L,
+        minGenes = 1L,
         maxGenes = Inf,
         minNovelty = 0L,
         maxMitoRatio = 1L,
@@ -85,44 +94,57 @@ setMethod(
 
         originalDim <- dim(object)
         sampleNames <- sampleNames(object)
-        metrics <- metrics(object)
+        # Coercing to tibble here for dplyr operations.
+        colData <- as(object = colData(object), Class = "tbl_df")
 
         # Parameter integrity checks -------------------------------------------
-        # Expected nCells per sample
-        assert_is_a_number(nCells)
-        assert_all_are_positive(nCells)
+        assert(
+            # Expected nCells per sample.
+            is.numeric(nCells),
+            all(isPositive(nCells)),
 
-        # minUMIs
-        assert_is_any_of(minUMIs, c("numeric", "character"))
+            # minUMIs (see below)
+            isAny(minUMIs, c("numeric", "character")),
+
+            # maxUMIs
+            is.numeric(maxUMIs),
+            all(isPositive(maxUMIs)),
+
+            # minGenes
+            is.numeric(minGenes),
+            all(isPositive(minGenes)),
+
+            # maxGenes
+            is.numeric(maxGenes),
+            all(isNonNegative(maxGenes)),
+
+            # minNovelty
+            is.numeric(minNovelty),
+            all(isInRange(minNovelty, lower = 0L, upper = 1L)),
+
+            # maxMitoRatio
+            is.numeric(maxMitoRatio),
+            # Don't allow the user to set at 0.
+            all(isInLeftOpenRange(maxMitoRatio, lower = 0L, upper = 1L)),
+
+            # minCellsPerGene
+            is.numeric(minCellsPerGene),
+            # Don't allow genes with all zero counts.
+            all(isPositive(minCellsPerGene))
+        )
+
+        # minUMIs supports barcode ranks filtering.
         if (is.character(minUMIs)) {
-            assert_is_a_string(minUMIs)
-            assert_is_subset(minUMIs, c("inflection", "knee"))
+            assert(
+                isString(minUMIs),
+                isSubset(minUMIs, c("inflection", "knee"))
+            )
+        } else {
+            assert(
+                is.numeric(minUMIs),
+                all(isPositive(minUMIs))
+            )
         }
-
-        # maxUMIs
-        assert_is_numeric(maxUMIs)
-        assert_all_are_positive(maxUMIs)
-
-        # minGenes
-        assert_is_numeric(minGenes)
-        assert_all_are_non_negative(minGenes)
-
-        # maxGenes
-        assert_is_numeric(maxGenes)
-        assert_all_are_non_negative(maxGenes)
-
-        # minNovelty
-        assert_is_numeric(minNovelty)
-        assert_all_are_in_range(minNovelty, lower = 0L, upper = 1L)
-
-        # maxMitoRatio
-        assert_is_numeric(maxMitoRatio)
-        assert_all_are_in_range(maxMitoRatio, lower = 0L, upper = 1L)
-
-        # minCellsPerGene
-        # Don't allow genes with all zero counts, so require at least 1 here
-        assert_is_numeric(minCellsPerGene)
-        assert_all_are_positive(minCellsPerGene)
 
         params <- list(
             nCells = nCells,
@@ -144,7 +166,7 @@ setMethod(
         )
 
         # minUMIs
-        if (is_a_string(minUMIs)) {
+        if (isString(minUMIs)) {
             ranks <- barcodeRanksPerSample(object)
             minUMIs <- vapply(
                 X = ranks,
@@ -157,7 +179,7 @@ setMethod(
             minUMIs <- minUMIs[sort(names(minUMIs))]
         }
         if (!is.null(names(minUMIs))) {
-            assert_are_set_equal(names(minUMIs), sampleNames)
+            assert(areSetEqual(names(minUMIs), sampleNames))
             message(paste(
                 "minUMIs: per sample mode",
                 printString(minUMIs),
@@ -167,30 +189,31 @@ setMethod(
                 sample = names(minUMIs),
                 cutoff = minUMIs,
                 FUN = function(sample, cutoff) {
-                    metrics %>%
-                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
-                        .[.[["nUMI"]] >= cutoff, , drop = FALSE]
+                    filter(
+                        colData,
+                        !!sym("sampleName") == !!sample,
+                        !!sym("nUMI") >= !!cutoff
+                    )
                 },
                 SIMPLIFY = FALSE,
                 USE.NAMES = FALSE
             )
-            metrics <- do.call(rbind, list)
+            colData <- bind_rows(list)
         } else {
-            metrics <- metrics %>%
-                .[.[["nUMI"]] >= minUMIs, , drop = FALSE]
+            colData <- filter(colData, !!sym("nUMI") >= !!minUMIs)
         }
-        if (!nrow(metrics)) {
+        if (!nrow(colData)) {
             stop("No cells passed `minUMIs` cutoff")
         }
         summaryCells[["minUMIs"]] <- paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
+            paste(.paddedCount(nrow(colData)), "cells"),
             paste("minUMIs", ">=", min(minUMIs)),
             sep = " | "
         )
 
         # maxUMIs
         if (!is.null(names(maxUMIs))) {
-            assert_are_set_equal(names(maxUMIs), sampleNames)
+            assert(areSetEqual(names(maxUMIs), sampleNames))
             message(paste(
                 "maxUMIs: per sample mode",
                 printString(maxUMIs),
@@ -200,30 +223,31 @@ setMethod(
                 sample = names(maxUMIs),
                 cutoff = maxUMIs,
                 FUN = function(sample, cutoff) {
-                    metrics %>%
-                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
-                        .[.[["nUMI"]] <= cutoff, , drop = FALSE]
+                    filter(
+                        colData,
+                        !!sym("sampleName") == !!sample,
+                        !!sym("nUMI") <= !!cutoff
+                    )
                 },
                 SIMPLIFY = FALSE,
                 USE.NAMES = FALSE
             )
-            metrics <- do.call(rbind, list)
+            colData <- bind_rows(list)
         } else {
-            metrics <- metrics %>%
-                .[.[["nUMI"]] <= maxUMIs, , drop = FALSE]
+            colData <- filter(colData, !!sym("nUMI") <= !!maxUMIs)
         }
-        if (!nrow(metrics)) {
+        if (!nrow(colData)) {
             stop("No cells passed `maxUMIs` cutoff")
         }
         summaryCells[["maxUMIs"]] <- paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
+            paste(.paddedCount(nrow(colData)), "cells"),
             paste("maxUMIs", "<=", max(maxUMIs)),
             sep = " | "
         )
 
         # minGenes
         if (!is.null(names(minGenes))) {
-            assert_are_set_equal(names(minGenes), sampleNames)
+            assert(areSetEqual(names(minGenes), sampleNames))
             message(paste(
                 "minGenes: per sample mode",
                 printString(minGenes),
@@ -233,30 +257,31 @@ setMethod(
                 sample = names(minGenes),
                 cutoff = minGenes,
                 FUN = function(sample, cutoff) {
-                    metrics %>%
-                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
-                        .[.[["nGene"]] >= cutoff, , drop = FALSE]
+                    filter(
+                        colData,
+                        !!sym("sampleName") == !!sample,
+                        !!sym("nGene") >= !!cutoff
+                    )
                 },
                 SIMPLIFY = FALSE,
                 USE.NAMES = FALSE
             )
-            metrics <- do.call(rbind, list)
+            colData <- bind_rows(list)
         } else {
-            metrics <- metrics %>%
-                .[.[["nGene"]] >= minGenes, , drop = FALSE]
+            colData <- filter(colData, !!sym("nGene") >= !!minGenes)
         }
-        if (!nrow(metrics)) {
+        if (!nrow(colData)) {
             stop("No cells passed `minGenes` cutoff")
         }
         summaryCells[["minGenes"]] <- paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
+            paste(.paddedCount(nrow(colData)), "cells"),
             paste("minGenes", ">=", min(minGenes)),
             sep = " | "
         )
 
         # maxGenes
         if (!is.null(names(maxGenes))) {
-            assert_are_set_equal(names(maxGenes), sampleNames)
+            assert(areSetEqual(names(maxGenes), sampleNames))
             message(paste(
                 "maxGenes: per sample mode",
                 printString(maxGenes),
@@ -266,30 +291,31 @@ setMethod(
                 sample = names(maxGenes),
                 cutoff = maxGenes,
                 FUN = function(sample, cutoff) {
-                    metrics %>%
-                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
-                        .[.[["nGene"]] <= cutoff, , drop = FALSE]
+                    filter(
+                        colData,
+                        !!sym("sampleName") == !!sample,
+                        !!sym("nGene") <= !!cutoff
+                    )
                 },
                 SIMPLIFY = FALSE,
                 USE.NAMES = FALSE
             )
-            metrics <- do.call(rbind, list)
+            colData <- bind_rows(list)
         } else {
-            metrics <- metrics %>%
-                .[.[["nGene"]] <= maxGenes, , drop = FALSE]
+            colData <- filter(colData, !!sym("nGene") <= !!maxGenes)
         }
-        if (!nrow(metrics)) {
+        if (!nrow(colData)) {
             stop("No cells passed `maxGenes` cutoff")
         }
         summaryCells[["maxGenes"]] <- paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
+            paste(.paddedCount(nrow(colData)), "cells"),
             paste("maxGenes", "<=", max(maxGenes)),
             sep = " | "
         )
 
         # minNovelty
         if (!is.null(names(minNovelty))) {
-            assert_are_set_equal(names(minNovelty), sampleNames)
+            assert(areSetEqual(names(minNovelty), sampleNames))
             message(paste(
                 "minNovelty: per sample mode",
                 printString(minNovelty),
@@ -299,30 +325,33 @@ setMethod(
                 sample = names(minNovelty),
                 cutoff = minNovelty,
                 FUN = function(sample, cutoff) {
-                    metrics %>%
-                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
-                        .[.[["log10GenesPerUMI"]] >= cutoff, , drop = FALSE]
+                    filter(
+                        colData,
+                        !!sym("sampleName") == !!sample,
+                        !!sym("log10GenesPerUMI") >= !!cutoff)
                 },
                 SIMPLIFY = FALSE,
                 USE.NAMES = FALSE
             )
-            metrics <- do.call(rbind, list)
+            colData <- bind_rows(list)
         } else {
-            metrics <- metrics %>%
-                .[.[["log10GenesPerUMI"]] >= minNovelty, , drop = FALSE]
+            colData <- filter(
+                colData,
+                !!sym("log10GenesPerUMI") >= !!minNovelty
+            )
         }
-        if (!nrow(metrics)) {
+        if (!nrow(colData)) {
             stop("No cells passed `minNovelty` cutoff")
         }
         summaryCells[["minNovelty"]] <- paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
-            paste("minNovelty", ">=", min(minNovelty)),
+            paste(.paddedCount(nrow(colData)), "cells"),
+            paste("minNovelty", "<=", min(minNovelty)),
             sep = " | "
         )
 
         # maxMitoRatio
         if (!is.null(names(maxMitoRatio))) {
-            assert_are_set_equal(names(maxMitoRatio), sampleNames)
+            assert(areSetEqual(names(maxMitoRatio), sampleNames))
             message(paste(
                 "maxMitoRatio: per sample mode",
                 printString(maxMitoRatio),
@@ -332,50 +361,51 @@ setMethod(
                 sample = names(maxMitoRatio),
                 cutoff = maxMitoRatio,
                 FUN = function(sample, cutoff) {
-                    metrics %>%
-                        .[.[["sampleName"]] == sample, , drop = FALSE] %>%
-                        .[.[["mitoRatio"]] <= cutoff, , drop = FALSE]
+                    filter(
+                        colData,
+                        !!sym("sampleName") == !!sample,
+                        !!sym("mitoRatio") <= !!cutoff
+                    )
                 },
                 SIMPLIFY = FALSE,
                 USE.NAMES = FALSE
             )
-            metrics <- do.call(rbind, list)
+            colData <- bind_rows(list)
         } else {
-            metrics <- metrics %>%
-                .[.[["mitoRatio"]] <= maxMitoRatio, , drop = FALSE]
+            colData <- filter(colData, !!sym("mitoRatio") <= !!maxMitoRatio)
         }
-        if (!nrow(metrics)) {
+        if (!nrow(colData)) {
             stop("No cells passed `maxMitoRatio` cutoff")
         }
         summaryCells[["maxMitoRatio"]] <- paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
+            paste(.paddedCount(nrow(colData)), "cells"),
             paste("maxMitoRatio", "<=", max(maxMitoRatio)),
             sep = " | "
         )
 
         # Expected nCells per sample (filtered by top nUMI)
         if (nCells < Inf) {
-            metrics <- metrics %>%
-                rownames_to_column() %>%
+            colData <- colData %>%
                 group_by(!!sym("sampleID")) %>%
                 arrange(desc(!!sym("nUMI")), .by_group = TRUE) %>%
-                slice(seq_len(nCells)) %>%
-                as.data.frame() %>%
-                column_to_rownames()
+                slice(seq_len(nCells))
         }
 
-        if (!nrow(metrics)) {
+        if (!nrow(colData)) {
             stop("No cells passed `nCells` cutoff")
         }
         summaryCells[["nCells"]] <- paste(
-            paste(.paddedCount(nrow(metrics)), "cells"),
+            paste(.paddedCount(nrow(colData)), "cells"),
             paste("nCells", "==", nCells),
             sep = " | "
         )
 
-        cells <- sort(rownames(metrics))
-        assert_is_subset(cells, colnames(object))
-        object <- object[, cells]
+        # Now coerce back to DataFrame from tibble.
+        colData <- as(colData, "DataFrame")
+        assert(hasRownames(colData))
+        cells <- sort(rownames(colData))
+        assert(isSubset(cells, colnames(object)))
+        object <- object[, cells, drop = FALSE]
 
         # Filter low quality genes ---------------------------------------------
         summaryGenes <- character()
@@ -400,11 +430,11 @@ setMethod(
             sep = " | "
         )
         genes <- sort(genes)
-        assert_is_subset(genes, rownames(object))
-        object <- object[genes, ]
+        assert(isSubset(genes, rownames(object)))
+        object <- object[genes, , drop = FALSE]
 
         # Summary --------------------------------------------------------------
-        printParams <- c(
+        summaryParams <- paste("  -", c(
             paste(">=", min(minUMIs), "UMIs per cell"),
             paste("<=", max(maxUMIs), "UMIs per cell"),
             paste(">=", min(minGenes), "genes per cell"),
@@ -413,38 +443,34 @@ setMethod(
             paste("<=", max(maxMitoRatio), "mitochondrial abundance"),
             paste("==", nCells, "cells per sample"),
             paste(">=", min(minCellsPerGene), "cells per gene")
-        )
-        message(paste(c(
+        ))
+        summary <- c(
             "Parameters:",
-            paste("  -", printParams),
-            bcbioBase::separatorBar,
+            summaryParams,
+            separatorBar,
             "Cells:",
             as.character(summaryCells),
-            printString(table(metrics[["sampleName"]])),
-            bcbioBase::separatorBar,
-            "Genes:",
-            as.character(summaryGenes),
-            bcbioBase::separatorBar,
-            "Summary:",
             paste(
-                "  -",
-                dim(object)[[2L]], "of", originalDim[[2L]],
+                .paddedCount(dim(object)[[2L]]), "of", originalDim[[2L]],
                 "cells passed filtering",
                 paste0(
                     "(", percent(dim(object)[[2L]] / originalDim[[2L]]), ")"
                 )
             ),
+            # Number of cells per sample.
+            printString(table(colData[["sampleName"]])),
+            separatorBar,
+            "Genes:",
+            as.character(summaryGenes),
             paste(
-                "  -",
-                dim(object)[[1L]], "of", originalDim[[1L]],
+                .paddedCount(dim(object)[[1L]]), "of", originalDim[[1L]],
                 "genes passed filtering",
                 paste0(
                     "(", percent(dim(object)[[1L]] / originalDim[[1L]]), ")"
                 )
             )
-        ), collapse = "\n"))
-
-        summary <- list(cells = summaryCells, genes = summaryGenes)
+        )
+        message(paste(summary, collapse = "\n"))
 
         # Metadata -------------------------------------------------------------
         metadata(object)[["cellularBarcodes"]] <- NULL
@@ -455,4 +481,13 @@ setMethod(
 
         object
     }
+
+
+
+#' @rdname filterCells
+#' @export
+setMethod(
+    f = "filterCells",
+    signature = signature("bcbioSingleCell"),
+    definition = filterCells.bcbioSingleCell
 )

@@ -4,7 +4,7 @@
 \name{show}
 \alias{show}
 \alias{show,bcbioSingleCell-method}
-\title{Show an Object}
+\title{Show an object}
 \usage{
 \S4method{show}{bcbioSingleCell}(object)
 }
@@ -37,13 +37,13 @@ complete, original object, with misleading results.  See the
 the discussion in \code{\link{setIs}} for the general concept.
 }
 \examples{
-show(indrops_small)
+data(indrops)
+show(indrops)
 }
 \seealso{
-Other S4 Object: \code{\link{bcbioSingleCell}},
-  \code{\link{extract}}, \code{\link{updateObject}}
+\code{\link{showMethods}} prints all the methods for one or more
+  functions.
 }
 \author{
 Michael Steinbuagh
 }
-\concept{S4 Object}

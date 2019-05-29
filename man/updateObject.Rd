@@ -4,9 +4,9 @@
 \name{updateObject}
 \alias{updateObject}
 \alias{updateObject,bcbioSingleCell-method}
-\title{Update an Object to Its Current Class Definition}
+\title{Update an object to its current class definition}
 \usage{
-\S4method{updateObject}{bcbioSingleCell}(object)
+\S4method{updateObject}{bcbioSingleCell}(object, rowRanges = NULL)
 }
 \arguments{
 \item{object}{
@@ -16,9 +16,19 @@
     Object for slot information to be extracted from for
     \code{getObjectSlots}.
   }
+
+\item{rowRanges}{\code{GRanges}.
+Genomic ranges (e.g. genome annotations). Metadata describing the assay
+rows.}
 }
 \value{
-Valid object.
+\code{updateObject} returns a valid instance of \code{object}.
+
+  \code{updateObjectFromSlots} returns an instance of class
+  \code{objclass}.
+
+  \code{getObjectSlots} returns a list of named elements, with each
+  element corresponding to a slot in \code{object}.
 }
 \description{
 \code{updateObject} is a generic function that returns an instance
@@ -81,14 +91,29 @@ Updating objects is primarily useful when an object has been
   \code{object} cannot be determined by accessing known slots.
 }
 \examples{
-x <- updateObject(indrops_small)
+data(indrops)
+x <- updateObject(indrops)
 print(x)
 }
 \seealso{
-Other S4 Object: \code{\link{bcbioSingleCell}},
-  \code{\link{extract}}, \code{\link{show}}
+\itemize{
+    \item \code{\link[Biobase]{updateObjectTo}} in the \pkg{Biobase} package
+          for updating an object to the class definition of a template (might
+          be useful for updating a virtual superclass).
+
+    \item \code{\link[methods]{validObject}} for testing the validity of an
+          object.
+
+    \item \code{\link[methods]{showMethods}} for displaying a summary of the
+          methods defined for a given generic function.
+
+    \item \code{\link[methods]{selectMethod}} for getting the definition of
+          a specific method.
+
+    \item \link{BiocGenerics} for a summary of all the generics defined
+          in the \pkg{BiocGenerics} package.
+  }
 }
 \author{
 Michael Steinbaugh
 }
-\concept{S4 Object}

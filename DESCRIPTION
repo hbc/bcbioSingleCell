@@ -1,7 +1,8 @@
 Package: bcbioSingleCell
-Title: Single-Cell RNA-Seq Utilities
+Title: bcbio Single-Cell RNA-Seq
 Description: Toolkit for bcbio single-cell RNA-seq analysis.
-Version: 0.2.1
+Version: 0.3.15
+Date: 2018-05-29
 Authors@R: c(
     person(
         given = "Michael",
@@ -44,61 +45,56 @@ Authors@R: c(
         role = c("cph", "fnd")
     ))
 URL:
-    http://bioinformatics.sph.harvard.edu/bcbioSingleCell,
-    https://github.com/hbc/bcbioSingleCell
-BugReports: https://github.com/hbc/bcbioSingleCell/issues
+    https://bioinformatics.sph.harvard.edu/bcbioSingleCell/,
+    https://github.com/hbc/bcbioSingleCell/
+BugReports: https://github.com/hbc/bcbioSingleCell/issues/
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: TRUE
+LazyData: false
 Depends:
     R (>= 3.5),
-    SingleCellExperiment,
-    bcbioBase (== 0.4.1)
+    SingleCellExperiment (>= 1.4)
 Imports:
-    assertive.base,
-    assertive.files,
-    assertive.numbers,
-    assertive.properties,
-    assertive.sets,
-    assertive.strings,
-    assertive.types,
-    basejump (== 0.7.2),
+    acidplots (>= 0.2.0),
+    basejump (>= 0.10.4),
+    bcbioBase (>= 0.6.2),
+    bioverbs (>= 0.1.13),
+    goalie (>= 0.2.15), 
     Biobase,
     BiocGenerics,
-    BiocParallel,
-    cowplot (>= 0.9),
-    dplyr (>= 0.7),
-    ggplot2 (>= 3.0),
-    ggridges (>= 0.5),
-    graphics,
-    magrittr (>= 1.5),
-    Matrix (>= 1.2),
-    Matrix.utils (>= 0.9),
-    methods,
-    purrr (>= 0.2.5),
-    R.utils,
-    readr (>= 1.1),
-    rhdf5 (>= 2.2),
-    rlang (>= 0.2),
-    rmarkdown (>= 1.10),
+    DropletUtils,
     S4Vectors,
-    scales,
-    sessioninfo (>= 1.0),
-    stats,
-    stringr (>= 1.3),
     SummarizedExperiment,
-    tibble (>= 1.4),
-    tidyverse (>= 1.2),
+    Matrix (>= 1.2),
+    cowplot (>= 0.9),
+    dplyr (>= 0.8),
+    ggplot2 (>= 3.1),
+    ggridges (>= 0.5),
+    magrittr (>= 1.5),
+    readr (>= 1.3),
+    rlang (>= 0.3), 
+    stringr (>= 1.4),
+    tibble (>= 2.1),
+    graphics,
+    methods,
+    scales,
+    stats,
     utils
 Suggests:
     BiocStyle,
-    DropletUtils,
-    EnsDb.Hsapiens.v75,
+    R.utils,
+    patrick,
+    rmarkdown,
     roxygen2,
-    testthat (>= 2.0)
+    sessioninfo,
+    testthat,
+    tidyverse
 Remotes:
-    acidgenomics/basejump@v0.7.2,
-    hbc/bcbioBase@v0.4.1
+    acidgenomics/acidplots,
+    acidgenomics/basejump,
+    acidgenomics/bioverbs,
+    acidgenomics/goalie,
+    hbc/bcbioBase
 biocViews:
     DataImport,
     DataRepresentation,
@@ -107,4 +103,32 @@ biocViews:
     RNASeq,
     SingleCell
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
+Collate: 
+    'AllClasses.R'
+    'assertions-internal.R'
+    'barcodeRanksPerSample-methods.R'
+    'barcodes-internal.R'
+    'bcbioSingleCell.R'
+    'calculateMetrics.R'
+    'data.R'
+    'deprecated.R'
+    'extract-methods.R'
+    'filterCells-methods.R'
+    'globals.R'
+    'import-internal.R'
+    'imports.R'
+    'package.R'
+    'plotBarcodeRanks-methods.R'
+    'plotCellCounts-methods.R'
+    'plotGenesPerCell-methods.R'
+    'plotMitoRatio-methods.R'
+    'plotMitoVsCoding-methods.R'
+    'plotNovelty-methods.R'
+    'plotQC-methods.R'
+    'plotReadsPerCell-methods.R'
+    'plotUMIsPerCell-methods.R'
+    'plotUMIsVsGenes-methods.R'
+    'reexports.R'
+    'show-methods.R'
+    'updateObject-methods.R'
