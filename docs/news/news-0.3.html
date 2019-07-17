@@ -48,6 +48,7 @@
 <![endif]-->
 
 
+
   </head>
 
   <body>
@@ -64,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.16</span>
       </span>
     </div>
 
@@ -98,6 +99,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -127,9 +129,9 @@
 <li>Reorganized <code>metricsPerSample</code> code approach.</li>
 </ul>
 </div>
-<div id="minor-changes-14" class="section level3">
+<div id="minor-changes-15" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-14" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-15" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Consolidated S4 validity check code into <code>AllClasses.R</code> file.</li>
 <li>Updated Travis and AppVeyor CI configuration.</li>
@@ -153,9 +155,9 @@
 <li>Renamed example data from <code>cellranger_small</code> to <code>cellranger</code>, and <code>indrops_small</code> to simply <code>indrops</code>.</li>
 </ul>
 </div>
-<div id="minor-changes-13" class="section level3">
+<div id="minor-changes-14" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-13" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-14" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Transitioning to goalie for assert checks in place of assertive package.</li>
 <li>Miscellaneous documentation improvements.</li>
@@ -174,15 +176,15 @@
 <li>Migrating <code>CellRanger</code> S4 class to separate Chromium R package.</li>
 <li>Migrated additional S4 generics to basejump package (bioverbs).</li>
 <li>Exporting <code>calculateMetrics</code> as a user-accessible function.</li>
-<li>Extract (<code>[</code>) now returns <code>bcbioSingleCell</code> object again.</li>
+<li>Extract (<code><a href="https://rdrr.io/r/base/Extract.html">[</a></code>) now returns <code>bcbioSingleCell</code> object again.</li>
 <li>
 <code>filterCells</code>: Reworking to return <code>SingleCellExperiment</code> instead of <code>bcbioSingleCell</code> object.</li>
 <li>Improved plotting functions to inherit params from basejump.</li>
 </ul>
 </div>
-<div id="minor-changes-12" class="section level3">
+<div id="minor-changes-13" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-12" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-13" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Removed <code>barcodePattern</code> global variable.</li>
 </ul>
@@ -191,9 +193,9 @@
     <div id="bcbiosinglecell-0-3-3-2018-11-25" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-3-2018-11-25" class="anchor"></a>bcbioSingleCell 0.3.3 (2018-11-25)</h2>
-<div id="minor-changes-11" class="section level3">
+<div id="minor-changes-12" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-11" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-12" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Updated basejump and bcbioBase dependencies, to tighten up build checks.</li>
 <li>Documentation and CI configuration fixes.</li>
@@ -211,9 +213,9 @@
 <code>metrics</code>: Removed code and consolidated <code>SingleCellExperiment</code> method support in basejump package.</li>
 </ul>
 </div>
-<div id="minor-changes-10" class="section level3">
+<div id="minor-changes-11" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-10" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-11" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Documentation improvements.</li>
 <li>
@@ -235,9 +237,9 @@
 <li>Migrated to inheriting S4 generics from bioverbs, where applicable.</li>
 </ul>
 </div>
-<div id="minor-changes-9" class="section level3">
+<div id="minor-changes-10" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-9" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-10" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Reworked documentation to use sentence case instead of title case.</li>
 </ul>
@@ -246,9 +248,9 @@
     <div id="bcbiosinglecell-0-3-6-2019-01-13" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-6-2019-01-13" class="anchor"></a>bcbioSingleCell 0.3.6 (2019-01-13)</h2>
-<div id="minor-changes-8" class="section level3">
+<div id="minor-changes-9" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-8" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-9" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Updated basejump and bcbioBase dependencies, to pass build checks.</li>
 <li>Split out imports into a separate R file.</li>
@@ -258,9 +260,9 @@
     <div id="bcbiosinglecell-0-3-7-2019-02-12" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-7-2019-02-12" class="anchor"></a>bcbioSingleCell 0.3.7 (2019-02-12)</h2>
-<div id="minor-changes-7" class="section level3">
+<div id="minor-changes-8" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-7" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-8" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>bcbioSingleCell</code> generator: improved internal handling of <code>mapCellsToSamples</code> call. This reworked join step checks the sampleID mapping more carefully.</li>
@@ -271,9 +273,9 @@
     <div id="bcbiosinglecell-0-3-8-2019-03-18" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-8-2019-03-18" class="anchor"></a>bcbioSingleCell 0.3.8 (2019-03-18)</h2>
-<div id="minor-changes-6" class="section level3">
+<div id="minor-changes-7" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-6" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-7" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Updated basejump and bcbioBase dependencies.</li>
 <li>Updated documentation.</li>
@@ -284,9 +286,9 @@
     <div id="bcbiosinglecell-0-3-9-2019-04-01" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-9-2019-04-01" class="anchor"></a>bcbioSingleCell 0.3.9 (2019-04-01)</h2>
-<div id="minor-changes-5" class="section level3">
+<div id="minor-changes-6" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-5" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-6" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Migrated development code to <a href="https://acidgenomics.com/">Acid Genomics</a>.</li>
 <li>Updated <a href="https://basejump.acidgenomics.com/">basejump</a> dependency to v0.10 release series.</li>
@@ -303,12 +305,12 @@
 <li>
 <code>updateObject</code> is now fully backward compatible for all objects created by the package, including versions prior to v0.1.</li>
 <li>Tightened up S4 validity class checks for <code>bcbioSingleCell</code>. Similar to <code>bcbioRNASeq</code> class checks, now requiring these elements in <code>metadata</code>: <code>bcbioCommandsLog</code>, <code>bcbioLog</code>, <code>dataVersions</code>, <code>gffFile</code>, <code>lanes</code>, <code>programVersions</code>, <code>projectDir</code>, <code>runDate</code>, <code>wd</code>, and <code>yaml</code>. Previously, these weren’t required because we were sharing internal validity code checks with the <code>CellRanger</code> S4 class. <code>CellRanger</code> has since been moved to the new Chromium package, so it’s now appropriate to tighten up bcbioSingleCell.</li>
-<li>Extract method <code>[</code> on <code>bcbioSingleCell</code> class objects no longer alters the version of the object. It only sets <code>subset = TRUE</code>, similar to bcbioRNASeq.</li>
+<li>Extract method <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code> on <code>bcbioSingleCell</code> class objects no longer alters the version of the object. It only sets <code>subset = TRUE</code>, similar to bcbioRNASeq.</li>
 </ul>
 </div>
-<div id="minor-changes-4" class="section level3">
+<div id="minor-changes-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-4" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-5" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Bug fix release for formal rename in <code>emptyRanges</code> from <code>mcolsNames</code> to <code>mcolnames</code>. This has been changed in <a href="https://basejump.acidgenomics.com/">basejump</a> 0.10.3.</li>
 </ul>
@@ -324,9 +326,9 @@
 <li>Restricted S4 methods back to <code>bcbioSingleCell</code> from <code>SingleCellExperiment</code> where applicable. Generally, this applies to the supported QC plotting functions. Previously, the methods were defined against <code>SingleCellExperiment</code> to also support <code>CellRanger</code> S4 class, which has since been moved to the <a href="https://chromium.acidgenomics.com/">Chromium</a> package.</li>
 </ul>
 </div>
-<div id="minor-changes-3" class="section level3">
+<div id="minor-changes-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-4" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Improved code coverage by adding additional unit tests.</li>
 <li>Updated internal reexport method for S4 generics, making <code>reexports.Rd</code> file no longer necessary.</li>
@@ -337,9 +339,9 @@
     <div id="bcbiosinglecell-0-3-12-2019-04-18" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-12-2019-04-18" class="anchor"></a>bcbioSingleCell 0.3.12 (2019-04-18)</h2>
-<div id="minor-changes-2" class="section level3">
+<div id="minor-changes-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-3" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Deprecated <code>prepareSingleCellTemplate</code>, in favor of <code>prepareTemplate</code>.</li>
 <li>Switched Travis CI configuration to use <code>singlecell</code> Docker image.</li>
@@ -349,9 +351,9 @@
     <div id="bcbiosinglecell-0-3-13-2019-04-23" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-13-2019-04-23" class="anchor"></a>bcbioSingleCell 0.3.13 (2019-04-23)</h2>
-<div id="minor-changes-1" class="section level3">
+<div id="minor-changes-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Now importing ggplot2 code from <a href="https://acidplots.acidgenomics.com/">acidplots</a> package.</li>
 <li>
@@ -370,12 +372,24 @@
     <div id="bcbiosinglecell-0-3-15-2019-05-29" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-15-2019-05-29" class="anchor"></a>bcbioSingleCell 0.3.15 (2019-05-29)</h2>
+<div id="minor-changes-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
+<ul>
+<li>Updated <code>barcodeRanksPerSample</code> and <code>plotBarcodeRanks</code> to support DropletUtils update in Bioconductor 3.9.</li>
+<li>Improved Travis and AppVeyor CI configuration.</li>
+</ul>
+</div>
+</div>
+    <div id="bcbiosinglecell-0-3-16-2019-07-17" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-3-16-2019-07-17" class="anchor"></a>bcbioSingleCell 0.3.16 (2019-07-17)</h2>
 <div id="minor-changes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h3>
 <ul>
-<li>Updated <code>barcodeRanksPerSample</code> and <code>plotBarcodeRanks</code> to support DropletUtils update in Bioconductor 3.9.</li>
-<li>Improved Travis and AppVeyor CI configuration.</li>
+<li>Updated basejump dependencies.</li>
+<li>Improved Travis CI docker configuration.</li>
 </ul>
 </div>
 </div>
@@ -401,11 +415,13 @@
         <li><a href="#bcbiosinglecell-0-3-13-2019-04-23">0.3.13</a></li>
         <li><a href="#bcbiosinglecell-0-3-14-2019-04-25">0.3.14</a></li>
         <li><a href="#bcbiosinglecell-0-3-15-2019-05-29">0.3.15</a></li>
+        <li><a href="#bcbiosinglecell-0-3-16-2019-07-17">0.3.16</a></li>
       </ul>
     </div>
   </div>
 
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -415,11 +431,14 @@
 <div class="pkgdown">
   <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
