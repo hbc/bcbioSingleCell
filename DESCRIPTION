@@ -94,7 +94,7 @@ Remotes:
     acidgenomics/basejump,
     acidgenomics/bioverbs,
     acidgenomics/goalie,
-    hbc/bcbioBase
+    acidgenomics/bcbioBase
 biocViews:
     DataImport,
     DataRepresentation,
