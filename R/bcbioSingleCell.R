@@ -43,27 +43,27 @@ bcbioSingleCell <- function(
     allSamples <- TRUE
     sampleData <- NULL
 
-    # Legacy arguments ---------------------------------------------------------
+    ## Legacy arguments ---------------------------------------------------------
     dots <- list(...)
     call <- match.call()
-    # ensemblVersion
+    ## ensemblVersion
     if ("ensemblVersion" %in% names(call)) {
         warning("Use `ensemblRelease` instead of `ensemblVersion`.")
         ensemblRelease <- call[["ensemblVersion"]]
         dots[["ensemblVersion"]] <- NULL
     }
-    # gtfFile
+    ## gtfFile
     if ("gtfFile" %in% names(call)) {
         warning("Use `gffFile` instead of `gtfFile`.")
         gffFile <- call[["gtfFile"]]
         dots[["gtfFile"]] <- NULL
     }
-    # annotable
+    ## annotable
     if ("annotable" %in% names(call)) {
         stop("Use `gffFile` instead of `annotable`.")
     }
 
-    # Assert checks ------------------------------------------------------------
+    ## Assert checks ------------------------------------------------------------
     assert(
         isADirectory(uploadDir),
         isString(sampleMetadataFile, nullOK = TRUE),
@@ -79,19 +79,19 @@ bcbioSingleCell <- function(
         isAFile(gffFile) || isAURL(gffFile)
     }
 
-    # Directory paths ----------------------------------------------------------
+    ## Directory paths ----------------------------------------------------------
     uploadDir <- realpath(uploadDir)
     projectDir <- projectDir(uploadDir)
     sampleDirs <- sampleDirs(uploadDir)
 
-    # Sequencing lanes ---------------------------------------------------------
+    ## Sequencing lanes ---------------------------------------------------------
     lanes <- detectLanes(sampleDirs)
 
-    # Project summary YAML -----------------------------------------------------
+    ## Project summary YAML -----------------------------------------------------
     yamlFile <- file.path(projectDir, "project-summary.yaml")
     yaml <- import(yamlFile)
 
-    # bcbio run information ----------------------------------------------------
+    ## bcbio run information ----------------------------------------------------
     dataVersions <- readDataVersions(file.path(projectDir, "data_versions.csv"))
     assert(is(dataVersions, "DataFrame"))
 
@@ -100,7 +100,7 @@ bcbioSingleCell <- function(
     assert(is(dataVersions, "DataFrame"))
 
     log <- import(file.path(projectDir, "bcbio-nextgen.log"))
-    # This step enables our minimal dataset inside the package to pass checks.
+    ## This step enables our minimal dataset inside the package to pass checks.
     tryCatch(
         expr = assert(isCharacter(log)),
         error = function(e) {
@@ -109,7 +109,7 @@ bcbioSingleCell <- function(
     )
 
     commandsLog <- import(file.path(projectDir, "bcbio-nextgen-commands.log"))
-    # This step enables our minimal dataset inside the package to pass checks.
+    ## This step enables our minimal dataset inside the package to pass checks.
     tryCatch(
         expr = assert(isCharacter(commandsLog)),
         error = function(e) {
@@ -121,7 +121,7 @@ bcbioSingleCell <- function(
     level <- getLevelFromCommands(commandsLog)
     umiType <- getUMITypeFromCommands(commandsLog)
 
-    # Check to see if we're dealing with a multiplexed platform.
+    ## Check to see if we're dealing with a multiplexed platform.
     multiplexed <- any(vapply(
         X = c("dropseq", "indrop"),
         FUN = function(pattern) {
@@ -130,11 +130,11 @@ bcbioSingleCell <- function(
         FUN.VALUE = logical(1L)
     ))
 
-    # User-defined sample metadata ---------------------------------------------
+    ## User-defined sample metadata ---------------------------------------------
     if (isString(sampleMetadataFile)) {
         sampleData <- readSampleData(sampleMetadataFile, lanes = lanes)
 
-        # Allow sample selection by with this file.
+        ## Allow sample selection by with this file.
         if (nrow(sampleData) < length(sampleDirs)) {
             message("Loading a subset of samples, defined by the metadata.")
             allSamples <- FALSE
@@ -142,7 +142,7 @@ bcbioSingleCell <- function(
             message(paste(length(sampleDirs), "samples matched by metadata."))
         }
 
-        # Error on incorrect reverse complement input.
+        ## Error on incorrect reverse complement input.
         if ("sequence" %in% colnames(sampleData)) {
             sampleDirSequence <- str_extract(names(sampleDirs), "[ACGT]+$")
             if (identical(
@@ -160,24 +160,24 @@ bcbioSingleCell <- function(
         }
     }
 
-    # Unfiltered cellular barcode distributions --------------------------------
+    ## Unfiltered cellular barcode distributions --------------------------------
     cbList <- .import.bcbio.barcodes(sampleDirs)
 
-    # Assays -------------------------------------------------------------------
-    # Note that we're now allowing transcript-level counts.
+    ## Assays -------------------------------------------------------------------
+    ## Note that we're now allowing transcript-level counts.
     counts <- .import.bcbio(sampleDirs)
     assays <- list(counts = counts)
 
-    # Row data -----------------------------------------------------------------
-    # Annotation priority:
-    # 1. AnnotationHub.
-    #    - Requires `organism` to be declared.
-    #    - Ensure that Ensembl release and genome build match.
-    # 2. GTF/GFF file. Use the bcbio GTF if possible.
-    # 3. Fall back to slotting empty ranges. This is offered as support for
-    #    complex datasets (e.g. multiple organisms).
+    ## Row data -----------------------------------------------------------------
+    ## Annotation priority:
+    ## 1. AnnotationHub.
+    ##    - Requires `organism` to be declared.
+    ##    - Ensure that Ensembl release and genome build match.
+    ## 2. GTF/GFF file. Use the bcbio GTF if possible.
+    ## 3. Fall back to slotting empty ranges. This is offered as support for
+    ##    complex datasets (e.g. multiple organisms).
     if (isString(organism) && is.numeric(ensemblRelease)) {
-        # AnnotationHub (ensembldb).
+        ## AnnotationHub (ensembldb).
         message("Using makeGRangesFromEnsembl() for annotations.")
         rowRanges <- makeGRangesFromEnsembl(
             organism = organism,
@@ -186,9 +186,9 @@ bcbioSingleCell <- function(
             release = ensemblRelease
         )
     } else {
-        # GTF/GFF file.
+        ## GTF/GFF file.
         if (is.null(gffFile)) {
-            # Attempt to use bcbio GTF automatically.
+            ## Attempt to use bcbio GTF automatically.
             gffFile <- getGTFFileFromYAML(yaml)
         }
         if (!is.null(gffFile)) {
@@ -202,8 +202,8 @@ bcbioSingleCell <- function(
     }
     assert(is(rowRanges, "GRanges"))
 
-    # Attempt to get genome build and Ensembl release if not declared.
-    # Note that these will remain NULL when using GTF file (see above).
+    ## Attempt to get genome build and Ensembl release if not declared.
+    ## Note that these will remain NULL when using GTF file (see above).
     if (is.null(genomeBuild)) {
         genomeBuild <- metadata(rowRanges)[["genomeBuild"]]
     }
@@ -211,11 +211,11 @@ bcbioSingleCell <- function(
         ensemblRelease <- metadata(rowRanges)[["ensemblRelease"]]
     }
 
-    # Column data --------------------------------------------------------------
-    # Automatic sample metadata.
+    ## Column data --------------------------------------------------------------
+    ## Automatic sample metadata.
     if (is.null(sampleData)) {
         if (isTRUE(multiplexed)) {
-            # Multiplexed samples without user-defined metadata.
+            ## Multiplexed samples without user-defined metadata.
             message(paste0(
                 "`sampleMetadataFile` is recommended for ",
                 "multiplexed samples (e.g. ", umiType, ")."
@@ -227,19 +227,19 @@ bcbioSingleCell <- function(
     }
     assert(isSubset(rownames(sampleData), names(sampleDirs)))
 
-    # Always prefilter, removing very low quality cells with no UMIs or genes.
+    ## Always prefilter, removing very low quality cells with no UMIs or genes.
     colData <- calculateMetrics(
         counts = counts,
         rowRanges = rowRanges,
         prefilter = TRUE
     )
 
-    # Subset the counts to match the prefiltered metrics.
+    ## Subset the counts to match the prefiltered metrics.
     assert(isSubset(rownames(colData), colnames(counts)))
     counts <- counts[, rownames(colData), drop = FALSE]
 
-    # Bind the `nCount` column into the colData. These are the number of counts
-    # bcbio uses for initial filtering (minimum_barcode_depth in YAML).
+    ## Bind the `nCount` column into the colData. These are the number of counts
+    ## bcbio uses for initial filtering (minimum_barcode_depth in YAML).
     nCount <- .nCount(cbList)
     assert(
         is.integer(nCount),
@@ -247,7 +247,7 @@ bcbioSingleCell <- function(
     )
     colData[["nCount"]] <- nCount[rownames(colData)]
 
-    # Join `sampleData()` into cell-level `colData()`.
+    ## Join `sampleData()` into cell-level `colData()`.
     if (nrow(sampleData) == 1L) {
         colData[["sampleID"]] <- as.factor(rownames(sampleData))
     } else {
@@ -259,8 +259,8 @@ bcbioSingleCell <- function(
         colData[["sampleID"]] <- cell2sample
     }
     sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
-    # Need to ensure the `sampleID` factor levels match up, otherwise we'll get
-    # a warning during the `left_join()` call below.
+    ## Need to ensure the `sampleID` factor levels match up, otherwise we'll get
+    ## a warning during the `left_join()` call below.
     assert(areSetEqual(
         x = levels(colData[["sampleID"]]),
         y = levels(sampleData[["sampleID"]])
@@ -273,10 +273,10 @@ bcbioSingleCell <- function(
     )
     colData <- as(colData, "DataFrame")
 
-    # Metadata -----------------------------------------------------------------
+    ## Metadata -----------------------------------------------------------------
     runDate <- runDate(projectDir)
 
-    # Interesting groups.
+    ## Interesting groups.
     interestingGroups <- camel(interestingGroups)
     assert(isSubset(interestingGroups, colnames(sampleData)))
 
@@ -294,7 +294,7 @@ bcbioSingleCell <- function(
         umiType = umiType,
         allSamples = allSamples,
         lanes = lanes,
-        # bcbio-specific -------------------------------------------------------
+        ## bcbio-specific -------------------------------------------------------
         projectDir = projectDir,
         runDate = runDate,
         yaml = yaml,
@@ -308,7 +308,7 @@ bcbioSingleCell <- function(
         call = match.call()
     )
 
-    # Return -------------------------------------------------------------------
+    ## Return -------------------------------------------------------------------
     .new.bcbioSingleCell(
         assays = assays,
         rowRanges = rowRanges,

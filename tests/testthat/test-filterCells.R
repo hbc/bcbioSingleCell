@@ -1,7 +1,7 @@
 context("filterCells")
 
 test_that("No filtering", {
-    # Expecting an object with the same dimensions by default.
+    ## Expecting an object with the same dimensions by default.
     invisible(capture.output(
         x <- filterCells(indrops)
     ))
@@ -29,8 +29,8 @@ with_parameters_test_that(
         expect_identical(metadata(x)[["subset"]], TRUE)
         expect_identical(dim(x), dim)
     },
-    # Refer to the quality control R Markdown for actual recommended cutoffs.
-    # These are skewed, and designed to work with our minimal dataset.
+    ## Refer to the quality control R Markdown for actual recommended cutoffs.
+    ## These are skewed, and designed to work with our minimal dataset.
     args = list(
         list(minUMIs = 2000L),
         list(maxUMIs = 2500L),
@@ -52,8 +52,8 @@ with_parameters_test_that(
 )
 
 test_that("Per sample cutoffs", {
-    # Get the count of sample1 (run1_AGAGGATA)
-    # We're applying no filtering to that sample
+    ## Get the count of sample1 (run1_AGAGGATA)
+    ## We're applying no filtering to that sample
     sampleNames <- sampleNames(indrops)
     expect_identical(
         sampleNames,

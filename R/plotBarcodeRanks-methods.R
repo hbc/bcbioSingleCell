@@ -84,7 +84,7 @@ plotBarcodeRanks.bcbioSingleCell <-  # nolint
                         y = "UMIs per cell"
                     )
 
-                # Include the fit line (smooth.spline)
+                ## Include the fit line (smooth.spline)
                 p <- p + geom_line(
                     data = filter(data, !is.na(!!sym("fitted"))),
                     mapping = aes(
@@ -107,7 +107,7 @@ plotBarcodeRanks.bcbioSingleCell <-  # nolint
                         yintercept = inflection
                     )
 
-                # Label the knee and inflection points more clearly
+                ## Label the knee and inflection points more clearly
                 knee <- which.min(abs(data[["total"]] - knee))
                 inflection <- which.min(abs(data[["total"]] - inflection))
                 labelData <- data[c(knee, inflection), , drop = FALSE]
@@ -130,7 +130,7 @@ plotBarcodeRanks.bcbioSingleCell <-  # nolint
             USE.NAMES = TRUE
         )
 
-        # Sort the plots by sample name
+        ## Sort the plots by sample name
         plotlist <- plotlist[sort(names(plotlist))]
 
         plot_grid(plotlist = plotlist)

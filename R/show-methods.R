@@ -15,13 +15,13 @@ NULL
 
 
 
-# Using the same internal method for bcbioSingleCell and CellRanger.
+## Using the same internal method for bcbioSingleCell and CellRanger.
 show.bcbioSingleCell <-  # nolint
     function(object) {
         validObject(object)
-        # Metadata.
+        ## Metadata.
         m <- metadata(object)
-        # Row ranges metadata.
+        ## Row ranges metadata.
         rrm <- metadata(rowRanges(object))
         .showHeader(object, version = m[["version"]])
         showSlotInfo(list(
@@ -40,7 +40,7 @@ show.bcbioSingleCell <-  # nolint
             interestingGroups = m[["interestingGroups"]],
             filtered = .isFiltered(object)
         ))
-        # Extend the SingleCellExperiment method.
+        ## Extend the SingleCellExperiment method.
         sce <- as(object, "SingleCellExperiment")
         cat(capture.output(show(sce)), sep = "\n")
     }

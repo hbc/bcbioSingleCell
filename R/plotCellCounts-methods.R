@@ -40,7 +40,7 @@ plotCellCounts.bcbioSingleCell <-  # nolint
         metrics <- metrics(object)
         sampleData <- sampleData(object)
 
-        # Remove user-defined `nCells` column, if present.
+        ## Remove user-defined `nCells` column, if present.
         metrics[["nCells"]] <- NULL
         sampleData[["nCells"]] <- NULL
 
@@ -69,22 +69,22 @@ plotCellCounts.bcbioSingleCell <-  # nolint
                 fill = paste(interestingGroups, collapse = ":\n")
             )
 
-        # Color palette
+        ## Color palette
         if (!is.null(fill)) {
             p <- p + fill
         }
 
-        # Labels
+        ## Labels
         if (nrow(data) <= 16L) {
             p <- p + acid_geom_label(
                 data = data,
                 mapping = aes(label = !!sym("nCells")),
-                # Align the label just under the top of the bar.
+                ## Align the label just under the top of the bar.
                 vjust = 1.25
             )
         }
 
-        # Facets
+        ## Facets
         facets <- NULL
         if (.isAggregate(data)) {
             facets <- c(facets, "aggregate")

@@ -19,8 +19,8 @@
     if (hasLength(list, n = 1L)) {
         list[[1L]]
     } else {
-        # This will unlist using a "." separator.
-        # Renaming "." to "_" in names.
+        ## This will unlist using a "." separator.
+        ## Renaming "." to "_" in names.
         x <- unlist(list, use.names = TRUE)
         names(x) <- makeNames(names(x))
         x
@@ -29,7 +29,7 @@
 
 
 
-# Obtain the raw, unfiltered cellular barcode read counts ("nCount").
+## Obtain the raw, unfiltered cellular barcode read counts ("nCount").
 .rawMetrics <- function(object) {
     list <- metadata(object)[["cellularBarcodes"]]
 

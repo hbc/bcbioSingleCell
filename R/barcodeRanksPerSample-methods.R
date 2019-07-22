@@ -34,13 +34,13 @@ barcodeRanksPerSample.bcbioSingleCell <-  # nolint
         cell2sample <- cell2sample(object)
         samples <- levels(cell2sample)
 
-        # Subset the counts per sample into a list.
+        ## Subset the counts per sample into a list.
         countsPerSample <- lapply(samples, function(sample) {
             cells <- names(cell2sample)[which(cell2sample == sample)]
             counts[, cells, drop = FALSE]
         })
 
-        # Calculate the ranks per sample.
+        ## Calculate the ranks per sample.
         ranks <- lapply(
             X = countsPerSample,
             FUN = function(counts) {
@@ -53,7 +53,7 @@ barcodeRanksPerSample.bcbioSingleCell <-  # nolint
                     )
                 )
 
-                # Check DropletUtils return.
+                ## Check DropletUtils return.
                 assert(
                     is(x, "DataFrame"),
                     identical(

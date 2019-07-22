@@ -32,7 +32,7 @@ NULL
 
 
 
-# Plot a single quality control metric.
+## Plot a single quality control metric.
 .plotQCMetric <- function(
     object,
     metricCol,
@@ -58,7 +58,7 @@ NULL
     interestingGroups(object) <-
         matchInterestingGroups(object, interestingGroups)
 
-    # Support for per sample filtering cutoffs.
+    ## Support for per sample filtering cutoffs.
     min <- min(min)
     max <- max(max)
     if (isTRUE(ratio)) {
@@ -79,7 +79,7 @@ NULL
         mapping[["x"]] <- as.symbol("sampleName")
         mapping[["y"]] <- as.symbol(metricCol)
     } else if (geom == "ridgeline") {
-        # Ridgeline flips the axes.
+        ## Ridgeline flips the axes.
         mapping[["x"]] <- as.symbol(metricCol)
         mapping[["y"]] <- as.symbol("sampleName")
     } else if (geom %in% c("ecdf", "histogram")) {
@@ -129,7 +129,7 @@ NULL
             labs(x = NULL)
     }
 
-    # Cutoff lines.
+    ## Cutoff lines.
     if (geom %in% c("boxplot", "violin")) {
         if (min > 0L) {
             p <- p + acid_geom_abline(yintercept = min)
@@ -152,7 +152,7 @@ NULL
         }
     }
 
-    # Label interesting groups.
+    ## Label interesting groups.
     p <- p +
         labs(
             title = title,
@@ -160,7 +160,7 @@ NULL
             fill = paste(interestingGroups, collapse = ":\n")
         )
 
-    # Color palette.
+    ## Color palette.
     if (geom == "ecdf") {
         if (is(color, "ScaleDiscrete")) {
             p <- p + color
@@ -171,7 +171,7 @@ NULL
         }
     }
 
-    # Median labels.
+    ## Median labels.
     if (!geom %in% c("ecdf", "histogram")) {
         if (metricCol %in% c("log10GenesPerUMI", "mitoRatio")) {
             digits <- 2L
@@ -182,7 +182,7 @@ NULL
             acid_geom_label_average(data, col = metricCol, digits = digits)
     }
 
-    # Facets.
+    ## Facets.
     facets <- NULL
     if (.isAggregate(data)) {
         facets <- "aggregate"
@@ -202,7 +202,7 @@ formals(.plotQCMetric)[["geom"]] <- geom
 
 
 
-# Compare two quality control metrics.
+## Compare two quality control metrics.
 .plotQCScatterplot <- function(
     object,
     xCol,
@@ -248,23 +248,23 @@ formals(.plotQCMetric)[["geom"]] <- geom
         scale_y_continuous(trans = yTrans)
 
     if (isTRUE(trendline)) {
-        # If `method = "gam"`, `mgcv` package is required.
-        # Otherwise build checks will error.
+        ## If `method = "gam"`, `mgcv` package is required.
+        ## Otherwise build checks will error.
         p <- p + geom_smooth(method = "glm", se = FALSE, size = 1L)
     }
 
-    # Label interesting groups.
+    ## Label interesting groups.
     p <- p + labs(
         title = title,
         color = paste(interestingGroups, collapse = ":\n")
     )
 
-    # Color palette.
+    ## Color palette.
     if (is(color, "ScaleDiscrete")) {
         p <- p + color
     }
 
-    # Facets.
+    ## Facets.
     facets <- NULL
     if (.isAggregate(data)) {
         facets <- c(facets, "aggregate")
@@ -294,7 +294,7 @@ plotQC.bcbioSingleCell <-  # nolint
         geom <- match.arg(geom)
         return <- match.arg(return)
 
-        # Don't show cell counts for unfiltered datasets.
+        ## Don't show cell counts for unfiltered datasets.
         if (!is.null(metadata(object)[["filterCells"]])) {
             plotCellCounts <- plotCellCounts(object)
             plotZerosVsDepth <- NULL
@@ -319,16 +319,16 @@ plotQC.bcbioSingleCell <-  # nolint
             "Zeros vs. Depth" = plotZerosVsDepth
         )
 
-        # Remove any `NULL` plots. This is useful for nuking the
-        # `plotReadsPerCell` return on an object that doesn't contain raw
-        # cellular barcode counts.
+        ## Remove any `NULL` plots. This is useful for nuking the
+        ## `plotReadsPerCell` return on an object that doesn't contain raw
+        ## cellular barcode counts.
         list <- Filter(f = Negate(is.null), x = list)
 
-        # Consistently show n plots.
+        ## Consistently show n plots.
         n <- 6L
         assert(hasLength(list, n = n))
 
-        # Hide the legends, if desired.
+        ## Hide the legends, if desired.
         if (identical(legend, FALSE)) {
             .hideLegend <- function(gg) {
                 gg + theme(legend.position = "none")
@@ -336,7 +336,7 @@ plotQC.bcbioSingleCell <-  # nolint
             list <- lapply(list, .hideLegend)
         }
 
-        # Return.
+        ## Return.
         if (return == "list") {
             names(list) <- camel(names(list))
             list

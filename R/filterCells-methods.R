@@ -94,46 +94,46 @@ filterCells.bcbioSingleCell <-  # nolint
 
         originalDim <- dim(object)
         sampleNames <- sampleNames(object)
-        # Coercing to tibble here for dplyr operations.
+        ## Coercing to tibble here for dplyr operations.
         colData <- as(object = colData(object), Class = "tbl_df")
 
-        # Parameter integrity checks -------------------------------------------
+        ## Parameter integrity checks -------------------------------------------
         assert(
-            # Expected nCells per sample.
+            ## Expected nCells per sample.
             is.numeric(nCells),
             all(isPositive(nCells)),
 
-            # minUMIs (see below)
+            ## minUMIs (see below)
             isAny(minUMIs, c("numeric", "character")),
 
-            # maxUMIs
+            ## maxUMIs
             is.numeric(maxUMIs),
             all(isPositive(maxUMIs)),
 
-            # minGenes
+            ## minGenes
             is.numeric(minGenes),
             all(isPositive(minGenes)),
 
-            # maxGenes
+            ## maxGenes
             is.numeric(maxGenes),
             all(isNonNegative(maxGenes)),
 
-            # minNovelty
+            ## minNovelty
             is.numeric(minNovelty),
             all(isInRange(minNovelty, lower = 0L, upper = 1L)),
 
-            # maxMitoRatio
+            ## maxMitoRatio
             is.numeric(maxMitoRatio),
-            # Don't allow the user to set at 0.
+            ## Don't allow the user to set at 0.
             all(isInLeftOpenRange(maxMitoRatio, lower = 0L, upper = 1L)),
 
-            # minCellsPerGene
+            ## minCellsPerGene
             is.numeric(minCellsPerGene),
-            # Don't allow genes with all zero counts.
+            ## Don't allow genes with all zero counts.
             all(isPositive(minCellsPerGene))
         )
 
-        # minUMIs supports barcode ranks filtering.
+        ## minUMIs supports barcode ranks filtering.
         if (is.character(minUMIs)) {
             assert(
                 isString(minUMIs),
@@ -157,7 +157,7 @@ filterCells.bcbioSingleCell <-  # nolint
             minCellsPerGene = minCellsPerGene
         )
 
-        # Filter low quality cells ---------------------------------------------
+        ## Filter low quality cells ---------------------------------------------
         summaryCells <- character()
         summaryCells[["prefilter"]] <- paste(
             paste(.paddedCount(ncol(object)), "cells"),
@@ -165,7 +165,7 @@ filterCells.bcbioSingleCell <-  # nolint
             sep = " | "
         )
 
-        # minUMIs
+        ## minUMIs
         if (isString(minUMIs)) {
             ranks <- barcodeRanksPerSample(object)
             minUMIs <- vapply(
@@ -211,7 +211,7 @@ filterCells.bcbioSingleCell <-  # nolint
             sep = " | "
         )
 
-        # maxUMIs
+        ## maxUMIs
         if (!is.null(names(maxUMIs))) {
             assert(areSetEqual(names(maxUMIs), sampleNames))
             message(paste(
@@ -245,7 +245,7 @@ filterCells.bcbioSingleCell <-  # nolint
             sep = " | "
         )
 
-        # minGenes
+        ## minGenes
         if (!is.null(names(minGenes))) {
             assert(areSetEqual(names(minGenes), sampleNames))
             message(paste(
@@ -279,7 +279,7 @@ filterCells.bcbioSingleCell <-  # nolint
             sep = " | "
         )
 
-        # maxGenes
+        ## maxGenes
         if (!is.null(names(maxGenes))) {
             assert(areSetEqual(names(maxGenes), sampleNames))
             message(paste(
@@ -313,7 +313,7 @@ filterCells.bcbioSingleCell <-  # nolint
             sep = " | "
         )
 
-        # minNovelty
+        ## minNovelty
         if (!is.null(names(minNovelty))) {
             assert(areSetEqual(names(minNovelty), sampleNames))
             message(paste(
@@ -349,7 +349,7 @@ filterCells.bcbioSingleCell <-  # nolint
             sep = " | "
         )
 
-        # maxMitoRatio
+        ## maxMitoRatio
         if (!is.null(names(maxMitoRatio))) {
             assert(areSetEqual(names(maxMitoRatio), sampleNames))
             message(paste(
@@ -383,7 +383,7 @@ filterCells.bcbioSingleCell <-  # nolint
             sep = " | "
         )
 
-        # Expected nCells per sample (filtered by top nUMI)
+        ## Expected nCells per sample (filtered by top nUMI)
         if (nCells < Inf) {
             colData <- colData %>%
                 group_by(!!sym("sampleID")) %>%
@@ -400,14 +400,14 @@ filterCells.bcbioSingleCell <-  # nolint
             sep = " | "
         )
 
-        # Now coerce back to DataFrame from tibble.
+        ## Now coerce back to DataFrame from tibble.
         colData <- as(colData, "DataFrame")
         assert(hasRownames(colData))
         cells <- sort(rownames(colData))
         assert(isSubset(cells, colnames(object)))
         object <- object[, cells, drop = FALSE]
 
-        # Filter low quality genes ---------------------------------------------
+        ## Filter low quality genes ---------------------------------------------
         summaryGenes <- character()
         summaryGenes[["prefilter"]] <- paste(
             paste(.paddedCount(nrow(object)), "genes"),
@@ -433,7 +433,7 @@ filterCells.bcbioSingleCell <-  # nolint
         assert(isSubset(genes, rownames(object)))
         object <- object[genes, , drop = FALSE]
 
-        # Summary --------------------------------------------------------------
+        ## Summary --------------------------------------------------------------
         summaryParams <- paste("  -", c(
             paste(">=", min(minUMIs), "UMIs per cell"),
             paste("<=", max(maxUMIs), "UMIs per cell"),
@@ -457,7 +457,7 @@ filterCells.bcbioSingleCell <-  # nolint
                     "(", percent(dim(object)[[2L]] / originalDim[[2L]]), ")"
                 )
             ),
-            # Number of cells per sample.
+            ## Number of cells per sample.
             printString(table(colData[["sampleName"]])),
             separatorBar,
             "Genes:",
@@ -472,7 +472,7 @@ filterCells.bcbioSingleCell <-  # nolint
         )
         message(paste(summary, collapse = "\n"))
 
-        # Metadata -------------------------------------------------------------
+        ## Metadata -------------------------------------------------------------
         metadata(object)[["cellularBarcodes"]] <- NULL
         metadata(object)[["filterCells"]] <- cells
         metadata(object)[["filterGenes"]] <- genes

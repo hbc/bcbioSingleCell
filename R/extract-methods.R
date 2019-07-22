@@ -42,11 +42,11 @@ extract.bcbioSingleCell <-  # nolint
     function(x, i, j, ..., drop = FALSE) {
         validObject(x)
 
-        # Genes
+        ## Genes
         if (missing(i)) {
             i <- 1L:nrow(x)
         }
-        # Cells
+        ## Cells
         if (missing(j)) {
             j <- 1L:ncol(x)
         }
@@ -58,43 +58,43 @@ extract.bcbioSingleCell <-  # nolint
             return(x)
         }
 
-        # Subset using SCE method.
+        ## Subset using SCE method.
         sce <- as(x, "SingleCellExperiment")
         sce <- sce[i, j, drop = drop]
 
         genes <- rownames(sce)
         cells <- colnames(sce)
 
-        # Column data ----------------------------------------------------------
-        # Ensure factors get releveled.
+        ## Column data ----------------------------------------------------------
+        ## Ensure factors get releveled.
         colData <- colData(sce) %>%
             as("tbl_df") %>%
             mutate_if(is.character, as.factor) %>%
             mutate_if(is.factor, droplevels) %>%
             as("DataFrame")
 
-        # Metadata -------------------------------------------------------------
+        ## Metadata -------------------------------------------------------------
         metadata <- metadata(sce)
         metadata[["subset"]] <- TRUE
 
-        # Drop unfiltered cellular barcode list.
+        ## Drop unfiltered cellular barcode list.
         metadata[["cellularBarcodes"]] <- NULL
 
-        # filterCells
+        ## filterCells
         filterCells <- metadata[["filterCells"]]
         if (!is.null(filterCells)) {
             filterCells <- intersect(filterCells, cells)
             metadata[["filterCells"]] <- filterCells
         }
 
-        # filterGenes
+        ## filterGenes
         filterGenes <- metadata[["filterGenes"]]
         if (!is.null(filterGenes)) {
             filterGenes <- intersect(filterGenes, genes)
             metadata[["filterGenes"]] <- filterGenes
         }
 
-        # Return ---------------------------------------------------------------
+        ## Return ---------------------------------------------------------------
         new(
             Class = class(x)[[1L]],
             makeSingleCellExperiment(

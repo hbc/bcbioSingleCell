@@ -27,7 +27,7 @@ calculateMetrics <-  # nolint
         rowRanges = NULL,
         prefilter = FALSE
     ) {
-        # Using shared method code for dense and sparseMatrix.
+        ## Using shared method code for dense and sparseMatrix.
         assert(
             isAny(counts, c("matrix", "sparseMatrix")),
             hasRows(counts),
@@ -53,7 +53,7 @@ calculateMetrics <-  # nolint
             ))
         }
 
-        # Calculate nCoding and nMito, which requires annotations.
+        ## Calculate nCoding and nMito, which requires annotations.
         if (length(rowRanges) > 0L) {
             assert(is(rowRanges, "GRanges"))
 
@@ -65,8 +65,8 @@ calculateMetrics <-  # nolint
                     printString(setdiff),
                     sep = "\n"
                 ))
-                # Slot the rowRanges with empty ranges for these genes.
-                # The same approach is used in `makeSummarizedExperiment`.
+                ## Slot the rowRanges with empty ranges for these genes.
+                ## The same approach is used in `makeSummarizedExperiment`.
                 rowRanges <- suppressWarnings(c(
                     rowRanges,
                     emptyRanges(
@@ -76,19 +76,19 @@ calculateMetrics <-  # nolint
                 ))
             }
 
-            # Subset ranges to match matrix.
+            ## Subset ranges to match matrix.
             assert(isSubset(rownames(counts), names(rowRanges)))
             rowRanges <- rowRanges[rownames(counts)]
             rowData <- as(rowRanges, "tbl_df")
             if ("broadClass" %in% colnames(rowData)) {
-                # Drop rows with NA broad class
+                ## Drop rows with NA broad class
                 rowData <- filter(rowData, !is.na(!!sym("broadClass")))
-                # Coding genes
+                ## Coding genes
                 codingGenes <- rowData %>%
                     filter(!!sym("broadClass") == "coding") %>%
                     pull("rowname")
                 message(paste(length(codingGenes), "coding genes."))
-                # Mitochondrial genes
+                ## Mitochondrial genes
                 mitoGenes <- rowData %>%
                     filter(!!sym("broadClass") == "mito") %>%
                     pull("rowname")
@@ -100,7 +100,7 @@ calculateMetrics <-  # nolint
             missingBiotype()
         }
 
-        # Following the Seurat `seurat@meta.data` naming conventions.
+        ## Following the Seurat `seurat@meta.data` naming conventions.
         data <- tibble(
             rowname = colnames(counts),
             nUMI = colSums(counts),
@@ -112,11 +112,11 @@ calculateMetrics <-  # nolint
                 log10GenesPerUMI = log10(!!sym("nGene")) / log10(!!sym("nUMI")),
                 mitoRatio = !!sym("nMito") / !!sym("nUMI")
             ) %>%
-            # Ensure `n`-prefixed count columns are integer.
+            ## Ensure `n`-prefixed count columns are integer.
             mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer)
 
-        # Apply low stringency cellular barcode pre-filtering.
-        # This keeps only cellular barcodes with non-zero genes.
+        ## Apply low stringency cellular barcode pre-filtering.
+        ## This keeps only cellular barcodes with non-zero genes.
         if (isTRUE(prefilter)) {
             data <- data %>%
                 filter(!is.na(UQ(sym("log10GenesPerUMI")))) %>%
@@ -129,11 +129,11 @@ calculateMetrics <-  # nolint
             ))
         }
 
-        # Return as DataFrame, containing cell IDs in the rownames.
+        ## Return as DataFrame, containing cell IDs in the rownames.
         data %>%
-            # Enforce count columns as integers (e.g. `nUMI`).
+            ## Enforce count columns as integers (e.g. `nUMI`).
             mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer) %>%
-            # Coerce character vectors to factors, and drop levels.
+            ## Coerce character vectors to factors, and drop levels.
             mutate_if(is.character, as.factor) %>%
             mutate_if(is.factor, droplevels) %>%
             as("DataFrame")

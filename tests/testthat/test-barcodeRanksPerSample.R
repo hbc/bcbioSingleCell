@@ -13,7 +13,7 @@ test_that("bcbioSingleCell", {
         object = colnames(x[[1L]]),
         expected = c("rank", "total", "fitted")
     )
-    # DropletUtils currently returning numeric instead of integer.
+    ## DropletUtils currently returning numeric instead of integer.
     expect_equal(
         object = metadata(x[[1L]]),
         expected = list(
