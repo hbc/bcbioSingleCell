@@ -62,6 +62,7 @@ NULL
 
 
 
+## Updated 2019-07-24.
 .isFiltered <- function(object) {
     if (!is.null(metadata(object)[["filterParams"]])) {
         TRUE
@@ -72,13 +73,15 @@ NULL
 
 
 
+## Updated 2019-07-24.
 .paddedCount <- function(x, width = 8L) {
     str_pad(x, width = width, pad = " ")
 }
 
 
 
-filterCells.bcbioSingleCell <-  # nolint
+## Updated 2019-07-24.
+`filterCells,bcbioSingleCell` <-  # nolint
     function(
         object,
         nCells = Inf,
@@ -489,5 +492,5 @@ filterCells.bcbioSingleCell <-  # nolint
 setMethod(
     f = "filterCells",
     signature = signature("bcbioSingleCell"),
-    definition = filterCells.bcbioSingleCell
+    definition = `filterCells,bcbioSingleCell`
 )

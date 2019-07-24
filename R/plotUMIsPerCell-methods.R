@@ -30,7 +30,8 @@ NULL
 
 
 
-plotUMIsPerCell.bcbioSingleCell <-  # nolint
+## Updated 2019-07-24.
+`plotUMIsPerCell,bcbioSingleCell` <-  # nolint
     function(
         object,
         geom,
@@ -146,11 +147,9 @@ plotUMIsPerCell.bcbioSingleCell <-  # nolint
         p
     }
 
-formals(plotUMIsPerCell.bcbioSingleCell)[["color"]] <-
-    formalsList[["color.discrete"]]
-formals(plotUMIsPerCell.bcbioSingleCell)[["fill"]] <-
-    formalsList[["fill.discrete"]]
-formals(plotUMIsPerCell.bcbioSingleCell)[["geom"]] <- geom
+formals(`plotUMIsPerCell,bcbioSingleCell`)[c("color", "fill")] <-
+    formalsList[c("color.discrete", "fill.discrete")]
+formals(`plotUMIsPerCell,bcbioSingleCell`)[["geom"]] <- geom
 
 
 
@@ -159,5 +158,5 @@ formals(plotUMIsPerCell.bcbioSingleCell)[["geom"]] <- geom
 setMethod(
     f = "plotUMIsPerCell",
     signature = signature("bcbioSingleCell"),
-    definition = plotUMIsPerCell.bcbioSingleCell
+    definition = `plotUMIsPerCell,bcbioSingleCell`
 )

@@ -28,6 +28,8 @@
 #'     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 #' )
 #' print(x)
+
+## Updated 2019-07-24.
 bcbioSingleCell <- function(
     uploadDir,
     sampleMetadataFile = NULL,
@@ -201,6 +203,7 @@ bcbioSingleCell <- function(
         }
     }
     assert(is(rowRanges, "GRanges"))
+    rowRanges <- relevel(rowRanges)
 
     ## Attempt to get genome build and Ensembl release if not declared.
     ## Note that these will remain NULL when using GTF file (see above).
@@ -272,12 +275,13 @@ bcbioSingleCell <- function(
         by = "sampleID"
     )
     colData <- as(colData, "DataFrame")
+    colData <- relevel(colData)
 
     ## Metadata -----------------------------------------------------------------
     runDate <- runDate(projectDir)
 
     ## Interesting groups.
-    interestingGroups <- camel(interestingGroups)
+    interestingGroups <- camelCase(interestingGroups)
     assert(isSubset(interestingGroups, colnames(sampleData)))
 
     metadata <- list(

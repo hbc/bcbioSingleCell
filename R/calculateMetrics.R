@@ -21,6 +21,8 @@
 #' # Minimal metrics (supported, but not recommended).
 #' x <- calculateMetrics(counts, rowRanges = NULL)
 #' head(x)
+
+## Updated 2019-07-24.
 calculateMetrics <-  # nolint
     function(
         counts,

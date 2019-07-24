@@ -27,7 +27,8 @@ NULL
 
 
 
-plotBarcodeRanks.bcbioSingleCell <-  # nolint
+## Updated 2019-07-24.
+`plotBarcodeRanks,bcbioSingleCell` <-  # nolint
     function(
         object,
         colors = c(
@@ -136,11 +137,11 @@ plotBarcodeRanks.bcbioSingleCell <-  # nolint
         plot_grid(plotlist = plotlist)
     }
 
-f1 <- formals(plotBarcodeRanks.bcbioSingleCell)
-f2 <- formals(barcodeRanksPerSample.bcbioSingleCell)
+f1 <- formals(`plotBarcodeRanks,bcbioSingleCell`)
+f2 <- formals(`barcodeRanksPerSample,bcbioSingleCell`)
 f2 <- f2[setdiff(names(f2), names(f1))]
 f <- c(f1, f2)
-formals(plotBarcodeRanks.bcbioSingleCell) <- f
+formals(`plotBarcodeRanks,bcbioSingleCell`) <- f
 
 
 
@@ -149,5 +150,5 @@ formals(plotBarcodeRanks.bcbioSingleCell) <- f
 setMethod(
     f = "plotBarcodeRanks",
     signature = signature("bcbioSingleCell"),
-    definition = plotBarcodeRanks.bcbioSingleCell
+    definition = `plotBarcodeRanks,bcbioSingleCell`
 )

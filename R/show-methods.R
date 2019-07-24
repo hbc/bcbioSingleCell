@@ -9,6 +9,7 @@ NULL
 
 
 
+## Updated 2019-07-24.
 .showHeader <- function(object, version = NULL) {
     cat(paste(class(object), version), sep = "\n")
 }
@@ -16,7 +17,8 @@ NULL
 
 
 ## Using the same internal method for bcbioSingleCell and CellRanger.
-show.bcbioSingleCell <-  # nolint
+## Updated 2019-07-24.
+`show,bcbioSingleCell` <-  # nolint
     function(object) {
         validObject(object)
         ## Metadata.
@@ -52,5 +54,5 @@ show.bcbioSingleCell <-  # nolint
 setMethod(
     f = "show",
     signature = signature("bcbioSingleCell"),
-    definition = show.bcbioSingleCell
+    definition = `show,bcbioSingleCell`
 )

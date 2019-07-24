@@ -38,7 +38,8 @@ NULL
 
 
 
-extract.bcbioSingleCell <-  # nolint
+## Updated 2019-07-24.
+`extract,bcbioSingleCell` <-  # nolint
     function(x, i, j, ..., drop = FALSE) {
         validObject(x)
 
@@ -65,13 +66,13 @@ extract.bcbioSingleCell <-  # nolint
         genes <- rownames(sce)
         cells <- colnames(sce)
 
+        ## Row data ------------------------------------------------------------
+        ## Ensure factors get releveled.
+        rowData(sce) <- relevel(rowData(sce))
+
         ## Column data ----------------------------------------------------------
         ## Ensure factors get releveled.
-        colData <- colData(sce) %>%
-            as("tbl_df") %>%
-            mutate_if(is.character, as.factor) %>%
-            mutate_if(is.factor, droplevels) %>%
-            as("DataFrame")
+        colData(sce) <- relevel(colData(sce))
 
         ## Metadata -------------------------------------------------------------
         metadata <- metadata(sce)
@@ -100,7 +101,7 @@ extract.bcbioSingleCell <-  # nolint
             makeSingleCellExperiment(
                 assays = assays(sce),
                 rowRanges <- rowRanges(sce),
-                colData <- colData,
+                colData <- colData(sce),
                 metadata = metadata,
                 spikeNames = rownames(sce)[isSpike(sce)]
             )
@@ -119,5 +120,5 @@ setMethod(
         j = "ANY",
         drop = "ANY"
     ),
-    definition = extract.bcbioSingleCell
+    definition = `extract,bcbioSingleCell`
 )

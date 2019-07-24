@@ -38,6 +38,7 @@ NULL
 #' @param data `tbl_df`. Raw read counts per cellular barcode.
 #'
 #' @return `grouped_df`. Grouped by `sampleID`.
+## Updated 2019-07-24.
 .proportionalReadsPerCell <- function(
     data,
     sampleData,
@@ -87,6 +88,7 @@ NULL
 
 
 
+## Updated 2019-07-24.
 .plotReadsPerCellHistogram <- function(
     data,
     min = 0L,
@@ -139,6 +141,7 @@ NULL
 
 
 ## Boxplot ======================================================================
+## Updated 2019-07-24.
 .plotReadsPerCellBoxplot <- function(
     data,
     min = 0L,
@@ -190,6 +193,7 @@ NULL
 
 
 ## ECDF =========================================================================
+## Updated 2019-07-24.
 .plotReadsPerCellECDF <- function(
     data,
     min = 0L,
@@ -239,6 +243,7 @@ NULL
 
 
 ## Ridgeline ====================================================================
+## Updated 2019-07-24.
 .plotReadsPerCellRidgeline <- function(
     data,
     min = 0L,
@@ -295,6 +300,7 @@ NULL
 
 
 ## Violin =======================================================================
+## Updated 2019-07-24.
 .plotReadsPerCellViolin <- function(
     data,
     min = 0L,
@@ -349,7 +355,8 @@ NULL
 
 
 ## bcbioSingleCell ==============================================================
-plotReadsPerCell.bcbioSingleCell <-  # nolint
+## Updated 2019-07-24.
+`plotReadsPerCell,bcbioSingleCell` <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -449,11 +456,9 @@ plotReadsPerCell.bcbioSingleCell <-  # nolint
         p
     }
 
-formals(plotReadsPerCell.bcbioSingleCell)[["color"]] <-
-    formalsList[["color.discrete"]]
-formals(plotReadsPerCell.bcbioSingleCell)[["fill"]] <-
-    formalsList[["fill.discrete"]]
-formals(plotReadsPerCell.bcbioSingleCell)[["geom"]] <- geom
+formals(`plotReadsPerCell,bcbioSingleCell`)[c("color", "fill")] <-
+    formalsList[c("color.discrete", "fill.discrete")]
+formals(`plotReadsPerCell,bcbioSingleCell`)[["geom"]] <- geom
 
 
 
@@ -462,5 +467,5 @@ formals(plotReadsPerCell.bcbioSingleCell)[["geom"]] <- geom
 setMethod(
     f = "plotReadsPerCell",
     signature = signature("bcbioSingleCell"),
-    definition = plotReadsPerCell.bcbioSingleCell
+    definition = `plotReadsPerCell,bcbioSingleCell`
 )

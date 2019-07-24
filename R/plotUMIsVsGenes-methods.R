@@ -22,7 +22,8 @@ NULL
 
 
 
-plotUMIsVsGenes.bcbioSingleCell <-  # nolint
+## Updated 2019-07-24.
+`plotUMIsVsGenes,bcbioSingleCell` <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -47,7 +48,7 @@ plotUMIsVsGenes.bcbioSingleCell <-  # nolint
         )
     }
 
-formals(plotUMIsVsGenes.bcbioSingleCell)[["color"]] <-
+formals(`plotUMIsVsGenes,bcbioSingleCell`)[["color"]] <-
     formalsList[["color.discrete"]]
 
 
@@ -57,5 +58,5 @@ formals(plotUMIsVsGenes.bcbioSingleCell)[["color"]] <-
 setMethod(
     f = "plotUMIsVsGenes",
     signature = signature("bcbioSingleCell"),
-    definition = plotUMIsVsGenes.bcbioSingleCell
+    definition = `plotUMIsVsGenes,bcbioSingleCell`
 )

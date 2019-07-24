@@ -12,7 +12,8 @@ NULL
 
 
 
-updateObject.bcbioSingleCell <-  # nolint
+## Updated 2019-07-24.
+`updateObject,bcbioSingleCell` <-  # nolint
     function(object, rowRanges = NULL) {
         assert(isAny(rowRanges, classes = c("GRanges", "NULL")))
 
@@ -189,5 +190,5 @@ updateObject.bcbioSingleCell <-  # nolint
 setMethod(
     f = "updateObject",
     signature = signature("bcbioSingleCell"),
-    definition = updateObject.bcbioSingleCell
+    definition = `updateObject,bcbioSingleCell`
 )

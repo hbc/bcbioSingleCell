@@ -23,7 +23,8 @@ NULL
 
 
 
-plotMitoRatio.bcbioSingleCell <-  # nolint
+## Updated 2019-07-24.
+`plotMitoRatio,bcbioSingleCell` <-  # nolint
     function(
         object,
         geom,
@@ -51,9 +52,9 @@ plotMitoRatio.bcbioSingleCell <-  # nolint
         )
     }
 
-formals(plotMitoRatio.bcbioSingleCell)[["fill"]] <-
+formals(`plotMitoRatio,bcbioSingleCell`)[["fill"]] <-
     formalsList[["fill.discrete"]]
-formals(plotMitoRatio.bcbioSingleCell)[["geom"]] <- geom
+formals(`plotMitoRatio,bcbioSingleCell`)[["geom"]] <- geom
 
 
 
@@ -62,5 +63,5 @@ formals(plotMitoRatio.bcbioSingleCell)[["geom"]] <- geom
 setMethod(
     f = "plotMitoRatio",
     signature = signature("bcbioSingleCell"),
-    definition = plotMitoRatio.bcbioSingleCell
+    definition = `plotMitoRatio,bcbioSingleCell`
 )

@@ -7,6 +7,8 @@
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @export
+
+## Updated 2019-07-24.
 setClass(
     Class = "bcbioSingleCell",
     contains = "SingleCellExperiment",

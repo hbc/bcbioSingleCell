@@ -22,7 +22,8 @@ NULL
 
 
 
-plotMitoVsCoding.bcbioSingleCell <-  # nolint
+## Updated 2019-07-24.
+`plotMitoVsCoding,bcbioSingleCell` <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -47,7 +48,7 @@ plotMitoVsCoding.bcbioSingleCell <-  # nolint
         )
     }
 
-formals(plotMitoVsCoding.bcbioSingleCell)[["color"]] <-
+formals(`plotMitoVsCoding,bcbioSingleCell`)[["color"]] <-
     formalsList[["color.discrete"]]
 
 
@@ -57,5 +58,5 @@ formals(plotMitoVsCoding.bcbioSingleCell)[["color"]] <-
 setMethod(
     f = "plotMitoVsCoding",
     signature = signature("bcbioSingleCell"),
-    definition = plotMitoVsCoding.bcbioSingleCell
+    definition = `plotMitoVsCoding,bcbioSingleCell`
 )

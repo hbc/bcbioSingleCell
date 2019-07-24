@@ -9,6 +9,8 @@
 #'
 #' @return `integer`.
 #' Cell identifiers are the names and raw read counts are the values.
+
+## Updated 2019-07-24.
 .nCount <- function(list) {
     assert(
         is.list(list),
@@ -30,6 +32,7 @@
 
 
 ## Obtain the raw, unfiltered cellular barcode read counts ("nCount").
+## Updated 2019-07-24.
 .rawMetrics <- function(object) {
     list <- metadata(object)[["cellularBarcodes"]]
 

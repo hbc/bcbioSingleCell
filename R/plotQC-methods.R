@@ -33,6 +33,7 @@ NULL
 
 
 ## Plot a single quality control metric.
+## Updated 2019-07-24.
 .plotQCMetric <- function(
     object,
     metricCol,
@@ -194,15 +195,15 @@ NULL
     p
 }
 
-formals(.plotQCMetric)[["color"]] <-
-    formalsList[["color.discrete"]]
-formals(.plotQCMetric)[["fill"]] <-
-    formalsList[["fill.discrete"]]
-formals(.plotQCMetric)[["geom"]] <- geom
+## Updated 2019-07-24.
+formals(`.plotQCMetric`)[c("color", "fill")] <-
+    formalsList[c("color.discrete", "fill.discrete")]
+formals(`.plotQCMetric`)[["geom"]] <- geom
 
 
 
 ## Compare two quality control metrics.
+## Updated 2019-07-24.
 .plotQCScatterplot <- function(
     object,
     xCol,
@@ -278,7 +279,8 @@ formals(.plotQCMetric)[["geom"]] <- geom
 
 
 
-plotQC.bcbioSingleCell <-  # nolint
+## Updated 2019-07-24.
+`plotQC,bcbioSingleCell` <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -338,7 +340,7 @@ plotQC.bcbioSingleCell <-  # nolint
 
         ## Return.
         if (return == "list") {
-            names(list) <- camel(names(list))
+            names(list) <- camelCase(names(list))
             list
         } else if (return == "grid") {
             plot_grid(
@@ -357,8 +359,8 @@ plotQC.bcbioSingleCell <-  # nolint
         }
     }
 
-formals(plotQC.bcbioSingleCell)[["geom"]] <- geom
-formals(plotQC.bcbioSingleCell)[["legend"]] <- formalsList[["legend"]]
+formals(`plotQC,bcbioSingleCell`)[["geom"]] <- geom
+formals(`plotQC,bcbioSingleCell`)[["legend"]] <- formalsList[["legend"]]
 
 
 
@@ -367,5 +369,5 @@ formals(plotQC.bcbioSingleCell)[["legend"]] <- formalsList[["legend"]]
 setMethod(
     f = "plotQC",
     signature = signature("bcbioSingleCell"),
-    definition = plotQC.bcbioSingleCell
+    definition = `plotQC,bcbioSingleCell`
 )

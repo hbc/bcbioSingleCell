@@ -23,7 +23,8 @@ NULL
 
 
 
-plotGenesPerCell.bcbioSingleCell <-  # nolint
+## Updated 2019-07-24.
+`plotGenesPerCell,bcbioSingleCell` <-  # nolint
     function(
         object,
         geom,
@@ -51,9 +52,9 @@ plotGenesPerCell.bcbioSingleCell <-  # nolint
         )
     }
 
-formals(plotGenesPerCell.bcbioSingleCell)[["fill"]] <-
+formals(`plotGenesPerCell,bcbioSingleCell`)[["fill"]] <-
     formalsList[["fill.discrete"]]
-formals(plotGenesPerCell.bcbioSingleCell)[["geom"]] <- geom
+formals(`plotGenesPerCell,bcbioSingleCell`)[["geom"]] <- geom
 
 
 
@@ -62,5 +63,5 @@ formals(plotGenesPerCell.bcbioSingleCell)[["geom"]] <- geom
 setMethod(
     f = "plotGenesPerCell",
     signature = signature("bcbioSingleCell"),
-    definition = plotGenesPerCell.bcbioSingleCell
+    definition = `plotGenesPerCell,bcbioSingleCell`
 )
