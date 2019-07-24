@@ -9,8 +9,8 @@
 #' @importFrom S4Vectors as.data.frame as.matrix mcols mcols<- merge metadata
 #'   metadata<-
 #' @importFrom SingleCellExperiment isSpike
-#' @importFrom SummarizedExperiment assayNames assays colData colData<-
-#'   rowRanges rowRanges<-
+#' @importFrom SummarizedExperiment assayNames assays colData colData<- rowData
+#'   rowData<- rowRanges rowRanges<-
 #' @importFrom acidplots acid_geom_bar acid_scale_y_continuous_nopad synesthesia
 #' @importFrom basejump camelCase cell2sample detectLanes emptyRanges
 #'   formalsList import interestingGroups interestingGroups<- makeDimnames
