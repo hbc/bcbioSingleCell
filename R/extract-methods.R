@@ -70,11 +70,11 @@ NULL
         ## Ensure factors get releveled.
         rowData(sce) <- relevel(rowData(sce))
 
-        ## Column data ----------------------------------------------------------
+        ## Column data ---------------------------------------------------------
         ## Ensure factors get releveled.
         colData(sce) <- relevel(colData(sce))
 
-        ## Metadata -------------------------------------------------------------
+        ## Metadata ------------------------------------------------------------
         metadata <- metadata(sce)
         metadata[["subset"]] <- TRUE
 
@@ -95,7 +95,7 @@ NULL
             metadata[["filterGenes"]] <- filterGenes
         }
 
-        ## Return ---------------------------------------------------------------
+        ## Return --------------------------------------------------------------
         new(
             Class = class(x)[[1L]],
             makeSingleCellExperiment(

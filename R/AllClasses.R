@@ -29,18 +29,18 @@ setClass(
         ok <- validate(!.hasSlot(object, "bcbio"))
         if (!isTRUE(ok)) return(ok)
 
-        ## Assays ---------------------------------------------------------------
+        ## Assays --------------------------------------------------------------
         ok <- validate(isSubset("counts", names(assays(object))))
         if (!isTRUE(ok)) return(ok)
 
-        ## Row data -------------------------------------------------------------
+        ## Row data ------------------------------------------------------------
         ok <- validate(
             is(rowRanges(object), "GRanges"),
             is(rowData(object), "DataFrame")
         )
         if (!isTRUE(ok)) return(ok)
 
-        ## Column data ----------------------------------------------------------
+        ## Column data ---------------------------------------------------------
         sampleData[["interestingGroups"]] <- NULL
 
         ## Check that the levels set in `sampleData` match `colData`
@@ -72,7 +72,7 @@ setClass(
         )
         if (!isTRUE(ok)) return(ok)
 
-        ## Metadata -------------------------------------------------------------
+        ## Metadata ------------------------------------------------------------
         ## Optional metadata:
         ## - cellularBarcodes
         ## - filterCells

@@ -27,9 +27,9 @@ NULL
 
         version <- metadata[["version"]]
         assert(is(version, c("package_version", "numeric_version")))
-        message(paste0("Upgrading from ", version, " to ", packageVersion, "."))
+        message(paste0("Upgrading from ", version, " to ", .version, "."))
 
-        ## Assays ---------------------------------------------------------------
+        ## Assays --------------------------------------------------------------
         ## Coerce `ShallowSimpleListAssays` S4 class to standard list.
         names <- names(assays)
         assays <- lapply(seq_along(assays), function(a) {
@@ -57,7 +57,7 @@ NULL
         assays <- assays[unique(c(requiredAssays, names(assays)))]
         assert(isSubset(requiredAssays, names(assays)))
 
-        ## Move sampleData into colData -----------------------------------------
+        ## Move sampleData into colData ----------------------------------------
         ## Require that all `sampleData` columns are now slotted in `colData`.
         if ("sampleData" %in% names(metadata)) {
             sampleData <- metadata[["sampleData"]]
@@ -97,7 +97,7 @@ NULL
             colData <- colData[cells, , drop = FALSE]
         }
 
-        ## Metadata -------------------------------------------------------------
+        ## Metadata ------------------------------------------------------------
         ## dataVersions
         dataVersions <- metadata[["dataVersions"]]
         if (is(dataVersions, "data.frame")) {
@@ -121,9 +121,9 @@ NULL
         }
 
         ## Update the version, if necessary.
-        if (!identical(metadata[["version"]], packageVersion)) {
+        if (!identical(metadata[["version"]], .version)) {
             metadata[["originalVersion"]] <- metadata[["version"]]
-            metadata[["version"]] <- packageVersion
+            metadata[["version"]] <- .version
         }
 
         ## gffFile
@@ -174,7 +174,7 @@ NULL
         )
         metadata <- metadata[keep]
 
-        ## Return ---------------------------------------------------------------
+        ## Return --------------------------------------------------------------
         .new.bcbioSingleCell(
             assays = assays,
             rowRanges = rowRanges,

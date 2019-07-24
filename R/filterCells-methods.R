@@ -100,7 +100,7 @@ NULL
         ## Coercing to tibble here for dplyr operations.
         colData <- as(object = colData(object), Class = "tbl_df")
 
-        ## Parameter integrity checks -------------------------------------------
+        ## Parameter integrity checks ------------------------------------------
         assert(
             ## Expected nCells per sample.
             is.numeric(nCells),
@@ -160,7 +160,7 @@ NULL
             minCellsPerGene = minCellsPerGene
         )
 
-        ## Filter low quality cells ---------------------------------------------
+        ## Filter low quality cells --------------------------------------------
         summaryCells <- character()
         summaryCells[["prefilter"]] <- paste(
             paste(.paddedCount(ncol(object)), "cells"),
@@ -410,7 +410,7 @@ NULL
         assert(isSubset(cells, colnames(object)))
         object <- object[, cells, drop = FALSE]
 
-        ## Filter low quality genes ---------------------------------------------
+        ## Filter low quality genes --------------------------------------------
         summaryGenes <- character()
         summaryGenes[["prefilter"]] <- paste(
             paste(.paddedCount(nrow(object)), "genes"),
@@ -436,7 +436,7 @@ NULL
         assert(isSubset(genes, rownames(object)))
         object <- object[genes, , drop = FALSE]
 
-        ## Summary --------------------------------------------------------------
+        ## Summary -------------------------------------------------------------
         summaryParams <- paste("  -", c(
             paste(">=", min(minUMIs), "UMIs per cell"),
             paste("<=", max(maxUMIs), "UMIs per cell"),
@@ -475,7 +475,7 @@ NULL
         )
         message(paste(summary, collapse = "\n"))
 
-        ## Metadata -------------------------------------------------------------
+        ## Metadata ------------------------------------------------------------
         metadata(object)[["cellularBarcodes"]] <- NULL
         metadata(object)[["filterCells"]] <- cells
         metadata(object)[["filterGenes"]] <- genes

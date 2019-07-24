@@ -1,6 +1,6 @@
 globalVariables(".")
 
-packageVersion <- packageVersion("bcbioSingleCell")
+.version <- packageVersion("bcbioSingleCell")
 
 #' @importFrom basejump lanePattern
 lanePattern <- basejump::lanePattern

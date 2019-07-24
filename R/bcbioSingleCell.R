@@ -45,7 +45,7 @@ bcbioSingleCell <- function(
     allSamples <- TRUE
     sampleData <- NULL
 
-    ## Legacy arguments ---------------------------------------------------------
+    ## Legacy arguments --------------------------------------------------------
     dots <- list(...)
     call <- match.call()
     ## ensemblVersion
@@ -65,7 +65,7 @@ bcbioSingleCell <- function(
         stop("Use `gffFile` instead of `annotable`.")
     }
 
-    ## Assert checks ------------------------------------------------------------
+    ## Assert checks -----------------------------------------------------------
     assert(
         isADirectory(uploadDir),
         isString(sampleMetadataFile, nullOK = TRUE),
@@ -81,19 +81,19 @@ bcbioSingleCell <- function(
         isAFile(gffFile) || isAURL(gffFile)
     }
 
-    ## Directory paths ----------------------------------------------------------
+    ## Directory paths ---------------------------------------------------------
     uploadDir <- realpath(uploadDir)
     projectDir <- projectDir(uploadDir)
     sampleDirs <- sampleDirs(uploadDir)
 
-    ## Sequencing lanes ---------------------------------------------------------
+    ## Sequencing lanes --------------------------------------------------------
     lanes <- detectLanes(sampleDirs)
 
-    ## Project summary YAML -----------------------------------------------------
+    ## Project summary YAML ----------------------------------------------------
     yamlFile <- file.path(projectDir, "project-summary.yaml")
     yaml <- import(yamlFile)
 
-    ## bcbio run information ----------------------------------------------------
+    ## bcbio run information ---------------------------------------------------
     dataVersions <- readDataVersions(file.path(projectDir, "data_versions.csv"))
     assert(is(dataVersions, "DataFrame"))
 
@@ -132,7 +132,7 @@ bcbioSingleCell <- function(
         FUN.VALUE = logical(1L)
     ))
 
-    ## User-defined sample metadata ---------------------------------------------
+    ## User-defined sample metadata --------------------------------------------
     if (isString(sampleMetadataFile)) {
         sampleData <- readSampleData(sampleMetadataFile, lanes = lanes)
 
@@ -162,15 +162,15 @@ bcbioSingleCell <- function(
         }
     }
 
-    ## Unfiltered cellular barcode distributions --------------------------------
+    ## Unfiltered cellular barcode distributions -------------------------------
     cbList <- .import.bcbio.barcodes(sampleDirs)
 
-    ## Assays -------------------------------------------------------------------
+    ## Assays ------------------------------------------------------------------
     ## Note that we're now allowing transcript-level counts.
     counts <- .import.bcbio(sampleDirs)
     assays <- list(counts = counts)
 
-    ## Row data -----------------------------------------------------------------
+    ## Row data ----------------------------------------------------------------
     ## Annotation priority:
     ## 1. AnnotationHub.
     ##    - Requires `organism` to be declared.
@@ -214,7 +214,7 @@ bcbioSingleCell <- function(
         ensemblRelease <- metadata(rowRanges)[["ensemblRelease"]]
     }
 
-    ## Column data --------------------------------------------------------------
+    ## Column data -------------------------------------------------------------
     ## Automatic sample metadata.
     if (is.null(sampleData)) {
         if (isTRUE(multiplexed)) {
@@ -277,7 +277,7 @@ bcbioSingleCell <- function(
     colData <- as(colData, "DataFrame")
     colData <- relevel(colData)
 
-    ## Metadata -----------------------------------------------------------------
+    ## Metadata ----------------------------------------------------------------
     runDate <- runDate(projectDir)
 
     ## Interesting groups.
@@ -285,7 +285,7 @@ bcbioSingleCell <- function(
     assert(isSubset(interestingGroups, colnames(sampleData)))
 
     metadata <- list(
-        version = packageVersion,
+        version = .version,
         pipeline = "bcbio",
         level = level,
         uploadDir = uploadDir,
@@ -298,7 +298,7 @@ bcbioSingleCell <- function(
         umiType = umiType,
         allSamples = allSamples,
         lanes = lanes,
-        ## bcbio-specific -------------------------------------------------------
+        ## bcbio-specific ------------------------------------------------------
         projectDir = projectDir,
         runDate = runDate,
         yaml = yaml,
@@ -312,7 +312,7 @@ bcbioSingleCell <- function(
         call = match.call()
     )
 
-    ## Return -------------------------------------------------------------------
+    ## Return ------------------------------------------------------------------
     .new.bcbioSingleCell(
         assays = assays,
         rowRanges = rowRanges,

@@ -11,8 +11,8 @@
             dir = sampleDirs,
             FUN = function(sampleID, dir) {
                 counts <- .import.bcbio.mtx(dir)
-                ## Prefix cell barcodes with sample identifier when we're loading
-                ## counts from multiple samples.
+                ## Prefix cell barcodes with sample identifier when we're
+                ## loading counts from multiple samples.
                 if (length(sampleDirs) > 1L) {
                     colnames(counts) <-
                         paste(sampleID, colnames(counts), sep = "_")
