@@ -30,7 +30,8 @@ NULL
 
 
 
-plotUMIsPerCell.bcbioSingleCell <-  # nolint
+## Updated 2019-07-24.
+`plotUMIsPerCell,bcbioSingleCell` <-  # nolint
     function(
         object,
         geom,
@@ -47,7 +48,7 @@ plotUMIsPerCell.bcbioSingleCell <-  # nolint
         geom <- match.arg(geom)
         point <- match.arg(point)
 
-        # Override `interestingGroups` argument when labeling points.
+        ## Override `interestingGroups` argument when labeling points.
         if (point != "none") {
             interestingGroups <- "sampleName"
         }
@@ -67,9 +68,9 @@ plotUMIsPerCell.bcbioSingleCell <-  # nolint
             )
         )
 
-        # Calculate barcode ranks and label inflection or knee points.
+        ## Calculate barcode ranks and label inflection or knee points.
         if (point != "none") {
-            # Require ecdf geom for now
+            ## Require ecdf geom for now
             assert(identical(geom, "ecdf"))
 
             if (length(title)) {
@@ -79,7 +80,7 @@ plotUMIsPerCell.bcbioSingleCell <-  # nolint
             sampleNames <- sampleNames(object)
 
             ranks <- barcodeRanksPerSample(object)
-            # Inflection or knee points per sample.
+            ## Inflection or knee points per sample.
             points <- lapply(
                 X = ranks,
                 FUN = function(x) {
@@ -95,7 +96,7 @@ plotUMIsPerCell.bcbioSingleCell <-  # nolint
             assert(identical(names(sampleNames), names(points)))
 
             if (geom == "ecdf") {
-                # Calculate the y-intercept per sample.
+                ## Calculate the y-intercept per sample.
                 freq <- mapply(
                     sampleID = names(points),
                     point = points,
@@ -146,11 +147,9 @@ plotUMIsPerCell.bcbioSingleCell <-  # nolint
         p
     }
 
-formals(plotUMIsPerCell.bcbioSingleCell)[["color"]] <-
-    formalsList[["color.discrete"]]
-formals(plotUMIsPerCell.bcbioSingleCell)[["fill"]] <-
-    formalsList[["fill.discrete"]]
-formals(plotUMIsPerCell.bcbioSingleCell)[["geom"]] <- geom
+formals(`plotUMIsPerCell,bcbioSingleCell`)[c("color", "fill")] <-
+    formalsList[c("color.discrete", "fill.discrete")]
+formals(`plotUMIsPerCell,bcbioSingleCell`)[["geom"]] <- geom
 
 
 
@@ -159,5 +158,5 @@ formals(plotUMIsPerCell.bcbioSingleCell)[["geom"]] <- geom
 setMethod(
     f = "plotUMIsPerCell",
     signature = signature("bcbioSingleCell"),
-    definition = plotUMIsPerCell.bcbioSingleCell
+    definition = `plotUMIsPerCell,bcbioSingleCell`
 )

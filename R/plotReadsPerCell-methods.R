@@ -26,7 +26,7 @@ NULL
 
 
 
-# Histogram ====================================================================
+## Histogram ===================================================================
 #' Proportional Cellular Barcodes Data
 #'
 #' Modified version of Allon Klein Lab MATLAB code.
@@ -38,6 +38,7 @@ NULL
 #' @param data `tbl_df`. Raw read counts per cellular barcode.
 #'
 #' @return `grouped_df`. Grouped by `sampleID`.
+## Updated 2019-07-24.
 .proportionalReadsPerCell <- function(
     data,
     sampleData,
@@ -60,14 +61,14 @@ NULL
         X = levels(data[["sampleID"]]),
         FUN = function(sampleID) {
             subset <- data[data[["sampleID"]] == sampleID, , drop = FALSE]
-            # Histogram of log10-transformed counts.
+            ## Histogram of log10-transformed counts.
             h <- hist(
                 x = log10(subset[["nCount"]]),
                 n = breaks,
                 plot = FALSE
             )
-            # Klein Lab MATLAB code reference.
-            # counts: fLog; mids: xLog
+            ## Klein Lab MATLAB code reference.
+            ## counts: fLog; mids: xLog
             proportion <- h[["counts"]] * (10L ^ h[["mids"]]) /
                 sum(h[["counts"]] * (10L ^ h[["mids"]]))
             tibble(
@@ -87,6 +88,7 @@ NULL
 
 
 
+## Updated 2019-07-24.
 .plotReadsPerCellHistogram <- function(
     data,
     min = 0L,
@@ -114,17 +116,17 @@ NULL
             y = "proportion of reads"
         )
 
-    # Cutoff line.
+    ## Cutoff line.
     if (min > 0L) {
         p <- p + acid_geom_abline(xintercept = log10(min))
     }
 
-    # Color palette.
+    ## Color palette.
     if (is(color, "ScaleDiscrete")) {
         p <- p + color
     }
 
-    # Facets.
+    ## Facets.
     facets <- NULL
     if (.isAggregate(data)) {
         facets <- c(facets, "aggregate")
@@ -138,7 +140,8 @@ NULL
 
 
 
-# Boxplot ======================================================================
+## Boxplot =====================================================================
+## Updated 2019-07-24.
 .plotReadsPerCellBoxplot <- function(
     data,
     min = 0L,
@@ -165,17 +168,17 @@ NULL
             y = "reads per cell"
         )
 
-    # Cutoff line.
+    ## Cutoff line.
     if (min > 0L) {
         p <- p + acid_geom_abline(yintercept = min)
     }
 
-    # Color palette.
+    ## Color palette.
     if (is(fill, "ScaleDiscrete")) {
         p <- p + fill
     }
 
-    # Facets.
+    ## Facets.
     facets <- NULL
     if (.isAggregate(data)) {
         facets <- c(facets, "aggregate")
@@ -189,7 +192,8 @@ NULL
 
 
 
-# ECDF =========================================================================
+## ECDF ========================================================================
+## Updated 2019-07-24.
 .plotReadsPerCellECDF <- function(
     data,
     min = 0L,
@@ -214,17 +218,17 @@ NULL
         ) +
         scale_x_continuous(trans = "log10")
 
-    # Cutoff line.
+    ## Cutoff line.
     if (min > 0L) {
         p <- p + acid_geom_abline(xintercept = min)
     }
 
-    # Color palette.
+    ## Color palette.
     if (is(color, "ScaleDiscrete")) {
         p <- p + color
     }
 
-    # Facets.
+    ## Facets.
     facets <- NULL
     if (.isAggregate(data)) {
         facets <- c(facets, "aggregate")
@@ -238,7 +242,8 @@ NULL
 
 
 
-# Ridgeline ====================================================================
+## Ridgeline ===================================================================
+## Updated 2019-07-24.
 .plotReadsPerCellRidgeline <- function(
     data,
     min = 0L,
@@ -270,17 +275,17 @@ NULL
             y = NULL
         )
 
-    # Cutoff line.
+    ## Cutoff line.
     if (min > 0L) {
         p <- p + acid_geom_abline(xintercept = min)
     }
 
-    # Color palette.
+    ## Color palette.
     if (is(fill, "ScaleDiscrete")) {
         p <- p + fill
     }
 
-    # Facets.
+    ## Facets.
     facets <- NULL
     if (.isAggregate(data)) {
         facets <- c(facets, "aggregate")
@@ -294,7 +299,8 @@ NULL
 
 
 
-# Violin =======================================================================
+## Violin ======================================================================
+## Updated 2019-07-24.
 .plotReadsPerCellViolin <- function(
     data,
     min = 0L,
@@ -324,17 +330,17 @@ NULL
             y = "reads per cell"
         )
 
-    # Cutoff line.
+    ## Cutoff line.
     if (min > 0L) {
         p <- p + acid_geom_abline(yintercept = min)
     }
 
-    # Color palette.
+    ## Color palette.
     if (is(fill, "ScaleDiscrete")) {
         p <- p + fill
     }
 
-    # Facets.
+    ## Facets.
     facets <- NULL
     if (.isAggregate(data)) {
         facets <- c(facets, "aggregate")
@@ -348,8 +354,9 @@ NULL
 
 
 
-# bcbioSingleCell ==============================================================
-plotReadsPerCell.bcbioSingleCell <-  # nolint
+## bcbioSingleCell =============================================================
+## Updated 2019-07-24.
+`plotReadsPerCell,bcbioSingleCell` <-  # nolint
     function(
         object,
         interestingGroups = NULL,
@@ -359,14 +366,14 @@ plotReadsPerCell.bcbioSingleCell <-  # nolint
         fill,
         title = "reads per cell"
     ) {
-        # Passthrough: color, fill.
+        ## Passthrough: color, fill.
         validObject(object)
         assert(isString(title, nullOK = TRUE))
         interestingGroups(object) <-
             matchInterestingGroups(object, interestingGroups)
         geom <- match.arg(geom)
 
-        # Minimum reads per barcode cutoff (for unfiltered data).
+        ## Minimum reads per barcode cutoff (for unfiltered data).
         if (length(metadata(object)[["filterCells"]])) {
             min <- 0L
             subtitle <- NULL
@@ -437,7 +444,7 @@ plotReadsPerCell.bcbioSingleCell <-  # nolint
             )
         }
 
-        # Add title and subtitle containing cutoff information.
+        ## Add title and subtitle containing cutoff information.
         p <- p +
             labs(
                 title = title,
@@ -449,11 +456,9 @@ plotReadsPerCell.bcbioSingleCell <-  # nolint
         p
     }
 
-formals(plotReadsPerCell.bcbioSingleCell)[["color"]] <-
-    formalsList[["color.discrete"]]
-formals(plotReadsPerCell.bcbioSingleCell)[["fill"]] <-
-    formalsList[["fill.discrete"]]
-formals(plotReadsPerCell.bcbioSingleCell)[["geom"]] <- geom
+formals(`plotReadsPerCell,bcbioSingleCell`)[c("color", "fill")] <-
+    formalsList[c("color.discrete", "fill.discrete")]
+formals(`plotReadsPerCell,bcbioSingleCell`)[["geom"]] <- geom
 
 
 
@@ -462,5 +467,5 @@ formals(plotReadsPerCell.bcbioSingleCell)[["geom"]] <- geom
 setMethod(
     f = "plotReadsPerCell",
     signature = signature("bcbioSingleCell"),
-    definition = plotReadsPerCell.bcbioSingleCell
+    definition = `plotReadsPerCell,bcbioSingleCell`
 )

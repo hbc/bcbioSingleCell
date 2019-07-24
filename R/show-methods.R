@@ -9,19 +9,21 @@ NULL
 
 
 
+## Updated 2019-07-24.
 .showHeader <- function(object, version = NULL) {
     cat(paste(class(object), version), sep = "\n")
 }
 
 
 
-# Using the same internal method for bcbioSingleCell and CellRanger.
-show.bcbioSingleCell <-  # nolint
+## Using the same internal method for bcbioSingleCell and CellRanger.
+## Updated 2019-07-24.
+`show,bcbioSingleCell` <-  # nolint
     function(object) {
         validObject(object)
-        # Metadata.
+        ## Metadata.
         m <- metadata(object)
-        # Row ranges metadata.
+        ## Row ranges metadata.
         rrm <- metadata(rowRanges(object))
         .showHeader(object, version = m[["version"]])
         showSlotInfo(list(
@@ -40,7 +42,7 @@ show.bcbioSingleCell <-  # nolint
             interestingGroups = m[["interestingGroups"]],
             filtered = .isFiltered(object)
         ))
-        # Extend the SingleCellExperiment method.
+        ## Extend the SingleCellExperiment method.
         sce <- as(object, "SingleCellExperiment")
         cat(capture.output(show(sce)), sep = "\n")
     }
@@ -52,5 +54,5 @@ show.bcbioSingleCell <-  # nolint
 setMethod(
     f = "show",
     signature = signature("bcbioSingleCell"),
-    definition = show.bcbioSingleCell
+    definition = `show,bcbioSingleCell`
 )

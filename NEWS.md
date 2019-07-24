@@ -1,3 +1,10 @@
+## bcbioSingleCell 0.3.17 (2019-07-24)
+
+### Minor changes
+
+- Improved internal S4 function naming consistency.
+- Updated basejump dependencies.
+
 ## bcbioSingleCell 0.3.16 (2019-07-17)
 
 ### Minor changes

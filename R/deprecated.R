@@ -1,4 +1,4 @@
-# nocov start
+## nocov start
 
 
 
@@ -14,7 +14,7 @@ NULL
 
 
 
-# v0.2.2 =======================================================================
+## v0.2.2 ======================================================================
 #' @rdname defunct
 #' @export
 readCellRanger <- function(...) {
@@ -23,7 +23,7 @@ readCellRanger <- function(...) {
 
 
 
-# v0.3.12 ======================================================================
+## v0.3.12 =====================================================================
 #' @rdname deprecated
 #' @export
 prepareSingleCellTemplate <- function(...) {
@@ -33,4 +33,4 @@ prepareSingleCellTemplate <- function(...) {
 
 
 
-# nocov end
+## nocov end

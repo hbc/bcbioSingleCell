@@ -23,7 +23,8 @@ NULL
 
 
 
-plotNovelty.bcbioSingleCell <-  # nolint
+## Updated 2019-07-24.
+`plotNovelty,bcbioSingleCell` <-  # nolint
     function(
         object,
         geom,
@@ -52,9 +53,9 @@ plotNovelty.bcbioSingleCell <-  # nolint
         )
     }
 
-formals(plotNovelty.bcbioSingleCell)[["fill"]] <-
+formals(`plotNovelty,bcbioSingleCell`)[["fill"]] <-
     formalsList[["fill.discrete"]]
-formals(plotNovelty.bcbioSingleCell)[["geom"]] <- geom
+formals(`plotNovelty,bcbioSingleCell`)[["geom"]] <- geom
 
 
 
@@ -63,5 +64,5 @@ formals(plotNovelty.bcbioSingleCell)[["geom"]] <- geom
 setMethod(
     f = "plotNovelty",
     signature = signature("bcbioSingleCell"),
-    definition = plotNovelty.bcbioSingleCell
+    definition = `plotNovelty,bcbioSingleCell`
 )

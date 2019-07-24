@@ -25,7 +25,8 @@ NULL
 
 
 
-barcodeRanksPerSample.bcbioSingleCell <-  # nolint
+## Updated 2019-07-24.
+`barcodeRanksPerSample,bcbioSingleCell` <-  # nolint
     function(object) {
         assert(packageVersion("DropletUtils") >= "1.4")
         which <- sys.parent()
@@ -34,13 +35,13 @@ barcodeRanksPerSample.bcbioSingleCell <-  # nolint
         cell2sample <- cell2sample(object)
         samples <- levels(cell2sample)
 
-        # Subset the counts per sample into a list.
+        ## Subset the counts per sample into a list.
         countsPerSample <- lapply(samples, function(sample) {
             cells <- names(cell2sample)[which(cell2sample == sample)]
             counts[, cells, drop = FALSE]
         })
 
-        # Calculate the ranks per sample.
+        ## Calculate the ranks per sample.
         ranks <- lapply(
             X = countsPerSample,
             FUN = function(counts) {
@@ -53,7 +54,7 @@ barcodeRanksPerSample.bcbioSingleCell <-  # nolint
                     )
                 )
 
-                # Check DropletUtils return.
+                ## Check DropletUtils return.
                 assert(
                     is(x, "DataFrame"),
                     identical(
@@ -74,11 +75,11 @@ barcodeRanksPerSample.bcbioSingleCell <-  # nolint
         ranks
     }
 
-f1 <- formals(barcodeRanksPerSample.bcbioSingleCell)
+f1 <- formals(`barcodeRanksPerSample,bcbioSingleCell`)
 f2 <- formals(barcodeRanks)
 f2 <- f2[setdiff(names(f2), c(names(f1), "m", "..."))]
 f <- c(f1, f2)
-formals(barcodeRanksPerSample.bcbioSingleCell) <- f
+formals(`barcodeRanksPerSample,bcbioSingleCell`) <- f
 
 
 
@@ -87,5 +88,5 @@ formals(barcodeRanksPerSample.bcbioSingleCell) <- f
 setMethod(
     f = "barcodeRanksPerSample",
     signature = signature("bcbioSingleCell"),
-    definition = barcodeRanksPerSample.bcbioSingleCell
+    definition = `barcodeRanksPerSample,bcbioSingleCell`
 )

@@ -1,6 +1,6 @@
 globalVariables(".")
 
-packageVersion <- packageVersion("bcbioSingleCell")
+.version <- packageVersion("bcbioSingleCell")
 
 #' @importFrom basejump lanePattern
 lanePattern <- basejump::lanePattern
@@ -14,7 +14,7 @@ requiredAssays <- "counts"
 
 geom <- c("histogram", "ecdf", "violin", "ridgeline", "boxplot")
 
-# `nCount` column is bcbioSingleCell class specific.
+## `nCount` column is bcbioSingleCell class specific.
 metricsCols <- c(
     "nUMI",
     "nGene",

@@ -11,13 +11,13 @@
             dir = sampleDirs,
             FUN = function(sampleID, dir) {
                 counts <- .import.bcbio.mtx(dir)
-                # Prefix cell barcodes with sample identifier when we're loading
-                # counts from multiple samples.
+                ## Prefix cell barcodes with sample identifier when we're
+                ## loading counts from multiple samples.
                 if (length(sampleDirs) > 1L) {
                     colnames(counts) <-
                         paste(sampleID, colnames(counts), sep = "_")
                 }
-                # Ensure names are valid.
+                ## Ensure names are valid.
                 counts <- makeDimnames(counts)
                 counts
             },
@@ -25,8 +25,8 @@
             USE.NAMES = TRUE
         )
 
-        # Remove any empty items in list, which can result from low quality
-        # samples with empty matrices in bcbio pipeline.
+        ## Remove any empty items in list, which can result from low quality
+        ## samples with empty matrices in bcbio pipeline.
         list <- Filter(Negate(is.null), list)
         if (!hasLength(list)) {
             stop(paste(
@@ -35,7 +35,7 @@
             ))
         }
 
-        # Bind the matrices.
+        ## Bind the matrices.
         do.call(cbind, list)
     }
 
@@ -77,29 +77,29 @@
 
 
 
-# Import bcbio Sparse Counts Data
-# Always in Matrix Market Exchange (MEX/MTX) format.
-# This may be advantagenous to loading the giant combined matrix because we
-# can parallelize with BiocParallel.
+## Import bcbio Sparse Counts Data
+## Always in Matrix Market Exchange (MEX/MTX) format.
+## This may be advantagenous to loading the giant combined matrix because we
+## can parallelize with BiocParallel.
 .import.bcbio.mtx <-  # nolint
     function(dir) {
         assert(isADirectory(dir))
 
-        # Require that all of the files exist, even if they are empty.
+        ## Require that all of the files exist, even if they are empty.
         file <- file.path(dir, paste0(basename(dir), ".mtx"))
         rownamesFile <- paste0(file, ".rownames")
         colnamesFile <- paste0(file, ".colnames")
         assert(all(isFile(c(file, rownamesFile, colnamesFile))))
 
-        # Attempt to load the column and rowname files first. If they're empty,
-        # skip loading the MatrixMarket file, which will error otherwise. The
-        # bcbio pipeline will output empty files for very low quality samples
-        # with no cells that pass filtering.
+        ## Attempt to load the column and rowname files first. If they're empty,
+        ## skip loading the MatrixMarket file, which will error otherwise. The
+        ## bcbio pipeline will output empty files for very low quality samples
+        ## with no cells that pass filtering.
 
-        # Import Genes/transcripts (features).
+        ## Import Genes/transcripts (features).
         rownames <- read_lines(rownamesFile)
 
-        # Import cellular barcodes.
+        ## Import cellular barcodes.
         colnames <- read_lines(colnamesFile)
 
         if (!length(rownames) > 0L || !length(colnames) > 0L) {
@@ -107,7 +107,7 @@
             return(NULL)
         }
 
-        # Import counts.
+        ## Import counts.
         counts <- readMM(file)
 
         assert(

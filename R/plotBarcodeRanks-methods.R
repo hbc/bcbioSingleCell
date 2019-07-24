@@ -27,7 +27,8 @@ NULL
 
 
 
-plotBarcodeRanks.bcbioSingleCell <-  # nolint
+## Updated 2019-07-24.
+`plotBarcodeRanks,bcbioSingleCell` <-  # nolint
     function(
         object,
         colors = c(
@@ -84,7 +85,7 @@ plotBarcodeRanks.bcbioSingleCell <-  # nolint
                         y = "UMIs per cell"
                     )
 
-                # Include the fit line (smooth.spline)
+                ## Include the fit line (smooth.spline)
                 p <- p + geom_line(
                     data = filter(data, !is.na(!!sym("fitted"))),
                     mapping = aes(
@@ -107,7 +108,7 @@ plotBarcodeRanks.bcbioSingleCell <-  # nolint
                         yintercept = inflection
                     )
 
-                # Label the knee and inflection points more clearly
+                ## Label the knee and inflection points more clearly
                 knee <- which.min(abs(data[["total"]] - knee))
                 inflection <- which.min(abs(data[["total"]] - inflection))
                 labelData <- data[c(knee, inflection), , drop = FALSE]
@@ -130,17 +131,17 @@ plotBarcodeRanks.bcbioSingleCell <-  # nolint
             USE.NAMES = TRUE
         )
 
-        # Sort the plots by sample name
+        ## Sort the plots by sample name
         plotlist <- plotlist[sort(names(plotlist))]
 
         plot_grid(plotlist = plotlist)
     }
 
-f1 <- formals(plotBarcodeRanks.bcbioSingleCell)
-f2 <- formals(barcodeRanksPerSample.bcbioSingleCell)
+f1 <- formals(`plotBarcodeRanks,bcbioSingleCell`)
+f2 <- formals(`barcodeRanksPerSample,bcbioSingleCell`)
 f2 <- f2[setdiff(names(f2), names(f1))]
 f <- c(f1, f2)
-formals(plotBarcodeRanks.bcbioSingleCell) <- f
+formals(`plotBarcodeRanks,bcbioSingleCell`) <- f
 
 
 
@@ -149,5 +150,5 @@ formals(plotBarcodeRanks.bcbioSingleCell) <- f
 setMethod(
     f = "plotBarcodeRanks",
     signature = signature("bcbioSingleCell"),
-    definition = plotBarcodeRanks.bcbioSingleCell
+    definition = `plotBarcodeRanks,bcbioSingleCell`
 )

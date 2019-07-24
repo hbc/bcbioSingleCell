@@ -8,23 +8,31 @@
 
 ## Installation
 
-### [Bioconductor][] method
-
-We recommend installing the package with [BiocManager][].
+### [R][] method
 
 ```r
-if (!require("BiocManager")) {
-    install.packages("BiocManager")
+if (!requireNamespace("remotes", quietly = TRUE)) {
+    install.packages("remotes")
 }
-BiocManager::install("remotes")
-BiocManager::install("hbc/bcbioSingleCell")
+Sys.setenv(R_REMOTES_UPGRADE = "always")
+# Set `GITHUB_PAT` in `~/.Renviron` if you get a rate limit error.
+remotes::install_github("hbc/bcbioRNASingleCell")
 ```
 
-For [R][] < 3.5, [BiocManager][] is not supported. Use `BiocInstaller::biocLite()` instead of `BiocManager::install()`. This requires sourcing the legacy [Bioconductor][] `biocLite.R` script.
+Here's how to update to the latest version on GitHub:
 
 ```r
-# Try `http://` if `https://` URLs are not supported.
-source("https://bioconductor.org/biocLite.R")
+Sys.setenv(R_REMOTES_UPGRADE = "always")
+remotes::update_packages()
+```
+
+Always check that your Bioconductor installation is valid before proceeding.
+
+```r
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+    install.packages("BiocManager")
+}
+BiocManager::valid()
 ```
 
 ## Load [bcbio][] single-cell RNA-seq data

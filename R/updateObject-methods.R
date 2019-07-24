@@ -12,7 +12,8 @@ NULL
 
 
 
-updateObject.bcbioSingleCell <-  # nolint
+## Updated 2019-07-24.
+`updateObject,bcbioSingleCell` <-  # nolint
     function(object, rowRanges = NULL) {
         assert(isAny(rowRanges, classes = c("GRanges", "NULL")))
 
@@ -26,10 +27,10 @@ updateObject.bcbioSingleCell <-  # nolint
 
         version <- metadata[["version"]]
         assert(is(version, c("package_version", "numeric_version")))
-        message(paste0("Upgrading from ", version, " to ", packageVersion, "."))
+        message(paste0("Upgrading from ", version, " to ", .version, "."))
 
-        # Assays ---------------------------------------------------------------
-        # Coerce `ShallowSimpleListAssays` S4 class to standard list.
+        ## Assays --------------------------------------------------------------
+        ## Coerce `ShallowSimpleListAssays` S4 class to standard list.
         names <- names(assays)
         assays <- lapply(seq_along(assays), function(a) {
             assay <- assays[[a]]
@@ -39,9 +40,9 @@ updateObject.bcbioSingleCell <-  # nolint
         names(assays) <- names
         rm(names)
 
-        # Ensure raw counts are always named "counts".
+        ## Ensure raw counts are always named "counts".
         if ("assay" %in% names(assays)) {
-            # Versions < 0.1 (e.g. 0.0.21).
+            ## Versions < 0.1 (e.g. 0.0.21).
             message("Renaming `assay` to `counts`.")
             assays[["counts"]] <- assays[["assay"]]
             assays[["assay"]] <- NULL
@@ -52,12 +53,12 @@ updateObject.bcbioSingleCell <-  # nolint
         }
 
         assays <- Filter(Negate(is.null), assays)
-        # Put the required assays first, in order
+        ## Put the required assays first, in order
         assays <- assays[unique(c(requiredAssays, names(assays)))]
         assert(isSubset(requiredAssays, names(assays)))
 
-        # Move sampleData into colData -----------------------------------------
-        # Require that all `sampleData` columns are now slotted in `colData`.
+        ## Move sampleData into colData ----------------------------------------
+        ## Require that all `sampleData` columns are now slotted in `colData`.
         if ("sampleData" %in% names(metadata)) {
             sampleData <- metadata[["sampleData"]]
         } else if ("sampleMetadata" %in% names(metadata)) {
@@ -68,7 +69,7 @@ updateObject.bcbioSingleCell <-  # nolint
         if (!is.null(sampleData)) {
             message("Moving `sampleData` columns to `colData`.")
             assert(isSubset("sampleID", colnames(sampleData)))
-            # Starting using `DataFrame` in place of `data.frame` in v0.1.7.
+            ## Starting using `DataFrame` in place of `data.frame` in v0.1.7.
             sampleData <- as(sampleData, "DataFrame")
             colData <- colData[
                 ,
@@ -92,19 +93,19 @@ updateObject.bcbioSingleCell <-  # nolint
             )
             rownames(colData) <- colData[["rowname"]]
             colData[["rowname"]] <- NULL
-            # Ensure rows are ordered to match the object.
+            ## Ensure rows are ordered to match the object.
             colData <- colData[cells, , drop = FALSE]
         }
 
-        # Metadata -------------------------------------------------------------
-        # dataVersions
+        ## Metadata ------------------------------------------------------------
+        ## dataVersions
         dataVersions <- metadata[["dataVersions"]]
         if (is(dataVersions, "data.frame")) {
             message("Setting dataVersions as DataFrame.")
             metadata[["dataVersions"]] <- as(dataVersions, "DataFrame")
         }
 
-        # ensemblRelease
+        ## ensemblRelease
         if ("ensemblVersion" %in% names(metadata)) {
             message("Renaming ensemblVersion to ensemblRelease.")
             metadata[["ensemblRelease"]] <- metadata[["ensemblVersion"]]
@@ -119,13 +120,13 @@ updateObject.bcbioSingleCell <-  # nolint
                 as.integer(metadata[["ensemblRelease"]])
         }
 
-        # Update the version, if necessary.
-        if (!identical(metadata[["version"]], packageVersion)) {
+        ## Update the version, if necessary.
+        if (!identical(metadata[["version"]], .version)) {
             metadata[["originalVersion"]] <- metadata[["version"]]
-            metadata[["version"]] <- packageVersion
+            metadata[["version"]] <- .version
         }
 
-        # gffFile
+        ## gffFile
         if ("gtfFile" %in% names(metadata)) {
             message("Renaming gtfFile to gffFile.")
             metadata[["gffFile"]] <- metadata[["gtfFile"]]
@@ -136,19 +137,19 @@ updateObject.bcbioSingleCell <-  # nolint
             metadata[["gffFile"]] <- character()
         }
 
-        # lanes
+        ## lanes
         if (!is.integer(metadata[["lanes"]])) {
             message("Setting lanes as integer.")
             metadata[["lanes"]] <- as.integer(metadata[["lanes"]])
         }
 
-        # level
+        ## level
         if (!"level" %in% names(metadata)) {
             message("Setting level as genes.")
             metadata[["level"]] <- "genes"
         }
 
-        # programVersions
+        ## programVersions
         if (!"programVersions" %in% names(metadata) &&
             "programs" %in% names(metadata)) {
             message("Renaming programs to programVersions.")
@@ -160,20 +161,20 @@ updateObject.bcbioSingleCell <-  # nolint
             metadata[["programVersions"]] <- as(programVersions, "DataFrame")
         }
 
-        # sampleMetadataFile
+        ## sampleMetadataFile
         if (!is.character(metadata[["sampleMetadataFile"]])) {
             message("Setting sampleMetadataFile as empty character.")
             metadata[["sampleMetadataFile"]] <- character()
         }
 
-        # Drop legacy slots.
+        ## Drop legacy slots.
         keep <- setdiff(
             x = names(metadata),
             y = c("cell2sample", "sampleData", "sampleMetadata")
         )
         metadata <- metadata[keep]
 
-        # Return ---------------------------------------------------------------
+        ## Return --------------------------------------------------------------
         .new.bcbioSingleCell(
             assays = assays,
             rowRanges = rowRanges,
@@ -189,5 +190,5 @@ updateObject.bcbioSingleCell <-  # nolint
 setMethod(
     f = "updateObject",
     signature = signature("bcbioSingleCell"),
-    definition = updateObject.bcbioSingleCell
+    definition = `updateObject,bcbioSingleCell`
 )
