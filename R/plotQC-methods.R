@@ -2,6 +2,7 @@
 #' @author Michael Steinbaugh
 #' @include globals.R
 #' @inherit acidplots::plotQC
+#' @note Updated 2019-07-24.
 #'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params
@@ -33,7 +34,7 @@ NULL
 
 
 ## Plot a single quality control metric.
-## Updated 2019-07-24.
+## Updated 2019-07-27.
 .plotQCMetric <- function(
     object,
     metricCol,
@@ -49,6 +50,7 @@ NULL
 ) {
     validObject(object)
     assert(
+        is(object, "SingleCellExperiment"),
         isString(metricCol),
         all(isNonNegative(c(min, max))),
         isString(trans),
@@ -67,8 +69,12 @@ NULL
     }
 
     data <- metrics(object)
-    if (!metricCol %in% colnames(data)) {
-        stop(paste(metricCol, "is not defined in colData()."))
+    if (!isSubset(metricCol, colnames(data))) {
+        stop(sprintf("`%s` is not defined in `colData()`.", metricCol))
+    } else if (anyNA(data[[metricCol]])) {
+        stop(sprintf("`%s` in `colData()` contains NA values.", metricCol))
+    } else if (all(data[[metricCol]] == 0L)) {
+        stop(sprintf("`%s` in `colData()` contains only zeros.", metricCol))
     }
 
     mapping <- aes(
@@ -195,7 +201,6 @@ NULL
     p
 }
 
-## Updated 2019-07-24.
 formals(`.plotQCMetric`)[c("color", "fill")] <-
     formalsList[c("color.discrete", "fill.discrete")]
 formals(`.plotQCMetric`)[["geom"]] <- geom
@@ -203,7 +208,7 @@ formals(`.plotQCMetric`)[["geom"]] <- geom
 
 
 ## Compare two quality control metrics.
-## Updated 2019-07-24.
+## Updated 2019-07-27.
 .plotQCScatterplot <- function(
     object,
     xCol,
@@ -215,7 +220,9 @@ formals(`.plotQCMetric`)[["geom"]] <- geom
     color = getOption("basejump.discrete.color", NULL),
     title = NULL
 ) {
+    validObject(object)
     assert(
+        is(object, "SingleCellExperiment"),
         isString(xCol),
         isString(yCol),
         isString(xTrans),
@@ -227,13 +234,19 @@ formals(`.plotQCMetric`)[["geom"]] <- geom
         matchInterestingGroups(object, interestingGroups)
 
     data <- metrics(object)
-    if (!all(c(xCol, yCol) %in% colnames(data))) {
-        warning(paste(
-            deparse(substitute(object)), "must contain",
-            toString(c(xCol, yCol)),
-            "columns in `colData`."
+    if (!isSubset(c(xCol, yCol), colnames(data))) {
+        stop(sprintf(
+            "%s are not defined in `colData()`.",
+            toString(c(xCol, yCol))
         ))
-        return(invisible())
+    } else if (anyNA(data[[xCol]])) {
+        stop(sprintf("`%s` in `colData()` contains NA values.", xCol))
+    } else if (anyNA(data[[yCol]])) {
+        stop(sprintf("`%s` in `colData()` contains NA values.", yCol))
+    } else if (all(data[[xCol]] == 0L)) {
+        stop(sprintf("`%s` in `colData()` contains only zeros.", xCol))
+    } else if (all(data[[yCol]] == 0L)) {
+        stop(sprintf("`%s` in `colData()` contains only zeros.", yCol))
     }
 
     p <- ggplot(
