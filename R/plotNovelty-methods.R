@@ -2,6 +2,7 @@
 #' @author Michael Steinbaugh
 #' @include globals.R
 #' @inherit bioverbs::plotNovelty
+#' @note Updated 2019-07-27.
 #'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params
@@ -23,7 +24,7 @@ NULL
 
 
 
-## Updated 2019-07-24.
+## Updated 2019-07-27.
 `plotNovelty,bcbioSingleCell` <-  # nolint
     function(
         object,
@@ -32,7 +33,7 @@ NULL
         min = 0L,
         fill,
         trans = "identity",
-        title = "novelty : genes per UMI"
+        title = "Novelty"
     ) {
         assert(isInRightOpenRange(min, lower = 0L, upper = 1L))
         geom <- match.arg(geom)

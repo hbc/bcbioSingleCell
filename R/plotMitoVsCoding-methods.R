@@ -1,6 +1,7 @@
 #' @name plotMitoVsCoding
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inherit bioverbs::plotMitoVsCoding
+#' @note Updated 2019-07-24.
 #'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params
@@ -30,7 +31,7 @@ NULL
         trendline = FALSE,
         color,
         trans = "log2",
-        title = "mito vs. coding"
+        title = "Mito vs. coding"
     ) {
         do.call(
             what = .plotQCScatterplot,

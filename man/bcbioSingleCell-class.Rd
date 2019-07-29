@@ -61,6 +61,9 @@ designed to store a bcbio single-cell RNA-seq analysis. This class contains
 read counts saved as a sparse matrix (\code{sparseMatrix}), sample metadata, and
 cell quality control metrics.
 }
+\note{
+Updated 2019-07-24.
+}
 \section{Remote data}{
 
 

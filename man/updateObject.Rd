@@ -90,6 +90,9 @@ Updating objects is primarily useful when an object has been
   definition that is no longer current, and hence the contents of
   \code{object} cannot be determined by accessing known slots.
 }
+\note{
+Updated 2019-07-24.
+}
 \examples{
 data(indrops)
 x <- updateObject(indrops)

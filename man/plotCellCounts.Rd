@@ -11,7 +11,7 @@ plotCellCounts(object, ...)
 \S4method{plotCellCounts}{bcbioSingleCell}(object,
   interestingGroups = NULL, fill = getOption(x = "acid.fill.discrete",
   default = acidplots::scale_fill_synesthesia_d()),
-  title = "cell counts")
+  title = "Cell counts")
 }
 \arguments{
 \item{object}{Object.}
@@ -38,6 +38,9 @@ Plot title.}
 }
 \description{
 Plot cell counts
+}
+\note{
+Updated 2019-07-27.
 }
 \examples{
 data(indrops)

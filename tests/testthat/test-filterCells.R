@@ -1,5 +1,18 @@
 context("filterCells")
 
+## FIXME .isFiltered on filtered object
+## FIXME filterCells with minUMIs argument
+## FIXME extract method with filterCells applied
+
+## FIXME No cells passing maxUMIs cutoff
+## FIXME No cells passing minGenes cutoff
+## FIXME No cells passing maxGenes cutoff
+## FIXME No cells passing minNovelty cutoff
+## FIXME No cells passing maxMitoRatio
+## FIXME nCells argument set, less than Inf
+## FIXME No cells pass nCells argument
+## FIXME No cells passed minCellsPerGene
+
 test_that("No filtering", {
     ## Expecting an object with the same dimensions by default.
     invisible(capture.output(

@@ -49,6 +49,9 @@ Plot title.}
 \description{
 Plot UMI and gene correlation
 }
+\note{
+Updated 2019-07-24.
+}
 \examples{
 data(indrops)
 plotUMIsVsGenes(indrops)

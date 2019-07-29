@@ -34,7 +34,7 @@ NULL
 
 
 ## Plot a single quality control metric.
-## Updated 2019-07-27.
+## Updated 2019-07-29.
 .plotQCMetric <- function(
     object,
     metricCol,
@@ -99,12 +99,16 @@ NULL
         p <- p +
             geom_boxplot(color = "black", outlier.shape = NA) +
             scale_y_continuous(trans = trans) +
-            labs(x = NULL)
+            labs(
+                x = NULL,
+                y = label(metricCol)
+            )
     } else if (geom == "ecdf") {
         p <- p +
             stat_ecdf(geom = "step", size = 1L) +
             scale_x_continuous(trans = trans) +
             labs(
+                x = label(metricCol),
                 y = "frequency"
             )
     } else if (geom == "histogram") {
@@ -114,7 +118,10 @@ NULL
                 color = FALSE
             ) +
             scale_x_continuous(trans = trans) +
-            scale_y_continuous()
+            scale_y_continuous() +
+            labs(
+                x = label(metricCol)
+            )
     } else if (geom == "ridgeline") {
         p <- p +
             geom_density_ridges(
@@ -124,7 +131,10 @@ NULL
                 scale = 10L
             ) +
             scale_x_continuous(trans = trans) +
-            labs(y = NULL)
+            labs(
+                x = label(metricCol),
+                y = NULL
+            )
     } else if (geom == "violin") {
         p <- p +
             geom_violin(
@@ -133,7 +143,10 @@ NULL
                 trim = TRUE
             ) +
             scale_y_continuous(trans = trans) +
-            labs(x = NULL)
+            labs(
+                x = NULL,
+                y = label(metricCol)
+            )
     }
 
     ## Cutoff lines.
@@ -254,7 +267,7 @@ formals(`.plotQCMetric`)[["geom"]] <- geom
         mapping = aes(
             x = !!sym(xCol),
             y = !!sym(yCol),
-            color = !!sym("interestingGroups")
+            colour = !!sym("interestingGroups")
         )
     ) +
         geom_point(alpha = 0.5, size = 1L) +
@@ -267,10 +280,12 @@ formals(`.plotQCMetric`)[["geom"]] <- geom
         p <- p + geom_smooth(method = "glm", se = FALSE, size = 1L)
     }
 
-    ## Label interesting groups.
+    ## Set the labels.
     p <- p + labs(
+        x = label(xCol),
+        y = label(yCol),
         title = title,
-        color = paste(interestingGroups, collapse = ":\n")
+        colour = paste(interestingGroups, collapse = ":\n")
     )
 
     ## Color palette.
@@ -325,13 +340,13 @@ formals(`.plotQCMetric`)[["geom"]] <- geom
         plotMitoRatio <- plotMitoRatio(object, geom = geom)
 
         list <- list(
-            "Cell Counts" = plotCellCounts,
-            "UMIs per Cell" = plotUMIsPerCell,
-            "Genes per Cell" = plotGenesPerCell,
-            "UMIs vs. Genes" = plotUMIsVsGenes,
+            "Cell counts" = plotCellCounts,
+            "UMIs per cell" = plotUMIsPerCell,
+            "Genes per cell" = plotGenesPerCell,
+            "UMIs vs. genes" = plotUMIsVsGenes,
             "Novelty" = plotNovelty,
-            "Mito Ratio" = plotMitoRatio,
-            "Zeros vs. Depth" = plotZerosVsDepth
+            "Mito ratio" = plotMitoRatio,
+            "Zeros vs. depth" = plotZerosVsDepth
         )
 
         ## Remove any `NULL` plots. This is useful for nuking the

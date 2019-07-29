@@ -12,7 +12,7 @@ plotMitoVsCoding(object, ...)
   interestingGroups = NULL, trendline = FALSE, color = getOption(x =
   "acid.color.discrete", default =
   acidplots::scale_colour_synesthesia_d()), trans = "log2",
-  title = "mito vs. coding")
+  title = "Mito vs. coding")
 }
 \arguments{
 \item{object}{Object.}
@@ -48,6 +48,9 @@ Plot title.}
 }
 \description{
 Plot mitochondrial vs. coding counts
+}
+\note{
+Updated 2019-07-24.
 }
 \examples{
 data(indrops)

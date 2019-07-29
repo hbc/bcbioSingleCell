@@ -57,6 +57,9 @@ Plot title.}
 \description{
 Plot the distribution of read counts for all unfiltered cellular barcodes.
 }
+\note{
+Updated 2019-07-24.
+}
 \examples{
 data(indrops)
 plotReadsPerCell(indrops, geom = "histogram")

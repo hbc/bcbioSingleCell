@@ -23,6 +23,9 @@ Apply prefiltering to remove zero count genes.}
 \description{
 Calculate cellular barcode quality metrics
 }
+\note{
+Updated 2019-07-24.
+}
 \examples{
 data(indrops)
 counts <- counts(indrops)

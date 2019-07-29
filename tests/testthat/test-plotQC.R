@@ -22,6 +22,15 @@ test_that("grid", {
     expect_true(all(names %in% names(x)))
 })
 
+geom <- eval(formals(`plotQC,bcbioSingleCell`)[["geom"]])
+with_parameters_test_that(
+    "geom argument", {
+        p <- plotQC(indrops, geom = geom)
+        expect_s3_class(p, "ggplot")
+    },
+    geom = geom
+)
+
 test_that("markdown", {
     output <- capture.output(plotQC(indrops, return = "markdown"))
     sep <- c("", "", "")

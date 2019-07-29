@@ -1,5 +1,4 @@
 #' @rdname bcbioSingleCell-class
-#' @note Updated 2019-07-24.
 #' @export
 #'
 #' @inheritParams basejump::makeSingleCellExperiment

@@ -56,6 +56,9 @@ Plot title.}
 \description{
 Plot genes per cell
 }
+\note{
+Updated 2019-07-24.
+}
 \examples{
 data(indrops)
 plotGenesPerCell(indrops)

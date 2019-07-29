@@ -2,6 +2,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #' @inherit bioverbs::plotMitoRatio
+#' @note Updated 2019-07-27.
 #'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params
@@ -23,7 +24,7 @@ NULL
 
 
 
-## Updated 2019-07-24.
+## Updated 2019-07-27.
 `plotMitoRatio,bcbioSingleCell` <-  # nolint
     function(
         object,
@@ -32,7 +33,7 @@ NULL
         max = 1L,
         fill,
         trans = "sqrt",
-        title = "mito ratio"
+        title = "Mito ratio"
     ) {
         assert(isInLeftOpenRange(max, lower = 0L, upper = 1L))
         geom <- match.arg(geom)
