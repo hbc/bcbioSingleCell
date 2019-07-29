@@ -1,5 +1,6 @@
 #' @name updateObject
 #' @author Michael Steinbaugh
+#' @note Updated 2019-07-24.
 #'
 #' @inherit BiocGenerics::updateObject
 #' @inheritParams basejump::params

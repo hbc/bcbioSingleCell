@@ -1,4 +1,5 @@
 #' @rdname bcbioSingleCell-class
+#' @note Updated 2019-07-24.
 #' @export
 #'
 #' @inheritParams basejump::makeSingleCellExperiment
@@ -28,8 +29,6 @@
 #'     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 #' )
 #' print(x)
-
-## Updated 2019-07-24.
 bcbioSingleCell <- function(
     uploadDir,
     sampleMetadataFile = NULL,

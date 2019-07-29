@@ -18,7 +18,7 @@
 #'   makeSingleCellExperiment mapCellsToSamples markdownHeader markdownPlots
 #'   matchArgsToDoCall matchInterestingGroups metrics minimalSampleData
 #'   prepareTemplate printString relevel realpath sampleData separator
-#'   showSlotInfo
+#'   showSlotInfo  label title
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
 #'   projectDir readDataVersions readProgramVersions readSampleData runDate
@@ -37,7 +37,7 @@
 #'   isNonNegative isNumber isPositive isString isSubset validate
 #'   validateClasses
 #' @importFrom graphics hist
-#' @importFrom magrittr %>% set_names
+#' @importFrom magrittr %<>% %>% set_names
 #' @importFrom methods as as<- is new setClass show slot slot<- validObject
 #'   .hasSlot
 #' @importFrom acidplots acid_geom_abline acid_geom_label

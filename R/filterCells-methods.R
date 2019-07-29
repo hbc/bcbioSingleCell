@@ -1,7 +1,7 @@
 #' @name filterCells
 #' @author Michael Steinbaugh
 #' @inherit bioverbs::filterCells
-#' @inheritParams basejump::params
+#' @note Updated 2019-07-24.
 #'
 #' @details
 #' Apply gene detection, novelty score, and mitochondrial abundance cutoffs to
@@ -11,6 +11,7 @@
 #' use the `sampleNames` return values (i.e. the `sampleName` column in
 #' `sampleData`).
 #'
+#' @inheritParams basejump::params
 #' @param nCells `integer(1)`.
 #'   Expected number of cells per sample.
 #' @param minUMIs `integer(1)`.

@@ -29,10 +29,12 @@
         ## samples with empty matrices in bcbio pipeline.
         list <- Filter(Negate(is.null), list)
         if (!hasLength(list)) {
+            ## nocov start
             stop(paste(
                 "bcbio didn't return any cells.",
                 "Check your `minimum_barcode_depth` setting."
             ))
+            ## nocov end
         }
 
         ## Bind the matrices.
@@ -103,8 +105,10 @@
         colnames <- read_lines(colnamesFile)
 
         if (!length(rownames) > 0L || !length(colnames) > 0L) {
+            ## nocov start
             message(paste0("Skipped", basename(dir), "."))
             return(NULL)
+            ## nocov end
         }
 
         ## Import counts.
