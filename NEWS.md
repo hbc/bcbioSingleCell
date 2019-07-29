@@ -1,5 +1,11 @@
 ## bcbioSingleCell 0.3.18 (2019-07-29)
 
+### Major changes
+
+- `updateObject`: Simplified method support, dropping `rowRanges` argument.
+  No longer attempting to coerce assays back to a simple list, which doesn't
+  work well on Bioconductor 3.10 Devel currently.
+
 ### Minor changes
 
 - Updated basejump dependencies.
