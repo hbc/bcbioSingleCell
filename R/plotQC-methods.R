@@ -2,7 +2,7 @@
 #' @author Michael Steinbaugh
 #' @include globals.R
 #' @inherit acidplots::plotQC
-#' @note Updated 2019-07-24.
+#' @note Updated 2019-07-29.
 #'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params
@@ -101,14 +101,14 @@ NULL
             scale_y_continuous(trans = trans) +
             labs(
                 x = NULL,
-                y = label(metricCol)
+                y = makeLabel(metricCol)
             )
     } else if (geom == "ecdf") {
         p <- p +
             stat_ecdf(geom = "step", size = 1L) +
             scale_x_continuous(trans = trans) +
             labs(
-                x = label(metricCol),
+                x = makeLabel(metricCol),
                 y = "frequency"
             )
     } else if (geom == "histogram") {
@@ -120,7 +120,7 @@ NULL
             scale_x_continuous(trans = trans) +
             scale_y_continuous() +
             labs(
-                x = label(metricCol)
+                x = makeLabel(metricCol)
             )
     } else if (geom == "ridgeline") {
         p <- p +
@@ -132,7 +132,7 @@ NULL
             ) +
             scale_x_continuous(trans = trans) +
             labs(
-                x = label(metricCol),
+                x = makeLabel(metricCol),
                 y = NULL
             )
     } else if (geom == "violin") {
@@ -145,7 +145,7 @@ NULL
             scale_y_continuous(trans = trans) +
             labs(
                 x = NULL,
-                y = label(metricCol)
+                y = makeLabel(metricCol)
             )
     }
 
@@ -282,8 +282,8 @@ formals(`.plotQCMetric`)[["geom"]] <- geom
 
     ## Set the labels.
     p <- p + labs(
-        x = label(xCol),
-        y = label(yCol),
+        x = makeLabel(xCol),
+        y = makeLabel(yCol),
         title = title,
         colour = paste(interestingGroups, collapse = ":\n")
     )

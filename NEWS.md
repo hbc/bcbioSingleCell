@@ -1,3 +1,10 @@
+## bcbioSingleCell 0.3.18 (2019-07-29)
+
+### Minor changes
+
+- Updated basejump dependencies.
+- Improved code coverage over 90%.
+
 ## bcbioSingleCell 0.3.17 (2019-07-24)
 
 ### Minor changes
