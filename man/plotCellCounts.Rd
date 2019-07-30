@@ -40,7 +40,7 @@ Plot title.}
 Plot cell counts
 }
 \note{
-Updated 2019-07-27.
+Updated 2019-07-29.
 }
 \examples{
 data(indrops)

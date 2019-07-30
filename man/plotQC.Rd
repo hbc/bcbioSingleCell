@@ -47,7 +47,7 @@ to the first argument in the \code{character} vector.}
 Quality control
 }
 \note{
-Updated 2019-07-24.
+Updated 2019-07-29.
 }
 \examples{
 data(indrops)

@@ -1,6 +1,6 @@
 #' @name updateObject
 #' @author Michael Steinbaugh
-#' @note Updated 2019-07-24.
+#' @note Updated 2019-07-29.
 #'
 #' @inherit BiocGenerics::updateObject
 #' @inheritParams basejump::params
@@ -13,33 +13,25 @@ NULL
 
 
 
-## Updated 2019-07-24.
+## Updated 2019-07-29.
 `updateObject,bcbioSingleCell` <-  # nolint
-    function(object, rowRanges = NULL) {
-        assert(isAny(rowRanges, classes = c("GRanges", "NULL")))
-
-        assays <- slot(object, name = "assays")
-        cells <- colnames(assays[[1L]])
-        if (is.null(rowRanges)) {
-            rowRanges <- slot(object, name = "rowRanges")
-        }
-        colData <- slot(object, name = "colData")
-        metadata <- slot(object, name = "metadata")
+    function(object) {
+        metadata <- metadata(object)
 
         version <- metadata[["version"]]
         assert(is(version, c("package_version", "numeric_version")))
-        message(paste0("Upgrading from ", version, " to ", .version, "."))
+        message(sprintf(
+            fmt = "Upgrading bcbioSingleCell from version %s to %s.",
+            as.character(version),
+            as.character(.version)
+        ))
+
+        cells <- colnames(object)
+        rowRanges <- rowRanges(object)
+        colData <- colData(object)
 
         ## Assays --------------------------------------------------------------
-        ## Coerce `ShallowSimpleListAssays` S4 class to standard list.
-        names <- names(assays)
-        assays <- lapply(seq_along(assays), function(a) {
-            assay <- assays[[a]]
-            assert(identical(colnames(assay), cells))
-            assay
-        })
-        names(assays) <- names
-        rm(names)
+        assays <- assays(object)
 
         ## Ensure raw counts are always named "counts".
         if ("assay" %in% names(assays)) {
@@ -54,7 +46,7 @@ NULL
         }
 
         assays <- Filter(Negate(is.null), assays)
-        ## Put the required assays first, in order
+        ## Put the required assays first, in order.
         assays <- assays[unique(c(requiredAssays, names(assays)))]
         assert(isSubset(requiredAssays, names(assays)))
 

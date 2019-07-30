@@ -1,7 +1,7 @@
 #' @name plotCellCounts
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inherit bioverbs::plotCellCounts
-#' @note Updated 2019-07-27.
+#' @note Updated 2019-07-29.
 #'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params
@@ -69,7 +69,7 @@ NULL
             labs(
                 title = title,
                 x = NULL,
-                y = label(metricCol),
+                y = makeLabel(metricCol),
                 fill = paste(interestingGroups, collapse = ":\n")
             )
 
