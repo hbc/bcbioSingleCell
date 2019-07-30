@@ -1,17 +1,10 @@
 context("calculateMetrics")
 
-## FIXME counts
-## FIXME rowRanges
-## FIXME prefilter
+counts <- counts(indrops)
+rowRanges <- rowRanges(indrops)
 
-## FIXME calculateMetrics rowRanges setdiff
-## FIXME calculateMetrics with broadClass
-## FIXME calculateMetrics without broadClass
-
-counts <- assay(indrops)
-
-test_that("No biotype information from rowRanges", {
-    x <- calculateMetrics(counts = counts)
+test_that("rowRanges argument", {
+    x <- calculateMetrics(counts = counts, rowRanges = NULL)
     expect_identical(
         object = colnames(x),
         expected = c(
@@ -34,4 +27,17 @@ test_that("No biotype information from rowRanges", {
             mitoRatio = TRUE
         )
     )
+    x <- calculateMetrics(counts = counts, rowRanges = rowRanges)
+    expect_false(any(vapply(X = x, FUN = anyNA, FUN.VALUE = logical(1L))))
+})
+
+test_that("Low pass prefiltering", {
+    ## All barcodes in example should pass.
+    x <- calculateMetrics(counts = counts, prefilter = TRUE)
+    expect_identical(nrow(x), ncol(counts))
+    ## Simulate a poor barcode.
+    bad <- counts
+    bad[, seq_len(2L)] <- 0L
+    x <- calculateMetrics(counts = bad, prefilter = TRUE)
+    expect_identical(nrow(x), ncol(counts) - 2L)
 })

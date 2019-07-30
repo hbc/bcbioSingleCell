@@ -1,18 +1,5 @@
 context("filterCells")
 
-## FIXME .isFiltered on filtered object
-## FIXME filterCells with minUMIs argument
-## FIXME extract method with filterCells applied
-
-## FIXME No cells passing maxUMIs cutoff
-## FIXME No cells passing minGenes cutoff
-## FIXME No cells passing maxGenes cutoff
-## FIXME No cells passing minNovelty cutoff
-## FIXME No cells passing maxMitoRatio
-## FIXME nCells argument set, less than Inf
-## FIXME No cells pass nCells argument
-## FIXME No cells passed minCellsPerGene
-
 test_that("No filtering", {
     ## Expecting an object with the same dimensions by default.
     invisible(capture.output(
@@ -65,8 +52,8 @@ with_parameters_test_that(
 )
 
 test_that("Per sample cutoffs", {
-    ## Get the count of sample1 (run1_AGAGGATA)
-    ## We're applying no filtering to that sample
+    ## Get the count of sample1 (run1_AGAGGATA).
+    ## We're applying no filtering to that sample.
     sampleNames <- sampleNames(indrops)
     expect_identical(
         sampleNames,
@@ -97,3 +84,15 @@ test_that("Per sample cutoffs", {
         )
     )
 })
+
+## .isFiltered on filtered object
+## filterCells with minUMIs argument
+## extract method with filterCells applied
+## No cells passing maxUMIs cutoff
+## No cells passing minGenes cutoff
+## No cells passing maxGenes cutoff
+## No cells passing minNovelty cutoff
+## No cells passing maxMitoRatio
+## nCells argument set, less than Inf
+## No cells pass nCells argument
+## No cells passed minCellsPerGene

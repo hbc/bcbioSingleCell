@@ -2,6 +2,7 @@
 
 ### Major changes
 
+- Updated R dependency to 3.6. This now requires Bioconductor 3.9+.
 - `updateObject`: Simplified method support, dropping `rowRanges` argument.
   No longer attempting to coerce assays back to a simple list, which doesn't
   work well on Bioconductor 3.10 Devel currently.

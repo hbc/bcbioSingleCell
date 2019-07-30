@@ -102,20 +102,22 @@ calculateMetrics <-  # nolint
         }
 
         ## Following the Seurat `seurat@meta.data` naming conventions.
+        nCoding <- if (hasLength(codingGenes)) {
+            colSums(counts[codingGenes, , drop = FALSE])
+        } else {
+            NA_integer_
+        }
+        nMito <- if (hasLength(mitoGenes)) {
+            colSums(counts[mitoGenes, , drop = FALSE])
+        } else {
+            NA_integer_
+        }
         data <- tibble(
             rowname = colnames(counts),
             nUMI = colSums(counts),
             nGene = colSums(counts > 0L),
-            nCoding = if (hasLength(codingGenes)) {
-                colSums(counts[codingGenes, , drop = FALSE])
-            } else {
-                NA_integer_
-            },
-            nMito = if (hasLength(mitoGenes)) {
-                colSums(counts[mitoGenes, , drop = FALSE])
-            } else {
-                NA_integer_
-            }
+            nCoding = nCoding,
+            nMito = nMito
         ) %>%
             mutate(
                 log10GenesPerUMI = log10(!!sym("nGene")) / log10(!!sym("nUMI")),

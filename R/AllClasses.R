@@ -6,7 +6,7 @@
 #' cell quality control metrics.
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
-#' @note Updated 2019-07-24.
+#' @note Updated 2019-07-30.
 #' @export
 setClass(
     Class = "bcbioSingleCell",
