@@ -107,9 +107,9 @@ calculateMetrics <-  # nolint
             nUMI = colSums(counts),
             nGene = colSums(counts > 0L),
             nCoding = if (hasLength(codingGenes)) {
-                nCoding <- colSums(counts[codingGenes, , drop = FALSE])
+                colSums(counts[codingGenes, , drop = FALSE])
             } else {
-                nCoding <- NA_integer_
+                NA_integer_
             },
             nMito = if (hasLength(mitoGenes)) {
                 colSums(counts[mitoGenes, , drop = FALSE])
