@@ -1,19 +1,28 @@
 #' @name updateObject
 #' @author Michael Steinbaugh
-#' @note Updated 2019-07-29.
+#' @note Updated 2019-07-30.
 #'
 #' @inherit BiocGenerics::updateObject
 #' @inheritParams basejump::params
 #'
 #' @examples
 #' data(indrops)
-#' x <- updateObject(indrops)
-#' print(x)
+#' updateObject(indrops)
+#'
+#' ## Example that depends on remote file.
+#' ## > x <- import(
+#' ## >     file = file.path(
+#' ## >         bcbioSingleCellTestsURL,
+#' ## >         "bcbioSingleCell_0.1.0.rds"
+#' ## >     )
+#' ## > )
+#' ## > x <- updateObject(x)
+#' ## > x
 NULL
 
 
 
-## Updated 2019-07-29.
+## Updated 2019-07-30.
 `updateObject,bcbioSingleCell` <-  # nolint
     function(object) {
         metadata <- metadata(object)
@@ -27,6 +36,7 @@ NULL
         ))
 
         cells <- colnames(object)
+        assert(.hasSlot(object, "rowRanges"))
         rowRanges <- rowRanges(object)
         colData <- colData(object)
 
@@ -72,7 +82,7 @@ NULL
             message("Mapping cells to samples.")
             cell2sample <- mapCellsToSamples(
                 cells = cells,
-                samples = sampleData[["sampleID"]]
+                samples = as.character(sampleData[["sampleID"]])
             )
             assert(is.factor(cell2sample))
             colData[["rowname"]] <- rownames(colData)
