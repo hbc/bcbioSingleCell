@@ -1,10 +1,10 @@
 ---
-# Updated 2019-07-24.
+## Updated 2019-07-25.
 params:
   title: "Quality control and filtering"
   bcbiosinglecell_file: "rds/YYYY-MM-DD/object.rds"
  
-  # Filtering parameters 
+  ## Filtering parameters 
   n_cells: !r Inf
   min_umis: 1000
   max_umis: !r Inf

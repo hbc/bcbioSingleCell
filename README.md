@@ -1,8 +1,8 @@
 # bcbioSingleCell
 
+[![Repo status: active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Travis CI build status](https://travis-ci.org/hbc/bcbioSingleCell.svg?branch=master)](https://travis-ci.org/hbc/bcbioSingleCell)
 [![AppVeyor CI build status](https://ci.appveyor.com/api/projects/status/npy0mhfjn9saqv4g/branch/master?svg=true)](https://ci.appveyor.com/project/mjsteinbaugh/bcbiosinglecell/branch/master)
-[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 [R][] package for [bcbio][] single-cell RNA-seq analysis.
 
@@ -61,7 +61,7 @@ help(topic = "bcbioSingleCell", package = "bcbioSingleCell")
 
 This is our current recommended method for analyzing an [inDrops][] dataset. The sample index barcodes are multiplexed per FASTQ set. For Illumina sequencing data, the raw binary base call (BCL) data must be converted into FASTQs (split into `R1`-`R4` files) using [bcl2fastq][].
 
-The [inDrops][] library version is automatically detected by [bcbio][], but ensure that the sample index sequences provided match the library version when attempting to create a `bcbioSingleCell` object. A current list of [inDrops v3 index barcodes][] is available in the [koopa][] shell bootloader.
+The [inDrops][] library version is automatically detected by [bcbio][], but ensure that the sample index sequences provided match the library version when attempting to create a `bcbioSingleCell` object.
 
 Consult the [bcbio][] documentation for more information on how to configure an [inDrops][] run prior to loading into [R][] with the `bcbioSingleCell()` function.
 
@@ -80,7 +80,7 @@ Note that bcbio currently outputs the reverse complement index sequence in the s
 
 ### FASTQ files demultiplexed per sample
 
-This is our current method for handling [10X Genomics Cell Ranger][cellranger] output (using `readCellRanger()`) and [Illumina SureCell][surecell] sample data.
+This is our current method for handling [10X Genomics Chromium][chromium] and [Illumina SureCell][surecell] cell barcodes.
 
 | description | genotype |
 |-------------|----------|
@@ -93,17 +93,16 @@ This is our current method for handling [10X Genomics Cell Ranger][cellranger] o
 
 The papers and software cited in our workflows are available as a [shared library](https://paperpile.com/shared/C8EMxl) on [Paperpile][].
 
-[bcbio]: https://bcbio-nextgen.readthedocs.io/
-[bcl2fastq]: https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html
-[Bioconductor]: https://bioconductor.org/
 [BiocManager]: https://cran.r-project.org/package=BiocManager
-[CellRanger]: https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger/
-[conda]: https://conda.io/
-[devtools]: https://cran.r-project.org/package=devtools
-[inDrops]: https://github.com/indrops/indrops/
-[inDrops v3 index barcodes]: https://github.com/steinbaugh/koopa/blob/master/workflows/indrops/harvard_v3_sample_barcodes.csv
-[koopa]: https://github.com/acidgenomics/koopa/
+[Bioconductor]: https://bioconductor.org/
+[Chromium]: https://www.10xgenomics.com/solutions/single-cell/
 [Paperpile]: https://paperpile.com/
 [R]: https://www.r-project.org/
 [SCE]: https://bioconductor.org/packages/SingleCellExperiment/
 [SureCell]: https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html
+[bcbio]: https://bcbio-nextgen.readthedocs.io/
+[bcl2fastq]: https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html
+[conda]: https://conda.io/
+[devtools]: https://cran.r-project.org/package=devtools
+[inDrops v3 index barcodes]: https://github.com/steinbaugh/koopa/blob/master/workflows/indrops/harvard_v3_sample_barcodes.csv
+[inDrops]: https://github.com/indrops/indrops/

@@ -12,7 +12,7 @@ plotMitoRatio(object, ...)
   "ecdf", "violin", "ridgeline", "boxplot"), interestingGroups = NULL,
   max = 1L, fill = getOption(x = "acid.fill.discrete", default =
   acidplots::scale_fill_synesthesia_d()), trans = "sqrt",
-  title = "mito ratio")
+  title = "Mito ratio")
 }
 \arguments{
 \item{object}{Object.}
@@ -52,6 +52,9 @@ Plot title.}
 }
 \description{
 Plot mitochondrial transcript abundance
+}
+\note{
+Updated 2019-07-27.
 }
 \examples{
 data(indrops)

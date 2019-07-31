@@ -12,7 +12,7 @@ plotNovelty(object, ...)
   "ecdf", "violin", "ridgeline", "boxplot"), interestingGroups = NULL,
   min = 0L, fill = getOption(x = "acid.fill.discrete", default =
   acidplots::scale_fill_synesthesia_d()), trans = "identity",
-  title = "novelty : genes per UMI")
+  title = "Novelty")
 }
 \arguments{
 \item{object}{Object.}
@@ -52,6 +52,9 @@ Plot title.}
 }
 \description{
 "Novelty" refers to log10 genes detected per count.
+}
+\note{
+Updated 2019-07-27.
 }
 \examples{
 data(indrops)

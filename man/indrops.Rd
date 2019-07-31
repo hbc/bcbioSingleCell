@@ -11,6 +11,9 @@ indrops
 \description{
 inDrops example data set
 }
+\note{
+Updated 2019-07-24.
+}
 \examples{
 data(indrops)
 indrops

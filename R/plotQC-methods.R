@@ -2,6 +2,7 @@
 #' @author Michael Steinbaugh
 #' @include globals.R
 #' @inherit acidplots::plotQC
+#' @note Updated 2019-07-29.
 #'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params
@@ -33,7 +34,7 @@ NULL
 
 
 ## Plot a single quality control metric.
-## Updated 2019-07-24.
+## Updated 2019-07-29.
 .plotQCMetric <- function(
     object,
     metricCol,
@@ -49,6 +50,7 @@ NULL
 ) {
     validObject(object)
     assert(
+        is(object, "SingleCellExperiment"),
         isString(metricCol),
         all(isNonNegative(c(min, max))),
         isString(trans),
@@ -67,8 +69,12 @@ NULL
     }
 
     data <- metrics(object)
-    if (!metricCol %in% colnames(data)) {
-        stop(paste(metricCol, "is not defined in colData()."))
+    if (!isSubset(metricCol, colnames(data))) {
+        stop(sprintf("`%s` is not defined in `colData()`.", metricCol))
+    } else if (anyNA(data[[metricCol]])) {
+        stop(sprintf("`%s` in `colData()` contains NA values.", metricCol))
+    } else if (all(data[[metricCol]] == 0L)) {
+        stop(sprintf("`%s` in `colData()` contains only zeros.", metricCol))
     }
 
     mapping <- aes(
@@ -93,12 +99,16 @@ NULL
         p <- p +
             geom_boxplot(color = "black", outlier.shape = NA) +
             scale_y_continuous(trans = trans) +
-            labs(x = NULL)
+            labs(
+                x = NULL,
+                y = makeLabel(metricCol)
+            )
     } else if (geom == "ecdf") {
         p <- p +
             stat_ecdf(geom = "step", size = 1L) +
             scale_x_continuous(trans = trans) +
             labs(
+                x = makeLabel(metricCol),
                 y = "frequency"
             )
     } else if (geom == "histogram") {
@@ -108,7 +118,10 @@ NULL
                 color = FALSE
             ) +
             scale_x_continuous(trans = trans) +
-            scale_y_continuous()
+            scale_y_continuous() +
+            labs(
+                x = makeLabel(metricCol)
+            )
     } else if (geom == "ridgeline") {
         p <- p +
             geom_density_ridges(
@@ -118,7 +131,10 @@ NULL
                 scale = 10L
             ) +
             scale_x_continuous(trans = trans) +
-            labs(y = NULL)
+            labs(
+                x = makeLabel(metricCol),
+                y = NULL
+            )
     } else if (geom == "violin") {
         p <- p +
             geom_violin(
@@ -127,7 +143,10 @@ NULL
                 trim = TRUE
             ) +
             scale_y_continuous(trans = trans) +
-            labs(x = NULL)
+            labs(
+                x = NULL,
+                y = makeLabel(metricCol)
+            )
     }
 
     ## Cutoff lines.
@@ -195,7 +214,6 @@ NULL
     p
 }
 
-## Updated 2019-07-24.
 formals(`.plotQCMetric`)[c("color", "fill")] <-
     formalsList[c("color.discrete", "fill.discrete")]
 formals(`.plotQCMetric`)[["geom"]] <- geom
@@ -203,7 +221,7 @@ formals(`.plotQCMetric`)[["geom"]] <- geom
 
 
 ## Compare two quality control metrics.
-## Updated 2019-07-24.
+## Updated 2019-07-27.
 .plotQCScatterplot <- function(
     object,
     xCol,
@@ -215,7 +233,9 @@ formals(`.plotQCMetric`)[["geom"]] <- geom
     color = getOption("basejump.discrete.color", NULL),
     title = NULL
 ) {
+    validObject(object)
     assert(
+        is(object, "SingleCellExperiment"),
         isString(xCol),
         isString(yCol),
         isString(xTrans),
@@ -227,13 +247,19 @@ formals(`.plotQCMetric`)[["geom"]] <- geom
         matchInterestingGroups(object, interestingGroups)
 
     data <- metrics(object)
-    if (!all(c(xCol, yCol) %in% colnames(data))) {
-        warning(paste(
-            deparse(substitute(object)), "must contain",
-            toString(c(xCol, yCol)),
-            "columns in `colData`."
+    if (!isSubset(c(xCol, yCol), colnames(data))) {
+        stop(sprintf(
+            "%s are not defined in `colData()`.",
+            toString(c(xCol, yCol))
         ))
-        return(invisible())
+    } else if (anyNA(data[[xCol]])) {
+        stop(sprintf("`%s` in `colData()` contains NA values.", xCol))
+    } else if (anyNA(data[[yCol]])) {
+        stop(sprintf("`%s` in `colData()` contains NA values.", yCol))
+    } else if (all(data[[xCol]] == 0L)) {
+        stop(sprintf("`%s` in `colData()` contains only zeros.", xCol))
+    } else if (all(data[[yCol]] == 0L)) {
+        stop(sprintf("`%s` in `colData()` contains only zeros.", yCol))
     }
 
     p <- ggplot(
@@ -241,7 +267,7 @@ formals(`.plotQCMetric`)[["geom"]] <- geom
         mapping = aes(
             x = !!sym(xCol),
             y = !!sym(yCol),
-            color = !!sym("interestingGroups")
+            colour = !!sym("interestingGroups")
         )
     ) +
         geom_point(alpha = 0.5, size = 1L) +
@@ -254,10 +280,12 @@ formals(`.plotQCMetric`)[["geom"]] <- geom
         p <- p + geom_smooth(method = "glm", se = FALSE, size = 1L)
     }
 
-    ## Label interesting groups.
+    ## Set the labels.
     p <- p + labs(
+        x = makeLabel(xCol),
+        y = makeLabel(yCol),
         title = title,
-        color = paste(interestingGroups, collapse = ":\n")
+        colour = paste(interestingGroups, collapse = ":\n")
     )
 
     ## Color palette.
@@ -312,13 +340,13 @@ formals(`.plotQCMetric`)[["geom"]] <- geom
         plotMitoRatio <- plotMitoRatio(object, geom = geom)
 
         list <- list(
-            "Cell Counts" = plotCellCounts,
-            "UMIs per Cell" = plotUMIsPerCell,
-            "Genes per Cell" = plotGenesPerCell,
-            "UMIs vs. Genes" = plotUMIsVsGenes,
+            "Cell counts" = plotCellCounts,
+            "UMIs per cell" = plotUMIsPerCell,
+            "Genes per cell" = plotGenesPerCell,
+            "UMIs vs. genes" = plotUMIsVsGenes,
             "Novelty" = plotNovelty,
-            "Mito Ratio" = plotMitoRatio,
-            "Zeros vs. Depth" = plotZerosVsDepth
+            "Mito ratio" = plotMitoRatio,
+            "Zeros vs. depth" = plotZerosVsDepth
         )
 
         ## Remove any `NULL` plots. This is useful for nuking the

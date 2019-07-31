@@ -1,44 +1,47 @@
 #' @name updateObject
 #' @author Michael Steinbaugh
+#' @note Updated 2019-07-30.
 #'
 #' @inherit BiocGenerics::updateObject
 #' @inheritParams basejump::params
 #'
 #' @examples
 #' data(indrops)
-#' x <- updateObject(indrops)
-#' print(x)
+#' updateObject(indrops)
+#'
+#' ## Example that depends on remote file.
+#' ## > x <- import(
+#' ## >     file = file.path(
+#' ## >         bcbioSingleCellTestsURL,
+#' ## >         "bcbioSingleCell_0.1.0.rds"
+#' ## >     )
+#' ## > )
+#' ## > x <- updateObject(x)
+#' ## > x
 NULL
 
 
 
-## Updated 2019-07-24.
+## Updated 2019-07-30.
 `updateObject,bcbioSingleCell` <-  # nolint
-    function(object, rowRanges = NULL) {
-        assert(isAny(rowRanges, classes = c("GRanges", "NULL")))
-
-        assays <- slot(object, name = "assays")
-        cells <- colnames(assays[[1L]])
-        if (is.null(rowRanges)) {
-            rowRanges <- slot(object, name = "rowRanges")
-        }
-        colData <- slot(object, name = "colData")
-        metadata <- slot(object, name = "metadata")
+    function(object) {
+        metadata <- metadata(object)
 
         version <- metadata[["version"]]
         assert(is(version, c("package_version", "numeric_version")))
-        message(paste0("Upgrading from ", version, " to ", .version, "."))
+        message(sprintf(
+            fmt = "Upgrading bcbioSingleCell from version %s to %s.",
+            as.character(version),
+            as.character(.version)
+        ))
+
+        cells <- colnames(object)
+        assert(.hasSlot(object, "rowRanges"))
+        rowRanges <- rowRanges(object)
+        colData <- colData(object)
 
         ## Assays --------------------------------------------------------------
-        ## Coerce `ShallowSimpleListAssays` S4 class to standard list.
-        names <- names(assays)
-        assays <- lapply(seq_along(assays), function(a) {
-            assay <- assays[[a]]
-            assert(identical(colnames(assay), cells))
-            assay
-        })
-        names(assays) <- names
-        rm(names)
+        assays <- assays(object)
 
         ## Ensure raw counts are always named "counts".
         if ("assay" %in% names(assays)) {
@@ -53,7 +56,7 @@ NULL
         }
 
         assays <- Filter(Negate(is.null), assays)
-        ## Put the required assays first, in order
+        ## Put the required assays first, in order.
         assays <- assays[unique(c(requiredAssays, names(assays)))]
         assert(isSubset(requiredAssays, names(assays)))
 
@@ -79,7 +82,7 @@ NULL
             message("Mapping cells to samples.")
             cell2sample <- mapCellsToSamples(
                 cells = cells,
-                samples = sampleData[["sampleID"]]
+                samples = as.character(sampleData[["sampleID"]])
             )
             assert(is.factor(cell2sample))
             colData[["rowname"]] <- rownames(colData)

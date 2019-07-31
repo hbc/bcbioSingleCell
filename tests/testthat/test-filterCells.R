@@ -52,8 +52,8 @@ with_parameters_test_that(
 )
 
 test_that("Per sample cutoffs", {
-    ## Get the count of sample1 (run1_AGAGGATA)
-    ## We're applying no filtering to that sample
+    ## Get the count of sample1 (run1_AGAGGATA).
+    ## We're applying no filtering to that sample.
     sampleNames <- sampleNames(indrops)
     expect_identical(
         sampleNames,
@@ -84,3 +84,15 @@ test_that("Per sample cutoffs", {
         )
     )
 })
+
+## .isFiltered on filtered object
+## filterCells with minUMIs argument
+## extract method with filterCells applied
+## No cells passing maxUMIs cutoff
+## No cells passing minGenes cutoff
+## No cells passing maxGenes cutoff
+## No cells passing minNovelty cutoff
+## No cells passing maxMitoRatio
+## nCells argument set, less than Inf
+## No cells pass nCells argument
+## No cells passed minCellsPerGene

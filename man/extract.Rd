@@ -83,6 +83,9 @@ Unfiltered cellular barcode distributions for the entire dataset, including
 cells not kept in the matrix will be dropped in favor of the \code{nCount} column
 of \code{\link[SummarizedExperiment:colData]{colData()}}.
 }
+\note{
+Updated 2019-07-24.
+}
 \examples{
 data(indrops)
 

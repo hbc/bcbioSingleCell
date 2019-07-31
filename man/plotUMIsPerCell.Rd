@@ -70,6 +70,9 @@ Plot title.}
 \description{
 Plot the universal molecular identifiers (UMIs) per cell.
 }
+\note{
+Updated 2019-07-24.
+}
 \examples{
 data(indrops)
 plotUMIsPerCell(indrops, geom = "violin")

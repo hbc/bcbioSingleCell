@@ -68,7 +68,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.18</span>
       </span>
     </div>
 
@@ -146,6 +146,10 @@ Apply prefiltering to remove zero count genes.</p></td>
 
     <p><code>DataFrame</code>.</p>
     
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Updated 2019-07-24.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>indrops</span>)
@@ -175,20 +179,20 @@ Apply prefiltering to remove zero count genes.</p></td>
 #&gt; <span class='message'>`rowRanges` is required to calculate: nCoding, nMito, mitoRatio</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; DataFrame with 6 rows and 6 columns
 #&gt;                        nUMI     nGene   nCoding     nMito  log10GenesPerUMI
 #&gt;                   &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;         &lt;numeric&gt;
-#&gt; AAACACTA_CTTCGATT      1670        49         0         0 0.524463164898477
-#&gt; AAACTACA_CCACATTA      1435        47         0         0 0.529672569488915
-#&gt; AACTGCCT_GCAAGGAC      2172        48         0         0 0.503839336263656
-#&gt; AAGAAGGT_TCTGTGGT      1536        48         0         0 0.527631770102223
-#&gt; AAGCCTTC_TAAATAGG      2486        48         0         0 0.495137882694531
-#&gt; AATAAGGA_CCACATTA      3506        38         0         0 0.445660767325011
+#&gt; AAACACTA_CTTCGATT      1670        49        NA        NA 0.524463164898477
+#&gt; AAACTACA_CCACATTA      1435        47        NA        NA 0.529672569488915
+#&gt; AACTGCCT_GCAAGGAC      2172        48        NA        NA 0.503839336263656
+#&gt; AAGAAGGT_TCTGTGGT      1536        48        NA        NA 0.527631770102223
+#&gt; AAGCCTTC_TAAATAGG      2486        48        NA        NA 0.495137882694531
+#&gt; AATAAGGA_CCACATTA      3506        38        NA        NA 0.445660767325011
 #&gt;                   mitoRatio
 #&gt;                   &lt;numeric&gt;
-#&gt; AAACACTA_CTTCGATT         0
-#&gt; AAACTACA_CCACATTA         0
-#&gt; AACTGCCT_GCAAGGAC         0
-#&gt; AAGAAGGT_TCTGTGGT         0
-#&gt; AAGCCTTC_TAAATAGG         0
-#&gt; AATAAGGA_CCACATTA         0</div></pre>
+#&gt; AAACACTA_CTTCGATT        NA
+#&gt; AAACTACA_CCACATTA        NA
+#&gt; AACTGCCT_GCAAGGAC        NA
+#&gt; AAGAAGGT_TCTGTGGT        NA
+#&gt; AAGCCTTC_TAAATAGG        NA
+#&gt; AATAAGGA_CCACATTA        NA</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -196,6 +200,8 @@ Apply prefiltering to remove zero count genes.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

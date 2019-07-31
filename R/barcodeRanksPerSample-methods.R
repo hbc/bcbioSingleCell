@@ -2,6 +2,7 @@
 #' @author Michael Steinbaugh
 #' @inherit bioverbs::barcodeRanksPerSample
 #' @inherit DropletUtils::barcodeRanks
+#' @note Updated 2019-07-24.
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params
 #' @param ... Additional arguments.

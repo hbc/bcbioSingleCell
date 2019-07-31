@@ -1,6 +1,7 @@
 #' @name plotUMIsVsGenes
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inherit bioverbs::plotUMIsVsGenes
+#' @note Updated 2019-07-24.
 #'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params

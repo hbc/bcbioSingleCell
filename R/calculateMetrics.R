@@ -1,9 +1,10 @@
 #' Calculate cellular barcode quality metrics
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
-#' @inheritParams basejump::params
+#' @note Updated 2019-07-24.
 #' @export
 #'
+#' @inheritParams basejump::params
 #' @param counts `matrix` or `sparseMatrix`.
 #'   Raw counts. Do not input log-normalized or library scaled counts.
 #'
@@ -21,8 +22,6 @@
 #' # Minimal metrics (supported, but not recommended).
 #' x <- calculateMetrics(counts, rowRanges = NULL)
 #' head(x)
-
-## Updated 2019-07-24.
 calculateMetrics <-  # nolint
     function(
         counts,
@@ -38,7 +37,7 @@ calculateMetrics <-  # nolint
         )
 
         message("Calculating cellular barcode metrics.")
-        message(paste(ncol(counts), "cells detected."))
+        message(sprintf("%d cells detected.", ncol(counts)))
 
         codingGenes <- character()
         mitoGenes <- character()
@@ -103,24 +102,34 @@ calculateMetrics <-  # nolint
         }
 
         ## Following the Seurat `seurat@meta.data` naming conventions.
+        nCoding <- if (hasLength(codingGenes)) {
+            colSums(counts[codingGenes, , drop = FALSE])
+        } else {
+            NA_integer_
+        }
+        nMito <- if (hasLength(mitoGenes)) {
+            colSums(counts[mitoGenes, , drop = FALSE])
+        } else {
+            NA_integer_
+        }
         data <- tibble(
             rowname = colnames(counts),
             nUMI = colSums(counts),
             nGene = colSums(counts > 0L),
-            nCoding = colSums(counts[codingGenes, , drop = FALSE]),
-            nMito = colSums(counts[mitoGenes, , drop = FALSE])
+            nCoding = nCoding,
+            nMito = nMito
         ) %>%
             mutate(
                 log10GenesPerUMI = log10(!!sym("nGene")) / log10(!!sym("nUMI")),
                 mitoRatio = !!sym("nMito") / !!sym("nUMI")
             ) %>%
-            ## Ensure `n`-prefixed count columns are integer.
+            ## Ensure `n`-prefixed count columns are always integer.
             mutate_if(grepl("^n[A-Z]", colnames(.)), as.integer)
 
         ## Apply low stringency cellular barcode pre-filtering.
         ## This keeps only cellular barcodes with non-zero genes.
         if (isTRUE(prefilter)) {
-            data <- data %>%
+            data %<>%
                 filter(!is.na(UQ(sym("log10GenesPerUMI")))) %>%
                 filter(!!sym("nUMI") > 0L) %>%
                 filter(!!sym("nGene") > 0L)

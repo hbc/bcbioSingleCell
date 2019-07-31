@@ -55,6 +55,9 @@ If \code{fit.bounds} is not specified, the lower bound is automatically set to t
 The upper bound is set to the point at which the first derivative is closest to zero, i.e., the \dQuote{plateau} region before the knee point.
 Note that only points with total counts above \code{lower} will be considered, regardless of how \code{fit.bounds} is defined.
 }
+\note{
+Updated 2019-07-24.
+}
 \examples{
 data(indrops)
 if (packageVersion("DropletUtils") >= "1.4") {

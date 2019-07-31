@@ -1,8 +1,8 @@
 Package: bcbioSingleCell
 Title: bcbio Single-Cell RNA-Seq
 Description: R package for bcbio single-cell RNA-seq analysis.
-Version: 0.3.17
-Date: 2018-07-24
+Version: 0.3.18
+Date: 2018-07-30
 Authors@R: c(
     person(
         given = "Michael",
@@ -52,14 +52,14 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: false
 Depends:
-    R (>= 3.5),
-    SingleCellExperiment (>= 1.4),
-    basejump (>= 0.11.1)
+    R (>= 3.6),
+    SingleCellExperiment,
+    basejump (>= 0.11.3)
 Imports:
-    acidplots (>= 0.2.7),
+    acidplots (>= 0.2.8),
     bcbioBase (>= 0.6.7),
-    bioverbs (>= 0.2.0),
-    goalie (>= 0.2.19), 
+    bioverbs (>= 0.2),
+    goalie (>= 0.3), 
     Biobase,
     BiocGenerics,
     DropletUtils,
@@ -94,6 +94,7 @@ Remotes:
     acidgenomics/basejump,
     acidgenomics/bioverbs,
     acidgenomics/goalie,
+    cole-trapnell-lab/monocle3,
     hbc/bcbioBase
 biocViews:
     DataImport,

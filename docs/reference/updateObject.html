@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.18</span>
       </span>
     </div>
 
@@ -122,7 +122,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>updateObject</span>(<span class='no'>object</span>, <span class='kw'>rowRanges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>updateObject</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -133,12 +133,6 @@
     <code>updateObjectFromSlots</code>.</p>
 <p>Object for slot information to be extracted from for
     <code>getObjectSlots</code>.</p></td>
-    </tr>
-    <tr>
-      <th>rowRanges</th>
-      <td><p><code>GRanges</code>.
-Genomic ranges (e.g. genome annotations). Metadata describing the assay
-rows.</p></td>
     </tr>
     </table>
     
@@ -194,6 +188,10 @@ rows.</p></td>
   definition that is no longer current, and hence the contents of
   <code>object</code> cannot be determined by accessing known slots.</p>
     
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Updated 2019-07-30.</p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'>
@@ -215,9 +213,9 @@ rows.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>indrops</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>updateObject</span>(<span class='no'>indrops</span>)</div><div class='output co'>#&gt; <span class='message'>Upgrading from 0.3.9 to 0.3.16.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.3.16
+<span class='fu'>updateObject</span>(<span class='no'>indrops</span>)</div><div class='output co'>#&gt; <span class='message'>Upgrading bcbioSingleCell from version 0.3.9 to 0.3.18.</span></div><div class='output co'>#&gt; bcbioSingleCell 0.3.18
 #&gt; uploadDir: /data00/packages/bcbioSingleCell/inst/extdata/indrops
-#&gt; dates(2): [bcbio] 2018-01-01; [R] 2019-07-24
+#&gt; dates(2): [bcbio] 2018-01-01; [R] 2019-07-30
 #&gt; level: genes
 #&gt; sampleMetadataFile: inst/extdata/indrops/metadata.csv
 #&gt; organism: Homo sapiens
@@ -234,7 +232,17 @@ rows.</p></td>
 #&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
 #&gt; colData names(15): nUMI nGene ... aggregate revcomp
 #&gt; reducedDimNames(0):
-#&gt; spikeNames(0):</div></pre>
+#&gt; spikeNames(0):</div><div class='input'>
+## Example that depends on remote file.
+## > x <- import(
+## >     file = file.path(
+## >         bcbioSingleCellTestsURL,
+## >         "bcbioSingleCell_0.1.0.rds"
+## >     )
+## > )
+## > x <- updateObject(x)
+## > x
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -244,6 +252,8 @@ rows.</p></td>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#note">Note</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

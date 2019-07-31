@@ -2,6 +2,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #' @inherit bioverbs::plotGenesPerCell
+#' @note Updated 2019-07-24.
 #'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params

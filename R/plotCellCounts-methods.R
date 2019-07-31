@@ -1,6 +1,7 @@
 #' @name plotCellCounts
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inherit bioverbs::plotCellCounts
+#' @note Updated 2019-07-29.
 #'
 #' @inheritParams acidplots::params
 #' @inheritParams basejump::params
@@ -22,13 +23,13 @@ NULL
 
 
 
-## Updated 2019-07-24.
+## Updated 2019-07-27.
 `plotCellCounts,bcbioSingleCell` <-  # nolint
     function(
         object,
         interestingGroups = NULL,
         fill,
-        title = "cell counts"
+        title = "Cell counts"
     ) {
         validObject(object)
         assert(
@@ -40,10 +41,11 @@ NULL
 
         metrics <- metrics(object)
         sampleData <- sampleData(object)
+        metricCol <- "nCells"
 
-        ## Remove user-defined `nCells` column, if present.
-        metrics[["nCells"]] <- NULL
-        sampleData[["nCells"]] <- NULL
+        ## Remove user-defined column, if present.
+        metrics[[metricCol]] <- NULL
+        sampleData[[metricCol]] <- NULL
 
         sampleData <- sampleData %>%
             as_tibble(rownames = "sampleID") %>%
@@ -51,14 +53,14 @@ NULL
 
         data <- metrics %>%
             group_by(!!sym("sampleID")) %>%
-            summarise(nCells = n()) %>%
+            summarise(!!sym(metricCol) := n()) %>%
             left_join(sampleData, by = "sampleID")
 
         p <- ggplot(
             data = data,
             mapping = aes(
                 x = !!sym("sampleName"),
-                y = !!sym("nCells"),
+                y = !!sym(metricCol),
                 fill = !!sym("interestingGroups")
             )
         ) +
@@ -67,6 +69,7 @@ NULL
             labs(
                 title = title,
                 x = NULL,
+                y = makeLabel(metricCol),
                 fill = paste(interestingGroups, collapse = ":\n")
             )
 
@@ -79,7 +82,7 @@ NULL
         if (nrow(data) <= 16L) {
             p <- p + acid_geom_label(
                 data = data,
-                mapping = aes(label = !!sym("nCells")),
+                mapping = aes(label = !!sym(metricCol)),
                 ## Align the label just under the top of the bar.
                 vjust = 1.25
             )

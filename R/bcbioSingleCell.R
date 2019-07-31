@@ -28,8 +28,6 @@
 #'     sampleMetadataFile = file.path(uploadDir, "metadata.csv")
 #' )
 #' print(x)
-
-## Updated 2019-07-24.
 bcbioSingleCell <- function(
     uploadDir,
     sampleMetadataFile = NULL,
@@ -46,6 +44,7 @@ bcbioSingleCell <- function(
     sampleData <- NULL
 
     ## Legacy arguments --------------------------------------------------------
+    ## nocov start
     dots <- list(...)
     call <- match.call()
     ## ensemblVersion
@@ -64,6 +63,13 @@ bcbioSingleCell <- function(
     if ("annotable" %in% names(call)) {
         stop("Use `gffFile` instead of `annotable`.")
     }
+    ## Error on unsupported arguments.
+    assert(isSubset(
+        x = setdiff(names(call), ""),
+        y = names(formals())
+    ))
+    rm(call)
+    ## nocov end
 
     ## Assert checks -----------------------------------------------------------
     assert(

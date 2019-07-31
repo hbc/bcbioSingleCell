@@ -53,6 +53,9 @@ defined using a named \code{numeric} vector. When matching per sample, be sure t
 use the \code{sampleNames} return values (i.e. the \code{sampleName} column in
 \code{sampleData}).
 }
+\note{
+Updated 2019-07-24.
+}
 \examples{
 data(indrops)
 
