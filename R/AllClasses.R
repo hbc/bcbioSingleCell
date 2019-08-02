@@ -6,12 +6,15 @@
 #' cell quality control metrics.
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
-#' @note Updated 2019-07-30.
+#' @note Updated 2019-08-01.
 #' @export
 setClass(
     Class = "bcbioSingleCell",
-    contains = "SingleCellExperiment",
-    validity = function(object) {
+    contains = "SingleCellExperiment"
+)
+setValidity(
+    Class = "bcbioSingleCell",
+    method = function(object) {
         colData <- colData(object)
         metadata <- metadata(object)
         sampleData <- sampleData(object)
