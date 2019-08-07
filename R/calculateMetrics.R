@@ -4,7 +4,7 @@
 #' @note Updated 2019-07-24.
 #' @export
 #'
-#' @inheritParams basejump::params
+#' @inheritParams acidroxygen::params
 #' @param counts `matrix` or `sparseMatrix`.
 #'   Raw counts. Do not input log-normalized or library scaled counts.
 #'

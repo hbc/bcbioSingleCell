@@ -3,7 +3,7 @@
 #' @note Updated 2019-07-30.
 #'
 #' @inherit BiocGenerics::updateObject
-#' @inheritParams basejump::params
+#' @inheritParams acidroxygen::params
 #'
 #' @examples
 #' data(indrops)

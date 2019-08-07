@@ -4,8 +4,7 @@
 #' @inherit bioverbs::plotMitoRatio
 #' @note Updated 2019-07-27.
 #'
-#' @inheritParams acidplots::params
-#' @inheritParams basejump::params
+#' @inheritParams acidroxygen::params
 #' @param ... Additional arguments.
 #'
 #' @examples

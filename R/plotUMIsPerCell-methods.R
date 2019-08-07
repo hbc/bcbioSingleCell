@@ -4,8 +4,7 @@
 #' @inherit bioverbs::plotUMIsPerCell
 #' @note Updated 2019-07-24.
 #'
-#' @inheritParams acidplots::params
-#' @inheritParams basejump::params
+#' @inheritParams acidroxygen::params
 #' @param point `character(1)`.
 #'   Label either the "`knee`" or "`inflection`" points per sample. To disable,
 #'   use "`none`". Requires `geom = "ecdf"`.

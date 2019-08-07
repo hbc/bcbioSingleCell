@@ -11,7 +11,7 @@
 #' use the `sampleNames` return values (i.e. the `sampleName` column in
 #' `sampleData`).
 #'
-#' @inheritParams basejump::params
+#' @inheritParams acidroxygen::params
 #' @param nCells `integer(1)`.
 #'   Expected number of cells per sample.
 #' @param minUMIs `integer(1)`.

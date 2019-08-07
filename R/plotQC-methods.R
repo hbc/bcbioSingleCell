@@ -4,8 +4,7 @@
 #' @inherit acidplots::plotQC
 #' @note Updated 2019-07-29.
 #'
-#' @inheritParams acidplots::params
-#' @inheritParams basejump::params
+#' @inheritParams acidroxygen::params
 #' @param headerLevel `integer(1)` (`1`-`7`).
 #'   R Markdown header level.
 #' @param legend `logical(1)`.

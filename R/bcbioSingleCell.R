@@ -1,9 +1,11 @@
-#' @rdname bcbioSingleCell-class
+#' bcbioSingleCell object generator
+#'
+#' @author Michael Steinbaugh
+#' @note Updated 2019-08-07.
 #' @export
 #'
 #' @inheritParams basejump::makeSingleCellExperiment
-#' @inheritParams basejump::params
-#' @inheritParams bcbioBase::params
+#' @inheritParams acidroxygen::params
 #'
 #' @section Remote data:
 #'

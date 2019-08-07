@@ -3,8 +3,7 @@
 #' @inherit bioverbs::plotMitoVsCoding
 #' @note Updated 2019-07-24.
 #'
-#' @inheritParams acidplots::params
-#' @inheritParams basejump::params
+#' @inheritParams acidroxygen::params
 #' @param ... Additional arguments.
 #'
 #' @examples

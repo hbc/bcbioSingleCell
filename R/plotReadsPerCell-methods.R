@@ -4,8 +4,7 @@
 #' @inherit bioverbs::plotReadsPerCell
 #' @note Updated 2019-07-24.
 #'
-#' @inheritParams acidplots::params
-#' @inheritParams basejump::params
+#' @inheritParams acidroxygen::params
 #' @param cutoffLine `logical(1)`.
 #'   Include a line marking the cutoff.
 #' @param ... Additional arguments.
