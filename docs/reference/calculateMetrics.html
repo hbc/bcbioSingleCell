@@ -68,7 +68,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.18</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.19</span>
       </span>
     </div>
 
@@ -131,14 +131,14 @@ Raw counts. Do not input log-normalized or library scaled counts.</p></td>
     </tr>
     <tr>
       <th>rowRanges</th>
-      <td><p><code>GRanges</code>.
+      <td><p><code>GRanges</code> or <code>GRangesList</code>.
 Genomic ranges (e.g. genome annotations). Metadata describing the assay
 rows.</p></td>
     </tr>
     <tr>
       <th>prefilter</th>
       <td><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>.
-Apply prefiltering to remove zero count genes.</p></td>
+Apply prefiltering. Remove zero count genes.</p></td>
     </tr>
     </table>
     
