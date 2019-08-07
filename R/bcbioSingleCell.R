@@ -1,5 +1,8 @@
-#' bcbioSingleCell object generator
-#'
+## FIXME Rework using BiocParallel.
+
+
+
+#' @inherit bcbioSingleCell-class title description
 #' @author Michael Steinbaugh
 #' @note Updated 2019-08-07.
 #' @export
@@ -42,7 +45,6 @@ bcbioSingleCell <- function(
     interestingGroups = "sampleName",
     ...
 ) {
-    allSamples <- TRUE
     sampleData <- NULL
 
     ## Legacy arguments --------------------------------------------------------
@@ -141,16 +143,11 @@ bcbioSingleCell <- function(
     ))
 
     ## User-defined sample metadata --------------------------------------------
+    allSamples <- TRUE
+    sampleData <- NULL
+
     if (isString(sampleMetadataFile)) {
         sampleData <- readSampleData(sampleMetadataFile, lanes = lanes)
-
-        ## Allow sample selection by with this file.
-        if (nrow(sampleData) < length(sampleDirs)) {
-            message("Loading a subset of samples, defined by the metadata.")
-            allSamples <- FALSE
-            sampleDirs <- sampleDirs[rownames(sampleData)]
-            message(paste(length(sampleDirs), "samples matched by metadata."))
-        }
 
         ## Error on incorrect reverse complement input.
         if ("sequence" %in% colnames(sampleData)) {
@@ -168,6 +165,16 @@ bcbioSingleCell <- function(
                 ))
             }
         }
+
+        ## Allow sample selection by with this file.
+        if (nrow(sampleData) < length(sampleDirs)) {
+            sampleDirs <- sampleDirs[rownames(sampleData)]
+            message(sprintf(
+                fmt = "Loading a subset of samples:\n%s",
+                str_trunc(toString(basename(sampleDirs)), width = 80L)
+            ))
+            allSamples <- FALSE
+        }
     }
 
     ## Unfiltered cellular barcode distributions -------------------------------
@@ -176,6 +183,7 @@ bcbioSingleCell <- function(
     ## Assays ------------------------------------------------------------------
     ## Note that we're now allowing transcript-level counts.
     counts <- .import.bcbio(sampleDirs)
+    assert(hasValidDimnames(counts))
     assays <- SimpleList(counts = counts)
 
     ## Row data ----------------------------------------------------------------
@@ -293,31 +301,30 @@ bcbioSingleCell <- function(
     assert(isSubset(interestingGroups, colnames(sampleData)))
 
     metadata <- list(
-        version = .version,
-        pipeline = "bcbio",
-        level = level,
-        uploadDir = uploadDir,
-        sampleDirs = sampleDirs,
-        sampleMetadataFile = as.character(sampleMetadataFile),
-        interestingGroups = interestingGroups,
-        organism = as.character(organism),
-        genomeBuild = as.character(genomeBuild),
-        ensemblRelease = as.integer(ensemblRelease),
-        umiType = umiType,
         allSamples = allSamples,
+        bcbioCommandsLog = commandsLog,
+        bcbioLog = log,
+        call = match.call(),
+        cellularBarcodeCutoff = cutoff,
+        cellularBarcodes = cbList,
+        dataVersions = dataVersions,
+        ensemblRelease = as.integer(ensemblRelease),
+        genomeBuild = as.character(genomeBuild),
+        gffFile = as.character(gffFile),
+        interestingGroups = interestingGroups,
         lanes = lanes,
-        ## bcbio-specific ------------------------------------------------------
+        level = level,
+        organism = as.character(organism),
+        pipeline = "bcbio",
+        programVersions = programVersions,
         projectDir = projectDir,
         runDate = runDate,
-        yaml = yaml,
-        gffFile = as.character(gffFile),
-        dataVersions = dataVersions,
-        programVersions = programVersions,
-        bcbioLog = log,
-        bcbioCommandsLog = commandsLog,
-        cellularBarcodes = cbList,
-        cellularBarcodeCutoff = cutoff,
-        call = match.call()
+        sampleDirs = sampleDirs,
+        sampleMetadataFile = as.character(sampleMetadataFile),
+        umiType = umiType,
+        uploadDir = uploadDir,
+        version = .version,
+        yaml = yaml
     )
 
     ## Return ------------------------------------------------------------------
