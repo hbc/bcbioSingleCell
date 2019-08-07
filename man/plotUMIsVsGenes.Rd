@@ -18,8 +18,8 @@ plotUMIsVsGenes(object, ...)
 \item{object}{Object.}
 
 \item{interestingGroups}{\code{character}.
-Groups of interest that define the samples. If left unset, defaults to
-\code{sampleName}.}
+Groups of interest to use for visualization.
+Corresponds to factors describing the columns of the object.}
 
 \item{trendline}{\code{logical(1)}.
 Include trendline on plot.}
@@ -39,7 +39,7 @@ For more information:\preformatted{help(topic = "scale_x_continuous", package = 
 }}
 
 \item{title}{\code{character(1)}.
-Plot title.}
+Title.}
 
 \item{...}{Additional arguments.}
 }
