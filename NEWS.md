@@ -1,3 +1,11 @@
+## bcbioSingleCell 0.3.19 (2019-08-07)
+
+### Minor changes
+
+- Improved documentation consistency by using shared roxygen from acidroxygen
+  package.
+- Updated basejump and bcbio R package dependencies.
+
 ## bcbioSingleCell 0.3.18 (2019-07-29)
 
 ### Major changes
