@@ -228,6 +228,14 @@
 </tbody>
 </table>
 </div>
+<div id="invalid-object" class="section level3">
+<h3 class="hasAnchor">
+<a href="#invalid-object" class="anchor"></a>Invalid object</h3>
+<p>If you encounter a <code>validObject</code> error when attempting to load a <code>bcbioSingleCell</code> object from a previous analysis, run this step to update the object to the current version of the package:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">object &lt;-<span class="st"> </span><span class="kw"><a href="reference/updateObject.html">updateObject</a></span>(object)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">validObject</span>(object)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">## [1] TRUE</span></a></code></pre></div>
+</div>
 </div>
 <div id="references" class="section level2">
 <h2 class="hasAnchor">

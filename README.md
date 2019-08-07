@@ -89,6 +89,16 @@ This is our current method for handling [10X Genomics Chromium][chromium] and [I
 | sample3     | wildtype |
 | sample4     | knockout |
 
+### Invalid object
+
+If you encounter a `validObject` error when attempting to load a `bcbioSingleCell` object from a previous analysis, run this step to update the object to the current version of the package:
+
+```r
+object <- updateObject(object)
+validObject(object)
+## [1] TRUE
+```
+
 ## References
 
 The papers and software cited in our workflows are available as a [shared library](https://paperpile.com/shared/C8EMxl) on [Paperpile][].
