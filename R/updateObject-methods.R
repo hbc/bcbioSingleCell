@@ -178,7 +178,7 @@ NULL
         metadata <- metadata[keep]
 
         ## Return --------------------------------------------------------------
-        .new.bcbioSingleCell(
+        `new,bcbioSingleCell`(
             assays = assays,
             rowRanges = rowRanges,
             colData = colData,

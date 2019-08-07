@@ -176,7 +176,7 @@ bcbioSingleCell <- function(
     ## Assays ------------------------------------------------------------------
     ## Note that we're now allowing transcript-level counts.
     counts <- .import.bcbio(sampleDirs)
-    assays <- list(counts = counts)
+    assays <- SimpleList(counts = counts)
 
     ## Row data ----------------------------------------------------------------
     ## Annotation priority:
@@ -321,7 +321,7 @@ bcbioSingleCell <- function(
     )
 
     ## Return ------------------------------------------------------------------
-    .new.bcbioSingleCell(
+    `new,bcbioSingleCell`(
         assays = assays,
         rowRanges = rowRanges,
         colData = colData,
@@ -333,7 +333,8 @@ bcbioSingleCell <- function(
 
 
 
-.new.bcbioSingleCell <-  # nolint
+## Updated 2019-08-07.
+`new,bcbioSingleCell` <-  # nolint
     function(...) {
         new(Class = "bcbioSingleCell", makeSingleCellExperiment(...))
     }
