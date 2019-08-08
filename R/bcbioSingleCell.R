@@ -1,4 +1,5 @@
-## FIXME Rework using BiocParallel.
+## FIXME Rename "nCount" to "nUMI"
+## FIXME Rename "nFeature" to "nGene"?
 
 
 
@@ -248,10 +249,22 @@ bcbioSingleCell <- function(
 
     ## Always prefilter, removing very low quality cells with no UMIs or genes.
     colData <- calculateMetrics(
-        counts = counts,
+        object = counts,
         rowRanges = rowRanges,
         prefilter = TRUE
     )
+    ## FIXME Add validity check for this and rename in legacy objects.
+    ## Rename columns, since we're assuming droplet scRNA-seq data.
+    ## We're adding raw `nCount` column for unfiltered barcodes below.
+    ## `nFeature` is now recommended instead of `nGene` as of v0.3.19.
+    assert(isSubset(
+        x = c("nCount", "nFeature", "log10FeaturesPerCount"),
+        y = colnames(colData)
+    ))
+    colnames(colData)[
+        colnames(colData) == "nCount"] <- "nUMI"
+    colnames(colData)[
+        colnames(colData) == "log10FeaturesPerCount"] <- "log10FeaturesPerUMI"
 
     ## Subset the counts to match the prefiltered metrics.
     assert(isSubset(rownames(colData), colnames(counts)))
@@ -285,12 +298,10 @@ bcbioSingleCell <- function(
         y = levels(sampleData[["sampleID"]])
     ))
     levels(sampleData[["sampleID"]]) <- levels(colData[["sampleID"]])
-    colData <- left_join(
-        x = as_tibble(colData, rownames = "rowname"),
-        y = as_tibble(sampleData, rownames = NULL),
-        by = "sampleID"
-    )
-    colData <- as(colData, "DataFrame")
+    ## FIXME Rethink this approach, now that we're using Rle for metrics.
+    ## FIXME Need to import transformer method.
+    colData <- left_join(colData, sampleData, by = "sampleID")
+    assert(is(colData, "DataFrame"))
     colData <- relevel(colData)
 
     ## Metadata ----------------------------------------------------------------

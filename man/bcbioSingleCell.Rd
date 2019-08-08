@@ -2,7 +2,7 @@
 % Please edit documentation in R/bcbioSingleCell.R
 \name{bcbioSingleCell}
 \alias{bcbioSingleCell}
-\title{bcbioSingleCell object generator}
+\title{bcbio single-cell RNA-seq data set}
 \usage{
 bcbioSingleCell(uploadDir, sampleMetadataFile = NULL, organism = NULL,
   ensemblRelease = NULL, genomeBuild = NULL, gffFile = NULL,
@@ -53,7 +53,10 @@ Corresponds to factors describing the columns of the object.}
 \code{bcbioSingleCell}.
 }
 \description{
-bcbioSingleCell object generator
+\code{bcbioSingleCell} is an S4 class that extends \code{SingleCellExperiment}, and is
+designed to store a bcbio single-cell RNA-seq analysis. This class contains
+read counts saved as a sparse matrix (\code{sparseMatrix}), sample metadata, and
+cell quality control metrics.
 }
 \note{
 Updated 2019-08-07.
