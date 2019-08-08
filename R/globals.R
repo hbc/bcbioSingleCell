@@ -24,9 +24,9 @@ requiredAssays <- "counts"
 
 geom <- c("histogram", "ecdf", "violin", "ridgeline", "boxplot")
 
-## `nCount` column is bcbioSingleCell class specific.
 ## Previously: "nGene", "log10GenesPerUMI" (until v0.3.19).
 metricsCols <- c(
+    "nCount",
     "nUMI",
     "nFeature",
     "nCoding",
