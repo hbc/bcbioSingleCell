@@ -1,10 +1,6 @@
-## FIXME Update to reflect change in metricsCols
-
-
-
 #' @name updateObject
 #' @author Michael Steinbaugh
-#' @note Updated 2019-07-30.
+#' @note Updated 2019-08-08.
 #'
 #' @inherit BiocGenerics::updateObject
 #' @inheritParams acidroxygen::params
@@ -12,21 +8,11 @@
 #' @examples
 #' data(indrops)
 #' updateObject(indrops)
-#'
-#' ## Example that depends on remote file.
-#' ## > x <- import(
-#' ## >     file = file.path(
-#' ## >         bcbioSingleCellTestsURL,
-#' ## >         "bcbioSingleCell_0.1.0.rds"
-#' ## >     )
-#' ## > )
-#' ## > x <- updateObject(x)
-#' ## > x
 NULL
 
 
 
-## Updated 2019-07-30.
+## Updated 2019-08-08.
 `updateObject,bcbioSingleCell` <-  # nolint
     function(object) {
         metadata <- metadata(object)
@@ -51,18 +37,27 @@ NULL
         if ("assay" %in% names(assays)) {
             ## Versions < 0.1 (e.g. 0.0.21).
             message("Renaming `assay` to `counts`.")
-            assays[["counts"]] <- assays[["assay"]]
-            assays[["assay"]] <- NULL
+            names(assays)[names(assays) == "assay"] <- "counts"
         } else if ("raw" %in% names(assays)) {
             message("Renaming `raw` assay to `counts`.")
-            assays[["counts"]] <- assays[["raw"]]
-            assays[["raw"]] <- NULL
+            names(assays)[names(assays) == "raw"] <- "counts"
         }
 
         assays <- Filter(Negate(is.null), assays)
         ## Put the required assays first, in order.
         assays <- assays[unique(c(requiredAssays, names(assays)))]
         assert(isSubset(requiredAssays, names(assays)))
+
+        ## Column data metrics -------------------------------------------------
+        ## Use "feature" instead of "gene" in column metrics.
+        if ("nGene" %in% colnames(colData)) {
+            colnames(colData)[
+                colnames(colData) == "nGene"] <-
+                "nFeature"
+            colnames(colData)[
+                colnames(colData) == "log10GenesPerUMI"] <-
+                "log10FeaturesPerUMI"
+        }
 
         ## Move sampleData into colData ----------------------------------------
         ## Require that all `sampleData` columns are now slotted in `colData`.
@@ -89,17 +84,13 @@ NULL
                 samples = as.character(sampleData[["sampleID"]])
             )
             assert(is.factor(cell2sample))
-            colData[["rowname"]] <- rownames(colData)
             colData[["sampleID"]] <- cell2sample
             sampleData[["sampleID"]] <- rownames(sampleData)
-            colData <- merge(
-                x = colData,
-                y = sampleData,
-                by = "sampleID",
-                all.x = TRUE
+            colData <- left_join(x = colData, y = sampleData, by = "sampleID")
+            assert(
+                is(colData, "DataFrame"),
+                identical(rownames(colData), colnames(object))
             )
-            rownames(colData) <- colData[["rowname"]]
-            colData[["rowname"]] <- NULL
             ## Ensure rows are ordered to match the object.
             colData <- colData[cells, , drop = FALSE]
         }
@@ -115,8 +106,8 @@ NULL
         ## ensemblRelease
         if ("ensemblVersion" %in% names(metadata)) {
             message("Renaming ensemblVersion to ensemblRelease.")
-            metadata[["ensemblRelease"]] <- metadata[["ensemblVersion"]]
-            metadata[["ensemblVersion"]] <- NULL
+            names(metadata)[
+                names(metadata) == "ensemblVersion"] <- "ensemblRelease"
         }
         if (
             is.numeric(metadata[["ensemblRelease"]]) &&
@@ -136,8 +127,7 @@ NULL
         ## gffFile
         if ("gtfFile" %in% names(metadata)) {
             message("Renaming gtfFile to gffFile.")
-            metadata[["gffFile"]] <- metadata[["gtfFile"]]
-            metadata[["gtfFile"]] <- NULL
+            names(metadata)[names(metadata) == "gtfFile"] <- "gffFile"
         }
         if (!"gffFile" %in% names(metadata)) {
             message("Setting gffFile as empty character")
@@ -160,8 +150,7 @@ NULL
         if (!"programVersions" %in% names(metadata) &&
             "programs" %in% names(metadata)) {
             message("Renaming programs to programVersions.")
-            metadata[["programVersions"]] <- metadata[["programs"]]
-            metadata <- metadata[setdiff(names(metadata), "programs")]
+            names(metadata)[names(metadata) == "programs"] <- "programVersions"
         }
         programVersions <- metadata[["programVersions"]]
         if (is(programVersions, "data.frame")) {
