@@ -49,14 +49,15 @@ NULL
         assert(isSubset(requiredAssays, names(assays)))
 
         ## Column data metrics -------------------------------------------------
-        ## Use "feature" instead of "gene" in column metrics.
-        if ("nGene" %in% colnames(colData)) {
-            colnames(colData)[
-                colnames(colData) == "nGene"] <-
-                "nFeature"
-            colnames(colData)[
-                colnames(colData) == "log10GenesPerUMI"] <-
-                "log10FeaturesPerUMI"
+        ## Update legacy column names.
+        if (isSubset(c("nCount", "nUMI"), colnames(colData))) {
+            colnames(colData)[colnames(colData) == "nCount"] <- "nRead"
+            colnames(colData)[colnames(colData) == "nUMI"] <- "nCount"
+        }
+        if (isSubset("nGene", colnames(colData))) {
+            colnames(colData)[colnames(colData) == "nGene"] <- "nFeature"
+            colnames(colData)[colnames(colData) == "log10GenesPerUMI"] <-
+                "log10FeaturesPerCount"
         }
 
         ## Move sampleData into colData ----------------------------------------
