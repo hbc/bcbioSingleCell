@@ -1,3 +1,7 @@
+## FIXME Consider adding BiocParallel support.
+
+
+
 #' @inherit bcbioSingleCell-class title description
 #' @author Michael Steinbaugh
 #' @note Updated 2019-08-07.

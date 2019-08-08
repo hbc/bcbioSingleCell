@@ -1,3 +1,7 @@
+## FIXME Consider adding BiocParallel support here.
+
+
+
 .import.bcbio <-  # nolint
     function(sampleDirs) {
         message("Importing counts...")
