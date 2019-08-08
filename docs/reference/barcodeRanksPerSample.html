@@ -192,7 +192,9 @@ Note that only points with total counts above <code>lower</code> will be conside
 <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/utils/packageDescription.html'>packageVersion</a></span>(<span class='st'>"DropletUtils"</span>) <span class='kw'>&gt;=</span> <span class='st'>"1.4"</span>) {
     <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>barcodeRanksPerSample</span>(<span class='no'>indrops</span>)
     <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>x</span>)
-}</div><div class='output co'>#&gt; [1] "multiplexed_AAAAAAAA"</div></pre>
+}</div><div class='output co'>#&gt; <span class='error'>Error in validObject(object): invalid class "bcbioSingleCell" object: isSubset(metricsCols, colnames(colData)) is not TRUE.</span>
+#&gt; <span class='error'>Cause of failure:</span>
+#&gt; <span class='error'>metricsCols has elements not in colnames(colData): nFeature, log10FeaturesPerUMI</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

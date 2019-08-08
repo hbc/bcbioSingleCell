@@ -197,172 +197,20 @@ use the <code>sampleNames</code> return values (i.e. the <code>sampleName</code>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>indrops</span>)
 
 <span class='no'>object</span> <span class='kw'>&lt;-</span> <span class='no'>indrops</span>
-<span class='fu'><a href='show.html'>show</a></span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.3.9
-#&gt; uploadDir: /data00/packages/bcbioSingleCell/inst/extdata/indrops
-#&gt; dates(2): [bcbio] 2018-01-01; [R] 2019-04-02
-#&gt; level: genes
-#&gt; sampleMetadataFile: inst/extdata/indrops/metadata.csv
-#&gt; organism: Homo sapiens
-#&gt; interestingGroups: sampleName
-#&gt; filtered: FALSE
-#&gt; class: SingleCellExperiment 
-#&gt; dim: 50 100 
-#&gt; metadata(27): version pipeline ... wd sessionInfo
-#&gt; assays(1): counts
-#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
-#&gt;   ENSG00000282105
-#&gt; rowData names(4): broadClass geneBiotype geneID geneName
-#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
-#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
-#&gt; colData names(15): nUMI nGene ... aggregate revcomp
-#&gt; reducedDimNames(0):
-#&gt; spikeNames(0):</div><div class='input'>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; <span class='message'>Parameters:</span>
-#&gt; <span class='message'>  - &gt;= 1 UMIs per cell</span>
-#&gt; <span class='message'>  - &lt;= Inf UMIs per cell</span>
-#&gt; <span class='message'>  - &gt;= 1 genes per cell</span>
-#&gt; <span class='message'>  - &lt;= Inf genes per cell</span>
-#&gt; <span class='message'>  - &gt;= 0 novelty score</span>
-#&gt; <span class='message'>  - &lt;= 1 mitochondrial abundance</span>
-#&gt; <span class='message'>  - == Inf cells per sample</span>
-#&gt; <span class='message'>  - &gt;= 1 cells per gene</span>
-#&gt; <span class='message'>========================================================================</span>
-#&gt; <span class='message'>Cells:</span>
-#&gt; <span class='message'>     100 cells | prefilter</span>
-#&gt; <span class='message'>     100 cells | minUMIs &gt;= 1</span>
-#&gt; <span class='message'>     100 cells | maxUMIs &lt;= Inf</span>
-#&gt; <span class='message'>     100 cells | minGenes &gt;= 1</span>
-#&gt; <span class='message'>     100 cells | maxGenes &lt;= Inf</span>
-#&gt; <span class='message'>     100 cells | minNovelty &lt;= 0</span>
-#&gt; <span class='message'>     100 cells | maxMitoRatio &lt;= 1</span>
-#&gt; <span class='message'>     100 cells | nCells == Inf</span>
-#&gt; <span class='message'>     100 of 100 cells passed filtering (100%)</span>
-#&gt; <span class='message'>rep_1 </span>
-#&gt; <span class='message'>  100 </span>
-#&gt; <span class='message'>========================================================================</span>
-#&gt; <span class='message'>Genes:</span>
-#&gt; <span class='message'>      50 genes | prefilter</span>
-#&gt; <span class='message'>      50 genes | minCellsPerGene &gt;= 1</span>
-#&gt; <span class='message'>      50 of 50 genes passed filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.3.9
-#&gt; uploadDir: /data00/packages/bcbioSingleCell/inst/extdata/indrops
-#&gt; dates(2): [bcbio] 2018-01-01; [R] 2019-04-02
-#&gt; level: genes
-#&gt; sampleMetadataFile: inst/extdata/indrops/metadata.csv
-#&gt; organism: Homo sapiens
-#&gt; interestingGroups: sampleName
-#&gt; filtered: TRUE
-#&gt; class: SingleCellExperiment 
-#&gt; dim: 50 100 
-#&gt; metadata(30): version pipeline ... filterParams filterSummary
-#&gt; assays(1): counts
-#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
-#&gt;   ENSG00000282105
-#&gt; rowData names(4): broadClass geneBiotype geneID geneName
-#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
-#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
-#&gt; colData names(15): nUMI nGene ... aggregate revcomp
-#&gt; reducedDimNames(0):
-#&gt; spikeNames(0):</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $nCells
-#&gt; [1] Inf
-#&gt; 
-#&gt; $minUMIs
-#&gt; [1] 1
-#&gt; 
-#&gt; $maxUMIs
-#&gt; [1] Inf
-#&gt; 
-#&gt; $minGenes
-#&gt; [1] 1
-#&gt; 
-#&gt; $maxGenes
-#&gt; [1] Inf
-#&gt; 
-#&gt; $minNovelty
-#&gt; [1] 0
-#&gt; 
-#&gt; $maxMitoRatio
-#&gt; [1] 1
-#&gt; 
-#&gt; $minCellsPerGene
-#&gt; [1] 1
-#&gt; </div><div class='input'>
+<span class='fu'><a href='show.html'>show</a></span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; <span class='error'>Error in validObject(object): invalid class "bcbioSingleCell" object: isSubset(metricsCols, colnames(colData)) is not TRUE.</span>
+#&gt; <span class='error'>Cause of failure:</span>
+#&gt; <span class='error'>metricsCols has elements not in colnames(colData): nFeature, log10FeaturesPerUMI</span></div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; <span class='error'>Error in validObject(object): invalid class "bcbioSingleCell" object: isSubset(metricsCols, colnames(colData)) is not TRUE.</span>
+#&gt; <span class='error'>Cause of failure:</span>
+#&gt; <span class='error'>metricsCols has elements not in colnames(colData): nFeature, log10FeaturesPerUMI</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='error'>Error in show(x): object 'x' not found</span></div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; <span class='error'>Error in metadata(x): object 'x' not found</span></div><div class='input'>
 <span class='co'>## Per sample cutoffs.</span>
 <span class='fu'>sampleNames</span>(<span class='no'>object</span>)</div><div class='output co'>#&gt; multiplexed_AAAAAAAA 
 #&gt;              "rep_1" </div><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>filterCells</span>(
     <span class='kw'>object</span> <span class='kw'>=</span> <span class='no'>object</span>,
     <span class='kw'>minUMIs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>rep_1</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-)</div><div class='output co'>#&gt; <span class='message'>minUMIs: per sample mode</span>
-#&gt; <span class='message'>rep_1 </span>
-#&gt; <span class='message'>  100 </span></div><div class='output co'>#&gt; <span class='message'>Parameters:</span>
-#&gt; <span class='message'>  - &gt;= 100 UMIs per cell</span>
-#&gt; <span class='message'>  - &lt;= Inf UMIs per cell</span>
-#&gt; <span class='message'>  - &gt;= 1 genes per cell</span>
-#&gt; <span class='message'>  - &lt;= Inf genes per cell</span>
-#&gt; <span class='message'>  - &gt;= 0 novelty score</span>
-#&gt; <span class='message'>  - &lt;= 1 mitochondrial abundance</span>
-#&gt; <span class='message'>  - == Inf cells per sample</span>
-#&gt; <span class='message'>  - &gt;= 1 cells per gene</span>
-#&gt; <span class='message'>========================================================================</span>
-#&gt; <span class='message'>Cells:</span>
-#&gt; <span class='message'>     100 cells | prefilter</span>
-#&gt; <span class='message'>     100 cells | minUMIs &gt;= 100</span>
-#&gt; <span class='message'>     100 cells | maxUMIs &lt;= Inf</span>
-#&gt; <span class='message'>     100 cells | minGenes &gt;= 1</span>
-#&gt; <span class='message'>     100 cells | maxGenes &lt;= Inf</span>
-#&gt; <span class='message'>     100 cells | minNovelty &lt;= 0</span>
-#&gt; <span class='message'>     100 cells | maxMitoRatio &lt;= 1</span>
-#&gt; <span class='message'>     100 cells | nCells == Inf</span>
-#&gt; <span class='message'>     100 of 100 cells passed filtering (100%)</span>
-#&gt; <span class='message'>rep_1 </span>
-#&gt; <span class='message'>  100 </span>
-#&gt; <span class='message'>========================================================================</span>
-#&gt; <span class='message'>Genes:</span>
-#&gt; <span class='message'>      50 genes | prefilter</span>
-#&gt; <span class='message'>      50 genes | minCellsPerGene &gt;= 1</span>
-#&gt; <span class='message'>      50 of 50 genes passed filtering (100%)</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.3.9
-#&gt; uploadDir: /data00/packages/bcbioSingleCell/inst/extdata/indrops
-#&gt; dates(2): [bcbio] 2018-01-01; [R] 2019-04-02
-#&gt; level: genes
-#&gt; sampleMetadataFile: inst/extdata/indrops/metadata.csv
-#&gt; organism: Homo sapiens
-#&gt; interestingGroups: sampleName
-#&gt; filtered: TRUE
-#&gt; class: SingleCellExperiment 
-#&gt; dim: 50 100 
-#&gt; metadata(30): version pipeline ... filterParams filterSummary
-#&gt; assays(1): counts
-#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
-#&gt;   ENSG00000282105
-#&gt; rowData names(4): broadClass geneBiotype geneID geneName
-#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
-#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
-#&gt; colData names(15): nUMI nGene ... aggregate revcomp
-#&gt; reducedDimNames(0):
-#&gt; spikeNames(0):</div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; $nCells
-#&gt; [1] Inf
-#&gt; 
-#&gt; $minUMIs
-#&gt; rep_1 
-#&gt;   100 
-#&gt; 
-#&gt; $maxUMIs
-#&gt; [1] Inf
-#&gt; 
-#&gt; $minGenes
-#&gt; [1] 1
-#&gt; 
-#&gt; $maxGenes
-#&gt; [1] Inf
-#&gt; 
-#&gt; $minNovelty
-#&gt; [1] 0
-#&gt; 
-#&gt; $maxMitoRatio
-#&gt; [1] 1
-#&gt; 
-#&gt; $minCellsPerGene
-#&gt; [1] 1
-#&gt; </div></pre>
+)</div><div class='output co'>#&gt; <span class='error'>Error in validObject(object): invalid class "bcbioSingleCell" object: isSubset(metricsCols, colnames(colData)) is not TRUE.</span>
+#&gt; <span class='error'>Cause of failure:</span>
+#&gt; <span class='error'>metricsCols has elements not in colnames(colData): nFeature, log10FeaturesPerUMI</span></div><div class='input'><span class='fu'><a href='show.html'>show</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='error'>Error in show(x): object 'x' not found</span></div><div class='input'><span class='fu'>metadata</span>(<span class='no'>x</span>)$<span class='no'>filterParams</span></div><div class='output co'>#&gt; <span class='error'>Error in metadata(x): object 'x' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

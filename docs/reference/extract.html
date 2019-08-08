@@ -216,68 +216,17 @@ of <code><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperim
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000071082" "ENSG00000100316" "ENSG00000106631" "ENSG00000108821"
 #&gt; [5] "ENSG00000112306" "ENSG00000115414"</div><div class='input'>
 <span class='co'>## Subset by cell identifiers.</span>
-<span class='no'>indrops</span>[, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.3.9
-#&gt; uploadDir: /data00/packages/bcbioSingleCell/inst/extdata/indrops
-#&gt; dates(2): [bcbio] 2018-01-01; [R] 2019-04-02
-#&gt; level: genes
-#&gt; sampleMetadataFile: inst/extdata/indrops/metadata.csv
-#&gt; organism: Homo sapiens
-#&gt; interestingGroups: sampleName
-#&gt; filtered: FALSE
-#&gt; class: SingleCellExperiment 
-#&gt; dim: 50 100 
-#&gt; metadata(27): version pipeline ... wd sessionInfo
-#&gt; assays(1): counts
-#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
-#&gt;   ENSG00000282105
-#&gt; rowData names(4): broadClass geneBiotype geneID geneName
-#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
-#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
-#&gt; colData names(15): nUMI nGene ... aggregate revcomp
-#&gt; reducedDimNames(0):
-#&gt; spikeNames(0):</div><div class='input'>
+<span class='no'>indrops</span>[, <span class='no'>cells</span>]</div><div class='output co'>#&gt; <span class='error'>Error in validObject(x): invalid class "bcbioSingleCell" object: isSubset(metricsCols, colnames(colData)) is not TRUE.</span>
+#&gt; <span class='error'>Cause of failure:</span>
+#&gt; <span class='error'>metricsCols has elements not in colnames(colData): nFeature, log10FeaturesPerUMI</span></div><div class='input'>
 <span class='co'>## Subset by genes.</span>
-<span class='no'>indrops</span>[<span class='no'>genes</span>, ]</div><div class='output co'>#&gt; bcbioSingleCell 0.3.9
-#&gt; uploadDir: /data00/packages/bcbioSingleCell/inst/extdata/indrops
-#&gt; dates(2): [bcbio] 2018-01-01; [R] 2019-04-02
-#&gt; level: genes
-#&gt; sampleMetadataFile: inst/extdata/indrops/metadata.csv
-#&gt; organism: Homo sapiens
-#&gt; interestingGroups: sampleName
-#&gt; filtered: FALSE
-#&gt; class: SingleCellExperiment 
-#&gt; dim: 50 100 
-#&gt; metadata(27): version pipeline ... wd sessionInfo
-#&gt; assays(1): counts
-#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
-#&gt;   ENSG00000282105
-#&gt; rowData names(4): broadClass geneBiotype geneID geneName
-#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
-#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
-#&gt; colData names(15): nUMI nGene ... aggregate revcomp
-#&gt; reducedDimNames(0):
-#&gt; spikeNames(0):</div><div class='input'>
+<span class='no'>indrops</span>[<span class='no'>genes</span>, ]</div><div class='output co'>#&gt; <span class='error'>Error in validObject(x): invalid class "bcbioSingleCell" object: isSubset(metricsCols, colnames(colData)) is not TRUE.</span>
+#&gt; <span class='error'>Cause of failure:</span>
+#&gt; <span class='error'>metricsCols has elements not in colnames(colData): nFeature, log10FeaturesPerUMI</span></div><div class='input'>
 <span class='co'>## Subset by both genes and cells.</span>
-<span class='no'>indrops</span>[<span class='no'>genes</span>, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.3.9
-#&gt; uploadDir: /data00/packages/bcbioSingleCell/inst/extdata/indrops
-#&gt; dates(2): [bcbio] 2018-01-01; [R] 2019-04-02
-#&gt; level: genes
-#&gt; sampleMetadataFile: inst/extdata/indrops/metadata.csv
-#&gt; organism: Homo sapiens
-#&gt; interestingGroups: sampleName
-#&gt; filtered: FALSE
-#&gt; class: SingleCellExperiment 
-#&gt; dim: 50 100 
-#&gt; metadata(27): version pipeline ... wd sessionInfo
-#&gt; assays(1): counts
-#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
-#&gt;   ENSG00000282105
-#&gt; rowData names(4): broadClass geneBiotype geneID geneName
-#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
-#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
-#&gt; colData names(15): nUMI nGene ... aggregate revcomp
-#&gt; reducedDimNames(0):
-#&gt; spikeNames(0):</div></pre>
+<span class='no'>indrops</span>[<span class='no'>genes</span>, <span class='no'>cells</span>]</div><div class='output co'>#&gt; <span class='error'>Error in validObject(x): invalid class "bcbioSingleCell" object: isSubset(metricsCols, colnames(colData)) is not TRUE.</span>
+#&gt; <span class='error'>Cause of failure:</span>
+#&gt; <span class='error'>metricsCols has elements not in colnames(colData): nFeature, log10FeaturesPerUMI</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

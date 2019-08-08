@@ -1,4 +1,4 @@
-## bcbioSingleCell 0.3.19 (2019-08-07)
+## bcbioSingleCell 0.3.19 (2019-08-08)
 
 ### Minor changes
 
