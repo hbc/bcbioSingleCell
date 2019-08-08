@@ -71,7 +71,7 @@ Title.}
 Plot the universal molecular identifiers (UMIs) per cell.
 }
 \note{
-Updated 2019-07-24.
+Updated 2019-08-08.
 }
 \examples{
 data(indrops)

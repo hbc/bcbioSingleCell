@@ -1,7 +1,7 @@
 #' @name plotUMIsVsGenes
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inherit bioverbs::plotUMIsVsGenes
-#' @note Updated 2019-07-24.
+#' @note Updated 2019-08-08.
 #'
 #' @inheritParams acidroxygen::params
 #' @param ... Additional arguments.
@@ -38,8 +38,10 @@ NULL
                 object = object,
                 interestingGroups = interestingGroups,
                 trendline = trendline,
-                xCol = "nUMI",
-                yCol = "nGene",
+                ## Note that these were renamed in v0.3.19 to better match
+                ## conventions used in Chromium and Seurat packages.
+                xCol = "nCount",
+                yCol = "nFeature",
                 color = color,
                 xTrans = trans,
                 yTrans = trans,

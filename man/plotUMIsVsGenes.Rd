@@ -50,7 +50,7 @@ Title.}
 Plot UMI and gene correlation
 }
 \note{
-Updated 2019-07-24.
+Updated 2019-08-08.
 }
 \examples{
 data(indrops)

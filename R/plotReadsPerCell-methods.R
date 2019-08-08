@@ -398,6 +398,7 @@ NULL
         }
         assert(isInt(min))
 
+        ## FIXME Improve failure handling here for filtered data.
         data <- .rawMetrics(object)
 
         p <- switch(

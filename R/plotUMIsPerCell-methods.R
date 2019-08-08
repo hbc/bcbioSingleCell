@@ -2,7 +2,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #' @inherit bioverbs::plotUMIsPerCell
-#' @note Updated 2019-07-24.
+#' @note Updated 2019-08-08.
 #'
 #' @inheritParams acidroxygen::params
 #' @param point `character(1)`.
@@ -57,7 +57,9 @@ NULL
             what = .plotQCMetric,
             args = list(
                 object = object,
-                metricCol = "nUMI",
+                ## Note that this was changed in v0.3.19 to better match
+                ## conventions used in Chromium and Seurat packages.
+                metricCol = "nCount",
                 geom = geom,
                 interestingGroups = interestingGroups,
                 min = min,
@@ -104,7 +106,7 @@ NULL
                     FUN = function(metrics, sampleID, point) {
                         nUMI <- metrics[
                             metrics[["sampleID"]] == sampleID,
-                            "nUMI",
+                            "nCount",
                             drop = TRUE
                         ]
                         e <- ecdf(sort(nUMI))
