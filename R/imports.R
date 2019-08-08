@@ -5,9 +5,10 @@
 #' @importFrom Biobase sampleNames
 #' @importFrom BiocGenerics cbind counts do.call updateObject
 #' @importFrom DropletUtils barcodeRanks
+#' @importFrom IRanges DataFrameList
 #' @importFrom Matrix colSums readMM rowSums
-#' @importFrom S4Vectors SimpleList as.data.frame as.matrix mcols mcols<- merge
-#'   metadata metadata<-
+#' @importFrom S4Vectors SimpleList as.data.frame as.matrix mcols
+#'   mcols<- merge metadata metadata<-
 #' @importFrom SingleCellExperiment isSpike
 #' @importFrom SummarizedExperiment assayNames assays colData colData<- rowData
 #'   rowData<- rowRanges rowRanges<-

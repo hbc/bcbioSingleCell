@@ -63,6 +63,7 @@ Imports:
     Biobase,
     BiocGenerics,
     DropletUtils,
+    IRanges,
     S4Vectors,
     SummarizedExperiment,
     Matrix (>= 1.2),
