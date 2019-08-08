@@ -14,7 +14,7 @@
 #' @name extract
 #' @author Michael Steinbaugh
 #' @inherit base::Extract params references
-#' @note Updated 2019-07-24.
+#' @note Updated 2019-08-08.
 #'
 #' @inheritParams acidroxygen::params
 #'
@@ -78,35 +78,18 @@ NULL
 
         ## Metadata ------------------------------------------------------------
         metadata <- metadata(sce)
+        metadata[["cellularBarcodes"]] <- NULL
+        metadata[["filterCells"]] <- NULL
+        metadata[["filterGenes"]] <- NULL
         metadata[["subset"]] <- TRUE
 
-        ## Drop unfiltered cellular barcode list.
-        metadata[["cellularBarcodes"]] <- NULL
-
-        ## filterCells
-        filterCells <- metadata[["filterCells"]]
-        if (!is.null(filterCells)) {
-            filterCells <- intersect(filterCells, cells)
-            metadata[["filterCells"]] <- filterCells
-        }
-
-        ## filterGenes
-        filterGenes <- metadata[["filterGenes"]]
-        if (!is.null(filterGenes)) {
-            filterGenes <- intersect(filterGenes, genes)
-            metadata[["filterGenes"]] <- filterGenes
-        }
-
         ## Return --------------------------------------------------------------
-        new(
-            Class = class(x)[[1L]],
-            makeSingleCellExperiment(
-                assays = assays(sce),
-                rowRanges <- rowRanges(sce),
-                colData <- colData(sce),
-                metadata = metadata,
-                spikeNames = rownames(sce)[isSpike(sce)]
-            )
+        `new,bcbioSingleCell`(
+            assays = assays(sce),
+            rowRanges <- rowRanges(sce),
+            colData <- colData(sce),
+            metadata = metadata,
+            spikeNames = rownames(sce)[isSpike(sce)]
         )
     }
 

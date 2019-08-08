@@ -116,7 +116,6 @@ Collate:
     'data.R'
     'deprecated.R'
     'extract-methods.R'
-    'filterCells-methods.R'
     'globals.R'
     'import-internal.R'
     'imports.R'

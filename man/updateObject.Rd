@@ -87,21 +87,11 @@ Updating objects is primarily useful when an object has been
   \code{object} cannot be determined by accessing known slots.
 }
 \note{
-Updated 2019-07-30.
+Updated 2019-08-08.
 }
 \examples{
 data(indrops)
 updateObject(indrops)
-
-## Example that depends on remote file.
-## > x <- import(
-## >     file = file.path(
-## >         bcbioSingleCellTestsURL,
-## >         "bcbioSingleCell_0.1.0.rds"
-## >     )
-## > )
-## > x <- updateObject(x)
-## > x
 }
 \seealso{
 \itemize{
