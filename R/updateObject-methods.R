@@ -1,3 +1,7 @@
+## FIXME Update to reflect change in metricsCols
+
+
+
 #' @name updateObject
 #' @author Michael Steinbaugh
 #' @note Updated 2019-07-30.

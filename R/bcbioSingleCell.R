@@ -1,8 +1,3 @@
-## FIXME Rename "nCount" to "nUMI"
-## FIXME Rename "nFeature" to "nGene"?
-
-
-
 #' @inherit bcbioSingleCell-class title description
 #' @author Michael Steinbaugh
 #' @note Updated 2019-08-07.
@@ -298,10 +293,11 @@ bcbioSingleCell <- function(
         y = levels(sampleData[["sampleID"]])
     ))
     levels(sampleData[["sampleID"]]) <- levels(colData[["sampleID"]])
-    ## FIXME Rethink this approach, now that we're using Rle for metrics.
-    ## FIXME Need to import transformer method.
     colData <- left_join(colData, sampleData, by = "sampleID")
-    assert(is(colData, "DataFrame"))
+    assert(
+        is(colData, "DataFrame"),
+        hasRownames(colData)
+    )
     colData <- relevel(colData)
 
     ## Metadata ----------------------------------------------------------------

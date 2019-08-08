@@ -18,7 +18,7 @@
 #'   makeGRangesFromGFF makeLabel makeNames makeSingleCellExperiment makeTitle
 #'   mapCellsToSamples markdownHeader markdownPlots matchArgsToDoCall
 #'   matchInterestingGroups metrics minimalSampleData prepareTemplate
-#'   printString relevel realpath sampleData separator showSlotInfo tibble
+#'   printString relevel realpath sampleData separator showSlotInfo
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
 #'   projectDir readDataVersions readProgramVersions readSampleData runDate
@@ -47,5 +47,6 @@
 #' @importFrom scales percent
 #' @importFrom stats ecdf
 #' @importFrom stringr str_extract str_pad
+#' @importFrom tibble as_tibble tibble
 #' @importFrom utils capture.output globalVariables packageVersion
 NULL
