@@ -51,8 +51,8 @@
         reads = list,
         FUN = function(sampleID, reads) {
             DataFrame(
-                sampleID = sampleID,
-                cellID = names(reads),
+                sampleID = as.factor(sampleID),
+                cellID = as.factor(names(reads)),
                 nRead = reads,
                 row.names = NULL
             )

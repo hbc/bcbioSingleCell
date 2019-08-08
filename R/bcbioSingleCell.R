@@ -252,31 +252,21 @@ bcbioSingleCell <- function(
         rowRanges = rowRanges,
         prefilter = TRUE
     )
-    ## FIXME Add validity check for this and rename in legacy objects.
-    ## Rename columns, since we're assuming droplet scRNA-seq data.
-    ## We're adding raw `nCount` column for unfiltered barcodes below.
-    ## `nFeature` is now recommended instead of `nGene` as of v0.3.19.
-    assert(isSubset(
-        x = c("nCount", "nFeature", "log10FeaturesPerCount"),
-        y = colnames(colData)
-    ))
-    colnames(colData)[
-        colnames(colData) == "nCount"] <- "nUMI"
-    colnames(colData)[
-        colnames(colData) == "log10FeaturesPerCount"] <- "log10FeaturesPerUMI"
 
     ## Subset the counts to match the prefiltered metrics.
     assert(isSubset(rownames(colData), colnames(counts)))
     counts <- counts[, rownames(colData), drop = FALSE]
 
-    ## Bind the `nCount` column into the colData. These are the number of counts
-    ## bcbio uses for initial filtering (minimum_barcode_depth in YAML).
-    nCount <- .nCount(cbList)
+    ## Bind the `nRead` column into the cell metrics. These are the number of
+    ## raw read counts prior to UMI disambiguation that bcbio uses for initial
+    ## filtering (minimum_barcode_depth in YAML).
+    nRead <- .nRead(cbList)
     assert(
-        is.integer(nCount),
-        isSubset(rownames(colData), names(nCount))
+        is.integer(nRead),
+        isSubset(rownames(colData), names(nRead))
     )
-    colData[["nCount"]] <- nCount[rownames(colData)]
+    ## Switched to "nRead" from "nCount" in v0.3.19.
+    colData[["nRead"]] <- nRead[rownames(colData)]
 
     ## Join `sampleData()` into cell-level `colData()`.
     if (nrow(sampleData) == 1L) {
