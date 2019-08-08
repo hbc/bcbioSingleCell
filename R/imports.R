@@ -4,7 +4,6 @@
 #'
 #' @importFrom Biobase sampleNames
 #' @importFrom BiocGenerics cbind counts do.call updateObject
-#' @importFrom DropletUtils barcodeRanks
 #' @importFrom IRanges DataFrameList
 #' @importFrom Matrix colSums readMM rowSums
 #' @importFrom S4Vectors SimpleList as.data.frame as.matrix mcols

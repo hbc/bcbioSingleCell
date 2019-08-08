@@ -22,6 +22,7 @@ separatorBar <- basejump::separator()
 
 requiredAssays <- "counts"
 
+## This is also defined in acidplots.
 geom <- c("histogram", "ecdf", "violin", "ridgeline", "boxplot")
 
 ## Previously: "nGene", "log10GenesPerUMI" (until v0.3.19).
