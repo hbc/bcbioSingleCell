@@ -14,7 +14,7 @@ plotReadsPerCell(object, ...)
   "acid.color.discrete", default =
   acidplots::scale_colour_synesthesia_d()), fill = getOption(x =
   "acid.fill.discrete", default = acidplots::scale_fill_synesthesia_d()),
-  title = "reads per cell")
+  title = "Reads per cell")
 }
 \arguments{
 \item{object}{Object.}
@@ -58,7 +58,7 @@ Title.}
 Plot the distribution of read counts for all unfiltered cellular barcodes.
 }
 \note{
-Updated 2019-07-24.
+Updated 2019-08-08.
 }
 \examples{
 data(indrops)
