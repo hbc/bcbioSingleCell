@@ -2,7 +2,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #' @inherit bioverbs::plotReadsPerCell
-#' @note Updated 2019-07-24.
+#' @note Updated 2019-08-08.
 #'
 #' @inheritParams acidroxygen::params
 #' @param cutoffLine `logical(1)`.
@@ -27,58 +27,59 @@ NULL
 
 
 ## Histogram ===================================================================
-#' Proportional Cellular Barcodes Data
+#' Proportional cellular barcodes data
 #'
 #' Modified version of Allon Klein Lab MATLAB code.
 #'
 #' @author Rory Kirchner, Michael Steinbaugh
 #' @keywords internal
+#' @note Updated 2019-08-08.
 #' @noRd
 #'
-#' @param data `tbl_df`. Raw read counts per cellular barcode.
+#' @param data `tbl_df`.
+#'   Raw read counts per cellular barcode.
+#'   Return from `.rawMetrics()` function.
 #'
 #' @return `grouped_df`. Grouped by `sampleID`.
-## Updated 2019-07-24.
 .proportionalReadsPerCell <- function(
     data,
     sampleData,
     breaks = 100L
 ) {
     assert(
-        is(data, "grouped_df"),
-        isSubset(c("nCount", "sampleID"), colnames(data)),
-        is.integer(data[["nCount"]]),
+        is(data, "tbl_df"),
+        isSubset(c("nRead", "sampleID"), colnames(data)),
+        is.integer(data[["nRead"]]),
         is.factor(data[["sampleID"]]),
         is(sampleData, "DataFrame"),
         isInt(breaks)
     )
-
     sampleData <- sampleData %>%
         as_tibble(rownames = "sampleID") %>%
         mutate_all(as.factor)
-
     list <- lapply(
         X = levels(data[["sampleID"]]),
         FUN = function(sampleID) {
             subset <- data[data[["sampleID"]] == sampleID, , drop = FALSE]
             ## Histogram of log10-transformed counts.
             h <- hist(
-                x = log10(subset[["nCount"]]),
+                x = log10(subset[["nRead"]]),
                 n = breaks,
                 plot = FALSE
             )
             ## Klein Lab MATLAB code reference.
             ## counts: fLog; mids: xLog
-            proportion <- h[["counts"]] * (10L ^ h[["mids"]]) /
+            proportion <-
+                h[["counts"]] *
+                (10L ^ h[["mids"]]) /
                 sum(h[["counts"]] * (10L ^ h[["mids"]]))
             tibble(
                 sampleID = sampleID,
-                "log10Count" = h[["mids"]],
+                "log10Read" = h[["mids"]],
                 proportion = proportion
             )
         }
     )
-
     list %>%
         bind_rows() %>%
         mutate_if(is.character, as.factor) %>%
@@ -88,11 +89,18 @@ NULL
 
 
 
-## Updated 2019-07-24.
+#' Plot proportional reads per cell histogram
+#'
+#' @note Updated 2019-08-08.
+#' @noRd
+#'
+#' @param data Return from `.proportionalReadsPerCell()` function.
+#'
+#' @return `ggplot`.
 .plotReadsPerCellHistogram <- function(
     data,
     min = 0L,
-    color = getOption("basejump.discrete.color", NULL)
+    color = getOption(x = "acid.discrete.color", default = NULL)
 ) {
     assert(
         is.data.frame(data),
@@ -102,7 +110,7 @@ NULL
     p <- ggplot(
         data = data,
         mapping = aes(
-            x = !!sym("log10Count"),
+            x = !!sym("log10Read"),
             y = !!sym("proportion"),
             color = !!sym("interestingGroups")
         )
@@ -156,13 +164,13 @@ NULL
         data = data,
         mapping = aes(
             x = !!sym("sampleName"),
-            y = !!sym("nCount"),
+            y = !!sym("nRead"),
             fill = !!sym("interestingGroups")
         )
     ) +
         geom_boxplot(color = "black", outlier.shape = NA) +
         scale_y_continuous(trans = "log10") +
-        acid_geom_label_average(data, col = "nCount", digits = 0L) +
+        acid_geom_label_average(data, col = "nRead", digits = 0L) +
         labs(
             x = NULL,
             y = "reads per cell"
@@ -207,7 +215,7 @@ NULL
     p <- ggplot(
         data = data,
         mapping = aes(
-            x = !!sym("nCount"),
+            x = !!sym("nRead"),
             color = !!sym("interestingGroups")
         )
     ) +
@@ -257,7 +265,7 @@ NULL
     p <- ggplot(
         data = data,
         mapping = aes(
-            x = !!sym("nCount"),
+            x = !!sym("nRead"),
             y = !!sym("sampleName"),
             fill = !!sym("interestingGroups")
         )
@@ -269,7 +277,7 @@ NULL
             scale = 10L
         ) +
         scale_x_continuous(trans = "log10") +
-        acid_geom_label_average(data, col = "nCount", digits = 0L) +
+        acid_geom_label_average(data, col = "nRead", digits = 0L) +
         labs(
             x = "reads per cell",
             y = NULL
@@ -315,7 +323,7 @@ NULL
         data = data,
         mapping = aes(
             x = !!sym("sampleName"),
-            y = !!sym("nCount"),
+            y = !!sym("nRead"),
             fill = !!sym("interestingGroups")
         )
     ) +
@@ -324,7 +332,7 @@ NULL
             scale = "count"
         ) +
         scale_y_continuous(trans = "log10") +
-        acid_geom_label_average(data, col = "nCount", digits = 0L) +
+        acid_geom_label_average(data, col = "nRead", digits = 0L) +
         labs(
             x = NULL,
             y = "reads per cell"
@@ -355,6 +363,8 @@ NULL
 
 
 ## bcbioSingleCell =============================================================
+## FIXME Don't attempt to show prefiltered cutoffs.
+
 ## Updated 2019-07-24.
 `plotReadsPerCell,bcbioSingleCell` <-  # nolint
     function(
@@ -364,7 +374,7 @@ NULL
         cutoffLine = FALSE,
         color,
         fill,
-        title = "reads per cell"
+        title = "Reads per cell"
     ) {
         ## Passthrough: color, fill.
         validObject(object)
@@ -374,7 +384,7 @@ NULL
         geom <- match.arg(geom)
 
         ## Minimum reads per barcode cutoff (for unfiltered data).
-        if (length(metadata(object)[["filterCells"]])) {
+        if (!is.null(metadata(object)[["filterCells"]])) {
             min <- 0L
             subtitle <- NULL
         } else {
@@ -390,51 +400,50 @@ NULL
 
         data <- .rawMetrics(object)
 
-        if (geom == "boxplot") {
-            p <- do.call(
+        p <- switch(
+            EXPR = geom,
+            boxplot = do.call(
                 what = .plotReadsPerCellBoxplot,
                 args = list(
                     data = data,
                     fill = fill,
                     min = min
                 )
-            )
-        } else if (geom == "ecdf") {
-            p <- do.call(
+            ),
+            ecdf = do.call(
                 what = .plotReadsPerCellECDF,
                 args = list(
                     data = data,
                     color = color,
                     min = min
                 )
-            )
-        } else if (geom == "histogram") {
-            data <- do.call(
-                what = .proportionalReadsPerCell,
-                args = list(
-                    data = data,
-                    sampleData = sampleData(object)
+            ),
+            histogram = {
+                data <- do.call(
+                    what = .proportionalReadsPerCell,
+                    args = list(
+                        data = data,
+                        sampleData = sampleData(object)
+                    )
                 )
-            )
-            p <- do.call(
-                what = .plotReadsPerCellHistogram,
-                args = list(
-                    data = data,
-                    color = color,
-                    min = min
+                do.call(
+                    what = .plotReadsPerCellHistogram,
+                    args = list(
+                        data = data,
+                        color = color,
+                        min = min
+                    )
                 )
-            )
-        } else if (geom == "ridgeline") {
-            p <- do.call(
+            },
+            ridgeline = do.call(
                 what = .plotReadsPerCellRidgeline,
                 args = list(
                     data = data,
                     fill = fill,
                     min = min
                 )
-            )
-        } else if (geom == "violin") {
-            p <- do.call(
+            ),
+            violin = do.call(
                 what = .plotReadsPerCellViolin,
                 args = list(
                     data = data,
@@ -442,7 +451,7 @@ NULL
                     min = min
                 )
             )
-        }
+        )
 
         ## Add title and subtitle containing cutoff information.
         p <- p +
