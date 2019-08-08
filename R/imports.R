@@ -12,13 +12,13 @@
 #' @importFrom SummarizedExperiment assayNames assays colData colData<- rowData
 #'   rowData<- rowRanges rowRanges<-
 #' @importFrom acidplots acid_geom_bar acid_scale_y_continuous_nopad synesthesia
-#' @importFrom basejump camelCase cell2sample detectLanes emptyRanges
-#'   formalsList import interestingGroups interestingGroups<- makeDimnames
-#'   makeGRangesFromEnsembl makeGRangesFromGFF makeLabel makeNames
-#'   makeSingleCellExperiment makeTitle mapCellsToSamples markdownHeader
-#'   markdownPlots matchArgsToDoCall matchInterestingGroups metrics
-#'   minimalSampleData prepareTemplate printString relevel realpath sampleData
-#'   separator showSlotInfo
+#' @importFrom basejump as_tibble calculateMetrics camelCase cell2sample
+#'   detectLanes emptyRanges formalsList import interestingGroups
+#'   interestingGroups<- left_join makeDimnames makeGRangesFromEnsembl
+#'   makeGRangesFromGFF makeLabel makeNames makeSingleCellExperiment makeTitle
+#'   mapCellsToSamples markdownHeader markdownPlots matchArgsToDoCall
+#'   matchInterestingGroups metrics minimalSampleData prepareTemplate
+#'   printString relevel realpath sampleData separator showSlotInfo tibble
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
 #'   projectDir readDataVersions readProgramVersions readSampleData runDate
@@ -31,10 +31,10 @@
 #'   labs scale_x_continuous scale_y_continuous stat_ecdf theme
 #' @importFrom ggridges geom_density_ridges
 #' @importFrom goalie allAreHexColors areDisjointSets areSetEqual assert
-#'   hasLength hasNames hasRows hasRownames isADirectory isAFile isAURL isAny
-#'   isCharacter isDirectory isFile isFlag isGGScale isHeaderLevel
-#'   isInLeftOpenRange isInRange isInRightOpenRange isInt isNonEmpty
-#'   isNonNegative isNumber isPositive isString isSubset validate
+#'   hasLength hasNames hasRows hasRownames hasValidDimnames isADirectory
+#'   isAFile isAURL isAny isCharacter isDirectory isFile isFlag isGGScale
+#'   isHeaderLevel isInLeftOpenRange isInRange isInRightOpenRange isInt
+#'   isNonEmpty isNonNegative isNumber isPositive isString isSubset validate
 #'   validateClasses
 #' @importFrom graphics hist
 #' @importFrom magrittr %<>% %>% set_names
@@ -47,6 +47,5 @@
 #' @importFrom scales percent
 #' @importFrom stats ecdf
 #' @importFrom stringr str_extract str_pad
-#' @importFrom tibble as_tibble tibble
 #' @importFrom utils capture.output globalVariables packageVersion
 NULL
