@@ -1,6 +1,6 @@
 #' @name updateObject
 #' @author Michael Steinbaugh
-#' @note Updated 2019-08-08.
+#' @note Updated 2019-08-12.
 #'
 #' @inherit BiocGenerics::updateObject
 #' @inheritParams acidroxygen::params
@@ -8,14 +8,29 @@
 #' @examples
 #' data(indrops)
 #' updateObject(indrops)
+#'
+#' ## Example that depends on remote file.
+#' ## > x <- import(
+#' ## >     file = file.path(
+#' ## >         bcbioSingleCellTestsURL,
+#' ## >         "bcbioSingleCell_0.1.0.rds"
+#' ## >     )
+#' ## > )
+#' ## > x <- updateObject(x)
+#' ## > x
 NULL
 
 
 
-## Updated 2019-08-08.
+## Updated 2019-08-12.
 `updateObject,bcbioSingleCell` <-  # nolint
     function(object) {
-        metadata <- metadata(object)
+        sce <- as(object, "SingleCellExperiment")
+
+        cells <- colnames(sce)
+        assays <- assays(sce)
+        colData <- colData(sce)
+        metadata <- metadata(sce)
 
         version <- metadata[["version"]]
         assert(is(version, c("package_version", "numeric_version")))
@@ -25,21 +40,14 @@ NULL
             as.character(.version)
         ))
 
-        cells <- colnames(object)
-        assert(.hasSlot(object, "rowRanges"))
-        rowRanges <- rowRanges(object)
-        colData <- colData(object)
-
         ## Assays --------------------------------------------------------------
-        assays <- assays(object)
-
         ## Ensure raw counts are always named "counts".
         if ("assay" %in% names(assays)) {
             ## Versions < 0.1 (e.g. 0.0.21).
-            message("Renaming `assay` to `counts`.")
+            message("Renaming 'assay' to 'counts'.")
             names(assays)[names(assays) == "assay"] <- "counts"
         } else if ("raw" %in% names(assays)) {
-            message("Renaming `raw` assay to `counts`.")
+            message("Renaming 'raw' assay to 'counts'.")
             names(assays)[names(assays) == "raw"] <- "counts"
         }
 
@@ -51,11 +59,15 @@ NULL
         ## Column data metrics -------------------------------------------------
         ## Update legacy column names.
         if (isSubset(c("nCount", "nUMI"), colnames(colData))) {
+            message("Renaming 'nCount' to 'nRead'.")
             colnames(colData)[colnames(colData) == "nCount"] <- "nRead"
+            message("Renaming 'nUMI' to 'nCount'.")
             colnames(colData)[colnames(colData) == "nUMI"] <- "nCount"
         }
         if (isSubset("nGene", colnames(colData))) {
+            message("Renaming 'nGene' to 'nFeature'.")
             colnames(colData)[colnames(colData) == "nGene"] <- "nFeature"
+            message("Renaming 'log10GenesPerUMI' to 'log10FeaturesPerCount'.")
             colnames(colData)[colnames(colData) == "log10GenesPerUMI"] <-
                 "log10FeaturesPerCount"
         }
@@ -70,7 +82,7 @@ NULL
             sampleData <- NULL
         }
         if (!is.null(sampleData)) {
-            message("Moving `sampleData` columns to `colData`.")
+            message("Moving 'sampleData' from 'metadata()' into 'colData()'.")
             assert(isSubset("sampleID", colnames(sampleData)))
             ## Starting using `DataFrame` in place of `data.frame` in v0.1.7.
             sampleData <- as(sampleData, "DataFrame")
@@ -100,13 +112,13 @@ NULL
         ## dataVersions
         dataVersions <- metadata[["dataVersions"]]
         if (is(dataVersions, "data.frame")) {
-            message("Setting dataVersions as DataFrame.")
+            message("Setting 'dataVersions' as DataFrame.")
             metadata[["dataVersions"]] <- as(dataVersions, "DataFrame")
         }
 
         ## ensemblRelease
         if ("ensemblVersion" %in% names(metadata)) {
-            message("Renaming ensemblVersion to ensemblRelease.")
+            message("Renaming 'ensemblVersion' to 'ensemblRelease'.")
             names(metadata)[
                 names(metadata) == "ensemblVersion"] <- "ensemblRelease"
         }
@@ -114,7 +126,7 @@ NULL
             is.numeric(metadata[["ensemblRelease"]]) &&
             !is.integer(metadata[["ensemblRelease"]])
         ) {
-            message("Setting ensemblRelease as integer.")
+            message("Setting 'ensemblRelease' as integer.")
             metadata[["ensemblRelease"]] <-
                 as.integer(metadata[["ensemblRelease"]])
         }
@@ -127,30 +139,30 @@ NULL
 
         ## gffFile
         if ("gtfFile" %in% names(metadata)) {
-            message("Renaming gtfFile to gffFile.")
+            message("Renaming 'gtfFile' to 'gffFile'.")
             names(metadata)[names(metadata) == "gtfFile"] <- "gffFile"
         }
         if (!"gffFile" %in% names(metadata)) {
-            message("Setting gffFile as empty character")
+            message("Setting 'gffFile' as empty character.")
             metadata[["gffFile"]] <- character()
         }
 
         ## lanes
         if (!is.integer(metadata[["lanes"]])) {
-            message("Setting lanes as integer.")
+            message("Setting 'lanes' as integer.")
             metadata[["lanes"]] <- as.integer(metadata[["lanes"]])
         }
 
         ## level
         if (!"level" %in% names(metadata)) {
-            message("Setting level as genes.")
+            message("Setting 'level' as genes.")
             metadata[["level"]] <- "genes"
         }
 
         ## programVersions
         if (!"programVersions" %in% names(metadata) &&
             "programs" %in% names(metadata)) {
-            message("Renaming programs to programVersions.")
+            message("Renaming 'programs' to 'programVersions'.")
             names(metadata)[names(metadata) == "programs"] <- "programVersions"
         }
         programVersions <- metadata[["programVersions"]]
@@ -160,8 +172,18 @@ NULL
 
         ## sampleMetadataFile
         if (!is.character(metadata[["sampleMetadataFile"]])) {
-            message("Setting sampleMetadataFile as empty character.")
+            message("Setting 'sampleMetadataFile' as empty character.")
             metadata[["sampleMetadataFile"]] <- character()
+        }
+
+        ## sessionInfo
+        ## Support for legacy devtoolsSessionInfo stash.
+        ## Previously, we stashed both devtools* and utils* variants.
+        if ("devtoolsSessionInfo" %in% names(metadata)) {
+            message("Simplifying stashed 'sessionInfo'.")
+            names(metadata)[
+                names(metadata) == "devtoolsSessionInfo"] <- "sessionInfo"
+            metadata[["utilsSessionInfo"]] <- NULL
         }
 
         ## Drop legacy slots.
@@ -172,12 +194,13 @@ NULL
         metadata <- metadata[keep]
 
         ## Return --------------------------------------------------------------
-        `new,bcbioSingleCell`(
-            assays = assays,
-            rowRanges = rowRanges,
-            colData = colData,
-            metadata = metadata
-        )
+        assays(sce) <- assays
+        colData(sce) <- colData
+        metadata(sce) <- metadata
+
+        bcb <- new(Class = "bcbioSingleCell", sce)
+        validObject(bcb)
+        bcb
     }
 
 
