@@ -2,7 +2,7 @@
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @include globals.R
 #' @inherit bioverbs::plotReadsPerCell
-#' @note Updated 2019-08-08.
+#' @note Updated 2019-08-12.
 #'
 #' @inheritParams acidroxygen::params
 #' @param cutoffLine `logical(1)`.
@@ -363,8 +363,6 @@ NULL
 
 
 ## bcbioSingleCell =============================================================
-## FIXME Don't attempt to show prefiltered cutoffs.
-
 ## Updated 2019-07-24.
 `plotReadsPerCell,bcbioSingleCell` <-  # nolint
     function(
@@ -398,7 +396,7 @@ NULL
         }
         assert(isInt(min))
 
-        ## FIXME Improve failure handling here for filtered data.
+        ## This step will intentionally error for filtered objects.
         data <- .rawMetrics(object)
 
         p <- switch(

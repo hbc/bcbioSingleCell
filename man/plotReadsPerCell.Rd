@@ -58,7 +58,7 @@ Title.}
 Plot the distribution of read counts for all unfiltered cellular barcodes.
 }
 \note{
-Updated 2019-08-08.
+Updated 2019-08-12.
 }
 \examples{
 data(indrops)

@@ -1,10 +1,6 @@
-## FIXME Consider adding BiocParallel support.
-
-
-
 #' @inherit bcbioSingleCell-class title description
 #' @author Michael Steinbaugh
-#' @note Updated 2019-08-07.
+#' @note Updated 2019-08-12.
 #' @export
 #'
 #' @inheritParams basejump::makeSingleCellExperiment
