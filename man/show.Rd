@@ -48,5 +48,5 @@ show(indrops)
   functions.
 }
 \author{
-Michael Steinbuagh
+Michael Steinbaugh
 }

@@ -1,6 +1,6 @@
 #' Show an object
 #' @name show
-#' @author Michael Steinbuagh
+#' @author Michael Steinbaugh
 #' @inherit methods::show
 #' @note Updated 2019-08-08.
 #' @examples
