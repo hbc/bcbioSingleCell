@@ -329,7 +329,7 @@ bcbioSingleCell <- function(
     )
 
     ## Return ------------------------------------------------------------------
-    `new,bcbioSingleCell`(
+    sce <- makeSingleCellExperiment(
         assays = assays,
         rowRanges = rowRanges,
         colData = colData,
@@ -337,12 +337,7 @@ bcbioSingleCell <- function(
         transgeneNames = transgeneNames,
         spikeNames = spikeNames
     )
+    bcb <- new(Class = "bcbioSingleCell", sce)
+    validObject(bcb)
+    bcb
 }
-
-
-
-## Updated 2019-08-07.
-`new,bcbioSingleCell` <-  # nolint
-    function(...) {
-        new(Class = "bcbioSingleCell", makeSingleCellExperiment(...))
-    }
