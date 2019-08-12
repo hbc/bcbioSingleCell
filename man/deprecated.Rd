@@ -2,14 +2,7 @@
 % Please edit documentation in R/deprecated.R
 \name{deprecated}
 \alias{deprecated}
-\alias{prepareSingleCellTemplate}
 \title{Deprecated functions}
-\usage{
-prepareSingleCellTemplate(...)
-}
-\arguments{
-\item{...}{Additional arguments.}
-}
 \value{
 \code{.Deprecated}.
 }

@@ -65,7 +65,6 @@ Imports:
     S4Vectors,
     SummarizedExperiment,
     Matrix (>= 1.2),
-    cowplot (>= 1.0),
     dplyr (>= 0.8),
     ggplot2 (>= 3.2),
     ggridges (>= 0.5),
@@ -76,8 +75,6 @@ Imports:
     tibble (>= 2.1),
     graphics,
     methods,
-    scales,
-    stats,
     utils
 Suggests:
     acidroxygen (>= 0.1),
@@ -118,6 +115,5 @@ Collate:
     'imports.R'
     'package.R'
     'plotReadsPerCell-methods.R'
-    'reexports.R'
     'show-methods.R'
     'updateObject-methods.R'
