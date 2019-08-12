@@ -84,6 +84,7 @@ NULL
         metadata[["subset"]] <- TRUE
 
         ## Return --------------------------------------------------------------
+        ## FIXME Just resize the object rather than regenerating...this is slow.
         `new,bcbioSingleCell`(
             assays = assays(sce),
             rowRanges <- rowRanges(sce),
