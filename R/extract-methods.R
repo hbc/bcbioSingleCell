@@ -44,54 +44,58 @@ NULL
 `extract,bcbioSingleCell` <-  # nolint
     function(x, i, j, ..., drop = FALSE) {
         validObject(x)
+        assert(identical(drop, FALSE))
 
-        ## Genes
+        ## Genes (rows).
         if (missing(i)) {
             i <- 1L:nrow(x)
         }
-        ## Cells
+        ## Cells (columns).
         if (missing(j)) {
             j <- 1L:ncol(x)
         }
 
-        if (identical(
-            x = c(length(i), length(j)),
-            y = dim(x)
-        )) {
-            return(x)
+        ## Determine whether we should stash subset in metadata.
+        if (identical(x = dim(x), y = c(length(i), length(j)))) {
+            subset <- FALSE
+        } else {
+            subset <- TRUE
         }
 
         ## Subset using SCE method.
         sce <- as(x, "SingleCellExperiment")
         sce <- sce[i, j, drop = drop]
 
-        genes <- rownames(sce)
-        cells <- colnames(sce)
+        ## Early return original object, if unmodified.
+        if (identical(assay(sce), assay(x))) {
+            message("Returning unmodified.")
+            return(x)
+        }
 
         ## Row data ------------------------------------------------------------
-        ## Ensure factors get releveled.
-        rowData(sce) <- relevel(rowData(sce))
+        ## Ensure factors get releveled, if necessary.
+        rowRanges <- relevel(rowRanges(sce))
 
         ## Column data ---------------------------------------------------------
-        ## Ensure factors get releveled.
-        colData(sce) <- relevel(colData(sce))
+        ## Ensure factors get releveled, if necessary.
+        colData <- relevel(colData(sce))
 
         ## Metadata ------------------------------------------------------------
         metadata <- metadata(sce)
         metadata[["cellularBarcodes"]] <- NULL
         metadata[["filterCells"]] <- NULL
         metadata[["filterGenes"]] <- NULL
-        metadata[["subset"]] <- TRUE
+        if (isTRUE(subset)) {
+            metadata[["subset"]] <- TRUE
+        }
+        metadata <- Filter(f = Negate(is.null), x = metadata)
 
         ## Return --------------------------------------------------------------
-        ## FIXME Just resize the object rather than regenerating...this is slow.
-        `new,bcbioSingleCell`(
-            assays = assays(sce),
-            rowRanges <- rowRanges(sce),
-            colData <- colData(sce),
-            metadata = metadata,
-            spikeNames = rownames(sce)[isSpike(sce)]
-        )
+        ## Note that this approach will keep `spikeNames` set, if defined.
+        rowRanges(sce) <- rowRanges
+        colData(sce) <- colData
+        metadata(sce) <- metadata
+        new(Class = "bcbioSingleCell", sce)
     }
 
 

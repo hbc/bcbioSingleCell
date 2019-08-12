@@ -194,10 +194,10 @@ NULL
         metadata <- metadata[keep]
 
         ## Return --------------------------------------------------------------
+        ## Note that this approach will keep `spikeNames` set, if defined.
         assays(sce) <- assays
         colData(sce) <- colData
         metadata(sce) <- metadata
-
         bcb <- new(Class = "bcbioSingleCell", sce)
         validObject(bcb)
         bcb
