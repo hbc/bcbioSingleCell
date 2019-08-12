@@ -8,6 +8,7 @@
 #' @export
 #'
 #' @inheritParams basejump::makeSingleCellExperiment
+#' @inheritParams BiocParallel::bplapply
 #' @inheritParams acidroxygen::params
 #'
 #' @section Remote data:
@@ -43,6 +44,7 @@ bcbioSingleCell <- function(
     transgeneNames = NULL,
     spikeNames = NULL,
     interestingGroups = "sampleName",
+    BPPARAM = BiocParallel::SerialParam(),  # nolint
     ...
 ) {
     sampleData <- NULL
@@ -53,19 +55,15 @@ bcbioSingleCell <- function(
     call <- match.call()
     ## ensemblVersion
     if ("ensemblVersion" %in% names(call)) {
-        warning("Use `ensemblRelease` instead of `ensemblVersion`.")
-        ensemblRelease <- call[["ensemblVersion"]]
-        dots[["ensemblVersion"]] <- NULL
+        stop("Use 'ensemblRelease' instead of 'ensemblVersion'.")
     }
     ## gtfFile
     if ("gtfFile" %in% names(call)) {
-        warning("Use `gffFile` instead of `gtfFile`.")
-        gffFile <- call[["gtfFile"]]
-        dots[["gtfFile"]] <- NULL
+        stop("Use 'gffFile' instead of 'gtfFile'.")
     }
     ## annotable
     if ("annotable" %in% names(call)) {
-        stop("Use `gffFile` instead of `annotable`.")
+        stop("Use 'gffFile' instead of 'annotable'.")
     }
     ## Error on unsupported arguments.
     assert(isSubset(
@@ -85,7 +83,8 @@ bcbioSingleCell <- function(
         isString(gffFile, nullOK = TRUE),
         isCharacter(transgeneNames, nullOK = TRUE),
         isCharacter(spikeNames, nullOK = TRUE),
-        isCharacter(interestingGroups)
+        isCharacter(interestingGroups),
+        identical(attr(class(BPPARAM), "package"), "BiocParallel")
     )
     if (isString(gffFile)) {
         isAFile(gffFile) || isAURL(gffFile)
@@ -116,7 +115,7 @@ bcbioSingleCell <- function(
     tryCatch(
         expr = assert(isCharacter(log)),
         error = function(e) {
-            message("bcbio-nextgen.log file is empty.")
+            message("'bcbio-nextgen.log' file is empty.")
         }
     )
 
@@ -125,7 +124,7 @@ bcbioSingleCell <- function(
     tryCatch(
         expr = assert(isCharacter(commandsLog)),
         error = function(e) {
-            message("bcbio-nextgen-commands.log file is empty.")
+            message("'bcbio-nextgen-commands.log' file is empty.")
         }
     )
 
@@ -159,7 +158,7 @@ bcbioSingleCell <- function(
                 stop(paste(
                     "It appears that the reverse complement sequence of the",
                     "i5 index barcodes were input into the sample metadata",
-                    "`sequence` column. bcbio outputs the revcomp into the",
+                    "'sequence' column. bcbio outputs the revcomp into the",
                     "sample directories, but the forward sequence should be",
                     "used in the R package."
                 ))
@@ -170,19 +169,25 @@ bcbioSingleCell <- function(
         if (nrow(sampleData) < length(sampleDirs)) {
             sampleDirs <- sampleDirs[rownames(sampleData)]
             message(sprintf(
-                fmt = "Loading a subset of samples:\n%s",
-                str_trunc(toString(basename(sampleDirs)), width = 80L)
+                fmt = "Loading a subset of samples: %s.",
+                toString(basename(sampleDirs), width = 100L)
             ))
             allSamples <- FALSE
         }
     }
 
     ## Unfiltered cellular barcode distributions -------------------------------
-    cbList <- .import.bcbio.barcodes(sampleDirs)
+    cbList <- .importReads(
+        sampleDirs = sampleDirs,
+        BPPARAM = BPPARAM
+    )
 
     ## Assays ------------------------------------------------------------------
     ## Note that we're now allowing transcript-level counts.
-    counts <- .import.bcbio(sampleDirs)
+    counts <- .importCounts(
+        sampleDirs = sampleDirs,
+        BPPARAM = BPPARAM
+    )
     assert(hasValidDimnames(counts))
     assays <- SimpleList(counts = counts)
 
@@ -196,7 +201,7 @@ bcbioSingleCell <- function(
     ##    complex datasets (e.g. multiple organisms).
     if (isString(organism) && is.numeric(ensemblRelease)) {
         ## AnnotationHub (ensembldb).
-        message("Using makeGRangesFromEnsembl() for annotations.")
+        message("Using 'makeGRangesFromEnsembl()' for annotations.")
         rowRanges <- makeGRangesFromEnsembl(
             organism = organism,
             level = level,
@@ -210,11 +215,11 @@ bcbioSingleCell <- function(
             gffFile <- getGTFFileFromYAML(yaml)
         }
         if (!is.null(gffFile)) {
-            message("Using makeGRangesFromGFF() for annotations.")
+            message("Using 'makeGRangesFromGFF()' for annotations.")
             gffFile <- realpath(gffFile)
             rowRanges <- makeGRangesFromGFF(file = gffFile, level = level)
         } else {
-            message("Slotting empty ranges into rowRanges().")
+            message("Slotting empty ranges into 'rowRanges()'.")
             rowRanges <- emptyRanges(rownames(assays[[1L]]))
         }
     }
@@ -235,9 +240,12 @@ bcbioSingleCell <- function(
     if (is.null(sampleData)) {
         if (isTRUE(multiplexed)) {
             ## Multiplexed samples without user-defined metadata.
-            message(paste0(
-                "`sampleMetadataFile` is recommended for ",
-                "multiplexed samples (e.g. ", umiType, ")."
+            message(sprintf(
+                fmt = paste0(
+                    "'sampleMetadataFile' is recommended for ",
+                    "multiplexed samples (e.g. %s)."
+                ),
+                umiType
             ))
             sampleData <- minimalSampleData(basename(sampleDirs))
         } else {
