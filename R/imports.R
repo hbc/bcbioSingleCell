@@ -3,6 +3,7 @@
 #' @importMethodsFrom basejump coerce
 #'
 #' @importFrom BiocGenerics cbind counts do.call updateObject
+#' @importFrom BiocParallel bplapply bpmapply
 #' @importFrom IRanges DataFrameList
 #' @importFrom Matrix colSums readMM rowSums
 #' @importFrom S4Vectors SimpleList as.data.frame as.matrix mcols
@@ -29,12 +30,12 @@
 #'   geom_hline geom_line geom_point geom_smooth geom_step geom_violin ggplot
 #'   labs scale_x_continuous scale_y_continuous stat_ecdf theme
 #' @importFrom ggridges geom_density_ridges
-#' @importFrom goalie allAreHexColors areDisjointSets areSetEqual assert
-#'   hasLength hasNames hasRows hasRownames hasValidDimnames isADirectory
-#'   isAFile isAURL isAny isCharacter isDirectory isFile isFlag isGGScale
-#'   isHeaderLevel isInLeftOpenRange isInRange isInRightOpenRange isInt
-#'   isNonEmpty isNonNegative isNumber isPositive isString isSubset validate
-#'   validateClasses
+#' @importFrom goalie allAreDirectories allAreFiles allAreHexColors
+#'   areDisjointSets areSetEqual assert hasLength hasNames hasRows hasRownames
+#'   hasValidDimnames isADirectory isAFile isAURL isAny isCharacter isDirectory
+#'   isFile isFlag isGGScale isHeaderLevel isInLeftOpenRange isInRange
+#'   isInRightOpenRange isInt isNonEmpty isNonNegative isNumber isPositive
+#'   isString isSubset validate validateClasses
 #' @importFrom graphics hist
 #' @importFrom magrittr %<>% %>% set_names
 #' @importFrom methods as as<- is new setClass show slot slot<- validObject
