@@ -116,5 +116,6 @@ Collate:
     'imports.R'
     'package.R'
     'plotReadsPerCell-methods.R'
+    'reexports.R'
     'show-methods.R'
     'updateObject-methods.R'

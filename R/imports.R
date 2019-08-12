@@ -6,9 +6,9 @@
 #' @importFrom BiocParallel bplapply bpmapply
 #' @importFrom IRanges DataFrameList
 #' @importFrom Matrix readMM
-#' @importFrom S4Vectors SimpleList metadata metadata<-
-#' @importFrom SummarizedExperiment assayNames assays colData colData<- rowData
-#'   rowData<- rowRanges rowRanges<-
+#' @importFrom S4Vectors DataFrame SimpleList metadata metadata<-
+#' @importFrom SummarizedExperiment assayNames assay assays assays<- colData
+#'   colData<- rowData rowData<- rowRanges rowRanges<-
 #' @importFrom acidplots acid_geom_abline acid_geom_label
 #'   acid_geom_label_average acid_geom_label_repel
 #' @importFrom basejump as_tibble calculateMetrics camelCase cell2sample
