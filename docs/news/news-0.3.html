@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.19</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -116,9 +116,9 @@
 <p>The v0.3 release series serves to offload some of the code base to the <a href="https://basejump.acidgenomics.com/">basejump</a> package, freeing <a href="https://bioinformatics.sph.harvard.edu/bcbioSingleCell/">bcbioSingleCell</a> up to be lighterweight and easier to maintain long-term.</p>
 <p>Note that v0.2 release series will remain pinned to basejump v0.7 series.</p>
 <p>CellRanger code will be split out into a separate Chromium R package in a future update, so some of these <code>SingleCellExperiment</code>-specific methods need to be consolidated into the basejump package.</p>
-<div id="major-changes-7" class="section level3">
+<div id="major-changes-8" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes-7" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-8" class="anchor"></a>Major changes</h3>
 <ul>
 <li>
 <code>aggregateReplicates</code>, <code>cell2sample</code>, <code>combine</code>, <code>plotZerosVsDepth</code>, <code>sampleData</code>, <code>selectSamples</code>, <code>subsetPerSample</code>, <code>topBarcodes</code>: Offloaded to basejump as <code>SingleCellExperiment</code> S4 methods.</li>
@@ -147,9 +147,9 @@
     <div id="bcbiosinglecell-0-3-1-2018-11-14" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-1-2018-11-14" class="anchor"></a>bcbioSingleCell 0.3.1 (2018-11-14)</h2>
-<div id="major-changes-6" class="section level3">
+<div id="major-changes-7" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes-6" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-7" class="anchor"></a>Major changes</h3>
 <ul>
 <li>Updated NAMESPACE to inherit from basejump instead of any of the basejump subpackages, which are subject to rework during this release series.</li>
 <li>Renamed example data from <code>cellranger_small</code> to <code>cellranger</code>, and <code>indrops_small</code> to simply <code>indrops</code>.</li>
@@ -169,9 +169,9 @@
     <div id="bcbiosinglecell-0-3-2-2018-11-19" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-2-2018-11-19" class="anchor"></a>bcbioSingleCell 0.3.2 (2018-11-19)</h2>
-<div id="major-changes-5" class="section level3">
+<div id="major-changes-6" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes-5" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-6" class="anchor"></a>Major changes</h3>
 <ul>
 <li>Migrating <code>CellRanger</code> S4 class to separate Chromium R package.</li>
 <li>Migrated additional S4 generics to basejump package (bioverbs).</li>
@@ -205,9 +205,9 @@
     <div id="bcbiosinglecell-0-3-4-2018-12-01" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-4-2018-12-01" class="anchor"></a>bcbioSingleCell 0.3.4 (2018-12-01)</h2>
-<div id="major-changes-4" class="section level3">
+<div id="major-changes-5" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes-4" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-5" class="anchor"></a>Major changes</h3>
 <ul>
 <li>
 <code>metrics</code>: Removed code and consolidated <code>SingleCellExperiment</code> method support in basejump package.</li>
@@ -227,9 +227,9 @@
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-5-2018-12-22" class="anchor"></a>bcbioSingleCell 0.3.5 (2018-12-22)</h2>
 <p>This release reworks the internal assert checks substantially.</p>
-<div id="major-changes-3" class="section level3">
+<div id="major-changes-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes-3" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-4" class="anchor"></a>Major changes</h3>
 <ul>
 <li>First release that has fully migrated to using goalie package instead of assertive package internally for checks.</li>
 <li>Reworked <code>bcbioSingleCell</code> S4 validity checks.</li>
@@ -298,9 +298,9 @@
     <div id="bcbiosinglecell-0-3-10-2019-04-07" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-10-2019-04-07" class="anchor"></a>bcbioSingleCell 0.3.10 (2019-04-07)</h2>
-<div id="major-changes-2" class="section level3">
+<div id="major-changes-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes-2" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-3" class="anchor"></a>Major changes</h3>
 <ul>
 <li>
 <code>updateObject</code> is now fully backward compatible for all objects created by the package, including versions prior to v0.1.</li>
@@ -319,9 +319,9 @@
     <div id="bcbiosinglecell-0-3-11-2019-04-11" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-11-2019-04-11" class="anchor"></a>bcbioSingleCell 0.3.11 (2019-04-11)</h2>
-<div id="major-changes-1" class="section level3">
+<div id="major-changes-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes-1" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-2" class="anchor"></a>Major changes</h3>
 <ul>
 <li>Restricted S4 methods back to <code>bcbioSingleCell</code> from <code>SingleCellExperiment</code> where applicable. Generally, this applies to the supported QC plotting functions. Previously, the methods were defined against <code>SingleCellExperiment</code> to also support <code>CellRanger</code> S4 class, which has since been moved to the <a href="https://chromium.acidgenomics.com/">Chromium</a> package.</li>
 </ul>
@@ -408,9 +408,9 @@
     <div id="bcbiosinglecell-0-3-18-2019-07-29" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-3-18-2019-07-29" class="anchor"></a>bcbioSingleCell 0.3.18 (2019-07-29)</h2>
-<div id="major-changes" class="section level3">
+<div id="major-changes-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-1" class="anchor"></a>Major changes</h3>
 <ul>
 <li>Updated R dependency to 3.6. This now requires Bioconductor 3.9+.</li>
 <li>
@@ -423,18 +423,6 @@
 <ul>
 <li>Updated basejump dependencies.</li>
 <li>Improved code coverage over 90%.</li>
-</ul>
-</div>
-</div>
-    <div id="bcbiosinglecell-0-3-19-2019-08-08" class="section level2">
-<h2 class="hasAnchor">
-<a href="#bcbiosinglecell-0-3-19-2019-08-08" class="anchor"></a>bcbioSingleCell 0.3.19 (2019-08-08)</h2>
-<div id="minor-changes" class="section level3">
-<h3 class="hasAnchor">
-<a href="#minor-changes" class="anchor"></a>Minor changes</h3>
-<ul>
-<li>Improved documentation consistency by using shared roxygen from acidroxygen package.</li>
-<li>Updated basejump and bcbio R package dependencies.</li>
 </ul>
 </div>
 </div>
@@ -463,7 +451,6 @@
         <li><a href="#bcbiosinglecell-0-3-16-2019-07-17">0.3.16</a></li>
         <li><a href="#bcbiosinglecell-0-3-17-2019-07-24">0.3.17</a></li>
         <li><a href="#bcbiosinglecell-0-3-18-2019-07-29">0.3.18</a></li>
-        <li><a href="#bcbiosinglecell-0-3-19-2019-08-08">0.3.19</a></li>
       </ul>
     </div>
   </div>
