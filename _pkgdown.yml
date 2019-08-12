@@ -18,18 +18,16 @@ news:
 reference:
   - title: S4 classes
     contents:
-    - ends_with("-class")
+    - starts_with("bcbioSingleCell")
     - extract
     - show
     - updateObject
-  - title: Quality qontrol
-    contents:
-    - starts_with("barcode")
-    - calculateMetrics
-    - filterCells
   - title: Plots
     contents:
     - starts_with("plot")
   - title: Example data
     contents:
     - indrops
+  - title: Reexports
+    contents:
+    - reexports

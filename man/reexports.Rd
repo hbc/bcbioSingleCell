@@ -3,12 +3,17 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{barcodeRanksPerSample}
+\alias{plotCellCounts}
 \alias{plotCountsPerCell}
 \alias{plotCountsVsFeatures}
 \alias{plotFeaturesPerCell}
 \alias{plotMitoRatio}
 \alias{plotNovelty}
+\alias{plotBarcodeRanks}
 \alias{plotQC}
+\alias{calculateMetrics}
+\alias{filterCells}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -16,6 +21,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{acidplots}{\code{\link[acidplots]{plotCountsPerCell}}, \code{\link[acidplots]{plotCountsVsFeatures}}, \code{\link[acidplots]{plotFeaturesPerCell}}, \code{\link[acidplots]{plotMitoRatio}}, \code{\link[acidplots]{plotNovelty}}, \code{\link[acidplots]{plotQC}}}
+  \item{acidplots}{\code{\link[acidplots]{barcodeRanksPerSample}}, \code{\link[acidplots]{plotCellCounts}}, \code{\link[acidplots]{plotCountsPerCell}}, \code{\link[acidplots]{plotCountsVsFeatures}}, \code{\link[acidplots]{plotFeaturesPerCell}}, \code{\link[acidplots]{plotMitoRatio}}, \code{\link[acidplots]{plotNovelty}}, \code{\link[acidplots]{plotBarcodeRanks}}, \code{\link[acidplots]{plotQC}}}
+
+  \item{basejump}{\code{\link[basejump]{calculateMetrics}}, \code{\link[basejump]{filterCells}}}
 }}
 

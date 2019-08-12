@@ -36,4 +36,28 @@ prepareSingleCellTemplate <- function(...) {
 
 
 
+## v0.3.19 =====================================================================
+#' @rdname deprecated
+#' @export
+plotGenesPerCell <- function(...) {
+    .Deprecated("plotFeaturesPerCell")
+    plotFeaturesPerCell(...)
+}
+
+#' @rdname deprecated
+#' @export
+plotUMIsPerCell <- function(...) {
+    .Deprecated("plotCountsPerCell")
+    plotCountsPerCell(...)
+}
+
+#' @rdname deprecated
+#' @export
+plotUMIsVsGenes <- function(...) {
+    .Deprecated("plotCountsVsFeatures")
+    plotCountsVsFeatures(...)
+}
+
+
+
 ## nocov end

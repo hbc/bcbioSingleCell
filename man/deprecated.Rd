@@ -2,7 +2,20 @@
 % Please edit documentation in R/deprecated.R
 \name{deprecated}
 \alias{deprecated}
+\alias{plotGenesPerCell}
+\alias{plotUMIsPerCell}
+\alias{plotUMIsVsGenes}
 \title{Deprecated functions}
+\usage{
+plotGenesPerCell(...)
+
+plotUMIsPerCell(...)
+
+plotUMIsVsGenes(...)
+}
+\arguments{
+\item{...}{Additional arguments.}
+}
 \value{
 \code{.Deprecated}.
 }
