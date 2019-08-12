@@ -1,4 +1,13 @@
-## bcbioSingleCell 0.3.19 (2019-08-08)
+## bcbioSingleCell 0.4.0 (2019-08-12)
+
+This update is intended to simplify the package and reduce the amount of
+plotting code that is defined to `bcbioSingleCell` class specifically, instead
+of `SingleCellExperiment`.
+
+### Major changes
+
+- Offloaded plotting functions to acidplots, so we can use some of this code in
+  a shared manner with objects imported from 10X Genomics Chromium.
 
 ### Minor changes
 
