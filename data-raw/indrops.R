@@ -1,7 +1,8 @@
 ## inDrops example data
-## Using harvard-indrop-v3 barcodes
-## 2019-04-02
+## Using harvard-indrop-v3 barcodes.
+## Updated 2019-08-12.
 
+library(usethis)
 library(pryr)
 library(tidyverse)
 library(Matrix)
@@ -84,21 +85,12 @@ sce <- bcbioSingleCell(
     organism = "Homo sapiens",
     ensemblRelease = 90L
 )
-object_size(sce)
-
-## Include only minimal metadata columns in rowRanges.
-mcols(rowRanges(sce)) <- mcols(rowRanges(sce)) %>%
-    .[, c("broadClass", "geneBiotype", "geneID", "geneName")]
 
 ## Report the size of each slot in bytes.
-vapply(
-    X = coerceS4ToList(sce),
-    FUN = object_size,
-    FUN.VALUE = numeric(1L)
-)
+lapply(coerceS4ToList(sce), object_size)
 object_size(sce)
 stopifnot(object_size(sce) < limit)
 validObject(sce)
 
 indrops <- sce
-usethis::use_data(indrops, compress = "xz", overwrite = TRUE)
+use_data(indrops, compress = "xz", overwrite = TRUE)
