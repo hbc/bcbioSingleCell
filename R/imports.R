@@ -2,7 +2,6 @@
 #'
 #' @importMethodsFrom basejump coerce
 #'
-#' @importFrom Biobase sampleNames
 #' @importFrom BiocGenerics cbind counts do.call updateObject
 #' @importFrom IRanges DataFrameList
 #' @importFrom Matrix colSums readMM rowSums
@@ -18,7 +17,7 @@
 #'   makeGRangesFromGFF makeLabel makeNames makeSingleCellExperiment makeTitle
 #'   mapCellsToSamples markdownHeader markdownPlots matchArgsToDoCall
 #'   matchInterestingGroups metrics minimalSampleData prepareTemplate
-#'   printString relevel realpath sampleData separator showSlotInfo
+#'   printString relevel realpath sampleData sampleNames separator showSlotInfo
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
 #'   projectDir readDataVersions readProgramVersions readSampleData runDate

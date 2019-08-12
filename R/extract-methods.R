@@ -14,7 +14,7 @@
 #' @name extract
 #' @author Michael Steinbaugh
 #' @inherit base::Extract params references
-#' @note Updated 2019-08-08.
+#' @note Updated 2019-08-12.
 #'
 #' @inheritParams acidroxygen::params
 #'
@@ -40,7 +40,7 @@ NULL
 
 
 
-## Updated 2019-07-24.
+## Updated 2019-08-12.
 `extract,bcbioSingleCell` <-  # nolint
     function(x, i, j, ..., drop = FALSE) {
         validObject(x)

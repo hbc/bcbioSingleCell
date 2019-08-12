@@ -59,8 +59,7 @@ Imports:
     acidplots (>= 0.2.10),
     bcbioBase (>= 0.6.8),
     bioverbs (>= 0.2.3),
-    goalie (>= 0.3.1), 
-    Biobase,
+    goalie (>= 0.3.1),
     BiocGenerics,
     IRanges,
     S4Vectors,
@@ -109,8 +108,6 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Collate: 
     'AllClasses.R'
-    'assertions-internal.R'
-    'barcodeRanksPerSample-methods.R'
     'barcodes-internal.R'
     'bcbioSingleCell.R'
     'data.R'
@@ -120,16 +117,7 @@ Collate:
     'import-internal.R'
     'imports.R'
     'package.R'
-    'plotBarcodeRanks-methods.R'
-    'plotCellCounts-methods.R'
-    'plotGenesPerCell-methods.R'
-    'plotMitoRatio-methods.R'
-    'plotMitoVsCoding-methods.R'
-    'plotNovelty-methods.R'
-    'plotQC-methods.R'
     'plotReadsPerCell-methods.R'
-    'plotUMIsPerCell-methods.R'
-    'plotUMIsVsGenes-methods.R'
     'reexports.R'
     'show-methods.R'
     'updateObject-methods.R'
