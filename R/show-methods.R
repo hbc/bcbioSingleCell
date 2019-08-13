@@ -27,7 +27,7 @@ NULL
         ## Row ranges metadata.
         rrm <- metadata(rowRanges(object))
         .showHeader(object, version = m[["version"]])
-        subset <- "subset" %in% names(m)
+        filtered <- "filterCells" %in% names(m)
         showSlotInfo(list(
             uploadDir = m[["uploadDir"]],
             dates = as.character(c(
@@ -42,7 +42,7 @@ NULL
             ensemblRelease = rrm[["release"]],
             genomeBuild = rrm[["build"]],
             interestingGroups = m[["interestingGroups"]],
-            subset = subset
+            filtered = filtered
         ))
         ## Extend the SingleCellExperiment method.
         sce <- as(object, "SingleCellExperiment")
