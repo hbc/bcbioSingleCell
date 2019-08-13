@@ -8,7 +8,6 @@ test_that("bcbioSingleCell", {
 test_that("v0.1 update", {
     skip_if_not(hasInternet())
     skip_on_appveyor()
-    skip_on_docker()
     invalid <- import(
         file = file.path(bcbioSingleCellTestsURL, "bcbioSingleCell_0.1.0.rds")
     )
