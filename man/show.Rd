@@ -40,8 +40,8 @@ the discussion in \code{\link{setIs}} for the general concept.
 Updated 2019-08-08.
 }
 \examples{
-data(indrops)
-show(indrops)
+data(bcb)
+show(bcb)
 }
 \seealso{
 \code{\link{showMethods}} prints all the methods for one or more

@@ -1,7 +1,11 @@
-#' inDrops example data set
+#' bcbio single-cell RNA-seq example data set
+#'
+#' Harvard inDrops v3 example data
+#'
 #' @author Michael Steinbaugh
-#' @note Updated 2019-07-24.
+#' @note Updated 2019-08-12.
+#'
 #' @examples
-#' data(indrops)
-#' indrops
-"indrops"
+#' data(bcb)
+#' bcb
+"bcb"

@@ -6,7 +6,7 @@ context("plotReadsPerCell")
 geom <- eval(formals(`plotReadsPerCell,bcbioSingleCell`)[["geom"]])
 with_parameters_test_that(
     "geom", {
-        x <- plotReadsPerCell(indrops, geom = geom)
+        x <- plotReadsPerCell(bcb, geom = geom)
         expect_is(x, "ggplot")
     },
     geom = geom

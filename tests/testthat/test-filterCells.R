@@ -1,17 +1,17 @@
 context("filterCells")
 
-indrops <- calculateMetrics(indrops)
+bcb <- calculateMetrics(bcb)
 
 ## Expecting an object with the same dimensions by default.
 test_that("No filtering", {
-    x <- filterCells(indrops)
+    x <- filterCells(bcb)
     expect_s4_class(x, "bcbioSingleCell")
-    expect_identical(dim(x), dim(indrops))
+    expect_identical(dim(x), dim(bcb))
 })
 
 with_parameters_test_that(
     "Parameterized cutoff tests", {
-        args[["object"]] <- indrops
+        args[["object"]] <- bcb
         x <- do.call(what = filterCells, args = args)
         expect_s4_class(x, "bcbioSingleCell")
         expect_s4_class(metadata(x)[["filterCells"]], "SimpleList")
@@ -42,7 +42,7 @@ with_parameters_test_that(
 
 test_that("Expected cutoff failure", {
     expect_error(
-        filterCells(indrops, minCounts = Inf),
+        filterCells(bcb, minCounts = Inf),
         "No cells passed"
     )
 })

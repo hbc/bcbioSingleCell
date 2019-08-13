@@ -10,9 +10,9 @@
 #' @param ... Additional arguments.
 #'
 #' @examples
-#' data(indrops)
-#' plotReadsPerCell(indrops, geom = "histogram")
-#' plotReadsPerCell(indrops, geom = "ecdf")
+#' data(bcb)
+#' plotReadsPerCell(bcb, geom = "histogram")
+#' plotReadsPerCell(bcb, geom = "ecdf")
 NULL
 
 

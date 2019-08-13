@@ -61,9 +61,9 @@ Plot the distribution of read counts for all unfiltered cellular barcodes.
 Updated 2019-08-12.
 }
 \examples{
-data(indrops)
-plotReadsPerCell(indrops, geom = "histogram")
-plotReadsPerCell(indrops, geom = "ecdf")
+data(bcb)
+plotReadsPerCell(bcb, geom = "histogram")
+plotReadsPerCell(bcb, geom = "ecdf")
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

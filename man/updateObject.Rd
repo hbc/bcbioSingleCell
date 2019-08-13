@@ -90,8 +90,8 @@ Updating objects is primarily useful when an object has been
 Updated 2019-08-12.
 }
 \examples{
-data(indrops)
-updateObject(indrops)
+data(bcb)
+updateObject(bcb)
 
 ## Example that depends on remote file.
 ## > x <- import(

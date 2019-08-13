@@ -6,8 +6,8 @@
 #' @inheritParams acidroxygen::params
 #'
 #' @examples
-#' data(indrops)
-#' updateObject(indrops)
+#' data(bcb)
+#' updateObject(bcb)
 #'
 #' ## Example that depends on remote file.
 #' ## > x <- import(

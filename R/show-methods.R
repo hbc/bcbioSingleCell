@@ -4,8 +4,8 @@
 #' @inherit methods::show
 #' @note Updated 2019-08-08.
 #' @examples
-#' data(indrops)
-#' show(indrops)
+#' data(bcb)
+#' show(bcb)
 NULL
 
 

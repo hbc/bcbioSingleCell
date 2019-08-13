@@ -21,21 +21,21 @@
 #' @return `bcbioSingleCell`.
 #'
 #' @examples
-#' data(indrops)
+#' data(bcb)
 #'
-#' cells <- head(colnames(indrops), 100L)
+#' cells <- head(colnames(bcb), 100L)
 #' head(cells)
-#' genes <- head(rownames(indrops), 100L)
+#' genes <- head(rownames(bcb), 100L)
 #' head(genes)
 #'
 #' ## Subset by cell identifiers.
-#' indrops[, cells]
+#' bcb[, cells]
 #'
 #' ## Subset by genes.
-#' indrops[genes, ]
+#' bcb[genes, ]
 #'
 #' ## Subset by both genes and cells.
-#' indrops[genes, cells]
+#' bcb[genes, cells]
 NULL
 
 

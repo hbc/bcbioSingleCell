@@ -79,7 +79,7 @@ readr::write_lines(colnames(counts), path = colnames_file)
 readr::write_tsv(barcodes, path = barcodes_file, col_names = FALSE)
 
 ## bcbioSingleCell object =======================================================
-sce <- bcbioSingleCell(
+bcb <- bcbioSingleCell(
     uploadDir = upload_dir,
     sampleMetadataFile = file.path(upload_dir, "metadata.csv"),
     organism = "Homo sapiens",
@@ -87,10 +87,9 @@ sce <- bcbioSingleCell(
 )
 
 ## Report the size of each slot in bytes.
-lapply(coerceS4ToList(sce), object_size)
-object_size(sce)
-stopifnot(object_size(sce) < limit)
-validObject(sce)
+lapply(coerceS4ToList(bcb), object_size)
+object_size(bcb)
+stopifnot(object_size(bcb) < limit)
+validObject(bcb)
 
-indrops <- sce
-use_data(indrops, compress = "xz", overwrite = TRUE)
+use_data(bcb, compress = "xz", overwrite = TRUE)
