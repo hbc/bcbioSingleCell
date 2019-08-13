@@ -43,10 +43,10 @@
         list <- Filter(f = Negate(is.null), x = list)
         if (!hasLength(list)) {
             ## nocov start
-            stop(paste(
-                "bcbio didn't return any cells.",
+            stop(
+                "bcbio didn't return any cells.\n",
                 "Check your 'minimum_barcode_depth' setting."
-            ))
+            )
             ## nocov end
         }
         ## Bind the matrices.

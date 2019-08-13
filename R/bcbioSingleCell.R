@@ -151,13 +151,13 @@ bcbioSingleCell <- function(
                 sort(sampleDirSequence),
                 sort(as.character(sampleData[["sequence"]]))
             )) {
-                stop(paste(
-                    "It appears that the reverse complement sequence of the",
-                    "i5 index barcodes were input into the sample metadata",
-                    "'sequence' column. bcbio outputs the revcomp into the",
-                    "sample directories, but the forward sequence should be",
+                stop(
+                    "It appears that the reverse complement sequence of the ",
+                    "i5 index barcodes were input into the sample metadata ",
+                    "'sequence' column. bcbio outputs the revcomp into the ",
+                    "sample directories, but the forward sequence should be ",
                     "used in the R package."
-                ))
+                )
             }
         }
 

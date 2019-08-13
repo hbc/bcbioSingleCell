@@ -42,10 +42,10 @@
     assert(is(object, "bcbioSingleCell"))
     list <- metadata(object)[["cellularBarcodes"]]
     if (!is.list(list)) {
-        stop(paste(
-            "Object does not contain unfiltered cellular barcodes.",
+        stop(
+            "Object does not contain unfiltered cellular barcodes.\n",
             "Has 'filterCells()' been applied? This step drops them."
-        ))
+        )
     }
     assert(
         is.list(list),
