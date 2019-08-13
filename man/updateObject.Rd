@@ -87,7 +87,7 @@ Updating objects is primarily useful when an object has been
   \code{object} cannot be determined by accessing known slots.
 }
 \note{
-Updated 2019-07-30.
+Updated 2019-08-12.
 }
 \examples{
 data(indrops)

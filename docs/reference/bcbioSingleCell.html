@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>bcbioSingleCell object generator — bcbioSingleCell • bcbioSingleCell</title>
+<title>bcbio single-cell RNA-seq data set — bcbioSingleCell • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -34,9 +34,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="bcbioSingleCell object generator — bcbioSingleCell" />
+<meta property="og:title" content="bcbio single-cell RNA-seq data set — bcbioSingleCell" />
 
-<meta property="og:description" content="bcbioSingleCell object generator" />
+<meta property="og:description" content="bcbioSingleCell is an S4 class that extends SingleCellExperiment, and is
+designed to store a bcbio single-cell RNA-seq analysis. This class contains
+read counts saved as a sparse matrix (sparseMatrix), sample metadata, and
+cell quality control metrics." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -68,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.19</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -108,21 +111,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>bcbioSingleCell object generator</h1>
+    <h1>bcbio single-cell RNA-seq data set</h1>
     <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/bcbioSingleCell.R'><code>R/bcbioSingleCell.R</code></a></small>
     <div class="hidden name"><code>bcbioSingleCell.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>bcbioSingleCell object generator</p>
+    <p><code>bcbioSingleCell</code> is an S4 class that extends <code>SingleCellExperiment</code>, and is
+designed to store a bcbio single-cell RNA-seq analysis. This class contains
+read counts saved as a sparse matrix (<code>sparseMatrix</code>), sample metadata, and
+cell quality control metrics.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>bcbioSingleCell</span>(<span class='no'>uploadDir</span>, <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>organism</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>ensemblRelease</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>genomeBuild</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>gffFile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>transgeneNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>spikeNames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='st'>"sampleName"</span>,
+  <span class='kw'>BPPARAM</span> <span class='kw'>=</span> <span class='kw pkg'>BiocParallel</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/BiocParallel/man/SerialParam-class.html'>SerialParam</a></span>(), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,6 +190,13 @@ Groups of interest to use for visualization.
 Corresponds to factors describing the columns of the object.</p></td>
     </tr>
     <tr>
+      <th>BPPARAM</th>
+      <td><p>An optional <code>BiocParallelParam</code> instance
+    determining the parallel back-end to be used during evaluation, or a
+    <code>list</code> of <code>BiocParallelParam</code> instances, to be applied in
+    sequence for nested calls to <span class="pkg">BiocParallel</span> functions.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Additional arguments.</p></td>
     </tr>
@@ -194,7 +208,7 @@ Corresponds to factors describing the columns of the object.</p></td>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Updated 2019-08-07.</p>
+    <p>Updated 2019-08-12.</p>
     
     <h2 class="hasAnchor" id="remote-data"><a class="anchor" href="#remote-data"></a>Remote data</h2>
 
@@ -219,16 +233,49 @@ directory as a remote connection over
     <pre class="examples"><div class='input'><span class='no'>uploadDir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata/indrops"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"bcbioSingleCell"</span>)
 
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>bcbioSingleCell</span>(<span class='no'>uploadDir</span>)</div><div class='output co'>#&gt; <span class='message'>Dated project directory: 2018-01-01_bcbio</span></div><div class='output co'>#&gt; <span class='message'>1 sample detected:</span>
-#&gt; <span class='message'>[1] "multiplexed_AAAAAAAA"</span></div><div class='output co'>#&gt; <span class='message'>Failed to detect sequencing lanes.</span></div><div class='output co'>#&gt; <span class='message'>Importing project-summary.yaml using yaml::yaml.load_file().</span></div><div class='output co'>#&gt; <span class='message'>Data versions are missing.</span></div><div class='output co'>#&gt; <span class='message'>Importing bcbio-nextgen.log using readr::read_lines().</span></div><div class='output co'>#&gt; <span class='message'>bcbio-nextgen.log file is empty.</span></div><div class='output co'>#&gt; <span class='message'>Importing bcbio-nextgen-commands.log using readr::read_lines().</span></div><div class='output co'>#&gt; <span class='message'>1000 reads per cellular barcode cutoff detected.</span></div><div class='output co'>#&gt; <span class='message'>Counts will imported as genes.</span></div><div class='output co'>#&gt; <span class='message'>UMI type: harvard-indrop-v3</span></div><div class='output co'>#&gt; <span class='message'>Importing unfiltered cellular barcode distributions...</span></div><div class='output co'>#&gt; <span class='message'>Importing counts...</span></div><div class='output co'>#&gt; <span class='message'>Imported multiplexed-AAAAAAAA.</span></div><div class='output co'>#&gt; <span class='message'>bcbio GTF file: /n/app/bcbio/dev/genomes/Hsapiens/hg38/rnaseq/ref-transcripts.gtf</span></div><div class='output co'>#&gt; <span class='message'>bcbio GTF file is not accessible.</span></div><div class='output co'>#&gt; <span class='message'>Slotting empty ranges into rowRanges().</span></div><div class='output co'>#&gt; <span class='message'>`sampleMetadataFile` is recommended for multiplexed samples (e.g. harvard-indrop-v3).</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics.</span></div><div class='output co'>#&gt; <span class='message'>100 cells detected.</span></div><div class='output co'>#&gt; <span class='message'>Calculating metrics without biotype information.</span>
-#&gt; <span class='message'>`rowRanges` is required to calculate: nCoding, nMito, mitoRatio</span></div><div class='output co'>#&gt; <span class='message'>100 / 100 cellular barcodes passed pre-filtering (100%)</span></div><div class='output co'>#&gt; <span class='error'>Error in .local(assays, ...): Assert failure.</span>
-#&gt; <span class='error'>[1] is(assays, "SimpleList") is not TRUE.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(x): object 'x' not found</span></div><div class='input'>
+#&gt; <span class='message'>[1] "multiplexed_AAAAAAAA"</span></div><div class='output co'>#&gt; <span class='message'>Importing project-summary.yaml using yaml::yaml.load_file().</span></div><div class='output co'>#&gt; <span class='message'>Data versions are missing.</span></div><div class='output co'>#&gt; <span class='message'>Importing bcbio-nextgen.log using readr::read_lines().</span></div><div class='output co'>#&gt; <span class='message'>bcbio-nextgen.log file is empty.</span></div><div class='output co'>#&gt; <span class='message'>Importing bcbio-nextgen-commands.log using readr::read_lines().</span></div><div class='output co'>#&gt; <span class='message'>1000 reads per cellular barcode cutoff detected.</span></div><div class='output co'>#&gt; <span class='message'>Counts will imported as genes.</span></div><div class='output co'>#&gt; <span class='message'>UMI type: harvard-indrop-v3</span></div><div class='output co'>#&gt; <span class='message'>Importing unfiltered cellular barcode distributions...</span></div><div class='output co'>#&gt; <span class='message'>Importing counts...</span></div><div class='output co'>#&gt; <span class='message'>Imported multiplexed-AAAAAAAA.</span></div><div class='output co'>#&gt; <span class='message'>bcbio GTF file: /n/app/bcbio/dev/genomes/Hsapiens/hg38/rnaseq/ref-transcripts.gtf</span></div><div class='output co'>#&gt; <span class='message'>bcbio GTF file is not accessible.</span></div><div class='output co'>#&gt; <span class='message'>Slotting empty ranges into rowRanges().</span></div><div class='output co'>#&gt; <span class='message'>`sampleMetadataFile` is recommended for multiplexed samples (e.g. harvard-indrop-v3).</span></div><div class='output co'>#&gt; <span class='message'>Calculating 100 cellular barcode metrics.</span></div><div class='output co'>#&gt; <span class='message'>Calculating metrics without biotype information.</span>
+#&gt; <span class='message'>'rowRanges' required to calculate: nCoding, nMito, mitoRatio.</span></div><div class='output co'>#&gt; <span class='message'>100 / 100 cellular barcodes passed pre-filtering (100%).</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.3.19
+#&gt; uploadDir: /data00/R/site-library/3.6/bcbioSingleCell/extdata/indrops
+#&gt; dates(2): [bcbio] 2018-01-01; [R] 2019-08-12
+#&gt; level: genes
+#&gt; interestingGroups: sampleName
+#&gt; filtered: FALSE
+#&gt; class: SingleCellExperiment 
+#&gt; dim: 50 100 
+#&gt; metadata(27): allSamples bcbioCommandsLog ... wd yaml
+#&gt; assays(1): counts
+#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
+#&gt;   ENSG00000282105
+#&gt; rowData names(0):
+#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
+#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
+#&gt; colData names(9): log10FeaturesPerUMI mitoRatio ... sampleID sampleName
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>bcbioSingleCell</span>(
     <span class='kw'>uploadDir</span> <span class='kw'>=</span> <span class='no'>uploadDir</span>,
     <span class='kw'>sampleMetadataFile</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='no'>uploadDir</span>, <span class='st'>"metadata.csv"</span>)
 )</div><div class='output co'>#&gt; <span class='message'>Dated project directory: 2018-01-01_bcbio</span></div><div class='output co'>#&gt; <span class='message'>1 sample detected:</span>
-#&gt; <span class='message'>[1] "multiplexed_AAAAAAAA"</span></div><div class='output co'>#&gt; <span class='message'>Failed to detect sequencing lanes.</span></div><div class='output co'>#&gt; <span class='message'>Importing project-summary.yaml using yaml::yaml.load_file().</span></div><div class='output co'>#&gt; <span class='message'>Data versions are missing.</span></div><div class='output co'>#&gt; <span class='message'>Importing bcbio-nextgen.log using readr::read_lines().</span></div><div class='output co'>#&gt; <span class='message'>bcbio-nextgen.log file is empty.</span></div><div class='output co'>#&gt; <span class='message'>Importing bcbio-nextgen-commands.log using readr::read_lines().</span></div><div class='output co'>#&gt; <span class='message'>1000 reads per cellular barcode cutoff detected.</span></div><div class='output co'>#&gt; <span class='message'>Counts will imported as genes.</span></div><div class='output co'>#&gt; <span class='message'>UMI type: harvard-indrop-v3</span></div><div class='output co'>#&gt; <span class='message'>Importing metadata.csv using data.table::fread().</span></div><div class='output co'>#&gt; <span class='message'>Multiplexed samples detected.</span></div><div class='output co'>#&gt; <span class='message'>Importing unfiltered cellular barcode distributions...</span></div><div class='output co'>#&gt; <span class='message'>Importing counts...</span></div><div class='output co'>#&gt; <span class='message'>Imported multiplexed-AAAAAAAA.</span></div><div class='output co'>#&gt; <span class='message'>bcbio GTF file: /n/app/bcbio/dev/genomes/Hsapiens/hg38/rnaseq/ref-transcripts.gtf</span></div><div class='output co'>#&gt; <span class='message'>bcbio GTF file is not accessible.</span></div><div class='output co'>#&gt; <span class='message'>Slotting empty ranges into rowRanges().</span></div><div class='output co'>#&gt; <span class='message'>Calculating cellular barcode metrics.</span></div><div class='output co'>#&gt; <span class='message'>100 cells detected.</span></div><div class='output co'>#&gt; <span class='message'>Calculating metrics without biotype information.</span>
-#&gt; <span class='message'>`rowRanges` is required to calculate: nCoding, nMito, mitoRatio</span></div><div class='output co'>#&gt; <span class='message'>100 / 100 cellular barcodes passed pre-filtering (100%)</span></div><div class='output co'>#&gt; <span class='error'>Error in .local(assays, ...): Assert failure.</span>
-#&gt; <span class='error'>[1] is(assays, "SimpleList") is not TRUE.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span class='error'>Error in print(x): object 'x' not found</span></div></pre>
+#&gt; <span class='message'>[1] "multiplexed_AAAAAAAA"</span></div><div class='output co'>#&gt; <span class='message'>Importing project-summary.yaml using yaml::yaml.load_file().</span></div><div class='output co'>#&gt; <span class='message'>Data versions are missing.</span></div><div class='output co'>#&gt; <span class='message'>Importing bcbio-nextgen.log using readr::read_lines().</span></div><div class='output co'>#&gt; <span class='message'>bcbio-nextgen.log file is empty.</span></div><div class='output co'>#&gt; <span class='message'>Importing bcbio-nextgen-commands.log using readr::read_lines().</span></div><div class='output co'>#&gt; <span class='message'>1000 reads per cellular barcode cutoff detected.</span></div><div class='output co'>#&gt; <span class='message'>Counts will imported as genes.</span></div><div class='output co'>#&gt; <span class='message'>UMI type: harvard-indrop-v3</span></div><div class='output co'>#&gt; <span class='message'>Importing metadata.csv using data.table::fread().</span></div><div class='output co'>#&gt; <span class='message'>Multiplexed samples detected.</span></div><div class='output co'>#&gt; <span class='message'>Importing unfiltered cellular barcode distributions...</span></div><div class='output co'>#&gt; <span class='message'>Importing counts...</span></div><div class='output co'>#&gt; <span class='message'>Imported multiplexed-AAAAAAAA.</span></div><div class='output co'>#&gt; <span class='message'>bcbio GTF file: /n/app/bcbio/dev/genomes/Hsapiens/hg38/rnaseq/ref-transcripts.gtf</span></div><div class='output co'>#&gt; <span class='message'>bcbio GTF file is not accessible.</span></div><div class='output co'>#&gt; <span class='message'>Slotting empty ranges into rowRanges().</span></div><div class='output co'>#&gt; <span class='message'>Calculating 100 cellular barcode metrics.</span></div><div class='output co'>#&gt; <span class='message'>Calculating metrics without biotype information.</span>
+#&gt; <span class='message'>'rowRanges' required to calculate: nCoding, nMito, mitoRatio.</span></div><div class='output co'>#&gt; <span class='message'>100 / 100 cellular barcodes passed pre-filtering (100%).</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.3.19
+#&gt; uploadDir: /data00/R/site-library/3.6/bcbioSingleCell/extdata/indrops
+#&gt; dates(2): [bcbio] 2018-01-01; [R] 2019-08-12
+#&gt; level: genes
+#&gt; sampleMetadataFile: /data00/R/site-library/3.6/bcbioSingleCell/extdata/indrops/metadata.csv
+#&gt; interestingGroups: sampleName
+#&gt; filtered: FALSE
+#&gt; class: SingleCellExperiment 
+#&gt; dim: 50 100 
+#&gt; metadata(27): allSamples bcbioCommandsLog ... wd yaml
+#&gt; assays(1): counts
+#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
+#&gt;   ENSG00000282105
+#&gt; rowData names(0):
+#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
+#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
+#&gt; colData names(15): aggregate description ... sampleName sequence
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

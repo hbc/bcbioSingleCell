@@ -37,7 +37,7 @@ complete, original object, with misleading results.  See the
 the discussion in \code{\link{setIs}} for the general concept.
 }
 \note{
-Updated 2019-07-24.
+Updated 2019-08-08.
 }
 \examples{
 data(indrops)
@@ -48,5 +48,5 @@ show(indrops)
   functions.
 }
 \author{
-Michael Steinbuagh
+Michael Steinbaugh
 }

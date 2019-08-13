@@ -3,12 +3,16 @@
 
 
 #' @name defunct
-#' @inherit basejump::defunct
+#' @inherit acidroxygen::defunct description examples return seealso title
+#' @inheritParams acidroxygen::params
 #' @keywords internal
 NULL
 
+
+
 #' @name deprecated
-#' @inherit basejump::deprecated
+#' @inherit acidroxygen::deprecated description examples return seealso title
+#' @inheritParams acidroxygen::params
 #' @keywords internal
 NULL
 
@@ -24,11 +28,34 @@ readCellRanger <- function(...) {
 
 
 ## v0.3.12 =====================================================================
-#' @rdname deprecated
+#' @rdname defunct
 #' @export
 prepareSingleCellTemplate <- function(...) {
-    .Deprecated("prepareTemplate(package = \"bcbioSingleCell\")")
-    prepareTemplate(package = "bcbioSingleCell", ...)
+    .Defunct("prepareTemplate(package = \"bcbioSingleCell\")")
+}
+
+
+
+## v0.3.19 =====================================================================
+#' @rdname deprecated
+#' @export
+plotGenesPerCell <- function(...) {
+    .Deprecated("plotFeaturesPerCell")
+    plotFeaturesPerCell(...)
+}
+
+#' @rdname deprecated
+#' @export
+plotUMIsPerCell <- function(...) {
+    .Deprecated("plotCountsPerCell")
+    plotCountsPerCell(...)
+}
+
+#' @rdname deprecated
+#' @export
+plotUMIsVsGenes <- function(...) {
+    .Deprecated("plotCountsVsFeatures")
+    plotCountsVsFeatures(...)
 }
 
 

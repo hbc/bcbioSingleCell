@@ -3,9 +3,12 @@
 \name{defunct}
 \alias{defunct}
 \alias{readCellRanger}
+\alias{prepareSingleCellTemplate}
 \title{Defunct functions}
 \usage{
 readCellRanger(...)
+
+prepareSingleCellTemplate(...)
 }
 \arguments{
 \item{...}{Additional arguments.}

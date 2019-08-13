@@ -1,19 +1,49 @@
-#' @importFrom basejump assignAndSaveData
-#' @export
-basejump::assignAndSaveData
+## These reexports are necessary for the quality control template.
 
-#' @importFrom basejump basenameSansExt
+#' @importFrom acidplots barcodeRanksPerSample
 #' @export
-basejump::basenameSansExt
+acidplots::barcodeRanksPerSample
 
-#' @importFrom basejump export
+#' @importFrom acidplots plotCellCounts
 #' @export
-basejump::export
+acidplots::plotCellCounts
 
-#' @importFrom basejump markdownHeader
+#' @importFrom acidplots plotCountsPerCell
 #' @export
-basejump::markdownHeader
+acidplots::plotCountsPerCell
 
-#' @importFrom basejump saveData
+#' @importFrom acidplots plotCountsVsFeatures
 #' @export
-basejump::saveData
+acidplots::plotCountsVsFeatures
+
+#' @importFrom acidplots plotFeaturesPerCell
+#' @export
+acidplots::plotFeaturesPerCell
+
+#' @importFrom acidplots plotMitoRatio
+#' @export
+acidplots::plotMitoRatio
+
+#' @importFrom acidplots plotNovelty
+#' @export
+acidplots::plotNovelty
+
+#' @importFrom acidplots plotBarcodeRanks
+#' @export
+acidplots::plotBarcodeRanks
+
+#' @importFrom acidplots plotQC
+#' @export
+acidplots::plotQC
+
+
+
+
+
+#' @importFrom basejump calculateMetrics
+#' @export
+basejump::calculateMetrics
+
+#' @importFrom basejump filterCells
+#' @export
+basejump::filterCells
