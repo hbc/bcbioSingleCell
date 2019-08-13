@@ -93,7 +93,6 @@ Remotes:
     acidgenomics/basejump,
     acidgenomics/bioverbs,
     acidgenomics/goalie,
-    cole-trapnell-lab/monocle3,
     hbc/bcbioBase
 biocViews:
     DataImport,
