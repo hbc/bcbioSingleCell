@@ -1,8 +1,4 @@
-..Rcheck
-.httr-oauth
 .RData
+.Rcheck
 .Rhistory
 .Rproj.user
-data-raw/*/
-data-raw/*.rds
-*.pdf

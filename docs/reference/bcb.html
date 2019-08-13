@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot UMI and gene correlation — plotUMIsVsGenes • bcbioSingleCell</title>
+<title>bcbio single-cell RNA-seq example data set — bcb • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -34,9 +34,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Plot UMI and gene correlation — plotUMIsVsGenes" />
+<meta property="og:title" content="bcbio single-cell RNA-seq example data set — bcb" />
 
-<meta property="og:description" content="Plot UMI and gene correlation" />
+<meta property="og:description" content="Harvard inDrops v3 example data" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -68,7 +68,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.18</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -108,90 +108,56 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot UMI and gene correlation</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/plotUMIsVsGenes-methods.R'><code>R/plotUMIsVsGenes-methods.R</code></a></small>
-    <div class="hidden name"><code>plotUMIsVsGenes.Rd</code></div>
+    <h1>bcbio single-cell RNA-seq example data set</h1>
+    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>bcb.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Plot UMI and gene correlation</p>
+    <p>Harvard inDrops v3 example data</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>plotUMIsVsGenes</span>(<span class='no'>object</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='no'>bcb</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-<span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>plotUMIsVsGenes</span>(<span class='no'>object</span>,
-  <span class='kw'>interestingGroups</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>trendline</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='kw'>x</span> <span class='kw'>=</span>
-  <span class='st'>"acid.color.discrete"</span>, <span class='kw'>default</span> <span class='kw'>=</span>
-  <span class='kw pkg'>acidplots</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/acidplots/man/synesthesia.html'>scale_colour_synesthesia_d</a></span>()), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='st'>"log2"</span>,
-  <span class='kw'>title</span> <span class='kw'>=</span> <span class='st'>"UMIs vs. genes"</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>object</th>
-      <td><p>Object.</p></td>
-    </tr>
-    <tr>
-      <th>interestingGroups</th>
-      <td><p><code>character</code>.
-Groups of interest that define the samples. If left unset, defaults to
-<code>sampleName</code>.</p></td>
-    </tr>
-    <tr>
-      <th>trendline</th>
-      <td><p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>.
-Include trendline on plot.</p></td>
-    </tr>
-    <tr>
-      <th>color</th>
-      <td><p><code>ScaleDiscrete</code>.
-Desired ggplot2 color scale. Must supply discrete values. When set <code>NULL</code>,
-the default ggplot2 color palette will be used. If manual color definitions
-are desired, we recommend using <code><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>ggplot2::scale_color_manual()</a></code>.</p>
-<p>To set the discrete color palette globally, use:</p><pre>options(acid.color.discrete = ggplot2::scale_color_viridis_d())
-</pre></td>
-    </tr>
-    <tr>
-      <th>trans</th>
-      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
-Name of the axis scale transformation to apply.</p>
-<p>For more information:</p><pre>help(topic = "scale_x_continuous", package = "ggplot2")
-</pre></td>
-    </tr>
-    <tr>
-      <th>title</th>
-      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>.
-Plot title.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p><code>ggplot</code>.</p>
+    <p>An object of class <code>bcbioSingleCell</code> with 50 rows and 100 columns.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Updated 2019-07-24.</p>
+    <p>Updated 2019-08-12.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>indrops</span>)
-<span class='fu'>plotUMIsVsGenes</span>(<span class='no'>indrops</span>)</div><div class='img'><img src='plotUMIsVsGenes-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>bcb</span>)
+<span class='no'>bcb</span></div><div class='output co'>#&gt; bcbioSingleCell 0.3.19
+#&gt; uploadDir: /data00/draco/acidbase/packages/bcbioSingleCell/inst/extdata/indrops
+#&gt; dates(2): [bcbio] 2018-01-01; [R] 2019-08-12
+#&gt; level: genes
+#&gt; sampleMetadataFile: inst/extdata/indrops/metadata.csv
+#&gt; organism: Homo sapiens
+#&gt; interestingGroups: sampleName
+#&gt; filtered: FALSE
+#&gt; class: SingleCellExperiment 
+#&gt; dim: 50 100 
+#&gt; metadata(27): allSamples bcbioCommandsLog ... wd yaml
+#&gt; assays(1): counts
+#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
+#&gt;   ENSG00000282105
+#&gt; rowData names(8): broadClass description ... geneName seqCoordSystem
+#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
+#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
+#&gt; colData names(15): aggregate description ... sampleName sequence
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
+      <li><a href="#format">Format</a></li>
 
       <li><a href="#note">Note</a></li>
       
@@ -199,7 +165,7 @@ Plot title.</p></td>
     </ul>
 
     <h2>Author</h2>
-    <p>Michael Steinbaugh, Rory Kirchner</p>
+    <p>Michael Steinbaugh</p>
   </div>
 </div>
 

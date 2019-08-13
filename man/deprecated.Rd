@@ -2,10 +2,16 @@
 % Please edit documentation in R/deprecated.R
 \name{deprecated}
 \alias{deprecated}
-\alias{prepareSingleCellTemplate}
+\alias{plotGenesPerCell}
+\alias{plotUMIsPerCell}
+\alias{plotUMIsVsGenes}
 \title{Deprecated functions}
 \usage{
-prepareSingleCellTemplate(...)
+plotGenesPerCell(...)
+
+plotUMIsPerCell(...)
+
+plotUMIsVsGenes(...)
 }
 \arguments{
 \item{...}{Additional arguments.}

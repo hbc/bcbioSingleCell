@@ -84,24 +84,24 @@ cells not kept in the matrix will be dropped in favor of the \code{nCount} colum
 of \code{\link[SummarizedExperiment:colData]{colData()}}.
 }
 \note{
-Updated 2019-07-24.
+Updated 2019-08-12.
 }
 \examples{
-data(indrops)
+data(bcb)
 
-cells <- head(colnames(indrops), 100L)
+cells <- head(colnames(bcb), 100L)
 head(cells)
-genes <- head(rownames(indrops), 100L)
+genes <- head(rownames(bcb), 100L)
 head(genes)
 
 ## Subset by cell identifiers.
-indrops[, cells]
+bcb[, cells]
 
 ## Subset by genes.
-indrops[genes, ]
+bcb[genes, ]
 
 ## Subset by both genes and cells.
-indrops[genes, cells]
+bcb[genes, cells]
 }
 \references{
 Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -1,11 +1,11 @@
 #' Show an object
 #' @name show
-#' @author Michael Steinbuagh
+#' @author Michael Steinbaugh
 #' @inherit methods::show
-#' @note Updated 2019-07-24.
+#' @note Updated 2019-08-08.
 #' @examples
-#' data(indrops)
-#' show(indrops)
+#' data(bcb)
+#' show(bcb)
 NULL
 
 
@@ -18,7 +18,7 @@ NULL
 
 
 ## Using the same internal method for bcbioSingleCell and CellRanger.
-## Updated 2019-07-24.
+## Updated 2019-08-08.
 `show,bcbioSingleCell` <-  # nolint
     function(object) {
         validObject(object)
@@ -27,6 +27,7 @@ NULL
         ## Row ranges metadata.
         rrm <- metadata(rowRanges(object))
         .showHeader(object, version = m[["version"]])
+        filtered <- "filterCells" %in% names(m)
         showSlotInfo(list(
             uploadDir = m[["uploadDir"]],
             dates = as.character(c(
@@ -41,7 +42,7 @@ NULL
             ensemblRelease = rrm[["release"]],
             genomeBuild = rrm[["build"]],
             interestingGroups = m[["interestingGroups"]],
-            filtered = .isFiltered(object)
+            filtered = filtered
         ))
         ## Extend the SingleCellExperiment method.
         sce <- as(object, "SingleCellExperiment")

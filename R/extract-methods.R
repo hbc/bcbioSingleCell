@@ -14,100 +14,88 @@
 #' @name extract
 #' @author Michael Steinbaugh
 #' @inherit base::Extract params references
-#' @note Updated 2019-07-24.
+#' @note Updated 2019-08-12.
 #'
-#' @inheritParams basejump::params
+#' @inheritParams acidroxygen::params
 #'
 #' @return `bcbioSingleCell`.
 #'
 #' @examples
-#' data(indrops)
+#' data(bcb)
 #'
-#' cells <- head(colnames(indrops), 100L)
+#' cells <- head(colnames(bcb), 100L)
 #' head(cells)
-#' genes <- head(rownames(indrops), 100L)
+#' genes <- head(rownames(bcb), 100L)
 #' head(genes)
 #'
 #' ## Subset by cell identifiers.
-#' indrops[, cells]
+#' bcb[, cells]
 #'
 #' ## Subset by genes.
-#' indrops[genes, ]
+#' bcb[genes, ]
 #'
 #' ## Subset by both genes and cells.
-#' indrops[genes, cells]
+#' bcb[genes, cells]
 NULL
 
 
 
-## Updated 2019-07-24.
+## Updated 2019-08-12.
 `extract,bcbioSingleCell` <-  # nolint
     function(x, i, j, ..., drop = FALSE) {
         validObject(x)
+        assert(identical(drop, FALSE))
 
-        ## Genes
+        ## Genes (rows).
         if (missing(i)) {
             i <- 1L:nrow(x)
         }
-        ## Cells
+        ## Cells (columns).
         if (missing(j)) {
             j <- 1L:ncol(x)
         }
 
-        if (identical(
-            x = c(length(i), length(j)),
-            y = dim(x)
-        )) {
-            return(x)
+        ## Determine whether we should stash subset in metadata.
+        if (identical(x = dim(x), y = c(length(i), length(j)))) {
+            subset <- FALSE
+        } else {
+            subset <- TRUE
         }
 
         ## Subset using SCE method.
         sce <- as(x, "SingleCellExperiment")
         sce <- sce[i, j, drop = drop]
 
-        genes <- rownames(sce)
-        cells <- colnames(sce)
+        ## Early return original object, if unmodified.
+        if (identical(assay(sce), assay(x))) {
+            message("Returning unmodified.")
+            return(x)
+        }
 
         ## Row data ------------------------------------------------------------
-        ## Ensure factors get releveled.
-        rowData(sce) <- relevel(rowData(sce))
+        ## Ensure factors get releveled, if necessary.
+        rowRanges <- relevel(rowRanges(sce))
 
         ## Column data ---------------------------------------------------------
-        ## Ensure factors get releveled.
-        colData(sce) <- relevel(colData(sce))
+        ## Ensure factors get releveled, if necessary.
+        colData <- relevel(colData(sce))
 
         ## Metadata ------------------------------------------------------------
         metadata <- metadata(sce)
-        metadata[["subset"]] <- TRUE
-
-        ## Drop unfiltered cellular barcode list.
         metadata[["cellularBarcodes"]] <- NULL
-
-        ## filterCells
-        filterCells <- metadata[["filterCells"]]
-        if (!is.null(filterCells)) {
-            filterCells <- intersect(filterCells, cells)
-            metadata[["filterCells"]] <- filterCells
+        metadata[["filterCells"]] <- NULL
+        metadata[["filterGenes"]] <- NULL
+        if (isTRUE(subset)) {
+            metadata[["subset"]] <- TRUE
         }
-
-        ## filterGenes
-        filterGenes <- metadata[["filterGenes"]]
-        if (!is.null(filterGenes)) {
-            filterGenes <- intersect(filterGenes, genes)
-            metadata[["filterGenes"]] <- filterGenes
-        }
+        metadata <- Filter(f = Negate(is.null), x = metadata)
 
         ## Return --------------------------------------------------------------
-        new(
-            Class = class(x)[[1L]],
-            makeSingleCellExperiment(
-                assays = assays(sce),
-                rowRanges <- rowRanges(sce),
-                colData <- colData(sce),
-                metadata = metadata,
-                spikeNames = rownames(sce)[isSpike(sce)]
-            )
-        )
+        ## Note that this approach will keep `spikeNames` set, if defined.
+        rowRanges(sce) <- rowRanges
+        colData(sce) <- colData
+        metadata(sce) <- metadata
+        new(Class = "bcbioSingleCell", sce)
     }
 
 

@@ -14,14 +14,14 @@ plotReadsPerCell(object, ...)
   "acid.color.discrete", default =
   acidplots::scale_colour_synesthesia_d()), fill = getOption(x =
   "acid.fill.discrete", default = acidplots::scale_fill_synesthesia_d()),
-  title = "reads per cell")
+  title = "Reads per cell")
 }
 \arguments{
 \item{object}{Object.}
 
 \item{interestingGroups}{\code{character}.
-Groups of interest that define the samples. If left unset, defaults to
-\code{sampleName}.}
+Groups of interest to use for visualization.
+Corresponds to factors describing the columns of the object.}
 
 \item{geom}{\code{character(1)}.
 Plot type. Uses \code{\link[base:match.arg]{match.arg()}} internally and defaults to
@@ -47,7 +47,7 @@ To set the discrete fill palette globally, use:\preformatted{options(acid.fill.d
 }}
 
 \item{title}{\code{character(1)}.
-Plot title.}
+Title.}
 
 \item{...}{Additional arguments.}
 }
@@ -58,12 +58,12 @@ Plot title.}
 Plot the distribution of read counts for all unfiltered cellular barcodes.
 }
 \note{
-Updated 2019-07-24.
+Updated 2019-08-12.
 }
 \examples{
-data(indrops)
-plotReadsPerCell(indrops, geom = "histogram")
-plotReadsPerCell(indrops, geom = "ecdf")
+data(bcb)
+plotReadsPerCell(bcb, geom = "histogram")
+plotReadsPerCell(bcb, geom = "ecdf")
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

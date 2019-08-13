@@ -22,15 +22,31 @@ separatorBar <- basejump::separator()
 
 requiredAssays <- "counts"
 
+## This is also defined in acidplots.
 geom <- c("histogram", "ecdf", "violin", "ridgeline", "boxplot")
 
-## `nCount` column is bcbioSingleCell class specific.
+## Previously: "nGene", "log10GenesPerUMI" (until v0.3.19).
 metricsCols <- c(
-    "nUMI",
-    "nGene",
+    ## Raw reads (pre UMI disambiguation).
+    ## Previously: "nCount" until v0.3.19. Note the switch!
+    "nRead",
+    ## UMI disambiguated counts.
+    ## Previously: "nUMI" until v0.3.19. Note the switch!
+    "nCount",
+    ## Features (i.e. genes, transcripts).
+    ## Previously: "nGene" until v0.3.19.
+    ## Rename improves consistency with Chromium code.
+    "nFeature",
+    ## Coding features.
     "nCoding",
+    ## Mitochondrial features.
     "nMito",
-    "log10GenesPerUMI",
+    ## Novelty score.
+    ## Previously: log10GenesPerUMI until v0.3.19.
+    ## Rename improves consistency with Chromium code.
+    "log10FeaturesPerCount",
+    ## Proportion of mito expression.
+    ## Useful to see if we have a lot of stress or dying cells.
     "mitoRatio"
 )
 

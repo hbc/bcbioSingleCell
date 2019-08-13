@@ -1,7 +1,8 @@
 ## inDrops example data
-## Using harvard-indrop-v3 barcodes
-## 2019-04-02
+## Using harvard-indrop-v3 barcodes.
+## Updated 2019-08-12.
 
+library(usethis)
 library(pryr)
 library(tidyverse)
 library(Matrix)
@@ -78,27 +79,17 @@ readr::write_lines(colnames(counts), path = colnames_file)
 readr::write_tsv(barcodes, path = barcodes_file, col_names = FALSE)
 
 ## bcbioSingleCell object =======================================================
-sce <- bcbioSingleCell(
+bcb <- bcbioSingleCell(
     uploadDir = upload_dir,
     sampleMetadataFile = file.path(upload_dir, "metadata.csv"),
     organism = "Homo sapiens",
     ensemblRelease = 90L
 )
-object_size(sce)
-
-## Include only minimal metadata columns in rowRanges.
-mcols(rowRanges(sce)) <- mcols(rowRanges(sce)) %>%
-    .[, c("broadClass", "geneBiotype", "geneID", "geneName")]
 
 ## Report the size of each slot in bytes.
-vapply(
-    X = coerceS4ToList(sce),
-    FUN = object_size,
-    FUN.VALUE = numeric(1L)
-)
-object_size(sce)
-stopifnot(object_size(sce) < limit)
-validObject(sce)
+lapply(coerceS4ToList(bcb), object_size)
+object_size(bcb)
+stopifnot(object_size(bcb) < limit)
+validObject(bcb)
 
-indrops <- sce
-usethis::use_data(indrops, compress = "xz", overwrite = TRUE)
+use_data(bcb, compress = "xz", overwrite = TRUE)

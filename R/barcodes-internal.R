@@ -1,17 +1,18 @@
-#' Counts per cellular barcode
+#' Raw reads per cellular barcode
+#'
+#' Read counts prior to UMI disambiguation.
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
+#' @note Updated 2019-08-08.
 #' @noRd
 #'
 #' @param list `list`.
 #'   Cellular barcodes per sample.
 #'
 #' @return `integer`.
-#' Cell identifiers are the names and raw read counts are the values.
-
-## Updated 2019-07-24.
-.nCount <- function(list) {
+#' Cell identifiers are the names and raw reads are the values.
+.nRead <- function(list) {
     assert(
         is.list(list),
         hasNames(list),
@@ -31,55 +32,49 @@
 
 
 
-## Obtain the raw, unfiltered cellular barcode read counts ("nCount").
-## Updated 2019-07-24.
+#' Obtain the raw, unfiltered cellular barcode read counts
+#'
+#' @note Updated 2019-08-12.
+#' @noRd
+#'
+#' @return `tbl_df`.
 .rawMetrics <- function(object) {
+    assert(is(object, "bcbioSingleCell"))
     list <- metadata(object)[["cellularBarcodes"]]
-
-    if (!hasLength(list)) {
-        message("Object is filtered. Using `metrics()` return.")
-        return(metrics(object))
+    if (!is.list(list)) {
+        stop(paste(
+            "Object does not contain unfiltered cellular barcodes.",
+            "Has 'filterCells()' been applied? This step drops them."
+        ))
     }
-
-    assert(is.list(list), isNonEmpty(list))
-
-    if (hasLength(list, n = 1L)) {
-        data <- tibble(
-            sampleID = names(list)[[1L]],
-            cellID = names(list[[1L]]),
-            nCount = list[[1L]]
-        )
-    } else {
-        data <- mapply(
-            x = list,
-            sampleID = names(list),
-            FUN = function(x, sampleID) {
-                tibble(
-                    sampleID = sampleID,
-                    cellID = names(x),
-                    nCount = x
-                )
-            },
-            SIMPLIFY = FALSE,
-            USE.NAMES = FALSE
-        )
-        data <- bind_rows(data)
-    }
-
-    sampleData <- sampleData(object) %>%
-        as_tibble(rownames = "sampleID") %>%
-        mutate_all(as.factor)
-
-    data <- data %>%
-        mutate(!!sym("sampleID") := as.factor(!!sym("sampleID"))) %>%
-        left_join(sampleData, by = "sampleID") %>%
-        group_by(!!sym("sampleID"))
-
     assert(
-        isSubset(c("sampleID", "cellID", "nCount"), colnames(data)),
-        is.integer(data[["nCount"]])
-
+        is.list(list),
+        isNonEmpty(list),
+        hasNames(list)
     )
-
-    data
+    list <- mapply(
+        sampleID = names(list),
+        reads = list,
+        FUN = function(sampleID, reads) {
+            DataFrame(
+                sampleID = as.factor(sampleID),
+                cellID = as.factor(names(reads)),
+                nRead = reads,
+                row.names = NULL
+            )
+        },
+        SIMPLIFY = FALSE,
+        USE.NAMES = TRUE
+    )
+    data <- unlist(DataFrameList(list), use.names = FALSE)
+    sampleData <- sampleData(object)
+    sampleData[["sampleID"]] <- rownames(sampleData)
+    data <- left_join(data, sampleData, by = "sampleID")
+    assert(
+        is(data, "DataFrame"),
+        !hasRownames(data),
+        isSubset(c("sampleID", "cellID", "nRead"), colnames(data)),
+        is.integer(data[["nRead"]])
+    )
+    as_tibble(data)
 }

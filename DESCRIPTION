@@ -1,8 +1,8 @@
 Package: bcbioSingleCell
 Title: bcbio Single-Cell RNA-Seq
 Description: R package for bcbio single-cell RNA-seq analysis.
-Version: 0.3.18
-Date: 2018-07-30
+Version: 0.4.0
+Date: 2018-08-12
 Authors@R: c(
     person(
         given = "Michael",
@@ -54,19 +54,18 @@ LazyData: false
 Depends:
     R (>= 3.6),
     SingleCellExperiment,
-    basejump (>= 0.11.3)
+    basejump (>= 0.11.7)
 Imports:
-    acidplots (>= 0.2.8),
-    bcbioBase (>= 0.6.7),
-    bioverbs (>= 0.2),
-    goalie (>= 0.3), 
-    Biobase,
+    acidplots (>= 0.2.11),
+    bcbioBase (>= 0.6.8),
+    bioverbs (>= 0.2.5),
+    goalie (>= 0.3.4),
     BiocGenerics,
-    DropletUtils,
+    BiocParallel,
+    IRanges,
     S4Vectors,
     SummarizedExperiment,
     Matrix (>= 1.2),
-    cowplot (>= 1.0),
     dplyr (>= 0.8),
     ggplot2 (>= 3.2),
     ggridges (>= 0.5),
@@ -77,10 +76,9 @@ Imports:
     tibble (>= 2.1),
     graphics,
     methods,
-    scales,
-    stats,
     utils
 Suggests:
+    acidroxygen (>= 0.1),
     BiocStyle,
     R.utils (>= 2.9),
     patrick (>= 0.0.1),
@@ -91,10 +89,10 @@ Suggests:
     tidyverse (>= 1.2)
 Remotes:
     acidgenomics/acidplots,
+    acidgenomics/acidroxygen,
     acidgenomics/basejump,
     acidgenomics/bioverbs,
     acidgenomics/goalie,
-    cole-trapnell-lab/monocle3,
     hbc/bcbioBase
 biocViews:
     DataImport,
@@ -107,29 +105,16 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Collate: 
     'AllClasses.R'
-    'assertions-internal.R'
-    'barcodeRanksPerSample-methods.R'
     'barcodes-internal.R'
     'bcbioSingleCell.R'
-    'calculateMetrics.R'
     'data.R'
     'deprecated.R'
     'extract-methods.R'
-    'filterCells-methods.R'
     'globals.R'
     'import-internal.R'
     'imports.R'
     'package.R'
-    'plotBarcodeRanks-methods.R'
-    'plotCellCounts-methods.R'
-    'plotGenesPerCell-methods.R'
-    'plotMitoRatio-methods.R'
-    'plotMitoVsCoding-methods.R'
-    'plotNovelty-methods.R'
-    'plotQC-methods.R'
     'plotReadsPerCell-methods.R'
-    'plotUMIsPerCell-methods.R'
-    'plotUMIsVsGenes-methods.R'
     'reexports.R'
     'show-methods.R'
     'updateObject-methods.R'
