@@ -212,10 +212,27 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>indrops</span>)
-<span class='fu'>updateObject</span>(<span class='no'>indrops</span>)</div><div class='output co'>#&gt; <span class='message'>Upgrading bcbioSingleCell from version 0.3.9 to 0.3.19.</span></div><div class='output co'>#&gt; <span class='error'>Error in validObject(.Object): invalid class "bcbioSingleCell" object: isSubset(metricsCols, colnames(colData)) is not TRUE.</span>
-#&gt; <span class='error'>Cause of failure:</span>
-#&gt; <span class='error'>'metricsCols' has elements not in 'colnames(colData)': nFeature, log10FeaturesPerUMI</span></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>bcb</span>)
+<span class='fu'>updateObject</span>(<span class='no'>bcb</span>)</div><div class='output co'>#&gt; <span class='message'>Upgrading bcbioSingleCell from version 0.3.19 to 0.4.0.</span></div><div class='output co'>#&gt; bcbioSingleCell 0.4.0
+#&gt; uploadDir: /data00/draco/acidbase/packages/bcbioSingleCell/inst/extdata/indrops
+#&gt; dates(2): [bcbio] 2018-01-01; [R] 2019-08-12
+#&gt; level: genes
+#&gt; sampleMetadataFile: inst/extdata/indrops/metadata.csv
+#&gt; organism: Homo sapiens
+#&gt; interestingGroups: sampleName
+#&gt; filtered: FALSE
+#&gt; class: SingleCellExperiment 
+#&gt; dim: 50 100 
+#&gt; metadata(28): allSamples bcbioCommandsLog ... yaml originalVersion
+#&gt; assays(1): counts
+#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
+#&gt;   ENSG00000282105
+#&gt; rowData names(8): broadClass description ... geneName seqCoordSystem
+#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
+#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
+#&gt; colData names(15): aggregate description ... sampleName sequence
+#&gt; reducedDimNames(0):
+#&gt; spikeNames(0):</div><div class='input'>
 ## Example that depends on remote file.
 ## > x <- import(
 ## >     file = file.path(

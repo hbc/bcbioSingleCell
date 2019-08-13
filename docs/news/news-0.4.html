@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>inDrops example data set — indrops • bcbioSingleCell</title>
+<title>Version 0.4 • bcbioSingleCell</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -34,10 +34,7 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="inDrops example data set — indrops" />
-
-<meta property="og:description" content="inDrops example data set" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="Version 0.4" />
 
 
 
@@ -55,7 +52,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -108,48 +105,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>inDrops example data set</h1>
-    <small class="dont-index">Source: <a href='https://github.com/hbc/bcbioSingleCell/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>indrops.Rd</code></div>
+      <h1>Changelog <small>0.4</small></h1>
+      
     </div>
 
-    <div class="ref-description">
-    
-    <p>inDrops example data set</p>
-    
-    </div>
-
-    <pre class="usage"><span class='no'>indrops</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>An object of class <code>bcbioSingleCell</code> with 50 rows and 100 columns.</p>
-    
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>Updated 2019-07-24.</p>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>indrops</span>)
-<span class='no'>indrops</span></div><div class='output co'>#&gt; <span class='error'>Error in validObject(object): invalid class "bcbioSingleCell" object: isSubset(metricsCols, colnames(colData)) is not TRUE.</span>
-#&gt; <span class='error'>Cause of failure:</span>
-#&gt; <span class='error'>'metricsCols' has elements not in 'colnames(colData)': nFeature, log10FeaturesPerUMI</span></div></pre>
+    <div id="bcbiosinglecell-0-4-0-2019-08-12" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-4-0-2019-08-12" class="anchor"></a>bcbioSingleCell 0.4.0 (2019-08-12)</h2>
+<p>This update is intended to simplify the package and reduce the amount of plotting code that is defined to <code>bcbioSingleCell</code> class specifically, instead of <code>SingleCellExperiment</code>.</p>
+<div id="major-changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h3>
+<ul>
+<li>Offloaded plotting functions to acidplots, so we can use some of this code in a shared manner with objects imported from 10X Genomics Chromium.</li>
+</ul>
+</div>
+<div id="minor-changes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h3>
+<ul>
+<li>Improved documentation consistency by using shared roxygen from acidroxygen package.</li>
+<li>Updated basejump and bcbio R package dependencies.</li>
+</ul>
+</div>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#format">Format</a></li>
-
-      <li><a href="#note">Note</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Michael Steinbaugh</p>
+    <div id="tocnav">
+      <h2>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="#bcbiosinglecell-0-4-0-2019-08-12">0.4.0</a></li>
+      </ul>
+    </div>
   </div>
+
 </div>
 
 
