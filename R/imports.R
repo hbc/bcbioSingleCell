@@ -12,11 +12,11 @@
 #' @importFrom acidplots acid_geom_abline acid_geom_label
 #'   acid_geom_label_average acid_geom_label_repel
 #' @importFrom basejump as_tibble calculateMetrics camelCase cell2sample
-#'   detectLanes emptyRanges formalsList import interestingGroups
+#'   detectLanes droplevels emptyRanges formalsList import interestingGroups
 #'   interestingGroups<- left_join makeDimnames makeGRangesFromEnsembl
 #'   makeGRangesFromGFF makeLabel makeNames makeSingleCellExperiment
 #'   mapCellsToSamples markdownPlots matchArgsToDoCall matchInterestingGroups
-#'   metrics minimalSampleData printString relevel realpath sampleData
+#'   metrics minimalSampleData printString realpath sampleData
 #'   sampleNames separator showSlotInfo
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands

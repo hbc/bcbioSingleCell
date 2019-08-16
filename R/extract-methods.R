@@ -72,14 +72,6 @@ NULL
             return(x)
         }
 
-        ## Row data ------------------------------------------------------------
-        ## Ensure factors get releveled, if necessary.
-        rowRanges <- relevel(rowRanges(sce))
-
-        ## Column data ---------------------------------------------------------
-        ## Ensure factors get releveled, if necessary.
-        colData <- relevel(colData(sce))
-
         ## Metadata ------------------------------------------------------------
         metadata <- metadata(sce)
         metadata[["cellularBarcodes"]] <- NULL
@@ -95,6 +87,7 @@ NULL
         rowRanges(sce) <- rowRanges
         colData(sce) <- colData
         metadata(sce) <- metadata
+        sce <- droplevels(sce)
         new(Class = "bcbioSingleCell", sce)
     }
 

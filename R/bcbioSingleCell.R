@@ -220,7 +220,6 @@ bcbioSingleCell <- function(
         }
     }
     assert(is(rowRanges, "GRanges"))
-    rowRanges <- relevel(rowRanges)
 
     ## Attempt to get genome build and Ensembl release if not declared.
     ## Note that these will remain NULL when using GTF file (see above).
@@ -296,7 +295,6 @@ bcbioSingleCell <- function(
         is(colData, "DataFrame"),
         hasRownames(colData)
     )
-    colData <- relevel(colData)
 
     ## Metadata ----------------------------------------------------------------
     runDate <- runDate(projectDir)
