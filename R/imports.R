@@ -22,7 +22,6 @@
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
 #'   projectDir readDataVersions readProgramVersions readSampleData runDate
 #'   sampleDirs
-#' @importFrom dplyr bind_rows group_by mutate mutate_all mutate_if
 #' @importFrom ggplot2 aes facet_wrap geom_boxplot geom_histogram geom_step
 #'   geom_violin ggplot labs scale_x_continuous scale_y_continuous stat_ecdf
 #' @importFrom ggridges geom_density_ridges
@@ -31,12 +30,15 @@
 #'   isAURL isAny isCharacter isDirectory isFile isFlag isGGScale isInt
 #'   isNonEmpty isString isSubset validate validateClasses
 #' @importFrom graphics hist
-#' @importFrom magrittr %>%
 #' @importFrom methods as as<- is new setClass show slot slot<- validObject
 #'   .hasSlot
-#' @importFrom readr read_lines read_tsv
 #' @importFrom rlang !! sym syms
 #' @importFrom stringr str_extract
 #' @importFrom tibble as_tibble tibble
 #' @importFrom utils capture.output globalVariables packageVersion
+#'
+#'
+#'
+#' @importFrom dplyr bind_rows group_by mutate mutate_all mutate_if
+#' @importFrom magrittr %>%
 NULL

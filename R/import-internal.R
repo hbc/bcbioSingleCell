@@ -85,9 +85,9 @@
         colnamesFile <- paste0(file, ".colnames")
         assert(allAreFiles(c(file, rownamesFile, colnamesFile)))
         ## Import Genes/transcripts (features).
-        rownames <- read_lines(rownamesFile)
+        rownames <- import(rownamesFile, format = "lines")
         ## Import cellular barcodes.
-        colnames <- read_lines(colnamesFile)
+        colnames <- import(colnamesFile, format = "lines")
         if (!length(rownames) > 0L || !length(colnames) > 0L) {
             ## nocov start
             message(sprintf("Skipped '%s'.", basename(dir)))
@@ -144,10 +144,10 @@
         list <- bplapply(
             X = files,
             FUN = function(file) {
-                data <- read_tsv(
+                data <- import(
                     file = file,
-                    col_names = c("barcode", "n"),
-                    col_types = "ci"
+                    format = "tsv",
+                    colnames = c("barcode", "n")
                 )
                 x <- data[["n"]]
                 names(x) <- makeNames(data[["barcode"]])
