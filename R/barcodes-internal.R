@@ -34,10 +34,10 @@
 
 #' Obtain the raw, unfiltered cellular barcode read counts
 #'
-#' @note Updated 2019-08-12.
+#' @note Updated 2019-08-20.
 #' @noRd
 #'
-#' @return `tbl_df`.
+#' @return `DataFrame`.
 .rawMetrics <- function(object) {
     assert(is(object, "bcbioSingleCell"))
     list <- metadata(object)[["cellularBarcodes"]]
@@ -76,5 +76,5 @@
         isSubset(c("sampleID", "cellID", "nRead"), colnames(data)),
         is.integer(data[["nRead"]])
     )
-    as_tibble(data)
+    data
 }

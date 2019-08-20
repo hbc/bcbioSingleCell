@@ -2,7 +2,7 @@
 #'
 #' @importMethodsFrom basejump coerce
 #'
-#' @importFrom BiocGenerics cbind counts do.call updateObject
+#' @importFrom BiocGenerics cbind counts do.call lapply updateObject
 #' @importFrom BiocParallel bplapply bpmapply
 #' @importFrom IRanges DataFrameList
 #' @importFrom Matrix readMM

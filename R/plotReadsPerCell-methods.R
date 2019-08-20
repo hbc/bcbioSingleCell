@@ -36,7 +36,7 @@ NULL
 #' @note Updated 2019-08-08.
 #' @noRd
 #'
-#' @param data `tbl_df`.
+#' @param data `DataFrame`.
 #'   Raw read counts per cellular barcode.
 #'   Return from `.rawMetrics()` function.
 #'
@@ -47,20 +47,20 @@ NULL
     breaks = 100L
 ) {
     assert(
-        is(data, "tbl_df"),
+        is(data, "DataFrame"),
         isSubset(c("nRead", "sampleID"), colnames(data)),
         is.integer(data[["nRead"]]),
         is.factor(data[["sampleID"]]),
         is(sampleData, "DataFrame"),
         isInt(breaks)
     )
-    sampleData <- sampleData %>%
-        as_tibble(rownames = "sampleID") %>%
-        mutate_all(as.factor)
-    list <- lapply(
-        X = levels(data[["sampleID"]]),
+    sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
+    samples <- levels(data[["sampleID"]])
+    list <- DataFrameList(lapply(
+        X = samples,
         FUN = function(sampleID) {
-            subset <- data[data[["sampleID"]] == sampleID, , drop = FALSE]
+            keep <- which(data[["sampleID"]] == sampleID)
+            subset <- data[keep, , drop = FALSE]
             ## Histogram of log10-transformed counts.
             h <- hist(
                 x = log10(subset[["nRead"]]),
@@ -73,19 +73,16 @@ NULL
                 h[["counts"]] *
                 (10L ^ h[["mids"]]) /
                 sum(h[["counts"]] * (10L ^ h[["mids"]]))
-            ## FIXME Need to rework this.
             DataFrame(
-                sampleID = sampleID,
+                sampleID = factor(sampleID),
                 "log10Read" = h[["mids"]],
                 proportion = proportion
             )
         }
-    )
-    list %>%
-        bind_rows() %>%
-        mutate_if(is.character, as.factor) %>%
-        group_by(!!sym("sampleID")) %>%
-        left_join(sampleData, by = "sampleID")
+    ))
+    out <- unlist(list, recursive = FALSE, use.names = FALSE)
+    out <- left_join(out, sampleData, by = "sampleID")
+    out
 }
 
 
@@ -364,7 +361,7 @@ NULL
 
 
 ## bcbioSingleCell =============================================================
-## Updated 2019-07-24.
+## Updated 2019-08-20.
 `plotReadsPerCell,bcbioSingleCell` <-  # nolint
     function(
         object,
@@ -381,7 +378,6 @@ NULL
         interestingGroups(object) <-
             matchInterestingGroups(object, interestingGroups)
         geom <- match.arg(geom)
-
         ## Minimum reads per barcode cutoff (for unfiltered data).
         if (!is.null(metadata(object)[["filterCells"]])) {
             min <- 0L
@@ -396,10 +392,8 @@ NULL
             }
         }
         assert(isInt(min))
-
         ## This step will intentionally error for filtered objects.
         data <- .rawMetrics(object)
-
         p <- switch(
             EXPR = geom,
             boxplot = do.call(
@@ -452,7 +446,6 @@ NULL
                 )
             )
         )
-
         ## Add title and subtitle containing cutoff information.
         p <- p +
             labs(
@@ -461,7 +454,7 @@ NULL
                 color = paste(interestingGroups, collapse = ":\n"),
                 fill = paste(interestingGroups, collapse = ":\n")
             )
-
+        ## Return.
         p
     }
 
