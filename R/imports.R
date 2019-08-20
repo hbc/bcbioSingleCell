@@ -22,7 +22,7 @@
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
 #'   projectDir readDataVersions readProgramVersions readSampleData runDate
 #'   sampleDirs
-#' @importFrom dplyr bind_rows group_by left_join mutate mutate_all mutate_if
+#' @importFrom dplyr bind_rows group_by mutate mutate_all mutate_if
 #' @importFrom ggplot2 aes facet_wrap geom_boxplot geom_histogram geom_step
 #'   geom_violin ggplot labs scale_x_continuous scale_y_continuous stat_ecdf
 #' @importFrom ggridges geom_density_ridges
