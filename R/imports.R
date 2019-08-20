@@ -34,9 +34,4 @@
 #' @importFrom rlang !! sym syms
 #' @importFrom stringr str_extract
 #' @importFrom utils capture.output globalVariables packageVersion
-#'
-#'
-#'
-#' @importFrom dplyr bind_rows group_by mutate mutate_all mutate_if
-#' @importFrom magrittr %>%
 NULL
