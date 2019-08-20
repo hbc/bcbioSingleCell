@@ -2,7 +2,7 @@
 #'
 #' @importMethodsFrom basejump coerce
 #'
-#' @importFrom BiocGenerics cbind counts do.call updateObject
+#' @importFrom BiocGenerics cbind counts do.call lapply updateObject
 #' @importFrom BiocParallel bplapply bpmapply
 #' @importFrom IRanges DataFrameList
 #' @importFrom Matrix readMM
@@ -12,17 +12,15 @@
 #' @importFrom acidplots acid_geom_abline acid_geom_label
 #'   acid_geom_label_average acid_geom_label_repel
 #' @importFrom basejump as_tibble calculateMetrics camelCase cell2sample
-#'   detectLanes emptyRanges formalsList import interestingGroups
+#'   detectLanes droplevels emptyRanges formalsList import interestingGroups
 #'   interestingGroups<- left_join makeDimnames makeGRangesFromEnsembl
 #'   makeGRangesFromGFF makeLabel makeNames makeSingleCellExperiment
 #'   mapCellsToSamples markdownPlots matchArgsToDoCall matchInterestingGroups
-#'   metrics minimalSampleData printString relevel realpath sampleData
-#'   sampleNames separator showSlotInfo
+#'   metrics minimalSampleData printString readSampleData realpath sampleData
+#'   sampleNames separator showSlotInfo standardizeCall
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
-#'   projectDir readDataVersions readProgramVersions readSampleData runDate
-#'   sampleDirs
-#' @importFrom dplyr bind_rows group_by left_join mutate mutate_all mutate_if
+#'   projectDir readDataVersions readProgramVersions runDate sampleDirs
 #' @importFrom ggplot2 aes facet_wrap geom_boxplot geom_histogram geom_step
 #'   geom_violin ggplot labs scale_x_continuous scale_y_continuous stat_ecdf
 #' @importFrom ggridges geom_density_ridges
@@ -31,12 +29,9 @@
 #'   isAURL isAny isCharacter isDirectory isFile isFlag isGGScale isInt
 #'   isNonEmpty isString isSubset validate validateClasses
 #' @importFrom graphics hist
-#' @importFrom magrittr %>%
 #' @importFrom methods as as<- is new setClass show slot slot<- validObject
 #'   .hasSlot
-#' @importFrom readr read_lines read_tsv
 #' @importFrom rlang !! sym syms
 #' @importFrom stringr str_extract
-#' @importFrom tibble as_tibble tibble
 #' @importFrom utils capture.output globalVariables packageVersion
 NULL

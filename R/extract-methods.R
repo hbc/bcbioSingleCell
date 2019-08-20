@@ -14,7 +14,7 @@
 #' @name extract
 #' @author Michael Steinbaugh
 #' @inherit base::Extract params references
-#' @note Updated 2019-08-12.
+#' @note Updated 2019-08-20.
 #'
 #' @inheritParams acidroxygen::params
 #'
@@ -40,7 +40,7 @@ NULL
 
 
 
-## Updated 2019-08-12.
+## Updated 2019-08-20.
 `extract,bcbioSingleCell` <-  # nolint
     function(x, i, j, ..., drop = FALSE) {
         validObject(x)
@@ -68,33 +68,22 @@ NULL
 
         ## Early return original object, if unmodified.
         if (identical(assay(sce), assay(x))) {
-            message("Returning unmodified.")
             return(x)
         }
 
-        ## Row data ------------------------------------------------------------
-        ## Ensure factors get releveled, if necessary.
-        rowRanges <- relevel(rowRanges(sce))
-
-        ## Column data ---------------------------------------------------------
-        ## Ensure factors get releveled, if necessary.
-        colData <- relevel(colData(sce))
-
         ## Metadata ------------------------------------------------------------
         metadata <- metadata(sce)
-        metadata[["cellularBarcodes"]] <- NULL
-        metadata[["filterCells"]] <- NULL
-        metadata[["filterGenes"]] <- NULL
         if (isTRUE(subset)) {
+            metadata[["cellularBarcodes"]] <- NULL
+            metadata[["filterCells"]] <- NULL
+            metadata[["filterGenes"]] <- NULL
             metadata[["subset"]] <- TRUE
         }
         metadata <- Filter(f = Negate(is.null), x = metadata)
+        metadata(sce) <- metadata
 
         ## Return --------------------------------------------------------------
-        ## Note that this approach will keep `spikeNames` set, if defined.
-        rowRanges(sce) <- rowRanges
-        colData(sce) <- colData
-        metadata(sce) <- metadata
+        sce <- droplevels(sce)
         new(Class = "bcbioSingleCell", sce)
     }
 

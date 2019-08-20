@@ -31,36 +31,36 @@ NULL
 #'
 #' Modified version of Allon Klein Lab MATLAB code.
 #'
-#' @author Rory Kirchner, Michael Steinbaugh
+#' @author Michael Steinbaugh, Rory Kirchner
 #' @keywords internal
-#' @note Updated 2019-08-08.
+#' @note Updated 2019-08-20.
 #' @noRd
 #'
-#' @param data `tbl_df`.
+#' @param data `DataFrame`.
 #'   Raw read counts per cellular barcode.
 #'   Return from `.rawMetrics()` function.
 #'
-#' @return `grouped_df`. Grouped by `sampleID`.
+#' @return `DataFrame`.
 .proportionalReadsPerCell <- function(
     data,
     sampleData,
     breaks = 100L
 ) {
     assert(
-        is(data, "tbl_df"),
+        is(data, "DataFrame"),
         isSubset(c("nRead", "sampleID"), colnames(data)),
         is.integer(data[["nRead"]]),
         is.factor(data[["sampleID"]]),
         is(sampleData, "DataFrame"),
         isInt(breaks)
     )
-    sampleData <- sampleData %>%
-        as_tibble(rownames = "sampleID") %>%
-        mutate_all(as.factor)
-    list <- lapply(
-        X = levels(data[["sampleID"]]),
+    sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
+    samples <- levels(data[["sampleID"]])
+    list <- DataFrameList(lapply(
+        X = samples,
         FUN = function(sampleID) {
-            subset <- data[data[["sampleID"]] == sampleID, , drop = FALSE]
+            keep <- which(data[["sampleID"]] == sampleID)
+            subset <- data[keep, , drop = FALSE]
             ## Histogram of log10-transformed counts.
             h <- hist(
                 x = log10(subset[["nRead"]]),
@@ -73,25 +73,23 @@ NULL
                 h[["counts"]] *
                 (10L ^ h[["mids"]]) /
                 sum(h[["counts"]] * (10L ^ h[["mids"]]))
-            tibble(
-                sampleID = sampleID,
+            DataFrame(
+                sampleID = factor(sampleID),
                 "log10Read" = h[["mids"]],
                 proportion = proportion
             )
         }
-    )
-    list %>%
-        bind_rows() %>%
-        mutate_if(is.character, as.factor) %>%
-        group_by(!!sym("sampleID")) %>%
-        left_join(sampleData, by = "sampleID")
+    ))
+    out <- unlist(list, recursive = FALSE, use.names = FALSE)
+    out <- left_join(out, sampleData, by = "sampleID")
+    out
 }
 
 
 
 #' Plot proportional reads per cell histogram
 #'
-#' @note Updated 2019-08-08.
+#' @note Updated 2019-08-20.
 #' @noRd
 #'
 #' @param data Return from `.proportionalReadsPerCell()` function.
@@ -103,10 +101,10 @@ NULL
     color = getOption(x = "acid.discrete.color", default = NULL)
 ) {
     assert(
-        is.data.frame(data),
+        is(data, "DataFrame"),
         isGGScale(color, scale = "discrete", aes = "colour", nullOK = TRUE)
     )
-
+    data <- as_tibble(data, rownames = NULL)
     p <- ggplot(
         data = data,
         mapping = aes(
@@ -123,17 +121,14 @@ NULL
             x = "log10 reads per cell",
             y = "proportion of reads"
         )
-
     ## Cutoff line.
     if (min > 0L) {
         p <- p + acid_geom_abline(xintercept = log10(min))
     }
-
     ## Color palette.
     if (is(color, "ScaleDiscrete")) {
         p <- p + color
     }
-
     ## Facets.
     facets <- NULL
     if (isSubset("aggregate", colnames(data))) {
@@ -142,24 +137,24 @@ NULL
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = syms(facets), scales = "free")
     }
-
+    ## Return.
     p
 }
 
 
 
 ## Boxplot =====================================================================
-## Updated 2019-07-24.
+## Updated 2019-08-20.
 .plotReadsPerCellBoxplot <- function(
     data,
     min = 0L,
     fill = getOption("basejump.discrete.fill", NULL)
 ) {
     assert(
-        is.data.frame(data),
+        is(data, "DataFrame"),
         isGGScale(fill, scale = "discrete", aes = "fill", nullOK = TRUE)
     )
-
+    data <- as_tibble(data, rownames = NULL)
     p <- ggplot(
         data = data,
         mapping = aes(
@@ -175,17 +170,14 @@ NULL
             x = NULL,
             y = "reads per cell"
         )
-
     ## Cutoff line.
     if (min > 0L) {
         p <- p + acid_geom_abline(yintercept = min)
     }
-
     ## Color palette.
     if (is(fill, "ScaleDiscrete")) {
         p <- p + fill
     }
-
     ## Facets.
     facets <- NULL
     if (isSubset("aggregate", colnames(data))) {
@@ -194,24 +186,24 @@ NULL
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = syms(facets), scales = "free")
     }
-
+    ## Return.
     p
 }
 
 
 
 ## ECDF ========================================================================
-## Updated 2019-07-24.
+## Updated 2019-08-20.
 .plotReadsPerCellECDF <- function(
     data,
     min = 0L,
     color = getOption("basejump.discrete.color", NULL)
 ) {
     assert(
-        is.data.frame(data),
+        is(data, "DataFrame"),
         isGGScale(color, scale = "discrete", aes = "colour", nullOK = TRUE)
     )
-
+    data <- as_tibble(data, rownames = NULL)
     p <- ggplot(
         data = data,
         mapping = aes(
@@ -225,17 +217,14 @@ NULL
             y = "frequency"
         ) +
         scale_x_continuous(trans = "log10")
-
     ## Cutoff line.
     if (min > 0L) {
         p <- p + acid_geom_abline(xintercept = min)
     }
-
     ## Color palette.
     if (is(color, "ScaleDiscrete")) {
         p <- p + color
     }
-
     ## Facets.
     facets <- NULL
     if (isSubset("aggregate", colnames(data))) {
@@ -244,24 +233,24 @@ NULL
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = syms(facets), scales = "free")
     }
-
+    ## Return.
     p
 }
 
 
 
 ## Ridgeline ===================================================================
-## Updated 2019-07-24.
+## Updated 2019-08-20.
 .plotReadsPerCellRidgeline <- function(
     data,
     min = 0L,
     fill = getOption("basejump.discrete.fill", NULL)
 ) {
     assert(
-        is.data.frame(data),
+        is(data, "DataFrame"),
         isGGScale(fill, scale = "discrete", aes = "fill", nullOK = TRUE)
     )
-
+    data <- as_tibble(data, rownames = NULL)
     p <- ggplot(
         data = data,
         mapping = aes(
@@ -308,17 +297,17 @@ NULL
 
 
 ## Violin ======================================================================
-## Updated 2019-07-24.
+## Updated 2019-08-20.
 .plotReadsPerCellViolin <- function(
     data,
     min = 0L,
     fill = getOption("basejump.discrete.fill", NULL)
 ) {
     assert(
-        is.data.frame(data),
+        is(data, "DataFrame"),
         isGGScale(fill, scale = "discrete", aes = "fill", nullOK = TRUE)
     )
-
+    data <- as_tibble(data, rownames = NULL)
     p <- ggplot(
         data = data,
         mapping = aes(
@@ -337,17 +326,14 @@ NULL
             x = NULL,
             y = "reads per cell"
         )
-
     ## Cutoff line.
     if (min > 0L) {
         p <- p + acid_geom_abline(yintercept = min)
     }
-
     ## Color palette.
     if (is(fill, "ScaleDiscrete")) {
         p <- p + fill
     }
-
     ## Facets.
     facets <- NULL
     if (isSubset("aggregate", colnames(data))) {
@@ -356,14 +342,14 @@ NULL
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = syms(facets), scales = "free")
     }
-
+    ## Return.
     p
 }
 
 
 
 ## bcbioSingleCell =============================================================
-## Updated 2019-07-24.
+## Updated 2019-08-20.
 `plotReadsPerCell,bcbioSingleCell` <-  # nolint
     function(
         object,
@@ -380,7 +366,6 @@ NULL
         interestingGroups(object) <-
             matchInterestingGroups(object, interestingGroups)
         geom <- match.arg(geom)
-
         ## Minimum reads per barcode cutoff (for unfiltered data).
         if (!is.null(metadata(object)[["filterCells"]])) {
             min <- 0L
@@ -395,10 +380,8 @@ NULL
             }
         }
         assert(isInt(min))
-
         ## This step will intentionally error for filtered objects.
         data <- .rawMetrics(object)
-
         p <- switch(
             EXPR = geom,
             boxplot = do.call(
@@ -451,7 +434,6 @@ NULL
                 )
             )
         )
-
         ## Add title and subtitle containing cutoff information.
         p <- p +
             labs(
@@ -460,7 +442,7 @@ NULL
                 color = paste(interestingGroups, collapse = ":\n"),
                 fill = paste(interestingGroups, collapse = ":\n")
             )
-
+        ## Return.
         p
     }
 

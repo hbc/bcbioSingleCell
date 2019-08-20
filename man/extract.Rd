@@ -84,7 +84,7 @@ cells not kept in the matrix will be dropped in favor of the \code{nCount} colum
 of \code{\link[SummarizedExperiment:colData]{colData()}}.
 }
 \note{
-Updated 2019-08-12.
+Updated 2019-08-20.
 }
 \examples{
 data(bcb)
