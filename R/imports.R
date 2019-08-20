@@ -16,12 +16,11 @@
 #'   interestingGroups<- left_join makeDimnames makeGRangesFromEnsembl
 #'   makeGRangesFromGFF makeLabel makeNames makeSingleCellExperiment
 #'   mapCellsToSamples markdownPlots matchArgsToDoCall matchInterestingGroups
-#'   metrics minimalSampleData printString realpath sampleData
+#'   metrics minimalSampleData printString readSampleData realpath sampleData
 #'   sampleNames separator showSlotInfo
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
-#'   projectDir readDataVersions readProgramVersions readSampleData runDate
-#'   sampleDirs
+#'   projectDir readDataVersions readProgramVersions runDate sampleDirs
 #' @importFrom ggplot2 aes facet_wrap geom_boxplot geom_histogram geom_step
 #'   geom_violin ggplot labs scale_x_continuous scale_y_continuous stat_ecdf
 #' @importFrom ggridges geom_density_ridges
