@@ -1,3 +1,12 @@
+## bcbioSingleCell 0.4.1 (2019-08-20)
+
+### Minor changes
+
+- `plotReadsPerCell`: Reworked internal code to use `DataFrame` primarily
+  instead of `tbl_df`, so we can remove dplyr dependency.
+- Updated basejump and bcbioBase dependency versions.
+- Removed some additional unused dependencies, to lighten the package.
+
 ## bcbioSingleCell 0.4.0 (2019-08-12)
 
 This update is intended to simplify the package and reduce the amount of

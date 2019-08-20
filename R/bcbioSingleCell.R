@@ -307,7 +307,7 @@ bcbioSingleCell <- function(
         allSamples = allSamples,
         bcbioCommandsLog = commandsLog,
         bcbioLog = log,
-        call = match.call(),
+        call = standardizeCall(),
         cellularBarcodeCutoff = cutoff,
         cellularBarcodes = cbList,
         dataVersions = dataVersions,

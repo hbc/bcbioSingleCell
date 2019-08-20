@@ -17,7 +17,7 @@
 #'   makeGRangesFromGFF makeLabel makeNames makeSingleCellExperiment
 #'   mapCellsToSamples markdownPlots matchArgsToDoCall matchInterestingGroups
 #'   metrics minimalSampleData printString readSampleData realpath sampleData
-#'   sampleNames separator showSlotInfo
+#'   sampleNames separator showSlotInfo standardizeCall
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
 #'   projectDir readDataVersions readProgramVersions runDate sampleDirs
