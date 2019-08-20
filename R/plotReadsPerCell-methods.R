@@ -73,7 +73,8 @@ NULL
                 h[["counts"]] *
                 (10L ^ h[["mids"]]) /
                 sum(h[["counts"]] * (10L ^ h[["mids"]]))
-            tibble(
+            ## FIXME Need to rework this.
+            DataFrame(
                 sampleID = sampleID,
                 "log10Read" = h[["mids"]],
                 proportion = proportion

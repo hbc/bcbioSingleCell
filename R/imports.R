@@ -33,7 +33,6 @@
 #'   .hasSlot
 #' @importFrom rlang !! sym syms
 #' @importFrom stringr str_extract
-#' @importFrom tibble as_tibble tibble
 #' @importFrom utils capture.output globalVariables packageVersion
 #'
 #'

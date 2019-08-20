@@ -72,7 +72,6 @@ Imports:
     magrittr (>= 1.5),
     rlang (>= 0.4), 
     stringr (>= 1.4),
-    tibble (>= 2.1),
     graphics,
     methods,
     utils
