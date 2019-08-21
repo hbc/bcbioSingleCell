@@ -1,3 +1,10 @@
+## bcbioSingleCell 0.4.2 (2019-08-21)
+
+### Minor changes
+
+- Moved `metricsCols` global to basejump, so we can share with Chromium.
+- Improved generator consistency with other basejump and bcbio R packages.
+
 ## bcbioSingleCell 0.4.1 (2019-08-20)
 
 ### Minor changes

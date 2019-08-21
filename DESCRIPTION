@@ -1,8 +1,8 @@
 Package: bcbioSingleCell
 Title: bcbio Single-Cell RNA-Seq
 Description: R package for bcbio single-cell RNA-seq analysis.
-Version: 0.4.1
-Date: 2018-08-20
+Version: 0.4.2
+Date: 2018-08-21
 Authors@R: c(
     person(
         given = "Michael",
@@ -98,18 +98,3 @@ biocViews:
     SingleCell
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
-Collate: 
-    'AllClasses.R'
-    'barcodes-internal.R'
-    'bcbioSingleCell.R'
-    'data.R'
-    'deprecated.R'
-    'extract-methods.R'
-    'globals.R'
-    'import-internal.R'
-    'imports.R'
-    'package.R'
-    'plotReadsPerCell-methods.R'
-    'reexports.R'
-    'show-methods.R'
-    'updateObject-methods.R'
