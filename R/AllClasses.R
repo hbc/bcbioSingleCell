@@ -47,24 +47,18 @@ setValidity(
             ## Require that metrics columns are defined.
             isSubset(metricsCols, colnames(colData)),
             ## Ensure that `interestingGroups` isn't slotted in colData.
-            areDisjointSets("interestingGroups", colnames(colData)),
-            ## Ensure that sample-level metadata is also defined at cell-level.
-            ## We're doing this in long format in the colData slot.
-            isSubset(colnames(sampleData), colnames(colData))
+            areDisjointSets("interestingGroups", colnames(colData))
         )
         if (!isTRUE(ok)) return(ok)
 
         ## Metadata ------------------------------------------------------------
-        ## FIXME Tighten this up.
-        ## Optional metadata:
-        ## - cellularBarcodes
-        ## - tx2gene
         ok <- validateClasses(
             object = metadata,
             expected = list(
                 allSamples = "logical",
                 bcbioCommandsLog = "character",
                 bcbioLog = "character",
+                cellularBarcodes = "list",
                 dataVersions = "DataFrame",
                 date = "Date",
                 ensemblRelease = "integer",
