@@ -101,11 +101,9 @@ bcbioSingleCell <- function(
     ## bcbio run information ---------------------------------------------------
     dataVersions <- readDataVersions(file.path(projectDir, "data_versions.csv"))
     assert(is(dataVersions, "DataFrame"))
-
     programVersions <-
         readProgramVersions(file.path(projectDir, "programs.txt"))
     assert(is(dataVersions, "DataFrame"))
-
     log <- import(file.path(projectDir, "bcbio-nextgen.log"))
     ## This step enables our minimal dataset inside the package to pass checks.
     tryCatch(
@@ -114,7 +112,6 @@ bcbioSingleCell <- function(
             message("'bcbio-nextgen.log' file is empty.")
         }
     )
-
     commandsLog <- import(file.path(projectDir, "bcbio-nextgen-commands.log"))
     ## This step enables our minimal dataset inside the package to pass checks.
     tryCatch(
@@ -123,11 +120,9 @@ bcbioSingleCell <- function(
             message("'bcbio-nextgen-commands.log' file is empty.")
         }
     )
-
     cutoff <- getBarcodeCutoffFromCommands(commandsLog)
     level <- getLevelFromCommands(commandsLog)
     umiType <- getUMITypeFromCommands(commandsLog)
-
     ## Check to see if we're dealing with a multiplexed platform.
     multiplexed <- any(vapply(
         X = c("dropseq", "indrop"),
@@ -143,7 +138,6 @@ bcbioSingleCell <- function(
 
     if (isString(sampleMetadataFile)) {
         sampleData <- readSampleData(sampleMetadataFile, lanes = lanes)
-
         ## Error on incorrect reverse complement input.
         if ("sequence" %in% colnames(sampleData)) {
             sampleDirSequence <- str_extract(names(sampleDirs), "[ACGT]+$")
@@ -160,7 +154,6 @@ bcbioSingleCell <- function(
                 )
             }
         }
-
         ## Allow sample selection by with this file.
         if (nrow(sampleData) < length(sampleDirs)) {
             sampleDirs <- sampleDirs[rownames(sampleData)]
@@ -220,7 +213,6 @@ bcbioSingleCell <- function(
         }
     }
     assert(is(rowRanges, "GRanges"))
-
     ## Attempt to get genome build and Ensembl release if not declared.
     ## Note that these will remain NULL when using GTF file (see above).
     if (is.null(genomeBuild)) {
@@ -248,18 +240,15 @@ bcbioSingleCell <- function(
         }
     }
     assert(isSubset(rownames(sampleData), names(sampleDirs)))
-
     ## Always prefilter, removing very low quality cells with no UMIs or genes.
     colData <- calculateMetrics(
         object = counts,
         rowRanges = rowRanges,
         prefilter = TRUE
     )
-
     ## Subset the counts to match the prefiltered metrics.
     assert(isSubset(rownames(colData), colnames(counts)))
     counts <- counts[, rownames(colData), drop = FALSE]
-
     ## Bind the `nRead` column into the cell metrics. These are the number of
     ## raw read counts prior to UMI disambiguation that bcbio uses for initial
     ## filtering (minimum_barcode_depth in YAML).
@@ -270,7 +259,6 @@ bcbioSingleCell <- function(
     )
     ## Switched to "nRead" from "nCount" in v0.3.19.
     colData[["nRead"]] <- nRead[rownames(colData)]
-
     ## Join `sampleData()` into cell-level `colData()`.
     if (nrow(sampleData) == 1L) {
         colData[["sampleID"]] <- as.factor(rownames(sampleData))
@@ -298,11 +286,8 @@ bcbioSingleCell <- function(
 
     ## Metadata ----------------------------------------------------------------
     runDate <- runDate(projectDir)
-
-    ## Interesting groups.
     interestingGroups <- camelCase(interestingGroups)
     assert(isSubset(interestingGroups, colnames(sampleData)))
-
     metadata <- list(
         allSamples = allSamples,
         bcbioCommandsLog = commandsLog,
