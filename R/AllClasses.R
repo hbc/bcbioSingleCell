@@ -58,7 +58,6 @@ setValidity(
                 allSamples = "logical",
                 bcbioCommandsLog = "character",
                 bcbioLog = "character",
-                cellularBarcodes = "list",
                 dataVersions = "DataFrame",
                 date = "Date",
                 ensemblRelease = "integer",
