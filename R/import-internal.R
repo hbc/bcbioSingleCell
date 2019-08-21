@@ -69,7 +69,7 @@
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
-#' @note Updated 2019-08-12.
+#' @note Updated 2019-08-21.
 #' @noRd
 #'
 #' @param dir `character(1)`.
@@ -95,7 +95,7 @@
             ## nocov end
         }
         ## Import counts.
-        counts <- readMM(file)
+        counts <- import(file)
         assert(
             identical(length(rownames), nrow(counts)),
             identical(length(colnames), ncol(counts))

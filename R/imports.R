@@ -5,7 +5,6 @@
 #' @importFrom BiocGenerics cbind counts do.call lapply updateObject
 #' @importFrom BiocParallel bplapply bpmapply
 #' @importFrom IRanges DataFrameList
-#' @importFrom Matrix readMM
 #' @importFrom S4Vectors DataFrame SimpleList metadata metadata<-
 #' @importFrom SummarizedExperiment assayNames assay assays assays<- colData
 #'   colData<- rowData rowData<- rowRanges rowRanges<-
