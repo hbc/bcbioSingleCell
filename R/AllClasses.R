@@ -43,25 +43,6 @@ setValidity(
         if (!isTRUE(ok)) return(ok)
 
         ## Column data ---------------------------------------------------------
-        sampleData[["interestingGroups"]] <- NULL
-
-        ## Check that the levels set in `sampleData` match `colData`
-        sampleDataLevels <- lapply(
-            X = sampleData,
-            FUN = function(x) {
-                if (is.factor(x)) {
-                    levels(x)
-                } else {
-                    NULL
-                }
-            }
-        )
-        sampleDataLevels <- Filter(Negate(is.null), sampleDataLevels)
-        colDataLevels <- lapply(
-            X = colData[, names(sampleDataLevels), drop = FALSE],
-            FUN = levels
-        )
-
         ok <- validate(
             ## Require that metrics columns are defined.
             isSubset(metricsCols, colnames(colData)),
@@ -69,18 +50,14 @@ setValidity(
             areDisjointSets("interestingGroups", colnames(colData)),
             ## Ensure that sample-level metadata is also defined at cell-level.
             ## We're doing this in long format in the colData slot.
-            isSubset(colnames(sampleData), colnames(colData)),
-            identical(sampleDataLevels, colDataLevels)
+            isSubset(colnames(sampleData), colnames(colData))
         )
         if (!isTRUE(ok)) return(ok)
 
         ## Metadata ------------------------------------------------------------
+        ## FIXME Tighten this up.
         ## Optional metadata:
         ## - cellularBarcodes
-        ## - filterCells
-        ## - filterGenes
-        ## - filterParams
-        ## - filterSummary
         ## - tx2gene
         ok <- validateClasses(
             object = metadata,
@@ -114,6 +91,7 @@ setValidity(
         )
         if (!isTRUE(ok)) return(ok)
 
+        ## Check that level is defined.
         ok <- validate(
             !isSubset("sampleName", names(metadata)),
             isSubset(metadata[["level"]], c("genes", "transcripts"))
