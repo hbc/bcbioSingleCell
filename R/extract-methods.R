@@ -23,9 +23,9 @@
 #' @examples
 #' data(bcb)
 #'
-#' cells <- head(colnames(bcb), 100L)
+#' cells <- head(colnames(bcb))
 #' head(cells)
-#' genes <- head(rownames(bcb), 100L)
+#' genes <- head(rownames(bcb))
 #' head(genes)
 #'
 #' ## Subset by cell identifiers.
