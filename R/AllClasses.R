@@ -6,7 +6,7 @@
 #' cell quality control metrics.
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
-#' @note Updated 2019-08-07.
+#' @note Updated 2019-08-21.
 #' @export
 setClass(
     Class = "bcbioSingleCell",
@@ -43,45 +43,15 @@ setValidity(
         if (!isTRUE(ok)) return(ok)
 
         ## Column data ---------------------------------------------------------
-        sampleData[["interestingGroups"]] <- NULL
-
-        ## Check that the levels set in `sampleData` match `colData`
-        sampleDataLevels <- lapply(
-            X = sampleData,
-            FUN = function(x) {
-                if (is.factor(x)) {
-                    levels(x)
-                } else {
-                    NULL
-                }
-            }
-        )
-        sampleDataLevels <- Filter(Negate(is.null), sampleDataLevels)
-        colDataLevels <- lapply(
-            X = colData[, names(sampleDataLevels), drop = FALSE],
-            FUN = levels
-        )
-
         ok <- validate(
             ## Require that metrics columns are defined.
             isSubset(metricsCols, colnames(colData)),
             ## Ensure that `interestingGroups` isn't slotted in colData.
-            areDisjointSets("interestingGroups", colnames(colData)),
-            ## Ensure that sample-level metadata is also defined at cell-level.
-            ## We're doing this in long format in the colData slot.
-            isSubset(colnames(sampleData), colnames(colData)),
-            identical(sampleDataLevels, colDataLevels)
+            areDisjointSets("interestingGroups", colnames(colData))
         )
         if (!isTRUE(ok)) return(ok)
 
         ## Metadata ------------------------------------------------------------
-        ## Optional metadata:
-        ## - cellularBarcodes
-        ## - filterCells
-        ## - filterGenes
-        ## - filterParams
-        ## - filterSummary
-        ## - tx2gene
         ok <- validateClasses(
             object = metadata,
             expected = list(
@@ -114,6 +84,7 @@ setValidity(
         )
         if (!isTRUE(ok)) return(ok)
 
+        ## Check that level is defined.
         ok <- validate(
             !isSubset("sampleName", names(metadata)),
             isSubset(metadata[["level"]], c("genes", "transcripts"))

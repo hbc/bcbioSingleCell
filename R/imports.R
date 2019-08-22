@@ -5,7 +5,6 @@
 #' @importFrom BiocGenerics cbind counts do.call lapply updateObject
 #' @importFrom BiocParallel bplapply bpmapply
 #' @importFrom IRanges DataFrameList
-#' @importFrom Matrix readMM
 #' @importFrom S4Vectors DataFrame SimpleList metadata metadata<-
 #' @importFrom SummarizedExperiment assayNames assay assays assays<- colData
 #'   colData<- rowData rowData<- rowRanges rowRanges<-
@@ -16,8 +15,8 @@
 #'   interestingGroups<- left_join makeDimnames makeGRangesFromEnsembl
 #'   makeGRangesFromGFF makeLabel makeNames makeSingleCellExperiment
 #'   mapCellsToSamples markdownPlots matchArgsToDoCall matchInterestingGroups
-#'   metrics minimalSampleData printString readSampleData realpath sampleData
-#'   sampleNames separator showSlotInfo standardizeCall
+#'   metrics metricsCols minimalSampleData printString readSampleData realpath
+#'   sampleData sampleNames separator showSlotInfo standardizeCall
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
 #'   projectDir readDataVersions readProgramVersions runDate sampleDirs

@@ -1,3 +1,18 @@
+## bcbioSingleCell 0.4.2 (2019-08-22)
+
+### Major changes
+
+- `bcbioSingleCell`: Simplifed internal `colData` handling, calling
+  `calculateMetrics` after creating `SingleCellExperiment` with
+  `makeSingleCellExperiment`. This improves consistency with Chromium package
+  and enables better preparation of `rowRanges` containing spike-ins and
+  transgenes.
+
+### Minor changes
+
+- Moved `metricsCols` global to basejump, so we can share with Chromium.
+- Improved generator consistency with other basejump and bcbio R packages.
+
 ## bcbioSingleCell 0.4.1 (2019-08-20)
 
 ### Minor changes

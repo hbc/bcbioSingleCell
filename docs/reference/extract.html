@@ -68,7 +68,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
       </span>
     </div>
 
@@ -210,9 +210,9 @@ of <code><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperim
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>bcb</span>)
 
-<span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>bcb</span>), <span class='fl'>100L</span>)
+<span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>bcb</span>))
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>cells</span>)</div><div class='output co'>#&gt; [1] "AAACACTA_CTTCGATT" "AAACTACA_CCACATTA" "AACTGCCT_GCAAGGAC"
-#&gt; [4] "AAGAAGGT_TCTGTGGT" "AAGCCTTC_TAAATAGG" "AATAAGGA_CCACATTA"</div><div class='input'><span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>bcb</span>), <span class='fl'>100L</span>)
+#&gt; [4] "AAGAAGGT_TCTGTGGT" "AAGCCTTC_TAAATAGG" "AATAAGGA_CCACATTA"</div><div class='input'><span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>bcb</span>))
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000071082" "ENSG00000100316" "ENSG00000106631" "ENSG00000108821"
 #&gt; [5] "ENSG00000112306" "ENSG00000115414"</div><div class='input'>
 <span class='co'>## Subset by cell identifiers.</span>
@@ -225,14 +225,14 @@ of <code><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperim
 #&gt; interestingGroups: sampleName
 #&gt; filtered: FALSE
 #&gt; class: SingleCellExperiment 
-#&gt; dim: 50 100 
-#&gt; metadata(27): allSamples bcbioCommandsLog ... wd yaml
+#&gt; dim: 50 6 
+#&gt; metadata(27): allSamples bcbioCommandsLog ... yaml subset
 #&gt; assays(1): counts
 #&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
 #&gt;   ENSG00000282105
 #&gt; rowData names(8): broadClass description ... geneName seqCoordSystem
-#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
-#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
+#&gt; colnames(6): AAACACTA_CTTCGATT AAACTACA_CCACATTA ... AAGCCTTC_TAAATAGG
+#&gt;   AATAAGGA_CCACATTA
 #&gt; colData names(15): aggregate description ... sampleName sequence
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div><div class='input'>
@@ -246,11 +246,11 @@ of <code><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperim
 #&gt; interestingGroups: sampleName
 #&gt; filtered: FALSE
 #&gt; class: SingleCellExperiment 
-#&gt; dim: 50 100 
-#&gt; metadata(27): allSamples bcbioCommandsLog ... wd yaml
+#&gt; dim: 6 100 
+#&gt; metadata(27): allSamples bcbioCommandsLog ... yaml subset
 #&gt; assays(1): counts
-#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
-#&gt;   ENSG00000282105
+#&gt; rownames(6): ENSG00000071082 ENSG00000100316 ... ENSG00000112306
+#&gt;   ENSG00000115414
 #&gt; rowData names(8): broadClass description ... geneName seqCoordSystem
 #&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
 #&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
@@ -267,14 +267,14 @@ of <code><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperim
 #&gt; interestingGroups: sampleName
 #&gt; filtered: FALSE
 #&gt; class: SingleCellExperiment 
-#&gt; dim: 50 100 
-#&gt; metadata(27): allSamples bcbioCommandsLog ... wd yaml
+#&gt; dim: 6 6 
+#&gt; metadata(27): allSamples bcbioCommandsLog ... yaml subset
 #&gt; assays(1): counts
-#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
-#&gt;   ENSG00000282105
+#&gt; rownames(6): ENSG00000071082 ENSG00000100316 ... ENSG00000112306
+#&gt;   ENSG00000115414
 #&gt; rowData names(8): broadClass description ... geneName seqCoordSystem
-#&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
-#&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
+#&gt; colnames(6): AAACACTA_CTTCGATT AAACTACA_CCACATTA ... AAGCCTTC_TAAATAGG
+#&gt;   AATAAGGA_CCACATTA
 #&gt; colData names(15): aggregate description ... sampleName sequence
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):</div></pre>

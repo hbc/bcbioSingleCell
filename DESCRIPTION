@@ -1,8 +1,8 @@
 Package: bcbioSingleCell
 Title: bcbio Single-Cell RNA-Seq
 Description: R package for bcbio single-cell RNA-seq analysis.
-Version: 0.4.1
-Date: 2018-08-20
+Version: 0.4.2
+Date: 2018-08-21
 Authors@R: c(
     person(
         given = "Michael",
@@ -54,9 +54,9 @@ LazyData: false
 Depends:
     R (>= 3.6),
     SingleCellExperiment,
-    basejump (>= 0.11.8)
+    basejump (>= 0.11.9)
 Imports:
-    acidplots (>= 0.2.12),
+    acidplots (>= 0.2.13),
     bcbioBase (>= 0.6.9),
     bioverbs (>= 0.2.5),
     goalie (>= 0.3.5),
@@ -65,7 +65,6 @@ Imports:
     IRanges,
     S4Vectors,
     SummarizedExperiment,
-    Matrix (>= 1.2),
     ggplot2 (>= 3.2),
     ggridges (>= 0.5),
     rlang (>= 0.4), 
@@ -99,18 +98,3 @@ biocViews:
     SingleCell
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
-Collate: 
-    'AllClasses.R'
-    'barcodes-internal.R'
-    'bcbioSingleCell.R'
-    'data.R'
-    'deprecated.R'
-    'extract-methods.R'
-    'globals.R'
-    'import-internal.R'
-    'imports.R'
-    'package.R'
-    'plotReadsPerCell-methods.R'
-    'reexports.R'
-    'show-methods.R'
-    'updateObject-methods.R'

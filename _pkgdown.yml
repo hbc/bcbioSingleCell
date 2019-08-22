@@ -27,7 +27,7 @@ reference:
     - starts_with("plot")
   - title: Example data
     contents:
-    - indrops
+    - bcb
   - title: Reexports
     contents:
     - reexports

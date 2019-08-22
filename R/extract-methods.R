@@ -23,9 +23,9 @@
 #' @examples
 #' data(bcb)
 #'
-#' cells <- head(colnames(bcb), 100L)
+#' cells <- head(colnames(bcb))
 #' head(cells)
-#' genes <- head(rownames(bcb), 100L)
+#' genes <- head(rownames(bcb))
 #' head(genes)
 #'
 #' ## Subset by cell identifiers.
@@ -48,11 +48,11 @@ NULL
 
         ## Genes (rows).
         if (missing(i)) {
-            i <- 1L:nrow(x)
+            i <- seq_len(nrow(x))
         }
         ## Cells (columns).
         if (missing(j)) {
-            j <- 1L:ncol(x)
+            j <- seq_len(ncol(x))
         }
 
         ## Determine whether we should stash subset in metadata.
