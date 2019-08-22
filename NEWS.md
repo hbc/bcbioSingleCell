@@ -1,4 +1,12 @@
-## bcbioSingleCell 0.4.2 (2019-08-21)
+## bcbioSingleCell 0.4.2 (2019-08-22)
+
+### Major changes
+
+- `bcbioSingleCell`: Simplifed internal `colData` handling, calling
+  `calculateMetrics` after creating `SingleCellExperiment` with
+  `makeSingleCellExperiment`. This improves consistency with Chromium package
+  and enables better preparation of `rowRanges` containing spike-ins and
+  transgenes.
 
 ### Minor changes
 
