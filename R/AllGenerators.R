@@ -1,6 +1,6 @@
 #' @inherit bcbioSingleCell-class title description
 #' @author Michael Steinbaugh
-#' @note Updated 2019-08-12.
+#' @note Updated 2019-08-22.
 #' @export
 #'
 #' @inheritParams basejump::makeSingleCellExperiment
@@ -135,7 +135,6 @@ bcbioSingleCell <- function(
     ## User-defined sample metadata --------------------------------------------
     allSamples <- TRUE
     sampleData <- NULL
-
     if (isString(sampleMetadataFile)) {
         sampleData <- readSampleData(sampleMetadataFile, lanes = lanes)
         ## Error on incorrect reverse complement input.
@@ -178,7 +177,6 @@ bcbioSingleCell <- function(
         BPPARAM = BPPARAM
     )
     assert(hasValidDimnames(counts))
-    assays <- SimpleList(counts = counts)
 
     ## Row data ----------------------------------------------------------------
     ## Annotation priority:
@@ -209,7 +207,7 @@ bcbioSingleCell <- function(
             rowRanges <- makeGRangesFromGFF(file = gffFile, level = level)
         } else {
             message("Slotting empty ranges into 'rowRanges()'.")
-            rowRanges <- emptyRanges(rownames(assays[[1L]]))
+            rowRanges <- emptyRanges(rownames(counts))
         }
     }
     assert(is(rowRanges, "GRanges"))
@@ -223,7 +221,8 @@ bcbioSingleCell <- function(
     }
 
     ## Column data -------------------------------------------------------------
-    ## Automatic sample metadata.
+    colData <- DataFrame(row.names = colnames(counts))
+    ## Generate automatic sample metadata, if necessary.
     if (is.null(sampleData)) {
         if (isTRUE(multiplexed)) {
             ## Multiplexed samples without user-defined metadata.
@@ -240,35 +239,14 @@ bcbioSingleCell <- function(
         }
     }
     assert(isSubset(rownames(sampleData), names(sampleDirs)))
-    ## Always prefilter, removing very low quality cells with no UMIs or genes.
-    colData <- calculateMetrics(
-        object = counts,
-        rowRanges = rowRanges,
-        prefilter = TRUE
-    )
-    ## Subset the counts to match the prefiltered metrics.
-    assert(isSubset(rownames(colData), colnames(counts)))
-    counts <- counts[, rownames(colData), drop = FALSE]
-    ## Bind the `nRead` column into the cell metrics. These are the number of
-    ## raw read counts prior to UMI disambiguation that bcbio uses for initial
-    ## filtering (minimum_barcode_depth in YAML).
-    nRead <- .nRead(cbList)
-    assert(
-        is.integer(nRead),
-        isSubset(rownames(colData), names(nRead))
-    )
-    ## Switched to "nRead" from "nCount" in v0.3.19.
-    colData[["nRead"]] <- nRead[rownames(colData)]
-    ## Join `sampleData()` into cell-level `colData()`.
-    if (nrow(sampleData) == 1L) {
+    ## Join `sampleData` into cell-level `colData`.
+    if (identical(nrow(sampleData), 1L)) {
         colData[["sampleID"]] <- as.factor(rownames(sampleData))
     } else {
-        cell2sample <- mapCellsToSamples(
+        colData[["sampleID"]] <- mapCellsToSamples(
             cells = rownames(colData),
             samples = rownames(sampleData)
         )
-        assert(identical(names(cell2sample), rownames(colData)))
-        colData[["sampleID"]] <- cell2sample
     }
     sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
     ## Need to ensure the `sampleID` factor levels match up, otherwise we'll get
@@ -315,16 +293,32 @@ bcbioSingleCell <- function(
         yaml = yaml
     )
 
-    ## Return ------------------------------------------------------------------
-    sce <- makeSingleCellExperiment(
-        assays = assays,
+    ## SingleCellExperiment ----------------------------------------------------
+    object <- makeSingleCellExperiment(
+        assays = SimpleList(counts = counts),
         rowRanges = rowRanges,
         colData = colData,
         metadata = metadata,
         transgeneNames = transgeneNames,
         spikeNames = spikeNames
     )
-    bcb <- new(Class = "bcbioSingleCell", sce)
-    validObject(bcb)
-    bcb
+
+    ## Return ------------------------------------------------------------------
+    ## Always prefilter, removing very low quality cells and/or genes.
+    object <- calculateMetrics(object = object, prefilter = TRUE)
+    ## Bind the `nRead` column into the cell metrics. These are the number of
+    ## raw read counts prior to UMI disambiguation that bcbio uses for initial
+    ## filtering (minimum_barcode_depth in YAML).
+    colData <- colData(object)
+    nRead <- .nRead(cbList)
+    assert(
+        is.integer(nRead),
+        isSubset(rownames(colData), names(nRead)),
+        areDisjointSets("nRead", colnames(colData))
+    )
+    ## Switched to "nRead" from "nCount" in v0.3.19.
+    colData[["nRead"]] <- unname(nRead[rownames(colData)])
+    colData <- colData[, sort(colnames(colData)), drop = FALSE]
+    colData(object) <- colData
+    new(Class = "bcbioSingleCell", object)
 }
