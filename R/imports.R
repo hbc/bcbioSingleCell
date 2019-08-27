@@ -12,7 +12,7 @@
 #'   acid_geom_label_average acid_geom_label_repel
 #' @importFrom basejump as_tibble calculateMetrics camelCase cell2sample
 #'   detectLanes droplevels emptyRanges formalsList import interestingGroups
-#'   interestingGroups<- left_join makeDimnames makeGRangesFromEnsembl
+#'   interestingGroups<- leftJoin makeDimnames makeGRangesFromEnsembl
 #'   makeGRangesFromGFF makeLabel makeNames makeSingleCellExperiment
 #'   mapCellsToSamples markdownPlots matchArgsToDoCall matchInterestingGroups
 #'   metrics metricsCols minimalSampleData printString readSampleData realpath

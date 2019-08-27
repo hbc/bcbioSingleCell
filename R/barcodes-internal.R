@@ -69,7 +69,7 @@
     data <- unlist(DataFrameList(list), use.names = FALSE)
     sampleData <- sampleData(object)
     sampleData[["sampleID"]] <- rownames(sampleData)
-    data <- left_join(data, sampleData, by = "sampleID")
+    data <- leftJoin(data, sampleData, by = "sampleID")
     assert(
         is(data, "DataFrame"),
         !hasRownames(data),

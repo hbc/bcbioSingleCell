@@ -250,13 +250,13 @@ bcbioSingleCell <- function(
     }
     sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
     ## Need to ensure the `sampleID` factor levels match up, otherwise we'll get
-    ## a warning during the `left_join()` call below.
+    ## a warning during the `leftJjoin()` call below.
     assert(areSetEqual(
         x = levels(colData[["sampleID"]]),
         y = levels(sampleData[["sampleID"]])
     ))
     levels(sampleData[["sampleID"]]) <- levels(colData[["sampleID"]])
-    colData <- left_join(colData, sampleData, by = "sampleID")
+    colData <- leftJoin(colData, sampleData, by = "sampleID")
     assert(
         is(colData, "DataFrame"),
         hasRownames(colData)
