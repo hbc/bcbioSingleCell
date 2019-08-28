@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
       </span>
     </div>
 
@@ -113,9 +113,9 @@
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-2-0-2018-08-09" class="anchor"></a>bcbioSingleCell 0.2.0 (2018-08-09)</h2>
 <p>This is a significant maintenance release designed to simplify the package for long-term stability. Here we are removing code support for <a href="http://satijalab.org/seurat/">Seurat</a> and visualization of cell clustering. This functionality has been moved to the new <a href="https://pointillism.acidgenomics.com/">pointillism</a> package. We have streamlined <a href="https://bioinformatics.sph.harvard.edu/bcbioSingleCell/">bcbioSingleCell</a> to simply import <a href="https://bcbio-nextgen.readthedocs.io/">bcbio</a> single-cell data using the <code>bcbioSingleCell</code> constructor or <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger">Cell Ranger</a> data with the <code>readCellRanger</code> function. The package continues to provide quality control visualization (see <code>plotQC</code>) and low-quality cell removal with the <code>filterCells</code> function.</p>
-<div id="major-changes-10" class="section level3">
+<div id="major-changes-11" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes-10" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-11" class="anchor"></a>Major changes</h3>
 <ul>
 <li>Moved clustering and <code>seurat</code> object support to <a href="https://pointillism.acidgenomics.com/">pointillism</a>: <code>cellCountsPerCluster</code>, <code>cellTypesPerCluster</code>, <code>clusterCellCountsPerSample</code>, <code>fetchData</code> functions, <code>plotFeature</code> functions, <code>plotGene</code> functions, <code>plotMarker</code> functions, <code>plotPCA</code>, plotTSNE<code>,</code>plotUMAP`.</li>
 <li>Now requiring <a href="https://bioinformatics.sph.harvard.edu/bcbioBase/">bcbioBase</a> v0.4+ and <a href="https://basejump.acidgenomics.com/">basejump</a> v0.7+.</li>
@@ -128,9 +128,9 @@
 <li>Removed from exports (for simplicifcation): <code>plotClusters</code>, <code>plotFeatures</code>, <code>quantileHeatmap</code>, <code>readMarkers</code>, <code>readMarkersFile</code>.</li>
 </ul>
 </div>
-<div id="minor-changes-22" class="section level3">
+<div id="minor-changes-23" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-22" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-23" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>No longer exporting <code>mapCellsToSamples</code>. This is now only called internally.</li>
 <li>Updated documentation to use <a href="https://cran.r-project.org/package=roxygen2">roxygen2</a> v6.1.</li>
@@ -140,16 +140,16 @@
     <div id="bcbiosinglecell-0-2-1-2018-08-19" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-2-1-2018-08-19" class="anchor"></a>bcbioSingleCell 0.2.1 (2018-08-19)</h2>
-<div id="major-changes-9" class="section level3">
+<div id="major-changes-10" class="section level3">
 <h3 class="hasAnchor">
-<a href="#major-changes-9" class="anchor"></a>Major changes</h3>
+<a href="#major-changes-10" class="anchor"></a>Major changes</h3>
 <ul>
 <li>Moved clustering and marker templates to <a href="https://pointillism.acidgenomics.com/">pointillism</a> package, since all clustering code has been moved there. The quality control template using the <code>filterCells</code> function is still provided here.</li>
 </ul>
 </div>
-<div id="minor-changes-21" class="section level3">
+<div id="minor-changes-22" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-21" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-22" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>prepareSingleCellTemplate</code>: Improved internal code to use updated <code>prepareTemplate</code>, which has been migrated to <a href="https://basejump.acidgenomics.com/">basejump</a> package.</li>
