@@ -1,8 +1,3 @@
-## FIXME No zero count rows and columns.
-## FIXME Require valid names everywhere.
-
-
-
 #' bcbio single-cell RNA-seq data set
 #'
 #' `bcbioSingleCell` is an S4 class that extends `SingleCellExperiment`, and is
