@@ -80,7 +80,7 @@ NULL
         }
     ))
     out <- unlist(list, recursive = FALSE, use.names = FALSE)
-    out <- left_join(out, sampleData, by = "sampleID")
+    out <- leftJoin(out, sampleData, by = "sampleID")
     out
 }
 

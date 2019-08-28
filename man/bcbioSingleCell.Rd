@@ -67,7 +67,7 @@ read counts saved as a sparse matrix (\code{sparseMatrix}), sample metadata, and
 cell quality control metrics.
 }
 \note{
-Updated 2019-08-22.
+Updated 2019-08-27.
 }
 \section{Remote data}{
 

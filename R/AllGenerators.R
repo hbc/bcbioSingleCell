@@ -1,6 +1,6 @@
 #' @inherit bcbioSingleCell-class title description
 #' @author Michael Steinbaugh
-#' @note Updated 2019-08-22.
+#' @note Updated 2019-08-27.
 #' @export
 #'
 #' @inheritParams basejump::makeSingleCellExperiment
@@ -99,10 +99,11 @@ bcbioSingleCell <- function(
     yaml <- import(yamlFile)
 
     ## bcbio run information ---------------------------------------------------
-    dataVersions <- readDataVersions(file.path(projectDir, "data_versions.csv"))
+    dataVersions <-
+        importDataVersions(file.path(projectDir, "data_versions.csv"))
     assert(is(dataVersions, "DataFrame"))
     programVersions <-
-        readProgramVersions(file.path(projectDir, "programs.txt"))
+        importProgramVersions(file.path(projectDir, "programs.txt"))
     assert(is(dataVersions, "DataFrame"))
     log <- import(file.path(projectDir, "bcbio-nextgen.log"))
     ## This step enables our minimal dataset inside the package to pass checks.
@@ -136,7 +137,7 @@ bcbioSingleCell <- function(
     allSamples <- TRUE
     sampleData <- NULL
     if (isString(sampleMetadataFile)) {
-        sampleData <- readSampleData(sampleMetadataFile, lanes = lanes)
+        sampleData <- importSampleData(sampleMetadataFile, lanes = lanes)
         ## Error on incorrect reverse complement input.
         if ("sequence" %in% colnames(sampleData)) {
             sampleDirSequence <- str_extract(names(sampleDirs), "[ACGT]+$")
@@ -250,13 +251,13 @@ bcbioSingleCell <- function(
     }
     sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
     ## Need to ensure the `sampleID` factor levels match up, otherwise we'll get
-    ## a warning during the `left_join()` call below.
+    ## a warning during the `leftJjoin()` call below.
     assert(areSetEqual(
         x = levels(colData[["sampleID"]]),
         y = levels(sampleData[["sampleID"]])
     ))
     levels(sampleData[["sampleID"]]) <- levels(colData[["sampleID"]])
-    colData <- left_join(colData, sampleData, by = "sampleID")
+    colData <- leftJoin(colData, sampleData, by = "sampleID")
     assert(
         is(colData, "DataFrame"),
         hasRownames(colData)
