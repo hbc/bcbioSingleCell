@@ -1,3 +1,9 @@
+## bcbioSingleCell 0.4.3 (2019-08-27)
+
+### Minor changes
+
+- NAMESPACE and basejump dependency updates.
+
 ## bcbioSingleCell 0.4.2 (2019-08-22)
 
 ### Major changes

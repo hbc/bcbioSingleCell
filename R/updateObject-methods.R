@@ -99,7 +99,7 @@ NULL
             assert(is.factor(cell2sample))
             colData[["sampleID"]] <- cell2sample
             sampleData[["sampleID"]] <- rownames(sampleData)
-            colData <- left_join(x = colData, y = sampleData, by = "sampleID")
+            colData <- leftJoin(x = colData, y = sampleData, by = "sampleID")
             assert(
                 is(colData, "DataFrame"),
                 identical(rownames(colData), colnames(object))

@@ -2,24 +2,25 @@
 #'
 #' @importMethodsFrom basejump coerce
 #'
-#' @importFrom BiocGenerics cbind counts do.call lapply updateObject
+#' @importFrom BiocGenerics counts updateObject
 #' @importFrom BiocParallel bplapply bpmapply
 #' @importFrom IRanges DataFrameList
-#' @importFrom S4Vectors DataFrame SimpleList metadata metadata<-
+#' @importFrom S4Vectors DataFrame SimpleList cbind do.call lapply metadata
+#'   metadata<-
 #' @importFrom SummarizedExperiment assayNames assay assays assays<- colData
 #'   colData<- rowData rowData<- rowRanges rowRanges<-
 #' @importFrom acidplots acid_geom_abline acid_geom_label
 #'   acid_geom_label_average acid_geom_label_repel
 #' @importFrom basejump as_tibble calculateMetrics camelCase cell2sample
-#'   detectLanes droplevels emptyRanges formalsList import interestingGroups
-#'   interestingGroups<- left_join makeDimnames makeGRangesFromEnsembl
-#'   makeGRangesFromGFF makeLabel makeNames makeSingleCellExperiment
-#'   mapCellsToSamples markdownPlots matchArgsToDoCall matchInterestingGroups
-#'   metrics metricsCols minimalSampleData printString readSampleData realpath
-#'   sampleData sampleNames separator showSlotInfo standardizeCall
+#'   detectLanes droplevels emptyRanges formalsList import importSampleData
+#'   interestingGroups interestingGroups<- leftJoin makeDimnames
+#'   makeGRangesFromEnsembl makeGRangesFromGFF makeLabel makeNames
+#'   makeSingleCellExperiment mapCellsToSamples markdownPlots matchArgsToDoCall
+#'   matchInterestingGroups metrics metricsCols minimalSampleData printString
+#'   realpath sampleData sampleNames separator showSlotInfo standardizeCall
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
-#'   projectDir readDataVersions readProgramVersions runDate sampleDirs
+#'   importDataVersions importProgramVersions projectDir runDate sampleDirs
 #' @importFrom ggplot2 aes facet_wrap geom_boxplot geom_histogram geom_step
 #'   geom_violin ggplot labs scale_x_continuous scale_y_continuous stat_ecdf
 #' @importFrom ggridges geom_density_ridges
