@@ -76,6 +76,7 @@ Suggests:
     acidroxygen (>= 0.1),
     BiocStyle (>= 2.12),
     R.utils (>= 2.9),
+    knitr (>= 1.24),
     patrick (>= 0.0.1),
     rmarkdown (>= 1.14),
     roxygen2 (>= 6.1),
