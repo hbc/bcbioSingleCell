@@ -121,6 +121,7 @@ The papers and software cited in our workflows are available as a [shared librar
 [SureCell]: https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html
 [bcbio]: https://bcbio-nextgen.readthedocs.io/
 [bcl2fastq]: https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html
+[bioconda]: https://bioconda.github.io/
 [conda]: https://conda.io/
 [devtools]: https://cran.r-project.org/package=devtools
 [inDrops v3 index barcodes]: https://github.com/steinbaugh/koopa/blob/master/workflows/indrops/harvard_v3_sample_barcodes.csv
