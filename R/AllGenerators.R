@@ -137,7 +137,11 @@ bcbioSingleCell <- function(
     allSamples <- TRUE
     sampleData <- NULL
     if (isString(sampleMetadataFile)) {
-        sampleData <- importSampleData(sampleMetadataFile, lanes = lanes)
+        sampleData <- importSampleData(
+            file = sampleMetadataFile,
+            lanes = lanes,
+            pipeline = "bcbio"
+        )
         ## Error on incorrect reverse complement input.
         if ("sequence" %in% colnames(sampleData)) {
             sampleDirSequence <- str_extract(names(sampleDirs), "[ACGT]+$")
