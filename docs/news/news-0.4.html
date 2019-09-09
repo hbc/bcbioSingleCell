@@ -123,9 +123,9 @@
 <li>Offloaded plotting functions to acidplots, so we can use some of this code in a shared manner with objects imported from 10X Genomics Chromium.</li>
 </ul>
 </div>
-<div id="minor-changes-3" class="section level3">
+<div id="minor-changes-4" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-4" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Improved documentation consistency by using shared roxygen from acidroxygen package.</li>
 <li>Updated basejump and bcbio R package dependencies.</li>
@@ -135,9 +135,9 @@
     <div id="bcbiosinglecell-0-4-1-2019-08-20" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-4-1-2019-08-20" class="anchor"></a>bcbioSingleCell 0.4.1 (2019-08-20)</h2>
-<div id="minor-changes-2" class="section level3">
+<div id="minor-changes-3" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-3" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>
 <code>plotReadsPerCell</code>: Reworked internal code to use <code>DataFrame</code> primarily instead of <code>tbl_df</code>, so we can remove dplyr dependency.</li>
@@ -157,9 +157,9 @@
 <code>bcbioSingleCell</code>: Simplifed internal <code>colData</code> handling, calling <code>calculateMetrics</code> after creating <code>SingleCellExperiment</code> with <code>makeSingleCellExperiment</code>. This improves consistency with Chromium package and enables better preparation of <code>rowRanges</code> containing spike-ins and transgenes.</li>
 </ul>
 </div>
-<div id="minor-changes-1" class="section level3">
+<div id="minor-changes-2" class="section level3">
 <h3 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h3>
 <ul>
 <li>Moved <code>metricsCols</code> global to basejump, so we can share with Chromium.</li>
 <li>Improved generator consistency with other basejump and bcbio R packages.</li>
@@ -169,11 +169,24 @@
     <div id="bcbiosinglecell-0-4-3-2019-08-27" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bcbiosinglecell-0-4-3-2019-08-27" class="anchor"></a>bcbioSingleCell 0.4.3 (2019-08-27)</h2>
+<div id="minor-changes-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h3>
+<ul>
+<li>NAMESPACE and basejump dependency updates.</li>
+</ul>
+</div>
+</div>
+    <div id="bcbiosinglecell-0-4-4-2019-09-09" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bcbiosinglecell-0-4-4-2019-09-09" class="anchor"></a>bcbioSingleCell 0.4.4 (2019-09-09)</h2>
 <div id="minor-changes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h3>
 <ul>
-<li>NAMESPACE and basejump dependency updates.</li>
+<li>
+<code>bcbioSingleCell</code>: Internal generator now calls <code>importSampleData</code> using <code>pipeline = "bcbio"</code> argument, so we don’t run into breaking changes when handling user metadata in a future basejump update.</li>
+<li>Updated basejump dependency versions.</li>
 </ul>
 </div>
 </div>
@@ -187,6 +200,7 @@
         <li><a href="#bcbiosinglecell-0-4-1-2019-08-20">0.4.1</a></li>
         <li><a href="#bcbiosinglecell-0-4-2-2019-08-22">0.4.2</a></li>
         <li><a href="#bcbiosinglecell-0-4-3-2019-08-27">0.4.3</a></li>
+        <li><a href="#bcbiosinglecell-0-4-4-2019-09-09">0.4.4</a></li>
       </ul>
     </div>
   </div>

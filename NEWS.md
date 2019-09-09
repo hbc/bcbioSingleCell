@@ -1,3 +1,12 @@
+## bcbioSingleCell 0.4.4 (2019-09-09)
+
+### Minor changes
+
+- `bcbioSingleCell`: Internal generator now calls `importSampleData` using
+  `pipeline = "bcbio"` argument, so we don't run into breaking changes when
+  handling user metadata in a future basejump update.
+- Updated basejump dependency versions.
+
 ## bcbioSingleCell 0.4.3 (2019-08-27)
 
 ### Minor changes
