@@ -3,6 +3,7 @@
 [![Repo status: active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Travis CI build status](https://travis-ci.org/hbc/bcbioSingleCell.svg?branch=master)](https://travis-ci.org/hbc/bcbioSingleCell)
 [![AppVeyor CI build status](https://ci.appveyor.com/api/projects/status/npy0mhfjn9saqv4g/branch/master?svg=true)](https://ci.appveyor.com/project/mjsteinbaugh/bcbiosinglecell/branch/master)
+[![Anaconda version](https://anaconda.org/bioconda/r-bcbiosinglecell/badges/version.svg) ![Anaconda latest release date](https://anaconda.org/bioconda/r-bcbiosinglecell/badges/latest_release_date.svg) ![Anaconda downloads](https://anaconda.org/bioconda/r-bcbiosinglecell/badges/downloads.svg)](https://anaconda.org/bioconda/r-bcbiosinglecell)
 
 [R][] package for [bcbio][] single-cell RNA-seq analysis.
 
@@ -33,6 +34,14 @@ if (!requireNamespace("BiocManager", quietly = TRUE)) {
     install.packages("BiocManager")
 }
 BiocManager::valid()
+```
+
+### [conda][] method
+
+Configure [conda][] to use the [bioconda][] channels.
+
+```sh
+conda install -c bioconda r-bcbiosinglecell
 ```
 
 ## Load [bcbio][] single-cell RNA-seq data
@@ -112,6 +121,7 @@ The papers and software cited in our workflows are available as a [shared librar
 [SureCell]: https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html
 [bcbio]: https://bcbio-nextgen.readthedocs.io/
 [bcl2fastq]: https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html
+[bioconda]: https://bioconda.github.io/
 [conda]: https://conda.io/
 [devtools]: https://cran.r-project.org/package=devtools
 [inDrops v3 index barcodes]: https://github.com/steinbaugh/koopa/blob/master/workflows/indrops/harvard_v3_sample_barcodes.csv
