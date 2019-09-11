@@ -1,7 +1,3 @@
-## FIXME bioc-devel is returning "DFrame" instead of "DataFrame"...
-
-
-
 #' bcbio single-cell RNA-seq data set
 #'
 #' `bcbioSingleCell` is an S4 class that extends `SingleCellExperiment`, and is
@@ -56,7 +52,6 @@ setValidity(
         if (!isTRUE(ok)) return(ok)
 
         ## Metadata ------------------------------------------------------------
-        ## FIXME Improve the verbosity of the output here, for debugging.
         ok <- validateClasses(
             object = metadata,
             expected = list(
