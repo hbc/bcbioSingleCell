@@ -101,7 +101,7 @@ NULL
 ) {
     assert(
         is(data, "DataFrame"),
-        isGGScale(color, scale = "discrete", aes = "colour", nullOK = TRUE)
+        isGGScale(color, scale = "discrete", aes = "color", nullOK = TRUE)
     )
     data <- as_tibble(data, rownames = NULL)
     p <- ggplot(
@@ -200,7 +200,7 @@ NULL
 ) {
     assert(
         is(data, "DataFrame"),
-        isGGScale(color, scale = "discrete", aes = "colour", nullOK = TRUE)
+        isGGScale(color, scale = "discrete", aes = "color", nullOK = TRUE)
     )
     data <- as_tibble(data, rownames = NULL)
     p <- ggplot(
