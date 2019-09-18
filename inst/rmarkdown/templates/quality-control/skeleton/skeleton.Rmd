@@ -201,7 +201,7 @@ plotFeaturesPerCell(
 If we graph out the total number of UMI counts per cell vs. the genes detected per cell, we can assess whether there is a large population of low quality cells with low counts and/or gene detection.
 
 ```{r plot-counts-vs-features}
-plotCountsVsFeatures(object = object)
+plotCountsVsFeatures(object)
 ```
 
 # Novelty score {.tabset}
