@@ -1,10 +1,12 @@
 ---
-## Updated 2019-08-12.
+## Updated 2019-09-17.
 params:
   title: "Quality control and filtering"
-  bcbiosinglecell_file: "rds/YYYY-MM-DD/object.rds"
+  
+  ## bcbioSingleCell object.
+  bcb_file: "data/YYYY-MM-DD/bcb.rds"
  
-  ## Counts: Expected number of UMI-disambiguated counts per cell. 
+  ## Counts: Expected number of UMI-disambiguated counts per cell.
   min_counts: 1000
   max_counts: !r Inf
   
@@ -27,7 +29,7 @@ params:
   ## Not recommended by default, unless you're sure of the capture.
   n_cells: !r Inf
   
-  data_dir: !r file.path("rds", Sys.Date())
+  data_dir: !r file.path("data", Sys.Date())
   output_dir: !r file.path("results", Sys.Date(), "quality-control")
 
 title: "`r params$title`"
@@ -37,9 +39,9 @@ bibliography: bibliography.bib
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-library(bcbioSingleCell)
 library(ggplot2)
-prepareTemplate(package = "bcbioSingleCell")
+library(bcbioSingleCell)
+prepareTemplate()
 source("_setup.R")
 ```
 
@@ -49,7 +51,7 @@ source("_setup.R")
 # Load bcbioSingleCell object
 
 ```{r load-object}
-file <- params$bcbiornaseq_file
+file <- params$bcb_file
 object <- import(file)
 name <- basenameSansExt(file)
 rm(file)
@@ -199,7 +201,7 @@ plotFeaturesPerCell(
 If we graph out the total number of UMI counts per cell vs. the genes detected per cell, we can assess whether there is a large population of low quality cells with low counts and/or gene detection.
 
 ```{r plot-counts-vs-features}
-plotCountsVsFeatures(object = object)
+plotCountsVsFeatures(object)
 ```
 
 # Novelty score {.tabset}
@@ -310,4 +312,7 @@ export(
 ```
 
 ```{r footer, child="_footer.Rmd"}
+```
+
+```{r links, child="_links.Rmd"}
 ```
