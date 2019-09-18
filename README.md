@@ -112,17 +112,17 @@ validObject(object)
 
 The papers and software cited in our workflows are available as a [shared library](https://paperpile.com/shared/C8EMxl) on [Paperpile][].
 
-[BiocManager]: https://cran.r-project.org/package=BiocManager
-[Bioconductor]: https://bioconductor.org/
-[Chromium]: https://www.10xgenomics.com/solutions/single-cell/
-[Paperpile]: https://paperpile.com/
-[R]: https://www.r-project.org/
-[SCE]: https://bioconductor.org/packages/SingleCellExperiment/
-[SureCell]: https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html
 [bcbio]: https://bcbio-nextgen.readthedocs.io/
 [bcl2fastq]: https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html
+[biocmanager]: https://cran.r-project.org/package=BiocManager
 [bioconda]: https://bioconda.github.io/
+[bioconductor]: https://bioconductor.org/
+[chromium]: https://www.10xgenomics.com/solutions/single-cell/
 [conda]: https://conda.io/
 [devtools]: https://cran.r-project.org/package=devtools
-[inDrops v3 index barcodes]: https://github.com/steinbaugh/koopa/blob/master/workflows/indrops/harvard_v3_sample_barcodes.csv
-[inDrops]: https://github.com/indrops/indrops/
+[indrops v3 index barcodes]: https://github.com/steinbaugh/koopa/blob/master/workflows/indrops/harvard_v3_sample_barcodes.csv
+[indrops]: https://github.com/indrops/indrops/
+[paperpile]: https://paperpile.com/
+[r]: https://www.r-project.org/
+[sce]: https://bioconductor.org/packages/SingleCellExperiment/
+[surecell]: https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html
