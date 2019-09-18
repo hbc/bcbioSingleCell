@@ -1,3 +1,11 @@
+## bcbioSingleCell 0.4.5 (2019-09-17)
+
+### Minor changes
+
+- Switched QC template to use `bcb_file` as main file input, similar to
+  bcbioRNASeq QC template.
+- Updated lintr config.
+
 ## bcbioSingleCell 0.4.4 (2019-09-09)
 
 ### Minor changes
@@ -318,7 +326,7 @@ removal with the `filterCells` function.
   `cellCountsPerCluster`, `cellTypesPerCluster`,
   `clusterCellCountsPerSample`, `fetchData` functions, `plotFeature`
   functions, `plotGene` functions, `plotMarker` functions, `plotPCA`,
-  plotTSNE`, `plotUMAP`.
+  `plotTSNE`, `plotUMAP`.
 - Now requiring [bcbioBase][] v0.4+ and [basejump][] v0.7+.
 
 ### Defunct functions
@@ -685,7 +693,7 @@ removal with the `filterCells` function.
 - Fixed y-axis scale for histogram geom in QC plots.
 - Prefiltering of very low quality barcodes with no UMIs or genes is now always
   applied. This helps avoid unwanted downstream errors with zero count barcodes.
-- Added boxplot geom support for `plotReadsPerCell().
+- Added boxplot geom support for `plotReadsPerCell()`.
 - `plotQC` geom argument is now more consistent across the paneled plots.
 - Fixed facet wrapping for aggregate samples in the QC plots.
 - Added `interestingGroups` support to `plotZerosVsDepth`, matching the other
@@ -953,7 +961,7 @@ removal with the `filterCells` function.
   arguments, where applicable.
 - Offloaded base `plotQuantileHeatmap` functionality into basejump, for use in
   [bcbioRNASeq][] package.
-- Added unit test data for `loadSingleCell().
+- Added unit test data for `loadSingleCell()`.
 - Added additional unit tests to improve code coverage.
 
 ## bcbioSingleCell 0.0.25 (2017-12-11)
@@ -1397,51 +1405,51 @@ removal with the `filterCells` function.
 
 - Initial draft release.
 
-[10X Genomics]: https://www.10xgenomics.com/
-[Acid Genomics]: https://acidgenomics.com/
+[10x genomics]: https://www.10xgenomics.com/
+[acid genomics]: https://acidgenomics.com/
 [acidplots]: https://acidplots.acidgenomics.com/
 [basejump]: https://basejump.acidgenomics.com/
 [bcbio]: https://bcbio-nextgen.readthedocs.io/
-[bcbioBase]: https://bioinformatics.sph.harvard.edu/bcbioBase/
-[bcbioRNASeq]: https://bioinformatics.sph.harvard.edu/bcbioRNASeq/
-[bcbioSingleCell]: https://bioinformatics.sph.harvard.edu/bcbioSingleCell/
-[BiocInstaller]: https://bioconductor.org/packages/BiocInstaller/
-[BiocManager]: https://bioconductor.org/packages/BiocManager/
-[Bioconductor]: https://bioconductor.org/
-[BiocParallel]: https://bioconductor.org/packages/BiocParallel/
-[Cell Ranger]: https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger
-[Chromium]: https://chromium.acidgenomics.com/
+[bcbiobase]: https://bioinformatics.sph.harvard.edu/bcbioBase/
+[bcbiornaseq]: https://bioinformatics.sph.harvard.edu/bcbioRNASeq/
+[bcbiosinglecell]: https://bioinformatics.sph.harvard.edu/bcbioSingleCell/
+[biocinstaller]: https://bioconductor.org/packages/BiocInstaller/
+[biocmanager]: https://bioconductor.org/packages/BiocManager/
+[bioconductor]: https://bioconductor.org/
+[biocparallel]: https://bioconductor.org/packages/BiocParallel/
+[cell ranger]: https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger
+[chromium]: https://chromium.acidgenomics.com/
 [conda]: https://conda.io/
 [covr]: https://github.com/jimhester/covr/
-[DESeq2]: https://bioconductor.org/packages/DESeq2/
+[deseq2]: https://bioconductor.org/packages/DESeq2/
 [dplyr]: https://dplyr.tidyverse.org/
-[edgeR]: https://bioconductor.org/packages/edgeR/
-[Ensembl]: https://www.ensembl.org/
+[edger]: https://bioconductor.org/packages/edgeR/
+[ensembl]: https://www.ensembl.org/
 [ensembldb]: https://bioconductor.org/packages/ensembldb/
 [ggplot2]: https://ggplot2.tidyverse.org/
-[GitHub]: https://github.com/
-[Google Sheets]: https://www.google.com/sheets/
-[inDrop]: https://1cell-bio.com/
+[github]: https://github.com/
+[google sheets]: https://www.google.com/sheets/
+[indrop]: https://1cell-bio.com/
 [lintr]: https://github.com/jimhester/lintr/
-[macOS]: https://www.apple.com/macos/
+[macos]: https://www.apple.com/macos/
 [monocle]: http://cole-trapnell-lab.github.io/monocle-release/
 [pkgdown]: https://pkgdown.r-lib.org/
 [pointillism]: https://pointillism.acidgenomics.com/
-[R Markdown]: http://rmarkdown.rstudio.com/
-[R]: https://www.r-project.org/
+[r markdown]: http://rmarkdown.rstudio.com/
+[r]: https://www.r-project.org/
 [rlang]: http://rlang.r-lib.org/
 [roxygen2]: https://cran.r-project.org/package=roxygen2
 [scater]: https://bioconductor.org/packages/scater/
 [scde]: https://bioconductor.org/packages/scde/
 [scone]: https://bioconductor.org/packages/scone/
 [scran]: https://bioconductor.org/packages/scran/
-[Seurat]: http://satijalab.org/seurat/
-[SummarizedExperiment]: https://bioconductor.org/packages/SummarizedExperiment/
-[SureCell]: https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html
+[seurat]: http://satijalab.org/seurat/
+[summarizedexperiment]: https://bioconductor.org/packages/SummarizedExperiment/
+[surecell]: https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html
 [testthat]: https://github.com/hadley/testthat/
 [tidyeval]: https://dplyr.tidyverse.org/articles/programming.html
 [tidyverse]: http://www.tidyverse.org/
-[Travis CI]: https://travis-ci.org/
+[travis ci]: https://travis-ci.org/
 [viridis]: https://cran.r-project.org/package=viridis
 [zinbwave]: https://bioconductor.org/packages/zinbwave/
-[zingeR]: https://github.com/statOmics/zingeR/
+[zinger]: https://github.com/statOmics/zingeR/
