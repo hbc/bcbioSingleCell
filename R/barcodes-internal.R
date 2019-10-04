@@ -49,7 +49,6 @@
     }
     assert(
         is.list(list),
-        isNonEmpty(list),
         hasNames(list)
     )
     list <- mapply(
