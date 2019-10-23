@@ -54,12 +54,12 @@ LazyData: false
 Depends:
     R (>= 3.6),
     SingleCellExperiment (>= 1.6),
-    basejump (>= 0.11.15)
+    basejump (>= 0.11.19)
 Imports:
     acidplots (>= 0.2.16),
     bcbioBase (>= 0.6.10),
     bioverbs (>= 0.2.10),
-    goalie (>= 0.3.8),
+    goalie (>= 0.4.0),
     BiocGenerics (>= 0.30),
     BiocParallel (>= 1.18),
     IRanges (>= 2.18.2),
