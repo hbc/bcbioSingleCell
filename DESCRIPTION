@@ -93,6 +93,7 @@ Remotes:
 biocViews:
     DataImport,
     DataRepresentation,
+    ImmunoOncology,
     QualityControl,
     ReportWriting,
     RNASeq,
