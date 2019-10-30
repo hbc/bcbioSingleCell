@@ -36,12 +36,29 @@ if (!requireNamespace("BiocManager", quietly = TRUE)) {
 BiocManager::valid()
 ```
 
-### [conda][] method
+### [Conda][] method
 
-Configure [conda][] to use the [bioconda][] channels.
+Configure [Conda][] to use the [Bioconda][] channels.
 
 ```sh
-conda install -c bioconda r-bcbiosinglecell
+# Don't install recipe into base environment.
+name="r-bcbiosinglecell"
+conda create --name="$name" "$name"
+conda activate "$name"
+R
+```
+
+### [Docker][] method
+
+```sh
+image="acidgenomics/bcbiosinglecell"
+workdir="/work"
+docker pull "$image"
+docker run -it \
+    --volume="${PWD}:${workdir}" \
+    --workdir="$workdir" \
+    "$image" \
+    R
 ```
 
 ## Load [bcbio][] single-cell RNA-seq data
@@ -120,6 +137,7 @@ The papers and software cited in our workflows are available as a [shared librar
 [chromium]: https://www.10xgenomics.com/solutions/single-cell/
 [conda]: https://conda.io/
 [devtools]: https://cran.r-project.org/package=devtools
+[docker]: https://www.docker.com/
 [indrops v3 index barcodes]: https://github.com/steinbaugh/koopa/blob/master/workflows/indrops/harvard_v3_sample_barcodes.csv
 [indrops]: https://github.com/indrops/indrops/
 [paperpile]: https://paperpile.com/
