@@ -1,3 +1,14 @@
+## bcbioSingleCell 0.4.6 (2019-10-30)
+
+### Minor changes
+
+- Updated S4 validity checks and unit tests to support Bioconductor 3.10.
+  Internally, we have to adjust checks against `DataFrame` class to also look
+  for `DFrame` class, which has changed in latest S4Vectors update. See related
+  update in bcbioRNASeq package.
+- Full backward compatiblity with Bioconductor 3.9 is currently maintained.
+- Updated basejump dependency versions.
+
 ## bcbioSingleCell 0.4.5 (2019-09-17)
 
 ### Minor changes
