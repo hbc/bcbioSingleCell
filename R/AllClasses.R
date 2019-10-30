@@ -6,7 +6,7 @@
 #' cell quality control metrics.
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
-#' @note Updated 2019-09-09.
+#' @note Updated 2019-10-30.
 #' @export
 setClass(
     Class = "bcbioSingleCell",
@@ -52,13 +52,17 @@ setValidity(
         if (!isTRUE(ok)) return(ok)
 
         ## Metadata ------------------------------------------------------------
+        df <- "DataFrame"
+        if (packageVersion("S4Vectors") >= "0.23") {
+            df <- c("DFrame", df)
+        }
         ok <- validateClasses(
             object = metadata,
             expected = list(
                 allSamples = "logical",
                 bcbioCommandsLog = "character",
                 bcbioLog = "character",
-                dataVersions = "DataFrame",
+                dataVersions = df,
                 date = "Date",
                 ensemblRelease = "integer",
                 genomeBuild = "character",
@@ -68,7 +72,7 @@ setValidity(
                 level = "character",
                 organism = "character",
                 pipeline = "character",
-                programVersions = "DataFrame",
+                programVersions = df,
                 projectDir = "character",
                 runDate = "Date",
                 sampleDirs = "character",
