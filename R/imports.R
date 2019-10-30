@@ -26,8 +26,8 @@
 #' @importFrom ggridges geom_density_ridges
 #' @importFrom goalie allAreDirectories allAreFiles areDisjointSets areSetEqual
 #'   assert hasLength hasNames hasRownames hasValidDimnames isADirectory isAFile
-#'   isAURL isAny isCharacter isDirectory isFile isFlag isGGScale isInt
-#'   isNonEmpty isString isSubset validate validateClasses
+#'   isAURL isAny isCharacter isDirectory isFile isFlag isGGScale isInt isString
+#'   isSubset validate validateClasses
 #' @importFrom graphics hist
 #' @importFrom methods as as<- is new setClass show slot slot<- validObject
 #'   .hasSlot
