@@ -1,6 +1,20 @@
+## FIXME Check that sampleNames return is what we expected.
+
+## multiplexed_AAAAAAAA
+## "rep_1"
+
+
+
 context("filterCells")
 
 bcb <- calculateMetrics(bcb)
+
+test_that("sampleNames", {
+    expect_identical(
+        object = sampleNames(bcb),
+        expected = c("multiplexed_AAAAAAAA" = "rep_1")
+    )
+})
 
 ## Expecting an object with the same dimensions by default.
 test_that("No filtering", {
