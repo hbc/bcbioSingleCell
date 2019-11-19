@@ -1,10 +1,3 @@
-## FIXME Check that sampleNames return is what we expected.
-
-## multiplexed_AAAAAAAA
-## "rep_1"
-
-
-
 context("filterCells")
 
 bcb <- calculateMetrics(bcb)
