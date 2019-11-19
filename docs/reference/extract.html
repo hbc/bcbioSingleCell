@@ -209,8 +209,8 @@ of <code><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperim
 <span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>bcb</span>))
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>cells</span>)</div><div class='output co'>#&gt; [1] "AAACACTA_CTTCGATT" "AAACTACA_CCACATTA" "AACTGCCT_GCAAGGAC"
 #&gt; [4] "AAGAAGGT_TCTGTGGT" "AAGCCTTC_TAAATAGG" "AATAAGGA_CCACATTA"</div><div class='input'><span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>bcb</span>))
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000071082" "ENSG00000100316" "ENSG00000106631" "ENSG00000108821"
-#&gt; [5] "ENSG00000112306" "ENSG00000115414"</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000071082" "ENSG00000100316" "ENSG00000106631"
+#&gt; [4] "ENSG00000108821" "ENSG00000112306" "ENSG00000115414"</div><div class='input'>
 <span class='co'>## Subset by cell identifiers.</span>
 <span class='no'>bcb</span>[, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.3.19
 #&gt; uploadDir: /data00/draco/acidbase/packages/bcbioSingleCell/inst/extdata/indrops
@@ -224,12 +224,14 @@ of <code><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperim
 #&gt; dim: 50 6 
 #&gt; metadata(27): allSamples bcbioCommandsLog ... yaml subset
 #&gt; assays(1): counts
-#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ... ENSG00000269028
-#&gt;   ENSG00000282105
-#&gt; rowData names(8): broadClass description ... geneName seqCoordSystem
-#&gt; colnames(6): AAACACTA_CTTCGATT AAACTACA_CCACATTA ... AAGCCTTC_TAAATAGG
-#&gt;   AATAAGGA_CCACATTA
-#&gt; colData names(15): aggregate description ... sampleName sequence
+#&gt; rownames(50): ENSG00000071082 ENSG00000100316 ...
+#&gt;   ENSG00000269028 ENSG00000282105
+#&gt; rowData names(8): broadClass description ... geneName
+#&gt;   seqCoordSystem
+#&gt; colnames(6): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
+#&gt;   AAGCCTTC_TAAATAGG AATAAGGA_CCACATTA
+#&gt; colData names(15): aggregate description ... sampleName
+#&gt;   sequence
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):
 #&gt; altExpNames(0):</div><div class='input'>
@@ -246,12 +248,14 @@ of <code><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperim
 #&gt; dim: 6 100 
 #&gt; metadata(27): allSamples bcbioCommandsLog ... yaml subset
 #&gt; assays(1): counts
-#&gt; rownames(6): ENSG00000071082 ENSG00000100316 ... ENSG00000112306
-#&gt;   ENSG00000115414
-#&gt; rowData names(8): broadClass description ... geneName seqCoordSystem
+#&gt; rownames(6): ENSG00000071082 ENSG00000100316 ...
+#&gt;   ENSG00000112306 ENSG00000115414
+#&gt; rowData names(8): broadClass description ... geneName
+#&gt;   seqCoordSystem
 #&gt; colnames(100): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
 #&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
-#&gt; colData names(15): aggregate description ... sampleName sequence
+#&gt; colData names(15): aggregate description ... sampleName
+#&gt;   sequence
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):
 #&gt; altExpNames(0):</div><div class='input'>
@@ -268,12 +272,14 @@ of <code><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperim
 #&gt; dim: 6 6 
 #&gt; metadata(27): allSamples bcbioCommandsLog ... yaml subset
 #&gt; assays(1): counts
-#&gt; rownames(6): ENSG00000071082 ENSG00000100316 ... ENSG00000112306
-#&gt;   ENSG00000115414
-#&gt; rowData names(8): broadClass description ... geneName seqCoordSystem
-#&gt; colnames(6): AAACACTA_CTTCGATT AAACTACA_CCACATTA ... AAGCCTTC_TAAATAGG
-#&gt;   AATAAGGA_CCACATTA
-#&gt; colData names(15): aggregate description ... sampleName sequence
+#&gt; rownames(6): ENSG00000071082 ENSG00000100316 ...
+#&gt;   ENSG00000112306 ENSG00000115414
+#&gt; rowData names(8): broadClass description ... geneName
+#&gt;   seqCoordSystem
+#&gt; colnames(6): AAACACTA_CTTCGATT AAACTACA_CCACATTA ...
+#&gt;   AAGCCTTC_TAAATAGG AATAAGGA_CCACATTA
+#&gt; colData names(15): aggregate description ... sampleName
+#&gt;   sequence
 #&gt; reducedDimNames(0):
 #&gt; spikeNames(0):
 #&gt; altExpNames(0):</div></pre>

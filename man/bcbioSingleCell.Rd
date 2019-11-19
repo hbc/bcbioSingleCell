@@ -4,11 +4,19 @@
 \alias{bcbioSingleCell}
 \title{bcbio single-cell RNA-seq data set}
 \usage{
-bcbioSingleCell(uploadDir, sampleMetadataFile = NULL, organism = NULL,
-  ensemblRelease = NULL, genomeBuild = NULL, gffFile = NULL,
-  transgeneNames = NULL, spikeNames = NULL,
+bcbioSingleCell(
+  uploadDir,
+  sampleMetadataFile = NULL,
+  organism = NULL,
+  ensemblRelease = NULL,
+  genomeBuild = NULL,
+  gffFile = NULL,
+  transgeneNames = NULL,
+  spikeNames = NULL,
   interestingGroups = "sampleName",
-  BPPARAM = BiocParallel::SerialParam(), ...)
+  BPPARAM = BiocParallel::SerialParam(),
+  ...
+)
 }
 \arguments{
 \item{uploadDir}{\code{character(1)}.
@@ -49,7 +57,7 @@ Groups of interest to use for visualization.
 Corresponds to factors describing the columns of the object.}
 
 \item{BPPARAM}{
-    An optional \code{\link{BiocParallelParam}} instance
+    An optional \code{\link[BiocParallel]{BiocParallelParam}} instance
     determining the parallel back-end to be used during evaluation, or a
     \code{list} of \code{BiocParallelParam} instances, to be applied in
     sequence for nested calls to \pkg{BiocParallel} functions.
