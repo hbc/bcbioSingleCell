@@ -1,6 +1,6 @@
 #' @inherit bcbioSingleCell-class title description
 #' @author Michael Steinbaugh
-#' @note Updated 2019-08-27.
+#' @note Updated 2020-01-20.
 #' @export
 #'
 #' @inheritParams basejump::makeSingleCellExperiment
@@ -40,36 +40,8 @@ bcbioSingleCell <- function(
     transgeneNames = NULL,
     spikeNames = NULL,
     interestingGroups = "sampleName",
-    BPPARAM = BiocParallel::SerialParam(),  # nolint
-    ...
+    BPPARAM = BiocParallel::SerialParam()  # nolint
 ) {
-    sampleData <- NULL
-
-    ## Legacy arguments --------------------------------------------------------
-    ## nocov start
-    dots <- list(...)
-    call <- match.call()
-    ## ensemblVersion
-    if ("ensemblVersion" %in% names(call)) {
-        stop("Use 'ensemblRelease' instead of 'ensemblVersion'.")
-    }
-    ## gtfFile
-    if ("gtfFile" %in% names(call)) {
-        stop("Use 'gffFile' instead of 'gtfFile'.")
-    }
-    ## annotable
-    if ("annotable" %in% names(call)) {
-        stop("Use 'gffFile' instead of 'annotable'.")
-    }
-    ## Error on unsupported arguments.
-    assert(isSubset(
-        x = setdiff(names(call), ""),
-        y = names(formals())
-    ))
-    rm(call)
-    ## nocov end
-
-    ## Assert checks -----------------------------------------------------------
     assert(
         isADirectory(uploadDir),
         isString(sampleMetadataFile, nullOK = TRUE),
@@ -86,19 +58,16 @@ bcbioSingleCell <- function(
         isAFile(gffFile) || isAURL(gffFile)
     }
 
-    ## Directory paths ---------------------------------------------------------
+    cli_h1("Importing bcbio-nextgen single-cell RNA-seq run")
+    sampleData <- NULL
+
+    ## Run info ---------------------------------------------------------------
     uploadDir <- realpath(uploadDir)
     projectDir <- projectDir(uploadDir)
     sampleDirs <- sampleDirs(uploadDir)
-
-    ## Sequencing lanes --------------------------------------------------------
     lanes <- detectLanes(sampleDirs)
-
-    ## Project summary YAML ----------------------------------------------------
     yamlFile <- file.path(projectDir, "project-summary.yaml")
     yaml <- import(yamlFile)
-
-    ## bcbio run information ---------------------------------------------------
     dataVersions <-
         importDataVersions(file.path(projectDir, "data_versions.csv"))
     assert(is(dataVersions, "DataFrame"))
@@ -110,7 +79,7 @@ bcbioSingleCell <- function(
     tryCatch(
         expr = assert(isCharacter(log)),
         error = function(e) {
-            message("'bcbio-nextgen.log' file is empty.")
+            cli_alert_warning("{.file bcbio-nextgen.log} file is empty.")
         }
     )
     commandsLog <- import(file.path(projectDir, "bcbio-nextgen-commands.log"))
@@ -118,7 +87,9 @@ bcbioSingleCell <- function(
     tryCatch(
         expr = assert(isCharacter(commandsLog)),
         error = function(e) {
-            message("'bcbio-nextgen-commands.log' file is empty.")
+            cli_alert_warning(
+                "{.file bcbio-nextgen-commands.log} file is empty."
+            )
         }
     )
     cutoff <- getBarcodeCutoffFromCommands(commandsLog)
@@ -133,7 +104,8 @@ bcbioSingleCell <- function(
         FUN.VALUE = logical(1L)
     ))
 
-    ## User-defined sample metadata --------------------------------------------
+    ## Sample metadata ---------------------------------------------------------
+    cli_h2("Sample metadata")
     allSamples <- TRUE
     sampleData <- NULL
     if (isString(sampleMetadataFile)) {
@@ -161,29 +133,22 @@ bcbioSingleCell <- function(
         ## Allow sample selection by with this file.
         if (nrow(sampleData) < length(sampleDirs)) {
             sampleDirs <- sampleDirs[rownames(sampleData)]
-            message(sprintf(
-                fmt = "Loading a subset of samples: %s.",
+            cli_alert(sprintf(
+                fmt = "Loading a subset of samples: {.var %s}.",
                 toString(basename(sampleDirs), width = 100L)
             ))
             allSamples <- FALSE
         }
     }
 
-    ## Unfiltered cellular barcode distributions -------------------------------
-    cbList <- .importReads(
-        sampleDirs = sampleDirs,
-        BPPARAM = BPPARAM
-    )
-
-    ## Assays ------------------------------------------------------------------
+    ## Assays (counts) ---------------------------------------------------------
+    cli_h2("Counts")
     ## Note that we're now allowing transcript-level counts.
-    counts <- .importCounts(
-        sampleDirs = sampleDirs,
-        BPPARAM = BPPARAM
-    )
+    counts <- .importCounts(sampleDirs = sampleDirs, BPPARAM = BPPARAM)
     assert(hasValidDimnames(counts))
 
-    ## Row data ----------------------------------------------------------------
+    ## Row data (genes/transcripts) --------------------------------------------
+    cli_h2("Feature metadata")
     ## Annotation priority:
     ## 1. AnnotationHub.
     ##    - Requires `organism` to be declared.
@@ -193,7 +158,7 @@ bcbioSingleCell <- function(
     ##    complex datasets (e.g. multiple organisms).
     if (isString(organism) && is.numeric(ensemblRelease)) {
         ## AnnotationHub (ensembldb).
-        message("Using 'makeGRangesFromEnsembl()' for annotations.")
+        cli_alert("{.fun makeGRangesFromEnsembl}")
         rowRanges <- makeGRangesFromEnsembl(
             organism = organism,
             level = level,
@@ -207,11 +172,11 @@ bcbioSingleCell <- function(
             gffFile <- getGTFFileFromYAML(yaml)
         }
         if (!is.null(gffFile)) {
-            message("Using 'makeGRangesFromGFF()' for annotations.")
+            cli_alert("{.fun makeGRangesFromGFF}")
             gffFile <- realpath(gffFile)
             rowRanges <- makeGRangesFromGFF(file = gffFile, level = level)
         } else {
-            message("Slotting empty ranges into 'rowRanges()'.")
+            cli_alert_warning("Slotting empty ranges into {.fun rowRanges}.")
             rowRanges <- emptyRanges(rownames(counts))
         }
     }
@@ -226,15 +191,16 @@ bcbioSingleCell <- function(
     }
 
     ## Column data -------------------------------------------------------------
+    cli_h2("Column data")
     colData <- DataFrame(row.names = colnames(counts))
     ## Generate automatic sample metadata, if necessary.
     if (is.null(sampleData)) {
         if (isTRUE(multiplexed)) {
             ## Multiplexed samples without user-defined metadata.
-            message(sprintf(
+            cli_alert_warning(sprintf(
                 fmt = paste0(
-                    "'sampleMetadataFile' is recommended for ",
-                    "multiplexed samples (e.g. %s)."
+                    "{.var sampleMetadataFile} is recommended for ",
+                    "multiplexed samples (e.g. {.val %s})."
                 ),
                 umiType
             ))
@@ -268,6 +234,8 @@ bcbioSingleCell <- function(
     )
 
     ## Metadata ----------------------------------------------------------------
+    cli_h2("Metadata")
+    cbList <- .importReads(sampleDirs = sampleDirs, BPPARAM = BPPARAM)
     runDate <- runDate(projectDir)
     interestingGroups <- camelCase(interestingGroups)
     assert(isSubset(interestingGroups, colnames(sampleData)))
@@ -325,5 +293,8 @@ bcbioSingleCell <- function(
     colData[["nRead"]] <- unname(nRead[rownames(colData)])
     colData <- colData[, sort(colnames(colData)), drop = FALSE]
     colData(object) <- colData
-    new(Class = "bcbioSingleCell", object)
+    bcb <- new(Class = "bcbioSingleCell", object)
+    cat_line()
+    cli_alert_success("bcbio single-cell RNA-seq run imported successfully.")
+    bcb
 }
