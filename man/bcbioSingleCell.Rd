@@ -14,8 +14,7 @@ bcbioSingleCell(
   transgeneNames = NULL,
   spikeNames = NULL,
   interestingGroups = "sampleName",
-  BPPARAM = BiocParallel::SerialParam(),
-  ...
+  BPPARAM = BiocParallel::SerialParam()
 )
 }
 \arguments{
@@ -62,8 +61,6 @@ Corresponds to factors describing the columns of the object.}
     \code{list} of \code{BiocParallelParam} instances, to be applied in
     sequence for nested calls to \pkg{BiocParallel} functions.
   }
-
-\item{...}{Additional arguments.}
 }
 \value{
 \code{bcbioSingleCell}.
@@ -75,7 +72,7 @@ read counts saved as a sparse matrix (\code{sparseMatrix}), sample metadata, and
 cell quality control metrics.
 }
 \note{
-Updated 2019-08-27.
+Updated 2020-01-20.
 }
 \section{Remote data}{
 

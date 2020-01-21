@@ -1,8 +1,8 @@
 Package: bcbioSingleCell
 Title: bcbio Single-Cell RNA-Seq
 Description: R package for bcbio single-cell RNA-seq analysis.
-Version: 0.4.6
-Date: 2018-10-30
+Version: 0.4.7
+Date: 2020-01-20
 Authors@R: c(
     person(
         given = "Michael",
@@ -53,41 +53,42 @@ Encoding: UTF-8
 LazyData: false
 Depends:
     R (>= 3.6),
-    SingleCellExperiment (>= 1.6),
-    basejump (>= 0.11.20)
+    SingleCellExperiment (>= 1.8),
+    basejump (>= 0.12.0)
 Imports:
-    BiocGenerics (>= 0.30),
-    BiocParallel (>= 1.18),
-    IRanges (>= 2.18.2),
-    S4Vectors (>= 0.22),
-    SummarizedExperiment (>= 1.14),
-    acidplots (>= 0.2.16),
-    bcbioBase (>= 0.6.10),
-    bioverbs (>= 0.2.10),
+    BiocGenerics (>= 0.32),
+    BiocParallel (>= 1.20),
+    IRanges (>= 2.20),
+    S4Vectors (>= 0.24),
+    SummarizedExperiment (>= 1.16),
+    acidgenerics (>= 0.3.0),
+    acidplots (>= 0.2.22),
+    bcbioBase (>= 0.6.11),
+    cli (>= 2.0),
     ggplot2 (>= 3.2),
     ggridges (>= 0.5),
-    goalie (>= 0.4.0),
+    goalie (>= 0.4.1),
     rlang (>= 0.4), 
     stringr (>= 1.4),
     graphics,
     methods,
     utils
 Suggests:
-    BiocStyle (>= 2.12),
+    BiocStyle (>= 2.14),
     R.utils (>= 2.9),
-    acidroxygen (>= 0.1.3),
-    knitr (>= 1.24),
+    acidroxygen (>= 0.1.6),
+    knitr (>= 1.27),
     patrick (>= 0.0.1),
-    rmarkdown (>= 1.14),
-    roxygen2 (>= 6.1),
+    rmarkdown (>= 2.0),
+    roxygen2 (>= 7.0),
     sessioninfo (>= 1.1),
-    testthat (>= 2.2),
-    tidyverse (>= 1.2)
+    testthat (>= 2.3),
+    tidyverse (>= 1.3)
 Remotes:
+    acidgenomics/acidgenerics,
     acidgenomics/acidplots,
     acidgenomics/acidroxygen,
     acidgenomics/basejump,
-    acidgenomics/bioverbs,
     acidgenomics/goalie,
     hbc/bcbioBase
 biocViews:
@@ -99,4 +100,4 @@ biocViews:
     RNASeq,
     SingleCell
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.0
+RoxygenNote: 7.0.2
