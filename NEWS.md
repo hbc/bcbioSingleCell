@@ -1,3 +1,11 @@
+## bcbioSingleCell 0.4.7 (2020-01-20)
+
+### Minor changes
+
+- Updated messages to use cli package approach. The same approach is now used in
+  the bcbioRNASeq package as well.
+- Updated basejump dependencies to support rename from bioverbs to acidgenerics.
+
 ## bcbioSingleCell 0.4.6 (2019-10-30)
 
 ### Minor changes

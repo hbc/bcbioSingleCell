@@ -2,7 +2,7 @@
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
-#' @note Updated 2019-08-12.
+#' @note Updated 2020-01-20.
 #' @noRd
 #'
 #' @inheritParams BiocParallel::bpmapply
@@ -18,7 +18,7 @@
             hasNames(sampleDirs),
             identical(attr(class(BPPARAM), "package"), "BiocParallel")
         )
-        message("Importing counts...")
+        cli_alert("Importing counts.")
         list <- bpmapply(
             sampleID = names(sampleDirs),
             dir = sampleDirs,
@@ -69,7 +69,7 @@
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
-#' @note Updated 2019-08-21.
+#' @note Updated 2020-01-20.
 #' @noRd
 #'
 #' @param dir `character(1)`.
@@ -90,7 +90,7 @@
         colnames <- import(colnamesFile, format = "lines")
         if (!length(rownames) > 0L || !length(colnames) > 0L) {
             ## nocov start
-            message(sprintf("Skipped '%s'.", basename(dir)))
+            cli_alert_warning(sprintf("Skipped {.path %s}.", basename(dir)))
             return(NULL)
             ## nocov end
         }
@@ -102,7 +102,7 @@
         )
         rownames(counts) <- rownames
         colnames(counts) <- colnames
-        message(sprintf("Imported '%s'.", basename(dir)))
+        cli_alert(sprintf("Imported {.path %s}.", basename(dir)))
         counts
     }
 
@@ -114,7 +114,7 @@
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
-#' @note Updated 2019-08-12.
+#' @note Updated 2020-01-20.
 #' @noRd
 #'
 #' @inheritParams BiocParallel::bplapply
@@ -134,7 +134,7 @@
             hasNames(sampleDirs),
             identical(attr(class(BPPARAM), "package"), "BiocParallel")
         )
-        message("Importing unfiltered cellular barcode distributions...")
+        cli_alert("Importing unfiltered cellular barcode distributions.")
         files <- file.path(
             sampleDirs,
             paste(basename(sampleDirs), "barcodes.tsv", sep = "-")
