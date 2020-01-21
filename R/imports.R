@@ -21,7 +21,7 @@
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
 #'   importDataVersions importProgramVersions projectDir runDate sampleDirs
-#' @importFrom cli cli_alert cli_alert_warning
+#' @importFrom cli cli_alert cli_alert_success cli_alert_warning cli_h1 cli_h2
 #' @importFrom ggplot2 aes facet_wrap geom_boxplot geom_histogram geom_step
 #'   geom_violin ggplot labs scale_x_continuous scale_y_continuous stat_ecdf
 #' @importFrom ggridges geom_density_ridges
