@@ -1,6 +1,6 @@
 #' @inherit bcbioSingleCell-class title description
 #' @author Michael Steinbaugh
-#' @note Updated 2020-01-20.
+#' @note Updated 2020-01-26.
 #' @export
 #'
 #' @inheritParams basejump::makeSingleCellExperiment
@@ -58,7 +58,8 @@ bcbioSingleCell <- function(
         isAFile(gffFile) || isAURL(gffFile)
     }
 
-    cli_h1("Importing bcbio-nextgen single-cell RNA-seq run")
+    cli_h1("bcbioSingleCell")
+    cli_text("Importing bcbio-nextgen single-cell RNA-seq run")
     sampleData <- NULL
 
     ## Run info ---------------------------------------------------------------
@@ -133,6 +134,7 @@ bcbioSingleCell <- function(
         ## Allow sample selection by with this file.
         if (nrow(sampleData) < length(sampleDirs)) {
             sampleDirs <- sampleDirs[rownames(sampleData)]
+            ## FIXME Rethink this approach.
             cli_alert(sprintf(
                 fmt = "Loading a subset of samples: {.var %s}.",
                 toString(basename(sampleDirs), width = 100L)
