@@ -1,8 +1,8 @@
 Package: bcbioSingleCell
 Title: bcbio Single-Cell RNA-Seq
 Description: R package for bcbio single-cell RNA-seq analysis.
-Version: 0.4.7
-Date: 2020-01-20
+Version: 0.4.8
+Date: 2020-02-19
 Authors@R: c(
     person(
         given = "Michael",
@@ -48,7 +48,7 @@ URL:
     https://bioinformatics.sph.harvard.edu/bcbioSingleCell/,
     https://github.com/hbc/bcbioSingleCell/
 BugReports: https://github.com/hbc/bcbioSingleCell/issues/
-License: MIT + file LICENSE
+License: GPL-3
 Encoding: UTF-8
 LazyData: false
 Depends:
