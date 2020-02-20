@@ -1,3 +1,10 @@
+## bcbioSingleCell 0.4.8 (2020-02-19)
+
+### Minor changes
+
+- Changed license from MIT to GPL-3, matching other bcbio and Acid Genomics
+  R packages.
+
 ## bcbioSingleCell 0.4.7 (2020-01-20)
 
 ### Minor changes
