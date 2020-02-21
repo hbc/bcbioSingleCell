@@ -134,7 +134,6 @@ bcbioSingleCell <- function(
         ## Allow sample selection by with this file.
         if (nrow(sampleData) < length(sampleDirs)) {
             sampleDirs <- sampleDirs[rownames(sampleData)]
-            ## FIXME Rethink this approach.
             cli_alert(sprintf(
                 fmt = "Loading a subset of samples: {.var %s}.",
                 toString(basename(sampleDirs), width = 100L)
