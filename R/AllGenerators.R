@@ -1,6 +1,6 @@
 #' @inherit bcbioSingleCell-class title description
 #' @author Michael Steinbaugh
-#' @note Updated 2020-01-20.
+#' @note Updated 2020-01-26.
 #' @export
 #'
 #' @inheritParams basejump::makeSingleCellExperiment
@@ -58,7 +58,8 @@ bcbioSingleCell <- function(
         isAFile(gffFile) || isAURL(gffFile)
     }
 
-    cli_h1("Importing bcbio-nextgen single-cell RNA-seq run")
+    cli_h1("bcbioSingleCell")
+    cli_text("Importing bcbio-nextgen single-cell RNA-seq run")
     sampleData <- NULL
 
     ## Run info ---------------------------------------------------------------

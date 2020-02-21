@@ -1,3 +1,10 @@
+## bcbioSingleCell 0.4.9 (2020-02-20)
+
+### Minor changes
+
+- Tightened up dependencies in DESCRIPTION in preparation for bioconda release
+  update, which breaks with basejump 0.12.0 conda dependency otherwise.
+
 ## bcbioSingleCell 0.4.8 (2020-02-19)
 
 ### Minor changes
