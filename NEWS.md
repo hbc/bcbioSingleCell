@@ -1,3 +1,11 @@
+## bcbioSingleCell 0.4.10 (2020-02-24)
+
+### Minor changes
+
+- `bcbioSingleCell`: Removed now defunct `spikeNames` argument. Refer to
+  `makeSummarizedExperiment`, `makeSingleCellExperiment` documentation and
+  release notes in basejump package for details.
+
 ## bcbioSingleCell 0.4.9 (2020-02-20)
 
 ### Minor changes
