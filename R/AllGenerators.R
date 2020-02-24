@@ -1,6 +1,6 @@
 #' @inherit bcbioSingleCell-class title description
 #' @author Michael Steinbaugh
-#' @note Updated 2020-01-26.
+#' @note Updated 2020-02-24.
 #' @export
 #'
 #' @inheritParams basejump::makeSingleCellExperiment
@@ -38,7 +38,6 @@ bcbioSingleCell <- function(
     genomeBuild = NULL,
     gffFile = NULL,
     transgeneNames = NULL,
-    spikeNames = NULL,
     interestingGroups = "sampleName",
     BPPARAM = BiocParallel::SerialParam()  # nolint
 ) {
@@ -50,7 +49,6 @@ bcbioSingleCell <- function(
         isString(genomeBuild, nullOK = TRUE),
         isString(gffFile, nullOK = TRUE),
         isCharacter(transgeneNames, nullOK = TRUE),
-        isCharacter(spikeNames, nullOK = TRUE),
         isCharacter(interestingGroups),
         identical(attr(class(BPPARAM), "package"), "BiocParallel")
     )
@@ -273,8 +271,7 @@ bcbioSingleCell <- function(
         rowRanges = rowRanges,
         colData = colData,
         metadata = metadata,
-        transgeneNames = transgeneNames,
-        spikeNames = spikeNames
+        transgeneNames = transgeneNames
     )
 
     ## Return ------------------------------------------------------------------
