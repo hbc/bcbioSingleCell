@@ -52,7 +52,7 @@ R
 
 ```sh
 image="acidgenomics/r-bcbiosinglecell"
-workdir="/work"
+workdir="/mnt/work"
 docker pull "$image"
 docker run -it \
     --volume="${PWD}:${workdir}" \
