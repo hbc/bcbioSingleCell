@@ -1,3 +1,13 @@
+## bcbioSingleCell 0.4.11 (2020-05-11)
+
+### Minor changes
+
+- Bug fix release for breaking changes introduced by `colData<-` assignment on
+  `SingleCellExperiment` / `SummarizedExperiment` expecting `check = FALSE`
+  support for downstream `updateObject` call. Added `...` passthrough that
+  prevents this error in method support for `bcbioSingleCell` class. This should
+  now be fully compliant with R 4.0 / Bioconductor 3.11 release.
+
 ## bcbioSingleCell 0.4.10 (2020-02-24)
 
 ### Minor changes
