@@ -1,6 +1,6 @@
 #' @name updateObject
 #' @author Michael Steinbaugh
-#' @note Updated 2020-02-24.
+#' @note Updated 2020-05-11.
 #'
 #' @inherit BiocGenerics::updateObject
 #' @inheritParams acidroxygen::params
@@ -22,9 +22,24 @@ NULL
 
 
 
-## Updated 2020-01-20.
+## Note that use of `...` here is intended to handle this call stack, now seen
+## in Bioconductor 3.11 release.
+##
+## Otherwise, we'll see an error due to unused `check = FALSE` here.
+##
+## Backtrace:
+##    █
+## 1. ├─acidgenerics::calculateMetrics(bcb)
+## 2. └─basejump::calculateMetrics(bcb)
+## 3.   └─basejump:::.local(object, ...)
+## 4.     ├─SummarizedExperiment::`colData<-`(`*tmp*`, value = colData)
+## 5.     └─SummarizedExperiment::`colData<-`(`*tmp*`, value = colData)
+## 6.       ├─BiocGenerics::updateObject(x, check = FALSE)
+## 7.       └─bcbioSingleCell::updateObject(x, check = FALSE)
+##
+## Updated 2020-05-11.
 `updateObject,bcbioSingleCell` <-  # nolint
-    function(object) {
+    function(object, ...) {
         cli_h1("Update object")
         sce <- as(object, "SingleCellExperiment")
         cells <- colnames(sce)
