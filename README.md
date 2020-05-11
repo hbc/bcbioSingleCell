@@ -51,7 +51,7 @@ R
 ### [Docker][] method
 
 ```sh
-image="acidgenomics/bcbiosinglecell"
+image="acidgenomics/r-bcbiosinglecell"
 workdir="/work"
 docker pull "$image"
 docker run -it \
