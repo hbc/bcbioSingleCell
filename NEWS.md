@@ -1,3 +1,10 @@
+## bcbioSingleCell 0.4.12 (2020-05-12)
+
+### Minor changes
+
+- Bug fix for integer handling in `.importReads` following switch to
+  `vroom::vroom` from `data.table::fread`.
+
 ## bcbioSingleCell 0.4.11 (2020-05-11)
 
 ### Minor changes
