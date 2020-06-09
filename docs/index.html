@@ -100,23 +100,23 @@
 <h3 class="hasAnchor">
 <a href="#conda-method" class="anchor"></a><a href="https://conda.io/">Conda</a> method</h3>
 <p>Configure <a href="https://conda.io/">Conda</a> to use the <a href="https://bioconda.github.io/">Bioconda</a> channels.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Don't install recipe into base environment.</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="va">name=</span><span class="st">"r-bcbiosinglecell"</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="ex">conda</span> create --name=<span class="st">"</span><span class="va">$name</span><span class="st">"</span> <span class="st">"</span><span class="va">$name</span><span class="st">"</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="ex">conda</span> activate <span class="st">"</span><span class="va">$name</span><span class="st">"</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="ex">R</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Don't install recipe into base environment.</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="va">name=</span><span class="st">"r-bcbiosinglecell"</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="ex">conda</span> create --name=<span class="st">"</span><span class="va">$name</span><span class="st">"</span> <span class="st">"</span><span class="va">$name</span><span class="st">"</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="ex">conda</span> activate <span class="st">"</span><span class="va">$name</span><span class="st">"</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="ex">R</span></span></code></pre></div>
 </div>
 <div id="docker-method" class="section level3">
 <h3 class="hasAnchor">
 <a href="#docker-method" class="anchor"></a><a href="https://www.docker.com/">Docker</a> method</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="va">image=</span><span class="st">"acidgenomics/r-bcbiosinglecell"</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="va">workdir=</span><span class="st">"/mnt/work"</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="ex">docker</span> pull <span class="st">"</span><span class="va">$image</span><span class="st">"</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="ex">docker</span> run -it \</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">    --volume=<span class="st">"</span><span class="va">${PWD}</span><span class="st">:</span><span class="va">${workdir}</span><span class="st">"</span> \</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">    --workdir=<span class="st">"</span><span class="va">$workdir</span><span class="st">"</span> \</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">    <span class="st">"</span><span class="va">$image</span><span class="st">"</span> \</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">    R</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="va">image=</span><span class="st">"acidgenomics/r-bcbiosinglecell"</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="va">workdir=</span><span class="st">"/mnt/work"</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="ex">docker</span> pull <span class="st">"</span><span class="va">$image</span><span class="st">"</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="ex">docker</span> run -it \</span>
+<span id="cb5-5"><a href="#cb5-5"></a>    --volume=<span class="st">"</span><span class="va">${PWD}</span><span class="st">:</span><span class="va">${workdir}</span><span class="st">"</span> \</span>
+<span id="cb5-6"><a href="#cb5-6"></a>    --workdir=<span class="st">"</span><span class="va">$workdir</span><span class="st">"</span> \</span>
+<span id="cb5-7"><a href="#cb5-7"></a>    <span class="st">"</span><span class="va">$image</span><span class="st">"</span> \</span>
+<span id="cb5-8"><a href="#cb5-8"></a>    R</span></code></pre></div>
 </div>
 </div>
 <div id="load-bcbio-single-cell-rna-seq-data" class="section level2">
@@ -219,7 +219,7 @@
 </tr>
 </tbody>
 </table>
-<p>Note that bcbio currently outputs the reverse complement index sequence in the sample directory names (e.g. <code>sample-ATAGAGAG</code>). Define the forward index barcode in the <code>sequence</code> column here, not the reverse complement. The reverse complement will be calculated automatically and added as the <code>revcomp</code> column in the sample metadata.</p>
+<p>Note that bcbio currently outputs the reverse complement index sequence in the sample directory names (e.g. <code>sample-ATAGAGAG</code>). Define the forward index barcode in the <code>sequence</code> column here, not the reverse complement. The reverse complement will be calculated automatically and added as the <code>revcomp</code> column in the sample metadata.</p>
 </div>
 <div id="fastq-files-demultiplexed-per-sample" class="section level3">
 <h3 class="hasAnchor">
