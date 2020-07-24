@@ -1,8 +1,8 @@
 Package: bcbioSingleCell
 Title: bcbio Single-Cell RNA-Seq
 Description: R package for bcbio single-cell RNA-seq analysis.
-Version: 0.4.12
-Date: 2020-05-12
+Version: 0.4.13
+Date: 2020-07-24
 Authors@R: c(
     person(
         given = "Michael",
@@ -52,37 +52,37 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: false
 Depends:
-    R (>= 3.6),
-    SingleCellExperiment (>= 1.8),
-    basejump (>= 0.12.6)
+    R (>= 4.0),
+    SingleCellExperiment (>= 1.10.1),
+    basejump (>= 0.12.9)
 Imports:
-    BiocGenerics (>= 0.32),
-    BiocParallel (>= 1.20),
-    IRanges (>= 2.20),
-    S4Vectors (>= 0.24),
-    SummarizedExperiment (>= 1.16),
-    acidgenerics (>= 0.3.4),
-    acidplots (>= 0.2.26),
-    bcbioBase (>= 0.6.13),
+    BiocGenerics,
+    BiocParallel,
+    IRanges,
+    S4Vectors,
+    SummarizedExperiment,
+    acidgenerics (>= 0.3.8),
+    acidplots (>= 0.2.30),
+    bcbioBase (>= 0.6.14),
     cli (>= 2.0),
-    ggplot2 (>= 3.2),
+    ggplot2 (>= 3.3),
     ggridges (>= 0.5),
-    goalie (>= 0.4.4),
-    rlang (>= 0.4),
-    stringr (>= 1.4),
+    goalie (>= 0.4.6),
     graphics,
     methods,
+    rlang (>= 0.4),
+    stringr (>= 1.4),
     utils
 Suggests:
-    BiocStyle (>= 2.14),
-    R.utils (>= 2.9),
-    knitr (>= 1.27),
-    patrick (>= 0.0.1),
-    rmarkdown (>= 2.0),
-    roxygen2 (>= 7.0),
-    sessioninfo (>= 1.1),
-    testthat (>= 2.3),
-    tidyverse (>= 1.3)
+    BiocStyle,
+    R.utils,
+    knitr,
+    patrick,
+    rmarkdown,
+    roxygen2,
+    sessioninfo,
+    testthat,
+    tidyverse
 Remotes:
     acidgenomics/acidgenerics,
     acidgenomics/acidplots,
