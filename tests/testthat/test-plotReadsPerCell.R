@@ -7,5 +7,4 @@ test_that("geom", {
         x <- plotReadsPerCell(bcb, geom = geom)
         expect_is(x, "ggplot")
     }
-    geom = geom
 })
