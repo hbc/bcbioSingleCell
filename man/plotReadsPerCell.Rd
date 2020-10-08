@@ -12,10 +12,10 @@ plotReadsPerCell(object, ...)
   interestingGroups = NULL,
   geom = c("histogram", "ecdf", "violin", "ridgeline", "boxplot"),
   cutoffLine = FALSE,
-  color = getOption(x = "acid.color.discrete", default =
-    acidplots::scale_color_synesthesia_d()),
-  fill = getOption(x = "acid.fill.discrete", default =
-    acidplots::scale_fill_synesthesia_d()),
+  color = getOption(x = "acid.color.discrete", default = getOption(x =
+    "ggplot2.discrete.colour", default = AcidPlots::scale_color_synesthesia_d())),
+  fill = getOption(x = "acid.fill.discrete", default = getOption(x =
+    "ggplot2.discrete.fill", default = AcidPlots::scale_fill_synesthesia_d())),
   title = "Reads per cell"
 )
 }

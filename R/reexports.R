@@ -1,40 +1,40 @@
 ## These reexports are necessary for the quality control template.
 
-#' @importFrom acidplots barcodeRanksPerSample
+#' @importFrom AcidPlots barcodeRanksPerSample
 #' @export
-acidplots::barcodeRanksPerSample
+AcidPlots::barcodeRanksPerSample
 
-#' @importFrom acidplots plotCellCounts
+#' @importFrom AcidPlots plotCellCounts
 #' @export
-acidplots::plotCellCounts
+AcidPlots::plotCellCounts
 
-#' @importFrom acidplots plotCountsPerCell
+#' @importFrom AcidPlots plotCountsPerCell
 #' @export
-acidplots::plotCountsPerCell
+AcidPlots::plotCountsPerCell
 
-#' @importFrom acidplots plotCountsVsFeatures
+#' @importFrom AcidPlots plotCountsVsFeatures
 #' @export
-acidplots::plotCountsVsFeatures
+AcidPlots::plotCountsVsFeatures
 
-#' @importFrom acidplots plotFeaturesPerCell
+#' @importFrom AcidPlots plotFeaturesPerCell
 #' @export
-acidplots::plotFeaturesPerCell
+AcidPlots::plotFeaturesPerCell
 
-#' @importFrom acidplots plotMitoRatio
+#' @importFrom AcidPlots plotMitoRatio
 #' @export
-acidplots::plotMitoRatio
+AcidPlots::plotMitoRatio
 
-#' @importFrom acidplots plotNovelty
+#' @importFrom AcidPlots plotNovelty
 #' @export
-acidplots::plotNovelty
+AcidPlots::plotNovelty
 
-#' @importFrom acidplots plotBarcodeRanks
+#' @importFrom AcidPlots plotBarcodeRanks
 #' @export
-acidplots::plotBarcodeRanks
+AcidPlots::plotBarcodeRanks
 
-#' @importFrom acidplots plotQC
+#' @importFrom AcidPlots plotQC
 #' @export
-acidplots::plotQC
+AcidPlots::plotQC
 
 
 

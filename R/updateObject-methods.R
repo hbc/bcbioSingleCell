@@ -3,7 +3,7 @@
 #' @note Updated 2020-05-11.
 #'
 #' @inherit BiocGenerics::updateObject
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #'
 #' @examples
 #' data(bcb)

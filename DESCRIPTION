@@ -61,8 +61,8 @@ Imports:
     IRanges,
     S4Vectors,
     SummarizedExperiment,
-    acidgenerics (>= 0.3.8),
-    acidplots (>= 0.2.30),
+    AcidGenerics (>= 0.3.8),
+    AcidPlots (>= 0.2.30),
     bcbioBase (>= 0.6.14),
     cli (>= 2.0),
     ggplot2 (>= 3.3),
@@ -82,12 +82,6 @@ Suggests:
     sessioninfo,
     testthat,
     tidyverse
-Remotes:
-    acidgenomics/acidgenerics,
-    acidgenomics/acidplots,
-    acidgenomics/basejump,
-    acidgenomics/goalie,
-    hbc/bcbioBase
 biocViews:
     DataImport,
     DataRepresentation,
