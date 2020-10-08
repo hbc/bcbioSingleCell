@@ -2,6 +2,8 @@
 #'
 #' @importMethodsFrom basejump coerce
 #'
+#' @importFrom AcidPlots acid_geom_abline acid_geom_label
+#'   acid_geom_label_average acid_geom_label_repel
 #' @importFrom BiocGenerics counts updateObject
 #' @importFrom BiocParallel bplapply bpmapply
 #' @importFrom IRanges DataFrameList
@@ -9,8 +11,6 @@
 #'   metadata<-
 #' @importFrom SummarizedExperiment assayNames assay assays assays<- colData
 #'   colData<- rowData rowData<- rowRanges rowRanges<-
-#' @importFrom AcidPlots acid_geom_abline acid_geom_label
-#'   acid_geom_label_average acid_geom_label_repel
 #' @importFrom basejump as_tibble calculateMetrics camelCase cell2sample
 #'   detectLanes droplevels emptyRanges formalsList import importSampleData
 #'   interestingGroups interestingGroups<- leftJoin makeDimnames

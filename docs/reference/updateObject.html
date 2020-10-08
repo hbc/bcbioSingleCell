@@ -125,7 +125,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>updateObject</span>(<span class='no'>object</span>, <span class='no'>...</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>updateObject</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,7 +166,7 @@
 <p><code>updateObject</code> requires that the class of the returned object be
   the same as the class of the argument <code>object</code>, and that the
   object is valid (see <code><a href='https://rdrr.io/r/methods/validObject.html'>validObject</a></code>). By default,
-  <code>updateObject</code> has the following behaviors:</p><dl'>
+  <code>updateObject</code> has the following behaviors:</p><dl>
     <dt><code>updateObject(ANY, ..., verbose=FALSE)</code></dt><dd><p>By default, <code>updateObject</code> uses heuristic methods to determine
       whether the object should be the `new' S4 type (introduced in R 2.4.0),
       but is not. If the heuristics indicate an update is required,
@@ -221,10 +221,14 @@
           in the <span class="pkg">BiocGenerics</span> package.</p></li>
 </ul>
 </div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Michael Steinbaugh</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>bcb</span>)
-<span class='fu'>updateObject</span>(<span class='no'>bcb</span>)</div><div class='output co'>#&gt; bcbioSingleCell 0.4.13
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>bcb</span><span class='op'>)</span>
+<span class='fu'>updateObject</span><span class='op'>(</span><span class='va'>bcb</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; bcbioSingleCell 0.4.13
 #&gt; uploadDir: /data00/draco/acidbase/packages/bcbioSingleCell/inst/extdata/indrops
 #&gt; dates(2): [bcbio] 2018-01-01; [R] 2019-08-12
 #&gt; level: genes
@@ -244,15 +248,15 @@
 #&gt; colData names(15): aggregate description ... sampleName sequence
 #&gt; reducedDimNames(0):
 #&gt; altExpNames(0):</div><div class='input'>
-## Example that depends on remote file.
-## &gt; x &lt;- import(
-## &gt;     file = file.path(
-## &gt;         bcbioSingleCellTestsURL,
-## &gt;         "bcbioSingleCell_0.1.0.rds"
-## &gt;     )
-## &gt; )
-## &gt; x &lt;- updateObject(x)
-## &gt; x
+<span class='co'>## Example that depends on remote file.</span>
+<span class='co'>## &gt; x &lt;- import(</span>
+<span class='co'>## &gt;     file = file.path(</span>
+<span class='co'>## &gt;         bcbioSingleCellTestsURL,</span>
+<span class='co'>## &gt;         "bcbioSingleCell_0.1.0.rds"</span>
+<span class='co'>## &gt;     )</span>
+<span class='co'>## &gt; )</span>
+<span class='co'>## &gt; x &lt;- updateObject(x)</span>
+<span class='co'>## &gt; x</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -269,7 +273,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

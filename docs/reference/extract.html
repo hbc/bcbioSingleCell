@@ -141,12 +141,12 @@
     Character vectors will be matched to the <code><a href='https://rdrr.io/r/base/names.html'>names</a></code> of the
     object (or for matrices/arrays, the <code><a href='https://rdrr.io/r/base/dimnames.html'>dimnames</a></code>):
     see &#8216;Character indices&#8217; below for further details.</p>
-<p>For <code>[</code>-indexing only: <code>i</code>, <code>j</code>, <code>...</code> can be
+<p>For <code><a href='https://rdrr.io/r/base/Extract.html'>[</a></code>-indexing only: <code>i</code>, <code>j</code>, <code>...</code> can be
     logical vectors, indicating elements/slices to select.  Such vectors
     are recycled if necessary to match the corresponding extent.
     <code>i</code>, <code>j</code>, <code>...</code> can also be negative integers,
     indicating elements/slices to leave out of the selection.</p>
-<p>When indexing arrays by <code>[</code> a single argument <code>i</code> can be a
+<p>When indexing arrays by <code><a href='https://rdrr.io/r/base/Extract.html'>[</a></code> a single argument <code>i</code> can be a
     matrix with as many columns as there are dimensions of <code>x</code>; the
     result is then a vector with elements corresponding to the sets of
     indices in each row of <code>i</code>.</p>
@@ -161,12 +161,12 @@
     Character vectors will be matched to the <code><a href='https://rdrr.io/r/base/names.html'>names</a></code> of the
     object (or for matrices/arrays, the <code><a href='https://rdrr.io/r/base/dimnames.html'>dimnames</a></code>):
     see &#8216;Character indices&#8217; below for further details.</p>
-<p>For <code>[</code>-indexing only: <code>i</code>, <code>j</code>, <code>...</code> can be
+<p>For <code><a href='https://rdrr.io/r/base/Extract.html'>[</a></code>-indexing only: <code>i</code>, <code>j</code>, <code>...</code> can be
     logical vectors, indicating elements/slices to select.  Such vectors
     are recycled if necessary to match the corresponding extent.
     <code>i</code>, <code>j</code>, <code>...</code> can also be negative integers,
     indicating elements/slices to leave out of the selection.</p>
-<p>When indexing arrays by <code>[</code> a single argument <code>i</code> can be a
+<p>When indexing arrays by <code><a href='https://rdrr.io/r/base/Extract.html'>[</a></code> a single argument <code>i</code> can be a
     matrix with as many columns as there are dimensions of <code>x</code>; the
     result is then a vector with elements corresponding to the sets of
     indices in each row of <code>i</code>.</p>
@@ -190,8 +190,8 @@
     <p><code>bcbioSingleCell</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Refer to <code><a href='https://rdrr.io/pkg/basejump/man/cell2sample.html'>cell2sample()</a></code> and
-<a href='https://rdrr.io/pkg/basejump/man/selectSamples.html'>selectSamples()</a> if sample-level extraction is
+    <p>Refer to <code><a href='https://basejump.acidgenomics.com/reference/cell2sample.html'>cell2sample()</a></code> and
+<a href='https://basejump.acidgenomics.com/reference/selectSamples.html'>selectSamples()</a> if sample-level extraction is
 desired. Note that <code>sampleID</code> is slotted into <code>colData</code> and defines the
 cell-to-sample mappings.</p>
 <p>Unfiltered cellular barcode distributions for the entire dataset, including
@@ -205,17 +205,23 @@ of <code><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperim
     <p>Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   <em>The New S Language</em>.
   Wadsworth &amp; Brooks/Cole.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Michael Steinbaugh</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>bcb</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>bcb</span><span class='op'>)</span>
 
-<span class='no'>cells</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>bcb</span>))
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>cells</span>)</div><div class='output co'>#&gt; [1] "AAACACTA_CTTCGATT" "AAACTACA_CCACATTA" "AACTGCCT_GCAAGGAC"
-#&gt; [4] "AAGAAGGT_TCTGTGGT" "AAGCCTTC_TAAATAGG" "AATAAGGA_CCACATTA"</div><div class='input'><span class='no'>genes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>bcb</span>))
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>genes</span>)</div><div class='output co'>#&gt; [1] "ENSG00000071082" "ENSG00000100316" "ENSG00000106631" "ENSG00000108821"
+<span class='va'>cells</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>bcb</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>cells</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "AAACACTA_CTTCGATT" "AAACTACA_CCACATTA" "AACTGCCT_GCAAGGAC"
+#&gt; [4] "AAGAAGGT_TCTGTGGT" "AAGCCTTC_TAAATAGG" "AATAAGGA_CCACATTA"</div><div class='input'><span class='va'>genes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>bcb</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>genes</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "ENSG00000071082" "ENSG00000100316" "ENSG00000106631" "ENSG00000108821"
 #&gt; [5] "ENSG00000112306" "ENSG00000115414"</div><div class='input'>
 <span class='co'>## Subset by cell identifiers.</span>
-<span class='no'>bcb</span>[, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.3.19
+<span class='va'>bcb</span><span class='op'>[</span>, <span class='va'>cells</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; bcbioSingleCell 0.3.19
 #&gt; uploadDir: /data00/draco/acidbase/packages/bcbioSingleCell/inst/extdata/indrops
 #&gt; dates(2): [bcbio] 2018-01-01; [R] 2019-08-12
 #&gt; level: genes
@@ -236,7 +242,8 @@ of <code><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperim
 #&gt; reducedDimNames(0):
 #&gt; altExpNames(0):</div><div class='input'>
 <span class='co'>## Subset by genes.</span>
-<span class='no'>bcb</span>[<span class='no'>genes</span>, ]</div><div class='output co'>#&gt; bcbioSingleCell 0.3.19
+<span class='va'>bcb</span><span class='op'>[</span><span class='va'>genes</span>, <span class='op'>]</span>
+</div><div class='output co'>#&gt; bcbioSingleCell 0.3.19
 #&gt; uploadDir: /data00/draco/acidbase/packages/bcbioSingleCell/inst/extdata/indrops
 #&gt; dates(2): [bcbio] 2018-01-01; [R] 2019-08-12
 #&gt; level: genes
@@ -257,7 +264,8 @@ of <code><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperim
 #&gt; reducedDimNames(0):
 #&gt; altExpNames(0):</div><div class='input'>
 <span class='co'>## Subset by both genes and cells.</span>
-<span class='no'>bcb</span>[<span class='no'>genes</span>, <span class='no'>cells</span>]</div><div class='output co'>#&gt; bcbioSingleCell 0.3.19
+<span class='va'>bcb</span><span class='op'>[</span><span class='va'>genes</span>, <span class='va'>cells</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; bcbioSingleCell 0.3.19
 #&gt; uploadDir: /data00/draco/acidbase/packages/bcbioSingleCell/inst/extdata/indrops
 #&gt; dates(2): [bcbio] 2018-01-01; [R] 2019-08-12
 #&gt; level: genes
@@ -292,7 +300,7 @@ of <code><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperim
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
