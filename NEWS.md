@@ -1,3 +1,9 @@
+## bcbioSingleCell 0.4.14 (2020-10-08)
+
+### Minor changes
+
+- Maintenance release, updating dependency version requirements.
+
 ## bcbioSingleCell 0.4.13 (2020-07-24)
 
 ### Minor changes
