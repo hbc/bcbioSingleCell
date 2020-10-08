@@ -82,16 +82,17 @@
 <div id="r-method" class="section level3">
 <h3 class="hasAnchor">
 <a href="#r-method" class="anchor"></a><a href="https://www.r-project.org/">R</a> method</h3>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="kw">if</span> (!<span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span>(<span class="st">"BiocManager"</span>, <span class="kw">quietly</span> <span class="kw">=</span> <span class="fl">TRUE</span>)) {
-    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"BiocManager"</span>)
-}
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(
-    <span class="kw">pkgs</span> <span class="kw">=</span> <span class="st">"bcbioSingleCell"</span>,
-    <span class="kw">repos</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span>
+    pkgs <span class="op">=</span> <span class="st">"bcbioSingleCell"</span>,
+    repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
         <span class="st">"r.acidgenomics.com"</span>,
-        <span class="kw pkg">BiocManager</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/repositories.html">repositories</a></span>()
-    )
-)</pre></div>
+        <span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/repositories.html">repositories</a></span><span class="op">(</span><span class="op">)</span>
+    <span class="op">)</span>
+<span class="op">)</span></pre></div>
 </div>
 <div id="conda-method" class="section level3">
 <h3 class="hasAnchor">
@@ -119,17 +120,19 @@
 <div id="load-bcbio-single-cell-rna-seq-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#load-bcbio-single-cell-rna-seq-data" class="anchor"></a>Load <a href="https://bcbio-nextgen.readthedocs.io/">bcbio</a> single-cell RNA-seq data</h2>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">bcbioSingleCell</span>)
-<span class="no">bcb</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/bcbioSingleCell.html">bcbioSingleCell</a></span>(
-    <span class="kw">uploadDir</span> <span class="kw">=</span> <span class="st">"indrops/final"</span>,
-    <span class="kw">interestingGroups</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"genotype"</span>, <span class="st">"treatment"</span>),
-    <span class="kw">sampleMetadataFile</span> <span class="kw">=</span> <span class="st">"sample_metadata.csv"</span>,
-    <span class="kw">organism</span> <span class="kw">=</span> <span class="st">"Homo sapiens"</span>,
-    <span class="kw">ensemblRelease</span> <span class="kw">=</span> <span class="fl">90L</span>
-)
-<span class="fu">saveData</span>(<span class="no">bcb</span>, <span class="kw">dir</span> <span class="kw">=</span> <span class="st">"."</span>)</pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bioinformatics.sph.harvard.edu/bcbioSingleCell/">bcbioSingleCell</a></span><span class="op">)</span>
+<span class="va">bcb</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/bcbioSingleCell.html">bcbioSingleCell</a></span><span class="op">(</span>
+    uploadDir <span class="op">=</span> <span class="st">"indrops/final"</span>,
+    interestingGroups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"genotype"</span>, <span class="st">"treatment"</span><span class="op">)</span>,
+    sampleMetadataFile <span class="op">=</span> <span class="st">"sample_metadata.csv"</span>,
+    organism <span class="op">=</span> <span class="st">"Homo sapiens"</span>,
+    ensemblRelease <span class="op">=</span> <span class="fl">90L</span>
+<span class="op">)</span>
+<span class="fu">saveData</span><span class="op">(</span><span class="va">bcb</span>, dir <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></pre></div>
 <p>This will return a <code>bcbioSingleCell</code> object, which is an extension of the <a href="https://bioconductor.org/">Bioconductor</a> <a href="https://bioconductor.org/packages/SingleCellExperiment/">SingleCellExperiment</a> container class. Consult the <code><a href="reference/bcbioSingleCell.html">bcbioSingleCell()</a></code> constructor function documentation for detailed information on the supported parameters:</p>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/help.html">help</a></span>(<span class="kw">topic</span> <span class="kw">=</span> <span class="st">"bcbioSingleCell"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"bcbioSingleCell"</span>)</pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/help.html">help</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="st">"bcbioSingleCell"</span>, package <span class="op">=</span> <span class="st">"bcbioSingleCell"</span><span class="op">)</span></pre></div>
 </div>
 <div id="sample-metadata-examples" class="section level2">
 <h2 class="hasAnchor">
@@ -251,8 +254,9 @@
 <h3 class="hasAnchor">
 <a href="#invalid-object" class="anchor"></a>Invalid object</h3>
 <p>If you encounter a <code>validObject</code> error when attempting to load a <code>bcbioSingleCell</code> object from a previous analysis, run this step to update the object to the current version of the package:</p>
-<div class="sourceCode" id="cb6"><pre class="r"><span class="no">object</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/updateObject.html">updateObject</a></span>(<span class="no">object</span>)
-<span class="fu">validObject</span>(<span class="no">object</span>)
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/updateObject.html">updateObject</a></span><span class="op">(</span><span class="va">object</span><span class="op">)</span>
+<span class="fu">validObject</span><span class="op">(</span><span class="va">object</span><span class="op">)</span>
 <span class="co">## [1] TRUE</span></pre></div>
 </div>
 </div>
@@ -309,7 +313,6 @@
 <ul class="list-unstyled">
 <li><a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Repo status: active"></a></li>
 <li><a href="https://travis-ci.org/hbc/bcbioSingleCell"><img src="https://travis-ci.org/hbc/bcbioSingleCell.svg?branch=master" alt="Travis CI build status"></a></li>
-<li><a href="https://ci.appveyor.com/project/mjsteinbaugh/bcbiosinglecell/branch/master"><img src="https://ci.appveyor.com/api/projects/status/npy0mhfjn9saqv4g/branch/master?svg=true" alt="AppVeyor CI build status"></a></li>
 <li><a href="http://bioconda.github.io/recipes/r-bcbiosinglecell/README.html"><img src="https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat" alt="Install with Bioconda"></a></li>
 </ul>
 </div>
@@ -322,7 +325,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

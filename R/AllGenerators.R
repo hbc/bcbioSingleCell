@@ -5,7 +5,7 @@
 #'
 #' @inheritParams basejump::makeSingleCellExperiment
 #' @inheritParams BiocParallel::bplapply
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #'
 #' @section Remote data:
 #'

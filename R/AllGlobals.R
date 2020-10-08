@@ -1,6 +1,6 @@
 globalVariables(".")
 
-.version <- packageVersion("bcbioSingleCell")
+.version <- packageVersion(packageName())
 
 #' Cache URL
 #' @keywords internal
@@ -22,7 +22,7 @@ separatorBar <- basejump::separator()
 
 requiredAssays <- "counts"
 
-## This is also defined in acidplots.
+## This is also defined in AcidPlots.
 geom <- c("histogram", "ecdf", "violin", "ridgeline", "boxplot")
 
 ## We're adding an additional raw reads column (pre-UMI disambiguation).
