@@ -16,7 +16,7 @@
 #' @inherit base::Extract params references
 #' @note Updated 2019-08-20.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #'
 #' @return `bcbioSingleCell`.
 #'

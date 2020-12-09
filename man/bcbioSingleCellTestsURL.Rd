@@ -4,7 +4,9 @@
 \name{bcbioSingleCellTestsURL}
 \alias{bcbioSingleCellTestsURL}
 \title{Cache URL}
-\format{An object of class \code{character} of length 1.}
+\format{
+An object of class \code{character} of length 1.
+}
 \usage{
 bcbioSingleCellTestsURL
 }

@@ -1,9 +1,9 @@
 #' @name updateObject
 #' @author Michael Steinbaugh
-#' @note Updated 2020-01-20.
+#' @note Updated 2020-05-11.
 #'
 #' @inherit BiocGenerics::updateObject
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #'
 #' @examples
 #' data(bcb)
@@ -22,10 +22,13 @@ NULL
 
 
 
-## Updated 2020-01-20.
+## Updated 2020-05-11.
 `updateObject,bcbioSingleCell` <-  # nolint
-    function(object) {
-        cli_h1("Update object")
+    function(object, ..., verbose = FALSE) {
+        assert(isFlag(verbose))
+        if (isTRUE(verbose)) {
+            cli_h1("Update object")
+        }
         sce <- as(object, "SingleCellExperiment")
         cells <- colnames(sce)
         assays <- assays(sce)
@@ -33,21 +36,29 @@ NULL
         metadata <- metadata(sce)
         version <- metadata[["version"]]
         assert(is(version, c("package_version", "numeric_version")))
-        cli_text(sprintf(
-            fmt = "Upgrading {.var bcbioSingleCell} from version %s to %s.",
-            as.character(version),
-            as.character(.version)
-        ))
+        if (isTRUE(verbose)) {
+            cli_text(sprintf(
+                fmt = "Upgrading {.var bcbioSingleCell} from version %s to %s.",
+                as.character(version),
+                as.character(.version)
+            ))
+        }
 
         ## Assays --------------------------------------------------------------
-        cli_h2("Assays")
+        if (isTRUE(verbose)) {
+            cli_h2("Assays")
+        }
         ## Ensure raw counts are always named "counts".
         if ("assay" %in% names(assays)) {
             ## Versions < 0.1 (e.g. 0.0.21).
-            cli_alert("Renaming {.var assay} to {.var counts}.")
+            if (isTRUE(verbose)) {
+                cli_alert("Renaming {.var assay} to {.var counts}.")
+            }
             names(assays)[names(assays) == "assay"] <- "counts"
         } else if ("raw" %in% names(assays)) {
-            cli_alert("Renaming {.var raw} assay to {.var counts}.")
+            if (isTRUE(verbose)) {
+                cli_alert("Renaming {.var raw} assay to {.var counts}.")
+            }
             names(assays)[names(assays) == "raw"] <- "counts"
         }
         assays <- Filter(Negate(is.null), assays)
@@ -56,21 +67,31 @@ NULL
         assert(isSubset(requiredAssays, names(assays)))
 
         ## Column data metrics -------------------------------------------------
-        cli_h2("Column data")
+        if (isTRUE(verbose)) {
+            cli_h2("Column data")
+        }
         ## Update legacy column names.
         if (isSubset(c("nCount", "nUMI"), colnames(colData))) {
-            cli_alert("Renaming {.var nCount} to {.var nRead}.")
+            if (isTRUE(verbose)) {
+                cli_alert("Renaming {.var nCount} to {.var nRead}.")
+            }
             colnames(colData)[colnames(colData) == "nCount"] <- "nRead"
-            cli_alert("Renaming {.var nUMI} to {.var nCount}.")
+            if (isTRUE(verbose)) {
+                cli_alert("Renaming {.var nUMI} to {.var nCount}.")
+            }
             colnames(colData)[colnames(colData) == "nUMI"] <- "nCount"
         }
         if (isSubset("nGene", colnames(colData))) {
-            cli_alert("Renaming {.var nGene} to {.var nFeature}.")
+            if (isTRUE(verbose)) {
+                cli_alert("Renaming {.var nGene} to {.var nFeature}.")
+            }
             colnames(colData)[colnames(colData) == "nGene"] <- "nFeature"
-            cli_alert(paste(
-                "Renaming {.var log10GenesPerUMI} to",
-                "{.var log10FeaturesPerCount}."
-            ))
+            if (isTRUE(verbose)) {
+                cli_alert(paste(
+                    "Renaming {.var log10GenesPerUMI} to",
+                    "{.var log10FeaturesPerCount}."
+                ))
+            }
             colnames(colData)[colnames(colData) == "log10GenesPerUMI"] <-
                 "log10FeaturesPerCount"
         }
@@ -84,10 +105,12 @@ NULL
             sampleData <- NULL
         }
         if (!is.null(sampleData)) {
-            cli_alert(paste(
-                "Moving {.var sampleData} from {.fun metadata} into",
-                "{.fun colData}."
-            ))
+            if (isTRUE(verbose)) {
+                cli_alert(paste(
+                    "Moving {.var sampleData} from {.fun metadata} into",
+                    "{.fun colData}."
+                ))
+            }
             assert(isSubset("sampleID", colnames(sampleData)))
             ## Starting using `DataFrame` in place of `data.frame` in v0.1.7.
             sampleData <- as(sampleData, "DataFrame")
@@ -96,7 +119,9 @@ NULL
                 setdiff(colnames(colData), colnames(sampleData)),
                 drop = FALSE
             ]
-            cli_alert("Mapping cells to samples.")
+            if (isTRUE(verbose)) {
+                cli_alert("Mapping cells to samples.")
+            }
             cell2sample <- mapCellsToSamples(
                 cells = cells,
                 samples = as.character(sampleData[["sampleID"]])
@@ -114,18 +139,24 @@ NULL
         }
 
         ## Metadata ------------------------------------------------------------
-        cli_h2("Metadata")
+        if (isTRUE(verbose)) {
+            cli_h2("Metadata")
+        }
         ## dataVersions
         dataVersions <- metadata[["dataVersions"]]
         if (is(dataVersions, "data.frame")) {
-            cli_alert("Setting {.var dataVersions} as {.var DataFrame}.")
+            if (isTRUE(verbose)) {
+                cli_alert("Setting {.var dataVersions} as {.var DataFrame}.")
+            }
             metadata[["dataVersions"]] <- as(dataVersions, "DataFrame")
         }
         ## ensemblRelease
         if ("ensemblVersion" %in% names(metadata)) {
-            cli_alert(
-                "Renaming {.var ensemblVersion} to {.var ensemblRelease}."
-            )
+            if (isTRUE(verbose)) {
+                cli_alert(
+                    "Renaming {.var ensemblVersion} to {.var ensemblRelease}."
+                )
+            }
             names(metadata)[
                 names(metadata) == "ensemblVersion"] <- "ensemblRelease"
         }
@@ -133,7 +164,9 @@ NULL
             is.numeric(metadata[["ensemblRelease"]]) &&
             !is.integer(metadata[["ensemblRelease"]])
         ) {
-            cli_alert("Setting {.var ensemblRelease} as integer.")
+            if (isTRUE(verbose)) {
+                cli_alert("Setting {.var ensemblRelease} as integer.")
+            }
             metadata[["ensemblRelease"]] <-
                 as.integer(metadata[["ensemblRelease"]])
         }
@@ -144,27 +177,37 @@ NULL
         }
         ## gffFile
         if ("gtfFile" %in% names(metadata)) {
-            cli_alert("Renaming {.var gtfFile} to {.var gffFile}.")
+            if (isTRUE(verbose)) {
+                cli_alert("Renaming {.var gtfFile} to {.var gffFile}.")
+            }
             names(metadata)[names(metadata) == "gtfFile"] <- "gffFile"
         }
         if (!"gffFile" %in% names(metadata)) {
-            cli_alert("Setting {.var gffFile} as empty character.")
+            if (isTRUE(verbose)) {
+                cli_alert("Setting {.var gffFile} as empty character.")
+            }
             metadata[["gffFile"]] <- character()
         }
         ## lanes
         if (!is.integer(metadata[["lanes"]])) {
-            cli_alert("Setting {.var lanes} as integer.")
+            if (isTRUE(verbose)) {
+                cli_alert("Setting {.var lanes} as integer.")
+            }
             metadata[["lanes"]] <- as.integer(metadata[["lanes"]])
         }
         ## level
         if (!"level" %in% names(metadata)) {
-            cli_alert("Setting {.var level} as genes.")
+            if (isTRUE(verbose)) {
+                cli_alert("Setting {.var level} as genes.")
+            }
             metadata[["level"]] <- "genes"
         }
         ## programVersions
         if (!"programVersions" %in% names(metadata) &&
             "programs" %in% names(metadata)) {
-            cli_alert("Renaming {.var programs} to {.var programVersions}.")
+            if (isTRUE(verbose)) {
+                cli_alert("Renaming {.var programs} to {.var programVersions}.")
+            }
             names(metadata)[names(metadata) == "programs"] <- "programVersions"
         }
         programVersions <- metadata[["programVersions"]]
@@ -173,14 +216,20 @@ NULL
         }
         ## sampleMetadataFile
         if (!is.character(metadata[["sampleMetadataFile"]])) {
-            cli_alert("Setting {.var sampleMetadataFile} as empty character.")
+            if (isTRUE(verbose)) {
+                cli_alert(
+                    "Setting {.var sampleMetadataFile} as empty character."
+                )
+            }
             metadata[["sampleMetadataFile"]] <- character()
         }
         ## sessionInfo
         ## Support for legacy devtoolsSessionInfo stash.
         ## Previously, we stashed both devtools* and utils* variants.
         if ("devtoolsSessionInfo" %in% names(metadata)) {
-            cli_alert("Simplifying stashed {.var sessionInfo}.")
+            if (isTRUE(verbose)) {
+                cli_alert("Simplifying stashed {.var sessionInfo}.")
+            }
             names(metadata)[
                 names(metadata) == "devtoolsSessionInfo"] <- "sessionInfo"
             metadata[["utilsSessionInfo"]] <- NULL
@@ -193,16 +242,17 @@ NULL
         metadata <- metadata[keep]
 
         ## Return --------------------------------------------------------------
-        ## Note that this approach will keep `spikeNames` set, if defined.
         assays(sce) <- assays
         colData(sce) <- colData
         metadata(sce) <- metadata
         bcb <- new(Class = "bcbioSingleCell", sce)
         validObject(bcb)
-        cat_line()
-        cli_alert_success(
-            "Update of {.var bcbioSingleCell} object was successful."
-        )
+        if (isTRUE(verbose)) {
+            cat_line()
+            cli_alert_success(
+                "Update of {.var bcbioSingleCell} object was successful."
+            )
+        }
         bcb
     }
 

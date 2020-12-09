@@ -1,39 +1,26 @@
 # bcbioSingleCell
 
-[![Repo status: active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Travis CI build status](https://travis-ci.org/hbc/bcbioSingleCell.svg?branch=master)](https://travis-ci.org/hbc/bcbioSingleCell)
-[![AppVeyor CI build status](https://ci.appveyor.com/api/projects/status/npy0mhfjn9saqv4g/branch/master?svg=true)](https://ci.appveyor.com/project/mjsteinbaugh/bcbiosinglecell/branch/master)
-[![Anaconda version](https://anaconda.org/bioconda/r-bcbiosinglecell/badges/version.svg) ![Anaconda latest release date](https://anaconda.org/bioconda/r-bcbiosinglecell/badges/latest_release_date.svg) ![Anaconda downloads](https://anaconda.org/bioconda/r-bcbiosinglecell/badges/downloads.svg)](https://anaconda.org/bioconda/r-bcbiosinglecell)
+[![Install with Bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/r-bcbiosinglecell/README.html)
 
 [R][] package for [bcbio][] single-cell RNA-seq analysis.
 
 ## Installation
 
+Requirements: [R][] >= 4.0, [Bioconductor][] >= 3.11.
+
 ### [R][] method
-
-```r
-if (!requireNamespace("remotes", quietly = TRUE)) {
-    install.packages("remotes")
-}
-Sys.setenv(R_REMOTES_UPGRADE = "always")
-# Set `GITHUB_PAT` in `~/.Renviron` if you get a rate limit error.
-remotes::install_github("hbc/bcbioSingleCell")
-```
-
-Here's how to update to the latest version on GitHub:
-
-```r
-Sys.setenv(R_REMOTES_UPGRADE = "always")
-remotes::update_packages()
-```
-
-Always check that your Bioconductor installation is valid before proceeding.
 
 ```r
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
     install.packages("BiocManager")
 }
-BiocManager::valid()
+install.packages(
+    pkgs = "bcbioSingleCell",
+    repos = c(
+        "https://r.acidgenomics.com",
+        BiocManager::repositories()
+    )
+)
 ```
 
 ### [Conda][] method
@@ -51,7 +38,7 @@ R
 ### [Docker][] method
 
 ```sh
-image="acidgenomics/bcbiosinglecell"
+image="acidgenomics/r-bcbiosinglecell"
 workdir="/mnt/work"
 docker pull "$image"
 docker run -it \

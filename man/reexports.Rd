@@ -21,7 +21,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{acidplots}{\code{\link[acidplots]{barcodeRanksPerSample}}, \code{\link[acidplots]{plotBarcodeRanks}}, \code{\link[acidplots]{plotCellCounts}}, \code{\link[acidplots]{plotCountsPerCell}}, \code{\link[acidplots]{plotCountsVsFeatures}}, \code{\link[acidplots]{plotFeaturesPerCell}}, \code{\link[acidplots]{plotMitoRatio}}, \code{\link[acidplots]{plotNovelty}}, \code{\link[acidplots]{plotQC}}}
+  \item{AcidPlots}{\code{\link[AcidPlots]{barcodeRanksPerSample}}, \code{\link[AcidPlots]{plotBarcodeRanks}}, \code{\link[AcidPlots]{plotCellCounts}}, \code{\link[AcidPlots]{plotCountsPerCell}}, \code{\link[AcidPlots]{plotCountsVsFeatures}}, \code{\link[AcidPlots]{plotFeaturesPerCell}}, \code{\link[AcidPlots]{plotMitoRatio}}, \code{\link[AcidPlots]{plotNovelty}}, \code{\link[AcidPlots]{plotQC}}}
 
   \item{basejump}{\code{\link[basejump]{calculateMetrics}}, \code{\link[basejump]{filterCells}}}
 }}

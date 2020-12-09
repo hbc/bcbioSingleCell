@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -40,7 +44,6 @@
 <meta property="og:title" content="Update an object to its current class definition — updateObject" />
 <meta property="og:description" content="updateObject is a generic function that returns an instance
   of object updated to its current class definition." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -58,7 +61,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -72,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bcbioSingleCell</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.13</span>
       </span>
     </div>
 
@@ -93,7 +96,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/hbc/bcbioSingleCell">
+  <a href="https://github.com/hbc/bcbioSingleCell/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -122,7 +125,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S4 method for bcbioSingleCell</span>
-<span class='fu'>updateObject</span>(<span class='no'>object</span>)</pre>
+<span class='fu'>updateObject</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -133,6 +136,17 @@
     <code>updateObjectFromSlots</code>.</p>
 <p>Object for slot information to be extracted from for
     <code>getObjectSlots</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments, for use in specific <code>updateObject</code>
+    methods.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p><code>TRUE</code> or <code>FALSE</code>, indicating whether information about
+    the update should be reported. Use <code><a href='https://rdrr.io/r/base/message.html'>message</a></code> to
+    report this information.</p></td>
     </tr>
     </table>
 
@@ -152,7 +166,7 @@
 <p><code>updateObject</code> requires that the class of the returned object be
   the same as the class of the argument <code>object</code>, and that the
   object is valid (see <code><a href='https://rdrr.io/r/methods/validObject.html'>validObject</a></code>). By default,
-  <code>updateObject</code> has the following behaviors:</p><dl class='dl-horizontal'>
+  <code>updateObject</code> has the following behaviors:</p><dl>
     <dt><code>updateObject(ANY, ..., verbose=FALSE)</code></dt><dd><p>By default, <code>updateObject</code> uses heuristic methods to determine
       whether the object should be the `new' S4 type (introduced in R 2.4.0),
       but is not. If the heuristics indicate an update is required,
@@ -189,7 +203,7 @@
   <code>object</code> cannot be determined by accessing known slots.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Updated 2020-01-20.</p>
+    <p>Updated 2020-05-11.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'>
@@ -207,10 +221,14 @@
           in the <span class="pkg">BiocGenerics</span> package.</p></li>
 </ul>
 </div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Michael Steinbaugh</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>bcb</span>)
-<span class='fu'>updateObject</span>(<span class='no'>bcb</span>)</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>──</span><span> </span><span style='font-weight: bold;'>Update object</span><span> </span><span style='color: #00BBBB;'>───────────────────────────────────────────────────────────────</span><span></span></div><div class='output co'>#&gt; <span class='message'>Upgrading </span><span style='color: #000000;background-color: #BBBBBB;'>`bcbioSingleCell`</span><span> from version 0.3.19 to 0.4.8.</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>── </span><span style='font-weight: bold;'>Assays</span><span> ──</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>── </span><span style='font-weight: bold;'>Column data</span><span> ──</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'>── </span><span style='font-weight: bold;'>Metadata</span><span> ──</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> Update of </span><span style='color: #000000;background-color: #BBBBBB;'>`bcbioSingleCell`</span><span> object was successful.</span></div><div class='output co'>#&gt; bcbioSingleCell 0.4.8
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>bcb</span><span class='op'>)</span>
+<span class='fu'>updateObject</span><span class='op'>(</span><span class='va'>bcb</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; bcbioSingleCell 0.4.13
 #&gt; uploadDir: /data00/draco/acidbase/packages/bcbioSingleCell/inst/extdata/indrops
 #&gt; dates(2): [bcbio] 2018-01-01; [R] 2019-08-12
 #&gt; level: genes
@@ -229,32 +247,22 @@
 #&gt;   TGGGAATT_ATATAGGA TGTTATCA_ACGCAGAG
 #&gt; colData names(15): aggregate description ... sampleName sequence
 #&gt; reducedDimNames(0):
-#&gt; spikeNames(0):
 #&gt; altExpNames(0):</div><div class='input'>
-## Example that depends on remote file.
-## > x <- import(
-## >     file = file.path(
-## >         bcbioSingleCellTestsURL,
-## >         "bcbioSingleCell_0.1.0.rds"
-## >     )
-## > )
-## > x <- updateObject(x)
-## > x
-</div></span></pre>
+<span class='co'>## Example that depends on remote file.</span>
+<span class='co'>## &gt; x &lt;- import(</span>
+<span class='co'>## &gt;     file = file.path(</span>
+<span class='co'>## &gt;         bcbioSingleCellTestsURL,</span>
+<span class='co'>## &gt;         "bcbioSingleCell_0.1.0.rds"</span>
+<span class='co'>## &gt;     )</span>
+<span class='co'>## &gt; )</span>
+<span class='co'>## &gt; x &lt;- updateObject(x)</span>
+<span class='co'>## &gt; x</span>
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#note">Note</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Michael Steinbaugh</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -265,7 +273,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

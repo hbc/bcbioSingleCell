@@ -12,7 +12,6 @@ bcbioSingleCell(
   genomeBuild = NULL,
   gffFile = NULL,
   transgeneNames = NULL,
-  spikeNames = NULL,
   interestingGroups = "sampleName",
   BPPARAM = BiocParallel::SerialParam()
 )
@@ -48,9 +47,6 @@ Generally, we recommend using GTF (GFFv2) instead of GFFv3.}
 \item{transgeneNames}{\code{character}.
 Vector indicating which assay rows denote transgenes (e.g. EGFP, TDTOMATO).}
 
-\item{spikeNames}{\code{character}.
-Vector indicating which assay rows denote spike-in sequences (e.g. ERCCs).}
-
 \item{interestingGroups}{\code{character}.
 Groups of interest to use for visualization.
 Corresponds to factors describing the columns of the object.}
@@ -72,7 +68,7 @@ read counts saved as a sparse matrix (\code{sparseMatrix}), sample metadata, and
 cell quality control metrics.
 }
 \note{
-Updated 2020-01-20.
+Updated 2020-02-24.
 }
 \section{Remote data}{
 

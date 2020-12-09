@@ -1,9 +1,9 @@
 #' @name plotReadsPerCell
 #' @author Michael Steinbaugh, Rory Kirchner
-#' @inherit acidgenerics::plotReadsPerCell
+#' @inherit AcidGenerics::plotReadsPerCell
 #' @note Updated 2019-08-12.
 #'
-#' @inheritParams acidroxygen::params
+#' @inheritParams AcidRoxygen::params
 #' @param cutoffLine `logical(1)`.
 #'   Include a line marking the cutoff.
 #' @param ... Additional arguments.
@@ -18,7 +18,7 @@ NULL
 
 #' @rdname plotReadsPerCell
 #' @name plotReadsPerCell
-#' @importFrom acidgenerics plotReadsPerCell
+#' @importFrom AcidGenerics plotReadsPerCell
 #' @usage plotReadsPerCell(object, ...)
 #' @export
 NULL

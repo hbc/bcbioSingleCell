@@ -1,3 +1,42 @@
+## bcbioSingleCell 0.4.14 (2020-10-08)
+
+### Minor changes
+
+- Maintenance release, updating dependency version requirements.
+
+## bcbioSingleCell 0.4.13 (2020-07-24)
+
+### Minor changes
+
+- Maintenance release, updating minimum R dependency to 4.0.
+
+## bcbioSingleCell 0.4.12 (2020-05-12)
+
+### Minor changes
+
+- Bug fix for integer handling in `.importReads` following switch to
+  `vroom::vroom` from `data.table::fread`.
+
+## bcbioSingleCell 0.4.11 (2020-05-11)
+
+### Minor changes
+
+- `updateObject`: Bug fix release for breaking changes introduced by `colData<-`
+  assignment on `SingleCellExperiment` / `SummarizedExperiment` expecting
+  `check = FALSE` support for downstream `updateObject` call. Added `...`
+  passthrough that prevents this error in method support for `bcbioSingleCell`
+  class. This should now be fully compliant with R 4.0 / Bioconductor 3.11
+  release.
+- `updateObject`: Added `verbose` argument support, defaulting now to `FALSE`.
+
+## bcbioSingleCell 0.4.10 (2020-02-24)
+
+### Minor changes
+
+- `bcbioSingleCell`: Removed now defunct `spikeNames` argument. Refer to
+  `makeSummarizedExperiment`, `makeSingleCellExperiment` documentation and
+  release notes in basejump package for details.
+
 ## bcbioSingleCell 0.4.9 (2020-02-20)
 
 ### Minor changes
@@ -18,7 +57,7 @@
 
 - Updated messages to use cli package approach. The same approach is now used in
   the bcbioRNASeq package as well.
-- Updated basejump dependencies to support rename from bioverbs to acidgenerics.
+- Updated basejump dependencies to support rename from bioverbs to AcidGenerics.
 
 ## bcbioSingleCell 0.4.6 (2019-10-30)
 
@@ -86,12 +125,12 @@ of `SingleCellExperiment`.
 
 ### Major changes
 
-- Offloaded plotting functions to acidplots, so we can use some of this code in
+- Offloaded plotting functions to AcidPlots, so we can use some of this code in
   a shared manner with objects imported from 10X Genomics Chromium.
 
 ### Minor changes
 
-- Improved documentation consistency by using shared roxygen from acidroxygen
+- Improved documentation consistency by using shared roxygen from AcidRoxygen
   package.
 - Updated basejump and bcbio R package dependencies.
 
@@ -139,7 +178,7 @@ of `SingleCellExperiment`.
 
 ### Minor changes
 
-- Now importing ggplot2 code from [acidplots][] package.
+- Now importing ggplot2 code from [AcidPlots][] package.
 - `plotCellCounts`: Improved default appearance, removing black border.
 - Updated basejump and bcbio R package dependencies.
 
@@ -1440,7 +1479,7 @@ removal with the `filterCells` function.
 
 [10x genomics]: https://www.10xgenomics.com/
 [acid genomics]: https://acidgenomics.com/
-[acidplots]: https://acidplots.acidgenomics.com/
+[AcidPlots]: https://AcidPlots.acidgenomics.com/
 [basejump]: https://basejump.acidgenomics.com/
 [bcbio]: https://bcbio-nextgen.readthedocs.io/
 [bcbiobase]: https://bioinformatics.sph.harvard.edu/bcbioBase/

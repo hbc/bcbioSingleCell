@@ -114,7 +114,7 @@
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
-#' @note Updated 2020-01-20.
+#' @note Updated 2020-05-12.
 #' @noRd
 #'
 #' @inheritParams BiocParallel::bplapply
@@ -149,9 +149,8 @@
                     format = "tsv",
                     colnames = c("barcode", "n")
                 )
-                x <- data[["n"]]
+                x <- as.integer(data[["n"]])
                 names(x) <- makeNames(data[["barcode"]])
-                assert(is.integer(x))
                 x
             },
             BPPARAM = BPPARAM
