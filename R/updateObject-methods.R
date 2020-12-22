@@ -2,7 +2,7 @@
 #' @author Michael Steinbaugh
 #' @note Updated 2020-05-11.
 #'
-#' @inherit BiocGenerics::updateObject
+#' @inherit AcidGenerics::updateObject
 #' @inheritParams AcidRoxygen::params
 #'
 #' @examples

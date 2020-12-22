@@ -16,15 +16,6 @@ NULL
 
 
 
-#' @rdname plotReadsPerCell
-#' @name plotReadsPerCell
-#' @importFrom AcidGenerics plotReadsPerCell
-#' @usage plotReadsPerCell(object, ...)
-#' @export
-NULL
-
-
-
 ## Histogram ===================================================================
 #' Proportional cellular barcodes data
 #'
