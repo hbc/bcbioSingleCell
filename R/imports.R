@@ -4,14 +4,13 @@
 #'
 #' @importFrom AcidPlots acid_geom_abline acid_geom_label
 #'   acid_geom_label_average acid_geom_label_repel
-#' @importFrom BiocGenerics counts updateObject
 #' @importFrom BiocParallel bplapply bpmapply
 #' @importFrom IRanges DataFrameList
 #' @importFrom S4Vectors DataFrame SimpleList cbind do.call lapply metadata
 #'   metadata<-
 #' @importFrom SummarizedExperiment assayNames assay assays assays<- colData
 #'   colData<- rowData rowData<- rowRanges rowRanges<-
-#' @importFrom basejump as_tibble calculateMetrics camelCase cell2sample
+#' @importFrom basejump as_tibble calculateMetrics camelCase cell2sample counts
 #'   detectLanes droplevels emptyRanges formalsList import importSampleData
 #'   interestingGroups interestingGroups<- leftJoin makeDimnames
 #'   makeGRangesFromEnsembl makeGRangesFromGFF makeLabel makeNames
