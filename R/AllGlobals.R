@@ -1,4 +1,13 @@
-globalVariables(".")
+## FIXME
+## This is also defined in AcidPlots.
+.geom <- c("histogram", "ecdf", "violin", "ridgeline", "boxplot")
+
+## FIXME
+## We're adding an additional raw reads column (pre-UMI disambiguation).
+.metricsCols <- c("nRead", metricsCols)
+
+## FIXME
+.requiredAssays <- "counts"
 
 .version <- packageVersion(packageName())
 
@@ -8,23 +17,6 @@ globalVariables(".")
 #' @examples
 #' bcbioSingleCellTestsURL
 bcbioSingleCellTestsURL <- paste0(
-    "https://tests.acidgenomics.com/bcbioSingleCell/",
+    "https://r.acidgenomics.com/packages/bcbiosinglecell/",
     "v", .version$major, ".", .version$minor  # nolint
 )
-
-#' @importFrom basejump lanePattern
-lanePattern <- basejump::lanePattern
-
-#' @importFrom bcbioBase projectDirPattern
-projectDirPattern <- bcbioBase::projectDirPattern
-
-separatorBar <- basejump::separator()
-
-requiredAssays <- "counts"
-
-## This is also defined in AcidPlots.
-geom <- c("histogram", "ecdf", "violin", "ridgeline", "boxplot")
-
-## We're adding an additional raw reads column (pre-UMI disambiguation).
-metricsCols <- basejump::metricsCols
-metricsCols <- c("nRead", metricsCols)

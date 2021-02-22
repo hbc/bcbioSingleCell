@@ -438,7 +438,7 @@ NULL
 
 formals(`plotReadsPerCell,bcbioSingleCell`)[c("color", "fill")] <-
     formalsList[c("color.discrete", "fill.discrete")]
-formals(`plotReadsPerCell,bcbioSingleCell`)[["geom"]] <- geom
+formals(`plotReadsPerCell,bcbioSingleCell`)[["geom"]] <- .geom
 
 
 

@@ -62,8 +62,8 @@ NULL
         }
         assays <- Filter(Negate(is.null), assays)
         ## Put the required assays first, in order.
-        assays <- assays[unique(c(requiredAssays, names(assays)))]
-        assert(isSubset(requiredAssays, names(assays)))
+        assays <- assays[unique(c(.requiredAssays, names(assays)))]
+        assert(isSubset(.requiredAssays, names(assays)))
         ## Row data ------------------------------------------------------------
         ## FIXME RENAME TO STRICT LOWER CAMEL.
         ## Column data ---------------------------------------------------------
