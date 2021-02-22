@@ -15,7 +15,7 @@
 #'   detectLanes droplevels emptyRanges formalsList import importSampleData
 #'   interestingGroups interestingGroups<- leftJoin makeDimnames
 #'   makeGRangesFromEnsembl makeGRangesFromGFF makeLabel makeNames
-#'   makeSingleCellExperiment mapCellsToSamples markdownPlots matchArgsToDoCall
+#'   makeSingleCellExperiment mapCellsToSamples markdownPlots
 #'   matchInterestingGroups metrics metricsCols minimalSampleData printString
 #'   realpath sampleData sampleNames separator showSlotInfo standardizeCall
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML

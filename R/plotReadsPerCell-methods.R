@@ -47,18 +47,18 @@ NULL
 ) {
     assert(
         is(data, "DataFrame"),
-        isSubset(c("nRead", "sampleID"), colnames(data)),
+        isSubset(c("nRead", "sampleId"), colnames(data)),
         is.integer(data[["nRead"]]),
-        is.factor(data[["sampleID"]]),
+        is.factor(data[["sampleId"]]),
         is(sampleData, "DataFrame"),
         isInt(breaks)
     )
-    sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
-    samples <- levels(data[["sampleID"]])
+    sampleData[["sampleId"]] <- as.factor(rownames(sampleData))
+    samples <- levels(data[["sampleId"]])
     list <- DataFrameList(lapply(
         X = samples,
-        FUN = function(sampleID) {
-            keep <- which(data[["sampleID"]] == sampleID)
+        FUN = function(sampleId) {
+            keep <- which(data[["sampleId"]] == sampleId)
             subset <- data[keep, , drop = FALSE]
             ## Histogram of log10-transformed counts.
             h <- hist(
@@ -73,14 +73,14 @@ NULL
                 (10L ^ h[["mids"]]) /
                 sum(h[["counts"]] * (10L ^ h[["mids"]]))
             DataFrame(
-                sampleID = factor(sampleID),
+                "sampleId" = factor(sampleId),
                 "log10Read" = h[["mids"]],
-                proportion = proportion
+                "proportion" = proportion
             )
         }
     ))
     out <- unlist(list, recursive = FALSE, use.names = FALSE)
-    out <- leftJoin(out, sampleData, by = "sampleID")
+    out <- leftJoin(out, sampleData, by = "sampleId")
     out
 }
 

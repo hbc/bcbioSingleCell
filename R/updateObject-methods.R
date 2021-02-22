@@ -111,7 +111,7 @@ NULL
                     "{.fun colData}."
                 ))
             }
-            assert(isSubset("sampleID", colnames(sampleData)))
+            assert(isSubset("sampleId", colnames(sampleData)))
             ## Starting using `DataFrame` in place of `data.frame` in v0.1.7.
             sampleData <- as(sampleData, "DataFrame")
             colData <- colData[
@@ -124,12 +124,12 @@ NULL
             }
             cell2sample <- mapCellsToSamples(
                 cells = cells,
-                samples = as.character(sampleData[["sampleID"]])
+                samples = as.character(sampleData[["sampleId"]])
             )
             assert(is.factor(cell2sample))
-            colData[["sampleID"]] <- cell2sample
-            sampleData[["sampleID"]] <- rownames(sampleData)
-            colData <- leftJoin(x = colData, y = sampleData, by = "sampleID")
+            colData[["sampleId"]] <- cell2sample
+            sampleData[["sampleId"]] <- rownames(sampleData)
+            colData <- leftJoin(x = colData, y = sampleData, by = "sampleId")
             assert(
                 is(colData, "DataFrame"),
                 identical(rownames(colData), colnames(object))

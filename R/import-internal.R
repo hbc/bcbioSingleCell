@@ -20,15 +20,15 @@
         )
         cli_alert("Importing counts.")
         list <- bpmapply(
-            sampleID = names(sampleDirs),
+            sampleId = names(sampleDirs),
             dir = sampleDirs,
-            FUN = function(sampleID, dir) {
+            FUN = function(sampleId, dir) {
                 counts <- .importCountsPerSample(dir)
                 ## Prefix cell barcodes with sample identifier when we're
                 ## loading counts from multiple samples.
                 if (length(sampleDirs) > 1L) {
                     colnames(counts) <-
-                        paste(sampleID, colnames(counts), sep = "_")
+                        paste(sampleId, colnames(counts), sep = "_")
                 }
                 ## Ensure names are valid.
                 counts <- makeDimnames(counts)

@@ -4,7 +4,7 @@
 #'
 #' Refer to [`cell2sample()`][basejump::cell2sample] and
 #' [selectSamples()][basejump::selectSamples] if sample-level extraction is
-#' desired. Note that `sampleID` is slotted into `colData` and defines the
+#' desired. Note that `sampleId` is slotted into `colData` and defines the
 #' cell-to-sample mappings.
 #'
 #' Unfiltered cellular barcode distributions for the entire dataset, including
