@@ -7,9 +7,8 @@ test_that("bcbioSingleCell", {
 
 ## FIXME CACHE THIS...
 test_that("v0.1 update", {
-    skip_if_not(hasInternet())
     invalid <- import(
-        file = file.path(bcbioSingleCellTestsURL, "bcbioSingleCell_0.1.0.rds")
+        file = file.path("cache", "bcbioSingleCell_0.1.0.rds")
     )
     valid <- updateObject(invalid)
     expect_s4_class(valid, "bcbioSingleCell")
