@@ -1,3 +1,7 @@
+## FIXME Consider converting any warnings to errors here.
+
+
+
 #' @inherit bcbioSingleCell-class title description
 #' @author Michael Steinbaugh
 #' @note Updated 2020-02-24.
