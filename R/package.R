@@ -20,10 +20,10 @@
 #'   importSampleData interestingGroups interestingGroups<- lapply leftJoin
 #'   makeDimnames makeGRangesFromEnsembl makeGRangesFromGFF makeLabel makeNames
 #'   makeSingleCellExperiment mapCellsToSamples markdownPlots
-#'   matchInterestingGroups metadata metadata<- metrics metricsCols
-#'   minimalSampleData packageName packageVersion printString realpath rowData
-#'   rowData<- rowRanges rowRanges<- sampleData sampleNames separator
-#'   showSlotInfo standardizeCall
+#'   matchInterestingGroups mcols mcols<- metadata metadata<- metrics
+#'   metricsCols minimalSampleData packageName packageVersion printString
+#'   realpath rowData rowData<- rowRanges rowRanges<- sampleData sampleNames
+#'   separator showSlotInfo standardizeCall
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
 #'   importDataVersions importProgramVersions projectDir runDate sampleDirs
