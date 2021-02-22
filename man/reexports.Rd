@@ -23,6 +23,6 @@ below to see their documentation.
 \describe{
   \item{AcidPlots}{\code{\link[AcidPlots]{barcodeRanksPerSample}}, \code{\link[AcidPlots]{plotBarcodeRanks}}, \code{\link[AcidPlots]{plotCellCounts}}, \code{\link[AcidPlots]{plotCountsPerCell}}, \code{\link[AcidPlots]{plotCountsVsFeatures}}, \code{\link[AcidPlots]{plotFeaturesPerCell}}, \code{\link[AcidPlots]{plotMitoRatio}}, \code{\link[AcidPlots]{plotNovelty}}, \code{\link[AcidPlots]{plotQC}}}
 
-  \item{basejump}{\code{\link[basejump]{calculateMetrics}}, \code{\link[basejump]{filterCells}}}
+  \item{basejump}{\code{\link[basejump:reexports]{calculateMetrics}}, \code{\link[basejump:reexports]{filterCells}}}
 }}
 
