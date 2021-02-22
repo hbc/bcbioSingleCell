@@ -40,7 +40,7 @@ setValidity(
         ## Column data ---------------------------------------------------------
         ok <- validate(
             ## Require that metrics columns are defined.
-            isSubset(metricsCols, colnames(colData)),
+            isSubset(.metricsCols, colnames(colData)),
             ## Ensure that `interestingGroups` isn't slotted in colData.
             areDisjointSets("interestingGroups", colnames(colData))
         )
