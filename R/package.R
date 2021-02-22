@@ -12,18 +12,17 @@
 #'
 #' @importFrom AcidPlots !! acid_geom_abline acid_geom_label
 #'   acid_geom_label_average acid_geom_label_repel sym syms
-#' @importFrom S4Vectors cbind do.call lapply metadata metadata<-
-#' @importFrom SummarizedExperiment assayNames assay assays assays<- colData
-#'   colData<- rowData rowData<- rowRanges rowRanges<-
-#' @importFrom basejump DataFrame DataFrameList SimpleList as_tibble
-#'   calculateMetrics camelCase capture.output cell2sample counts detectLanes
-#'   droplevels emptyRanges formalsList import importSampleData
-#'   interestingGroups interestingGroups<- leftJoin makeDimnames
-#'   makeGRangesFromEnsembl makeGRangesFromGFF makeLabel makeNames
-#'   makeSingleCellExperiment mapCellsToSamples markdownPlots
-#'   matchInterestingGroups metrics metricsCols minimalSampleData packageName
-#'   packageVersion printString realpath sampleData sampleNames separator
-#'   showSlotInfo standardizeCall
+#' @importFrom BiocParallel bplapply bpmapply
+#' @importFrom basejump DataFrame DataFrameList SimpleList assayNames assay
+#'   assays assays<- as_tibble calculateMetrics camelCase capture.output cbind
+#'   cell2sample colData colData<- counts detectLanes do.call droplevels
+#'   emptyRanges formalsList import importSampleData interestingGroups
+#'   interestingGroups<- lapply leftJoin makeDimnames makeGRangesFromEnsembl
+#'   makeGRangesFromGFF makeLabel makeNames makeSingleCellExperiment
+#'   mapCellsToSamples markdownPlots matchInterestingGroups metadata metadata<-
+#'   metrics metricsCols minimalSampleData packageName packageVersion
+#'   printString realpath rowData rowData<- rowRanges rowRanges<- sampleData
+#'   sampleNames separator showSlotInfo standardizeCall
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
 #'   importDataVersions importProgramVersions projectDir runDate sampleDirs
@@ -45,8 +44,4 @@
 ## REWORK AS ACIDCLI.
 #' @importFrom cli cat_line cli_alert cli_alert_success cli_alert_warning cli_h1
 #'   cli_h2 cli_text
-NULL
-
-## FIXME MAKE THESE OPTIONAL
-#' @importFrom BiocParallel bplapply bpmapply
 NULL
