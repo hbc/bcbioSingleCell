@@ -211,22 +211,22 @@ bcbioSingleCell <- function(
     assert(isSubset(rownames(sampleData), names(sampleDirs)))
     ## Join `sampleData` into cell-level `colData`.
     if (identical(nrow(sampleData), 1L)) {
-        colData[["sampleID"]] <- as.factor(rownames(sampleData))
+        colData[["sampleId"]] <- as.factor(rownames(sampleData))
     } else {
-        colData[["sampleID"]] <- mapCellsToSamples(
+        colData[["sampleId"]] <- mapCellsToSamples(
             cells = rownames(colData),
             samples = rownames(sampleData)
         )
     }
-    sampleData[["sampleID"]] <- as.factor(rownames(sampleData))
-    ## Need to ensure the `sampleID` factor levels match up, otherwise we'll get
-    ## a warning during the `leftJjoin()` call below.
+    sampleData[["sampleId"]] <- as.factor(rownames(sampleData))
+    ## Need to ensure the `sampleId` factor levels match up, otherwise we'll get
+    ## a warning during the `leftJoin()` call below.
     assert(areSetEqual(
-        x = levels(colData[["sampleID"]]),
-        y = levels(sampleData[["sampleID"]])
+        x = levels(colData[["sampleId"]]),
+        y = levels(sampleData[["sampleId"]])
     ))
-    levels(sampleData[["sampleID"]]) <- levels(colData[["sampleID"]])
-    colData <- leftJoin(colData, sampleData, by = "sampleID")
+    levels(sampleData[["sampleId"]]) <- levels(colData[["sampleId"]])
+    colData <- leftJoin(colData, sampleData, by = "sampleId")
     assert(
         is(colData, "DataFrame"),
         hasRownames(colData)
@@ -236,7 +236,7 @@ bcbioSingleCell <- function(
     cli_h2("Metadata")
     cbList <- .importReads(sampleDirs = sampleDirs, BPPARAM = BPPARAM)
     runDate <- runDate(projectDir)
-    interestingGroups <- camelCase(interestingGroups)
+    interestingGroups <- camelCase(interestingGroups, strict = TRUE)
     assert(isSubset(interestingGroups, colnames(sampleData)))
     metadata <- list(
         allSamples = allSamples,
