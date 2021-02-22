@@ -13,16 +13,17 @@
 #' @importFrom AcidPlots !! acid_geom_abline acid_geom_label
 #'   acid_geom_label_average acid_geom_label_repel sym syms
 #' @importFrom BiocParallel bplapply bpmapply bpparam
-#' @importFrom basejump DataFrame DataFrameList SimpleList assayNames assay
-#'   assays assays<- as_tibble calculateMetrics camelCase capture.output cbind
-#'   cell2sample colData colData<- counts detectLanes do.call droplevels
-#'   emptyRanges formalsList h1 h2 import importSampleData interestingGroups
-#'   interestingGroups<- lapply leftJoin makeDimnames makeGRangesFromEnsembl
-#'   makeGRangesFromGFF makeLabel makeNames makeSingleCellExperiment
-#'   mapCellsToSamples markdownPlots matchInterestingGroups metadata metadata<-
-#'   metrics metricsCols minimalSampleData packageName packageVersion
-#'   printString realpath rowData rowData<- rowRanges rowRanges<- sampleData
-#'   sampleNames separator showSlotInfo standardizeCall
+#' @importFrom basejump DataFrame DataFrameList SimpleList alert alertSuccess
+#'   alertWarning assayNames assay assays assays<- as_tibble calculateMetrics
+#'   camelCase capture.output cbind cell2sample colData colData<- counts
+#'   detectLanes do.call droplevels emptyRanges formalsList h1 h2 import
+#'   importSampleData interestingGroups interestingGroups<- lapply leftJoin
+#'   makeDimnames makeGRangesFromEnsembl makeGRangesFromGFF makeLabel makeNames
+#'   makeSingleCellExperiment mapCellsToSamples markdownPlots
+#'   matchInterestingGroups metadata metadata<- metrics metricsCols
+#'   minimalSampleData packageName packageVersion printString realpath rowData
+#'   rowData<- rowRanges rowRanges<- sampleData sampleNames separator
+#'   showSlotInfo standardizeCall
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
 #'   importDataVersions importProgramVersions projectDir runDate sampleDirs
