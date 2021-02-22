@@ -1,3 +1,9 @@
+## bcbioSingleCell 0.1.15 (2021-02-22)
+
+### Minor changes
+
+- Maintenance release, providing support for basejump v0.14 release series.
+
 ## bcbioSingleCell 0.4.14 (2020-10-08)
 
 ### Minor changes
