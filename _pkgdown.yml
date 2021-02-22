@@ -1,6 +1,6 @@
 authors:
   Michael Steinbaugh:
-    href: https://steinbaugh.com/
+    href: https://mike.steinbaugh.com/
   Rory Kirchner:
     href: https://github.com/roryk/
   Mary Piper:
@@ -11,10 +11,8 @@ authors:
     href: https://github.com/sjhosui/
   Harvard Chan Bioinformatics Core:
     href: https://bioinformatics.sph.harvard.edu/
-
 news:
   - one_page: false
-
 reference:
   - title: S4 classes
     contents:
@@ -31,3 +29,4 @@ reference:
   - title: Reexports
     contents:
     - reexports
+url: https://r.acidgenomics.com/packages/bcbiosinglecell

@@ -45,7 +45,7 @@ Authors@R: c(
         role = c("cph", "fnd")
     ))
 URL:
-    https://bioinformatics.sph.harvard.edu/bcbioSingleCell/,
+    https://r.acidgenomics.com/packages/bcbiosinglecell/,
     https://github.com/hbc/bcbioSingleCell/
 BugReports: https://github.com/hbc/bcbioSingleCell/issues/
 License: AGPL-3
