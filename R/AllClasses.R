@@ -18,7 +18,6 @@ setValidity(
         colData <- colData(object)
         metadata <- metadata(object)
         sampleData <- sampleData(object)
-
         ## Return invalid for all objects older than v0.1.
         version <- metadata[["version"]]
         ok <- validate(
@@ -26,22 +25,18 @@ setValidity(
             version >= 0.1
         )
         if (!isTRUE(ok)) return(ok)
-
         ## Check for legacy bcbio slot.
         ok <- validate(!.hasSlot(object, "bcbio"))
         if (!isTRUE(ok)) return(ok)
-
         ## Assays --------------------------------------------------------------
         ok <- validate(isSubset("counts", names(assays(object))))
         if (!isTRUE(ok)) return(ok)
-
         ## Row data ------------------------------------------------------------
         ok <- validate(
             is(rowRanges(object), "GRanges"),
             is(rowData(object), "DataFrame")
         )
         if (!isTRUE(ok)) return(ok)
-
         ## Column data ---------------------------------------------------------
         ok <- validate(
             ## Require that metrics columns are defined.
@@ -50,7 +45,6 @@ setValidity(
             areDisjointSets("interestingGroups", colnames(colData))
         )
         if (!isTRUE(ok)) return(ok)
-
         ## Metadata ------------------------------------------------------------
         df <- "DataFrame"
         if (packageVersion("S4Vectors") >= "0.23") {
@@ -87,14 +81,12 @@ setValidity(
             subset = TRUE
         )
         if (!isTRUE(ok)) return(ok)
-
         ## Check that level is defined.
         ok <- validate(
             !isSubset("sampleName", names(metadata)),
             isSubset(metadata[["level"]], c("genes", "transcripts"))
         )
         if (!isTRUE(ok)) return(ok)
-
         TRUE
     }
 )
