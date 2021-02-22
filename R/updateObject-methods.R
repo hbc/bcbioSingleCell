@@ -247,7 +247,6 @@ NULL
         bcb <- new(Class = "bcbioSingleCell", sce)
         validObject(bcb)
         if (isTRUE(verbose)) {
-            cat_line()
             cli_alert_success(
                 "Update of {.var bcbioSingleCell} object was successful."
             )

@@ -14,6 +14,6 @@
 #' @examples
 #' bcbioSingleCellTestsURL
 bcbioSingleCellTestsURL <- paste0(
-    "https://r.acidgenomics.com/packages/bcbiosinglecell/",
+    "https://r.acidgenomics.com/testdata/bcbiosinglecell/",
     "v", .version$major, ".", .version$minor  # nolint
 )

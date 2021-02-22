@@ -285,7 +285,6 @@ bcbioSingleCell <- function(
     colData <- colData[, sort(colnames(colData)), drop = FALSE]
     colData(object) <- colData
     bcb <- new(Class = "bcbioSingleCell", object)
-    cat_line()
     cli_alert_success("bcbio single-cell RNA-seq run imported successfully.")
     bcb
 }
