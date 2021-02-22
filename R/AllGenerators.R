@@ -39,7 +39,7 @@ bcbioSingleCell <- function(
     gffFile = NULL,
     transgeneNames = NULL,
     interestingGroups = "sampleName",
-    BPPARAM = BiocParallel::SerialParam()  # nolint
+    BPPARAM = BiocParallel::bpparam()  # nolint
 ) {
     assert(
         isADirectory(uploadDir),

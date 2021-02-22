@@ -13,7 +13,7 @@ bcbioSingleCell(
   gffFile = NULL,
   transgeneNames = NULL,
   interestingGroups = "sampleName",
-  BPPARAM = BiocParallel::SerialParam()
+  BPPARAM = BiocParallel::bpparam()
 )
 }
 \arguments{

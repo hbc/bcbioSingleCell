@@ -2,7 +2,7 @@
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
-#' @note Updated 2020-01-20.
+#' @note Updated 2021-02-22.
 #' @noRd
 #'
 #' @inheritParams BiocParallel::bpmapply
@@ -11,7 +11,7 @@
 .importCounts <-  # nolint
     function(
         sampleDirs,
-        BPPARAM = BiocParallel::SerialParam()  # nolint
+        BPPARAM  # nolint
     ) {
         assert(
             allAreDirectories(sampleDirs),
@@ -127,7 +127,7 @@
 .importReads <-  # nolint
     function(
         sampleDirs,
-        BPPARAM = BiocParallel::bpparam()  # nolint
+        BPPARAM  # nolint
     ) {
         assert(
             allAreDirectories(sampleDirs),

@@ -12,7 +12,7 @@
 #'
 #' @importFrom AcidPlots !! acid_geom_abline acid_geom_label
 #'   acid_geom_label_average acid_geom_label_repel sym syms
-#' @importFrom BiocParallel bplapply bpmapply
+#' @importFrom BiocParallel bplapply bpmapply bpparam
 #' @importFrom basejump DataFrame DataFrameList SimpleList assayNames assay
 #'   assays assays<- as_tibble calculateMetrics camelCase capture.output cbind
 #'   cell2sample colData colData<- counts detectLanes do.call droplevels
