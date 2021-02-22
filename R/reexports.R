@@ -1,8 +1,18 @@
-## These reexports are necessary for the quality control template.
-
 #' @importFrom AcidPlots barcodeRanksPerSample
 #' @export
 AcidPlots::barcodeRanksPerSample
+
+#' @importFrom basejump calculateMetrics
+#' @export
+basejump::calculateMetrics
+
+#' @importFrom basejump filterCells
+#' @export
+basejump::filterCells
+
+#' @importFrom AcidPlots plotBarcodeRanks
+#' @export
+AcidPlots::plotBarcodeRanks
 
 #' @importFrom AcidPlots plotCellCounts
 #' @export
@@ -28,22 +38,6 @@ AcidPlots::plotMitoRatio
 #' @export
 AcidPlots::plotNovelty
 
-#' @importFrom AcidPlots plotBarcodeRanks
-#' @export
-AcidPlots::plotBarcodeRanks
-
 #' @importFrom AcidPlots plotQC
 #' @export
 AcidPlots::plotQC
-
-
-
-
-
-#' @importFrom basejump calculateMetrics
-#' @export
-basejump::calculateMetrics
-
-#' @importFrom basejump filterCells
-#' @export
-basejump::filterCells

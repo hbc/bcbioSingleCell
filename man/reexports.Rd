@@ -4,16 +4,16 @@
 \name{reexports}
 \alias{reexports}
 \alias{barcodeRanksPerSample}
+\alias{calculateMetrics}
+\alias{filterCells}
+\alias{plotBarcodeRanks}
 \alias{plotCellCounts}
 \alias{plotCountsPerCell}
 \alias{plotCountsVsFeatures}
 \alias{plotFeaturesPerCell}
 \alias{plotMitoRatio}
 \alias{plotNovelty}
-\alias{plotBarcodeRanks}
 \alias{plotQC}
-\alias{calculateMetrics}
-\alias{filterCells}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
