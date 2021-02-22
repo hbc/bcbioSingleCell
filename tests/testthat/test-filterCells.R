@@ -2,7 +2,6 @@ context("filterCells")
 
 bcb <- calculateMetrics(bcb)
 
-## FIXME now named "unknown"?
 test_that("sampleNames", {
     expect_identical(
         object = sampleNames(bcb),

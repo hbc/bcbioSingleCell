@@ -32,6 +32,7 @@ NULL
         sce <- as(object, "SingleCellExperiment")
         cells <- colnames(sce)
         assays <- assays(sce)
+        rowRanges <- rowRanges(sce)
         colData <- colData(sce)
         metadata <- metadata(sce)
         version <- metadata[["version"]]
@@ -65,11 +66,15 @@ NULL
         assays <- assays[unique(c(.requiredAssays, names(assays)))]
         assert(isSubset(.requiredAssays, names(assays)))
         ## Row data ------------------------------------------------------------
-        ## FIXME RENAME TO STRICT LOWER CAMEL.
+        if (hasNames(mcols(rowRanges(sce)))) {
+            colnames(mcols(rowRanges(sce))) <-
+                camelCase(colnames(mcols(rowRanges(sce))), strict = TRUE)
+        }
         ## Column data ---------------------------------------------------------
         if (isTRUE(verbose)) {
             h2("Column data")
         }
+        colnames(colData) <- camelCase(colnames(colData), strict = TRUE)
         ## FIXME RENAME TO STRICT LOWER CAMEL.
         ## Update legacy column names.
         if (isSubset(c("nCount", "nUMI"), colnames(colData))) {
@@ -242,6 +247,7 @@ NULL
         metadata <- metadata[keep]
         ## Return --------------------------------------------------------------
         assays(sce) <- assays
+        rowRanges(sce) <- rowRanges
         colData(sce) <- colData
         metadata(sce) <- metadata
         bcb <- new(Class = "bcbioSingleCell", sce)
