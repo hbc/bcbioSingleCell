@@ -1,0 +1,45 @@
+#+TITLE: bcbioSingleCell
+#+STARTUP: content
+* Development
+** TODO Need to ensure R Markdown renders correctly without goalie issues.
+** TODO Require valid names in all slots.
+** TODO Add monocle celldataset coercion method.
+** TODO Need to run BFG on the repo and remove old example R data.
+** TODO `bcbioSingleCell()`: Explain genome annotation priority in better detail, following the logic defined in `bcbioRNASeq()`.
+** TODO Improve support for transcript-level counts?
+    Should we even allow this at this point?
+** TODO Vignette using example bcbio data and 10X pbmc data.
+** TODO Look into BarcodeInflectionsPlot, now in Seurat 3.
+* pointillism
+** TODO Move markers out of Google Sheets and into the package, as simple CSV files.
+** TODO Use pseudobulk approach for DE with sample replicates
+** TODO `plotFeature()`: Add `pointsAsNumbers` argument support.
+** TODO `diffExp()`: Add internal support for accessing design with `design()` generic.
+** TODO `KnownMarkers` S4: switch from DataFrame to SplitDataFrameList inheritance?
+** TODO Improve SeuratMarkers class.
+    This needs to error if the input data.frame contains `cluster` column.
+    Consider only using `SeuratMarkers` as a single generator but returning `SeuratMarkers` or `SeuratMarkersPerCluster` automatically.
+    Allow generator to work with empty ranges?
+** TODO Improve plotFeature.
+    Add pointsAsNumbers support. Is there a way to facet wrap these instead of using plot grid? Then we can easily support a title. We're using continuous color here, so the formal won't match… argument "color" is missing, with no default.
+** TODO `findMarkers()`: Consider adding `progress` option or BPPARAM support.
+** TODO Switch to `Misc()` to access the `@misc` slot?
+** TODO Consider splitting `SeuratMarkers` class into a `DataFrameList`, per cluster.
+** TODO Stacked bar plot for relative cell abundances per cluster or sample type.
+** TODO Put the resolution in the plot title for t-SNE.
+** TODO Add `write = TRUE` argument support for marking looping functions, to write CSVs automatically to disk.
+** TODO Improve assert checks for `findMarkers()`
+* syntactic
+** TODO saveData: Need to harden against accidential pipe to this function.
+** TODO Check that renaming mode renames symlinks themselves, not the resolved file.
+    I ran into this attempting to name album artist symlinks in iTunes.
+** TODO VIGNETTE. Seriously, work on it.
+** TODO Functions need to convert accent marks if possible. Particularly useful for file names.
+** TODO Ensure nM returns as nm instead of n_m.
+** TODO Rename mode: Need to look for and strip ' - ' out automatically.
+    Otherwise this will return '-minus-' in the file name, which is annoying. Need to improve the internal sanitization in R for this.
+** TODO Rename mode needs to also make extension lowercase.
+** TODO Need to add recursive rename mode support (koopa only?).
+    Maybe this is easiest to implement on the R side of things. Need to rename files first, then directories, sorted. Need to work from lowest levels up.
+** TODO nMito, nCoding looks weird with makeLabel plural.
+    See bcbioSingleCell example.
