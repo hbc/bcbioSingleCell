@@ -41,7 +41,9 @@
 
 
 
+#' @importFrom basejump h1 h2
+NULL
+
 ## REWORK AS ACIDCLI.
-#' @importFrom cli cat_line cli_alert cli_alert_success cli_alert_warning cli_h1
-#'   cli_h2 cli_text
+#' @importFrom cli cli_alert cli_alert_success cli_alert_warning cli_text
 NULL

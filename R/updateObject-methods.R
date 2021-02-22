@@ -27,7 +27,7 @@ NULL
     function(object, ..., verbose = FALSE) {
         assert(isFlag(verbose))
         if (isTRUE(verbose)) {
-            cli_h1("Update object")
+            h1("Update object")
         }
         sce <- as(object, "SingleCellExperiment")
         cells <- colnames(sce)
@@ -45,7 +45,7 @@ NULL
         }
         ## Assays --------------------------------------------------------------
         if (isTRUE(verbose)) {
-            cli_h2("Assays")
+            h2("Assays")
         }
         ## Ensure raw counts are always named "counts".
         if ("assay" %in% names(assays)) {
@@ -68,7 +68,7 @@ NULL
         ## FIXME RENAME TO STRICT LOWER CAMEL.
         ## Column data ---------------------------------------------------------
         if (isTRUE(verbose)) {
-            cli_h2("Column data")
+            h2("Column data")
         }
         ## FIXME RENAME TO STRICT LOWER CAMEL.
         ## Update legacy column names.
@@ -140,7 +140,7 @@ NULL
         }
         ## Metadata ------------------------------------------------------------
         if (isTRUE(verbose)) {
-            cli_h2("Metadata")
+            h2("Metadata")
         }
         ## dataVersions
         dataVersions <- metadata[["dataVersions"]]

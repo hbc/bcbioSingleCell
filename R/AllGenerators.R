@@ -55,18 +55,15 @@ bcbioSingleCell <- function(
     if (isString(gffFile)) {
         isAFile(gffFile) || isAURL(gffFile)
     }
-
-    cli_h1("bcbioSingleCell")
-    cli_text("Importing bcbio-nextgen single-cell RNA-seq run")
+    h1("bcbioSingleCell")
+    alert("Importing bcbio-nextgen single-cell RNA-seq run")
     sampleData <- NULL
-
     ## Run info ---------------------------------------------------------------
     uploadDir <- realpath(uploadDir)
     projectDir <- projectDir(uploadDir)
     sampleDirs <- sampleDirs(uploadDir)
     lanes <- detectLanes(sampleDirs)
-    yamlFile <- file.path(projectDir, "project-summary.yaml")
-    yaml <- import(yamlFile)
+    yaml <- import(file.path(projectDir, "project-summary.yaml"))
     dataVersions <-
         importDataVersions(file.path(projectDir, "data_versions.csv"))
     assert(is(dataVersions, "DataFrame"))
@@ -78,7 +75,10 @@ bcbioSingleCell <- function(
     tryCatch(
         expr = assert(isCharacter(log)),
         error = function(e) {
-            cli_alert_warning("{.file bcbio-nextgen.log} file is empty.")
+            alertWarning(sprintf(
+                "{.file %s} file is empty.",
+                "bcbio-nextgen.log"
+            ))
         }
     )
     commandsLog <- import(file.path(projectDir, "bcbio-nextgen-commands.log"))
@@ -102,9 +102,8 @@ bcbioSingleCell <- function(
         },
         FUN.VALUE = logical(1L)
     ))
-
     ## Sample metadata ---------------------------------------------------------
-    cli_h2("Sample metadata")
+    h2("Sample metadata")
     allSamples <- TRUE
     sampleData <- NULL
     if (isString(sampleMetadataFile)) {
@@ -139,15 +138,13 @@ bcbioSingleCell <- function(
             allSamples <- FALSE
         }
     }
-
     ## Assays (counts) ---------------------------------------------------------
-    cli_h2("Counts")
+    h2("Counts")
     ## Note that we're now allowing transcript-level counts.
     counts <- .importCounts(sampleDirs = sampleDirs, BPPARAM = BPPARAM)
     assert(hasValidDimnames(counts))
-
     ## Row data (genes/transcripts) --------------------------------------------
-    cli_h2("Feature metadata")
+    h2("Feature metadata")
     ## Annotation priority:
     ## 1. AnnotationHub.
     ##    - Requires `organism` to be declared.
@@ -188,9 +185,8 @@ bcbioSingleCell <- function(
     if (is.null(ensemblRelease)) {
         ensemblRelease <- metadata(rowRanges)[["ensemblRelease"]]
     }
-
     ## Column data -------------------------------------------------------------
-    cli_h2("Column data")
+    h2("Column data")
     colData <- DataFrame(row.names = colnames(counts))
     ## Generate automatic sample metadata, if necessary.
     if (is.null(sampleData)) {
@@ -231,9 +227,8 @@ bcbioSingleCell <- function(
         is(colData, "DataFrame"),
         hasRownames(colData)
     )
-
     ## Metadata ----------------------------------------------------------------
-    cli_h2("Metadata")
+    h2("Metadata")
     cbList <- .importReads(sampleDirs = sampleDirs, BPPARAM = BPPARAM)
     runDate <- runDate(projectDir)
     interestingGroups <- camelCase(interestingGroups, strict = TRUE)
@@ -264,7 +259,6 @@ bcbioSingleCell <- function(
         version = .version,
         yaml = yaml
     )
-
     ## SingleCellExperiment ----------------------------------------------------
     object <- makeSingleCellExperiment(
         assays = SimpleList(counts = counts),
@@ -273,7 +267,6 @@ bcbioSingleCell <- function(
         metadata = metadata,
         transgeneNames = transgeneNames
     )
-
     ## Return ------------------------------------------------------------------
     ## Always prefilter, removing very low quality cells and/or genes.
     object <- calculateMetrics(object = object, prefilter = TRUE)
