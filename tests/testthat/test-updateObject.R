@@ -5,7 +5,6 @@ test_that("bcbioSingleCell", {
     expect_s4_class(x, "bcbioSingleCell")
 })
 
-## FIXME CACHE THIS...
 test_that("v0.1 update", {
     invalid <- import(
         file = file.path("cache", "bcbioSingleCell_0.1.0.rds")
