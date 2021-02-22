@@ -1,13 +1,9 @@
-## FIXME Consider converting any warnings to errors here.
-
-
-
 #' @inherit bcbioSingleCell-class title description
 #' @author Michael Steinbaugh
-#' @note Updated 2020-02-24.
+#' @note Updated 2021-02-22.
 #' @export
 #'
-#' @inheritParams basejump::makeSingleCellExperiment
+#' @inheritParams AcidSingleCell::makeSingleCellExperiment
 #' @inheritParams BiocParallel::bplapply
 #' @inheritParams AcidRoxygen::params
 #'

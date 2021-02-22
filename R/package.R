@@ -6,30 +6,27 @@
 #' @aliases NULL
 #' @keywords internal
 #'
-#' @importClassesFrom SingleCellExperiment SingleCellExperiment
+#' @importClassesFrom basejump SingleCellExperiment
 #'
 #' @importMethodsFrom basejump coerce
 #'
-#' @importFrom AcidPlots acid_geom_abline acid_geom_label
-#'   acid_geom_label_average acid_geom_label_repel
-#' @importFrom BiocParallel bplapply bpmapply
-#' @importFrom IRanges DataFrameList
-#' @importFrom S4Vectors DataFrame SimpleList cbind do.call lapply metadata
-#'   metadata<-
+#' @importFrom AcidPlots !! acid_geom_abline acid_geom_label
+#'   acid_geom_label_average acid_geom_label_repel sym syms
+#' @importFrom S4Vectors cbind do.call lapply metadata metadata<-
 #' @importFrom SummarizedExperiment assayNames assay assays assays<- colData
 #'   colData<- rowData rowData<- rowRanges rowRanges<-
-#' @importFrom basejump as_tibble calculateMetrics camelCase cell2sample counts
-#'   detectLanes droplevels emptyRanges formalsList import importSampleData
+#' @importFrom basejump DataFrame DataFrameList SimpleList as_tibble
+#'   calculateMetrics camelCase capture.output cell2sample counts detectLanes
+#'   droplevels emptyRanges formalsList import importSampleData
 #'   interestingGroups interestingGroups<- leftJoin makeDimnames
 #'   makeGRangesFromEnsembl makeGRangesFromGFF makeLabel makeNames
 #'   makeSingleCellExperiment mapCellsToSamples markdownPlots
-#'   matchInterestingGroups metrics metricsCols minimalSampleData printString
-#'   realpath sampleData sampleNames separator showSlotInfo standardizeCall
+#'   matchInterestingGroups metrics metricsCols minimalSampleData packageName
+#'   packageVersion printString realpath sampleData sampleNames separator
+#'   showSlotInfo standardizeCall
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
 #'   importDataVersions importProgramVersions projectDir runDate sampleDirs
-#' @importFrom cli cat_line cli_alert cli_alert_success cli_alert_warning cli_h1
-#'   cli_h2 cli_text
 #' @importFrom ggplot2 aes facet_wrap geom_boxplot geom_histogram geom_step
 #'   geom_violin ggplot labs scale_x_continuous scale_y_continuous stat_ecdf
 #' @importFrom ggridges geom_density_ridges
@@ -40,7 +37,16 @@
 #' @importFrom graphics hist
 #' @importFrom methods as as<- is new setClass show slot slot<- validObject
 #'   .hasSlot
-#' @importFrom rlang !! sym syms
 #' @importFrom stringr str_extract
-#' @importFrom utils capture.output packageName packageVersion
 "_PACKAGE"
+
+
+
+## REWORK AS ACIDCLI.
+#' @importFrom cli cat_line cli_alert cli_alert_success cli_alert_warning cli_h1
+#'   cli_h2 cli_text
+NULL
+
+## FIXME MAKE THESE OPTIONAL
+#' @importFrom BiocParallel bplapply bpmapply
+NULL
