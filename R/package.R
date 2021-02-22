@@ -16,7 +16,7 @@
 #' @importFrom basejump DataFrame DataFrameList SimpleList assayNames assay
 #'   assays assays<- as_tibble calculateMetrics camelCase capture.output cbind
 #'   cell2sample colData colData<- counts detectLanes do.call droplevels
-#'   emptyRanges formalsList import importSampleData interestingGroups
+#'   emptyRanges formalsList h1 h2 import importSampleData interestingGroups
 #'   interestingGroups<- lapply leftJoin makeDimnames makeGRangesFromEnsembl
 #'   makeGRangesFromGFF makeLabel makeNames makeSingleCellExperiment
 #'   mapCellsToSamples markdownPlots matchInterestingGroups metadata metadata<-
@@ -40,9 +40,6 @@
 "_PACKAGE"
 
 
-
-#' @importFrom basejump h1 h2
-NULL
 
 ## REWORK AS ACIDCLI.
 #' @importFrom cli cli_alert cli_alert_success cli_alert_warning cli_text

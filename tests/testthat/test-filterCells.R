@@ -2,6 +2,7 @@ context("filterCells")
 
 bcb <- calculateMetrics(bcb)
 
+## FIXME now named "unknown"?
 test_that("sampleNames", {
     expect_identical(
         object = sampleNames(bcb),
@@ -21,13 +22,13 @@ test_that("No filtering", {
 test_that("Parameterized cutoff tests", {
     mapply(
         args = list(
-            list(minCounts = 2000L),
-            list(maxCounts = 2500L),
-            list(minFeatures = 45L),
-            list(maxFeatures = 49L),
-            list(maxMitoRatio = 0.1),
-            list(minNovelty = 0.5),
-            list(minCellsPerFeature = 95L)
+            list("minCounts" = 2000L),
+            list("maxCounts" = 2500L),
+            list("minFeatures" = 45L),
+            list("maxFeatures" = 49L),
+            list("maxMitoRatio" = 0.1),
+            list("minNovelty" = 0.5),
+            list("minCellsPerFeature" = 95L)
         ),
         dim = list(
             c(50L, 35L),
@@ -52,7 +53,7 @@ test_that("Parameterized cutoff tests", {
 
 test_that("Expected cutoff failure", {
     expect_error(
-        filterCells(bcb, minCounts = Inf),
-        "No cells passed"
+        object = filterCells(bcb, minCounts = Inf),
+        expected = "No cells passed"
     )
 })
