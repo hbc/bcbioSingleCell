@@ -18,7 +18,7 @@
             hasNames(sampleDirs),
             identical(attr(class(BPPARAM), "package"), "BiocParallel")
         )
-        cli_alert("Importing counts.")
+        alert("Importing counts.")
         list <- bpmapply(
             sampleId = names(sampleDirs),
             dir = sampleDirs,
@@ -90,7 +90,7 @@
         colnames <- import(colnamesFile, format = "lines")
         if (!length(rownames) > 0L || !length(colnames) > 0L) {
             ## nocov start
-            cli_alert_warning(sprintf("Skipped {.path %s}.", basename(dir)))
+            alertWarning(sprintf("Skipped {.path %s}.", basename(dir)))
             return(NULL)
             ## nocov end
         }
@@ -102,7 +102,7 @@
         )
         rownames(counts) <- rownames
         colnames(counts) <- colnames
-        cli_alert(sprintf("Imported {.path %s}.", basename(dir)))
+        alert(sprintf("Imported {.path %s}.", basename(dir)))
         counts
     }
 
@@ -134,7 +134,7 @@
             hasNames(sampleDirs),
             identical(attr(class(BPPARAM), "package"), "BiocParallel")
         )
-        cli_alert("Importing unfiltered cellular barcode distributions.")
+        alert("Importing unfiltered cellular barcode distributions.")
         files <- file.path(
             sampleDirs,
             paste(basename(sampleDirs), "barcodes.tsv", sep = "-")

@@ -39,9 +39,3 @@
 #'   .hasSlot
 #' @importFrom stringr str_extract
 "_PACKAGE"
-
-
-
-## REWORK AS ACIDCLI.
-#' @importFrom cli cli_alert cli_alert_success cli_alert_warning cli_text
-NULL

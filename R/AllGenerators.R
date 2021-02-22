@@ -86,7 +86,7 @@ bcbioSingleCell <- function(
     tryCatch(
         expr = assert(isCharacter(commandsLog)),
         error = function(e) {
-            cli_alert_warning(
+            alertWarning(
                 "{.file bcbio-nextgen-commands.log} file is empty."
             )
         }
@@ -131,7 +131,7 @@ bcbioSingleCell <- function(
         ## Allow sample selection by with this file.
         if (nrow(sampleData) < length(sampleDirs)) {
             sampleDirs <- sampleDirs[rownames(sampleData)]
-            cli_alert(sprintf(
+            alert(sprintf(
                 fmt = "Loading a subset of samples: {.var %s}.",
                 toString(basename(sampleDirs), width = 100L)
             ))
@@ -154,7 +154,7 @@ bcbioSingleCell <- function(
     ##    complex datasets (e.g. multiple organisms).
     if (isString(organism) && is.numeric(ensemblRelease)) {
         ## AnnotationHub (ensembldb).
-        cli_alert("{.fun makeGRangesFromEnsembl}")
+        alert("{.fun makeGRangesFromEnsembl}")
         rowRanges <- makeGRangesFromEnsembl(
             organism = organism,
             level = level,
@@ -168,11 +168,11 @@ bcbioSingleCell <- function(
             gffFile <- getGTFFileFromYAML(yaml)
         }
         if (!is.null(gffFile)) {
-            cli_alert("{.fun makeGRangesFromGFF}")
+            alert("{.fun makeGRangesFromGFF}")
             gffFile <- realpath(gffFile)
             rowRanges <- makeGRangesFromGFF(file = gffFile, level = level)
         } else {
-            cli_alert_warning("Slotting empty ranges into {.fun rowRanges}.")
+            alertWarning("Slotting empty ranges into {.fun rowRanges}.")
             rowRanges <- emptyRanges(rownames(counts))
         }
     }
@@ -192,7 +192,7 @@ bcbioSingleCell <- function(
     if (is.null(sampleData)) {
         if (isTRUE(multiplexed)) {
             ## Multiplexed samples without user-defined metadata.
-            cli_alert_warning(sprintf(
+            alertWarning(sprintf(
                 fmt = paste0(
                     "{.var sampleMetadataFile} is recommended for ",
                     "multiplexed samples (e.g. {.val %s})."
@@ -285,6 +285,6 @@ bcbioSingleCell <- function(
     colData <- colData[, sort(colnames(colData)), drop = FALSE]
     colData(object) <- colData
     bcb <- new(Class = "bcbioSingleCell", object)
-    cli_alert_success("bcbio single-cell RNA-seq run imported successfully.")
+    alertSuccess("bcbio single-cell RNA-seq run imported successfully.")
     bcb
 }
