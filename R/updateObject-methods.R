@@ -1,6 +1,6 @@
 #' @name updateObject
 #' @author Michael Steinbaugh
-#' @note Updated 2020-05-11.
+#' @note Updated 2021-02-22.
 #'
 #' @inherit BiocGenerics::updateObject
 #' @inheritParams AcidRoxygen::params
@@ -22,7 +22,7 @@ NULL
 
 
 
-## Updated 2020-05-11.
+## Updated 2021-02-22.
 `updateObject,bcbioSingleCell` <-  # nolint
     function(object, ..., verbose = FALSE) {
         assert(isFlag(verbose))
@@ -43,7 +43,6 @@ NULL
                 as.character(.version)
             ))
         }
-
         ## Assays --------------------------------------------------------------
         if (isTRUE(verbose)) {
             cli_h2("Assays")
@@ -65,11 +64,13 @@ NULL
         ## Put the required assays first, in order.
         assays <- assays[unique(c(requiredAssays, names(assays)))]
         assert(isSubset(requiredAssays, names(assays)))
-
-        ## Column data metrics -------------------------------------------------
+        ## Row data ------------------------------------------------------------
+        ## FIXME RENAME TO STRICT LOWER CAMEL.
+        ## Column data ---------------------------------------------------------
         if (isTRUE(verbose)) {
             cli_h2("Column data")
         }
+        ## FIXME RENAME TO STRICT LOWER CAMEL.
         ## Update legacy column names.
         if (isSubset(c("nCount", "nUMI"), colnames(colData))) {
             if (isTRUE(verbose)) {
@@ -137,7 +138,6 @@ NULL
             ## Ensure rows are ordered to match the object.
             colData <- colData[cells, , drop = FALSE]
         }
-
         ## Metadata ------------------------------------------------------------
         if (isTRUE(verbose)) {
             cli_h2("Metadata")
@@ -240,7 +240,6 @@ NULL
             y = c("cell2sample", "sampleData", "sampleMetadata")
         )
         metadata <- metadata[keep]
-
         ## Return --------------------------------------------------------------
         assays(sce) <- assays
         colData(sce) <- colData
