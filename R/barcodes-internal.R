@@ -52,13 +52,13 @@
         hasNames(list)
     )
     list <- mapply(
-        sampleID = names(list),
+        sampleId = names(list),
         reads = list,
-        FUN = function(sampleID, reads) {
+        FUN = function(sampleId, reads) {
             DataFrame(
-                sampleID = as.factor(sampleID),
-                cellID = as.factor(names(reads)),
-                nRead = reads,
+                "sampleId" = as.factor(sampleId),
+                "cellId" = as.factor(names(reads)),
+                "nRead" = reads,
                 row.names = NULL
             )
         },
@@ -67,12 +67,12 @@
     )
     data <- unlist(DataFrameList(list), use.names = FALSE)
     sampleData <- sampleData(object)
-    sampleData[["sampleID"]] <- rownames(sampleData)
-    data <- leftJoin(data, sampleData, by = "sampleID")
+    sampleData[["sampleId"]] <- rownames(sampleData)
+    data <- leftJoin(data, sampleData, by = "sampleId")
     assert(
         is(data, "DataFrame"),
         !hasRownames(data),
-        isSubset(c("sampleID", "cellID", "nRead"), colnames(data)),
+        isSubset(c("sampleId", "cellId", "nRead"), colnames(data)),
         is.integer(data[["nRead"]])
     )
     data
