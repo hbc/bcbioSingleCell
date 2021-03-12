@@ -1,4 +1,10 @@
-## bcbioSingleCell 0.1.15 (2021-02-22)
+## bcbioSingleCell 0.4.16 (2021-03-12)
+
+### Minor changes
+
+- Updated basejump dependencies and removed unnecessary stringr import.
+
+## bcbioSingleCell 0.4.15 (2021-02-22)
 
 ### Minor changes
 

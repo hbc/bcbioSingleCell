@@ -23,7 +23,7 @@
 #'   matchInterestingGroups mcols mcols<- metadata metadata<- metrics
 #'   metricsCols minimalSampleData packageName packageVersion printString
 #'   realpath rowData rowData<- rowRanges rowRanges<- sampleData sampleNames
-#'   separator showSlotInfo standardizeCall
+#'   separator showSlotInfo standardizeCall str_extract
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
 #'   importDataVersions importProgramVersions projectDir runDate sampleDirs
@@ -37,5 +37,4 @@
 #' @importFrom graphics hist
 #' @importFrom methods as as<- is new setClass show slot slot<- validObject
 #'   .hasSlot
-#' @importFrom stringr str_extract
 "_PACKAGE"
