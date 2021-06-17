@@ -53,12 +53,12 @@ rownames(counts) <- rownames
 colnames(counts) <- colnames
 
 ## Subset the matrix to include only the top genes and cells.
-top_genes <- Matrix::rowSums(counts) %>%
+top_genes <- Matrix::rowSums(counts) %>%                                 # FIXME
     sort(decreasing = TRUE) %>%
     head(n = 50L)
 genes <- sort(names(top_genes))
 
-top_cells <- Matrix::colSums(counts) %>%
+top_cells <- Matrix::colSums(counts) %>%                                 # FIXME
     sort(decreasing = TRUE) %>%
     head(n = 100L)
 cells <- sort(names(top_cells))
