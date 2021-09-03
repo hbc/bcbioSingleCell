@@ -53,15 +53,15 @@ Encoding: UTF-8
 LazyData: false
 Depends:
     R (>= 4.0),
-    basejump (>= 0.14.17)
+    basejump (>= 0.14.21.9000)
 Imports:
-    AcidGenerics (>= 0.5.17),
-    AcidPlots (>= 0.3.5),
-    BiocParallel (>= 1.24),
-    bcbioBase (>= 0.6.21),
-    ggplot2 (>= 3.3),
-    ggridges (>= 0.5),
-    goalie (>= 0.5.1),
+    AcidGenerics (>= 0.5.19.9000),
+    AcidPlots (>= 0.4.0.9000),
+    BiocParallel (>= 1.26.0),
+    bcbioBase (>= 0.6.21.9000),
+    ggplot2 (>= 3.3.5),
+    ggridges (>= 0.5.3),
+    goalie (>= 0.5.4),
     graphics,
     methods
 Suggests:
