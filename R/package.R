@@ -13,17 +13,17 @@
 #' @importFrom AcidPlots !! acid_geom_abline acid_geom_label
 #'   acid_geom_label_average acid_geom_label_repel sym syms
 #' @importFrom BiocParallel bplapply bpmapply bpparam
-#' @importFrom basejump DataFrame DataFrameList SimpleList alert alertSuccess
-#'   alertWarning assayNames assay assays assays<- as_tibble calculateMetrics
-#'   camelCase capture.output cbind cell2sample colData colData<- counts
-#'   detectLanes do.call droplevels emptyRanges formalsList h1 h2 import
-#'   importSampleData interestingGroups interestingGroups<- lapply leftJoin
-#'   makeDimnames makeGRangesFromEnsembl makeGRangesFromGFF makeLabel makeNames
-#'   makeSingleCellExperiment mapCellsToSamples markdownPlots
+#' @importFrom basejump DataFrame DataFrameList SimpleList abort alert
+#'   alertSuccess alertWarning assayNames assay assays assays<- as_tibble
+#'   calculateMetrics camelCase capture.output cbind cell2sample colData
+#'   colData<- counts detectLanes do.call droplevels emptyRanges formalsList h1
+#'   h2 import importSampleData interestingGroups interestingGroups<- lapply
+#'   leftJoin makeDimnames makeGRangesFromEnsembl makeGRangesFromGFF makeLabel
+#'   makeNames makeSingleCellExperiment mapCellsToSamples markdownPlots
 #'   matchInterestingGroups mcols mcols<- metadata metadata<- metrics
 #'   metricsCols minimalSampleData packageName packageVersion printString
 #'   realpath rowData rowData<- rowRanges rowRanges<- sampleData sampleNames
-#'   separator showSlotInfo standardizeCall str_extract
+#'   separator showSlotInfo standardizeCall str_extract toInlineString
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #'   getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
 #'   importDataVersions importProgramVersions projectDir runDate sampleDirs
