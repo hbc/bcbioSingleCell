@@ -11,7 +11,8 @@
 #' @importMethodsFrom basejump coerce
 #'
 #' @importFrom AcidPlots !! acid_geom_abline acid_geom_label
-#'   acid_geom_label_average acid_geom_label_repel sym syms
+#'   acid_geom_label_average acid_geom_label_repel autoDiscreteColorScale
+#'   autoDiscreteFillScale sym syms
 #' @importFrom BiocParallel bplapply bpmapply bpparam
 #' @importFrom basejump DataFrame DataFrameList SimpleList abort alert
 #'   alertSuccess alertWarning assayNames assay assays assays<- as_tibble
@@ -32,8 +33,8 @@
 #' @importFrom ggridges geom_density_ridges
 #' @importFrom goalie allAreDirectories allAreFiles areDisjointSets areSetEqual
 #'   assert hasLength hasNames hasRownames hasValidDimnames isADirectory isAFile
-#'   isAURL isAny isCharacter isDirectory isFile isFlag isGGScale isInt isString
-#'   isSubset validate validateClasses
+#'   isAURL isAny isCharacter isDirectory isFile isFlag isInt isString isSubset
+#'   validate validateClasses
 #' @importFrom graphics hist
 #' @importFrom methods as as<- is new setClass show slot slot<- validObject
 #'   .hasSlot
