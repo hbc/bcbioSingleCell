@@ -1,7 +1,7 @@
 #' @name plotReadsPerCell
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inherit AcidGenerics::plotReadsPerCell
-#' @note Updated 2019-08-12.
+#' @note Updated 2021-09-10.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param cutoffLine `logical(1)`.
@@ -9,6 +9,7 @@
 #' @param ... Additional arguments.
 #'
 #' @examples
+#' ## bcbioSingleCell ====
 #' data(bcb)
 #' plotReadsPerCell(bcb, geom = "histogram")
 #' plotReadsPerCell(bcb, geom = "ecdf")

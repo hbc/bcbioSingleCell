@@ -3,6 +3,7 @@
 #' @inherit AcidGenerics::show
 #' @note Updated 2020-12-22.
 #' @examples
+#' ## bcbioSingleCell ====
 #' data(bcb)
 #' show(bcb)
 NULL

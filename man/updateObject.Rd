@@ -27,6 +27,7 @@ Update object
 Updated 2021-02-22.
 }
 \examples{
+## bcbioSingleCell ====
 data(bcb)
 updateObject(bcb)
 

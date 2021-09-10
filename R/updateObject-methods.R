@@ -6,6 +6,7 @@
 #' @inheritParams AcidRoxygen::params
 #'
 #' @examples
+#' ## bcbioSingleCell ====
 #' data(bcb)
 #' updateObject(bcb)
 #'
