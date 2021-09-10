@@ -80,7 +80,7 @@ NULL
 
 #' Plot proportional reads per cell histogram
 #'
-#' @note Updated 2019-08-20.
+#' @note Updated 2021-09-10.
 #' @noRd
 #'
 #' @param data Return from `.proportionalReadsPerCell()` function.
@@ -88,13 +88,9 @@ NULL
 #' @return `ggplot`.
 .plotReadsPerCellHistogram <- function(
     data,
-    min = 0L,
-    color = getOption(x = "acid.discrete.color", default = NULL)
+    min = 0L
 ) {
-    assert(
-        is(data, "DataFrame"),
-        isGGScale(color, scale = "discrete", aes = "color", nullOK = TRUE)
-    )
+    assert(is(data, "DataFrame"))
     data <- as_tibble(data, rownames = NULL)
     p <- ggplot(
         data = data,
@@ -117,9 +113,7 @@ NULL
         p <- p + acid_geom_abline(xintercept = log10(min))
     }
     ## Color palette.
-    if (is(color, "ScaleDiscrete")) {
-        p <- p + color
-    }
+    p <- p + autoDiscreteColorScale()
     ## Facets.
     facets <- NULL
     if (isSubset("aggregate", colnames(data))) {
@@ -135,16 +129,12 @@ NULL
 
 
 ## Boxplot =====================================================================
-## Updated 2019-08-20.
+## Updated 2021-09-10.
 .plotReadsPerCellBoxplot <- function(
     data,
-    min = 0L,
-    fill = getOption("basejump.discrete.fill", NULL)
+    min = 0L
 ) {
-    assert(
-        is(data, "DataFrame"),
-        isGGScale(fill, scale = "discrete", aes = "fill", nullOK = TRUE)
-    )
+    assert(is(data, "DataFrame"))
     data <- as_tibble(data, rownames = NULL)
     p <- ggplot(
         data = data,
@@ -166,9 +156,7 @@ NULL
         p <- p + acid_geom_abline(yintercept = min)
     }
     ## Color palette.
-    if (is(fill, "ScaleDiscrete")) {
-        p <- p + fill
-    }
+    p <- p + autoDiscreteFillScale()
     ## Facets.
     facets <- NULL
     if (isSubset("aggregate", colnames(data))) {
@@ -184,16 +172,12 @@ NULL
 
 
 ## ECDF ========================================================================
-## Updated 2019-08-20.
+## Updated 2021-09-10.
 .plotReadsPerCellECDF <- function(
     data,
-    min = 0L,
-    color = getOption("basejump.discrete.color", NULL)
+    min = 0L
 ) {
-    assert(
-        is(data, "DataFrame"),
-        isGGScale(color, scale = "discrete", aes = "color", nullOK = TRUE)
-    )
+    assert(is(data, "DataFrame"))
     data <- as_tibble(data, rownames = NULL)
     p <- ggplot(
         data = data,
@@ -213,9 +197,7 @@ NULL
         p <- p + acid_geom_abline(xintercept = min)
     }
     ## Color palette.
-    if (is(color, "ScaleDiscrete")) {
-        p <- p + color
-    }
+    p <- p + autoDiscreteColorScale()
     ## Facets.
     facets <- NULL
     if (isSubset("aggregate", colnames(data))) {
@@ -231,16 +213,12 @@ NULL
 
 
 ## Ridgeline ===================================================================
-## Updated 2019-08-20.
+## Updated 2021-09-10.
 .plotReadsPerCellRidgeline <- function(
     data,
-    min = 0L,
-    fill = getOption("basejump.discrete.fill", NULL)
+    min = 0L
 ) {
-    assert(
-        is(data, "DataFrame"),
-        isGGScale(fill, scale = "discrete", aes = "fill", nullOK = TRUE)
-    )
+    assert(is(data, "DataFrame"))
     data <- as_tibble(data, rownames = NULL)
     p <- ggplot(
         data = data,
@@ -262,17 +240,12 @@ NULL
             x = "reads per cell",
             y = NULL
         )
-
     ## Cutoff line.
     if (min > 0L) {
         p <- p + acid_geom_abline(xintercept = min)
     }
-
     ## Color palette.
-    if (is(fill, "ScaleDiscrete")) {
-        p <- p + fill
-    }
-
+    p <- p + autoDiscreteFillScale()
     ## Facets.
     facets <- NULL
     if (isSubset("aggregate", colnames(data))) {
@@ -281,23 +254,18 @@ NULL
     if (is.character(facets)) {
         p <- p + facet_wrap(facets = syms(facets), scales = "free")
     }
-
     p
 }
 
 
 
 ## Violin ======================================================================
-## Updated 2019-08-20.
+## Updated 2021-09-10.
 .plotReadsPerCellViolin <- function(
     data,
-    min = 0L,
-    fill = getOption("basejump.discrete.fill", NULL)
+    min = 0L
 ) {
-    assert(
-        is(data, "DataFrame"),
-        isGGScale(fill, scale = "discrete", aes = "fill", nullOK = TRUE)
-    )
+    assert(is(data, "DataFrame"))
     data <- as_tibble(data, rownames = NULL)
     p <- ggplot(
         data = data,
@@ -322,9 +290,7 @@ NULL
         p <- p + acid_geom_abline(yintercept = min)
     }
     ## Color palette.
-    if (is(fill, "ScaleDiscrete")) {
-        p <- p + fill
-    }
+    p <- p + autoDiscreteFillScale()
     ## Facets.
     facets <- NULL
     if (isSubset("aggregate", colnames(data))) {
@@ -340,22 +306,20 @@ NULL
 
 
 ## bcbioSingleCell =============================================================
-## Updated 2019-08-20.
+## Updated 2021-09-10.
 `plotReadsPerCell,bcbioSingleCell` <-  # nolint
     function(
         object,
         interestingGroups = NULL,
         geom,
         cutoffLine = FALSE,
-        color,
-        fill,
         title = "Reads per cell"
     ) {
-        ## Passthrough: color, fill.
         validObject(object)
         assert(isString(title, nullOK = TRUE))
         interestingGroups(object) <-
             matchInterestingGroups(object, interestingGroups)
+        interestingGroups <- interestingGroups(object)
         geom <- match.arg(geom)
         ## Minimum reads per barcode cutoff (for unfiltered data).
         if (!is.null(metadata(object)[["filterCells"]])) {
@@ -378,50 +342,45 @@ NULL
             boxplot = do.call(
                 what = .plotReadsPerCellBoxplot,
                 args = list(
-                    data = data,
-                    fill = fill,
-                    min = min
+                    "data" = data,
+                    "min" = min
                 )
             ),
             ecdf = do.call(
                 what = .plotReadsPerCellECDF,
                 args = list(
-                    data = data,
-                    color = color,
-                    min = min
+                    "data" = data,
+                    "min" = min
                 )
             ),
             histogram = {
                 data <- do.call(
                     what = .proportionalReadsPerCell,
                     args = list(
-                        data = data,
-                        sampleData = sampleData(object)
+                        "data" = data,
+                        "sampleData" = sampleData(object)
                     )
                 )
                 do.call(
                     what = .plotReadsPerCellHistogram,
                     args = list(
-                        data = data,
-                        color = color,
-                        min = min
+                        "data" = data,
+                        "min" = min
                     )
                 )
             },
             ridgeline = do.call(
                 what = .plotReadsPerCellRidgeline,
                 args = list(
-                    data = data,
-                    fill = fill,
-                    min = min
+                    "data" = data,
+                    "min" = min
                 )
             ),
             violin = do.call(
                 what = .plotReadsPerCellViolin,
                 args = list(
-                    data = data,
-                    fill = fill,
-                    min = min
+                    "data" = data,
+                    "min" = min
                 )
             )
         )
@@ -437,8 +396,6 @@ NULL
         p
     }
 
-formals(`plotReadsPerCell,bcbioSingleCell`)[c("color", "fill")] <-
-    formalsList[c("color.discrete", "fill.discrete")]
 formals(`plotReadsPerCell,bcbioSingleCell`)[["geom"]] <- .geom
 
 

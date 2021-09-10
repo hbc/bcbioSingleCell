@@ -82,7 +82,7 @@ cells not kept in the matrix will be dropped in favor of the \code{nCount} colum
 of \code{colData()}.
 }
 \note{
-Updated 2019-08-20.
+Updated 2021-09-10.
 }
 \examples{
 ## bcbioSingleCell ====
