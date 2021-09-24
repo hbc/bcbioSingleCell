@@ -4,6 +4,7 @@
 
 - Removed unused `formalsList` from NAMESPACE, which is removed in upcoming
   basejump package update.
+- Removed `barcodeRanksPerSample` from NAMESPACE.
 
 ## bcbioSingleCell 0.4.16 (2021-03-12)
 

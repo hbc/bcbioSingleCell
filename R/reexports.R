@@ -1,7 +1,3 @@
-#' @importFrom AcidPlots barcodeRanksPerSample
-#' @export
-AcidPlots::barcodeRanksPerSample
-
 #' @importFrom basejump calculateMetrics
 #' @export
 basejump::calculateMetrics
