@@ -1,5 +1,10 @@
 ## bcbioSingleCell 0.4.17 (UNRELEASED)
 
+### Minor changes
+
+- Removed unused `formalsList` from NAMESPACE, which is removed in upcoming
+  basejump package update.
+
 ## bcbioSingleCell 0.4.16 (2021-03-12)
 
 ### Minor changes
