@@ -17,10 +17,10 @@
 #' @importFrom basejump DataFrame DataFrameList SimpleList abort alert
 #'   alertSuccess alertWarning assayNames assay assays assays<- as_tibble
 #'   calculateMetrics camelCase capture.output cbind cell2sample colData
-#'   colData<- counts detectLanes do.call droplevels emptyRanges formalsList h1
-#'   h2 import importSampleData interestingGroups interestingGroups<- lapply
-#'   leftJoin makeDimnames makeGRangesFromEnsembl makeGRangesFromGFF makeLabel
-#'   makeNames makeSingleCellExperiment mapCellsToSamples markdownPlots
+#'   colData<- counts detectLanes do.call droplevels emptyRanges h1 h2 import
+#'   importSampleData interestingGroups interestingGroups<- lapply leftJoin
+#'   makeDimnames makeGRangesFromEnsembl makeGRangesFromGFF makeLabel makeNames
+#'   makeSingleCellExperiment mapCellsToSamples markdownPlots
 #'   matchInterestingGroups mcols mcols<- metadata metadata<- metrics
 #'   metricsCols minimalSampleData packageName packageVersion printString
 #'   realpath rowData rowData<- rowRanges rowRanges<- sampleData sampleNames
