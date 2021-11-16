@@ -152,7 +152,10 @@ NULL
         dataVersions <- metadata[["dataVersions"]]
         if (is(dataVersions, "data.frame")) {
             if (isTRUE(verbose)) {
-                alert("Setting {.var dataVersions} as {.var DataFrame}.")
+                alert(sprintf(
+                    "Setting {.var %s} as {.cls %s}.",
+                    "dataVersions", "DataFrame"
+                ))
             }
             metadata[["dataVersions"]] <- as(dataVersions, "DataFrame")
         }
@@ -267,6 +270,6 @@ NULL
 #' @export
 setMethod(
     f = "updateObject",
-    signature = signature("bcbioSingleCell"),
+    signature = signature(object = "bcbioSingleCell"),
     definition = `updateObject,bcbioSingleCell`
 )

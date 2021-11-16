@@ -55,6 +55,6 @@ NULL
 #' @export
 setMethod(
     f = "show",
-    signature = signature("bcbioSingleCell"),
+    signature = signature(object = "bcbioSingleCell"),
     definition = `show,bcbioSingleCell`
 )

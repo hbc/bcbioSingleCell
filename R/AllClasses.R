@@ -39,7 +39,7 @@ setValidity(
         }
         ## Row data ------------------------------------------------------------
         ok <- validate(
-            is(rowRanges(object), "GRanges"),
+            is(rowRanges(object), "GenomicRanges"),
             is(rowData(object), "DataFrame")
         )
         if (!isTRUE(ok)) {
@@ -57,8 +57,9 @@ setValidity(
         }
         ## Metadata ------------------------------------------------------------
         df <- "DataFrame"
+        ## FIXME Rework this, now that we're no longer supporting old BioC.
         if (packageVersion("S4Vectors") >= "0.23") {
-            df <- c("DFrame", df)
+            df <- c("DataFrame", df)
         }
         ok <- validateClasses(
             object = metadata,

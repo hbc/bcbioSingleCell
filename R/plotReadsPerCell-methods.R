@@ -404,6 +404,6 @@ formals(`plotReadsPerCell,bcbioSingleCell`)[["geom"]] <- .geom
 #' @export
 setMethod(
     f = "plotReadsPerCell",
-    signature = signature("bcbioSingleCell"),
+    signature = signature(object = "bcbioSingleCell"),
     definition = `plotReadsPerCell,bcbioSingleCell`
 )

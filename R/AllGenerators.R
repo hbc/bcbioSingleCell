@@ -177,7 +177,7 @@ bcbioSingleCell <- function(
             rowRanges <- emptyRanges(rownames(counts))
         }
     }
-    assert(is(rowRanges, "GRanges"))
+    assert(is(rowRanges, "GenomicRanges"))
     ## Attempt to get genome build and Ensembl release if not declared.
     ## Note that these will remain NULL when using GTF file (see above).
     if (is.null(genomeBuild)) {
