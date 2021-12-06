@@ -2,7 +2,7 @@ Package: bcbioSingleCell
 Title: bcbio Single-Cell RNA-Seq
 Description: R package for bcbio single-cell RNA-seq analysis.
 Version: 0.4.17.9000
-Date: 2021-10-12
+Date: 2021-12-06
 Authors@R: c(
     person(
         given = "Michael",
@@ -43,30 +43,34 @@ Authors@R: c(
         given = "Harvard Chan Bioinformatics Core",
         email = "bioinformatics@hsph.harvard.edu",
         role = c("cph", "fnd")
+    ),
+    person(
+        given = "Acid Genomics",
+        role = c("cph", "fnd")
     ))
 URL:
     https://r.acidgenomics.com/packages/bcbiosinglecell/,
-    https://github.com/hbc/bcbioSingleCell/
-BugReports: https://github.com/hbc/bcbioSingleCell/issues/
+    https://github.com/acidgenomics/r-bcbiosinglecell/
+BugReports: https://github.com/acidgenomics/r-bcbiosinglecell/issues/
 License: AGPL-3
 Encoding: UTF-8
 LazyData: false
 Depends:
-    R (>= 4.0),
-    basejump (>= 0.14.22)
+    R (>= 4.1),
+    basejump (>= 0.15.0.9000)
 Imports:
-    AcidGenerics (>= 0.5.20),
-    AcidPlots (>= 0.4.0),
+    AcidGenerics (>= 0.6.0.9000),
+    AcidPlots (>= 0.4.0.9000),
     BiocParallel (>= 1.26.0),
-    bcbioBase (>= 0.6.22),
+    bcbioBase (>= 0.6.23.9000),
     ggplot2 (>= 3.3.5),
     ggridges (>= 0.5.3),
-    goalie (>= 0.5.4),
+    goalie (>= 0.6.0.9000),
     graphics,
     methods
 Suggests:
-    rmarkdown,
-    testthat
+    rmarkdown (>= 2.11),
+    testthat (>= 3.1.1)
 biocViews:
     DataImport,
     DataRepresentation,
