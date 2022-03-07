@@ -71,6 +71,7 @@ Imports:
     BiocParallel,
     IRanges,
     S4Vectors,
+    SingleCellExperiment,
     SummarizedExperiment,
     bcbioBase (>= 0.7.0),
     ggplot2,
