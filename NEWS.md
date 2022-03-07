@@ -1,4 +1,4 @@
-## bcbioSingleCell 0.4.17 (UNRELEASED)
+## bcbioSingleCell 0.5.0 (UNRELEASED)
 
 ### Minor changes
 
