@@ -56,18 +56,13 @@ setValidity(
             return(ok)
         }
         ## Metadata ------------------------------------------------------------
-        df <- "DataFrame"
-        ## FIXME Rework this, now that we're no longer supporting old BioC.
-        if (packageVersion("S4Vectors") >= "0.23") {
-            df <- c("DataFrame", df)
-        }
         ok <- validateClasses(
             object = metadata,
             expected = list(
                 allSamples = "logical",
                 bcbioCommandsLog = "character",
                 bcbioLog = "character",
-                dataVersions = df,
+                dataVersions = "DataFrame",
                 date = "Date",
                 ensemblRelease = "integer",
                 genomeBuild = "character",
@@ -77,7 +72,7 @@ setValidity(
                 level = "character",
                 organism = "character",
                 pipeline = "character",
-                programVersions = df,
+                programVersions = "DataFrame",
                 projectDir = "character",
                 runDate = "Date",
                 sampleDirs = "character",
