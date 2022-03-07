@@ -26,11 +26,10 @@ test_that("AnnotationHub", {
     expect_s4_class(x, "bcbioSingleCell")
 })
 
-## Setting to serial by default, for cross-platform compatibility.
 test_that("BPPARAM", {
-    skip_on_appveyor()
      x <- bcbioSingleCell(
          uploadDir = uploadDir,
          BPPARAM = BiocParallel::MulticoreParam()
      )
+    expect_s4_class(x, "bcbioSingleCell")
 })

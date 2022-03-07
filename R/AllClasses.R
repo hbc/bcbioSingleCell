@@ -56,13 +56,14 @@ setValidity(
             return(ok)
         }
         ## Metadata ------------------------------------------------------------
+        df <- c("DFrame", "DataFrame")
         ok <- validateClasses(
             object = metadata,
             expected = list(
                 allSamples = "logical",
                 bcbioCommandsLog = "character",
                 bcbioLog = "character",
-                dataVersions = "DataFrame",
+                dataVersions = df,
                 date = "Date",
                 ensemblRelease = "integer",
                 genomeBuild = "character",
@@ -72,7 +73,7 @@ setValidity(
                 level = "character",
                 organism = "character",
                 pipeline = "character",
-                programVersions = "DataFrame",
+                programVersions = df,
                 projectDir = "character",
                 runDate = "Date",
                 sampleDirs = "character",
