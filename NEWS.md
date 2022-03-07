@@ -1,5 +1,9 @@
 ## bcbioSingleCell 0.5.0 (UNRELEASED)
 
+### Major changes
+
+- Split out basejump imports into component packages.
+
 ### Minor changes
 
 - Removed unused `formalsList` from NAMESPACE, which is removed in upcoming
