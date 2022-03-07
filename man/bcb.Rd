@@ -8,7 +8,10 @@
 An object of class \code{bcbioSingleCell} with 50 rows and 100 columns.
 }
 \usage{
-bcb
+data(bcb)
+}
+\value{
+\code{bcbioSingleCell}.
 }
 \description{
 Harvard inDrops v3 example data
@@ -18,7 +21,7 @@ Updated 2019-08-12.
 }
 \examples{
 data(bcb)
-bcb
+class(bcb)
 }
 \author{
 Michael Steinbaugh
