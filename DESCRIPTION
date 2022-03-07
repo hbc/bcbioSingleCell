@@ -84,6 +84,7 @@ Imports:
     syntactic (>= 0.5.1),
     utils
 Suggests:
+    Biostrings,
     rmarkdown,
     testthat
 biocViews:
