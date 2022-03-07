@@ -1,6 +1,6 @@
 ## S4 classes ==================================================================
 
-#' @importClassesFrom basejump SingleCellExperiment
+#' @importClassesFrom SingleCellExperiment SingleCellExperiment
 NULL
 
 
