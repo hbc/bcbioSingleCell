@@ -17,6 +17,9 @@ updateObject(object, ..., verbose = FALSE)
 \item{verbose}{\code{logical(1)}.
 Run the function with verbose output.}
 }
+\value{
+Modified object.
+}
 \description{
 Update object
 }
@@ -24,8 +27,9 @@ Update object
 Updated 2022-03-07.
 }
 \examples{
-## bcbioSingleCell ====
 data(bcb)
+
+## bcbioSingleCell ====
 updateObject(bcb)
 
 ## Example that depends on remote file.

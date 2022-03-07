@@ -6,9 +6,12 @@
 #'
 #' @inheritParams AcidRoxygen::params
 #'
+#' @return Modified object.
+#'
 #' @examples
-#' ## bcbioSingleCell ====
 #' data(bcb)
+#'
+#' ## bcbioSingleCell ====
 #' updateObject(bcb)
 #'
 #' ## Example that depends on remote file.

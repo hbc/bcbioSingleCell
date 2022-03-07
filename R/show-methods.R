@@ -1,12 +1,17 @@
-#' Show
+#' Show an object
 #'
 #' @name show
 #' @author Michael Steinbaugh
-#' @note Updated 2020-12-22.
+#' @note Updated 2022-03-07.
+#'
+#' @inheritParams AcidRoxygen::params
+#'
+#' @return Console output.
 #'
 #' @examples
-#' ## bcbioSingleCell ====
 #' data(bcb)
+#'
+#' ## bcbioSingleCell ====
 #' show(bcb)
 NULL
 

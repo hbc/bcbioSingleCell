@@ -3,21 +3,28 @@
 \name{show}
 \alias{show}
 \alias{show,bcbioSingleCell-method}
-\title{Show}
+\title{Show an object}
 \usage{
 show(object)
 
 \S4method{show}{bcbioSingleCell}(object)
 }
+\arguments{
+\item{object}{Object.}
+}
+\value{
+Console output.
+}
 \description{
-Show
+Show an object
 }
 \note{
-Updated 2020-12-22.
+Updated 2022-03-07.
 }
 \examples{
-## bcbioSingleCell ====
 data(bcb)
+
+## bcbioSingleCell ====
 show(bcb)
 }
 \author{
