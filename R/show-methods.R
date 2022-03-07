@@ -1,7 +1,9 @@
+#' Show
+#'
 #' @name show
 #' @author Michael Steinbaugh
-#' @inherit AcidGenerics::show
 #' @note Updated 2020-12-22.
+#'
 #' @examples
 #' ## bcbioSingleCell ====
 #' data(bcb)

@@ -1,8 +1,9 @@
+#' Update object
+#'
 #' @name updateObject
 #' @author Michael Steinbaugh
-#' @note Updated 2021-02-22.
+#' @note Updated 2022-03-07.
 #'
-#' @inherit AcidGenerics::updateObject
 #' @inheritParams AcidRoxygen::params
 #'
 #' @examples

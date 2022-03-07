@@ -10,15 +10,15 @@ NULL
 #' @importFrom AcidExperiment sampleNames
 #' @importFrom AcidGenerics calculateMetrics camelCase cell2sample
 #'   interestingGroups interestingGroups<- leftJoin makeDimnames makeLabel
-#'   makeNames metrics sampleData
-#' @importFrom BiocGenerics counts
+#'   makeNames metrics plotReadsPerCell sampleData
+#' @importFrom BiocGenerics counts updateObject
 #' @importFrom BiocParallel bplapply bpmapply
 #' @importFrom S4Vectors cbind do.call droplevels lapply mcols mcols<-
 #'   metadata metadata<-
 #' @importFrom SummarizedExperiment assayNames assay assays assays<- colData
 #'   colData<- rowData rowData<- rowRanges rowRanges<-
 #' @importFrom methods coerce show
-#' @importFrom pipette
+#' @importFrom pipette import
 #'
 #' @importMethodsFrom AcidExperiment calculateMetrics interestingGroups
 #'   interestingGroups<- metrics sampleData sampleNames
@@ -39,9 +39,10 @@ NULL
 
 ## Standard functions ==========================================================
 
-#' @importFrom AcidBase metricsCols printString realpath standardizeCall
+#' @importFrom AcidBase metricsCols printString realpath showSlotInfo
+#'   standardizeCall
 #' @importFrom AcidCLI abort alert alertSuccess alertWarning h1 h2
-#'   separator showSlotInfo toInlineString
+#'   separator toInlineString
 #' @importFrom AcidExperiment detectLanes importSampleData
 #'   matchInterestingGroups minimalSampleData
 #' @importFrom AcidGenomes emptyRanges makeGRangesFromEnsembl makeGRangesFromGFF
