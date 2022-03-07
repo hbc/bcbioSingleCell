@@ -44,8 +44,9 @@ Plot the distribution of read counts for all unfiltered cellular barcodes.
 Updated 2021-09-10.
 }
 \examples{
-## bcbioSingleCell ====
 data(bcb)
+
+## bcbioSingleCell ====
 plotReadsPerCell(bcb, geom = "histogram")
 plotReadsPerCell(bcb, geom = "ecdf")
 }

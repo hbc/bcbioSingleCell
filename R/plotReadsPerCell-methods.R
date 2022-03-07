@@ -9,8 +9,9 @@
 #' @param ... Additional arguments.
 #'
 #' @examples
-#' ## bcbioSingleCell ====
 #' data(bcb)
+#'
+#' ## bcbioSingleCell ====
 #' plotReadsPerCell(bcb, geom = "histogram")
 #' plotReadsPerCell(bcb, geom = "ecdf")
 NULL
