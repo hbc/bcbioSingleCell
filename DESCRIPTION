@@ -2,7 +2,7 @@ Package: bcbioSingleCell
 Title: bcbio Single-Cell RNA-Seq
 Description: R package for bcbio single-cell RNA-seq analysis.
 Version: 0.5.0.9000
-Date: 2022-03-08
+Date: 2022-03-11
 Authors@R: c(
     person(
         given = "Michael",
@@ -60,7 +60,7 @@ Depends:
     SingleCellExperiment (>= 1.16.0)
 Imports:
     AcidBase (>= 0.5.0),
-    AcidCLI (>= 0.1.8),
+    AcidCLI (>= 0.2.0),
     AcidExperiment (>= 0.3.0),
     AcidGenerics (>= 0.6.0),
     AcidGenomes (>= 0.3.0),
