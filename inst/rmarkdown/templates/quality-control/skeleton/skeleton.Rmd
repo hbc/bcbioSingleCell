@@ -30,7 +30,7 @@ params:
   n_cells: !r Inf
 
   ## Where to save the filtered output.
-  data_dir: !r file.path("data", Sys.Date())
+  data_dir: !r file.path("data")
 
   ## Where to export results of the analysis.
   output_dir: !r file.path("results", Sys.Date(), "quality-control")
