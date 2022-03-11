@@ -29,8 +29,10 @@ params:
   ## Not recommended by default, unless you're sure of the capture.
   n_cells: !r Inf
   
-  ## This is where to save the filtered output.
+  ## Where to save the filtered output.
   data_dir: !r file.path("data", Sys.Date())
+  
+  ## Where to export results of the analysis.
   output_dir: !r file.path("results", Sys.Date(), "quality-control")
 
 title: "`r params$title`"

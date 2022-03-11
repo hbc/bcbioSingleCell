@@ -85,6 +85,7 @@ Imports:
     utils
 Suggests:
     Biostrings,
+    basejump (>= 0.15.0),
     rmarkdown,
     testthat
 biocViews:
