@@ -1,10 +1,10 @@
 ---
-## Updated 2019-09-17.
+## Updated 2022-03-19.
 params:
   title: "Quality control and filtering"
   
   ## bcbioSingleCell object.
-  bcb_file: "data/YYYY-MM-DD/bcb.rds"
+  bcb_file: !r file.path("data", "bcb.rds")
  
   ## Counts: Expected number of UMI-disambiguated counts per cell.
   min_counts: 1000
@@ -29,6 +29,7 @@ params:
   ## Not recommended by default, unless you're sure of the capture.
   n_cells: !r Inf
   
+  ## This is where to save the filtered output.
   data_dir: !r file.path("data", Sys.Date())
   output_dir: !r file.path("results", Sys.Date(), "quality-control")
 
@@ -39,8 +40,11 @@ bibliography: bibliography.bib
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-library(ggplot2)
-library(bcbioSingleCell)
+suppressPackageStartupMessages({
+    library(basejump)
+    library(ggplot2)
+    library(bcbioSingleCell)
+})
 prepareTemplate()
 source("_setup.R")
 ```
