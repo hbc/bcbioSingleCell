@@ -61,7 +61,10 @@ bcb <- bcbioSingleCell(
 saveData(bcb, dir = ".")
 ```
 
-This will return a `bcbioSingleCell` object, which is an extension of the [Bioconductor][] [SingleCellExperiment][sce] container class. Consult the `bcbioSingleCell()` constructor function documentation for detailed information on the supported parameters:
+This will return a `bcbioSingleCell` object, which is an extension of the
+[Bioconductor][] [SingleCellExperiment][sce] container class. Consult the
+`bcbioSingleCell()` constructor function documentation for detailed information
+on the supported parameters:
 
 ```r
 help(topic = "bcbioSingleCell", package = "bcbioSingleCell")
@@ -71,11 +74,18 @@ help(topic = "bcbioSingleCell", package = "bcbioSingleCell")
 
 ### FASTQ files with samples multiplexed by index barcode
 
-This is our current recommended method for analyzing an [inDrops][] dataset. The sample index barcodes are multiplexed per FASTQ set. For Illumina sequencing data, the raw binary base call (BCL) data must be converted into FASTQs (split into `R1`-`R4` files) using [bcl2fastq][].
+This is our current recommended method for analyzing an [inDrops][] dataset.
+The sample index barcodes are multiplexed per FASTQ set. For Illumina
+sequencing data, the raw binary base call (BCL) data must be converted into
+FASTQs (split into `R1`-`R4` files) using [bcl2fastq][].
 
-The [inDrops][] library version is automatically detected by [bcbio][], but ensure that the sample index sequences provided match the library version when attempting to create a `bcbioSingleCell` object.
+The [inDrops][] library version is automatically detected by [bcbio][], but
+ensure that the sample index sequences provided match the library version when
+attempting to create a `bcbioSingleCell` object.
 
-Consult the [bcbio][] documentation for more information on how to configure an [inDrops][] run prior to loading into [R][] with the `bcbioSingleCell()` function.
+Consult the [bcbio][] documentation for more information on how to configure an
+[inDrops][] run prior to loading into [R][] with the `bcbioSingleCell()`
+function.
 
 | description | index | sequence | sampleName | aggregate | genotype |
 | ----------- | ----- | -------- | ---------- | --------- | -------- |
@@ -88,11 +98,16 @@ Consult the [bcbio][] documentation for more information on how to configure an 
 | indrops2    | 3     | GTAAGGAG | sample1_2  | sample3   | wildtype |
 | indrops2    | 4     | ACTGCATA | sample1_2  | sample4   | knockout |
 
-Note that bcbio currently outputs the reverse complement index sequence in the sample directory names (e.g. `sample-ATAGAGAG`). Define the forward index barcode in the `sequence` column here, not the reverse complement. The reverse complement will be calculated automatically and added as the `revcomp` column in the sample metadata.
+Note that bcbio currently outputs the reverse complement index sequence in the
+sample directory names (e.g. `sample-ATAGAGAG`). Define the forward index
+barcode in the `sequence` column here, not the reverse complement. The reverse
+complement will be calculated automatically and added as the `revcomp` column
+in the sample metadata.
 
 ### FASTQ files demultiplexed per sample
 
-This is our current method for handling [10X Genomics Chromium][chromium] and [Illumina SureCell][surecell] cell barcodes.
+This is our current method for handling [10X Genomics Chromium][chromium] and
+[Illumina SureCell][surecell] cell barcodes.
 
 | description | genotype |
 | ----------- | -------- |
@@ -103,7 +118,9 @@ This is our current method for handling [10X Genomics Chromium][chromium] and [I
 
 ### Invalid object
 
-If you encounter a `validObject` error when attempting to load a `bcbioSingleCell` object from a previous analysis, run this step to update the object to the current version of the package:
+If you encounter a `validObject` error when attempting to load a
+`bcbioSingleCell` object from a previous analysis, run this step to update the
+object to the current version of the package:
 
 ```r
 object <- updateObject(object)
@@ -113,7 +130,8 @@ validObject(object)
 
 ## References
 
-The papers and software cited in our workflows are available as a [shared library](https://paperpile.com/shared/C8EMxl) on [Paperpile][].
+The papers and software cited in our workflows are available as a [shared
+library](https://paperpile.com/shared/C8EMxl) on [Paperpile][].
 
 [bcbio]: https://bcbio-nextgen.readthedocs.io/
 [bcl2fastq]: https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html
