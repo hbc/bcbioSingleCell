@@ -19,10 +19,12 @@ Console output.
 Show an object
 }
 \note{
-Updated 2020-12-22.
+Updated 2022-03-07.
 }
 \examples{
 data(bcb)
+
+## bcbioSingleCell ====
 show(bcb)
 }
 \author{

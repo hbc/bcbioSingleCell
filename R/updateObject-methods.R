@@ -1,12 +1,17 @@
+#' Update object
+#'
 #' @name updateObject
 #' @author Michael Steinbaugh
-#' @note Updated 2021-02-22.
+#' @note Updated 2022-03-07.
 #'
-#' @inherit AcidGenerics::updateObject
 #' @inheritParams AcidRoxygen::params
+#'
+#' @return Modified object.
 #'
 #' @examples
 #' data(bcb)
+#'
+#' ## bcbioSingleCell ====
 #' updateObject(bcb)
 #'
 #' ## Example that depends on remote file.
@@ -151,7 +156,10 @@ NULL
         dataVersions <- metadata[["dataVersions"]]
         if (is(dataVersions, "data.frame")) {
             if (isTRUE(verbose)) {
-                alert("Setting {.var dataVersions} as {.var DataFrame}.")
+                alert(sprintf(
+                    "Setting {.var %s} as {.cls %s}.",
+                    "dataVersions", "DataFrame"
+                ))
             }
             metadata[["dataVersions"]] <- as(dataVersions, "DataFrame")
         }
@@ -266,6 +274,6 @@ NULL
 #' @export
 setMethod(
     f = "updateObject",
-    signature = signature("bcbioSingleCell"),
+    signature = signature(object = "bcbioSingleCell"),
     definition = `updateObject,bcbioSingleCell`
 )

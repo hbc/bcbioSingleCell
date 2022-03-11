@@ -11,8 +11,8 @@ RNA-seq data.
 Useful links:
 \itemize{
   \item \url{https://r.acidgenomics.com/packages/bcbiosinglecell/}
-  \item \url{https://github.com/hbc/bcbioSingleCell/}
-  \item Report bugs at \url{https://github.com/hbc/bcbioSingleCell/issues/}
+  \item \url{https://github.com/acidgenomics/r-bcbiosinglecell/}
+  \item Report bugs at \url{https://github.com/acidgenomics/r-bcbiosinglecell/issues/}
 }
 
 }
@@ -30,6 +30,7 @@ Authors:
 Other contributors:
 \itemize{
   \item Harvard Chan Bioinformatics Core \email{bioinformatics@hsph.harvard.edu} [copyright holder, funder]
+  \item Acid Genomics [copyright holder, funder]
 }
 
 }

@@ -15,7 +15,7 @@ updateObject(object, ..., verbose = FALSE)
 \item{...}{Additional arguments.}
 
 \item{verbose}{\code{logical(1)}.
-Verbose output.}
+Run the function with verbose output.}
 }
 \value{
 Modified object.
@@ -24,10 +24,12 @@ Modified object.
 Update object
 }
 \note{
-Updated 2021-02-22.
+Updated 2022-03-07.
 }
 \examples{
 data(bcb)
+
+## bcbioSingleCell ====
 updateObject(bcb)
 
 ## Example that depends on remote file.

@@ -73,19 +73,19 @@
 Extract genes by row and cells by column.
 }
 \details{
-Refer to \code{\link[basejump:reexports]{cell2sample()}} and
-\link[basejump:reexports]{selectSamples()} if sample-level extraction is
+Refer to \code{cell2sample()} and \code{selectSamples()} if sample-level extraction is
 desired. Note that \code{sampleId} is slotted into \code{colData} and defines the
 cell-to-sample mappings.
 
 Unfiltered cellular barcode distributions for the entire dataset, including
 cells not kept in the matrix will be dropped in favor of the \code{nCount} column
-of \code{\link[SummarizedExperiment:SummarizedExperiment-class]{colData()}}.
+of \code{colData()}.
 }
 \note{
-Updated 2019-08-20.
+Updated 2021-09-10.
 }
 \examples{
+## bcbioSingleCell ====
 data(bcb)
 
 cells <- head(colnames(bcb))

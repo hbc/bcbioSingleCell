@@ -38,4 +38,6 @@ reference:
   - title: Reexports
     contents:
     - reexports
+template:
+  bootstrap: 5
 url: https://r.acidgenomics.com/packages/bcbiosinglecell

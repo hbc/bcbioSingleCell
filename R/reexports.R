@@ -1,43 +1,39 @@
-#' @importFrom AcidPlots barcodeRanksPerSample
 #' @export
-AcidPlots::barcodeRanksPerSample
+#' @importFrom AcidGenerics calculateMetrics
+AcidGenerics::calculateMetrics
 
-#' @importFrom basejump calculateMetrics
 #' @export
-basejump::calculateMetrics
+#' @importFrom AcidGenerics filterCells
+AcidGenerics::filterCells
 
-#' @importFrom basejump filterCells
 #' @export
-basejump::filterCells
+#' @importFrom AcidGenerics plotBarcodeRanks
+AcidGenerics::plotBarcodeRanks
 
-#' @importFrom AcidPlots plotBarcodeRanks
 #' @export
-AcidPlots::plotBarcodeRanks
+#' @importFrom AcidGenerics plotCellCounts
+AcidGenerics::plotCellCounts
 
-#' @importFrom AcidPlots plotCellCounts
 #' @export
-AcidPlots::plotCellCounts
+#' @importFrom AcidGenerics plotCountsPerCell
+AcidGenerics::plotCountsPerCell
 
-#' @importFrom AcidPlots plotCountsPerCell
 #' @export
-AcidPlots::plotCountsPerCell
+#' @importFrom AcidGenerics plotCountsVsFeatures
+AcidGenerics::plotCountsVsFeatures
 
-#' @importFrom AcidPlots plotCountsVsFeatures
 #' @export
-AcidPlots::plotCountsVsFeatures
+#' @importFrom AcidGenerics plotFeaturesPerCell
+AcidGenerics::plotFeaturesPerCell
 
-#' @importFrom AcidPlots plotFeaturesPerCell
 #' @export
-AcidPlots::plotFeaturesPerCell
+#' @importFrom AcidGenerics plotMitoRatio
+AcidGenerics::plotMitoRatio
 
-#' @importFrom AcidPlots plotMitoRatio
 #' @export
-AcidPlots::plotMitoRatio
+#' @importFrom AcidGenerics plotNovelty
+AcidGenerics::plotNovelty
 
-#' @importFrom AcidPlots plotNovelty
 #' @export
-AcidPlots::plotNovelty
-
-#' @importFrom AcidPlots plotQC
-#' @export
-AcidPlots::plotQC
+#' @importFrom AcidGenerics plotQC
+AcidGenerics::plotQC

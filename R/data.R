@@ -4,8 +4,10 @@
 #'
 #' @author Michael Steinbaugh
 #' @note Updated 2019-08-12.
+#' @usage data(bcb)
+#' @return `bcbioSingleCell`.
 #'
 #' @examples
 #' data(bcb)
-#' bcb
+#' class(bcb)
 "bcb"

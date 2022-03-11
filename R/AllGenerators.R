@@ -115,25 +115,26 @@ bcbioSingleCell <- function(
         ## Error on incorrect reverse complement input.
         if ("sequence" %in% colnames(sampleData)) {
             sampleDirSequence <- str_extract(names(sampleDirs), "[ACGT]+$")
-            if (identical(
-                sort(sampleDirSequence),
-                sort(as.character(sampleData[["sequence"]]))
-            )) {
-                stop(
-                    "It appears that the reverse complement sequence of the ",
-                    "i5 index barcodes were input into the sample metadata ",
-                    "'sequence' column. bcbio outputs the revcomp into the ",
-                    "sample directories, but the forward sequence should be ",
+            assert(
+                !identical(
+                    sort(sampleDirSequence),
+                    sort(as.character(sampleData[["sequence"]]))
+                ),
+                msg = paste(
+                    "It appears that the reverse complement sequence of the",
+                    "i5 index barcodes were input into the sample metadata",
+                    "'sequence' column. bcbio outputs the revcomp into the",
+                    "sample directories, but the forward sequence should be",
                     "used in the R package."
                 )
-            }
+            )
         }
         ## Allow sample selection by with this file.
         if (nrow(sampleData) < length(sampleDirs)) {
             sampleDirs <- sampleDirs[rownames(sampleData)]
             alert(sprintf(
-                fmt = "Loading a subset of samples: {.var %s}.",
-                toString(basename(sampleDirs), width = 100L)
+                fmt = "Loading a subset of samples: %s.",
+                toInlineString(basename(sampleDirs), n = 5L)
             ))
             allSamples <- FALSE
         }
@@ -176,7 +177,7 @@ bcbioSingleCell <- function(
             rowRanges <- emptyRanges(rownames(counts))
         }
     }
-    assert(is(rowRanges, "GRanges"))
+    assert(is(rowRanges, "GenomicRanges"))
     ## Attempt to get genome build and Ensembl release if not declared.
     ## Note that these will remain NULL when using GTF file (see above).
     if (is.null(genomeBuild)) {

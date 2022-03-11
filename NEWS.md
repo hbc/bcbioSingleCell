@@ -1,37 +1,49 @@
-## bcbioSingleCell 0.4.16 (2021-03-12)
+# bcbioSingleCell 0.5.0 (2022-03-11)
 
-### Minor changes
+## Major changes
+
+- Split out basejump imports into component packages.
+
+## Minor changes
+
+- Removed unused `formalsList` from NAMESPACE, which is removed in upcoming
+  basejump package update.
+- Removed `barcodeRanksPerSample` from NAMESPACE.
+
+# bcbioSingleCell 0.4.16 (2021-03-12)
+
+## Minor changes
 
 - Updated basejump dependencies and removed unnecessary stringr import.
 
-## bcbioSingleCell 0.4.15 (2021-02-22)
+# bcbioSingleCell 0.4.15 (2021-02-22)
 
-### Minor changes
+## Minor changes
 
 - Maintenance release, providing support for basejump v0.14 release series.
 
-## bcbioSingleCell 0.4.14 (2020-10-08)
+# bcbioSingleCell 0.4.14 (2020-10-08)
 
-### Minor changes
+## Minor changes
 
 - Maintenance release, updating dependency version requirements.
 
-## bcbioSingleCell 0.4.13 (2020-07-24)
+# bcbioSingleCell 0.4.13 (2020-07-24)
 
-### Minor changes
+## Minor changes
 
 - Maintenance release, updating minimum R dependency to 4.0.
 
-## bcbioSingleCell 0.4.12 (2020-05-12)
+# bcbioSingleCell 0.4.12 (2020-05-12)
 
-### Minor changes
+## Minor changes
 
 - Bug fix for integer handling in `.importReads` following switch to
   `vroom::vroom` from `data.table::fread`.
 
-## bcbioSingleCell 0.4.11 (2020-05-11)
+# bcbioSingleCell 0.4.11 (2020-05-11)
 
-### Minor changes
+## Minor changes
 
 - `updateObject`: Bug fix release for breaking changes introduced by `colData<-`
   assignment on `SingleCellExperiment` / `SummarizedExperiment` expecting
@@ -41,39 +53,39 @@
   release.
 - `updateObject`: Added `verbose` argument support, defaulting now to `FALSE`.
 
-## bcbioSingleCell 0.4.10 (2020-02-24)
+# bcbioSingleCell 0.4.10 (2020-02-24)
 
-### Minor changes
+## Minor changes
 
 - `bcbioSingleCell`: Removed now defunct `spikeNames` argument. Refer to
   `makeSummarizedExperiment`, `makeSingleCellExperiment` documentation and
   release notes in basejump package for details.
 
-## bcbioSingleCell 0.4.9 (2020-02-20)
+# bcbioSingleCell 0.4.9 (2020-02-20)
 
-### Minor changes
+## Minor changes
 
 - Tightened up dependencies in DESCRIPTION in preparation for bioconda release
   update, which breaks with basejump 0.12.0 conda dependency otherwise.
 
-## bcbioSingleCell 0.4.8 (2020-02-19)
+# bcbioSingleCell 0.4.8 (2020-02-19)
 
-### Minor changes
+## Minor changes
 
 - Changed license from MIT to GPL-3, matching other bcbio and Acid Genomics
   R packages.
 
-## bcbioSingleCell 0.4.7 (2020-01-20)
+# bcbioSingleCell 0.4.7 (2020-01-20)
 
-### Minor changes
+## Minor changes
 
 - Updated messages to use cli package approach. The same approach is now used in
   the bcbioRNASeq package as well.
 - Updated basejump dependencies to support rename from bioverbs to AcidGenerics.
 
-## bcbioSingleCell 0.4.6 (2019-10-30)
+# bcbioSingleCell 0.4.6 (2019-10-30)
 
-### Minor changes
+## Minor changes
 
 - Updated S4 validity checks and unit tests to support Bioconductor 3.10.
   Internally, we have to adjust checks against `DataFrame` class to also look
@@ -82,32 +94,32 @@
 - Full backward compatiblity with Bioconductor 3.9 is currently maintained.
 - Updated basejump dependency versions.
 
-## bcbioSingleCell 0.4.5 (2019-09-17)
+# bcbioSingleCell 0.4.5 (2019-09-17)
 
-### Minor changes
+## Minor changes
 
 - Switched QC template to use `bcb_file` as main file input, similar to
   bcbioRNASeq QC template.
 - Updated lintr config.
 
-## bcbioSingleCell 0.4.4 (2019-09-09)
+# bcbioSingleCell 0.4.4 (2019-09-09)
 
-### Minor changes
+## Minor changes
 
 - `bcbioSingleCell`: Internal generator now calls `importSampleData` using
   `pipeline = "bcbio"` argument, so we don't run into breaking changes when
   handling user metadata in a future basejump update.
 - Updated basejump dependency versions.
 
-## bcbioSingleCell 0.4.3 (2019-08-27)
+# bcbioSingleCell 0.4.3 (2019-08-27)
 
-### Minor changes
+## Minor changes
 
 - NAMESPACE and basejump dependency updates.
 
-## bcbioSingleCell 0.4.2 (2019-08-22)
+# bcbioSingleCell 0.4.2 (2019-08-22)
 
-### Major changes
+## Major changes
 
 - `bcbioSingleCell`: Simplifed internal `colData` handling, calling
   `calculateMetrics` after creating `SingleCellExperiment` with
@@ -115,95 +127,95 @@
   and enables better preparation of `rowRanges` containing spike-ins and
   transgenes.
 
-### Minor changes
+## Minor changes
 
 - Moved `metricsCols` global to basejump, so we can share with Chromium.
 - Improved generator consistency with other basejump and bcbio R packages.
 
-## bcbioSingleCell 0.4.1 (2019-08-20)
+# bcbioSingleCell 0.4.1 (2019-08-20)
 
-### Minor changes
+## Minor changes
 
 - `plotReadsPerCell`: Reworked internal code to use `DataFrame` primarily
   instead of `tbl_df`, so we can remove dplyr dependency.
 - Updated basejump and bcbioBase dependency versions.
 - Removed some additional unused dependencies, to lighten the package.
 
-## bcbioSingleCell 0.4.0 (2019-08-12)
+# bcbioSingleCell 0.4.0 (2019-08-12)
 
 This update is intended to simplify the package and reduce the amount of
 plotting code that is defined to `bcbioSingleCell` class specifically, instead
 of `SingleCellExperiment`.
 
-### Major changes
+## Major changes
 
 - Offloaded plotting functions to AcidPlots, so we can use some of this code in
   a shared manner with objects imported from 10X Genomics Chromium.
 
-### Minor changes
+## Minor changes
 
 - Improved documentation consistency by using shared roxygen from AcidRoxygen
   package.
 - Updated basejump and bcbio R package dependencies.
 
-## bcbioSingleCell 0.3.18 (2019-07-29)
+# bcbioSingleCell 0.3.18 (2019-07-29)
 
-### Major changes
+## Major changes
 
 - Updated R dependency to 3.6. This now requires Bioconductor 3.9+.
 - `updateObject`: Simplified method support, dropping `rowRanges` argument.
   No longer attempting to coerce assays back to a simple list, which doesn't
   work well on Bioconductor 3.10 Devel currently.
 
-### Minor changes
+## Minor changes
 
 - Updated basejump dependencies.
 - Improved code coverage over 90%.
 
-## bcbioSingleCell 0.3.17 (2019-07-24)
+# bcbioSingleCell 0.3.17 (2019-07-24)
 
-### Minor changes
+## Minor changes
 
 - Improved internal S4 function naming consistency.
 - Updated basejump dependencies.
 
-## bcbioSingleCell 0.3.16 (2019-07-17)
+# bcbioSingleCell 0.3.16 (2019-07-17)
 
-### Minor changes
+## Minor changes
 
 - Updated basejump dependencies.
 - Improved Travis CI docker configuration.
 
-## bcbioSingleCell 0.3.15 (2019-05-29)
+# bcbioSingleCell 0.3.15 (2019-05-29)
 
-### Minor changes
+## Minor changes
 
 - Updated `barcodeRanksPerSample` and `plotBarcodeRanks` to support DropletUtils
   update in Bioconductor 3.9.
 - Improved Travis and AppVeyor CI configuration.
 
-## bcbioSingleCell 0.3.14 (2019-04-25)
+# bcbioSingleCell 0.3.14 (2019-04-25)
 
 - S4 generic reexport documentation fixes.
 
-## bcbioSingleCell 0.3.13 (2019-04-23)
+# bcbioSingleCell 0.3.13 (2019-04-23)
 
-### Minor changes
+## Minor changes
 
 - Now importing ggplot2 code from [AcidPlots][] package.
 - `plotCellCounts`: Improved default appearance, removing black border.
 - Updated basejump and bcbio R package dependencies.
 
-## bcbioSingleCell 0.3.12 (2019-04-18)
+# bcbioSingleCell 0.3.12 (2019-04-18)
 
-### Minor changes
+## Minor changes
 
 - Deprecated `prepareSingleCellTemplate`, in favor of `prepareTemplate`.
 - Switched Travis CI configuration to use `singlecell` Docker image.
 
-## bcbioSingleCell 0.3.11 (2019-04-11)
+# bcbioSingleCell 0.3.11 (2019-04-11)
 
-### Major changes
+## Major changes
 
 - Restricted S4 methods back to `bcbioSingleCell` from `SingleCellExperiment`
   where applicable. Generally, this applies to the supported QC plotting
@@ -211,7 +223,7 @@ of `SingleCellExperiment`.
   to also support `CellRanger` S4 class, which has since been moved to the
   [Chromium][] package.
 
-### Minor changes
+## Minor changes
 
 - Improved code coverage by adding additional unit tests.
 - Updated internal reexport method for S4 generics, making `reexports.Rd` file
@@ -219,9 +231,9 @@ of `SingleCellExperiment`.
 - Renamed R Markdown QC template from `quality_control` to `quality-control`,
   using kebab case instead of snake case.
 
-## bcbioSingleCell 0.3.10 (2019-04-07)
+# bcbioSingleCell 0.3.10 (2019-04-07)
 
-### Major changes
+## Major changes
 
 - `updateObject` is now fully backward compatible for all objects created by
   the package, including versions prior to v0.1.
@@ -235,47 +247,47 @@ of `SingleCellExperiment`.
 - Extract method `[` on `bcbioSingleCell` class objects no longer alters the
   version of the object. It only sets `subset = TRUE`, similar to bcbioRNASeq.
 
-### Minor changes
+## Minor changes
 
 - Bug fix release for formal rename in `emptyRanges` from `mcolsNames` to
   `mcolnames`. This has been changed in [basejump][] 0.10.3.
 
-## bcbioSingleCell 0.3.9 (2019-04-01)
+# bcbioSingleCell 0.3.9 (2019-04-01)
 
-### Minor changes
+## Minor changes
 
 - Migrated development code to [Acid Genomics][].
 - Updated [basejump][] dependency to v0.10 release series.
 
-## bcbioSingleCell 0.3.8 (2019-03-18)
+# bcbioSingleCell 0.3.8 (2019-03-18)
 
-### Minor changes
+## Minor changes
 
 - Updated basejump and bcbioBase dependencies.
 - Updated documentation.
 - Added complete release information in NEWS.
 
-## bcbioSingleCell 0.3.7 (2019-02-12)
+# bcbioSingleCell 0.3.7 (2019-02-12)
 
-### Minor changes
+## Minor changes
 
 - `bcbioSingleCell` generator: improved internal handling of `mapCellsToSamples`
   call. This reworked join step checks the sampleID mapping more carefully.
 - Removed `plotGene` from deprecations. This function has been renamed to
   `plotCounts` instead in the basejump package.
 
-## bcbioSingleCell 0.3.6 (2019-01-13)
+# bcbioSingleCell 0.3.6 (2019-01-13)
 
-### Minor changes
+## Minor changes
 
 - Updated basejump and bcbioBase dependencies, to pass build checks.
 - Split out imports into a separate R file.
 
-## bcbioSingleCell 0.3.5 (2018-12-22)
+# bcbioSingleCell 0.3.5 (2018-12-22)
 
 This release reworks the internal assert checks substantially.
 
-### Major changes
+## Major changes
 
 - First release that has fully migrated to using goalie package instead of
   assertive package internally for checks.
@@ -283,32 +295,32 @@ This release reworks the internal assert checks substantially.
 - Reworked `bcbioSingleCell` generator function to use cleaner assert checks.
 - Migrated to inheriting S4 generics from bioverbs, where applicable.
 
-### Minor changes
+## Minor changes
 
 - Reworked documentation to use sentence case instead of title case.
 
-## bcbioSingleCell 0.3.4 (2018-12-01)
+# bcbioSingleCell 0.3.4 (2018-12-01)
 
-### Major changes
+## Major changes
 
 - `metrics`: Removed code and consolidated `SingleCellExperiment` method support
   in basejump package.
 
-### Minor changes
+## Minor changes
 
 - Documentation improvements.
 - `plotQC`: Improved validity checks.
 
-## bcbioSingleCell 0.3.3 (2018-11-25)
+# bcbioSingleCell 0.3.3 (2018-11-25)
 
-### Minor changes
+## Minor changes
 
 - Updated basejump and bcbioBase dependencies, to tighten up build checks.
 - Documentation and CI configuration fixes.
 
-## bcbioSingleCell 0.3.2 (2018-11-19)
+# bcbioSingleCell 0.3.2 (2018-11-19)
 
-### Major changes
+## Major changes
 
 - Migrating `CellRanger` S4 class to separate Chromium R package.
 - Migrated additional S4 generics to basejump package (bioverbs).
@@ -318,27 +330,27 @@ This release reworks the internal assert checks substantially.
   `bcbioSingleCell` object.
 - Improved plotting functions to inherit params from basejump.
 
-### Minor changes
+## Minor changes
 
 - Removed `barcodePattern` global variable.
 
-## bcbioSingleCell 0.3.1 (2018-11-14)
+# bcbioSingleCell 0.3.1 (2018-11-14)
 
-### Major changes
+## Major changes
 
 - Updated NAMESPACE to inherit from basejump instead of any of the basejump
   subpackages, which are subject to rework during this release series.
 - Renamed example data from `cellranger_small` to `cellranger`, and
   `indrops_small` to simply `indrops`.
 
-### Minor changes
+## Minor changes
 
 - Transitioning to goalie for assert checks in place of assertive package.
 - Miscellaneous documentation improvements.
 - Updated working examples for plotting functions, using `indrops` example data.
 - Reworked `bcbioSingleCell` `show` (`print`) method.
 
-## bcbioSingleCell 0.3.0 (2018-11-06)
+# bcbioSingleCell 0.3.0 (2018-11-06)
 
 Fork of `hbc/bcbioSingleCell` code base, for additional development and
 improvements prior to Bioconductor submission. The v0.2 release series is
@@ -354,7 +366,7 @@ CellRanger code will be split out into a separate Chromium R package in a future
 update, so some of these `SingleCellExperiment`-specific methods need to be
 consolidated into the basejump package.
 
-### Major changes
+## Major changes
 
 - `aggregateReplicates`, `cell2sample`, `combine`, `plotZerosVsDepth`,
   `sampleData`, `selectSamples`, `subsetPerSample`, `topBarcodes`: Offloaded to
@@ -366,7 +378,7 @@ consolidated into the basejump package.
   inherited for `CellRanger` S4 class.
 - Reorganized `metricsPerSample` code approach.
 
-### Minor changes
+## Minor changes
 
 - Consolidated S4 validity check code into `AllClasses.R` file.
 - Updated Travis and AppVeyor CI configuration.
@@ -379,21 +391,21 @@ consolidated into the basejump package.
 - Split out plotting code methods into internal functions
   (e.g. `plotMitoVsCoding.SingleCellExperiment`).
 
-## bcbioSingleCell 0.2.1 (2018-08-19)
+# bcbioSingleCell 0.2.1 (2018-08-19)
 
-### Major changes
+## Major changes
 
 - Moved clustering and marker templates to [pointillism][] package, since
   all clustering code has been moved there. The quality control template using
   the `filterCells` function is still provided here.
 
-### Minor changes
+## Minor changes
 
 - `prepareSingleCellTemplate`: Improved internal code to use updated
   `prepareTemplate`, which has been migrated to [basejump][] package.
 - Added back the `cellranger_small` example dataset.
 
-## bcbioSingleCell 0.2.0 (2018-08-09)
+# bcbioSingleCell 0.2.0 (2018-08-09)
 
 This is a significant maintenance release designed to simplify the package for
 long-term stability. Here we are removing code support for [Seurat][] and
@@ -404,7 +416,7 @@ import [bcbio][] single-cell data using the `bcbioSingleCell` constructor or
 to provide quality control visualization (see `plotQC`) and low-quality cell
 removal with the `filterCells` function.
 
-### Major changes
+## Major changes
 
 - Moved clustering and `seurat` object support to [pointillism][]:
   `cellCountsPerCluster`, `cellTypesPerCluster`,
@@ -413,19 +425,19 @@ removal with the `filterCells` function.
   `plotTSNE`, `plotUMAP`.
 - Now requiring [bcbioBase][] v0.4+ and [basejump][] v0.7+.
 
-### Defunct functions
+## Defunct functions
 
 - Removed from exports (for simplicifcation): `plotClusters`,
   `plotFeatures`, `quantileHeatmap`, `readMarkers`, `readMarkersFile`.
 
-### Minor changes
+## Minor changes
 
 - No longer exporting `mapCellsToSamples`. This is now only called internally.
 - Updated documentation to use [roxygen2][] v6.1.
 
-## bcbioSingleCell 0.1.18 (2018-07-31)
+# bcbioSingleCell 0.1.18 (2018-07-31)
 
-### Major changes
+## Major changes
 
 - Now recommending [BiocManager][] instead of [BiocInstaller][] to install.
 - `filterCells` now supports `zinbwave = TRUE` for automatic
@@ -454,7 +466,7 @@ removal with the `filterCells` function.
 - Added support for global [ggplot2][] discrete color palettes using
   `bcbio.discrete.color` and `bcbio.discrete.fill` with `options`.
 
-## Minor changes
+# Minor changes
 
 - Marker functions are no longer exported as generics, since they only
   currently apply to [Seurat][] and may be deprecated in the future.
@@ -474,9 +486,9 @@ removal with the `filterCells` function.
   exactly. This can happen if the sample order is different in `sampleData`
   than in `colData`.
 
-## bcbioSingleCell 0.1.17 (2018-07-21)
+# bcbioSingleCell 0.1.17 (2018-07-21)
 
-### Major changes
+## Major changes
 
 - `readCellRanger` now supports HDF5 data (.h5 files) or MatrixMarket Exchange
   Format explicitly, using the `format` argument. The function also now supports
@@ -493,7 +505,7 @@ removal with the `filterCells` function.
   `cell_type_markers` in place of `cellTypeMarkers`. There's no easy way to
   link these files as aliases, so this is a necessary breaking change.
 
-### Minor changes
+## Minor changes
 
 - Improved [R Markdown][] template defaults for quality control and clustering.
 - Now importing functions related to differential expression into the package
@@ -509,19 +521,19 @@ removal with the `filterCells` function.
 - Improved internal consistency between the `bcbioSingleCell` and
   `readCellRanger` data import functions.
 
-### Additional notes
+## Additional notes
 
 - Package still works with [Bioconductor][] 3.6 / [R][] 3.4, but we will be
   migrating to [Bioconductor][] 3.7 / [R][] 3.5 when [conda][] r-base is updated
   to 3.5.1.
 
-## bcbioSingleCell 0.1.16 (2018-06-20)
+# bcbioSingleCell 0.1.16 (2018-06-20)
 
-### New functions
+## New functions
 
 - `cellCountsPerCluster` and `clusterCellCountsPerSample`.
 
-### R Markdown templates
+## R Markdown templates
 
 - Now recommending 1000 UMIs by default, and a maximum of 10% mitochondrial
   transcripts.
@@ -529,7 +541,7 @@ removal with the `filterCells` function.
   0.8, and 1.2 by default. Dimensional reduction plots have been updated to
   support looping of these multiple resolutions.
 
-### Minor changes
+## Minor changes
 
 - `as(object, "SingleCellExperiment")` coercion now slots stashed metadata
   into `SingleCellExperiment`, if defined.
@@ -547,18 +559,18 @@ removal with the `filterCells` function.
 - `topBarcodes` can now return either a `data.frame` or `list`, containing
   the top barcodes grouped by sample.
 
-## bcbioSingleCell 0.1.15 (2018-06-13)
+# bcbioSingleCell 0.1.15 (2018-06-13)
 
-### Minor changes
+## Minor changes
 
 - Updated internal code to use `text` as primary argument in `markdownHeader`
   calls.
 - Updated example datasets and unit tests to match.
 - Working on using pbmc4k as example dataset for vignette.
 
-## bcbioSingleCell 0.1.14 (2018-06-05)
+# bcbioSingleCell 0.1.14 (2018-06-05)
 
-### Major changes
+## Major changes
 
 - Multiplexed [Cell Ranger][] barcodes are now reformatted to be more readable
   and compatible with the `mapCellsToSamples` utility function. This change
@@ -572,7 +584,7 @@ removal with the `filterCells` function.
 - `readCellRanger` no longer requires reference data defined by `refdataDir`,
   although this is still recommended.
 
-### Minor changes
+## Minor changes
 
 - Resaved example datasets.
 - Switched the example `cellranger_small` and `seurat_small` datasets to the
@@ -590,27 +602,27 @@ removal with the `filterCells` function.
 - Improved `plotMarker` documentation examples to use mitochondrial genes.
 - Using `seurat_small` in place of `Seurat::pbmc_small` in working examples.
 
-### Internal code changes
+## Internal code changes
 
 - Now consistently using [dplyr][] for piped `data.frame` as much as possible,
   where applicable. Code is being updated to use [tidyeval][].
 
-## bcbioSingleCell 0.1.13 (2018-05-29)
+# bcbioSingleCell 0.1.13 (2018-05-29)
 
-### Minor changes
+## Minor changes
 
 - t-SNE and UMAP plot improvements.
 
-## bcbioSingleCell 0.1.12 (2018-05-25)
+# bcbioSingleCell 0.1.12 (2018-05-25)
 
-### Major changes
+## Major changes
 
 - No longer using automatic camel case sanitization for `metrics` or
   `fetchData` return column names.
 - Improved [R Markdown][] clustering and marker templates to optionally support
   UMAP and dark mode in the YAML parameters.
 
-### Minor changes
+## Minor changes
 
 - Using original [Seurat][] mapping names for data: tSNE_1, tSNE_2, PC1, PC2,
   UMAP1, UMAP2.
@@ -620,9 +632,9 @@ removal with the `filterCells` function.
 - Note that "phase" has been renamed to "Phase" in the [R Markdown][] clustering
   for cell-cycle regression PCA.
 
-## bcbioSingleCell 0.1.11 (2018-05-23)
+# bcbioSingleCell 0.1.11 (2018-05-23)
 
-### New functions
+## New functions
 
 - UMAP is now supported. This functionality is provided in: `plotUMAP`,
   `plotMarkerUMAP`, and `plotFeatureUMAP`. Corresponding fetch functions,
@@ -631,7 +643,7 @@ removal with the `filterCells` function.
   the plot is needed, use `plotDot` or `plotViolin` instead, or refer to the
   [Seurat][] documentation for alternates.
 
-### Major changes
+## Major changes
 
 - Dimensional reduction and marker plots no longer use dark mode by default.
   The default color palette support for marker plots has been improved to
@@ -647,7 +659,7 @@ removal with the `filterCells` function.
   `SingleCellExperiment` object instead of `bcbioSingleCell`. The v0.2.4
   update of [bcbioRNASeq][] behaves similarly with this generic.
 
-### Minor changes
+## Minor changes
 
 - Reworked the internal handling of some `seurat` `SingleCellExperiment` method
   support, using `as(x, "SingleCellExperiment")` internally, which uses the
@@ -661,9 +673,9 @@ removal with the `filterCells` function.
 - `sanitizeMarkers`: improved internal code for supported bcbio stashed
   metadata, including `rowRanges`.
 
-## bcbioSingleCell 0.1.10 (2018-05-19)
+# bcbioSingleCell 0.1.10 (2018-05-19)
 
-### Minor changes
+## Minor changes
 
 - `plotCellTypesPerCluster` is using `dark = TRUE` by default again.
 - Fixed `cell2sample` handling for multiplexed [Cell Ranger][] data loaded up
@@ -672,15 +684,15 @@ removal with the `filterCells` function.
   `mapCellsToSamples`.
 - Updated [Travis CI][] build checks to include bioc-release on [macOS][].
 
-## bcbioSingleCell 0.1.9 (2018-05-18)
+# bcbioSingleCell 0.1.9 (2018-05-18)
 
-### Major changes
+## Major changes
 
 - No longer attempting to sanitize the rownames for `seurat` objects in coercion
   method. This helps maintain the gene symbol appearance in plotting functions
   for genes with hyphens in the names.
 
-### Minor changes
+## Minor changes
 
 - Using `BiocParallel::SerialParam` internally for zinbwave in `diffExp`.
 - Simplified `cell2sample` internal code to always use `mapCellsToSamples`
@@ -695,23 +707,23 @@ removal with the `filterCells` function.
 - `topMarkers` now defaults to `coding = FALSE` by default, since not all
   datasets will contain biotype information.
 
-## bcbioSingleCell 0.1.8 (2018-05-16)
+# bcbioSingleCell 0.1.8 (2018-05-16)
 
-### Minor changes
+## Minor changes
 
 - Initial `updateObject` method support for `bcbioSingleCell` class.
 - Relaxed `validObject` validity check to not require sample-level metadata in
   `colData` yet.
 
-## bcbioSingleCell 0.1.7 (2018-05-15)
+# bcbioSingleCell 0.1.7 (2018-05-15)
 
-### New functions
+## New functions
 
 - Added support for Uniform Manifold Approximation and Projection (UMAP) with
   the `plotUMAP` and `fetchUMAPData` functions. These work similarly to the
   other `plotDimensionalReduction` and `fetchData` functions.
 
-### Major changes
+## Major changes
 
 - Now adding sample-level metadata into `colData` slot, for better downstream
   compatibility with other packages that work with `SingleCellExperiment`
@@ -723,7 +735,7 @@ removal with the `filterCells` function.
   filtering based on the cellular barcode ranks. Internally this is handled
   by `DropletUtils::barcodeRanks`.
 
-### Minor changes
+## Minor changes
 
 - Attempting to re-enable `libgsl-dev` installation for [zinbwave][] on
   [Travis CI][].
@@ -745,9 +757,9 @@ removal with the `filterCells` function.
 - Updated `readCellRanger` internal code to match `bcbioSingleCell`
   constructor, specifically handling sample-level metadata in `colData`.
 
-## bcbioSingleCell 0.1.6 (2018-05-09)
+# bcbioSingleCell 0.1.6 (2018-05-09)
 
-### Minor changes
+## Minor changes
 
 - Updated default QC [R Markdown][] template.
 - Added trendline option to QC scatter plot functions.
@@ -759,9 +771,9 @@ removal with the `filterCells` function.
   than suggesting. Similar update applied to bcbioRNASeq.
 - Suggesting scater and scran.
 
-## bcbioSingleCell 0.1.5 (2018-05-04)
+# bcbioSingleCell 0.1.5 (2018-05-04)
 
-### Major changes
+## Major changes
 
 - Overhauled inflection and knee point labeling support in `plotUMIsPerCell`.
   Now uses the `point` argument and always labels per sample. Currently requires
@@ -769,7 +781,7 @@ removal with the `filterCells` function.
 - Updated default quality control template.
 - Added `plotBarcodeRanks`.
 
-### Minor changes
+## Minor changes
 
 - Added barcode rank support for `seurat` class objects.
 - QC plots now have titles by default, matching the conventions used in
@@ -783,7 +795,7 @@ removal with the `filterCells` function.
 - Added `interestingGroups` support to `plotZerosVsDepth`, matching the other
   QC functions.
 
-## bcbioSingleCell 0.1.4 (2018-04-30)
+# bcbioSingleCell 0.1.4 (2018-04-30)
 
 - Updated `sampleData` S4 methods to match update in bcbioBase. Now supports
   `clean` argument, which returns non-blacklisted factor columns only. See
@@ -802,9 +814,9 @@ removal with the `filterCells` function.
   `plotMarker`.
 - Updated sample metadata example in README.
 
-## bcbioSingleCell 0.1.3 (2018-04-25)
+# bcbioSingleCell 0.1.3 (2018-04-25)
 
-### Minor changes
+## Minor changes
 
 - Improved summary statistics output during `filterCells` call.
 - Miscellaneous documentation improvements, most notably to `bcbioSingleCell`
@@ -813,9 +825,9 @@ removal with the `filterCells` function.
 - Improved `cell2sample` mapping internally for `readCellRanger`.
 - Improved [Bioconductor][] 3.7 installation instructions.
 
-## bcbioSingleCell 0.1.2 (2018-04-24)
+# bcbioSingleCell 0.1.2 (2018-04-24)
 
-### Major changes
+## Major changes
 
 - Now using `bcbioSingleCell` instead of `loadSingleCell` as the main
   constructor function to create a `bcbioSingleCell` object. `loadSingleCell`
@@ -829,7 +841,7 @@ removal with the `filterCells` function.
 - Use "`aggregate`" instead of "`sampleNameAggregate`" to define
   aggregate/grouped samples in metadata.
 
-### Minor changes
+## Minor changes
 
 - Reexporting relevant [ggplot2][] and [viridis][] color palettes.
 - Renamed references to "inDrops" from "inDrop", where applicable.
@@ -841,7 +853,7 @@ removal with the `filterCells` function.
   `theme_paperwhite` [ggplot2][] themes.
 - Updated installation instructions to support [Bioconductor][] 3.7.
 
-### Internal changes
+## Internal changes
 
 - `metrics` method support now defaults to `matrix` and works similarly
   for `dgCMatrix` sparse matrices. This is used in place of `calculateMetrics`
@@ -852,9 +864,9 @@ removal with the `filterCells` function.
 - Improved internal code for `sanitizeMarkers` to use map the gene annotations
   from `rowRanges` better.
 
-## bcbioSingleCell 0.1.1 (2018-04-16)
+# bcbioSingleCell 0.1.1 (2018-04-16)
 
-### Major changes
+## Major changes
 
 - Added support for calculating `barcodeRanks` and `barcodeRanksPerSample`.
 - Now exporting `plotMarker` in addition to `plotMarkers`.
@@ -871,7 +883,7 @@ removal with the `filterCells` function.
   where applicable, providing support for `SingleCellExperiment` objects created
   elsewhere.
 
-### Minor changes
+## Minor changes
 
 - Added support for labeling barcode ranks, such as elbow or inflection point on
   UMI counts per cell plots.
@@ -885,9 +897,9 @@ removal with the `filterCells` function.
 - `inflectionPoint` has been made defunct, in favor of using `barcodeRanks`.
 - Moved internal constructors into S4 methods, where applicable.
 
-## bcbioSingleCell 0.1.0 (2018-04-04)
+# bcbioSingleCell 0.1.0 (2018-04-04)
 
-### Major changes
+## Major changes
 
 - `bcbioSingleCell` S4 class now extends `SingleCellExperiment` instead of
   `SummarizedExperiment`. This requires definition of `rowRanges` inside the
@@ -898,7 +910,7 @@ removal with the `filterCells` function.
   [zingeR][]/[edgeR][] internally to calculate gene expression changes across
   cell groups.
 
-### Minor changes
+## Minor changes
 
 - Added `plotCumulativeUMIsPerCell` utility. This may be removed in a future
   update in favor of adding this plot into `plotUMIsPerCell` using an ECDF
@@ -907,11 +919,11 @@ removal with the `filterCells` function.
   `readCellTypeMarkersFile`. This matches the conventions used in the
   [bcbioBase][] package.
 
-## bcbioSingleCell 0.0.32 (2018-03-12)
+# bcbioSingleCell 0.0.32 (2018-03-12)
 
 - Fixes for object subsetting and `loadSingleCell` organism calls
 
-## bcbioSingleCell 0.0.31 (2018-02-21)
+# bcbioSingleCell 0.0.31 (2018-02-21)
 
 - Improved handling of old [Ensembl][] release version for [Cell Ranger][]
   output.
@@ -942,7 +954,7 @@ removal with the `filterCells` function.
 - Updated internal sample metadata sanitization to ensure all columns are
   factors.
 
-## bcbioSingleCell 0.0.30 (2018-01-26)
+# bcbioSingleCell 0.0.30 (2018-01-26)
 
 - Fixes for QC plot labeling of bcbioSingleCell object with different per sample
   filtering cutoffs applied.
@@ -978,7 +990,7 @@ removal with the `filterCells` function.
   lowerCamelCase (e.g. `Phase`, `res.0.8`, `orig.ident`).
 - Suppress package startup messages in [R Markdown][] templates.
 
-## bcbioSingleCell 0.0.29 (2018-01-24)
+# bcbioSingleCell 0.0.29 (2018-01-24)
 
 - Switched to [rlang][] methods for errors, messages, and warnings: `abort`,
   `inform`, and `warn`.
@@ -994,7 +1006,7 @@ removal with the `filterCells` function.
 - Explicit integers are now consistently used in all of the function parameter
   arguments.
 
-## bcbioSingleCell 0.0.28 (2018-01-22)
+# bcbioSingleCell 0.0.28 (2018-01-22)
 
 - Manually define functions used to read barcodes and matrices. This improves
   the functionality of the internal `.readSparseCounts` function.
@@ -1004,7 +1016,7 @@ removal with the `filterCells` function.
 - Added tabbed histogram, violin, and barplots for appropriate quality control
   functions in the [R Markdown][] code.
 
-## bcbioSingleCell 0.0.27 (2018-01-18)
+# bcbioSingleCell 0.0.27 (2018-01-18)
 
 - Migrated core dependency imports from [basejump][] to [bcbioBase][].
 - Improved `colnames` and `rownames` handling for internal `.readSparseCounts`
@@ -1029,7 +1041,7 @@ removal with the `filterCells` function.
 - Added method support for `plotViolin`.
 - Improved internal `cell2sample` handling in subset method code.
 
-## bcbioSingleCell 0.0.26 (2017-12-18)
+# bcbioSingleCell 0.0.26 (2017-12-18)
 
 - Renamed `readMarkersFile` to `readCellTypeMarkersFile`.
 - Improved internal handling of multiplexed CellRanger samples. These are count
@@ -1048,7 +1060,7 @@ removal with the `filterCells` function.
 - Added unit test data for `loadSingleCell()`.
 - Added additional unit tests to improve code coverage.
 
-## bcbioSingleCell 0.0.25 (2017-12-11)
+# bcbioSingleCell 0.0.25 (2017-12-11)
 
 - Prepared a minimal working example dataset.
 - Added some initial unit tests.
@@ -1112,7 +1124,7 @@ removal with the `filterCells` function.
   improved the metadata slotting.
 - Initial commit of example data script in the `data-raw/` directory!
 
-## bcbioSingleCell 0.0.24 (2017-11-27)
+# bcbioSingleCell 0.0.24 (2017-11-27)
 
 - Raw cellular barcodes are now slotted in `object@cellularBarcodes` as a
   `data.frame` instead of a per sample `list`. This makes downstream subsetting
@@ -1153,7 +1165,7 @@ removal with the `filterCells` function.
   other plotting functions.
 - Initial methods support for custom bracket-based subsetting.
 
-## bcbioSingleCell 0.0.23 (2017-11-22)
+# bcbioSingleCell 0.0.23 (2017-11-22)
 
 - Improved facet wrapping of aggregated samples (`sampleNameAggregate` present
   in sample metadata), but removing code support for wrapping by multiplexed
@@ -1212,7 +1224,7 @@ removal with the `filterCells` function.
 - Clustering template fixes. Now uses `plotFeatureTSNE` to assess quality
   control metrics on t-SNE.
 
-## bcbioSingleCell 0.0.22 (2017-11-17)
+# bcbioSingleCell 0.0.22 (2017-11-17)
 
 - Now internally stashing a `cell2sample` data.frame, which helps speed up
   operations on cellular barcode metrics calculations for quality control plots.
@@ -1237,7 +1249,7 @@ removal with the `filterCells` function.
 - Added a troubleshooting section to the GitHub README, with a note on maximum
   DLLs.
 
-## bcbioSingleCell 0.0.21 (2017-11-08)
+# bcbioSingleCell 0.0.21 (2017-11-08)
 
 - Updated package imports to match [Bioconductor][] 3.6.
 - Initial support for `plotCellTypesPerCluster`.
@@ -1269,7 +1281,7 @@ removal with the `filterCells` function.
 - Updated `topMarkers` to match Seurat v2.1 update.
 - Improved `bcbioSingleCell` to `seurat` coercion method with `setAs`.
 
-## bcbioSingleCell 0.0.20 (2017-10-24)
+# bcbioSingleCell 0.0.20 (2017-10-24)
 
 - Upgraded to [basejump][] 0.1.0 and [Seurat][] 2.1.0 dependencies.
 - Improved documentation of NAMESPACE imports per function.
@@ -1291,7 +1303,7 @@ removal with the `filterCells` function.
   setup chunk object loading workflow.
 - Removed lintr checks from testthat. This is breaking `devtools::test`.
 
-## bcbioSingleCell 0.0.19 (2017-10-12)
+# bcbioSingleCell 0.0.19 (2017-10-12)
 
 - Renamed main object class from `bcbioSCDataSet` to `bcbioSingleCell`.
 - Cell filtering with `filterCells` will now slot a named logical vector into
@@ -1320,7 +1332,7 @@ removal with the `filterCells` function.
 - Added internal utility to check for valid marker genes (`.validMarkers`).
 - Improved [Ensembl][] release version support (`ensemblVersion`).
 
-## bcbioSingleCell 0.0.18 (2017-09-17)
+# bcbioSingleCell 0.0.18 (2017-09-17)
 
 - Renamed `plotClusters` to `plotMarkers`. Added soft deprecation.
 - Added [viridis][] color support in t-SNE plots and heatmaps.
@@ -1350,7 +1362,7 @@ removal with the `filterCells` function.
 - Improved `bcbioSCFiltered` to `seurat` coercion to slot relevant bcbio
   metadata.
 
-## bcbioSingleCell 0.0.17 (2017-09-03)
+# bcbioSingleCell 0.0.17 (2017-09-03)
 
 - Renamed package from `bcbioSinglecell` to `bcbioSingleCell`.
 - Added [viridis][] color palette support to quality control plots.
@@ -1361,7 +1373,7 @@ removal with the `filterCells` function.
 - Added cell-cycle regression into [Seurat][] clustering [RMarkdown][] template.
 - Improved [pkgdown][] settings and website appearance.
 
-## bcbioSingleCell 0.0.16 (2017-08-25)
+# bcbioSingleCell 0.0.16 (2017-08-25)
 
 - Support for CRAN release of [Seurat][].
 - Improved documentation of package NAMESPACE in `bcbioSinglecell-package.R`
@@ -1399,7 +1411,7 @@ removal with the `filterCells` function.
 - Initial commit of `subsetPerSample` function.
 - Miscellaneous [RMarkdown][] template improvements.
 
-## bcbioSingleCell 0.0.15 (2017-08-11)
+# bcbioSingleCell 0.0.15 (2017-08-11)
 
 - Renamed functions in `lowerCamelCase` from `snake_case`.
 - Draft support for [monocle][], [scater][], and [scone][].
@@ -1414,7 +1426,7 @@ removal with the `filterCells` function.
 - Renamed `filteringCriteria` to `filterParams` in `@metadata` slot.
 - Miscellaneous documentation fixes.
 
-## bcbioSingleCell 0.0.14 (2017-07-26)
+# bcbioSingleCell 0.0.14 (2017-07-26)
 
 - Migrated plotting functions to S4 methods.
 - Improved sample metadata handling.
@@ -1424,68 +1436,68 @@ removal with the `filterCells` function.
 - Draft support for [Seurat][] v2 pre-release.
 - Initial support for [SureCell][] UMIs.
 
-## bcbioSingleCell 0.0.13 (2017-07-10)
+# bcbioSingleCell 0.0.13 (2017-07-10)
 
 - Integrated [bcbio][] and [Cell Ranger][] workflows into `load_run`.
 
-## bcbioSingleCell 0.0.12 (2017-06-28)
+# bcbioSingleCell 0.0.12 (2017-06-28)
 
 - Initial support for S4 object creation using [SummarizedExperiment][].
 
-## bcbioSingleCell 0.0.11 (2017-06-24)
+# bcbioSingleCell 0.0.11 (2017-06-24)
 
 - Added [testthat][], [lintr][], and [covr][] support for code coverage.
 
-## bcbioSingleCell 0.0.10 (2017-06-15)
+# bcbioSingleCell 0.0.10 (2017-06-15)
 
 - Updated [RMarkdown][] templates.
 
-## bcbioSingleCell 0.0.9 (2017-06-12)
+# bcbioSingleCell 0.0.9 (2017-06-12)
 
 - Compatibility update for basejump S4 NAMESPACE changes.
 - Improved plots for quality control and filtering.
 
-## bcbioSingleCell 0.0.8 (2017-05-28)
+# bcbioSingleCell 0.0.8 (2017-05-28)
 
 - Renamed mitochondrial plot functions.
 - Changed presentation of mitochondrial abundance as ratio instead of
   percentage.
 - Simplified NAMESPACE by offloading dependencies to basejump.
 
-## bcbioSingleCell 0.0.7 (2017-05-13)
+# bcbioSingleCell 0.0.7 (2017-05-13)
 
 - Initial support for loading of 10x Genomics [Cell Ranger][] output.
 - Add detection of droplet method based on the metadata file.
 - Draft support for import of [inDrop][] i5 index barcode counts.
 
-## bcbioSingleCell 0.0.6 (2017-05-10)
+# bcbioSingleCell 0.0.6 (2017-05-10)
 
 - Modified `load_run` function for improved consistency with [bcbioRNASeq][]
   package.
 - Initial incorporation of scater package into workflow.
 - Initial commit of RMarkdown template skeletons.
 
-## bcbioSingleCell 0.0.5 (2017-05-08)
+# bcbioSingleCell 0.0.5 (2017-05-08)
 
 - Improvements to run object based on code in [bcbioRNASeq][] package.
 - Better handling in plots for datasets with many samples.
 - Labeled quality control cutoffs on the plots.
 
-## bcbioSingleCell 0.0.4 (2017-04-26)
+# bcbioSingleCell 0.0.4 (2017-04-26)
 
 - Prepared package for [tidyverse][] dependency updates.
 - Updated HPC server detection.
 
-## bcbioSingleCell 0.0.3 (2017-04-20)
+# bcbioSingleCell 0.0.3 (2017-04-20)
 
  - NAMESPACE consolidation and function cleanup.
 
-## bcbioSingleCell 0.0.2 (2017-04-12)
+# bcbioSingleCell 0.0.2 (2017-04-12)
 
 - Added quality control plotting functions.
 - Converted all functions to standard evaluation.
 
-## bcbioSingleCell 0.0.1 (2017-03-01)
+# bcbioSingleCell 0.0.1 (2017-03-01)
 
 - Initial draft release.
 

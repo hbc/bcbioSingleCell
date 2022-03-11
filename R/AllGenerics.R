@@ -1,24 +1,17 @@
-#' @rdname plotReadsPerCell
+#' @export
 #' @name plotReadsPerCell
-#' @importFrom AcidGenerics plotReadsPerCell
+#' @rdname plotReadsPerCell
 #' @usage plotReadsPerCell(object, ...)
-#' @export
 NULL
 
-
-
-#' @rdname show
+#' @export
 #' @name show
-#' @importFrom AcidGenerics show
+#' @rdname show
 #' @usage show(object)
-#' @export
 NULL
 
-
-
-#' @rdname updateObject
-#' @name updateObject
-#' @importFrom AcidGenerics updateObject
-#' @usage updateObject(object, ..., verbose = FALSE)
 #' @export
+#' @name updateObject
+#' @rdname updateObject
+#' @usage updateObject(object, ..., verbose = FALSE)
 NULL

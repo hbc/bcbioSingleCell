@@ -2,7 +2,7 @@
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
-#' @note Updated 2021-02-22.
+#' @note Updated 2021-09-03.
 #' @noRd
 #'
 #' @inheritParams BiocParallel::bpmapply
@@ -41,14 +41,16 @@
         ## Remove any empty items in list, which can result from low quality
         ## samples with empty matrices in bcbio pipeline.
         list <- Filter(f = Negate(is.null), x = list)
-        if (!hasLength(list)) {
-            ## nocov start
-            stop(
-                "bcbio didn't return any cells.\n",
-                "Check your 'minimum_barcode_depth' setting."
+        assert(
+            hasLength(list),
+            msg = sprintf(
+                fmt = paste0(
+                    "bcbio didn't return any cells.\n",
+                    "Check your '%s' setting."
+                ),
+                "minimum_barcode_depth"
             )
-            ## nocov end
-        }
+        )
         ## Bind the matrices.
         do.call(cbind, list)
     }

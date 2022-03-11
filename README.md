@@ -6,9 +6,7 @@
 
 ## Installation
 
-Requirements: [R][] >= 4.0, [Bioconductor][] >= 3.12.
-
-### [R][] method
+This is an [R][] package.
 
 ```r
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
@@ -19,7 +17,8 @@ install.packages(
     repos = c(
         "https://r.acidgenomics.com",
         BiocManager::repositories()
-    )
+    ),
+    dependencies = TRUE
 )
 ```
 
@@ -62,7 +61,7 @@ bcb <- bcbioSingleCell(
 saveData(bcb, dir = ".")
 ```
 
-This will return a `bcbioSingleCell` object, which is an extension of the [Bioconductor][] [SingleCellExperiment][SCE] container class. Consult the `bcbioSingleCell()` constructor function documentation for detailed information on the supported parameters:
+This will return a `bcbioSingleCell` object, which is an extension of the [Bioconductor][] [SingleCellExperiment][sce] container class. Consult the `bcbioSingleCell()` constructor function documentation for detailed information on the supported parameters:
 
 ```r
 help(topic = "bcbioSingleCell", package = "bcbioSingleCell")
@@ -79,7 +78,7 @@ The [inDrops][] library version is automatically detected by [bcbio][], but ensu
 Consult the [bcbio][] documentation for more information on how to configure an [inDrops][] run prior to loading into [R][] with the `bcbioSingleCell()` function.
 
 | description | index | sequence | sampleName | aggregate | genotype |
-|-------------|-------|----------|------------|-----------|----------|
+| ----------- | ----- | -------- | ---------- | --------- | -------- |
 | indrops1    | 1     | CTCTCTAT | sample1_1  | sample1   | wildtype |
 | indrops1    | 2     | TATCCTCT | sample2_1  | sample2   | knockout |
 | indrops1    | 3     | GTAAGGAG | sample3_1  | sample3   | wildtype |
@@ -96,7 +95,7 @@ Note that bcbio currently outputs the reverse complement index sequence in the s
 This is our current method for handling [10X Genomics Chromium][chromium] and [Illumina SureCell][surecell] cell barcodes.
 
 | description | genotype |
-|-------------|----------|
+| ----------- | -------- |
 | sample1     | wildtype |
 | sample2     | knockout |
 | sample3     | wildtype |

@@ -34,19 +34,23 @@
 
 #' Obtain the raw, unfiltered cellular barcode read counts
 #'
-#' @note Updated 2019-08-20.
+#' @note Updated 2021-09-03.
 #' @noRd
 #'
 #' @return `DataFrame`.
 .rawMetrics <- function(object) {
     assert(is(object, "bcbioSingleCell"))
     list <- metadata(object)[["cellularBarcodes"]]
-    if (!is.list(list)) {
-        stop(
-            "Object does not contain unfiltered cellular barcodes.\n",
-            "Has 'filterCells()' been applied? This step drops them."
+    assert(
+        is.list(list),
+        msg = sprintf(
+            fmt = paste0(
+                "Object does not contain unfiltered cellular barcodes.\n",
+                "Has '%s' been applied? This step drops them."
+            ),
+            "filterCells()"
         )
-    }
+    )
     assert(
         is.list(list),
         hasNames(list)

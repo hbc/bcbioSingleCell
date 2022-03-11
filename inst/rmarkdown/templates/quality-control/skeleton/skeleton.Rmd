@@ -1,46 +1,52 @@
 ---
-## Updated 2019-09-17.
+## Updated 2022-03-11.
 params:
   title: "Quality control and filtering"
-  
+
   ## bcbioSingleCell object.
-  bcb_file: "data/YYYY-MM-DD/bcb.rds"
- 
+  bcb_file: !r file.path("data", "bcb.rds")
+
   ## Counts: Expected number of UMI-disambiguated counts per cell.
   min_counts: 1000
   max_counts: !r Inf
-  
+
   ## Features: Expected number of features (i.e. genes) per cell.
   min_features: 500
   max_features: !r Inf
-  
+
   ## Novelty score: log10 features per count.
   min_novelty: 0.85
-  
+
   ## Mitochondrial abundance.
   ## Low quality / stressed cells tend to be above 20%.
   max_mito_ratio: 0.1
-  
+
   ## Minimum number of cells per feature.
   ## This will remove features with very low expression.
   min_cells_per_feature: 10
-  
+
   ## Expected number of cells per sample.
-  ## Not recommended by default, unless you're sure of the capture.
+  ## Not recommended by default.
   n_cells: !r Inf
-  
+
+  ## Where to save the filtered output.
   data_dir: !r file.path("data", Sys.Date())
+
+  ## Where to export results of the analysis.
   output_dir: !r file.path("results", Sys.Date(), "quality-control")
 
-title: "`r params$title`"
+title: "`r params[["title"]]`"
 author: "`r getOption('author')`"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
-library(ggplot2)
-library(bcbioSingleCell)
+suppressPackageStartupMessages({
+    library(basejump)
+    library(ggplot2)
+    library(bcbioSingleCell)
+})
 prepareTemplate()
 source("_setup.R")
 ```
@@ -51,7 +57,7 @@ source("_setup.R")
 # Load bcbioSingleCell object
 
 ```{r load-object}
-file <- params$bcb_file
+file <- params[["bcb_file"]]
 object <- import(file)
 name <- basenameSansExt(file)
 rm(file)
@@ -64,7 +70,7 @@ print(object)
 ```
 
 [bcbio][] run data was imported from:
-**`r metadata(object)$uploadDir`**.
+**`r metadata(object)[["uploadDir"]]`**.
 
 # Sample metadata
 
@@ -74,11 +80,23 @@ sampleData(object)
 
 # Reads per cell {.tabset}
 
-These are counts of how many reads are assigned to a given cellular barcode. It is normal for single cell RNA-seq data to contain a large number of low complexity barcodes. The bcbio pipeline filters out most of these barcodes, and here we have applied a threshold cutoff of a minimum of `r metadata(object)$cellularBarcodeCutoff` reads per cell. The unfiltered read count distributions are shown here.
+These are counts of how many reads are assigned to a given cellular barcode. It
+is normal for single cell RNA-seq data to contain a large number of low
+complexity barcodes. The bcbio pipeline filters out most of these barcodes, and
+here we have applied a threshold cutoff of a minimum of
+`r metadata(object)[["cellularBarcodeCutoff"]]` reads per cell. The unfiltered
+read count distributions are shown here.
 
 ## Histogram
 
-For high quality data, the proportional histogram should contain a single large peak that represents cells that were encapsulated. If we see a strong shoulder, or a bimodal distribution of the cells, that can indicate a couple problems. It might be that there is free floating RNA, which happens when cells are dying. It could also be that there are a set of cells that failed for some reason. Finally, it could also be that there are biologically different types of cells, and one type is much smaller than the other. If this is the case we would expect to see less RNA being sequenced from the smaller cells.
+For high quality data, the proportional histogram should contain a single large
+peak that represents cells that were encapsulated. If we see a strong shoulder,
+or a bimodal distribution of the cells, that can indicate a couple problems. It
+might be that there is free floating RNA, which happens when cells are dying.
+It could also be that there are a set of cells that failed for some reason.
+Finally, it could also be that there are biologically different types of cells,
+and one type is much smaller than the other. If this is the case we would
+expect to see less RNA being sequenced from the smaller cells.
 
 ```{r plot-reads-per-cell-histogram}
 plotReadsPerCell(
@@ -90,7 +108,9 @@ plotReadsPerCell(
 
 ## ECDF
 
-An empirical distribution function (ECDF) plot will show the frequency distribution of the reads per cell. You can see that the vast majority of low complexity barcodes plateau at a read depth below 1000 reads per cell.
+An empirical distribution function (ECDF) plot will show the frequency
+distribution of the reads per cell. You can see that the vast majority of low
+complexity barcodes plateau at a read depth below 1000 reads per cell.
 
 ```{r plot-reads-per-cell-ecdf}
 plotReadsPerCell(object = object, geom = "ecdf")
@@ -98,107 +118,118 @@ plotReadsPerCell(object = object, geom = "ecdf")
 
 # UMI counts per cell {.tabset}
 
-Now let's assess the distribution of unique molecular identifier (UMI)-deconvoluted counts per cell. In general, the distributions should be relatively uniform per sample. Here we are also including violin and ridgeline plots, with the average number of genes per cell labeled.
+Now let's assess the distribution of unique molecular identifier
+(UMI)-deconvoluted counts per cell. In general, the distributions should be
+relatively uniform per sample. Here we are also including violin and ridgeline
+plots, with the average number of genes per cell labeled.
 
 ```{r plot-counts-per-cell-prefilter}
-markdownHeader("Violin", level = 2)
+markdownHeader("Violin", level = 2L)
 plotCountsPerCell(
     object = object,
     geom = "violin",
-    min = params$min_counts,
-    max = params$max_counts
+    min = params[["min_counts"]],
+    max = params[["max_counts"]]
 )
 
-markdownHeader("Ridgeline", level = 2)
+markdownHeader("Ridgeline", level = 2L)
 plotCountsPerCell(
     object = object,
     geom = "ridgeline",
-    min = params$min_counts,
-    max = params$max_counts
+    min = params[["min_counts"]],
+    max = params[["max_counts"]]
 )
 
-markdownHeader("Histogram", level = 2)
+markdownHeader("Histogram", level = 2L)
 plotCountsPerCell(
     object = object,
     geom = "histogram",
-    min = params$min_counts,
-    max = params$max_counts
+    min = params[["min_counts"]],
+    max = params[["max_counts"]]
 )
 
-markdownHeader("ECDF", level = 2)
+markdownHeader("ECDF", level = 2L)
 plotCountsPerCell(
     object = object,
     geom = "ecdf",
     interestingGroups = "sampleName",
-    min = params$min_counts,
-    max = params$max_counts
+    min = params[["min_counts"]],
+    max = params[["max_counts"]]
 )
 ```
 
 # Filter cells by UMI count
 
-Let's apply this step first and then proceed to evaluating gene detection, mitocondrial transcript abundance, and novelty scores.
+Let's apply this step first and then proceed to evaluating gene detection,
+mitocondrial transcript abundance, and novelty scores.
 
 ```{r filter-cells-by-count}
 object <- filterCells(
     object = object,
-    minCounts = params$min_counts,
-    maxCounts = params$max_counts
+    minCounts = params[["min_counts"]],
+    maxCounts = params[["max_counts"]]
 )
 ```
 
-Let's take a look at the UMI per cell distributions after this filtering step. Note that we haven't applied very strict filtering here — we're going to cut off the "low quality" cells based on the gene detection rate, novelty score, and mitochondrial abundance.
+Let's take a look at the UMI per cell distributions after this filtering step.
+Note that we haven't applied very strict filtering here -- we're going to cut
+off the "low quality" cells based on the gene detection rate, novelty score,
+and mitochondrial abundance.
 
 ```{r plot-counts-per-cell-postfilter}
 plotCountsPerCell(
     object = object,
     geom = "histogram",
-    min = params$min_counts,
-    max = params$max_counts
+    min = params[["min_counts"]],
+    max = params[["max_counts"]]
 )
 ```
 
 # Genes detected per cell {.tabset}
 
-Here by "detected", we mean genes with a non-zero count measurement per cell. Seeing gene detection in the range of `500`-`5000` is normal for most single-cell experiments.
+Here by "detected", we mean genes with a non-zero count measurement per cell.
+Seeing gene detection in the range of `500`-`5000` is normal for most
+single-cell experiments.
 
 ```{r plot-features-per-cell}
-markdownHeader("Violin", level = 2)
+markdownHeader("Violin", level = 2L)
 plotFeaturesPerCell(
     object = object,
     geom = "violin",
-    min = min(params$min_features),
-    max = max(params$max_features)
+    min = min(params[["min_features"]]),
+    max = max(params[["max_features"]])
 )
 
-markdownHeader("Ridgeline", level = 2)
+markdownHeader("Ridgeline", level = 2L)
 plotFeaturesPerCell(
     object = object,
     geom = "ridgeline",
-    min = min(params$min_features),
-    max = max(params$max_features)
+    min = min(params[["min_features"]]),
+    max = max(params[["max_features"]])
 )
 
-markdownHeader("Histogram", level = 2)
+markdownHeader("Histogram", level = 2L)
 plotFeaturesPerCell(
     object = object,
     geom = "histogram",
-    min = min(params$min_features),
-    max = max(params$max_features)
+    min = min(params[["min_features"]]),
+    max = max(params[["max_features"]])
 )
 
-markdownHeader("ECDF", level = 2)
+markdownHeader("ECDF", level = 2L)
 plotFeaturesPerCell(
     object = object,
     geom = "ecdf",
-    min = min(params$min_features),
-    max = max(params$max_features)
+    min = min(params[["min_features"]]),
+    max = max(params[["max_features"]])
 )
 ```
 
 # UMIs vs. features detected
 
-If we graph out the total number of UMI counts per cell vs. the genes detected per cell, we can assess whether there is a large population of low quality cells with low counts and/or gene detection.
+If we graph out the total number of UMI counts per cell vs. the genes detected
+per cell, we can assess whether there is a large population of low quality
+cells with low counts and/or gene detection.
 
 ```{r plot-counts-vs-features}
 plotCountsVsFeatures(object)
@@ -206,69 +237,76 @@ plotCountsVsFeatures(object)
 
 # Novelty score {.tabset}
 
-Another way to QC the data is to look for less novelty, that is cells that have less genes detected per count than other cells. We can see the samples where we sequenced each cell less have a higher overall novelty, that is because we have not started saturated the sequencing for any given gene for these samples. Outlier cells in these samples might be cells that we have a less complex RNA species than other cells. Sometimes we can detect contamination with low complexity cell types like red blood cells via this metric.
+Another way to QC the data is to look for less novelty, that is cells that have
+less genes detected per count than other cells. We can see the samples where we
+sequenced each cell less have a higher overall novelty, that is because we have
+not started saturated the sequencing for any given gene for these samples.
+Outlier cells in these samples might be cells that we have a less complex RNA
+species than other cells. Sometimes we can detect contamination with low
+complexity cell types like red blood cells via this metric.
 
 ```{r plot-novelty}
-markdownHeader("Violin", level = 2)
+markdownHeader("Violin", level = 2L)
 plotNovelty(
     object = object,
     geom = "violin",
-    min = min(params$min_novelty)
+    min = min(params[["min_novelty"]])
 )
 
-markdownHeader("Ridgeline", level = 2)
+markdownHeader("Ridgeline", level = 2L)
 plotNovelty(
     object = object,
     geom = "ridgeline",
-    min = min(params$min_novelty)
+    min = min(params[["min_novelty"]])
 )
 
-markdownHeader("Histogram", level = 2)
+markdownHeader("Histogram", level = 2L)
 plotNovelty(
     object = object,
     geom = "histogram",
-    min = min(params$min_novelty)
+    min = min(params[["min_novelty"]])
 )
 
-markdownHeader("ECDF", level = 2)
+markdownHeader("ECDF", level = 2L)
 plotNovelty(
     object = object,
     geom = "ecdf",
-    min = min(params$min_novelty)
+    min = min(params[["min_novelty"]])
 )
 ```
 
 # Mitochondrial abundance {.tabset}
 
-We evaluate overall mitochondrial gene expression as a biomarker of cellular stress during sample preparation.
+We evaluate overall mitochondrial gene expression as a biomarker of cellular
+stress during sample preparation.
 
 ```{r plot-mito-ratio}
-markdownHeader("Violin", level = 2)
+markdownHeader("Violin", level = 2L)
 plotMitoRatio(
     object = object,
     geom = "violin",
-    max = max(params$max_mito_ratio)
+    max = max(params[["max_mito_ratio"]])
 )
 
-markdownHeader("Ridgeline", level = 2)
+markdownHeader("Ridgeline", level = 2L)
 plotMitoRatio(
     object = object,
     geom = "ridgeline",
-    max = max(params$max_mito_ratio)
+    max = max(params[["max_mito_ratio"]])
 )
 
-markdownHeader("Histogram", level = 2)
+markdownHeader("Histogram", level = 2L)
 plotMitoRatio(
     object = object,
     geom = "histogram",
-    max = max(params$max_mito_ratio)
+    max = max(params[["max_mito_ratio"]])
 )
 
-markdownHeader("ECDF", level = 2)
+markdownHeader("ECDF", level = 2L)
 plotMitoRatio(
     object = object,
     geom = "ecdf",
-    max = max(params$max_mito_ratio)
+    max = max(params[["max_mito_ratio"]])
 )
 ```
 
@@ -277,14 +315,14 @@ plotMitoRatio(
 ```{r filter-cells}
 object <- filterCells(
     object = object,
-    minCounts = params$min_counts,
-    maxCounts = params$max_counts,
-    minFeatures = params$min_features,
-    maxFeatures = params$max_features,
-    maxMitoRatio = params$max_mito_ratio,
-    minNovelty = params$min_novelty,
-    nCells = params$n_cells,
-    minCellsPerFeature = params$min_cells_per_feature
+    minCounts = params[["min_counts"]],
+    maxCounts = params[["max_counts"]],
+    minFeatures = params[["min_features"]],
+    maxFeatures = params[["max_features"]],
+    maxMitoRatio = params[["max_mito_ratio"]],
+    minNovelty = params[["min_novelty"]],
+    nCells = params[["n_cells"]],
+    minCellsPerFeature = params[["min_cells_per_feature"]]
 )
 ```
 
@@ -298,15 +336,14 @@ plotQC(object, geom = "violin")
 assignAndSaveData(
     name = paste(name, "filtered", sep = "_"),
     object = object,
-    dir = params$data_dir
+    dir = params[["data_dir"]]
 )
 ```
 
 ```{r export}
 export(
     object = object,
-    name = name,
-    dir = params$output_dir,
+    con = params[["output_dir"]],
     compress = TRUE
 )
 ```
