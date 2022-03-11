@@ -1,4 +1,4 @@
-## bcbioSingleCell 0.5.0 (UNRELEASED)
+## bcbioSingleCell 0.5.0 (2022-03-11)
 
 ### Major changes
 
