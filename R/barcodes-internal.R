@@ -8,7 +8,7 @@
 #' @noRd
 #'
 #' @param list `list`.
-#'   Cellular barcodes per sample.
+#' Cellular barcodes per sample.
 #'
 #' @return `integer`.
 #' Cell identifiers are the names and raw reads are the values.

@@ -4,9 +4,10 @@
 #' @note Updated 2021-09-10.
 #'
 #' @inheritParams AcidRoxygen::params
-#' @param cutoffLine `logical(1)`.
-#'   Include a line marking the cutoff.
 #' @param ... Additional arguments.
+#'
+#' @param cutoffLine `logical(1)`.
+#' Include a line marking the cutoff.
 #'
 #' @examples
 #' data(bcb)
@@ -18,7 +19,6 @@ NULL
 
 
 
-## Histogram ===================================================================
 #' Proportional cellular barcodes data
 #'
 #' Modified version of Allon Klein Lab MATLAB code.
@@ -29,53 +29,52 @@ NULL
 #' @noRd
 #'
 #' @param data `DataFrame`.
-#'   Raw read counts per cellular barcode.
-#'   Return from `.rawMetrics()` function.
+#' Raw read counts per cellular barcode.
+#' Return from `.rawMetrics()` function.
 #'
 #' @return `DataFrame`.
-.proportionalReadsPerCell <- function(
-    data,
-    sampleData,
-    breaks = 100L
-) {
-    assert(
-        is(data, "DataFrame"),
-        isSubset(c("nRead", "sampleId"), colnames(data)),
-        is.integer(data[["nRead"]]),
-        is.factor(data[["sampleId"]]),
-        is(sampleData, "DataFrame"),
-        isInt(breaks)
-    )
-    sampleData[["sampleId"]] <- as.factor(rownames(sampleData))
-    samples <- levels(data[["sampleId"]])
-    list <- DataFrameList(lapply(
-        X = samples,
-        FUN = function(sampleId) {
-            keep <- which(data[["sampleId"]] == sampleId)
-            subset <- data[keep, , drop = FALSE]
-            ## Histogram of log10-transformed counts.
-            h <- hist(
-                x = log10(subset[["nRead"]]),
-                n = breaks,
-                plot = FALSE
-            )
-            ## Klein Lab MATLAB code reference.
-            ## counts: fLog; mids: xLog
-            proportion <-
-                h[["counts"]] *
-                (10L ^ h[["mids"]]) /
-                sum(h[["counts"]] * (10L ^ h[["mids"]]))
-            DataFrame(
-                "sampleId" = factor(sampleId),
-                "log10Read" = h[["mids"]],
-                "proportion" = proportion
-            )
-        }
-    ))
-    out <- unlist(list, recursive = FALSE, use.names = FALSE)
-    out <- leftJoin(out, sampleData, by = "sampleId")
-    out
-}
+.proportionalReadsPerCell <-
+    function(data,
+             sampleData,
+             breaks = 100L) {
+        assert(
+            is(data, "DataFrame"),
+            isSubset(c("nRead", "sampleId"), colnames(data)),
+            is.integer(data[["nRead"]]),
+            is.factor(data[["sampleId"]]),
+            is(sampleData, "DataFrame"),
+            isInt(breaks)
+        )
+        sampleData[["sampleId"]] <- as.factor(rownames(sampleData))
+        samples <- levels(data[["sampleId"]])
+        list <- DataFrameList(lapply(
+            X = samples,
+            FUN = function(sampleId) {
+                keep <- which(data[["sampleId"]] == sampleId)
+                subset <- data[keep, , drop = FALSE]
+                ## Histogram of log10-transformed counts.
+                h <- hist(
+                    x = log10(subset[["nRead"]]),
+                    n = breaks,
+                    plot = FALSE
+                )
+                ## Klein Lab MATLAB code reference.
+                ## counts: fLog; mids: xLog
+                proportion <-
+                    h[["counts"]] *
+                        (10L^h[["mids"]]) /
+                        sum(h[["counts"]] * (10L^h[["mids"]]))
+                DataFrame(
+                    "sampleId" = factor(sampleId),
+                    "log10Read" = h[["mids"]],
+                    "proportion" = proportion
+                )
+            }
+        ))
+        out <- unlist(list, recursive = FALSE, use.names = FALSE)
+        out <- leftJoin(out, sampleData, by = "sampleId")
+        out
+    }
 
 
 
@@ -87,235 +86,223 @@ NULL
 #' @param data Return from `.proportionalReadsPerCell()` function.
 #'
 #' @return `ggplot`.
-.plotReadsPerCellHistogram <- function(
-    data,
-    min = 0L
-) {
-    assert(is(data, "DataFrame"))
-    data <- as_tibble(data, rownames = NULL)
-    p <- ggplot(
-        data = data,
-        mapping = aes(
-            x = !!sym("log10Read"),
-            y = !!sym("proportion"),
-            color = !!sym("interestingGroups")
-        )
-    ) +
-        geom_step(
-            alpha = 0.75,
-            size = 1L
+.plotReadsPerCellHistogram <-
+    function(data,
+             min = 0L) {
+        assert(is(data, "DataFrame"))
+        data <- as_tibble(data, rownames = NULL)
+        p <- ggplot(
+            data = data,
+            mapping = aes(
+                x = !!sym("log10Read"),
+                y = !!sym("proportion"),
+                color = !!sym("interestingGroups")
+            )
         ) +
-        labs(
-            x = "log10 reads per cell",
-            y = "proportion of reads"
-        )
-    ## Cutoff line.
-    if (min > 0L) {
-        p <- p + acid_geom_abline(xintercept = log10(min))
+            geom_step(
+                alpha = 0.75,
+                size = 1L
+            ) +
+            labs(
+                x = "log10 reads per cell",
+                y = "proportion of reads"
+            )
+        ## Cutoff line.
+        if (min > 0L) {
+            p <- p + acid_geom_abline(xintercept = log10(min))
+        }
+        ## Color palette.
+        p <- p + autoDiscreteColorScale()
+        ## Facets.
+        facets <- NULL
+        if (isSubset("aggregate", colnames(data))) {
+            facets <- c(facets, "aggregate")
+        }
+        if (is.character(facets)) {
+            p <- p + facet_wrap(facets = syms(facets), scales = "free")
+        }
+        ## Return.
+        p
     }
-    ## Color palette.
-    p <- p + autoDiscreteColorScale()
-    ## Facets.
-    facets <- NULL
-    if (isSubset("aggregate", colnames(data))) {
-        facets <- c(facets, "aggregate")
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = syms(facets), scales = "free")
-    }
-    ## Return.
-    p
-}
 
 
 
-## Boxplot =====================================================================
 ## Updated 2021-09-10.
-.plotReadsPerCellBoxplot <- function(
-    data,
-    min = 0L
-) {
-    assert(is(data, "DataFrame"))
-    data <- as_tibble(data, rownames = NULL)
-    p <- ggplot(
-        data = data,
-        mapping = aes(
-            x = !!sym("sampleName"),
-            y = !!sym("nRead"),
-            fill = !!sym("interestingGroups")
-        )
-    ) +
-        geom_boxplot(color = "black", outlier.shape = NA) +
-        scale_y_continuous(trans = "log10") +
-        acid_geom_label_average(data, col = "nRead", digits = 0L) +
-        labs(
-            x = NULL,
-            y = "reads per cell"
-        )
-    ## Cutoff line.
-    if (min > 0L) {
-        p <- p + acid_geom_abline(yintercept = min)
-    }
-    ## Color palette.
-    p <- p + autoDiscreteFillScale()
-    ## Facets.
-    facets <- NULL
-    if (isSubset("aggregate", colnames(data))) {
-        facets <- c(facets, "aggregate")
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = syms(facets), scales = "free")
-    }
-    ## Return.
-    p
-}
-
-
-
-## ECDF ========================================================================
-## Updated 2021-09-10.
-.plotReadsPerCellECDF <- function(
-    data,
-    min = 0L
-) {
-    assert(is(data, "DataFrame"))
-    data <- as_tibble(data, rownames = NULL)
-    p <- ggplot(
-        data = data,
-        mapping = aes(
-            x = !!sym("nRead"),
-            color = !!sym("interestingGroups")
-        )
-    ) +
-        stat_ecdf(geom = "step", size = 1L) +
-        labs(
-            x = "reads per cell",
-            y = "frequency"
+.plotReadsPerCellBoxplot <-
+    function(data,
+             min = 0L) {
+        assert(is(data, "DataFrame"))
+        data <- as_tibble(data, rownames = NULL)
+        p <- ggplot(
+            data = data,
+            mapping = aes(
+                x = !!sym("sampleName"),
+                y = !!sym("nRead"),
+                fill = !!sym("interestingGroups")
+            )
         ) +
-        scale_x_continuous(trans = "log10")
-    ## Cutoff line.
-    if (min > 0L) {
-        p <- p + acid_geom_abline(xintercept = min)
+            geom_boxplot(color = "black", outlier.shape = NA) +
+            scale_y_continuous(trans = "log10") +
+            acid_geom_label_average(data, col = "nRead", digits = 0L) +
+            labs(
+                x = NULL,
+                y = "reads per cell"
+            )
+        ## Cutoff line.
+        if (min > 0L) {
+            p <- p + acid_geom_abline(yintercept = min)
+        }
+        ## Color palette.
+        p <- p + autoDiscreteFillScale()
+        ## Facets.
+        facets <- NULL
+        if (isSubset("aggregate", colnames(data))) {
+            facets <- c(facets, "aggregate")
+        }
+        if (is.character(facets)) {
+            p <- p + facet_wrap(facets = syms(facets), scales = "free")
+        }
+        ## Return.
+        p
     }
-    ## Color palette.
-    p <- p + autoDiscreteColorScale()
-    ## Facets.
-    facets <- NULL
-    if (isSubset("aggregate", colnames(data))) {
-        facets <- c(facets, "aggregate")
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = syms(facets), scales = "free")
-    }
-    ## Return.
-    p
-}
 
 
 
-## Ridgeline ===================================================================
 ## Updated 2021-09-10.
-.plotReadsPerCellRidgeline <- function(
-    data,
-    min = 0L
-) {
-    assert(is(data, "DataFrame"))
-    data <- as_tibble(data, rownames = NULL)
-    p <- ggplot(
-        data = data,
-        mapping = aes(
-            x = !!sym("nRead"),
-            y = !!sym("sampleName"),
-            fill = !!sym("interestingGroups")
-        )
-    ) +
-        geom_density_ridges(
-            alpha = 0.75,
-            color = "black",
-            panel_scaling = TRUE,
-            scale = 10L
+.plotReadsPerCellECDF <-
+    function(data,
+             min = 0L) {
+        assert(is(data, "DataFrame"))
+        data <- as_tibble(data, rownames = NULL)
+        p <- ggplot(
+            data = data,
+            mapping = aes(
+                x = !!sym("nRead"),
+                color = !!sym("interestingGroups")
+            )
         ) +
-        scale_x_continuous(trans = "log10") +
-        acid_geom_label_average(data, col = "nRead", digits = 0L) +
-        labs(
-            x = "reads per cell",
-            y = NULL
-        )
-    ## Cutoff line.
-    if (min > 0L) {
-        p <- p + acid_geom_abline(xintercept = min)
+            stat_ecdf(geom = "step", size = 1L) +
+            labs(
+                x = "reads per cell",
+                y = "frequency"
+            ) +
+            scale_x_continuous(trans = "log10")
+        ## Cutoff line.
+        if (min > 0L) {
+            p <- p + acid_geom_abline(xintercept = min)
+        }
+        ## Color palette.
+        p <- p + autoDiscreteColorScale()
+        ## Facets.
+        facets <- NULL
+        if (isSubset("aggregate", colnames(data))) {
+            facets <- c(facets, "aggregate")
+        }
+        if (is.character(facets)) {
+            p <- p + facet_wrap(facets = syms(facets), scales = "free")
+        }
+        ## Return.
+        p
     }
-    ## Color palette.
-    p <- p + autoDiscreteFillScale()
-    ## Facets.
-    facets <- NULL
-    if (isSubset("aggregate", colnames(data))) {
-        facets <- c(facets, "aggregate")
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = syms(facets), scales = "free")
-    }
-    p
-}
 
 
 
-## Violin ======================================================================
 ## Updated 2021-09-10.
-.plotReadsPerCellViolin <- function(
-    data,
-    min = 0L
-) {
-    assert(is(data, "DataFrame"))
-    data <- as_tibble(data, rownames = NULL)
-    p <- ggplot(
-        data = data,
-        mapping = aes(
-            x = !!sym("sampleName"),
-            y = !!sym("nRead"),
-            fill = !!sym("interestingGroups")
-        )
-    ) +
-        geom_violin(
-            color = "black",
-            scale = "count"
+.plotReadsPerCellRidgeline <-
+    function(data,
+             min = 0L) {
+        assert(is(data, "DataFrame"))
+        data <- as_tibble(data, rownames = NULL)
+        p <- ggplot(
+            data = data,
+            mapping = aes(
+                x = !!sym("nRead"),
+                y = !!sym("sampleName"),
+                fill = !!sym("interestingGroups")
+            )
         ) +
-        scale_y_continuous(trans = "log10") +
-        acid_geom_label_average(data, col = "nRead", digits = 0L) +
-        labs(
-            x = NULL,
-            y = "reads per cell"
-        )
-    ## Cutoff line.
-    if (min > 0L) {
-        p <- p + acid_geom_abline(yintercept = min)
+            geom_density_ridges(
+                alpha = 0.75,
+                color = "black",
+                panel_scaling = TRUE,
+                scale = 10L
+            ) +
+            scale_x_continuous(trans = "log10") +
+            acid_geom_label_average(data, col = "nRead", digits = 0L) +
+            labs(
+                x = "reads per cell",
+                y = NULL
+            )
+        ## Cutoff line.
+        if (min > 0L) {
+            p <- p + acid_geom_abline(xintercept = min)
+        }
+        ## Color palette.
+        p <- p + autoDiscreteFillScale()
+        ## Facets.
+        facets <- NULL
+        if (isSubset("aggregate", colnames(data))) {
+            facets <- c(facets, "aggregate")
+        }
+        if (is.character(facets)) {
+            p <- p + facet_wrap(facets = syms(facets), scales = "free")
+        }
+        p
     }
-    ## Color palette.
-    p <- p + autoDiscreteFillScale()
-    ## Facets.
-    facets <- NULL
-    if (isSubset("aggregate", colnames(data))) {
-        facets <- c(facets, "aggregate")
-    }
-    if (is.character(facets)) {
-        p <- p + facet_wrap(facets = syms(facets), scales = "free")
-    }
-    ## Return.
-    p
-}
 
 
 
-## bcbioSingleCell =============================================================
 ## Updated 2021-09-10.
-`plotReadsPerCell,bcbioSingleCell` <-  # nolint
-    function(
-        object,
-        interestingGroups = NULL,
-        geom,
-        cutoffLine = FALSE,
-        title = "Reads per cell"
-    ) {
+.plotReadsPerCellViolin <-
+    function(data,
+             min = 0L) {
+        assert(is(data, "DataFrame"))
+        data <- as_tibble(data, rownames = NULL)
+        p <- ggplot(
+            data = data,
+            mapping = aes(
+                x = !!sym("sampleName"),
+                y = !!sym("nRead"),
+                fill = !!sym("interestingGroups")
+            )
+        ) +
+            geom_violin(
+                color = "black",
+                scale = "count"
+            ) +
+            scale_y_continuous(trans = "log10") +
+            acid_geom_label_average(data, col = "nRead", digits = 0L) +
+            labs(
+                x = NULL,
+                y = "reads per cell"
+            )
+        ## Cutoff line.
+        if (min > 0L) {
+            p <- p + acid_geom_abline(yintercept = min)
+        }
+        ## Color palette.
+        p <- p + autoDiscreteFillScale()
+        ## Facets.
+        facets <- NULL
+        if (isSubset("aggregate", colnames(data))) {
+            facets <- c(facets, "aggregate")
+        }
+        if (is.character(facets)) {
+            p <- p + facet_wrap(facets = syms(facets), scales = "free")
+        }
+        ## Return.
+        p
+    }
+
+
+
+## Updated 2021-09-10.
+`plotReadsPerCell,bcbioSingleCell` <- # nolint
+    function(object,
+             interestingGroups = NULL,
+             geom,
+             cutoffLine = FALSE,
+             title = "Reads per cell") {
         validObject(object)
         assert(isString(title, nullOK = TRUE))
         interestingGroups(object) <-

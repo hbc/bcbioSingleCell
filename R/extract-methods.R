@@ -41,7 +41,7 @@ NULL
 
 
 ## Updated 2019-08-20.
-`extract,bcbioSingleCell` <-  # nolint
+`extract,bcbioSingleCell` <- # nolint
     function(x, i, j, ..., drop = FALSE) {
         validObject(x)
         assert(identical(drop, FALSE))

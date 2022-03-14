@@ -26,7 +26,7 @@ NULL
 
 ## Using the same internal method for bcbioSingleCell and CellRanger.
 ## Updated 2019-08-08.
-`show,bcbioSingleCell` <-  # nolint
+`show,bcbioSingleCell` <- # nolint
     function(object) {
         validObject(object)
         ## Metadata.

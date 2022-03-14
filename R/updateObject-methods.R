@@ -28,7 +28,7 @@ NULL
 
 
 ## Updated 2021-02-22.
-`updateObject,bcbioSingleCell` <-  # nolint
+`updateObject,bcbioSingleCell` <- # nolint
     function(object, ..., verbose = FALSE) {
         assert(isFlag(verbose))
         if (isTRUE(verbose)) {
@@ -171,11 +171,12 @@ NULL
                 )
             }
             names(metadata)[
-                names(metadata) == "ensemblVersion"] <- "ensemblRelease"
+                names(metadata) == "ensemblVersion"
+            ] <- "ensemblRelease"
         }
         if (
             is.numeric(metadata[["ensemblRelease"]]) &&
-            !is.integer(metadata[["ensemblRelease"]])
+                !is.integer(metadata[["ensemblRelease"]])
         ) {
             if (isTRUE(verbose)) {
                 alert("Setting {.var ensemblRelease} as integer.")
@@ -244,7 +245,8 @@ NULL
                 alert("Simplifying stashed {.var sessionInfo}.")
             }
             names(metadata)[
-                names(metadata) == "devtoolsSessionInfo"] <- "sessionInfo"
+                names(metadata) == "devtoolsSessionInfo"
+            ] <- "sessionInfo"
             metadata[["utilsSessionInfo"]] <- NULL
         }
         ## Drop legacy slots.

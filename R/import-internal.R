@@ -7,11 +7,10 @@
 #'
 #' @inheritParams BiocParallel::bpmapply
 #' @param sampleDirs `character`.
-#'   Sample directory paths.
-.importCounts <-  # nolint
-    function(
-        sampleDirs,
-        BPPARAM  # nolint
+#' Sample directory paths.
+.importCounts <- # nolint
+    function(sampleDirs,
+             BPPARAM # nolint
     ) {
         assert(
             allAreDirectories(sampleDirs),
@@ -75,10 +74,10 @@
 #' @noRd
 #'
 #' @param dir `character(1)`.
-#'   Sample directory path.
+#' Sample directory path.
 #'
 #' @return `sparseMatrix`.
-.importCountsPerSample <-  # nolint
+.importCountsPerSample <- # nolint
     function(dir) {
         assert(isADirectory(dir))
         ## Require that all of the files exist, even if they are empty.
@@ -121,15 +120,14 @@
 #'
 #' @inheritParams BiocParallel::bplapply
 #' @param sampleDirs `character`.
-#'   Sample directories.
+#' Sample directories.
 #'
 #' @return `list`.
 #' List of integer vectors per sample containing the pre-filtered cellular
 #' barcode counts (`nCount`).
-.importReads <-  # nolint
-    function(
-        sampleDirs,
-        BPPARAM  # nolint
+.importReads <- # nolint
+    function(sampleDirs,
+             BPPARAM # nolint
     ) {
         assert(
             allAreDirectories(sampleDirs),

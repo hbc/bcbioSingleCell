@@ -27,9 +27,9 @@ test_that("AnnotationHub", {
 })
 
 test_that("BPPARAM", {
-     x <- bcbioSingleCell(
-         uploadDir = uploadDir,
-         BPPARAM = BiocParallel::MulticoreParam()
-     )
+    x <- bcbioSingleCell(
+        uploadDir = uploadDir,
+        BPPARAM = BiocParallel::MulticoreParam()
+    )
     expect_s4_class(x, "bcbioSingleCell")
 })
