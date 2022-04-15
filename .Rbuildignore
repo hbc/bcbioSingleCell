@@ -7,8 +7,8 @@
 ^\.Rproj\.user$
 ^cran-comments\.md$
 ^data-raw$
-^doc(s)?$
+^doc$
+^docs$
 ^pkgdown$
 ^tests$
 ^todo\.org$
-^vignettes/\.$
