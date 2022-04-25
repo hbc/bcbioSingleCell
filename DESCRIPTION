@@ -2,7 +2,7 @@ Package: bcbioSingleCell
 Title: bcbio Single-Cell RNA-Seq
 Description: R package for bcbio single-cell RNA-seq analysis.
 Version: 0.5.1.9000
-Date: 2022-03-14
+Date: 2022-04-25
 Authors@R: c(
     person(
         given = "Michael",
@@ -56,18 +56,18 @@ License: AGPL-3
 Encoding: UTF-8
 LazyData: false
 Depends:
-    R (>= 4.1),
-    SingleCellExperiment (>= 1.16.0)
+    R (>= 4.2),
+    SingleCellExperiment
 Imports:
     AcidBase (>= 0.5.0),
     AcidCLI (>= 0.2.0),
-    AcidExperiment (>= 0.3.0),
-    AcidGenerics (>= 0.6.0),
-    AcidGenomes (>= 0.3.0),
+    AcidExperiment (>= 0.3.1),
+    AcidGenerics (>= 0.6.1),
+    AcidGenomes (>= 0.3.1),
     AcidMarkdown (>= 0.1.5),
-    AcidPlots (>= 0.4.0),
+    AcidPlots (>= 0.4.1),
     AcidPlyr (>= 0.2.0),
-    AcidSingleCell (>= 0.2.0),
+    AcidSingleCell (>= 0.2.1),
     BiocGenerics,
     BiocParallel,
     IRanges,
@@ -78,14 +78,14 @@ Imports:
     ggridges,
     goalie (>= 0.6.0),
     graphics,
-    pipette (>= 0.8.0),
+    pipette (>= 0.8.1),
     methods,
     stringr,
     syntactic (>= 0.5.1),
     utils
 Suggests:
     Biostrings,
-    basejump (>= 0.15.0),
+    basejump (>= 0.15.1),
     rmarkdown,
     testthat
 biocViews:
