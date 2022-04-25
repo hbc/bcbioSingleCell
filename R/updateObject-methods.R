@@ -2,7 +2,7 @@
 #'
 #' @name updateObject
 #' @author Michael Steinbaugh
-#' @note Updated 2022-03-07.
+#' @note Updated 2022-04-25.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -27,7 +27,7 @@ NULL
 
 
 
-## Updated 2021-02-22.
+## Updated 2022-04-25.
 `updateObject,bcbioSingleCell` <- # nolint
     function(object, ..., verbose = FALSE) {
         assert(isFlag(verbose))
@@ -41,7 +41,7 @@ NULL
         colData <- colData(sce)
         metadata <- metadata(sce)
         version <- metadata[["version"]]
-        assert(is(version, c("package_version", "numeric_version")))
+        assert(is(version, "package_version"))
         if (isTRUE(verbose)) {
             alert(sprintf(
                 fmt = "Upgrading {.var bcbioSingleCell} from version %s to %s.",
