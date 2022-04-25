@@ -38,7 +38,7 @@ ensembldb in use.}
 \item{genomeBuild}{\code{character(1)}.
 Ensembl genome build assembly name (e.g. \code{"GRCh38"}). If set \code{NULL},
 defaults to the most recent build available.
-Note: don't pass in UCSC build IDs (e.g. \code{"hg38"}).}
+\emph{Note:} don't pass in UCSC build IDs (e.g. \code{"hg38"}).}
 
 \item{gffFile}{\code{character(1)}.
 GFF/GTF (General Feature Format) file.

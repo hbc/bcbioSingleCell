@@ -77,7 +77,7 @@ NULL
         metadata <- Filter(f = Negate(is.null), x = metadata)
         metadata(sce) <- metadata
         ## Return --------------------------------------------------------------
-        sce <- droplevels(sce)
+        sce <- droplevels2(sce)
         new(Class = "bcbioSingleCell", sce)
     }
 

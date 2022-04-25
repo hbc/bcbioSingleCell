@@ -8,7 +8,7 @@ NULL
 ## S4 generics and methods =====================================================
 
 #' @importFrom AcidExperiment sampleNames
-#' @importFrom AcidGenerics calculateMetrics camelCase cell2sample
+#' @importFrom AcidGenerics calculateMetrics camelCase cell2sample droplevels2
 #' interestingGroups interestingGroups<- leftJoin makeDimnames makeLabel
 #' makeNames metrics plotReadsPerCell sampleData
 #' @importFrom BiocGenerics counts updateObject
@@ -43,7 +43,7 @@ NULL
 #' standardizeCall
 #' @importFrom AcidCLI abort alert alertSuccess alertWarning h1 h2
 #' separator toInlineString
-#' @importFrom AcidExperiment detectLanes importSampleData
+#' @importFrom AcidExperiment detectLanes droplevels2 importSampleData
 #' matchInterestingGroups minimalSampleData
 #' @importFrom AcidGenomes emptyRanges makeGRangesFromEnsembl makeGRangesFromGFF
 #' @importFrom AcidMarkdown markdownPlots
