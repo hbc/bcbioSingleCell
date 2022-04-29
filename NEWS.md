@@ -1,3 +1,10 @@
+# bcbioSingleCell 0.5.1 (2022-04-29)
+
+## Minor changes
+
+- Now requiring R 4.2 / Bioconductor 3.15.
+- Minor compatibility fixes for Bioconductor 3.15.
+
 # bcbioSingleCell 0.5.0 (2022-03-11)
 
 ## Major changes
