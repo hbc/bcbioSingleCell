@@ -2,7 +2,7 @@
 #'
 #' @name updateObject
 #' @author Michael Steinbaugh
-#' @note Updated 2022-04-25.
+#' @note Updated 2022-05-09.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -27,7 +27,7 @@ NULL
 
 
 
-## Updated 2022-04-25.
+## Updated 2022-05-09.
 `updateObject,bcbioSingleCell` <- # nolint
     function(object, ..., verbose = FALSE) {
         assert(isFlag(verbose))
@@ -44,7 +44,8 @@ NULL
         assert(is(version, "package_version"))
         if (isTRUE(verbose)) {
             alert(sprintf(
-                fmt = "Upgrading {.var bcbioSingleCell} from version %s to %s.",
+                fmt = "Upgrading {.var %s} from version %s to %s.",
+                "bcbioSingleCell",
                 as.character(version),
                 as.character(.version)
             ))
@@ -54,15 +55,21 @@ NULL
             h2("Assays")
         }
         ## Ensure raw counts are always named "counts".
-        if ("assay" %in% names(assays)) {
+        if (isSubset("assay", names(assays))) {
             ## Versions < 0.1 (e.g. 0.0.21).
             if (isTRUE(verbose)) {
-                alert("Renaming {.var assay} to {.var counts}.")
+                alert(sprintf(
+                    "Renaming {.var %s} to {.var %s}.",
+                    "assay", "counts"
+                ))
             }
             names(assays)[names(assays) == "assay"] <- "counts"
-        } else if ("raw" %in% names(assays)) {
+        } else if (isSubset("raw", names(assays))) {
             if (isTRUE(verbose)) {
-                alert("Renaming {.var raw} assay to {.var counts}.")
+                alert(sprintf(
+                    "Renaming {.var %s} assay to {.var %s}.",
+                    "raw", "counts"
+                ))
             }
             names(assays)[names(assays) == "raw"] <- "counts"
         }
@@ -82,33 +89,41 @@ NULL
         colnames(colData) <- camelCase(colnames(colData), strict = TRUE)
         if (isSubset(c("nCount", "nUmi"), colnames(colData))) {
             if (isTRUE(verbose)) {
-                alert("Renaming {.var nCount} to {.var nRead}.")
+                alert(sprintf(
+                    "Renaming {.var %s} to {.var %s}.",
+                    "nCount", "nRead"
+                ))
             }
             colnames(colData)[colnames(colData) == "nCount"] <- "nRead"
             if (isTRUE(verbose)) {
-                alert("Renaming {.var nUmi} to {.var nCount}.")
+                alert(sprintf(
+                    "Renaming {.var %s} to {.var %s}.",
+                    "nUmi", "nCount"
+                ))
             }
             colnames(colData)[colnames(colData) == "nUmi"] <- "nCount"
         }
         if (isSubset("nGene", colnames(colData))) {
             if (isTRUE(verbose)) {
-                alert("Renaming {.var nGene} to {.var nFeature}.")
+                alert(sprintf(
+                    "Renaming {.var %s} to {.var %s}.",
+                    "nGene", "nFeature"
+                ))
             }
             colnames(colData)[colnames(colData) == "nGene"] <- "nFeature"
             if (isTRUE(verbose)) {
-                alert(paste(
-                    "Renaming {.var log10GenesPerUmi} to",
-                    "{.var log10FeaturesPerCount}."
+                alert(sprintf(
+                    "Renaming {.var %s} to {.var %s}.",
+                    "log10GenesPerUmi", "log10FeaturesPerCount"
                 ))
             }
             colnames(colData)[colnames(colData) == "log10GenesPerUmi"] <-
                 "log10FeaturesPerCount"
         }
         ## Move sampleData into colData.
-        ## Require that all `sampleData` columns are now slotted in `colData`.
-        if ("sampleData" %in% names(metadata)) {
+        if (isSubset("sampleData", names(metadata))) {
             sampleData <- metadata[["sampleData"]]
-        } else if ("sampleMetadata" %in% names(metadata)) {
+        } else if (isSubset("sampleMetadata", names(metadata))) {
             sampleData <- metadata[["sampleMetadata"]]
         } else {
             sampleData <- NULL
@@ -117,13 +132,12 @@ NULL
             colnames(sampleData) <-
                 camelCase(colnames(sampleData), strict = TRUE)
             if (isTRUE(verbose)) {
-                alert(paste(
-                    "Moving {.var sampleData} from {.fun metadata} into",
-                    "{.fun colData}."
+                alert(sprintf(
+                    "Moving {.var %s} from {.fun %s} into {.fun %s}.",
+                    "sampleData", "metadata", "colData"
                 ))
             }
             assert(isSubset("sampleId", colnames(sampleData)))
-            ## Starting using `DataFrame` in place of `data.frame` in v0.1.7.
             sampleData <- as(sampleData, "DataFrame")
             colData <- colData[
                 ,
@@ -152,7 +166,7 @@ NULL
         if (isTRUE(verbose)) {
             h2("Metadata")
         }
-        ## dataVersions
+        ## dataVersions.
         dataVersions <- metadata[["dataVersions"]]
         if (is(dataVersions, "data.frame")) {
             if (isTRUE(verbose)) {
@@ -163,11 +177,12 @@ NULL
             }
             metadata[["dataVersions"]] <- as(dataVersions, "DataFrame")
         }
-        ## ensemblRelease
-        if ("ensemblVersion" %in% names(metadata)) {
+        ## ensemblRelease.
+        if (isSubset("ensemblVersion", names(metadata))) {
             if (isTRUE(verbose)) {
                 alert(
-                    "Renaming {.var ensemblVersion} to {.var ensemblRelease}."
+                    "Renaming {.var %s} to {.var %s}.",
+                    "ensemblVersion", "ensemblRelease"
                 )
             }
             names(metadata)[
@@ -179,7 +194,10 @@ NULL
                 !is.integer(metadata[["ensemblRelease"]])
         ) {
             if (isTRUE(verbose)) {
-                alert("Setting {.var ensemblRelease} as integer.")
+                alert(sprintf(
+                    "Setting {.var %s} as integer.",
+                    "ensemblRelease"
+                ))
             }
             metadata[["ensemblRelease"]] <-
                 as.integer(metadata[["ensemblRelease"]])
@@ -189,38 +207,54 @@ NULL
             metadata[["originalVersion"]] <- metadata[["version"]]
             metadata[["version"]] <- .version
         }
-        ## gffFile
-        if ("gtfFile" %in% names(metadata)) {
+        ## gffFile.
+        if (isSubset("gtfFile", names(metadata))) {
             if (isTRUE(verbose)) {
-                alert("Renaming {.var gtfFile} to {.var gffFile}.")
+                alert(sprintf(
+                    "Renaming {.var %s} to {.var %s}.",
+                    "gtfFile", "gffFile"
+                ))
             }
             names(metadata)[names(metadata) == "gtfFile"] <- "gffFile"
         }
-        if (!"gffFile" %in% names(metadata)) {
+        if (!isSubset("gffFile", names(metadata))) {
             if (isTRUE(verbose)) {
-                alert("Setting {.var gffFile} as empty character.")
+                alert(sprintf(
+                    "Setting {.var %s} as {.val %s}.",
+                    "gffFile", "empty character"
+                ))
             }
             metadata[["gffFile"]] <- character()
         }
-        ## lanes
+        ## lanes.
         if (!is.integer(metadata[["lanes"]])) {
             if (isTRUE(verbose)) {
-                alert("Setting {.var lanes} as integer.")
+                alert(sprintf(
+                    "Setting {.var %s} as {.val %s}.",
+                    "lanes", "integer"
+                ))
             }
             metadata[["lanes"]] <- as.integer(metadata[["lanes"]])
         }
-        ## level
-        if (!"level" %in% names(metadata)) {
+        ## level.
+        if (!isSubset("level", names(metadata))) {
             if (isTRUE(verbose)) {
-                alert("Setting {.var level} as genes.")
+                alert(sprintf(
+                    "Setting {.var %s} as {.val %s}.",
+                    "level", "genes"
+                ))
             }
             metadata[["level"]] <- "genes"
         }
-        ## programVersions
-        if (!"programVersions" %in% names(metadata) &&
-            "programs" %in% names(metadata)) {
+        ## programVersions.
+        if (!isSubset("programVersions", names(metadata)) &&
+            isSubset("programs", names(metadata))
+        ) {
             if (isTRUE(verbose)) {
-                alert("Renaming {.var programs} to {.var programVersions}.")
+                alert(sprintf(
+                    "Renaming {.var %s} to {.var %s}.",
+                    "programs", "programVersions"
+                ))
             }
             names(metadata)[names(metadata) == "programs"] <- "programVersions"
         }
@@ -228,26 +262,25 @@ NULL
         if (is(programVersions, "data.frame")) {
             metadata[["programVersions"]] <- as(programVersions, "DataFrame")
         }
-        ## sampleMetadataFile
+        ## sampleMetadataFile.
         if (!is.character(metadata[["sampleMetadataFile"]])) {
             if (isTRUE(verbose)) {
-                alert(
-                    "Setting {.var sampleMetadataFile} as empty character."
-                )
+                alert(sprintf(
+                    "Setting {.var %s} as {.val %s}.",
+                    "sampleMetadataFile", "empty character"
+                ))
             }
             metadata[["sampleMetadataFile"]] <- character()
         }
-        ## sessionInfo
-        ## Support for legacy devtoolsSessionInfo stash.
-        ## Previously, we stashed both devtools* and utils* variants.
-        if ("devtoolsSessionInfo" %in% names(metadata)) {
+        ## sessionInfo.
+        if (isSubset("utilsSessionInfo", names(metadata))) {
             if (isTRUE(verbose)) {
-                alert("Simplifying stashed {.var sessionInfo}.")
+                alert(sprintf("Simplifying stashed {.var %s}.", "sessionInfo"))
             }
             names(metadata)[
-                names(metadata) == "devtoolsSessionInfo"
+                names(metadata) == "utilsSessionInfo"
             ] <- "sessionInfo"
-            metadata[["utilsSessionInfo"]] <- NULL
+            metadata[["devtoolsSessionInfo"]] <- NULL
         }
         ## Drop legacy slots.
         keep <- setdiff(
@@ -263,9 +296,10 @@ NULL
         bcb <- new(Class = "bcbioSingleCell", sce)
         validObject(bcb)
         if (isTRUE(verbose)) {
-            alertSuccess(
-                "Update of {.var bcbioSingleCell} object was successful."
-            )
+            alertSuccess(sprintf(
+                "Update of {.var %s} object was successful.",
+                "bcbioSingleCell"
+            ))
         }
         bcb
     }
