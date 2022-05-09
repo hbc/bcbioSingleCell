@@ -32,8 +32,8 @@ NULL
 
 ## Standard functions ==========================================================
 
-#' @importFrom AcidBase metricsCols printString realpath showSlotInfo
-#' standardizeCall
+#' @importFrom AcidBase metricsCols printString realpath requireNamespaces
+#' showSlotInfo standardizeCall
 #' @importFrom AcidCLI abort alert alertSuccess alertWarning h1 h2
 #' separator toInlineString
 #' @importFrom AcidExperiment detectLanes droplevels2 importSampleData
