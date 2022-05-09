@@ -180,10 +180,10 @@ NULL
         ## ensemblRelease.
         if (isSubset("ensemblVersion", names(metadata))) {
             if (isTRUE(verbose)) {
-                alert(
+                alert(sprintf(
                     "Renaming {.var %s} to {.var %s}.",
                     "ensemblVersion", "ensemblRelease"
-                )
+                ))
             }
             names(metadata)[
                 names(metadata) == "ensemblVersion"
