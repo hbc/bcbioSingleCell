@@ -2,7 +2,7 @@
 #'
 #' @name show
 #' @author Michael Steinbaugh
-#' @note Updated 2022-03-07.
+#' @note Updated 2022-05-09.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -34,7 +34,7 @@ NULL
         ## Row ranges metadata.
         rrm <- metadata(rowRanges(object))
         .showHeader(object, version = m[["version"]])
-        filtered <- "filterCells" %in% names(m)
+        filtered <- isSubset("filterCells", names(m))
         showSlotInfo(list(
             uploadDir = m[["uploadDir"]],
             dates = as.character(c(
