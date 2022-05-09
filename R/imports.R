@@ -59,5 +59,6 @@ NULL
 #' validate validateClasses
 #' @importFrom methods as as<- is new setClass slot slot<- validObject
 #' .hasSlot
+#' @importFrom stringi stri_match_first_regex
 #' @importFrom utils capture.output packageName packageVersion
 NULL

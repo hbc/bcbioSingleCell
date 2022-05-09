@@ -11,7 +11,7 @@ read counts saved as a sparse matrix (\code{sparseMatrix}), sample metadata, and
 cell quality control metrics.
 }
 \note{
-Updated 2019-10-30.
+Updated 2022-05-09.
 }
 \author{
 Michael Steinbaugh, Rory Kirchner

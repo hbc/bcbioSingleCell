@@ -79,7 +79,7 @@ Imports:
     goalie,
     methods,
     pipette,
-    stringr,
+    stringi,
     syntactic,
     utils
 Suggests:

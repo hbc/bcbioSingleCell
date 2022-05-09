@@ -1,6 +1,6 @@
 #' @inherit bcbioSingleCell-class title description
 #' @author Michael Steinbaugh
-#' @note Updated 2021-02-22.
+#' @note Updated 2022-05-09.
 #' @export
 #'
 #' @inheritParams AcidSingleCell::makeSingleCellExperiment
@@ -114,8 +114,11 @@ bcbioSingleCell <-
                 pipeline = "bcbio"
             )
             ## Error on incorrect reverse complement input.
-            if ("sequence" %in% colnames(sampleData)) {
-                sampleDirSequence <- str_extract(names(sampleDirs), "[ACGT]+$")
+            if (isSubset("sequence", colnames(sampleData))) {
+                sampleDirSequence <- stri_match_first_regex(
+                    str = names(sampleDirs),
+                    pattern = "^.+_([ACGT]+)$"
+                )[, 2L]
                 assert(
                     !identical(
                         sort(sampleDirSequence),
@@ -195,11 +198,11 @@ bcbioSingleCell <-
             if (isTRUE(multiplexed)) {
                 ## Multiplexed samples without user-defined metadata.
                 alertWarning(sprintf(
-                    fmt = paste0(
-                        "{.var sampleMetadataFile} is recommended for ",
+                    fmt = paste(
+                        "{.var %s} is recommended for",
                         "multiplexed samples (e.g. {.val %s})."
                     ),
-                    umiType
+                    "sampleMetadataFile", umiType
                 ))
                 sampleData <- minimalSampleData(basename(sampleDirs))
             } else {
@@ -236,34 +239,34 @@ bcbioSingleCell <-
         interestingGroups <- camelCase(interestingGroups, strict = TRUE)
         assert(isSubset(interestingGroups, colnames(sampleData)))
         metadata <- list(
-            allSamples = allSamples,
-            bcbioCommandsLog = commandsLog,
-            bcbioLog = log,
-            call = standardizeCall(),
-            cellularBarcodeCutoff = cutoff,
-            cellularBarcodes = cbList,
-            dataVersions = dataVersions,
-            ensemblRelease = as.integer(ensemblRelease),
-            genomeBuild = as.character(genomeBuild),
-            gffFile = as.character(gffFile),
-            interestingGroups = interestingGroups,
-            lanes = lanes,
-            level = level,
-            organism = as.character(organism),
-            pipeline = "bcbio",
-            programVersions = programVersions,
-            projectDir = projectDir,
-            runDate = runDate,
-            sampleDirs = sampleDirs,
-            sampleMetadataFile = as.character(sampleMetadataFile),
-            umiType = umiType,
-            uploadDir = uploadDir,
-            version = .version,
-            yaml = yaml
+            "allSamples" = allSamples,
+            "bcbioCommandsLog" = commandsLog,
+            "bcbioLog" = log,
+            "call" = standardizeCall(),
+            "cellularBarcodeCutoff" = cutoff,
+            "cellularBarcodes" = cbList,
+            "dataVersions" = dataVersions,
+            "ensemblRelease" = as.integer(ensemblRelease),
+            "genomeBuild" = as.character(genomeBuild),
+            "gffFile" = as.character(gffFile),
+            "interestingGroups" = interestingGroups,
+            "lanes" = lanes,
+            "level" = level,
+            "organism" = as.character(organism),
+            "pipeline" = "bcbio",
+            "programVersions" = programVersions,
+            "projectDir" = projectDir,
+            "runDate" = runDate,
+            "sampleDirs" = sampleDirs,
+            "sampleMetadataFile" = as.character(sampleMetadataFile),
+            "umiType" = umiType,
+            "uploadDir" = uploadDir,
+            "version" = .version,
+            "yaml" = yaml
         )
         ## SingleCellExperiment ------------------------------------------------
         object <- makeSingleCellExperiment(
-            assays = SimpleList(counts = counts),
+            assays = SimpleList("counts" = counts),
             rowRanges = rowRanges,
             colData = colData,
             metadata = metadata,
@@ -282,7 +285,6 @@ bcbioSingleCell <-
             isSubset(rownames(colData), names(nRead)),
             areDisjointSets("nRead", colnames(colData))
         )
-        ## Switched to "nRead" from "nCount" in v0.3.19.
         colData[["nRead"]] <- unname(nRead[rownames(colData)])
         colData <- colData[, sort(colnames(colData)), drop = FALSE]
         colData(object) <- colData

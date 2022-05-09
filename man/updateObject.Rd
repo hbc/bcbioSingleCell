@@ -24,7 +24,7 @@ Modified object.
 Update object
 }
 \note{
-Updated 2022-04-25.
+Updated 2022-05-09.
 }
 \examples{
 data(bcb)
