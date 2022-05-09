@@ -25,7 +25,7 @@ NULL
 #'
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @keywords internal
-#' @note Updated 2019-08-20.
+#' @note Updated 2022-05-07.
 #' @noRd
 #'
 #' @param data `DataFrame`.
@@ -38,6 +38,7 @@ NULL
              sampleData,
              breaks = 100L) {
         assert(
+            requireNamespaces("graphics"),
             is(data, "DataFrame"),
             isSubset(c("nRead", "sampleId"), colnames(data)),
             is.integer(data[["nRead"]]),
@@ -53,7 +54,7 @@ NULL
                 keep <- which(data[["sampleId"]] == sampleId)
                 subset <- data[keep, , drop = FALSE]
                 ## Histogram of log10-transformed counts.
-                h <- hist(
+                h <- graphics::hist(
                     x = log10(subset[["nRead"]]),
                     n = breaks,
                     plot = FALSE
@@ -80,7 +81,7 @@ NULL
 
 #' Plot proportional reads per cell histogram
 #'
-#' @note Updated 2021-09-10.
+#' @note Updated 2022-05-07.
 #' @noRd
 #'
 #' @param data Return from `.proportionalReadsPerCell()` function.
@@ -90,9 +91,8 @@ NULL
     function(data,
              min = 0L) {
         assert(is(data, "DataFrame"))
-        data <- as_tibble(data, rownames = NULL)
         p <- ggplot(
-            data = data,
+            data = as.data.frame(data),
             mapping = aes(
                 x = !!sym("log10Read"),
                 y = !!sym("proportion"),
@@ -127,14 +127,13 @@ NULL
 
 
 
-## Updated 2021-09-10.
+## Updated 2022-05-07.
 .plotReadsPerCellBoxplot <-
     function(data,
              min = 0L) {
         assert(is(data, "DataFrame"))
-        data <- as_tibble(data, rownames = NULL)
         p <- ggplot(
-            data = data,
+            data = as.data.frame(data),
             mapping = aes(
                 x = !!sym("sampleName"),
                 y = !!sym("nRead"),
@@ -143,7 +142,11 @@ NULL
         ) +
             geom_boxplot(color = "black", outlier.shape = NA) +
             scale_y_continuous(trans = "log10") +
-            acid_geom_label_average(data, col = "nRead", digits = 0L) +
+            acid_geom_label_average(
+                data = as.data.frame(data),
+                col = "nRead",
+                digits = 0L
+            ) +
             labs(
                 x = NULL,
                 y = "reads per cell"
@@ -168,14 +171,13 @@ NULL
 
 
 
-## Updated 2021-09-10.
+## Updated 2022-05-07.
 .plotReadsPerCellECDF <-
     function(data,
              min = 0L) {
         assert(is(data, "DataFrame"))
-        data <- as_tibble(data, rownames = NULL)
         p <- ggplot(
-            data = data,
+            data = as.data.frame(data),
             mapping = aes(
                 x = !!sym("nRead"),
                 color = !!sym("interestingGroups")
@@ -207,14 +209,13 @@ NULL
 
 
 
-## Updated 2021-09-10.
+## Updated 2022-05-07.
 .plotReadsPerCellRidgeline <-
     function(data,
              min = 0L) {
         assert(is(data, "DataFrame"))
-        data <- as_tibble(data, rownames = NULL)
         p <- ggplot(
-            data = data,
+            data = as.data.frame(data),
             mapping = aes(
                 x = !!sym("nRead"),
                 y = !!sym("sampleName"),
@@ -228,7 +229,11 @@ NULL
                 scale = 10L
             ) +
             scale_x_continuous(trans = "log10") +
-            acid_geom_label_average(data, col = "nRead", digits = 0L) +
+            acid_geom_label_average(
+                data = as.data.frame(data),
+                col = "nRead",
+                digits = 0L
+            ) +
             labs(
                 x = "reads per cell",
                 y = NULL
@@ -252,14 +257,13 @@ NULL
 
 
 
-## Updated 2021-09-10.
+## Updated 2022-05-07.
 .plotReadsPerCellViolin <-
     function(data,
              min = 0L) {
         assert(is(data, "DataFrame"))
-        data <- as_tibble(data, rownames = NULL)
         p <- ggplot(
-            data = data,
+            data = as.data.frame(data),
             mapping = aes(
                 x = !!sym("sampleName"),
                 y = !!sym("nRead"),
@@ -271,7 +275,11 @@ NULL
                 scale = "count"
             ) +
             scale_y_continuous(trans = "log10") +
-            acid_geom_label_average(data, col = "nRead", digits = 0L) +
+            acid_geom_label_average(
+                data = as.data.frame(data),
+                col = "nRead",
+                digits = 0L
+            ) +
             labs(
                 x = NULL,
                 y = "reads per cell"
@@ -296,7 +304,7 @@ NULL
 
 
 
-## Updated 2021-09-10.
+## Updated 2022-05-07.
 `plotReadsPerCell,bcbioSingleCell` <- # nolint
     function(object,
              interestingGroups = NULL,

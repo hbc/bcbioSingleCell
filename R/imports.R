@@ -24,15 +24,8 @@ NULL
 #' interestingGroups<- metrics sampleData sampleNames
 #' @importMethodsFrom AcidPlyr leftJoin
 #' @importMethodsFrom AcidSingleCell cell2sample sampleData
-#' @importMethodsFrom pipette coerce import
+#' @importMethodsFrom pipette import
 #' @importMethodsFrom syntactic camelCase makeDimnames makeLabel makeNames
-NULL
-
-
-
-## S3 generics =================================================================
-
-#' @importFrom pipette as_tibble
 NULL
 
 
@@ -64,9 +57,7 @@ NULL
 #' assert hasLength hasNames hasRownames hasValidDimnames isADirectory isAFile
 #' isAURL isAny isCharacter isDirectory isFile isFlag isInt isString isSubset
 #' validate validateClasses
-#' @importFrom graphics hist
 #' @importFrom methods as as<- is new setClass slot slot<- validObject
 #' .hasSlot
-#' @importFrom stringr str_extract
 #' @importFrom utils capture.output packageName packageVersion
 NULL

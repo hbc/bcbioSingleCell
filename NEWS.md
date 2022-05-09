@@ -1,3 +1,12 @@
+# bcbioSingleCell 0.6.0 (2022-05-09)
+
+## Major changes
+
+- Starting a new release series based on R 4.2 / Bioconductor 3.15.
+- `bcbioSingleCell` S4 class check now allows either `sessionInfo`
+  (from utils package) or `session_info` (from sessioninfo package) to be
+  slotted in `sessionInfo` metadata.
+
 # bcbioSingleCell 0.5.1 (2022-04-29)
 
 ## Minor changes
