@@ -51,14 +51,13 @@ docker run -it \
 
 ```r
 library(bcbioSingleCell)
-bcb <- bcbioSingleCell(
+object <- bcbioSingleCell(
     uploadDir = "indrops/final",
     interestingGroups = c("genotype", "treatment"),
     sampleMetadataFile = "sample_metadata.csv",
     organism = "Homo sapiens",
     ensemblRelease = 90L
 )
-saveData(bcb, dir = ".")
 ```
 
 This will return a `bcbioSingleCell` object, which is an extension of the
