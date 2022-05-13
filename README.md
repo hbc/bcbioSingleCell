@@ -52,7 +52,7 @@ docker run -it \
 ```r
 library(bcbioSingleCell)
 object <- bcbioSingleCell(
-    uploadDir = "indrops/final",
+    uploadDir = file.path("indrops", "final"),
     interestingGroups = c("genotype", "treatment"),
     sampleMetadataFile = "sample_metadata.csv",
     organism = "Homo sapiens",
