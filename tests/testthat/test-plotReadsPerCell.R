@@ -1,5 +1,3 @@
-context("plotReadsPerCell")
-
 ## Example dataset doesn't have a cellular barcode cutoff because we removed the
 ## bcbio commands log file (which conflicts with Travis CI).
 test_that("geom", {

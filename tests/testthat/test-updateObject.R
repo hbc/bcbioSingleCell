@@ -1,5 +1,3 @@
-context("updateObject")
-
 test_that("bcbioSingleCell", {
     x <- updateObject(bcb)
     expect_s4_class(x, "bcbioSingleCell")

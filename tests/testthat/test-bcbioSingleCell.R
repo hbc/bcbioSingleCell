@@ -1,5 +1,3 @@
-context("bcbioSingleCell")
-
 uploadDir <- system.file("extdata/indrops", package = "bcbioSingleCell")
 
 ## Minimal mode, with no metadata or annotations.

@@ -1,5 +1,3 @@
-context("filterCells")
-
 bcb <- calculateMetrics(bcb)
 
 test_that("sampleNames", {
