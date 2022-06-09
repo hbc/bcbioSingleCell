@@ -88,13 +88,7 @@ Suggests:
     graphics,
     rmarkdown,
     testthat
-biocViews:
-    DataImport,
-    DataRepresentation,
-    QualityControl,
-    ReportWriting,
-    RNASeq,
-    SingleCell
+Additional_repositories: https://r.acidgenomics.com
+Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-Additional_repositories: https://r.acidgenomics.com

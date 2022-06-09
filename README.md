@@ -58,7 +58,6 @@ bcb <- bcbioSingleCell(
     organism = "Homo sapiens",
     ensemblRelease = 90L
 )
-saveData(bcb, dir = ".")
 ```
 
 This will return a `bcbioSingleCell` object, which is an extension of the
