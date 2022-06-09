@@ -6,7 +6,7 @@
 
 ## Installation
 
-This is an [R][] package.
+This is an R package.
 
 ```r
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
@@ -24,7 +24,7 @@ install.packages(
 
 ### [Conda][] method
 
-Configure [Conda][] to use the [Bioconda][] channels.
+Configure Conda to use the [Bioconda][] channels.
 
 ```sh
 # Don't install recipe into base environment.
@@ -47,7 +47,7 @@ docker run -it \
     R
 ```
 
-## Load [bcbio][] single-cell RNA-seq data
+## Load bcbio single-cell RNA-seq data
 
 ```r
 library(bcbioSingleCell)
@@ -73,18 +73,17 @@ help(topic = "bcbioSingleCell", package = "bcbioSingleCell")
 
 ### FASTQ files with samples multiplexed by index barcode
 
-This is our current recommended method for analyzing an [inDrops][] dataset.
+This is our current recommended method for analyzing an inDrops dataset.
 The sample index barcodes are multiplexed per FASTQ set. For Illumina
 sequencing data, the raw binary base call (BCL) data must be converted into
 FASTQs (split into `R1`-`R4` files) using [bcl2fastq][].
 
-The [inDrops][] library version is automatically detected by [bcbio][], but
-ensure that the sample index sequences provided match the library version when
-attempting to create a `bcbioSingleCell` object.
+The inDrops library version is automatically detected by bcbio, but ensure that
+the sample index sequences provided match the library version when attempting to
+create a `bcbioSingleCell` object.
 
-Consult the [bcbio][] documentation for more information on how to configure an
-[inDrops][] run prior to loading into [R][] with the `bcbioSingleCell()`
-function.
+Consult the bcbio documentation for more information on how to configure an
+inDrops run prior to loading into R with the `bcbioSingleCell()` function.
 
 | description | index | sequence | sampleName | aggregate | genotype |
 | ----------- | ----- | -------- | ---------- | --------- | -------- |
@@ -105,8 +104,8 @@ in the sample metadata.
 
 ### FASTQ files demultiplexed per sample
 
-This is our current method for handling [10X Genomics Chromium][chromium] and
-[Illumina SureCell][surecell] cell barcodes.
+This is our current method for handling 10X Genomics Chromium and Illumina
+SureCell cell barcodes.
 
 | description | genotype |
 | ----------- | -------- |
@@ -137,13 +136,10 @@ library](https://paperpile.com/shared/C8EMxl) on [Paperpile][].
 [biocmanager]: https://cran.r-project.org/package=BiocManager
 [bioconda]: https://bioconda.github.io/
 [bioconductor]: https://bioconductor.org/
-[chromium]: https://www.10xgenomics.com/solutions/single-cell/
 [conda]: https://conda.io/
 [devtools]: https://cran.r-project.org/package=devtools
 [docker]: https://www.docker.com/
 [indrops v3 index barcodes]: https://github.com/steinbaugh/koopa/blob/master/workflows/indrops/harvard_v3_sample_barcodes.csv
-[indrops]: https://github.com/indrops/indrops/
 [paperpile]: https://paperpile.com/
 [r]: https://www.r-project.org/
 [sce]: https://bioconductor.org/packages/SingleCellExperiment/
-[surecell]: https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html

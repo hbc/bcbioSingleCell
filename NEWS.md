@@ -704,7 +704,7 @@ removal with the `filterCells` function.
   with `readCellRanger`. Need to use stashed `cell2sample` factor saved in
   `metadata`, rather than attempting to calculate on the fly with
   `mapCellsToSamples`.
-- Updated [Travis CI][] build checks to include bioc-release on [macOS][].
+- Updated [Travis CI][] build checks to include bioc-release on macOS.
 
 # bcbioSingleCell 0.1.9 (2018-05-18)
 
@@ -1456,7 +1456,7 @@ removal with the `filterCells` function.
 - Initial commit of [Seurat][] utility functions.
 - Initial commit of YAML parameters for [RMarkdown][] templates.
 - Draft support for [Seurat][] v2 pre-release.
-- Initial support for [SureCell][] UMIs.
+- Initial support for SureCell UMIs.
 
 # bcbioSingleCell 0.0.13 (2017-07-10)
 
@@ -1490,7 +1490,7 @@ removal with the `filterCells` function.
 
 - Initial support for loading of 10x Genomics [Cell Ranger][] output.
 - Add detection of droplet method based on the metadata file.
-- Draft support for import of [inDrop][] i5 index barcode counts.
+- Draft support for import of inDrop i5 index barcode counts.
 
 # bcbioSingleCell 0.0.6 (2017-05-10)
 
@@ -1525,20 +1525,20 @@ removal with the `filterCells` function.
 
 [10x genomics]: https://www.10xgenomics.com/
 [acid genomics]: https://acidgenomics.com/
-[AcidPlots]: https://AcidPlots.acidgenomics.com/
-[basejump]: https://basejump.acidgenomics.com/
+[acidplots]: https://r.acidgenomics.com/packages/acidplots/
+[basejump]: https://r.acidgenomics.com/packages/basejump/
 [bcbio]: https://bcbio-nextgen.readthedocs.io/
-[bcbiobase]: https://bioinformatics.sph.harvard.edu/bcbioBase/
-[bcbiornaseq]: https://bioinformatics.sph.harvard.edu/bcbioRNASeq/
-[bcbiosinglecell]: https://bioinformatics.sph.harvard.edu/bcbioSingleCell/
+[bcbiobase]: https://r.acidgenomics.com/packages/bcbiobase/
+[bcbiornaseq]: https://r.acidgenomics.com/packages/bcbiornaseq/
+[bcbiosinglecell]: https://r.acidgenomics.com/packages/bcbiosinglecell/
 [biocinstaller]: https://bioconductor.org/packages/BiocInstaller/
 [biocmanager]: https://bioconductor.org/packages/BiocManager/
 [bioconductor]: https://bioconductor.org/
 [biocparallel]: https://bioconductor.org/packages/BiocParallel/
 [cell ranger]: https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/what-is-cell-ranger
-[chromium]: https://chromium.acidgenomics.com/
+[chromium]: https://r.acidgenomics.com/packages/chromium/
 [conda]: https://conda.io/
-[covr]: https://github.com/jimhester/covr/
+[covr]: https://github.com/r-lib/covr/
 [deseq2]: https://bioconductor.org/packages/DESeq2/
 [dplyr]: https://dplyr.tidyverse.org/
 [edger]: https://bioconductor.org/packages/edgeR/
@@ -1546,27 +1546,24 @@ removal with the `filterCells` function.
 [ensembldb]: https://bioconductor.org/packages/ensembldb/
 [ggplot2]: https://ggplot2.tidyverse.org/
 [github]: https://github.com/
-[google sheets]: https://www.google.com/sheets/
-[indrop]: https://1cell-bio.com/
-[lintr]: https://github.com/jimhester/lintr/
-[macos]: https://www.apple.com/macos/
+[google sheets]: https://www.google.com/sheets/about/
+[lintr]: https://github.com/r-lib/lintr/
 [monocle]: http://cole-trapnell-lab.github.io/monocle-release/
 [pkgdown]: https://pkgdown.r-lib.org/
-[pointillism]: https://pointillism.acidgenomics.com/
-[r markdown]: http://rmarkdown.rstudio.com/
+[pointillism]: https://r.acidgenomics.com/packages/pointillism/
+[r markdown]: https://rmarkdown.rstudio.com/
 [r]: https://www.r-project.org/
-[rlang]: http://rlang.r-lib.org/
+[rlang]: https://rlang.r-lib.org/
 [roxygen2]: https://cran.r-project.org/package=roxygen2
 [scater]: https://bioconductor.org/packages/scater/
 [scde]: https://bioconductor.org/packages/scde/
 [scone]: https://bioconductor.org/packages/scone/
 [scran]: https://bioconductor.org/packages/scran/
-[seurat]: http://satijalab.org/seurat/
+[seurat]: https://satijalab.org/seurat/
 [summarizedexperiment]: https://bioconductor.org/packages/SummarizedExperiment/
-[surecell]: https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/surecell-wta-ddseq.html
-[testthat]: https://github.com/hadley/testthat/
+[testthat]: https://github.com/r-lib/testthat/
 [tidyeval]: https://dplyr.tidyverse.org/articles/programming.html
-[tidyverse]: http://www.tidyverse.org/
+[tidyverse]: https://www.tidyverse.org/
 [travis ci]: https://travis-ci.org/
 [viridis]: https://cran.r-project.org/package=viridis
 [zinbwave]: https://bioconductor.org/packages/zinbwave/
