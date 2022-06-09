@@ -9,7 +9,7 @@ suppressPackageStartupMessages({
 })
 ## nolint end
 load_all()
-limit <- structure(1e6L, class = "object_size")
+limit <- structure(2e6L, class = "object_size")
 ## Minimal example bcbio upload directory.
 ## Include the top 500 genes (rows) and cells (columns).
 uploadDir <- file.path("..", "inst", "extdata", "indrops")
