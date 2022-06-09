@@ -392,7 +392,8 @@ NULL
         p
     }
 
-formals(`plotReadsPerCell,bcbioSingleCell`)[["geom"]] <- .geom
+formals(`plotReadsPerCell,bcbioSingleCell`)[["geom"]] <- # nolint
+    .geom
 
 
 

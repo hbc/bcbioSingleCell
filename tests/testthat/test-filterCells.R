@@ -41,7 +41,7 @@ test_that("Parameterized cutoff tests", {
             x <- do.call(what = filterCells, args = args)
             expect_s4_class(x, "bcbioSingleCell")
             expect_s4_class(metadata(x)[["filterCells"]], "SimpleList")
-            expect_identical(metadata(x)[["subset"]], TRUE)
+            expect_true(metadata(x)[["subset"]])
             expect_identical(dim(x), dim)
         }
     )

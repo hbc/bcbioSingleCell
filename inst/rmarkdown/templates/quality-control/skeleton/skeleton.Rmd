@@ -1,5 +1,5 @@
 ---
-## Updated 2022-03-11.
+## Updated 2022-06-09.
 params:
   title: "Quality control and filtering"
 
@@ -44,6 +44,7 @@ bibliography: "bibliography.bib"
 ---
 
 ```{r setup, cache=FALSE, message=FALSE}
+## nolint start
 suppressPackageStartupMessages({
     library(goalie)
     library(basejump)
@@ -52,6 +53,7 @@ suppressPackageStartupMessages({
 })
 prepareTemplate()
 source("_setup.R")
+## nolint end
 ```
 
 ```{r header, child="_header.Rmd"}

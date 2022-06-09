@@ -4,8 +4,8 @@ if (!isTRUE(goalie::hasInternet())) {
 }
 dir.create("cache", showWarnings = FALSE)
 files <- "bcbioSingleCell_0.1.0.rds"
-mapply(
-    FUN = function(remoteDir, file, envir) {
+Map(
+    f = function(remoteDir, file, envir) {
         destfile <- file.path("cache", file)
         if (!file.exists(destfile)) {
             utils::download.file(
@@ -16,8 +16,8 @@ mapply(
     },
     file = files,
     MoreArgs = list(
-        remoteDir = bcbioSingleCellTestsURL,
-        envir = environment()
+        "remoteDir" = bcbioSingleCellTestsURL,
+        "envir" = environment()
     )
 )
 rm(files)

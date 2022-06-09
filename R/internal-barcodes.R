@@ -55,19 +55,17 @@
         is.list(list),
         hasNames(list)
     )
-    list <- mapply(
+    list <- Map(
         sampleId = names(list),
         reads = list,
-        FUN = function(sampleId, reads) {
+        f = function(sampleId, reads) {
             DataFrame(
                 "sampleId" = as.factor(sampleId),
                 "cellId" = as.factor(names(reads)),
                 "nRead" = reads,
                 row.names = NULL
             )
-        },
-        SIMPLIFY = FALSE,
-        USE.NAMES = TRUE
+        }
     )
     data <- unlist(DataFrameList(list), use.names = FALSE)
     sampleData <- sampleData(object)
