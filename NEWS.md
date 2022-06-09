@@ -1,3 +1,9 @@
+# bcbioSingleCell 0.6.1 (2022-06-09)
+
+## Minor changes
+
+- Updated lintr checks and testthat unit tests.
+
 # bcbioSingleCell 0.6.0 (2022-05-09)
 
 ## Major changes
