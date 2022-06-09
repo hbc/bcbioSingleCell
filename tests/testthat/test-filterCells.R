@@ -17,7 +17,7 @@ test_that("No filtering", {
 ## Refer to the quality control R Markdown for actual recommended cutoffs.
 ## These are skewed, and designed to work with our minimal dataset.
 test_that("Parameterized cutoff tests", {
-    mapply(
+    Map(
         args = list(
             list("minCounts" = 2000L),
             list("maxCounts" = 2500L),
@@ -36,21 +36,20 @@ test_that("Parameterized cutoff tests", {
             c(50L, 81L),
             c(45L, 100L)
         ),
-        FUN = function(args, dim) {
+        f = function(args, dim) {
             args[["object"]] <- bcb
             x <- do.call(what = filterCells, args = args)
             expect_s4_class(x, "bcbioSingleCell")
             expect_s4_class(metadata(x)[["filterCells"]], "SimpleList")
             expect_identical(metadata(x)[["subset"]], TRUE)
             expect_identical(dim(x), dim)
-        },
-        SIMPLIFY = FALSE
+        }
     )
 })
 
 test_that("Expected cutoff failure", {
     expect_error(
         object = filterCells(bcb, minCounts = Inf),
-        expected = "No cells passed"
+        regexp = "No cells passed"
     )
 })

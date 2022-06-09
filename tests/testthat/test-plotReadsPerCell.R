@@ -3,6 +3,6 @@
 test_that("geom", {
     for (geom in eval(formals(`plotReadsPerCell,bcbioSingleCell`)[["geom"]])) {
         x <- plotReadsPerCell(bcb, geom = geom)
-        expect_is(x, "ggplot")
+        expect_s3_class(x, "ggplot")
     }
 })
