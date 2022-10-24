@@ -1,6 +1,8 @@
 #+TITLE: bcbioSingleCell
 #+STARTUP: content
 * Development
+** TODO Need to address this note now popping up in build checks.
+    Note: found 88 marked UTF-8 strings
 ** TODO Need to ensure R Markdown renders correctly without goalie issues.
 ** TODO Require valid names in all slots.
 ** TODO Add monocle celldataset coercion method.
