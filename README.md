@@ -133,13 +133,10 @@ library](https://paperpile.com/shared/C8EMxl) on [Paperpile][].
 
 [bcbio]: https://bcbio-nextgen.readthedocs.io/
 [bcl2fastq]: https://support.illumina.com/sequencing/sequencing_software/bcl2fastq-conversion-software.html
-[biocmanager]: https://cran.r-project.org/package=BiocManager
 [bioconda]: https://bioconda.github.io/
 [bioconductor]: https://bioconductor.org/
 [conda]: https://conda.io/
-[devtools]: https://cran.r-project.org/package=devtools
 [docker]: https://www.docker.com/
-[indrops v3 index barcodes]: https://github.com/steinbaugh/koopa/blob/master/workflows/indrops/harvard_v3_sample_barcodes.csv
 [paperpile]: https://paperpile.com/
 [r]: https://www.r-project.org/
 [sce]: https://bioconductor.org/packages/SingleCellExperiment/
