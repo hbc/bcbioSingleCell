@@ -1,12 +1,13 @@
 # Release notes
 
-## bcbioSingleCell 0.6.2 (UNRELEASED)
+## bcbioSingleCell 0.6.2 (2022-10-24)
 
 Minor changes:
 
 - Updated calls to `import` and `export`, switching from `file`/`dir` to
   simply `con`. This helps avoid breaking changes with pending pipette package
   update.
+- Updated Docker image URL.
 
 ## bcbioSingleCell 0.6.1 (2022-06-09)
 
