@@ -62,7 +62,7 @@ source("_setup.R")
 # Load `bcbioSingleCell` object
 
 ```{r load-object}
-object <- import(file = params[["bcb_file"]])
+object <- import(params[["bcb_file"]])
 assert(
     is(object, "bcbioSingleCell"),
     validObject(object)

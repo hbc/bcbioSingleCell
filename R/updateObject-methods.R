@@ -16,7 +16,7 @@
 #'
 #' ## Example that depends on remote file.
 #' ## > x <- import(
-#' ## >     file = file.path(
+#' ## >     con = file.path(
 #' ## >         bcbioSingleCellTestsURL,
 #' ## >         "bcbioSingleCell_0.1.0.rds"
 #' ## >     )

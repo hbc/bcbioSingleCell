@@ -145,7 +145,7 @@
             X = files,
             FUN = function(file) {
                 data <- import(
-                    file = file,
+                    con = file,
                     format = "tsv",
                     colnames = c("barcode", "n")
                 )
