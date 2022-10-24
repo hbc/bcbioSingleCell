@@ -538,7 +538,7 @@ removal with the `filterCells` function.
 - Now requiring [ggplot2][] v3.0. Switched to using `aes` instead of
   `aes_string` internally, using new [tidyeval][] syntax.
 - Removed additional single-cell toolkit packages in Suggests, including
-  [scater][] and [scran][]. This helps speed up build checks on [Travis CI][].
+  [scater][] and [scran][]. This helps speed up build checks on Travis CI.
 - Reexported functions have been moved to the [bcbioBase][] package.
 - Improved internal consistency between the `bcbioSingleCell` and
   `readCellRanger` data import functions.
@@ -704,7 +704,7 @@ removal with the `filterCells` function.
   with `readCellRanger`. Need to use stashed `cell2sample` factor saved in
   `metadata`, rather than attempting to calculate on the fly with
   `mapCellsToSamples`.
-- Updated [Travis CI][] build checks to include bioc-release on macOS.
+- Updated Travis CI build checks to include bioc-release on macOS.
 
 # bcbioSingleCell 0.1.9 (2018-05-18)
 
@@ -760,7 +760,7 @@ removal with the `filterCells` function.
 ## Minor changes
 
 - Attempting to re-enable `libgsl-dev` installation for [zinbwave][] on
-  [Travis CI][].
+  Travis CI.
 - Suggesting [BiocParallel][] for [zinbwave][] call in `diffExp`.
 - Now importing [Seurat][] functions into NAMESPACE.
 - Consolidated `fetchData` functions in the documentation.
@@ -1378,7 +1378,7 @@ removal with the `filterCells` function.
   [Seurat][] automatically.
 - Package no longer imports mononcle or suggests scater, scde, or scone. We're
   planning on adding these back in a future update, but build checks on
-  [Travis CI][] otherwise take too long.
+  Travis CI otherwise take too long.
 - Added new `quantileHeatmap` function.
 - Improved Markdown header support across functions, where applicable.
 - Improved `bcbioSCFiltered` to `seurat` coercion to slot relevant bcbio
@@ -1564,7 +1564,6 @@ removal with the `filterCells` function.
 [testthat]: https://github.com/r-lib/testthat/
 [tidyeval]: https://dplyr.tidyverse.org/articles/programming.html
 [tidyverse]: https://www.tidyverse.org/
-[travis ci]: https://travis-ci.org/
 [viridis]: https://cran.r-project.org/package=viridis
 [zinbwave]: https://bioconductor.org/packages/zinbwave/
 [zinger]: https://github.com/statOmics/zingeR/
