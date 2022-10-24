@@ -1,8 +1,8 @@
 Package: bcbioSingleCell
 Title: bcbio Single-Cell RNA-Seq
 Description: R package for bcbio single-cell RNA-seq analysis.
-Version: 0.6.1
-Date: 2022-06-09
+Version: 0.6.2.9000
+Date: 2022-10-24
 Authors@R: c(
     person(
         given = "Michael",
@@ -57,37 +57,37 @@ Encoding: UTF-8
 LazyData: false
 Depends:
     R (>= 4.2),
-    SingleCellExperiment
+    SingleCellExperiment (>= 1.18.0)
 Imports:
-    AcidBase,
-    AcidCLI,
-    AcidExperiment,
-    AcidGenerics,
-    AcidGenomes,
-    AcidMarkdown,
-    AcidPlots,
-    AcidPlyr,
-    AcidSingleCell,
-    BiocGenerics,
-    BiocParallel,
-    IRanges,
-    S4Vectors,
-    SummarizedExperiment,
-    bcbioBase,
-    ggplot2,
-    ggridges,
-    goalie,
+    AcidBase (>= 0.6.8),
+    AcidCLI (>= 0.2.4),
+    AcidExperiment (>= 0.4.4),
+    AcidGenerics (>= 0.6.4),
+    AcidGenomes (>= 0.4.4),
+    AcidMarkdown (>= 0.2.4),
+    AcidPlots (>= 0.5.1),
+    AcidPlyr (>= 0.3.2),
+    AcidSingleCell (>= 0.3.3),
+    BiocGenerics (>= 0.42.0),
+    BiocParallel (>= 1.30.0),
+    IRanges (>= 2.30.0),
+    S4Vectors (>= 0.34.0),
+    SummarizedExperiment (>= 1.26.0),
+    bcbioBase (>= 0.8.1),
+    ggplot2 (>= 3.3.6),
+    ggridges (>= 0.5.4),
+    goalie (>= 0.6.6),
     methods,
-    pipette,
-    stringi,
-    syntactic,
+    pipette (>= 0.10.0),
+    stringi (>= 1.7.8),
+    syntactic (>= 0.6.3),
     utils
 Suggests:
-    Biostrings,
-    basejump,
+    Biostrings (>= 2.64.0),
+    basejump (>= 0.16.0),
     graphics,
-    rmarkdown,
-    testthat
+    rmarkdown (>= 2.17),
+    testthat (>= 3.1.5)
 Additional_repositories: https://r.acidgenomics.com
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
