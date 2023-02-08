@@ -33,8 +33,8 @@ NULL
 
 ## Standard functions ==========================================================
 
-#' @importFrom AcidBase metricsCols printString realpath requireNamespaces
-#' showSlotInfo standardizeCall
+#' @importFrom AcidBase metricsCols printString realpath showSlotInfo
+#' standardizeCall
 #' @importFrom AcidCLI abort alert alertSuccess alertWarning h1 h2
 #' separator toInlineString
 #' @importFrom AcidExperiment detectLanes droplevels2 importSampleData
@@ -57,7 +57,7 @@ NULL
 #' @importFrom goalie allAreDirectories allAreFiles areDisjointSets areSetEqual
 #' assert hasLength hasNames hasRownames hasValidDimnames isADirectory isAFile
 #' isAURL isAny isCharacter isDirectory isFile isFlag isInt isString isSubset
-#' validate validateClasses
+#' requireNamespaces validate validateClasses
 #' @importFrom methods as as<- is new setClass slot slot<- validObject
 #' .hasSlot
 #' @importFrom stringi stri_match_first_regex
