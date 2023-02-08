@@ -1,5 +1,12 @@
 # Release notes
 
+## bcbioSingleCell 0.6.3 (2023-02-08)
+
+Minor changes:
+
+- Tightened up package dependencies, requiring Bioconductor 3.16.
+- Migrated `requireNamespaes` in imports from AcidBase to goalie.
+
 ## bcbioSingleCell 0.6.2 (2022-10-24)
 
 Minor changes:
