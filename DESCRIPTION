@@ -1,7 +1,7 @@
 Package: bcbioSingleCell
 Title: bcbio Single-Cell RNA-Seq
 Description: R package for bcbio single-cell RNA-seq analysis.
-Version: 0.6.3.9000
+Version: 0.6.3
 Date: 2023-02-08
 Authors@R: c(
     person(
@@ -57,37 +57,37 @@ Encoding: UTF-8
 LazyData: false
 Depends:
     R (>= 4.2),
-    SingleCellExperiment (>= 1.18.0)
+    SingleCellExperiment (>= 1.20.0)
 Imports:
-    AcidBase (>= 0.6.8),
-    AcidCLI (>= 0.2.4),
+    AcidBase (>= 0.6.11),
+    AcidCLI (>= 0.2.7),
     AcidExperiment (>= 0.4.4),
-    AcidGenerics (>= 0.6.4),
-    AcidGenomes (>= 0.4.4),
-    AcidMarkdown (>= 0.2.4),
-    AcidPlots (>= 0.5.1),
-    AcidPlyr (>= 0.3.2),
+    AcidGenerics (>= 0.6.5),
+    AcidGenomes (>= 0.4.5),
+    AcidMarkdown (>= 0.2.5),
+    AcidPlots (>= 0.5.3),
+    AcidPlyr (>= 0.3.4),
     AcidSingleCell (>= 0.3.3),
-    BiocGenerics (>= 0.42.0),
-    BiocParallel (>= 1.30.0),
-    IRanges (>= 2.30.0),
-    S4Vectors (>= 0.34.0),
-    SummarizedExperiment (>= 1.26.0),
+    BiocGenerics (>= 0.44.0),
+    BiocParallel (>= 1.32.0),
+    IRanges (>= 2.32.0),
+    S4Vectors (>= 0.36.0),
+    SummarizedExperiment (>= 1.28.0),
     bcbioBase (>= 0.8.1),
-    ggplot2 (>= 3.3.6),
+    ggplot2 (>= 3.4.0),
     ggridges (>= 0.5.4),
-    goalie (>= 0.6.6),
+    goalie (>= 0.6.8),
+    pipette (>= 0.10.2),
+    stringi (>= 1.7.12),
+    syntactic (>= 0.6.4),
     methods,
-    pipette (>= 0.10.0),
-    stringi (>= 1.7.8),
-    syntactic (>= 0.6.3),
     utils
 Suggests:
-    Biostrings (>= 2.64.0),
-    basejump (>= 0.16.0),
+    Biostrings (>= 2.66.0),
+    basejump (>= 0.16.3),
+    rmarkdown (>= 2.20),
+    testthat (>= 3.1.6),
     graphics,
-    rmarkdown (>= 2.17),
-    testthat (>= 3.1.5)
 Additional_repositories: https://r.acidgenomics.com
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
