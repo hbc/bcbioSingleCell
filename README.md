@@ -28,16 +28,15 @@ Configure Conda to use the [Bioconda][] channels.
 
 ```sh
 # Don't install recipe into base environment.
-name='r-bcbiosinglecell'
-conda create --name="$name" "$name"
-conda activate "$name"
+conda create --name='r-bcbiosinglecell@0.6.3' 'r-bcbiosinglecell==0.6.3'
+conda activate 'r-bcbiosinglecell@0.6.3'
 R
 ```
 
 ### [Docker][] method
 
 ```sh
-image='acidgenomics/r-packages:bcbiosinglecell'
+image='quay.io/biocontainers/r-bcbiosinglecell:0.6.3--r42hdfd78af_1'
 workdir='/mnt/work'
 docker pull "$image"
 docker run -it \
