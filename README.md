@@ -33,19 +33,6 @@ conda activate 'r-bcbiosinglecell@0.6.3'
 R
 ```
 
-### [Docker][] method
-
-```sh
-image='quay.io/biocontainers/r-bcbiosinglecell:0.6.3--r42hdfd78af_1'
-workdir='/mnt/work'
-docker pull "$image"
-docker run -it \
-    --volume="${PWD}:${workdir}" \
-    --workdir="$workdir" \
-    "$image" \
-    R
-```
-
 ## Load bcbio single-cell RNA-seq data
 
 ```r
@@ -135,7 +122,6 @@ library](https://paperpile.com/shared/C8EMxl) on [Paperpile][].
 [bioconda]: https://bioconda.github.io/
 [bioconductor]: https://bioconductor.org/
 [conda]: https://conda.io/
-[docker]: https://www.docker.com/
 [paperpile]: https://paperpile.com/
 [r]: https://www.r-project.org/
 [sce]: https://bioconductor.org/packages/SingleCellExperiment/
