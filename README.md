@@ -24,7 +24,7 @@ install.packages(
 
 ### [Conda][] method
 
-Configure Conda to use the [Bioconda][] channels.
+Configure [Conda][] to use the [Bioconda][] channels.
 
 ```sh
 # Don't install recipe into base environment.
