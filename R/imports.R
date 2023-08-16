@@ -41,9 +41,9 @@ NULL
 #' matchInterestingGroups minimalSampleData
 #' @importFrom AcidGenomes emptyRanges makeGRangesFromEnsembl makeGRangesFromGFF
 #' @importFrom AcidMarkdown markdownPlots
-#' @importFrom AcidPlots !! !!! acid_geom_abline acid_geom_label
-#' acid_geom_label_average acid_geom_label_repel autoDiscreteColorScale
-#' autoDiscreteFillScale sym syms
+#' @importFrom AcidPlots !!! acid_geom_abline acid_geom_label
+#' acid_geom_label_average acid_geom_label_repel acid_scale_color_discrete
+#' acid_scale_fill_discrete syms
 #' @importFrom AcidSingleCell makeSingleCellExperiment mapCellsToSamples
 #' @importFrom IRanges DataFrameList
 #' @importFrom S4Vectors DataFrame SimpleList
