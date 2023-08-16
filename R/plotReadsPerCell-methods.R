@@ -100,7 +100,7 @@ NULL
         ) +
             geom_step(
                 alpha = 0.75,
-                size = 1L
+                linewidth = 1L
             ) +
             labs(
                 x = "log10 reads per cell",
@@ -188,7 +188,7 @@ NULL
                 color = .data[["interestingGroups"]]
             )
         ) +
-            stat_ecdf(geom = "step", size = 1L) +
+            stat_ecdf(geom = "step", linewidth = 1L) +
             labs(
                 x = "reads per cell",
                 y = "frequency"
