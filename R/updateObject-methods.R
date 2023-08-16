@@ -247,8 +247,9 @@ NULL
             metadata[["level"]] <- "genes"
         }
         ## programVersions.
-        if (!isSubset("programVersions", names(metadata)) &&
-            isSubset("programs", names(metadata))
+        if (
+            !isSubset("programVersions", names(metadata)) &&
+                isSubset("programs", names(metadata))
         ) {
             if (isTRUE(verbose)) {
                 alert(sprintf(

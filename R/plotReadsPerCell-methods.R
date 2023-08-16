@@ -61,10 +61,9 @@ NULL
                 )
                 ## Klein Lab MATLAB code reference.
                 ## counts: fLog; mids: xLog
-                proportion <-
-                    h[["counts"]] *
-                        (10L^h[["mids"]]) /
-                        sum(h[["counts"]] * (10L^h[["mids"]]))
+                proportion <- h[["counts"]] *
+                    (10L^h[["mids"]]) /
+                    sum(h[["counts"]] * (10L^h[["mids"]]))
                 DataFrame(
                     "sampleId" = factor(sampleId),
                     "log10Read" = h[["mids"]],

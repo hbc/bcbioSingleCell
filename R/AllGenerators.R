@@ -31,6 +31,7 @@
 #' )
 #' print(x)
 bcbioSingleCell <-
+    ## nolint start
     function(uploadDir,
              sampleMetadataFile = NULL,
              organism = NULL,
@@ -41,6 +42,7 @@ bcbioSingleCell <-
              interestingGroups = "sampleName",
              BPPARAM = BiocParallel::bpparam() # nolint
     ) {
+        ## nolint end
         assert(
             isADirectory(uploadDir),
             isString(sampleMetadataFile, nullOK = TRUE),
