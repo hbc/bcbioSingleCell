@@ -1,7 +1,7 @@
 #' @name plotReadsPerCell
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inherit AcidGenerics::plotReadsPerCell
-#' @note Updated 2021-09-10.
+#' @note Updated 2023-08-16.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -81,7 +81,7 @@ NULL
 
 #' Plot proportional reads per cell histogram
 #'
-#' @note Updated 2022-05-07.
+#' @note Updated 2023-08-16.
 #' @noRd
 #'
 #' @param data Return from `.proportionalReadsPerCell()` function.
@@ -94,9 +94,9 @@ NULL
         p <- ggplot(
             data = as.data.frame(data),
             mapping = aes(
-                x = !!sym("log10Read"),
-                y = !!sym("proportion"),
-                color = !!sym("interestingGroups")
+                x = .data[["log10Read"]],
+                y = .data[["proportion"]],
+                color = .data[["interestingGroups"]]
             )
         ) +
             geom_step(
@@ -112,7 +112,7 @@ NULL
             p <- p + acid_geom_abline(xintercept = log10(min))
         }
         ## Color palette.
-        p <- p + autoDiscreteColorScale()
+        p <- p + acid_scale_color_discrete()
         ## Facets.
         facets <- NULL
         if (isSubset("aggregate", colnames(data))) {
@@ -130,7 +130,7 @@ NULL
 
 
 
-## Updated 2022-05-07.
+## Updated 2023-08-16.
 .plotReadsPerCellBoxplot <-
     function(data,
              min = 0L) {
@@ -138,9 +138,9 @@ NULL
         p <- ggplot(
             data = as.data.frame(data),
             mapping = aes(
-                x = !!sym("sampleName"),
-                y = !!sym("nRead"),
-                fill = !!sym("interestingGroups")
+                x = .data[["sampleName"]],
+                y = .data[["nRead"]],
+                fill = .data[["interestingGroups"]]
             )
         ) +
             geom_boxplot(color = "black", outlier.shape = NA) +
@@ -159,7 +159,7 @@ NULL
             p <- p + acid_geom_abline(yintercept = min)
         }
         ## Color palette.
-        p <- p + autoDiscreteFillScale()
+        p <- p + acid_scale_fill_discrete()
         ## Facets.
         facets <- NULL
         if (isSubset("aggregate", colnames(data))) {
@@ -177,16 +177,16 @@ NULL
 
 
 
-## Updated 2022-05-07.
-.plotReadsPerCellECDF <-
+## Updated 2023-08-16.
+.plotReadsPerCellEcdf <-
     function(data,
              min = 0L) {
         assert(is(data, "DataFrame"))
         p <- ggplot(
             data = as.data.frame(data),
             mapping = aes(
-                x = !!sym("nRead"),
-                color = !!sym("interestingGroups")
+                x = .data[["nRead"]],
+                color = .data[["interestingGroups"]]
             )
         ) +
             stat_ecdf(geom = "step", size = 1L) +
@@ -200,7 +200,7 @@ NULL
             p <- p + acid_geom_abline(xintercept = min)
         }
         ## Color palette.
-        p <- p + autoDiscreteColorScale()
+        p <- p + acid_scale_color_discrete()
         ## Facets.
         facets <- NULL
         if (isSubset("aggregate", colnames(data))) {
@@ -218,7 +218,7 @@ NULL
 
 
 
-## Updated 2022-05-07.
+## Updated 2023-08-16.
 .plotReadsPerCellRidgeline <-
     function(data,
              min = 0L) {
@@ -226,9 +226,9 @@ NULL
         p <- ggplot(
             data = as.data.frame(data),
             mapping = aes(
-                x = !!sym("nRead"),
-                y = !!sym("sampleName"),
-                fill = !!sym("interestingGroups")
+                x = .data[["nRead"]],
+                y = .data[["sampleName"]],
+                fill = .data[["interestingGroups"]]
             )
         ) +
             geom_density_ridges(
@@ -252,7 +252,7 @@ NULL
             p <- p + acid_geom_abline(xintercept = min)
         }
         ## Color palette.
-        p <- p + autoDiscreteFillScale()
+        p <- p + acid_scale_fill_discrete()
         ## Facets.
         facets <- NULL
         if (isSubset("aggregate", colnames(data))) {
@@ -269,7 +269,7 @@ NULL
 
 
 
-## Updated 2022-05-07.
+## Updated 2023-08-16.
 .plotReadsPerCellViolin <-
     function(data,
              min = 0L) {
@@ -277,9 +277,9 @@ NULL
         p <- ggplot(
             data = as.data.frame(data),
             mapping = aes(
-                x = !!sym("sampleName"),
-                y = !!sym("nRead"),
-                fill = !!sym("interestingGroups")
+                x = .data[["sampleName"]],
+                y = .data[["nRead"]],
+                fill = .data[["interestingGroups"]]
             )
         ) +
             geom_violin(
@@ -301,7 +301,7 @@ NULL
             p <- p + acid_geom_abline(yintercept = min)
         }
         ## Color palette.
-        p <- p + autoDiscreteFillScale()
+        p <- p + acid_scale_fill_discrete()
         ## Facets.
         facets <- NULL
         if (isSubset("aggregate", colnames(data))) {
@@ -319,7 +319,7 @@ NULL
 
 
 
-## Updated 2022-05-07.
+## Updated 2023-08-16.
 `plotReadsPerCell,bcbioSingleCell` <- # nolint
     function(object,
              interestingGroups = NULL,
@@ -358,7 +358,7 @@ NULL
                 )
             ),
             ecdf = do.call(
-                what = .plotReadsPerCellECDF,
+                what = .plotReadsPerCellEcdf,
                 args = list(
                     "data" = data,
                     "min" = min
