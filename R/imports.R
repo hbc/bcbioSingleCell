@@ -41,7 +41,7 @@ NULL
 #' matchInterestingGroups minimalSampleData
 #' @importFrom AcidGenomes emptyRanges makeGRangesFromEnsembl makeGRangesFromGFF
 #' @importFrom AcidMarkdown markdownPlots
-#' @importFrom AcidPlots .data !!! acid_geom_abline acid_geom_label
+#' @importFrom AcidPlots !!! .data acid_geom_abline acid_geom_label
 #' acid_geom_label_average acid_geom_label_repel acid_scale_color_discrete
 #' acid_scale_fill_discrete syms
 #' @importFrom AcidSingleCell makeSingleCellExperiment mapCellsToSamples
@@ -58,8 +58,7 @@ NULL
 #' assert hasLength hasNames hasRownames hasValidDimnames isADirectory isAFile
 #' isAURL isAny isCharacter isDirectory isFile isFlag isInt isString isSubset
 #' requireNamespaces validate validateClasses
-#' @importFrom methods as as<- is new setClass slot slot<- validObject
-#' .hasSlot
+#' @importFrom methods .hasSlot as as<- is new setClass slot slot<- validObject
 #' @importFrom stringi stri_match_first_regex
 #' @importFrom utils capture.output packageName packageVersion
 NULL
