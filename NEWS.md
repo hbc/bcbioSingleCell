@@ -506,7 +506,7 @@ Major changes:
 - Added support for global [ggplot2][] discrete color palettes using
   `bcbio.discrete.color` and `bcbio.discrete.fill` with `options`.
 
-## Minor changes
+Minor changes:
 
 - Marker functions are no longer exported as generics, since they only
   currently apply to [Seurat][] and may be deprecated in the future.
@@ -790,7 +790,7 @@ Minor changes:
   to `SingleCellExperiment`, using `as(seurat, "SingleCellExperiment")`. This
   utility function was added to [Seurat][] v2.3.1.
 
-## Internal changes
+Internal changes:
 
 - Tweaked `metrics` `SingleCellExperiment` method code to always merge
   `colData` and `sampleData`.
