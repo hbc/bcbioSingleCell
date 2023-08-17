@@ -63,7 +63,7 @@ Imports:
     AcidCLI (>= 0.2.8),
     AcidExperiment (>= 0.4.7),
     AcidGenerics (>= 0.6.7),
-    AcidGenomes (>= 0.5.2),
+    AcidGenomes (>= 0.5.1),
     AcidMarkdown (>= 0.2.6),
     AcidPlots (>= 0.6.1),
     AcidPlyr (>= 0.3.11),
