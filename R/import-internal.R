@@ -2,26 +2,24 @@
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
-#' @note Updated 2021-09-03.
+#' @note Updated 2023-08-17.
 #' @noRd
 #'
-#' @inheritParams BiocParallel::bpmapply
 #' @param sampleDirs `character`.
 #' Sample directory paths.
-.importCounts <- # nolint
-    function(sampleDirs,
-             BPPARAM # nolint
-    ) {
+#'
+#' @return `Matrix` / `matrix`.
+.importCounts <-
+    function(sampleDirs) {
         assert(
             allAreDirectories(sampleDirs),
-            hasNames(sampleDirs),
-            identical(attr(class(BPPARAM), "package"), "BiocParallel")
+            hasNames(sampleDirs)
         )
         alert("Importing counts.")
-        list <- bpmapply(
+        list <- mcMap(
             sampleId = names(sampleDirs),
             dir = sampleDirs,
-            FUN = function(sampleId, dir) {
+            f = function(sampleId, dir) {
                 counts <- .importCountsPerSample(dir)
                 ## Prefix cell barcodes with sample identifier when we're
                 ## loading counts from multiple samples.
@@ -32,10 +30,7 @@
                 ## Ensure names are valid.
                 counts <- makeDimnames(counts)
                 counts
-            },
-            SIMPLIFY = FALSE,
-            USE.NAMES = TRUE,
-            BPPARAM = BPPARAM
+            }
         )
         ## Remove any empty items in list, which can result from low quality
         ## samples with empty matrices in bcbio pipeline.
@@ -115,24 +110,20 @@
 #'
 #' @author Michael Steinbaugh
 #' @keywords internal
-#' @note Updated 2021-02-22.
+#' @note Updated 2023-08-17.
 #' @noRd
 #'
-#' @inheritParams BiocParallel::bplapply
 #' @param sampleDirs `character`.
 #' Sample directories.
 #'
 #' @return `list`.
 #' List of integer vectors per sample containing the pre-filtered cellular
 #' barcode counts (`nCount`).
-.importReads <- # nolint
-    function(sampleDirs,
-             BPPARAM # nolint
-    ) {
+.importReads <-
+    function(sampleDirs) {
         assert(
             allAreDirectories(sampleDirs),
-            hasNames(sampleDirs),
-            identical(attr(class(BPPARAM), "package"), "BiocParallel")
+            hasNames(sampleDirs)
         )
         alert("Importing unfiltered cellular barcode distributions.")
         files <- file.path(
@@ -141,7 +132,7 @@
         )
         files <- realpath(files)
         names(files) <- names(sampleDirs)
-        list <- bplapply(
+        list <- mclapply(
             X = files,
             FUN = function(file) {
                 data <- import(
@@ -152,8 +143,7 @@
                 x <- as.integer(data[["n"]])
                 names(x) <- makeNames(data[["barcode"]])
                 x
-            },
-            BPPARAM = BPPARAM
+            }
         )
         names(list) <- names(sampleDirs)
         list

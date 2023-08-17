@@ -1,10 +1,9 @@
 #' @inherit bcbioSingleCell-class title description
 #' @author Michael Steinbaugh
-#' @note Updated 2022-05-09.
+#' @note Updated 2023-08-17.
 #' @export
 #'
 #' @inheritParams AcidSingleCell::makeSingleCellExperiment
-#' @inheritParams BiocParallel::bplapply
 #' @inheritParams AcidRoxygen::params
 #'
 #' @section Remote data:
@@ -31,7 +30,6 @@
 #' )
 #' print(x)
 bcbioSingleCell <-
-    ## nolint start
     function(uploadDir,
              sampleMetadataFile = NULL,
              organism = NULL,
@@ -39,10 +37,7 @@ bcbioSingleCell <-
              genomeBuild = NULL,
              gffFile = NULL,
              transgeneNames = NULL,
-             interestingGroups = "sampleName",
-             BPPARAM = BiocParallel::bpparam() # nolint
-    ) {
-        ## nolint end
+             interestingGroups = "sampleName") {
         assert(
             isADirectory(uploadDir),
             isString(sampleMetadataFile, nullOK = TRUE),
@@ -51,8 +46,7 @@ bcbioSingleCell <-
             isString(genomeBuild, nullOK = TRUE),
             isString(gffFile, nullOK = TRUE),
             isCharacter(transgeneNames, nullOK = TRUE),
-            isCharacter(interestingGroups),
-            identical(attr(class(BPPARAM), "package"), "BiocParallel")
+            isCharacter(interestingGroups)
         )
         if (isString(gffFile)) {
             isAFile(gffFile) || isAURL(gffFile)
@@ -148,7 +142,7 @@ bcbioSingleCell <-
         ## Assays (counts) -----------------------------------------------------
         h2("Counts")
         ## Note that we're now allowing transcript-level counts.
-        counts <- .importCounts(sampleDirs = sampleDirs, BPPARAM = BPPARAM)
+        counts <- .importCounts(sampleDirs = sampleDirs)
         assert(hasValidDimnames(counts))
         ## Row data (genes/transcripts) ----------------------------------------
         h2("Feature metadata")
@@ -236,7 +230,7 @@ bcbioSingleCell <-
         )
         ## Metadata ------------------------------------------------------------
         h2("Metadata")
-        cbList <- .importReads(sampleDirs = sampleDirs, BPPARAM = BPPARAM)
+        cbList <- .importReads(sampleDirs = sampleDirs)
         runDate <- runDate(projectDir)
         interestingGroups <- camelCase(interestingGroups, strict = TRUE)
         assert(isSubset(interestingGroups, colnames(sampleData)))

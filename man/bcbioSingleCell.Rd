@@ -12,8 +12,7 @@ bcbioSingleCell(
   genomeBuild = NULL,
   gffFile = NULL,
   transgeneNames = NULL,
-  interestingGroups = "sampleName",
-  BPPARAM = BiocParallel::bpparam()
+  interestingGroups = "sampleName"
 )
 }
 \arguments{
@@ -50,13 +49,6 @@ Vector indicating which assay rows denote transgenes (e.g. EGFP, TDTOMATO).}
 \item{interestingGroups}{\code{character}.
 Groups of interest to use for visualization.
 Corresponds to factors describing the columns of the object.}
-
-\item{BPPARAM}{
-    An optional \code{\link[BiocParallel]{BiocParallelParam}} instance
-    determining the parallel back-end to be used during evaluation, or a
-    \code{list} of \code{BiocParallelParam} instances, to be applied in
-    sequence for nested calls to \pkg{BiocParallel} functions.
-  }
 }
 \value{
 \code{bcbioSingleCell}.
@@ -68,7 +60,7 @@ read counts saved as a sparse matrix (\code{sparseMatrix}), sample metadata, and
 cell quality control metrics.
 }
 \note{
-Updated 2022-05-09.
+Updated 2023-08-17.
 }
 \section{Remote data}{
 

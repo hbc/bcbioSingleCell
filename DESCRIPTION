@@ -69,7 +69,6 @@ Imports:
     AcidPlyr (>= 0.3.11),
     AcidSingleCell (>= 0.3.5),
     BiocGenerics (>= 0.46.0),
-    BiocParallel (>= 1.34.0),
     IRanges (>= 2.34.0),
     S4Vectors (>= 0.38.0),
     SummarizedExperiment (>= 1.30.0),
@@ -81,6 +80,7 @@ Imports:
     stringi (>= 1.7.12),
     syntactic (>= 0.6.6),
     methods,
+    parallel,
     utils
 Suggests:
     Biostrings (>= 2.68.0),

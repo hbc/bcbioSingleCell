@@ -12,7 +12,6 @@ NULL
 #' interestingGroups interestingGroups<- leftJoin makeDimnames makeLabel
 #' makeNames metrics plotReadsPerCell sampleData
 #' @importFrom BiocGenerics counts updateObject
-#' @importFrom BiocParallel bplapply bpmapply
 #' @importFrom S4Vectors cbind do.call droplevels lapply mcols mcols<-
 #' metadata metadata<-
 #' @importFrom SummarizedExperiment assayNames assay assays assays<- colData
@@ -47,7 +46,6 @@ NULL
 #' @importFrom AcidSingleCell makeSingleCellExperiment mapCellsToSamples
 #' @importFrom IRanges DataFrameList
 #' @importFrom S4Vectors DataFrame SimpleList
-#' @importFrom BiocParallel bpparam
 #' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
 #' getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
 #' importDataVersions importProgramVersions projectDir runDate sampleDirs
@@ -59,6 +57,7 @@ NULL
 #' isAURL isAny isCharacter isDirectory isFile isFlag isInt isString isSubset
 #' requireNamespaces validate validateClasses
 #' @importFrom methods .hasSlot as as<- is new setClass slot slot<- validObject
+#' @importFrom parallel mcMap mclapply
 #' @importFrom stringi stri_match_first_regex
 #' @importFrom utils capture.output packageName packageVersion
 NULL
