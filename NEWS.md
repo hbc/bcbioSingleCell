@@ -1,5 +1,18 @@
 # Release notes
 
+## bcbioSingleCell (2023-08-17)
+
+Major changes:
+
+- Now requiring R 4.3 / Bioconductor 3.17.
+- Removed usage of BiocParallel, including `BPPARAM` from primary
+  `bcbioSingleCell` generator function.
+
+Minor changes:
+
+- `plotReadsPerCell`: Updated internal ggplot2 to use `.data` pronoun instead
+  of `!!`/`sym` rlang syntactic sugar approach.
+
 ## bcbioSingleCell 0.6.3 (2023-02-08)
 
 Minor changes:
@@ -1355,7 +1368,7 @@ Minor changes:
   package.
 - Now allowing implicit integers in our function code.
 - Added support for plotting technical replicates. This is handled by
-`sampleNameAggregate` in the sample metadata.
+  `sampleNameAggregate` in the sample metadata.
 - Now using ridgeline plots in place of histograms where applicable.
 - Travis CI checks take too long when loading SummarizedExperiment. Hopefully
   this will be fixed in the 3.6 release later this month.
