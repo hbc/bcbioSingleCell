@@ -1,6 +1,6 @@
 #' @inherit bcbioSingleCell-class title description
 #' @author Michael Steinbaugh
-#' @note Updated 2023-08-17.
+#' @note Updated 2023-09-21.
 #' @export
 #'
 #' @inheritParams AcidSingleCell::makeSingleCellExperiment
