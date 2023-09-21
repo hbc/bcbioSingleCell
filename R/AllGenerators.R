@@ -111,8 +111,8 @@ bcbioSingleCell <-
             )
             ## Error on incorrect reverse complement input.
             if (isSubset("sequence", colnames(sampleData))) {
-                sampleDirSequence <- stri_match_first_regex(
-                    str = names(sampleDirs),
+                sampleDirSequence <- strMatch(
+                    x = names(sampleDirs),
                     pattern = "^.+_([ACGT]+)$"
                 )[, 2L]
                 assert(

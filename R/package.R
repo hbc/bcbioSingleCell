@@ -44,7 +44,7 @@ NULL
 ## Standard functions ==========================================================
 
 #' @importFrom AcidBase metricsCols printString realpath showSlotInfo
-#' standardizeCall
+#' standardizeCall strMatch
 #' @importFrom AcidCLI abort alert alertSuccess alertWarning h1 h2
 #' separator toInlineString
 #' @importFrom AcidExperiment detectLanes droplevels2 importSampleData
@@ -69,6 +69,5 @@ NULL
 #' requireNamespaces validate validateClasses
 #' @importFrom methods .hasSlot as as<- is new setClass slot slot<- validObject
 #' @importFrom parallel mcMap mclapply
-#' @importFrom stringi stri_match_first_regex
 #' @importFrom utils capture.output packageName packageVersion
 NULL
