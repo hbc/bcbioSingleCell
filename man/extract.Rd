@@ -41,7 +41,7 @@ For more information:
 Extract genes by row and cells by column.
 }
 \details{
-Refer to \code{cell2sample()} and \code{selectSamples()} if sample-level extraction is
+Refer to \code{cellToSample()} and \code{selectSamples()} if sample-level extraction is
 desired. Note that \code{sampleId} is slotted into \code{colData} and defines the
 cell-to-sample mappings.
 

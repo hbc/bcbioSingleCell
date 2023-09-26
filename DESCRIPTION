@@ -2,7 +2,7 @@ Package: bcbioSingleCell
 Title: Bcbio Single-Cell RNA-Seq
 Description: R package for bcbio single-cell RNA-seq analysis.
 Version: 0.6.5.9000
-Date: 2023-09-21
+Date: 2023-09-26
 Authors@R: c(
     person(
         given = "Michael",
