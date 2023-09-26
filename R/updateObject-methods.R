@@ -147,12 +147,12 @@ NULL
             if (isTRUE(verbose)) {
                 alert("Mapping cells to samples.")
             }
-            cell2sample <- mapCellsToSamples(
+            c2s <- mapCellsToSamples(
                 cells = cells,
                 samples = as.character(sampleData[["sampleId"]])
             )
-            assert(is.factor(cell2sample))
-            colData[["sampleId"]] <- cell2sample
+            assert(is.factor(c2s))
+            colData[["sampleId"]] <- c2s
             sampleData[["sampleId"]] <- rownames(sampleData)
             colData <- leftJoin(x = colData, y = sampleData, by = "sampleId")
             assert(
@@ -286,7 +286,7 @@ NULL
         ## Drop legacy slots.
         keep <- setdiff(
             x = names(metadata),
-            y = c("cell2sample", "sampleData", "sampleMetadata")
+            y = c("cellToSample", "sampleData", "sampleMetadata")
         )
         metadata <- metadata[keep]
         ## Return --------------------------------------------------------------

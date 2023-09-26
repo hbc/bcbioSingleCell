@@ -19,7 +19,7 @@ NULL
 ## S4 generics and methods =====================================================
 
 #' @importFrom AcidExperiment sampleNames
-#' @importFrom AcidGenerics calculateMetrics camelCase cell2sample droplevels2
+#' @importFrom AcidGenerics calculateMetrics camelCase droplevels2
 #' interestingGroups interestingGroups<- leftJoin makeDimnames makeLabel
 #' makeNames metrics plotReadsPerCell sampleData
 #' @importFrom BiocGenerics counts updateObject
@@ -34,7 +34,7 @@ NULL
 #' @importMethodsFrom AcidExperiment calculateMetrics interestingGroups
 #' interestingGroups<- metrics sampleData sampleNames
 #' @importMethodsFrom AcidPlyr leftJoin
-#' @importMethodsFrom AcidSingleCell cell2sample sampleData
+#' @importMethodsFrom AcidSingleCell sampleData
 #' @importMethodsFrom pipette import
 #' @importMethodsFrom syntactic camelCase makeDimnames makeLabel makeNames
 NULL
