@@ -326,7 +326,7 @@ NULL
              cutoffLine = FALSE,
              title = "Reads per cell") {
         validObject(object)
-        assert(isString(title, nullOK = TRUE))
+        assert(isString(title, nullOk = TRUE))
         interestingGroups(object) <-
             matchInterestingGroups(object, interestingGroups)
         interestingGroups <- interestingGroups(object)

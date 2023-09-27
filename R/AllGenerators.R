@@ -40,16 +40,16 @@ bcbioSingleCell <-
              interestingGroups = "sampleName") {
         assert(
             isADirectory(uploadDir),
-            isString(sampleMetadataFile, nullOK = TRUE),
-            isString(organism, nullOK = TRUE),
-            isInt(ensemblRelease, nullOK = TRUE),
-            isString(genomeBuild, nullOK = TRUE),
-            isString(gffFile, nullOK = TRUE),
-            isCharacter(transgeneNames, nullOK = TRUE),
+            isString(sampleMetadataFile, nullOk = TRUE),
+            isString(organism, nullOk = TRUE),
+            isInt(ensemblRelease, nullOk = TRUE),
+            isString(genomeBuild, nullOk = TRUE),
+            isString(gffFile, nullOk = TRUE),
+            isCharacter(transgeneNames, nullOk = TRUE),
             isCharacter(interestingGroups)
         )
         if (isString(gffFile)) {
-            isAFile(gffFile) || isAURL(gffFile)
+            isAFile(gffFile) || isAUrl(gffFile)
         }
         h1("bcbioSingleCell")
         alert("Importing bcbio-nextgen single-cell RNA-seq run")
@@ -90,7 +90,7 @@ bcbioSingleCell <-
         )
         cutoff <- getBarcodeCutoffFromCommands(commandsLog)
         level <- getLevelFromCommands(commandsLog)
-        umiType <- getUMITypeFromCommands(commandsLog)
+        umiType <- getUmiTypeFromCommands(commandsLog)
         ## Check to see if we're dealing with a multiplexed platform.
         multiplexed <- any(vapply(
             X = c("dropseq", "indrop"),
@@ -166,12 +166,12 @@ bcbioSingleCell <-
             ## GTF/GFF file.
             if (is.null(gffFile)) {
                 ## Attempt to use bcbio GTF automatically.
-                gffFile <- getGTFFileFromYAML(yaml)
+                gffFile <- getGtfFileFromYaml(yaml)
             }
             if (!is.null(gffFile)) {
-                alert("{.fun makeGRangesFromGFF}")
+                alert("{.fun makeGRangesFromGff}")
                 gffFile <- realpath(gffFile)
-                rowRanges <- makeGRangesFromGFF(file = gffFile, level = level)
+                rowRanges <- makeGRangesFromGff(file = gffFile, level = level)
             } else {
                 alertWarning("Slotting empty ranges into {.fun rowRanges}.")
                 rowRanges <- emptyRanges(rownames(counts))
@@ -202,7 +202,7 @@ bcbioSingleCell <-
                 ))
                 sampleData <- minimalSampleData(basename(sampleDirs))
             } else {
-                sampleData <- getSampleDataFromYAML(yaml)
+                sampleData <- getSampleDataFromYaml(yaml)
             }
         }
         assert(isSubset(rownames(sampleData), names(sampleDirs)))

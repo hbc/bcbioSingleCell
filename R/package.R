@@ -49,7 +49,7 @@ NULL
 #' separator toInlineString
 #' @importFrom AcidExperiment detectLanes droplevels2 importSampleData
 #' matchInterestingGroups minimalSampleData
-#' @importFrom AcidGenomes emptyRanges makeGRangesFromEnsembl makeGRangesFromGFF
+#' @importFrom AcidGenomes emptyRanges makeGRangesFromEnsembl makeGRangesFromGff
 #' @importFrom AcidMarkdown markdownPlots
 #' @importFrom AcidPlots !!! .data acid_geom_abline acid_geom_label
 #' acid_geom_label_average acid_geom_label_repel acid_scale_color_discrete
@@ -57,15 +57,15 @@ NULL
 #' @importFrom AcidSingleCell makeSingleCellExperiment mapCellsToSamples
 #' @importFrom IRanges DataFrameList
 #' @importFrom S4Vectors DataFrame SimpleList
-#' @importFrom bcbioBase getBarcodeCutoffFromCommands getGTFFileFromYAML
-#' getLevelFromCommands getSampleDataFromYAML getUMITypeFromCommands
+#' @importFrom bcbioBase getBarcodeCutoffFromCommands getGtfFileFromYaml
+#' getLevelFromCommands getSampleDataFromYaml getUmiTypeFromCommands
 #' importDataVersions importProgramVersions projectDir runDate sampleDirs
 #' @importFrom ggplot2 aes facet_wrap geom_boxplot geom_histogram geom_step
 #' geom_violin ggplot labs scale_x_continuous scale_y_continuous stat_ecdf vars
 #' @importFrom ggridges geom_density_ridges
 #' @importFrom goalie allAreDirectories allAreFiles areDisjointSets areSetEqual
 #' assert hasLength hasNames hasRownames hasValidDimnames isADirectory isAFile
-#' isAURL isAny isCharacter isDirectory isFile isFlag isInt isString isSubset
+#' isAUrl isAny isCharacter isDirectory isFile isFlag isInt isString isSubset
 #' requireNamespaces validate validateClasses
 #' @importFrom methods .hasSlot as as<- is new setClass slot slot<- validObject
 #' @importFrom parallel mcMap mclapply

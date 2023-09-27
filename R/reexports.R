@@ -35,5 +35,5 @@ AcidGenerics::plotMitoRatio
 AcidGenerics::plotNovelty
 
 #' @export
-#' @importFrom AcidGenerics plotQC
-AcidGenerics::plotQC
+#' @importFrom AcidGenerics plotQc
+AcidGenerics::plotQc

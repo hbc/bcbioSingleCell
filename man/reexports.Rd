@@ -12,7 +12,7 @@
 \alias{plotFeaturesPerCell}
 \alias{plotMitoRatio}
 \alias{plotNovelty}
-\alias{plotQC}
+\alias{plotQc}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -20,6 +20,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{AcidGenerics}{\code{\link[AcidGenerics]{calculateMetrics}}, \code{\link[AcidGenerics]{filterCells}}, \code{\link[AcidGenerics]{plotBarcodeRanks}}, \code{\link[AcidGenerics]{plotCellCounts}}, \code{\link[AcidGenerics]{plotCountsPerCell}}, \code{\link[AcidGenerics]{plotCountsVsFeatures}}, \code{\link[AcidGenerics]{plotFeaturesPerCell}}, \code{\link[AcidGenerics]{plotMitoRatio}}, \code{\link[AcidGenerics]{plotNovelty}}, \code{\link[AcidGenerics]{plotQC}}}
+  \item{AcidGenerics}{\code{\link[AcidGenerics]{calculateMetrics}}, \code{\link[AcidGenerics]{filterCells}}, \code{\link[AcidGenerics]{plotBarcodeRanks}}, \code{\link[AcidGenerics]{plotCellCounts}}, \code{\link[AcidGenerics]{plotCountsPerCell}}, \code{\link[AcidGenerics]{plotCountsVsFeatures}}, \code{\link[AcidGenerics]{plotFeaturesPerCell}}, \code{\link[AcidGenerics]{plotMitoRatio}}, \code{\link[AcidGenerics]{plotNovelty}}, \code{\link[AcidGenerics]{plotQc}}}
 }}
 

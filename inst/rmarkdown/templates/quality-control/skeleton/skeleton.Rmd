@@ -328,7 +328,7 @@ object <- filterCells(
 ```
 
 ```{r plot-filtered-qc}
-plotQC(object, geom = "violin")
+plotQc(object, geom = "violin")
 ```
 
 # Save filtered data

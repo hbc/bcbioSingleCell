@@ -35,7 +35,7 @@ updateObject(bcb)
 ## Example that depends on remote file.
 ## > x <- import(
 ## >     con = file.path(
-## >         bcbioSingleCellTestsURL,
+## >         bcbioSingleCellTestsUrl,
 ## >         "bcbioSingleCell_0.1.0.rds"
 ## >     )
 ## > )

@@ -16,7 +16,7 @@ Map(
     },
     file = files,
     MoreArgs = list(
-        "remoteDir" = bcbioSingleCellTestsURL,
+        "remoteDir" = bcbioSingleCellTestsUrl,
         "envir" = environment()
     )
 )
