@@ -47,7 +47,7 @@ NULL
                 fmt = "Upgrading {.var %s} from version %s to %s.",
                 "bcbioSingleCell",
                 as.character(version),
-                as.character(.version)
+                as.character(.pkgVersion)
             ))
         }
         ## Assays --------------------------------------------------------------
@@ -203,9 +203,9 @@ NULL
                 as.integer(metadata[["ensemblRelease"]])
         }
         ## Update the version, if necessary.
-        if (!identical(metadata[["version"]], .version)) {
+        if (!identical(metadata[["version"]], .pkgVersion)) {
             metadata[["originalVersion"]] <- metadata[["version"]]
-            metadata[["version"]] <- .version
+            metadata[["version"]] <- .pkgVersion
         }
         ## gffFile.
         if (isSubset("gtfFile", names(metadata))) {

@@ -257,7 +257,7 @@ bcbioSingleCell <-
             "sampleMetadataFile" = as.character(sampleMetadataFile),
             "umiType" = umiType,
             "uploadDir" = uploadDir,
-            "version" = .version,
+            "version" = .pkgVersion,
             "yaml" = yaml
         )
         ## SingleCellExperiment ------------------------------------------------

@@ -1,6 +1,14 @@
 # Release notes
 
-## bcbioSingleCell (2023-08-17)
+## bcbioSingleCell 0.7.0 (2023-10-05)
+
+Major changes:
+
+- Bumping version, due to significant changes in bcbioBase and Acid Genomics
+  dependency packages.
+- Enforcing strict camel case in all function names.
+
+## bcbioSingleCell 0.6.4 (2023-08-17)
 
 Major changes:
 
