@@ -1,5 +1,12 @@
 # Release notes
 
+## bcbioSingleCell 0.7.1 (2023-12-04)
+
+Minor changes:
+
+- `plotReadsPerCell`: Updated internal code to avoid unwanted type change during
+  `leftJoin` step.
+
 ## bcbioSingleCell 0.7.0 (2023-10-05)
 
 Major changes:
