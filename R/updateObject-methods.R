@@ -2,7 +2,7 @@
 #'
 #' @name updateObject
 #' @author Michael Steinbaugh
-#' @note Updated 2022-05-09.
+#' @note Updated 2023-12-04.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -153,7 +153,7 @@ NULL
             )
             assert(is.factor(c2s))
             colData[["sampleId"]] <- c2s
-            sampleData[["sampleId"]] <- rownames(sampleData)
+            sampleData[["sampleId"]] <- as.factor(rownames(sampleData))
             colData <- leftJoin(x = colData, y = sampleData, by = "sampleId")
             assert(
                 is(colData, "DataFrame"),
