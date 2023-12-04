@@ -85,10 +85,8 @@
         ## Import cellular barcodes.
         colnames <- import(colnamesFile, format = "lines")
         if (!length(rownames) > 0L || !length(colnames) > 0L) {
-            ## nocov start
             alertWarning(sprintf("Skipped {.path %s}.", basename(dir)))
             return(NULL)
-            ## nocov end
         }
         ## Import counts.
         counts <- import(file)
