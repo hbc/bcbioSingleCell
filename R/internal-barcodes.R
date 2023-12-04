@@ -34,7 +34,7 @@
 
 #' Obtain the raw, unfiltered cellular barcode read counts
 #'
-#' @note Updated 2021-09-03.
+#' @note Updated 2023-12-04.
 #' @noRd
 #'
 #' @return `DataFrame`.
@@ -44,11 +44,12 @@
     assert(
         is.list(list),
         msg = sprintf(
-            fmt = paste0(
-                "Object does not contain unfiltered cellular barcodes.\n",
-                "Has '%s' been applied? This step drops them."
+            fmt = paste(
+                "Object does not contain unfiltered cellular barcodes.",
+                "Has {.fun %s} been applied?",
+                "This step drops them."
             ),
-            "filterCells()"
+            "filterCells"
         )
     )
     assert(
@@ -69,7 +70,7 @@
     )
     data <- unlist(DataFrameList(list), use.names = FALSE)
     sampleData <- sampleData(object)
-    sampleData[["sampleId"]] <- rownames(sampleData)
+    sampleData[["sampleId"]] <- as.factor(rownames(sampleData))
     data <- leftJoin(data, sampleData, by = "sampleId")
     assert(
         is(data, "DataFrame"),

@@ -1,7 +1,7 @@
 #' @name plotReadsPerCell
 #' @author Michael Steinbaugh, Rory Kirchner
 #' @inherit AcidGenerics::plotReadsPerCell
-#' @note Updated 2023-08-16.
+#' @note Updated 2023-12-04.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
