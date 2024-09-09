@@ -1,6 +1,10 @@
 # bcbioSingleCell
 
-[![Install with Bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg)](http://bioconda.github.io/recipes/r-bcbiosinglecell/README.html) ![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)
+[![Install with Bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg)](http://bioconda.github.io/recipes/r-bcbiosinglecell/README.html)
+![Lifecycle: retired](https://img.shields.io/badge/lifecycle-retired-red.svg)
+
+**NOTE: [bcbio-nextgen][bcbio] is no longer under active development.**
+Refer to the [notice of discontinuation][] for additional details.
 
 [R][] package for [bcbio][] single-cell RNA-seq analysis.
 
@@ -28,8 +32,8 @@ Configure [Conda][] to use the [Bioconda][] channels.
 
 ```sh
 # Don't install recipe into base environment.
-conda create --name='r-bcbiosinglecell@0.6.3' 'r-bcbiosinglecell==0.6.3'
-conda activate 'r-bcbiosinglecell@0.6.3'
+conda create --name='r-bcbiosinglecell' 'r-bcbiosinglecell'
+conda activate 'r-bcbiosinglecell'
 R
 ```
 
@@ -122,6 +126,7 @@ library](https://paperpile.com/shared/C8EMxl) on [Paperpile][].
 [bioconda]: https://bioconda.github.io/
 [bioconductor]: https://bioconductor.org/
 [conda]: https://conda.io/
+[notice of discontinuation]: https://github.com/bcbio/bcbio-nextgen/issues/3749
 [paperpile]: https://paperpile.com/
 [r]: https://www.r-project.org/
 [sce]: https://bioconductor.org/packages/SingleCellExperiment/
